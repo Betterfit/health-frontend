@@ -8,7 +8,7 @@ import {
 
   const SideBarNavigation = ({navList}) => {
     return(
-        <nav class="flex-1 bg-white space-y-1 my-4">
+        <nav class="flex-1 bg-white space-y-1 my-4 text-light-text">
             {navList.map(navItem => {
                 return(
                     <NavLink class="" to={navItem.to} >

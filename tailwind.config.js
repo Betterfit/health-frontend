@@ -10,6 +10,11 @@ module.exports = {
   theme: {
     fontFamily: {
       'body': ['Open Sans'],
+    },
+    extend: {
+      colors: {
+        'light-text': '#444444', 
+      }
     }
   }
 }

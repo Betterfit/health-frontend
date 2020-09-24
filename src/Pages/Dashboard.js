@@ -3,9 +3,9 @@ import { Transition } from '@tailwindui/react'
 
 
 // ========= Components ========
-import SideBar from 'Components/SideBar';
+import SideBar from 'Components/SideBar/SideBar';
 import DashboardContainer from 'Containers/DashboardContainer';
-import SideBarMobileToggle from 'Components/SideBarMobileToggle';
+import SideBarMobileToggle from 'Components/SideBar/SideBarMobileToggle';
 import {
     BrowserRouter as Router,
 } from "react-router-dom";
