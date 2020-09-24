@@ -7,4 +7,9 @@ module.exports = {
     require('tailwindcss/lib/plugins/container')({}),
     ...Object.keys(plugins).map(name => plugins[name]()),
   ],
+  theme: {
+    fontFamily: {
+      'body': ['Open Sans'],
+    }
+  }
 }
