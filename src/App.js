@@ -23,7 +23,7 @@ function App() {
           <Route path="/login" exact>
             <Login />
           </Route>
-          <Route path="/dashboard" exact>
+          <Route path="/dashboard">
             <Dashboard />
           </Route>
         </Switch>
