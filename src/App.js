@@ -12,7 +12,6 @@ import {
 
 
 // ================ PAGES ================
-
 import Login from './Pages/Login';
 import Dashboard from './Pages/Dashboard';
 
@@ -21,16 +20,15 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/login">
+          <Route path="/login" exact>
             <Login />
           </Route>
-          <Route path="/dashboard">
+          <Route path="/dashboard" exact>
             <Dashboard />
           </Route>
         </Switch>
       </div>
     </Router>
-   
   );
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../Images/logo.png'
+import logo from 'Images/logo.png'
 
 const Logo = ({size}) => 
  //Eventually we can have pre determined sizes of logos 
