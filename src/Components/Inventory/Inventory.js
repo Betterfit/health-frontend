@@ -18,12 +18,15 @@ const ProductImage = ({ product_image, product_name }) => {
     return null;
   }
   return (
-    <div className="lg:w-5/12 m-auto">
-      <img
-        className="border border-gray-400"
+    <div className="md:w-5/12 relative pt-3">
+        <div className="border border-gray-400 bg-white md:absolute md:-top-sm">
+      <img   
         src={Read_Product(product_image.image, "")}
         alt={Read_Product(product_name + " Product Image", "Product Image")}
+        loading="lazy"
+        data-sizes="auto"
       ></img>
+      </div>
     </div>
   );
 };
@@ -35,8 +38,8 @@ const Inventory = ({ product }) => {
         <h1 className="text-gray-700 text-xl font-semibold">
           {Read_Product(product.product_name, "")}
         </h1>
-        <div className="flex lg:flex-row flex-col-reverse">
-          <div className="lg:w-7/12 pr-5">
+        <div className="flex md:flex-row flex-col-reverse">
+          <div className="md:w-7/12 pr-5">
             <Inventory_Description
               title="Size"
               description={Read_Product(product.product_size, "N/A")}
@@ -47,7 +50,7 @@ const Inventory = ({ product }) => {
               class_addons="pb-2 pt-4"
               description={Read_Product(product.product_description, "")}
             ></Inventory_Description>
-            <div className="w-1/2 lg:grid lg:grid-cols-2 py-8">
+            <div className="md:w-2/3 lg:w-1/2 md:grid md:grid-cols-2 py-8">
               <h2 className="text-gray-700 text-2-5xl font-semibold col-span-2">
                 Quantity
               </h2>

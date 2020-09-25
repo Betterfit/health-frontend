@@ -13,7 +13,7 @@ function Inventory_Edit(props) {
   return (
     <input
       type="number"
-      className="py-3 pl-4 form-input block w-3/4 text-lg border-gray-400 border rounded"
+      className="py-2 pl-4 form-input block w-1/3 md:w-3/4 text-lg border-gray-400 border rounded"
       defaultValue={description}
     />
   );
@@ -22,7 +22,6 @@ function Inventory_Edit(props) {
 function Inventory_Description({ title, description, class_addons, edit }) {
   let description_type;
   let standard_dt_styles = `uppercase text-sm text-gray-600 font-bold tracking-wider pt-6 ${class_addons}`;
-  console.log({ standard_dt_styles });
   if (edit) {
     description_type = <Inventory_Edit description={description} />;
   } else {

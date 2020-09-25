@@ -8,6 +8,9 @@ module.exports = {
       fontSize: {
         '2-5xl': '1.65rem',
       },
+      inset: {
+        '-sm': '-30px',
+      },
     },
   },
   purge: [
