@@ -1,14 +1,31 @@
 import React from "react";
 import Button from "../Button";
-import image from "../../Images/example_product.png";
 import Inventory_Description from "../Inventory/Inventory_Description";
 
-//This Read Product and the attribute if exists, or a default value
+//This will either return the attribute if it exists, or
+// return the passed in 'default_value' if not
 const Read_Product = (product_attr, default_value) => {
   if (product_attr === undefined) {
     return default_value;
   }
   return product_attr;
+};
+
+//The html component for the product image
+//If no image can be found - return nothing
+const ProductImage = ({ product_image, product_name }) => {
+  if (product_image === undefined || !product_image.hasOwnProperty("image")) {
+    return null;
+  }
+  return (
+    <div className="lg:w-5/12 m-auto">
+      <img
+        className="border border-gray-400"
+        src={Read_Product(product_image.image, "")}
+        alt={Read_Product(product_name + " Product Image", "Product Image")}
+      ></img>
+    </div>
+  );
 };
 
 const Inventory = ({ product }) => {
@@ -53,13 +70,10 @@ const Inventory = ({ product }) => {
               </div>
             </div>
           </div>
-          <div className="lg:w-5/12 m-auto">
-            <img
-              className="border border-gray-400"
-              src={image}
-              alt="Betterfit Logo"
-            ></img>
-          </div>
+          <ProductImage
+            product_name={product.product_name}
+            product_image={product.product_image}
+          />
         </div>
       </div>
     </>
