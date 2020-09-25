@@ -1,3 +1,10 @@
 *{
     font-family: 'Open Sans';
 }
+
+p{
+   color:#4A5568;
+   line-height: 27px;
+   font-size: 1.2em;
+   margin: 6px 0px;
+}

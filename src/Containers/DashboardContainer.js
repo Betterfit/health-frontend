@@ -6,6 +6,7 @@ import {
 
 import DashboardInventory from './DashboardInventory'
 import DashboardOrders from './DashboardOrders'
+import DashboardProductList from './DashboardProductList'
 
 const DashboardContainer = () =>{
     return(
@@ -25,6 +26,9 @@ const DashboardContainer = () =>{
                             <Route path="/dashboard/inventory" exact>
                                 <DashboardInventory />
                             </Route>
+                            <Route path='/dashboard/product/:id' render={(props) => {
+                                return ( <DashboardProductList {...props } /> )
+                            }} />
                         </Switch>
                     </div>
                     {/* <!-- /End replace --> */}

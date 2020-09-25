@@ -20,7 +20,7 @@ import {
 const Dashboard = () => {
     // usestate to save user and pass
     return(
-        <div class="h-screen flex overflow-hidden bg-white">
+        <div class="h-screen flex overflow-hidden bg-white" style={{backgroundColor:'#F7FAFC'}}>
             <SideBarMobileToggle /> 
             <Router>
                 <SideBar />
