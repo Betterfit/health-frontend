@@ -6,7 +6,7 @@ export default class Api {
   constructor() {
     this.api_token = null;
     this.client = null;
-    this.api_url = 'http://betterfit.l1f7.com/'
+    this.api_url = 'http://betterfit.l1f7.com'
   }
 
   init = () => {
@@ -15,6 +15,7 @@ export default class Api {
     let headers = {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Credentials':true
     };
 
     if (this.api_token) {
@@ -35,7 +36,7 @@ export default class Api {
 //   };
 
   signIn = (data) => {
-    return this.init().post("api-token-auth/", data);
+    return this.init().post("/api-token-auth", data);
   }
 
   addNewUser = (data) => {
