@@ -1,6 +1,7 @@
 import React from 'react'
 import { ReactSVG } from 'react-svg'
 import Edit from 'Images/Icons/edit.svg'
+import {NavLink} from "react-router-dom";
 const TableBody = ({TableBody}) => {
     let TableId = TableBody.id;
     
@@ -21,9 +22,9 @@ const TableBody = ({TableBody}) => {
                                     })
                                 }
                                 <td class="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                    <a class="block" onClick={() => console.log(row[row.length - 1])}>
+                                    <NavLink to={`/dashboard/product/detail/${row[row.length-1]}`}>
                                         <ReactSVG src={Edit} className=" text-gray-800"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
-                                    </a>
+                                    </NavLink>
                                 </td>
                             </tr>
                         )
@@ -40,9 +41,9 @@ const TableBody = ({TableBody}) => {
                                     })
                                 }
                                 <td class="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                    <a class="block" onClick={() => console.log(row[row.length - 1])}>
+                                    <NavLink to={`/dashboard/product/detail/${row[row.length-1]}`}>
                                         <ReactSVG src={Edit} className=" text-gray-800"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
-                                    </a>
+                                    </NavLink>
                                 </td>
                             </tr>
                         )

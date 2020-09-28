@@ -7,7 +7,7 @@ import {
 import DashboardInventory from './DashboardInventory'
 import DashboardOrders from './DashboardOrders'
 import DashboardProductList from './DashboardProductList'
-
+import DashboardProductDetail from './DashboardProductDetail'
 const DashboardContainer = () =>{
     return(
         <div class="flex flex-col w-0 flex-1 overflow-hidden">
@@ -26,8 +26,11 @@ const DashboardContainer = () =>{
                             <Route path="/dashboard/inventory" exact>
                                 <DashboardInventory />
                             </Route>
-                            <Route path='/dashboard/product/:id' render={(props) => {
+                            <Route exact path='/dashboard/product/:id' render={(props) => {
                                 return ( <DashboardProductList {...props } /> )
+                            }} />
+                            <Route path='/dashboard/product/detail/:id' render={(props) => {
+                                return ( <DashboardProductDetail {...props } /> )
                             }} />
                         </Switch>
                     </div>

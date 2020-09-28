@@ -8,7 +8,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
-
+import { CookiesProvider } from 'react-cookie';
 
 
 // ================ PAGES ================
@@ -17,18 +17,20 @@ import Dashboard from './Pages/Dashboard';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Switch>
-          <Route path="/login" exact>
-            <Login />
-          </Route>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <CookiesProvider>
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route path="/login" exact>
+              <Login />
+            </Route>
+            <Route path="/dashboard">
+              <Dashboard />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </CookiesProvider>
   );
 }
 
