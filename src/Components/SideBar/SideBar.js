@@ -5,7 +5,7 @@ import SideBarProfile from './SideBarProfile';
 import logo from 'Images/logo.png'
 
 
-const SideBarDashBoard = () => {
+const SideBar = () => {
     const navItemsList = [
         {
             to:'/dashboard/orders',
@@ -30,11 +30,11 @@ const SideBarDashBoard = () => {
                 <div class="flex items-center flex-shrink-0">
                   <img class="w-48 md:w-3/4" src={logo} alt="Workflow"/>
                 </div>
-                <SideBarDashboardTypeCTA name="Supplier Name" location="Edmonton,AB" />
+                {/* <SideBarDashboardTypeCTA name="Supplier Name" location="Edmonton,AB" /> */}
                 <SideBarNavigation navList={navItemsList} />
               </div>
               {/* TODO - DYNAMIC NAME ONCE API IS HOOKED UP */}
-              <SideBarProfile userName="My Name" />
+              {/* <SideBarProfile userName="My Name" /> */}
             </div>
           </div>
         </div>
@@ -42,4 +42,4 @@ const SideBarDashBoard = () => {
     )
 }
 
-export default SideBarDashBoard
+export default SideBar
