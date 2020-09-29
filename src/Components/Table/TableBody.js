@@ -2,18 +2,18 @@ import React from 'react'
 import { ReactSVG } from 'react-svg'
 import Edit from 'Images/Icons/edit.svg'
 import {NavLink} from "react-router-dom";
-const TableBody = ({TableBody}) => {
-    let TableId = TableBody.id;
-    
+const TableBody = ({TableBody,removeAtIndex,variantID}) => {
+    console.log(`slide ${TableBody}`)
     return(
         <tbody>  
             {
                 TableBody.map((row,index) =>{
-                    if(index%2 == 0){
+                    if(index%2 == 0 ){
                         return(
                             <tr class="bg-gray-100 border-t border-gray-200">
                                 {
-                                    row.slice(0,-1).map(r=>{
+                                    row.map((r, index)=>{
+                                        if(index !== removeAtIndex)
                                         return(
                                             <td class="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                                 {r}
@@ -21,8 +21,8 @@ const TableBody = ({TableBody}) => {
                                         )
                                     })
                                 }
-                                <td class="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                    <NavLink to={`/dashboard/product/detail/${row[row.length-1]}`}>
+                                <td class="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
+                                    <NavLink to={`${variantID}/detail/${row[removeAtIndex]}`} >
                                         <ReactSVG src={Edit} className=" text-gray-800"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
                                     </NavLink>
                                 </td>
@@ -32,7 +32,8 @@ const TableBody = ({TableBody}) => {
                         return(
                             <tr class="bg-white border-t border-gray-200">
                                 {
-                                    row.slice(0,-1).map(r=>{
+                                    row.map((r,index)=>{
+                                        if(index !== removeAtIndex)
                                         return(
                                             <td class="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                                 {r}
@@ -41,7 +42,7 @@ const TableBody = ({TableBody}) => {
                                     })
                                 }
                                 <td class="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                    <NavLink to={`/dashboard/product/detail/${row[row.length-1]}`}>
+                                    <NavLink to={`${variantID}/detail/${row[removeAtIndex]}`} >
                                         <ReactSVG src={Edit} className=" text-gray-800"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
                                     </NavLink>
                                 </td>

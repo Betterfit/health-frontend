@@ -1,31 +1,32 @@
 
 import * as axios from "axios";
-import { useCookies } from 'react-cookie';
+import Cookies from 'js-cookie'
 
 export default class Api {
   constructor() {
-    this.api_token = null;
+    this.api_token = Cookies.get('token') ? Cookies.get('token') : null ;
     this.client = null;
-    this.api_url = 'http://betterfit.l1f7.com'
+    this.api_url = 'http://betterfit.l1f7.com'  
   }
 
   init = () => {
-    this.api_token = null;
 
     let headers = {
-        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Credentials':true
     };
 
     if (this.api_token) {
-      headers.Authorization = `Bearer ${this.api_token}`;
+        console.log(this.api_token)
+        headers.Authorization = `Token ${this.api_token}`;
     }
 
+    console.log(headers);
+
     this.client = axios.create({
-      baseURL: this.api_url,
-      timeout: 31000,
-      headers: headers,
+        mode: 'no-cors',
+        baseURL: this.api_url,
+        timeout: 31000,
+        headers: headers,
     });
 
     return this.client;
@@ -36,11 +37,21 @@ export default class Api {
 //   };
 
   signIn = (data) => {
-    return this.init().post("/api-token-auth", data);
+    return this.init().post("/api-token-auth/", data);
+  }
+
+  getProductCategories = () => {
+    return this.init().get("/product-categories/"); 
+  }
+  getProduct = (id) => {
+    return this.init().get(`/products/${id}`); 
+  }
+  getProductVariant = (id) => {
+    return this.init().get(`/product-variations/${id}`); 
   }
 
   addNewUser = (data) => {
-    return this.init().post("/users", data);
+    return this.init().post("/users/", data);
   };
 
 }

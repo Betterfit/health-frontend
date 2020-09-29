@@ -5,15 +5,21 @@ const Table = ({TableData}) => {
 
     const TableHeadData = [];
     const TableBodyData = [];
-    TableData.variants.map(variant => {
+    let removeAtIndex;
+    TableData.product_options.map(variant => {
         let keys = Object.keys(variant);
         let values = Object.values(variant);
-        keys.forEach(key => {
+        keys.forEach((key,index) => {
             if(!TableHeadData.includes(key)){
-                TableHeadData.push(key);
+                if(key !== "pk"){
+                    console.log(`key ${variant[key]}`);
+                    TableHeadData.push(key);
+                }else{
+                    removeAtIndex = index;
+                }
             }
         });
-        TableBodyData.push(values)
+        TableBodyData.push(values);
     });
     return(
         <div class="flex flex-col mt-10 mb-4">
@@ -26,7 +32,7 @@ const Table = ({TableData}) => {
                         <div class="p-4 bg-white">
                            <table class="min-w-full divide-y divide-gray-200 p-4">
                             <TableHead TableHead={TableHeadData} />
-                            <TableBody TableBody={TableBodyData} />                            
+                            <TableBody TableBody={TableBodyData} removeAtIndex={removeAtIndex} variantID={TableData.pk} />                            
                             </table>  
                         </div>
                        

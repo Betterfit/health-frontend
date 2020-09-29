@@ -6,22 +6,29 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from "react-router-dom";
-import { CookiesProvider } from 'react-cookie';
 
 
 // ================ PAGES ================
 import Login from './Pages/Login';
 import Dashboard from './Pages/Dashboard';
-
+import Cookies from 'js-cookie'
 function App() {
+  const loginCookie = Cookies.get('token');
   return (
-    <CookiesProvider>
       <Router>
         <div className="App">
           <Switch>
-            <Route path="/login" exact>
+          <Route exact path="/" render={() => (
+              loginCookie ? (
+                <Redirect to="/dashboard/inventory"/>
+              ) : (
+                <Redirect to="/login"/>
+              )
+            )}/>
+            <Route path="/login" initial exact>
               <Login />
             </Route>
             <Route path="/dashboard">
@@ -30,7 +37,6 @@ function App() {
           </Switch>
         </div>
       </Router>
-    </CookiesProvider>
   );
 }
 

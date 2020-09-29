@@ -5,7 +5,7 @@ import TabHeadings from './TabHeadings';
 
 
 const Tabs = ({tabs}) => {
-    console.log(tabs)
+    // console.log(tabs)
     const [activeTab , setActiveTab] = useState(tabs[0].key)
 
     const Headings = tabs.map(tab => {
@@ -17,7 +17,7 @@ const Tabs = ({tabs}) => {
     });
 
     const headingChangeActive = (key) => {
-        console.log(key)
+        // console.log(key)
         setActiveTab(key);   
     }
 

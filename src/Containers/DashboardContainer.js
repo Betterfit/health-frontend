@@ -29,7 +29,7 @@ const DashboardContainer = () =>{
                             <Route exact path='/dashboard/product/:id' render={(props) => {
                                 return ( <DashboardProductList {...props } /> )
                             }} />
-                            <Route path='/dashboard/product/detail/:id' render={(props) => {
+                            <Route path='/dashboard/product/:id/detail/:oid' render={(props) => {
                                 return ( <DashboardProductDetail {...props } /> )
                             }} />
                         </Switch>

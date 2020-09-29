@@ -2,8 +2,10 @@ import React , {useState} from 'react'
 import logo from 'Images/logo.png'
 import Input_Field from 'Components/Forms/Input_Field';
 import Api from "Helpers/api";
-
+import Cookies from 'js-cookie'
+import { useHistory } from "react-router-dom";
 const Login = () => {
+    const history = useHistory();
     // usestate to save user and pass
     const [{user,pass} , setAuthData] = useState({
         user:'',
@@ -13,15 +15,17 @@ const Login = () => {
     // WHENEVER YOU SEE SOMETHING AND THINK , HEY I COULD RE USE THIS IN SOME WAY , WRITE A COMPONENT , SOMETIMES YOU DON'T NEED TO BE WRITING 10000000 COMPONENTS SO KEEP THAT IN MIND AS WELL
     // WE ARE USING TAILWIND REACT UI IN THIS PROJECT , WHICH HAS TAILWIND REACT COMPONENTS THAT USE TAILWIND THAT ARE ALREADY MADE FOR US :D HERE IS THE LINK https://emortlock.github.io/tailwind-react-ui/#documentation
     const api = new Api();
-
-  const signIn = (e) => {
-      e.preventDefault();
-      console.log('sign in');
-    api
-      .signIn({"username":"lift", "password":"L1f7is0wly!"})
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
-  };
+    const signIn = (e) => {
+        e.preventDefault();
+        console.log('sign in');
+        api
+            .signIn({"username":"lift", "password":"L1f7is0wly!"})
+            .then((response) => {
+                Cookies.set('token', response.data.token);
+                history.push("/dashboard/inventory");
+            })
+            .catch((err) => console.log(err));
+    };
     return(
     <div class="min-h-screen bg-gray-700 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">

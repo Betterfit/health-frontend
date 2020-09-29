@@ -5,7 +5,6 @@ const TableHead = ({TableHead}) => {
         <thead>
             <tr>
                 {TableHead.map(head => {
-                    if(head !== "id")
                         return(
                             <th class="px-4 py-3 bg-white text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider uppercase text-gray-700 font-extrabold ">
                                 {head}
