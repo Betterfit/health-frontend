@@ -35,7 +35,7 @@ const Login = () => {
                 </div>
             <form class = "pb-24" action="#" method="POST">
                 <div>
-                    <Input_Field id_tag="email" name="Email"></Input_Field>
+                    <Input_Field id_tag="email" name="User"></Input_Field>
                 </div>
 
                 <div class="mt-3">
