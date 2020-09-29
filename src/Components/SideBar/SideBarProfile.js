@@ -1,5 +1,5 @@
 import React , {useState} from 'react'
-import { Transition } from '@tailwindui/react'
+// import { Transition } from '@tailwindui/react'
 // components
 import SideBarProfileNavigation  from './SideBarProfileNavigation';
 
@@ -14,7 +14,7 @@ const SideBarProfile = ({userName}) => {
 
     return(
         <div class="hidden md:block flex-shrink-0 flex border-t border-gray-400 p-4 relative z-10" onMouseOver={ToggleProfileNavigation} onMouseOut={ToggleProfileNavigation}>
-            <Transition
+            {/* <Transition
                 show={ShowNav}
                 enter="transition-opacity duration-75"
                 enterFrom="opacity-0"
@@ -22,9 +22,9 @@ const SideBarProfile = ({userName}) => {
                 leave="transition-opacity duration-150"
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
-            >
+            > */}
                 <SideBarProfileNavigation />
-            </Transition>
+            {/* </Transition> */}
             <a href="#" class="flex-shrink-0 w-full group block profile-container">
                 <div class="flex items-center">
                     <div class="ml-3">
