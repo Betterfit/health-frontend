@@ -1,8 +1,6 @@
 import React , {useState} from 'react'
 import { Transition } from '@tailwindui/react'
-
 // components
-import SideBar from './SideBar'
 import SideBarProfileNavigation  from './SideBarProfileNavigation';
 
 

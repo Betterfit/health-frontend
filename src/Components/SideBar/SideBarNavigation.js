@@ -1,12 +1,9 @@
-import React,{useState} from 'react'
-
-
+import React from 'react';
 import {
     NavLink
   } from "react-router-dom";
 
-
-  const SideBarNavigation = ({navList}) => {
+    const SideBarNavigation = ({navList}) => {
     return(
         <nav class="flex-1 flex-row md:flex-col flex-wrap flex md:block justify-between items-baseline bg-white space-y-1 my-4 text-light-text">
             {navList.map(navItem => {
