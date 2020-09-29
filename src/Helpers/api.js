@@ -23,7 +23,6 @@ export default class Api {
     console.log(headers);
 
     this.client = axios.create({
-        mode: 'no-cors',
         baseURL: this.api_url,
         timeout: 31000,
         headers: headers,
