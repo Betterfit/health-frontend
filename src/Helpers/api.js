@@ -20,10 +20,9 @@ export default class Api {
         headers.Authorization = `Token ${this.api_token}`;
     }
 
-    console.log(headers);
 
     this.client = axios.create({
-        baseURL: this.api_url,
+        baseURL: 'http://betterfit.l1f7.com'  ,
         timeout: 31000,
         headers: headers,
     });
