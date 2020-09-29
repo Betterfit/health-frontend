@@ -1,7 +1,7 @@
 import React from "react";
 
 const Search = () => (
-  <>
+  <div class="absolute top-0 right-0 hidden md:block"> 
     <label for="search"></label>
     <div className="m-1 flex max-w-sm">
       <div className="relative flex-grow">
@@ -16,6 +16,6 @@ const Search = () => (
         Search
       </button>
     </div>
-  </>
+  </div>
 );
 export default Search;

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Tabs from 'Components/Tabs/Tabs';
 import BoxLink from 'Components/BoxLink';
+import Search from 'Components/Search/Search';
 import Api from "Helpers/api";
 const api = new Api();
 
@@ -43,7 +44,10 @@ const DashboardInventory = ({changeTitle}) =>{
             }
         ]
         return(
-            <Tabs tabs={TabData} />
+            <div class="relative">
+                <Tabs tabs={TabData} />
+                <Search/>
+            </div>
         )
     }else{
         getData();
