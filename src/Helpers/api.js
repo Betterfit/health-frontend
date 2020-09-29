@@ -22,7 +22,7 @@ export default class Api {
 
 
     this.client = axios.create({
-        baseURL: 'http://betterfit.l1f7.com'  ,
+        baseURL: 'http://betterfit.l1f7.com/' ,
         timeout: 31000,
         headers: headers,
     });
@@ -35,21 +35,21 @@ export default class Api {
 //   };
 
   signIn = (data) => {
-    return this.init().post("/api-token-auth/", data);
+    return this.init().post("api-token-auth/", data);
   }
 
   getProductCategories = () => {
-    return this.init().get("/product-categories/"); 
+    return this.init().get("product-categories/"); 
   }
   getProduct = (id) => {
-    return this.init().get(`/products/${id}`); 
+    return this.init().get(`products/${id}`); 
   }
   getProductVariant = (id) => {
-    return this.init().get(`/product-variations/${id}`); 
+    return this.init().get(`product-variations/${id}`); 
   }
 
   addNewUser = (data) => {
-    return this.init().post("/users/", data);
+    return this.init().post("users/", data);
   };
 
 }
