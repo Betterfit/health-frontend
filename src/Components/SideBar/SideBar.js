@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import SideBarNavigation from './SideBarNavigation';
-import SideBarDashboardTypeCTA from './SideBarDashboardTypeCTA';
-import SideBarProfile from './SideBarProfile';
+// import SideBarDashboardTypeCTA from './SideBarDashboardTypeCTA';
+// import SideBarProfile from './SideBarProfile';
 import logo from 'Images/logo.png'
 
 
