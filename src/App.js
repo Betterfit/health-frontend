@@ -25,13 +25,13 @@ function App() {
               loginCookie ? (
                 <Redirect to="/dashboard/inventory"/>
               ) : (
-                <Redirect to="/login"/>
+                <Redirect to="/login/"/>
               )
             )}/>
             <Route path="/login" initial exact>
               <Login />
             </Route>
-            <Route path="/dashboard">
+            <Route path="/dashboard/">
               <Dashboard />
             </Route>
           </Switch>
