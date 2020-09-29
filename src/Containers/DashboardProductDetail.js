@@ -54,7 +54,7 @@ const DashboardProductDetail = (props) =>{
         <div>
             {VariantData && (
                 <>
-                    <BackNavigation link="Back to" />
+                    <BackNavigation link={`Back`} />
                     <TitleUnderLine title={ OptionData ?  `${OptionData[0].name} - ${VariantData.name}` : `${VariantData.name}`} />  
                     <div className="w-full flex place-self-center justify-self-center m-auto">
                         {ProductData && (
