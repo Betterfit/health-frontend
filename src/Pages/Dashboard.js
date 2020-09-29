@@ -1,5 +1,4 @@
 import React , {useState} from 'react'
-import { Transition } from '@tailwindui/react'
 // ========= Components ========
 import SideBarDashBoard from 'Components/SideBar/SideBar';
 import DashboardContainer from 'Containers/DashboardContainer';
