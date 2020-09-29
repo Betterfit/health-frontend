@@ -15,7 +15,7 @@ const SideBarProfile = ({userName}) => {
     }
 
     return(
-        <div class="flex-shrink-0 flex border-t border-gray-400 p-4 relative z-10" onMouseOver={ToggleProfileNavigation} onMouseOut={ToggleProfileNavigation}>
+        <div class="hidden md:block flex-shrink-0 flex border-t border-gray-400 p-4 relative z-10" onMouseOver={ToggleProfileNavigation} onMouseOut={ToggleProfileNavigation}>
             <Transition
                 show={ShowNav}
                 enter="transition-opacity duration-75"

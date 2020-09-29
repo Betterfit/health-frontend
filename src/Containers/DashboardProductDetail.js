@@ -8,7 +8,6 @@ const api = new Api();
 
 
 const DashboardProductDetail = (props) =>{
-
     const { match } = props
     const VariantId = parseInt(match.params.id);
     const OptionId = parseInt(match.params.oid);
@@ -18,17 +17,30 @@ const DashboardProductDetail = (props) =>{
     const [OptionData , setOptionData] = useState(null);
     const getData = async () => await api.getProductVariant(VariantId)
     .then((response) => {
-        setVariantData(response.data)
-        let OptionData = response.data.product_options.filter(item => item.pk === OptionId);
-        setOptionData(OptionData)
-        setProductData({ 
-            "product_name": response.data.name,
-            "product_size": OptionData[0].name,
-            "product_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis scelerisque enim, et venenatis arcu dictum nec. Praesent tristique lacinia nisi, pulvinar congue dui malesuada vitae.",
-            "product_alloted": 244,
-            "product_available": 430,
-            "product_image": {image},
-        })
+        setVariantData(response.data);
+        props.changeTitle(`Product - ${response.data.name}`)
+        if(OptionId){
+            let OptionData = response.data.product_options.filter(item => item.pk === OptionId);
+            setOptionData(OptionData)
+            setProductData({ 
+                "product_name": response.data.name,
+                "product_size": OptionData[0].name,
+                "product_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis scelerisque enim, et venenatis arcu dictum nec. Praesent tristique lacinia nisi, pulvinar congue dui malesuada vitae.",
+                "product_alloted": 244,
+                "product_available": 430,
+                "product_image": {image},
+            })
+        }else{
+            setOptionData(OptionData)
+            setProductData({ 
+                // "product_name": response.data.name,
+                // "product_size": OptionData[0].name,
+                "product_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis scelerisque enim, et venenatis arcu dictum nec. Praesent tristique lacinia nisi, pulvinar congue dui malesuada vitae.",
+                "product_alloted": 244,
+                "product_available": 430,
+                "product_image": {image},
+            })
+        }
     })
     .catch((err) => console.log(err));
     
@@ -43,10 +55,10 @@ const DashboardProductDetail = (props) =>{
             {VariantData && (
                 <>
                     <BackNavigation link="Back to" />
-                    <TitleUnderLine title={ OptionData ?  `${OptionData[0].name} - ${VariantData.name}` : ''} />  
+                    <TitleUnderLine title={ OptionData ?  `${OptionData[0].name} - ${VariantData.name}` : `${VariantData.name}`} />  
                     <div className="w-full flex place-self-center justify-self-center m-auto">
                         {ProductData && (
-                            <Inventory product={ProductData} edit={false}></Inventory>
+                            <Inventory product={ProductData} edit={props.edit}></Inventory>
                         )}
                     </div>
                 </>

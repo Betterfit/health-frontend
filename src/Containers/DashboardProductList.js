@@ -6,6 +6,7 @@ import Api from "Helpers/api";
 const api = new Api();
 
 const DashboardProductList = (props) => {
+    props.changeTitle('Products')
     const { match } = props
     const ProductId = parseInt(match.params.id);
     // TODO : restructure data when we have an api
@@ -25,11 +26,10 @@ const DashboardProductList = (props) => {
             {/* product title */}
             {ProductData && (
                 <>
-                    <TitleUnderLine />
+                    <TitleUnderLine title={`${ProductData.name}`} />
                     {/* product description */}
                     <p class="w-3/5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis scelerisque enim, et venenatis arcu dictum nec. Praesent tristique lacinia nisi, pulvinar congue dui malesuada vitae.</p>
                     {ProductData.product_variations.map(product => {
-                        console.log(product);
                         return <Table TableData={product} ProductId={ProductId} /> 
                     })}
                </>

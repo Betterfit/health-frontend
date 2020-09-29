@@ -5,8 +5,8 @@ import Api from "Helpers/api";
 const api = new Api();
 
 
-
-const DashboardInventory = () =>{ 
+const DashboardInventory = ({changeTitle}) =>{ 
+    changeTitle('Inventory');
     const [ProductData , setProductData] = useState(null);
     const getData = async () => await api.getProductCategories()
     .then((response) => {
@@ -19,10 +19,11 @@ const DashboardInventory = () =>{
             {
                 heading:'All Products',
                 content:ProductData.map(product => {
+                    console.log(product);
                     return(
                         <div>
-                            <h3 class="mb-2 font-extrabold text-gray-700 text-lg font-body">{product.name}</h3>
-                            <div class="grid grid-cols-3 gap-10 mb-10">
+                            <h3 class="mb-4 md:mb-2 font-extrabold text-gray-700 text-lg font-body">{product.name}</h3>
+                            <div class="grid md:grid-cols-3 gap-4 mb-6 md:gap-10 md:mb-10">
                                 
                                 {product.products.map(p =>{
                                     return(
