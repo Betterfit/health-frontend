@@ -12,7 +12,7 @@ import {
 
 
 // ================ PAGES ================
-import Login from './Pages/Login';
+import Login from './Pages/Login/Login';
 import Dashboard from './Pages/Dashboard';
 import Cookies from 'js-cookie'
 function App() {
@@ -28,9 +28,13 @@ function App() {
                 <Redirect to="/login"/>
               )
             )}/>
-            <Route path="/login" initial exact>
+            <Route path="/login" initial >
               <Login />
             </Route>
+            <Route path="/login/reset" initial >
+              <Login />
+            </Route>
+
             <Route path="/dashboard">
               <Dashboard />
             </Route>
