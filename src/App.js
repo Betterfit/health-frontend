@@ -31,8 +31,8 @@ function App() {
             <Route path="/login" initial >
               <Login />
             </Route>
-            <Route path="/login/reset" initial >
-              <Login />
+            <Route path="/login/forgotpassword" initial >
+              <Login/>
             </Route>
 
             <Route path="/dashboard">

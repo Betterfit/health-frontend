@@ -128,7 +128,9 @@ const LoginTemplate = () => {
 
 const Login = ({ match }) => {
   let { path, url } = useRouteMatch();
-
+  const location = useLocation();
+  const match = useRouteMatch();
+console.log(location)
   // usestate to save user and pass
   const [{ user, pass }, setAuthData] = useState({
     user: "",
