@@ -12,7 +12,7 @@ const Search = () => (
           placeholder="Search Products"
         ></input>
       </div>
-      <button className="-ml-px relative inline-flex items-center px-4 py-2 text-base leading-5 rounded-r uppercase font-medium text-white font-bold tracking-normal bg-gray-700 hover:bg-gray-600 focus:outline-none transition ease-in-out duration-150">
+      <button className="-ml-px relative inline-flex items-center px-4 py-2 text-base leading-5 rounded-r uppercase font-medium text-white font-bold tracking-normal bg-basic-blue hover:bg-darker-blue focus:outline-none transition ease-in-out duration-150">
         Search
       </button>
     </div>

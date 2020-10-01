@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../Button";
+import Button from "../Forms/Button";
 import Inventory_Description from "../Inventory/Inventory_Description";
 
 //This will either return the attribute if it exists, or
@@ -70,7 +70,7 @@ const Inventory = ({ product,edit }) => {
                 ></Inventory_Description>
               </div>
               <div className="col-span-2 py-8">
-                <Button text="Save Changes"></Button>
+                <Button text="Save Changes" svgName="plus"></Button>
               </div>
             </div>
           </div>

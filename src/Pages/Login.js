@@ -3,6 +3,7 @@ import logo from 'Images/logo.png'
 import Input_Field from 'Components/Forms/Input_Field';
 import Api from "Helpers/api";
 import Cookies from 'js-cookie'
+import Button from '../Components/Forms/Button'
 import { useHistory } from "react-router-dom";
 const Login = () => {
     const history = useHistory();
@@ -27,7 +28,7 @@ const Login = () => {
             .catch((err) => console.log(err));
     };
     return(
-    <div class="min-h-screen bg-gray-700 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div class="min-h-screen bg-basic-blue flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
             <div class="bg-white px-20 shadow rounded-sm">
                 <div class="sm:mx-auto sm:w-full sm:max-w-md pt-20 pb-10">
@@ -42,11 +43,7 @@ const Login = () => {
                     <Input_Field id_tag="password" name="Password" type="password"></Input_Field>
                 </div>
                 <div class="mt-6">
-                <span class="block w-full shadow-sm">
-                    <button onClick={signIn} type="submit" class="w-full flex justify-center py-4 border border-transparent text-lg font-medium text-white bg-gray-700 hover:bg-gray-600 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out uppercase">
-                    Login
-                    </button>
-                </span>
+                <Button onClick= {signIn} text="Login"></Button>
                 </div>
                 <div class="mt-6 flex justify-center">
                     <div class="text-base leading-5">
