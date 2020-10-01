@@ -33,7 +33,7 @@ const Button = ({ text, svgName, onClick }) => {
         type="submit"
         className="rounded w-full flex justify-center py-2 border border-transparent text-lg font-semibold text-white bg-basic-blue hover:bg-darker-blue focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out uppercase"
       >
-        <span>{text}ww</span>
+        <span>{text}</span>
         {svgMap[svgName]}
       </button>
     </span>
