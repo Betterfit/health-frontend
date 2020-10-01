@@ -32,7 +32,7 @@ function App() {
               <Login />
             </Route>
             <Route path="/login/forgotpassword" initial >
-              <Login/>
+              <Login />
             </Route>
 
             <Route path="/dashboard">
