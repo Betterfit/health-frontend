@@ -18,25 +18,19 @@ const PasswordReset = () => {
   const [email, setEmail] = useState("");
   const api = new Api();
   const resetPW = (e) => {
-    e.preventDefault();
     console.log("Reset PW");
+    e.preventDefault();
     api
-      .passwordResetRequest({ email: { email } })
+      .passwordResetRequest({ email: email })
       .then((response) => {
         setSendEmail(email);
         //TODO pull out json response
         //setShowResults(response.data);
       })
       .catch((err) => {
-        console.log(err);
-        //TODO - remove one api is hooked up
-        if (email === "valid@email.com") {
-          setSendEmail(email);
-          setShowResults(true);
-        } else {
-          setSendEmail(email);
-          setShowResults(false);
-        }
+        setSendEmail(email);
+        setShowResults(false);
+        
       });
   };
 
@@ -51,7 +45,7 @@ const PasswordReset = () => {
           be sent that allows you to reset your password
         </p>
       </div>
-      <form className="pb-24" action="#" method="POST">
+      <form className="pb-24" onSubmit={resetPW}>
         <div>
           <label htmlFor="email" className="sr-only">
             Email
@@ -60,6 +54,7 @@ const PasswordReset = () => {
             <Input_Field
               id_tag="email"
               name="Email"
+              type="email"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -73,7 +68,7 @@ const PasswordReset = () => {
         <div className="mt-6">
           <span className="block w-full shadow-sm">
             <button
-              onClick={resetPW}
+
               type="submit"
               className="w-full flex justify-center py-4 border border-transparent text-lg font-medium text-white bg-gray-700 hover:bg-gray-600 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out uppercase"
             >

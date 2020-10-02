@@ -57,7 +57,7 @@ export default class Api {
   //To request a password reset email
   passwordResetRequest = (data) => {
     //stub until relevent api can be included
-    return this.init().get("users/emailValidation", data)
+    return this.init().post("api/password_reset/", data)
   }
 
 }
