@@ -14,7 +14,8 @@ module.exports = {
       colors: {
         'light-text': '#444444', 
         'basic-blue': '#1F45A8',
-        'darker-blue': '#224192'
+        'darker-blue': '#224192',
+        'hot-pink': '#F9525B',
       },
       padding: {
         '7': '1.75rem',
