@@ -16,7 +16,8 @@ const LoginTemplate = () => {
     e.preventDefault();
     console.log("sign in");
     api
-      .signIn({ username: email, password: password })
+      .signIn({  username: "lift", password: "L1f7is0wly!" }) 
+      //.signIn({ username: email, password: password })
       .then((response) => {
         Cookies.set("token", response.data.token);
         history.push("/dashboard/inventory");
