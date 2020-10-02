@@ -4,7 +4,7 @@ import React, {useState} from 'react'
 import TabHeadings from './TabHeadings';
 
 
-const Tabs = ({tabs}) => {
+const Tabs = ({tabs,headingComp}) => {
     // console.log(tabs)
     const [activeTab , setActiveTab] = useState(tabs[0].key)
 
@@ -23,7 +23,7 @@ const Tabs = ({tabs}) => {
 
     return(
         <div>
-            <TabHeadings headings={Headings} headingFunction={headingChangeActive}   />
+            <TabHeadings headings={Headings} headingFunction={headingChangeActive} headingComp={headingComp}    />
             {tabs.map(tab => {
                 return(
                     <div class={`${tab.key === activeTab ? 'opacity-100' : 'opacity-0' }`} >

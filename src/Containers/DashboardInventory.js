@@ -45,8 +45,7 @@ const DashboardInventory = ({changeTitle}) =>{
         ]
         return(
             <div class="relative">
-                <Tabs tabs={TabData} />
-                <Search/>
+                <Tabs tabs={TabData} headingComp={<Search/>} />
             </div>
         )
     }else{
@@ -55,7 +54,7 @@ const DashboardInventory = ({changeTitle}) =>{
             <h1>loading data</h1>
         )
     }
-    
+        
 
 }
 

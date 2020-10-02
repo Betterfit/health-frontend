@@ -9,6 +9,7 @@ import DashboardInventory from './DashboardInventory'
 import DashboardOrders from './DashboardOrders'
 import DashboardProductList from './DashboardProductList'
 import DashboardProductDetail from './DashboardProductDetail'
+import DashboardSearch from './DashboardSearch';
 const DashboardContainer = () =>{
     const [title , setTitle] = useState('');
     const changeTitle = (title) => {
@@ -34,7 +35,6 @@ const DashboardContainer = () =>{
                                 <DashboardInventory changeTitle={(title) => changeTitle(title)} />
                             </Route>
                             <Route exact path='/dashboard/product/:id' render={(props) => {
-
                             return ( <DashboardProductList changeTitle={(title) => changeTitle(title)} {...props } /> )
                             }} />
                             <Route path='/dashboard/product/:id/detail/:oid?' exact render={(props) => {
@@ -43,6 +43,9 @@ const DashboardContainer = () =>{
                             <Route path='/dashboard/product/:id/detail/:oid?/edit' exact render={(props) => {
                                 return ( <DashboardProductDetail edit={true} changeTitle={(title) => changeTitle(title)} {...props } /> )
                             }} />
+                            <Route path='/dashboard/inventory/search:query?'>
+                                <DashboardSearch changeTitle={ (title) => changeTitle(title)} />
+                            </Route>
                         </Switch>
                     </div>
                     {/* <!-- /End replace --> */}

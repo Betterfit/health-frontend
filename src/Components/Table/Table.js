@@ -7,14 +7,14 @@ const Table = ({TableData}) => {
     const TableBodyData = [];
     let nooptions = false;
     let removeAtIndex;
-    if(TableData.product_options.length){
+    if(TableData.product_options && TableData.product_options.length){
         TableData.product_options.map(variant => {
             let keys = Object.keys(variant);
             let values = Object.values(variant);
             keys.forEach((key,index) => {
                 if(!TableHeadData.includes(key)){
                     if(key !== "pk"){
-                        console.log(`key ${variant[key]}`);
+                        // console.log(`key ${variant[key]}`);
                         TableHeadData.push(key);
                     }else{
                         removeAtIndex = index;
@@ -29,7 +29,7 @@ const Table = ({TableData}) => {
         let values = Object.values(TableData);
         keys.forEach((key,index) => {
             if(!TableHeadData.includes(key)){
-                if(key !== "pk" && key !=="product_options"){
+                if(key !== "pk" && key !=="product_options" &&  key !=="product_variations"){
                     TableHeadData.push(key);
                 }else{
                     if(key === "pk"){

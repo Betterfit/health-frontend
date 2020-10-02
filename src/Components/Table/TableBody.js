@@ -3,7 +3,7 @@ import { ReactSVG } from 'react-svg'
 import Edit from 'Images/Icons/edit.svg'
 import {NavLink} from "react-router-dom";
 const TableBody = ({TableBody,removeAtIndex,variantID,NoOptions}) => {
-    console.log(`slide ${TableBody}`)
+    // console.log(`slide ${TableBody}`)
     return(
         <tbody>  
             {
