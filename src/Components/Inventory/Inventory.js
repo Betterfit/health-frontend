@@ -70,7 +70,7 @@ const Inventory = ({ product,edit }) => {
                 ></Inventory_Description>
               </div>
               <div className="col-span-2 py-8">
-                <Button text="Save Changes" svgName="plus"></Button>
+                <Button text="Save Changes"></Button>
               </div>
             </div>
           </div>
