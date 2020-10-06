@@ -9,12 +9,17 @@ p{
    margin: 6px 0px;
 }
 
-.active-nav{
+/* .active-nav{
     border-bottom: 2px solid #4A5568;
+} */
+
+
+a.active{
+    border-bottom: 2px solid #4A5568;  
 }
-
-
-
+a[aria-current="page"]{
+    border-bottom: 2px solid #4A5568; 
+}
 
 /* override classes */
 .title-no-margin {

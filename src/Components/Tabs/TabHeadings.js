@@ -5,7 +5,7 @@ const TabHeadings = ({headings,headingFunction,headingComp}) => {
     const [activeHeading , setActiveHeading ] = useState(headings[0].key);
     // console.log(activeHeading);
     return(
-        <div class="flex flex-row mb-8 items-end">
+        <div class="flex flex-col-reverse md:flex-row mb-8 md:items-end ">
             <div class="border-b border-gray-400 flex flex-row flex-1 ">
                 {headings.map(heading =>{
                     return(
@@ -15,7 +15,7 @@ const TabHeadings = ({headings,headingFunction,headingComp}) => {
                     )
                 })}
             </div>
-            <div >
+            <div class="mb-6 md:mb-0 mt-4 md:mt-0" >
                 {headingComp}
             </div>
         </div>
