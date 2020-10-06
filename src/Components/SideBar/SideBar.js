@@ -35,7 +35,7 @@ const SideBar = () => {
                 <div class="flex items-center flex-shrink-0">
                   <img class="w-48 md:w-3/4" src={logo} alt="Workflow"/>
                 </div>
-                <div class="flex flex-row md:flex-col items-end justify-between ">
+                <div class="flex flex-row md:flex-col items-end md:items-start justify-between ">
                   <SideBarDashboardTypeCTA name="Supplier Name" location="Edmonton,AB" />
                   <SideBarProfileMobile />
                 </div>
