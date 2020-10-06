@@ -26,7 +26,7 @@ const Tabs = ({tabs,headingComp}) => {
             <TabHeadings headings={Headings} headingFunction={headingChangeActive} headingComp={headingComp}    />
             {tabs.map(tab => {
                 return(
-                    <div class={`${tab.key === activeTab ? 'opacity-100' : 'opacity-0' }`} >
+                    <div class={`${tab.key === activeTab ? 'opacity-100 visible' : 'opacity-0 hidden' }`} >
                         {tab.content}
                     </div>
                 )

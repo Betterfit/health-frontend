@@ -16,7 +16,7 @@ const SideBar = () => {
     const navItemsList = [
         {
             to:'/dashboard/orders',
-            name:'Orders'
+            name:'Tickets'
         },
         {
             to:'/dashboard/inventory',

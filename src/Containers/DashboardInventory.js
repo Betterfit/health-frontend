@@ -20,7 +20,7 @@ const DashboardInventory = ({changeTitle}) =>{
         // console.log(ProductData);
         const TabData = [ 
             {
-                heading:'All Products',
+                heading:'My Inventory',
                 content:ProductData.map(product => {
                     console.log(product);
                     return(
@@ -37,12 +37,12 @@ const DashboardInventory = ({changeTitle}) =>{
                         </div>
                     )
                 }),
-                key:'products'
+                key:'my-inventory'
             },
             {
-                heading:'My Inventory',
-                content: 'my inventory!!',
-                key:'my-inventory'
+                heading:'All Products',
+                content: 'All Products!!',
+                key:'all-products'
             }
         ]
         return(
