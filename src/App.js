@@ -20,7 +20,7 @@ function App() {
       <Router>
         <div className="App">
           <Switch>
-          <Route exact path="/" render={() => (
+            <Route exact path="/" render={() => (
               loginCookie ? (
                 <Redirect to="/dashboard/inventory"/>
               ) : (
@@ -31,6 +31,7 @@ function App() {
               <Login />
             </Route>
             <Route path="/dashboard/">
+              
               <Dashboard />
             </Route>
           </Switch>

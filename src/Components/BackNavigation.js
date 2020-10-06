@@ -11,5 +11,4 @@ const BackNavigation = ({link}) => {
         </a>
     )
 }
-
 export default BackNavigation;

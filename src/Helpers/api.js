@@ -6,7 +6,7 @@ export default class Api {
   constructor() {
     this.api_token = Cookies.get('token') ? Cookies.get('token') : null ;
     this.client = null;
-    this.api_url = 'http://betterfit.l1f7.com'  
+    this.api_url = 'http://betterfit.l1f7.com/'  
   }
 
   init = () => {
@@ -16,7 +16,7 @@ export default class Api {
     };
 
     if (this.api_token) {
-        console.log(this.api_token)
+        // console.log(this.api_token)
         headers.Authorization = `Token ${this.api_token}`;
     }
 
@@ -46,6 +46,10 @@ export default class Api {
   }
   getProductVariant = (id) => {
     return this.init().get(`product-variations/${id}`); 
+  }
+
+  getSearchResults = (query) => {
+    return this.init().get(`product-categories/?q=${query}`)
   }
 
   addNewUser = (data) => {

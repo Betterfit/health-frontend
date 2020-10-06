@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import Tabs from 'Components/Tabs/Tabs';
 import BoxLink from 'Components/BoxLink';
 import Search from 'Components/Search/Search';
+import Table from 'Components/Table/Table';
 import Api from "Helpers/api";
+import Spinner from "Images/spinner.gif";
 const api = new Api();
 
 
@@ -15,10 +17,10 @@ const DashboardInventory = ({changeTitle}) =>{
     })
     .catch((err) => console.log(err));
     if(ProductData){
-        console.log(ProductData);
+        // console.log(ProductData);
         const TabData = [ 
             {
-                heading:'All Products',
+                heading:'My Inventory',
                 content:ProductData.map(product => {
                     console.log(product);
                     return(
@@ -35,27 +37,28 @@ const DashboardInventory = ({changeTitle}) =>{
                         </div>
                     )
                 }),
-                key:'products'
+                key:'my-inventory'
             },
             {
-                heading:'My Inventory',
-                content: 'my inventory!!',
-                key:'my-inventory'
+                heading:'All Products',
+                content: 'All Products!!',
+                key:'all-products'
             }
         ]
         return(
             <div class="relative">
-                <Tabs tabs={TabData} />
-                <Search/>
+                <Tabs tabs={TabData} headingComp={<Search/>} />
             </div>
         )
     }else{
         getData();
         return(
-            <h1>loading data</h1>
+            <div class="relative w-full min-h-screen"> 
+                <img class="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
+            </div> 
         )
     }
-    
+        
 
 }
 

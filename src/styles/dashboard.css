@@ -1,0 +1,19 @@
+.switch-wrapper {
+    position: relative;
+    width:100%;
+  }
+  
+  .switch-wrapper > div {
+    position: absolute;
+    width:100%;
+}
+
+
+.spinner{
+    position: absolute;
+    top:30%;
+    left:0;
+    right:0;
+    transform: translateY(-50%);
+    margin: 0 auto;
+}
