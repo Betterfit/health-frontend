@@ -22,6 +22,7 @@ module.exports = {
         'betterfit-grey-blue': '#617193',
         'betterfit-highlight-blue': '#9EB9FF',
         'betterfit-navy': '#2A3863',
+        'betterfit-grey': '#C7D4E5',
         'betterfit-highlight-red':'#B74554',
         'status-grey': 'E1EBF6',
         'status-dark-grey': '#43537B',

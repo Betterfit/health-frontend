@@ -19,26 +19,17 @@ const PlusButton = () => (
   />
 );
 
-const Button = ({ text, svgName, onClick }) => {
-
-  const svgSwitch = (svgType) => {
-    switch(svgType) {
-      case 'plus':
-        return <PlusButton/>
-      default:
-        return null;
-    }
-  }
-
+const Button = ({ text, onClick, solid=true }) => {
+  let css_add_on = solid ? "text-white bg-betterfit-basic-blue hover:bg-betterfit-darker-blue" : 
+  "text-betterfit-betterfit-navy bg-transparent border border-betterfit-grey"
   return (
     <span className="block w-full shadow-sm flex items-baseline">
       <button
         onClick = {onClick}
         type="submit"
-        className="rounded w-full flex justify-center py-2 border border-transparent text-lg font-semibold text-white bg-basic-blue hover:bg-darker-blue focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out uppercase"
+        className={css_add_on + " rounded-md w-full flex justify-center py-3 border border-transparent text-lg font-semibold  focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out capitalize"}
       >
-        <span>{text}</span>
-        { svgSwitch(svgName) }
+        {text}
   
       </button>
     </span>
