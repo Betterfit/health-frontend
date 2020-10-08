@@ -17,7 +17,7 @@ function Checkbox({ id_tag, name, initialval = false }) {
 
   return (
     <>
-      <label class="flex justify-start items-start">
+      <label class="flex items-center px-4">
         <div
           class={
             "select-none uppercase text-xxs tracking-extra-wide pr-3 " +

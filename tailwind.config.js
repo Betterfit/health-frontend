@@ -23,6 +23,7 @@ module.exports = {
         'betterfit-highlight-blue': '#9EB9FF',
         'betterfit-navy': '#2A3863',
         'betterfit-grey': '#C7D4E5',
+        'betterfit-graphite': '#192552',
         'betterfit-highlight-red':'#B74554',
         'status-grey': 'E1EBF6',
         'status-dark-grey': '#43537B',
@@ -39,7 +40,11 @@ module.exports = {
         '7': '1.75rem',
       },
       fontSize: {
-        '2-5xl': '1.65rem',
+        'xxs':'0.60rem',
+        '3xl': '1.75rem',
+      },
+      letterSpacing: {
+        'extra-wide': '2px',
       },
       inset: {
         '-sm': '-30px',
