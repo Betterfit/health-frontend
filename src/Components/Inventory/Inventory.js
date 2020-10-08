@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Forms/Button";
 import Inventory_Description from "../Inventory/Inventory_Description";
+import Quantity_Input from "Components/Forms/Quantity_Input";
 
 //This will either return the attribute if it exists, or
 // return the passed in 'default_value' if not
@@ -18,66 +19,60 @@ const ProductImage = ({ product_image, product_name }) => {
     return null;
   }
   return (
-    <div className="md:w-5/12 relative pt-3">
-        <div className="border border-gray-400 bg-white md:absolute md:-top-sm">
-      <img   
+    <div className="product_image bg-white rounded-lg m-2 w-5/12 md:w-auto">
+      <img
         src={Read_Product(product_image.image, "")}
         alt={Read_Product(product_name + " Product Image", "Product Image")}
         loading="lazy"
         data-sizes="auto"
       ></img>
-      </div>
     </div>
   );
 };
 
-const Inventory = ({ product,edit }) => {
+const Inventory = ({ product, edit }) => {
+  const [available, readAvailble] = useState(
+    Read_Product(product.product_available, 0)
+  );
   return (
     <>
-      <div className="mb-4 bg-gray-100">
-        <h1 className="text-gray-700 text-xl font-semibold">
-          {Read_Product(product.product_name, "")}
-        </h1>
-        <div className="flex md:flex-row flex-col-reverse">
-          <div className="md:w-7/12 pr-12">
-            <Inventory_Description
-              title="Size"
-              description={Read_Product(product.product_size, "N/A")}
-              class_addons="pb-2"
-            ></Inventory_Description>
-            <Inventory_Description
-              title="Description"
-              class_addons="pb-2 pt-4"
-              description={Read_Product(product.product_description, "")}
-            ></Inventory_Description>
-            <div className="md:w-2/3 lg:w-1/2 md:grid md:grid-cols-2 py-8">
-              <h2 className="text-gray-700 text-2-5xl font-semibold col-span-2">
-                Quantity
-              </h2>
-              <div className="col-span-1">
-                <Inventory_Description
-                  title="Allotted"
-                  description={Read_Product(product.product_alloted, 0)}
-                  class_addons="pb-3"
-                ></Inventory_Description>
-              </div>
-              <div className="col-span-1">
-                <Inventory_Description
-                  title="Available"
-                  class_addons={edit ? 'pb-3' : ''}
-                  description={Read_Product(product.product_available, 0)}
-                  edit={edit ? true : false}
-                ></Inventory_Description>
-              </div>
-              <div className="col-span-2 py-8">
-                <Button text="Save Changes"></Button>
-              </div>
-            </div>
-          </div>
+      <div className="flex md:flex-row flex-col-reverse">
+        <div className="md:w-2/3 md:pr-12 py-4 mx-2">
+          <Inventory_Description
+            title="Size"
+            description={Read_Product(product.product_size, "N/A")}
+            class_addons="pb-2"
+          ></Inventory_Description>
+          <Inventory_Description
+            title="Description"
+            class_addons="pb-2 pt-4"
+            description={Read_Product(product.product_description, "")}
+          ></Inventory_Description>
+        </div>
+        <div className="flex flex-row md:flex-col md:w-1/3 bg-betterfit-soft-blue rounded justify-center">
           <ProductImage
             product_name={product.product_name}
             product_image={product.product_image}
           />
+          <div className="flex flex-col mx-1 pt-2">
+            <div className="py-2 flex justify-end mr-auto">
+              <Quantity_Input
+                name="Allotted"
+                value={Read_Product(product.product_alloted, 0)}
+                readOnly={true}
+              ></Quantity_Input>
+            </div>
+            <div className="py-2 flex justify-end mr-auto">
+              <Quantity_Input
+                name="Available"
+                value={available}
+                readValue={readAvailble}
+              ></Quantity_Input>
+            </div>
+            <div className="py-2 md:py-8 md:mx-2">
+              <Button text="Save Changes" text_size="text-base"></Button>
+            </div>
+          </div>
         </div>
       </div>
     </>

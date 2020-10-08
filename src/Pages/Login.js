@@ -35,7 +35,7 @@ const Login = () => {
     <img src={ UpperBackgroundBlob } role="presentation" class="absolute left-0 top-0 z-0"></img>
     <img src={ LowerBackgroundBlob } role="presentation" class="absolute right-0 bottom-0 z-0"></img>
       <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-lg z-50">
-        <div class="bg-white px-12 m-auto w-5/6 shadow rounded-lg">
+        <div class="bg-white px-12 m-2 sm:m-auto sm:w-5/6 shadow rounded-lg">
           <div class="sm:mx-auto sm:w-full sm:max-w-md pt-12 pb-10">
             <ReactSVG
               src={Logo}
@@ -58,7 +58,7 @@ const Login = () => {
               ></Input_Field>
             </div>
             <div class="mt-6">
-              <Button onClick={signIn} text="Login" solid={false}></Button>
+              <Button onClick={signIn} text="Login" solid={true}></Button>
             </div>
             <div class="mt-6 flex justify-center">
               <div class="text-base leading-5">
