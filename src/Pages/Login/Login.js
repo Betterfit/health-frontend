@@ -5,8 +5,8 @@ import LowerBackgroundBlob from "Images/Login/login_lower_right.svg"
 import UpperBackgroundBlob from "Images/Login/login_upper_left.svg"
 import Input_Field from "Components/Forms/Input_Field";
 import Api from "Helpers/api";
-import Cookies from "js-cookie";
-import Button from "../Components/Forms/Button";
+// import Cookies from "js-cookie";
+import Button from "Components/Forms/Button";
 import { useHistory } from "react-router-dom";
 const Login = () => {
   const history = useHistory();
@@ -25,7 +25,7 @@ const Login = () => {
     api
       .signIn({ username: "lift", password: "L1f7is0wly!" })
       .then((response) => {
-        Cookies.set("token", response.data.token);
+        localStorage.setItem('token',response.data);
         history.push("/dashboard/inventory");
       })
       .catch((err) => console.log(err));

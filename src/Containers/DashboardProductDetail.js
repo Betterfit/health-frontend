@@ -18,7 +18,7 @@ const DashboardProductDetail = (props) =>{
     const getData = async () => await api.getProductVariant(VariantId)
     .then((response) => {
         setVariantData(response.data);
-        props.changeTitle(`Product - ${response.data.name}`)
+        // props.changeTitle(`Product - ${response.data.name}`)
         if(OptionId){
             let OptionData = response.data.product_options.filter(item => item.pk === OptionId);
             setOptionData(OptionData)
@@ -51,7 +51,7 @@ const DashboardProductDetail = (props) =>{
 
 
     return(
-        <div>
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
             {VariantData && (
                 <>
                     <BackNavigation link={`Back`} />

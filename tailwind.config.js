@@ -12,6 +12,10 @@ module.exports = {
     },
     extend: {
       colors: {
+        'light-text': '#444444',
+        'blue' : "#1F45A8",
+        'dark-blue': "#192552",
+        'paragraph':"#617193" ,
         'light-text': '#444444', 
         'betterfit-light-blue': '#E1EBF6',
         'betterfit-soft-blue': '#F7FAFD',

@@ -13,13 +13,13 @@ const SideBarProfileMobile = ({userName}) => {
     }
     return(
         <>
-        <div class="p-0 block flex-shrink-0 flex border-gray-400 md:p-4 relative z-10">
-            <div class="flex flex-row items-center md:hidden">
+        <div className="p-0 block flex-shrink-0 flex border-gray-400 md:p-4 relative z-10">
+            <div className="flex flex-row items-center md:hidden">
                 <ReactSVG src={Profile} className="text-gray-600"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 30px;')}}  />
                 <ReactSVG onClick={ToggleProfileNavigation} src={DotMenu} className="text-gray-600"/>
             </div>
         </div>
-        <div class="w-4/5 absolute bottom-0 right-0 px-4 py-4">
+        <div className="w-4/5 absolute bottom-0 right-0 px-4 py-4">
             <Transition
                     show={ShowNav}
                     enter="transition-opacity duration-75"

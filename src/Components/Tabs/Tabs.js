@@ -23,10 +23,10 @@ const Tabs = ({tabs,headingComp}) => {
 
     return(
         <div>
-            <TabHeadings headings={Headings} headingFunction={headingChangeActive} headingComp={headingComp}    />
+            <TabHeadings headings={Headings} headingFunction={headingChangeActive} headingComp={headingComp}   />
             {tabs.map(tab => {
                 return(
-                    <div class={`${tab.key === activeTab ? 'opacity-100 visible' : 'opacity-0 hidden' }`} >
+                    <div className={`${tab.key === activeTab ? 'opacity-100 visible' : 'opacity-0 hidden' }`} >
                         {tab.content}
                     </div>
                 )

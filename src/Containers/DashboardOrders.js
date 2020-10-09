@@ -1,6 +1,14 @@
 import React from "react";
 import OrderHeader from '../Components/Order/OrderHeader'
 
+// const DashboardOrders = ({changeTitle}) =>{
+//     changeTitle('Orders');
+//     return(
+//         <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
+//           {/* <h1>Orders!!!!</h1>   */}
+//         </div>
+//     )
+// }
 const DashboardOrders = ({ changeTitle }) => {
     //TODO For testing and developing only
   const Info = {

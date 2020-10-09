@@ -16,7 +16,7 @@ import {
 const Dashboard = () => {
     // usestate to save user and pass
     return(
-        <div class="md:h-screen flex-col md:flex-row flex overflow-hidden bg-white min-h-screen" style={{backgroundColor:'#F7FAFC'}}>
+        <div className="md:h-screen flex-col md:flex-row flex overflow-hidden bg-white min-h-screen" style={{backgroundColor:'#F7FAFC'}}>
             <Router>
                 <SideBar />
                 <DashboardContainer />

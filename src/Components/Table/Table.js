@@ -42,15 +42,15 @@ const Table = ({TableData}) => {
       
     }
     return(
-        <div class="flex flex-col mt-10 mb-4">
-            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                        <div class="bg-gray-400 px-3 py-3 border-b border-gray-400">
-                            <h3 class="font-bold font-body text-gray-700 text-xl">{TableData.name}</h3>
+        <div className="flex flex-col mt-10 mb-4">
+            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                    <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                        <div className="bg-gray-400 px-3 py-3 border-b border-gray-400">
+                            <h3 className="font-bold font-body text-gray-700 text-xl">{TableData.name}</h3>
                         </div>
-                        <div class="p-4 bg-white">
-                           <table class="min-w-full divide-y divide-gray-200 p-4">
+                        <div className="p-4 bg-white">
+                           <table className="min-w-full divide-y divide-gray-200 p-4">
                             <TableHead TableHead={TableHeadData} />
                             <TableBody NoOptions={nooptions} TableBody={TableBodyData} removeAtIndex={removeAtIndex} variantID={TableData.pk} />                            
                             </table>  
