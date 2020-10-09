@@ -1,8 +1,4 @@
-import React, { useState, useEffect } from "react";
-import Button from "../Forms/Button";
-import Inventory_Description from "../Inventory/Inventory_Description";
-import Quantity_Input from "Components/Forms/Quantity_Input";
-import Checkbox from "Components/Forms/Checkbox";
+import React, { useState } from "react";
 import CircleButton from "Components/Forms/CircleButton";
 import FlatButton from "Components/Forms/FlatDetailButton";
 
@@ -35,14 +31,12 @@ const ProductImage = ({ product_image, product_name, hover }) => {
 };
 
 const ProductCard = ({ product }) => {
-  const [priority, setPriority] = useState(product.priority);
-  const [quantity, getQuantity] = useState(0);
   const [active, setActive] = useState(false);
   return (
     <>
       <div
         className={
-          "mb-2 rounded relative" +
+          "mb-2 rounded relative flex flex-col justify-content" +
           (active
             ? "bg-betterfit-pale-blue border border-betterfit-basic-blue"
             : "bg-betterfit-soft-blue")
@@ -58,12 +52,7 @@ const ProductCard = ({ product }) => {
           />
           <div className="flex-col pt-7">
             <h1
-              className={
-                "text-base font-semibold " +
-                (priority
-                  ? "text-betterfit-highlight-darkred"
-                  : "text-betterfit-graphite ")
-              }
+              className="text-base font-semibold "
             >
               {Read_Product(product.product_name, "")}
             </h1>
