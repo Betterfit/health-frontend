@@ -10,7 +10,7 @@ const InputButton = ({backgroundColor}) => {
         {error &&
             <div> {error} </div>
         }
-        <input class={bgc} type="submit" value="Submit" />
+        <input className={bgc} type="submit" value="Submit" />
         </>
     )
 }

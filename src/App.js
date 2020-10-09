@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import logo from './logo.svg';
 // components
 import Button from './Components/Button';
@@ -9,20 +9,20 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
-
+import {UserAuthContext} from 'Context/UserAuth'
 
 // ================ PAGES ================
 import Login from './Pages/Login';
 import Dashboard from './Pages/Dashboard';
-import Cookies from 'js-cookie'
 function App() {
-  const loginCookie = Cookies.get('token');
+  const token = localStorage.getItem('token');
+  const {userData,addUserData} = useContext(UserAuthContext);
   return (
       <Router>
         <div className="App">
           <Switch>
             <Route exact path="/" render={() => (
-              loginCookie ? (
+              token ? (
                 <Redirect to="/dashboard/inventory"/>
               ) : (
                 <Redirect to="/login/"/>

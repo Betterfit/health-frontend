@@ -9,12 +9,11 @@ import Search from 'Components/Search/Search';
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
-const DashboardSearch = ({changeTitle}) => {
+const DashboardSearch = () => {
     const api = new API;
     let query = useQuery();    
     
     const [searchQuery , setSearchQuery] = useState(query.get('search'));
-    changeTitle(`Search - ${query.get('search')} `)
     const [searchData , setSearchData] = useState();
     const getSearchResults = async () => await api.getSearchResults(query.get('search'))
     .then((response) => {
@@ -31,13 +30,12 @@ const DashboardSearch = ({changeTitle}) => {
     }
     
     return(
-        <div>
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
             {searchData && (
                 <>
-                    <BackNavigation link="Back to all products" />
-                    <div class="flex justify-between mt-8">
+                    <BackNavigation link="Back" />
+                    <div className="flex justify-between mt-8">
                         <TitleUnderLine extraclasses="title-no-margin pt-0" nounderline={true} title={`Search results for "${query.get('search')}"`} />
-                        <Search />
                     </div>
                     {searchData.length > 0 && (
                         searchData.map(productCat => {
@@ -45,7 +43,7 @@ const DashboardSearch = ({changeTitle}) => {
                                 productCat.products.map(product=> {
                                     return(
                                         <>
-                                        <h2 class="text-2xl text-gray-700 font-bold">{product.name}</h2>
+                                        <h2 className="text-2xl text-gray-700 font-bold">{product.name}</h2>
 
                                         {
                                             product.product_variations.length > 0 && (

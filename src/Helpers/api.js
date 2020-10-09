@@ -38,6 +38,10 @@ export default class Api {
     return this.init().post("api-token-auth/", data);
   }
 
+  getUserData = (data) => {
+    return this.init().post("api-token-auth/", data);
+  }
+
   getProductCategories = () => {
     return this.init().get("product-categories/"); 
   }

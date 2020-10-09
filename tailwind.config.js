@@ -25,7 +25,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        'light-text': '#444444', 
+        'light-text': '#444444',
+        'blue' : "#1F45A8",
+        'dark-blue': "#192552",
+        'paragraph':"#617193" 
       }
     }
   }

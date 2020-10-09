@@ -14,14 +14,30 @@ p{
 } */
 
 
-a.active{
-    border-bottom: 2px solid #4A5568;  
+a.nav.active{
+    border-bottom: 2px solid white;  
+    opacity: 1 !important;
 }
-a[aria-current="page"]{
-    border-bottom: 2px solid #4A5568; 
+a.nav[aria-current="page"]{
+    border-bottom: 2px solid white; 
+    opacity: 1;
 }
 
 /* override classes */
 .title-no-margin {
     margin-bottom: 10px;
 }
+
+
+.button-reset,.input-reset{
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important
+}
+
+.button-reset:focus,.input-reset:focus{
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important
+}
+
