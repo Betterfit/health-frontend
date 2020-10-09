@@ -12,7 +12,7 @@ import {
 import {UserAuthContext} from 'Context/UserAuth'
 
 // ================ PAGES ================
-import Login from './Pages/Login';
+import Login from './Pages/Login/Login';
 import Dashboard from './Pages/Dashboard';
 function App() {
   const token = localStorage.getItem('token');
@@ -28,11 +28,13 @@ function App() {
                 <Redirect to="/login/"/>
               )
             )}/>
-            <Route path="/login" initial exact>
+            <Route path="/login" initial >
               <Login />
             </Route>
-            <Route path="/dashboard/">
-              
+            <Route path="/login/forgotpassword" initial >
+              <Login />
+            </Route>
+            <Route path="/dashboard">
               <Dashboard />
             </Route>
           </Switch>
