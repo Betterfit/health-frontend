@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Input_Field from "Components/Forms/Input_Field";
 import Api from "Helpers/api";
+import Button from "Components/Forms/Button";
 
 // Success/fail message that will show to user once
 // they have submitted an email
@@ -30,7 +31,6 @@ const PasswordReset = () => {
       .catch((err) => {
         setSendEmail(email);
         setShowResults(false);
-        
       });
   };
 
@@ -66,15 +66,7 @@ const PasswordReset = () => {
           <PasswordResetConfirmation success={showResults} email={sentEmail} />
         ) : null}
         <div className="mt-6">
-          <span className="block w-full shadow-sm">
-            <button
-
-              type="submit"
-              className="w-full flex justify-center py-4 border border-transparent text-lg font-medium text-white bg-gray-700 hover:bg-gray-600 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out uppercase"
-            >
-              Reset Password
-            </button>
-          </span>
+          <Button text="Reset Password"> </Button>
         </div>
         <div className="mt-6 flex justify-center">
           <div className="text-base leading-5">
