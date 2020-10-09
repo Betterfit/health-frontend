@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import logo from './logo.svg';
 // components
-import Button from './Components/Button';
 import {
   BrowserRouter as Router,
   Switch,
