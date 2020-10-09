@@ -55,14 +55,14 @@ const Inventory = ({ product, edit }) => {
             product_image={product.product_image}
           />
           <div className="flex flex-col mx-1 pt-2">
-            <div className="py-2 flex justify-end mr-auto">
+            <div className="py-2 flex justify-end">
               <Quantity_Input
                 name="Allotted"
                 value={Read_Product(product.product_alloted, 0)}
                 readOnly={true}
               ></Quantity_Input>
             </div>
-            <div className="py-2 flex justify-end mr-auto">
+            <div className="py-2 flex justify-end">
               <Quantity_Input
                 name="Available"
                 value={available}

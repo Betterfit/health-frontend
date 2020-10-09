@@ -20,20 +20,19 @@ const ProductImage = ({ product_image, product_name }) => {
     return null;
   }
   return (
-    <div className="md:w-3/12 relative pt-3">
       <img
+        className="h-20 w-20 md:h-40 md:w-40 pt-3"
         src={Read_Product(product_image.image, "")}
         alt={Read_Product(product_name + " Product Image", "Product Image")}
         loading="lazy"
         data-sizes="auto"
       ></img>
-    </div>
   );
 };
 
 const OrderProductCard = ({ product }) => {
   const [priority, setPriority] = useState(product.priority);
-  const [quantity, getQuantity] = useState(product.product_quantity);
+  const [quantity, getQuantity] = useState(5);
   return (
     <>
       <div className={ "mb-2 bg-white rounded " + (priority ? "border border-betterfit-highlight-red" : "border-transparent") }>
@@ -52,7 +51,7 @@ const OrderProductCard = ({ product }) => {
           </div>
           </div>
           <div className = "flex flex-row items-center justify-end py-3">
-            <Quantity_Input id="quantity" name="Quantity" value={product.product_quantity} readValue={getQuantity} />
+            <Quantity_Input id="quantity" name="Quantity" value={quantity} readValue={getQuantity} />
             <Checkbox id="priority" name="Priority" value={priority} setValue = {setPriority} />
           </div>
       </div>

@@ -13,7 +13,7 @@ module.exports = {
     extend: {
       colors: {
         'light-text': '#444444', 
-        'betterfit-grey-blue': '#E1EBF6',
+        'betterfit-light-blue': '#E1EBF6',
         'betterfit-soft-blue': '#F7FAFD',
         'betterfit-pale-blue': '#EFF5FA',
         'betterfit-basic-blue': '#1F45A8',
