@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react'
-import BackNavigation from 'Components/BackNavigation'
-import TitleUnderLine from 'Components/TitleUnderLine'
+import BackNavigation from 'Components/Helpers/BackNavigation'
+import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import Table from 'Components/Table/Table';
 import Api from "Helpers/api";
 const api = new Api();
@@ -8,7 +8,7 @@ const api = new Api();
 const DashboardProductList = (props) => {
     const { match } = props
     const ProductId = parseInt(match.params.id);
-    const [lastProduct , setLastProduct] = useState(ProductId);
+    const [lastProductId , setLastProductId] = useState(ProductId);
     // TODO : restructure data when we have an api
     const [ProductData , setProductData] = useState(null);
     const getData = async () => await api.getProduct(ProductId)
@@ -21,9 +21,9 @@ const DashboardProductList = (props) => {
     }
     // console.log(JSON.stringify(ProductData))
     useEffect(() => {
-        if(lastProduct !== ProductId){
+        if(lastProductId !== ProductId){
             console.log('getting data');
-            setLastProduct(ProductId);
+            setLastProductId(ProductId);
             getData();
         }
     }); 

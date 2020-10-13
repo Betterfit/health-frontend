@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import BackNavigation from 'Components/BackNavigation'
-import TitleUnderLine from 'Components/TitleUnderLine'
+import BackNavigation from 'Components/Helpers/BackNavigation'
+import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import Inventory from 'Components/Inventory/Inventory'
 import image from "Images/example_product.png"; //remove this later
 import Api from "Helpers/api";

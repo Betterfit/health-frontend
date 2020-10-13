@@ -10,23 +10,34 @@ import {
 } from "react-router-dom";
 import {UserAuthContext} from 'Context/UserAuth'
 
+import { Provider } from 'mobx-react';
+import store from 'Store/store.js';
+
 // ================ PAGES ================
 import Login from './Pages/Login/Login';
-import Dashboard from './Pages/Dashboard';
+import DashboardSupplier from './Pages/Dashboards/DashboardSupplier';
+import DashboardFacility from './Pages/Dashboards/DashboardFacility';
+
 function App() {
   const token = localStorage.getItem('token');
   const {userData,addUserData} = useContext(UserAuthContext);
+
+  const type = "facility";
+  // const type = "supplier";
   return (
+    <Provider store={store}>
       <Router>
         <div className="App">
           <Switch>
-            <Route exact path="/" render={() => (
+
+            {/* <Route exact path="/" render={() => (
               token ? (
                 <Redirect to="/dashboard/inventory"/>
               ) : (
                 <Redirect to="/login/"/>
               )
-            )}/>
+            )}/> */}
+
             <Route path="/login" initial >
               <Login />
             </Route>
@@ -34,11 +45,18 @@ function App() {
               <Login />
             </Route>
             <Route path="/dashboard">
-              <Dashboard />
+              {type === "facility" && (
+                <DashboardFacility/>
+              )}
+              {type === "supplier" && (
+                <DashboardSupplier/>
+              )}
             </Route>
+
           </Switch>
         </div>
       </Router>
+    </Provider>
   );
 }
 

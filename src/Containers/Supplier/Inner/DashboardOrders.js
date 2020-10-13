@@ -1,6 +1,6 @@
 import React from "react";
-import OrderHeader from '../Components/Order/OrderHeader'
-
+import OrderHeader from 'Components/Order/OrderHeader'
+import BackNavigation from 'Components/Helpers/BackNavigation'
 // const DashboardOrders = ({changeTitle}) =>{
 //     changeTitle('Orders');
 //     return(
@@ -22,10 +22,11 @@ const DashboardOrders = ({ changeTitle }) => {
   };
   changeTitle("Orders");
   return (
-    <>
-      <h1>Orders!!!!</h1>
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-10">
       <OrderHeader facility={Info} />
-    </>
+    </div>
+      
+    
   );
 };
 

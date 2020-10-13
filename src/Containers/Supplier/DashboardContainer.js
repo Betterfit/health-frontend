@@ -6,11 +6,11 @@ import {
 } from "react-router-dom";
 import ReactCSSTransitionGroup from 'react-transition-group';
 import { AnimatedSwitch } from 'react-router-transition';
-import DashboardInventory from './DashboardInventory'
-import DashboardOrders from './DashboardOrders'
-// import DashboardProductList from './DashboardProductList'
-// import DashboardProductDetail from './DashboardProductDetail'
-// import DashboardSearch from './DashboardSearch';
+
+import DashboardInventory from './Inner/DashboardInventory'
+import DashboardOrders from './Inner/DashboardOrders'
+
+
 const DashboardContainer = () =>{
     const [title , setTitle] = useState('');
     const changeTitle = (title) => {
@@ -31,18 +31,6 @@ const DashboardContainer = () =>{
                     <Route path="/dashboard/inventory" >
                         <DashboardInventory changeTitle={(title) => changeTitle(title)} />
                     </Route>
-                    {/* <Route exact path='/dashboard/product/:id' render={(props) => {
-                    return ( <DashboardProductList changeTitle={(title) => changeTitle(title)} {...props } /> )
-                    }} />
-                    <Route path='/dashboard/product/:id/detail/:oid?' exact render={(props) => {
-                        return ( <DashboardProductDetail edit={true} changeTitle={(title) => changeTitle(title)} {...props } /> )
-                    }} />
-                    <Route path='/dashboard/product/:id/detail/:oid?/edit' exact render={(props) => {
-                        return ( <DashboardProductDetail edit={true} changeTitle={(title) => changeTitle(title)} {...props } /> )
-                    }} /> */}
-                    {/* <Route path='/dashboard/inventory/search:query?'>
-                        <DashboardSearch changeTitle={ (title) => changeTitle(title)} />
-                    </Route> */}
                 </AnimatedSwitch>
         
                 {/* <!-- /End replace --> */}

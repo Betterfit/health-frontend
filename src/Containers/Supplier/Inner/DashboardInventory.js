@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Tabs from 'Components/Tabs/Tabs';
-import BoxLink from 'Components/BoxLink';
+import BoxLink from 'Components/Content/BoxLink';
 import Search from 'Components/Search/Search';
 import Table from 'Components/Table/Table';
 import Api from "Helpers/api";
@@ -13,9 +13,9 @@ import {
 } from "react-router-dom";
 import { AnimatedSwitch } from 'react-router-transition';
 import DashboardSideBar from 'Components/DashboardSideBar/DashboardSideBar';
-import DashboardProductList from './DashboardProductList'
-import DashboardProductDetail from './DashboardProductDetail'
-import DashboardSearch from './DashboardSearch';
+import DashboardProductList from 'Containers/DashboardProductList'
+import DashboardProductDetail from 'Containers/DashboardProductDetail'
+import DashboardSearch from 'Containers/DashboardSearch';
 
 const api = new Api();
 const DashboardInventory = () =>{ 
@@ -28,7 +28,7 @@ const DashboardInventory = () =>{
         setProductData(response.data)
     })
     .catch((err) => console.log(err));
-
+    //  setSearchActive(1)  
     if(ProductData){
         // console.log(ProductData);
         const TabData = [ 

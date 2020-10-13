@@ -15,6 +15,7 @@ const Search = ({type}) => {
     history.push(`/dashboard/inventory`);
   }
   const [showInput , setShowInput] = useState(false);
+  
   if(type === "icon" ){
     return(
       <div className={`flex items-center h-full bg-gray-300 ${showInput ? 'absolute w-full z-10  border-b-2 border-gray-400 ' : 'relative'}`}> 

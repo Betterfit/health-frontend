@@ -2,8 +2,8 @@ import React , {useState, useEffect} from 'react';
 import ReactDOM from "react-dom";
 import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 import API from 'Helpers/api';
-import BackNavigation from 'Components/BackNavigation';
-import TitleUnderLine from 'Components/TitleUnderLine';
+import BackNavigation from 'Components/Helpers/BackNavigation';
+import TitleUnderLine from 'Components/Content/TitleUnderLine';
 import Table from 'Components/Table/Table';
 import Search from 'Components/Search/Search';
 function useQuery() {

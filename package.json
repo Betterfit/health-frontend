@@ -9,11 +9,13 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.20.0",
     "craco": "0.0.3",
+    "customize-cra": "^1.0.0",
     "dayjs": "^1.9.1",
     "js-cookie": "^2.2.1",
     "mobx": "^6.0.1",
     "mobx-react": "^7.0.0",
     "react": "^16.13.1",
+    "react-app-rewired": "^2.1.6",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-router-transition": "^2.0.0",
@@ -23,10 +25,10 @@
     "tailwind-react-ui": "^0.8.1"
   },
   "scripts": {
-    "start": "npm run build:style && react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "npm run build:style && react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject",
     "build:style": "tailwind build src/styles/index.css -o src/styles/tailwind.css --watch"
   },
   "eslintConfig": {

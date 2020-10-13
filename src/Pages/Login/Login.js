@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { ReactSVG } from "react-svg";
+// store context hook
+import useStores from 'Helpers/useStores';
+// end store context hook
 import Logo from "Images/logo.svg";
 import LowerBackgroundBlob from "Images/Login/login_lower_right.svg"
 import UpperBackgroundBlob from "Images/Login/login_upper_left.svg"
@@ -9,6 +12,7 @@ import Api from "Helpers/api";
 import Button from "Components/Forms/Button";
 import { useHistory } from "react-router-dom";
 const Login = () => {
+  const { store } = useStores();
   const history = useHistory();
   // usestate to save user and pass
   const [{ user, pass }, setAuthData] = useState({
@@ -25,18 +29,19 @@ const Login = () => {
     api
       .signIn({ username: "lift", password: "L1f7is0wly!" })
       .then((response) => {
+        console.log(response);
         localStorage.setItem('token',response.data);
         history.push("/dashboard/inventory");
       })
       .catch((err) => console.log(err));
   };
   return (
-    <div class="min-h-screen bg-betterfit-basic-blue flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-    <img src={ UpperBackgroundBlob } role="presentation" class="absolute left-0 top-0 z-0"></img>
-    <img src={ LowerBackgroundBlob } role="presentation" class="absolute right-0 bottom-0 z-0"></img>
-      <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-lg z-50">
-        <div class="bg-white px-12 m-2 sm:m-auto sm:w-5/6 shadow rounded-lg">
-          <div class="sm:mx-auto sm:w-full sm:max-w-md pt-12 pb-10">
+    <div className="min-h-screen bg-betterfit-basic-blue flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <img src={ UpperBackgroundBlob } role="presentation" className="absolute left-0 top-0 z-0"></img>
+    <img src={ LowerBackgroundBlob } role="presentation" className="absolute right-0 bottom-0 z-0"></img>
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-lg z-50">
+        <div className="bg-white px-12 m-2 sm:m-auto sm:w-5/6 shadow rounded-lg">
+          <div className="sm:mx-auto sm:w-full sm:max-w-md pt-12 pb-10">
             <ReactSVG
               src={Logo}
               className=" px-2 mx-auto"
@@ -45,27 +50,27 @@ const Login = () => {
               }}
             />
           </div>
-          <form class="pb-12" action="#" method="POST">
+          {store.authStore.userData}
+          <form className="pb-12" action="#" method="POST">
             <div>
               <Input_Field id_tag="email" name="User"></Input_Field>
             </div>
-
-            <div class="mt-3">
+            <div className="mt-3">
               <Input_Field
                 id_tag="password"
                 name="Password"
                 type="password"
               ></Input_Field>
             </div>
-            <div class="mt-6">
+            <div className="mt-6">
               <Button onClick={signIn} text="Login" solid={true}></Button>
             </div>
-            <div class="mt-6 flex justify-center">
-              <div class="text-base leading-5">
+            <div className="mt-6 flex justify-center">
+              <div className="text-base leading-5">
                 <a
                   href="#"
                   onClick={signIn}
-                  class="font-medium text-betterfit-basic-blue hover:text-betterfit-darker-blue focus:outline-none focus:underline transition ease-in-out duration-150"
+                  className="font-medium text-betterfit-basic-blue hover:text-betterfit-darker-blue focus:outline-none focus:underline transition ease-in-out duration-150"
                 >
                   Forgot password?
                 </a>

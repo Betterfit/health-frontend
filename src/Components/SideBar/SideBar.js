@@ -7,26 +7,11 @@ import logo from 'Images/Icons/logo-full.svg';
 
 
 
-const SideBar = () => {
+const SideBar = ({navItemsList}) => {
   const [active , setActive] = useState(false)
   const activateMenu = ()=>{
     setActive(!active);
   }
-
-    const navItemsList = [
-        {
-            to:'/dashboard/orders',
-            name:'Tickets'
-        },
-        {
-            to:'/dashboard/inventory',
-            name:'Inventory'
-        },
-        {
-          to:'/dashboard/Resources',
-          name:'Resources'
-      }
-    ]
     return(
         <div className="md:flex md:flex-shrink-0">
           <div className="flex flex-col sidebar md:p-4 md:pr-0">
