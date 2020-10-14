@@ -67,8 +67,9 @@ const DashboardCategoryProductList = () => {
 
             {/* product title */}
             {CategoryData && (
-                <div className="pt-8 md:pt-12">
-                    <CategoryTitle title={`${CategoryData.name}`} icon={CategoryData.icon} />
+                <>
+                <BackNavigation link={`Back to Product Categories`} />
+                <CategoryTitle title={`${CategoryData.name}`} icon={CategoryData.icon} />
                     <div className="grid md:grid-cols-3 gap-2 mb-6 md:mb-10">
                     {CategoryData.products.map(p =>{
                                     return(
@@ -77,7 +78,7 @@ const DashboardCategoryProductList = () => {
                                 })}
                     </div>
 
-               </div>
+               </>
             )}
         </div>
     )
