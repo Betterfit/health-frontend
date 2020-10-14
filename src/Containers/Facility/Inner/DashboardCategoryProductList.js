@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react'
 import BackNavigation from 'Components/Helpers/BackNavigation'
-import CategoryTitle from 'Components/CategoryTitle'
+import CategoryTitle from 'Components/Content/CategoryTitle'
 import Api from "Helpers/api";
 import ProductCard from "Components/Order/ProductCard"
 import image from "Images/example_product.png"; //remove this later
