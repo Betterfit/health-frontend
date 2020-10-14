@@ -6,6 +6,7 @@ import Table from 'Components/Table/Table';
 import Api from "Helpers/api";
 import OrderHeader from "Components/Order/NewOrderHeader"
 import Spinner from "Images/spinner.gif";
+import OrderCart from "Components/Order/OrderCart"
 
 import {
     Switch,
@@ -32,8 +33,9 @@ const DashboardNewOrder = () =>{
      
     return(
         <div className="flex flex-col md:flex-row">
-            <DashboardSideBar>
+            <DashboardSideBar addonStyles=" flex flex-col">
                     <OrderHeader/>
+                    <OrderCart/>
             </DashboardSideBar>
             <div className="w-3/5 mx-auto h-screen overflow-y-scroll">
                 {/* <Route exact path='/dashboard/inventory/product/:id' exact render={(props) => {
