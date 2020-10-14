@@ -10,6 +10,15 @@ module.exports = {
     fontFamily: {
       'body': ['Open Sans'],
     },
+    maxWidth: {
+      '1/4': '25%',
+      '1/2': '50%',
+      '3/4': '75%',
+    },
+    inset: {
+      '1/4': '25%',
+      '1/2': '50%'
+    },
     extend: {
       colors: {
         'light-text': '#444444',
