@@ -4,6 +4,7 @@ import BoxLink from 'Components/Content/BoxLink';
 import Search from 'Components/Search/Search';
 import Table from 'Components/Table/Table';
 import Api from "Helpers/api";
+import OrderHeader from "Components/Order/NewOrderHeader"
 import Spinner from "Images/spinner.gif";
 
 import {
@@ -32,7 +33,7 @@ const DashboardNewOrder = () =>{
     return(
         <div className="flex flex-col md:flex-row">
             <DashboardSideBar>
-                <h2 className="text-3xl text-dark-blue my-3">{title}</h2>
+                    <OrderHeader/>
             </DashboardSideBar>
             <div className="w-3/5 mx-auto h-screen overflow-y-scroll">
                 {/* <Route exact path='/dashboard/inventory/product/:id' exact render={(props) => {
