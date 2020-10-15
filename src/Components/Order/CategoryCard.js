@@ -6,8 +6,18 @@ import { ReactSVG } from "react-svg";
 import RightArrow from "Images/Icons/right-arrow.svg";
 
 const CategoryCard = (category) => {
-  //TODO - hook up with api once created and remove if condition
-  //TODO - pull out svg into circle below
+  const getProductCount = (products) => {
+    let sum = 0;
+    products.forEach((val) => {
+      sum += val.product_variations.length;
+    });
+    return sum;
+  };
+
+  const category_name = category.category.name;
+  const count = getProductCount(category.category.products);
+
+  //TODO - pull out svg into circle below once included in api
   //    const backgroundColor = {
   //     background: category.icon.backgroundcolor;
   //  }
@@ -18,8 +28,6 @@ const CategoryCard = (category) => {
   const backgroundColor = {
     background: "#FBEDDE",
   };
-  const category_name = "Reusable Respirators";
-  const count = 2;
 
   return (
     <>

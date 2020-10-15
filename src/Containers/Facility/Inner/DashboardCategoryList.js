@@ -12,7 +12,7 @@ const DashboardCategoryList = () => {
 
   const getData = async () =>
     await api
-      .getCategories()
+      .getProductCategories()
       .then((response) => {
         setCategory(response.data);
         setIsError(false);
@@ -28,9 +28,9 @@ const DashboardCategoryList = () => {
     //if(lastCategory !== CategoryId){
     console.log("getting data");
     //    setLastProduct(CategoryId);
-    //    getData();
+    getData();
     // }
-  });
+  }, []);
 
   let CategoryData = {
     name: "IV Solutions",
@@ -77,6 +77,7 @@ const DashboardCategoryList = () => {
       },
     ],
   };
+  console.log("he", categories);
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
       {isError && <div>Something went wrong ...</div>}
@@ -88,7 +89,7 @@ const DashboardCategoryList = () => {
           <TitleUnderLine title="Products" extraclasses=" hidden md:block" />
           <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-2 mb-6 md:mb-10">
             {categories.map((p) => {
-              return <CategoryCard key={`${p.name}`} />;
+              return <CategoryCard key={`${p.name}`} category={p} />;
             })}
           </div>
         </>
