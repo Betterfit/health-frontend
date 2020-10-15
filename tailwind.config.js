@@ -19,6 +19,7 @@ module.exports = {
       '1/4': '25%',
       '1/2': '50%'
     },
+
     extend: {
       colors: {
         'light-text': '#444444',
@@ -49,6 +50,9 @@ module.exports = {
         'status-dark-yellow': '#8D7825',
         'status-blue': '#BECBFF',
         'status-dark-blue': '#1D2A93',
+      },
+      spacing: {
+        '18': '4.5rem',
       },
       padding: {
         '7': '1.75rem',

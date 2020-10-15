@@ -51,7 +51,7 @@ const DashboardProductDetail = (props) =>{
 
 
     return(
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
             {VariantData && (
                 <>
                     <BackNavigation link={`Back`} />
