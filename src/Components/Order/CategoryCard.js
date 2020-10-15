@@ -9,7 +9,8 @@ const CategoryCard = (category) => {
   const getProductCount = (products) => {
     let sum = 0;
     products.forEach((val) => {
-      sum += val.product_variations.length;
+        //if there are no product_variations, then 1 for the product
+      sum += (val.product_variations.length>0 ? val.product_variations.length : 1);
     });
     return sum;
   };
