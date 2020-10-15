@@ -2,11 +2,11 @@ import React from 'react'
 
 const CategoryTitle = ({title, icon}) => {
     const backgroundColor = {
-        background: icon['background-color']
+        background: "#FBEDDE",
     }
     //TODO - add in svg when passed through
-    const color = icon['color']
-    const svg = icon['svg']
+   // const color = icon['color']
+    //const svg = icon['svg']
    
     return(
         <div className="flex flex-row pb-4 pt-2 ">

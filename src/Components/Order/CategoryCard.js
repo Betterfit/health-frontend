@@ -4,8 +4,11 @@ import FlatButton from "Components/Forms/FlatDetailButton";
 import EmptyImage from "Images/emptyImage.png";
 import { ReactSVG } from "react-svg";
 import RightArrow from "Images/Icons/right-arrow.svg";
+import { useHistory } from "react-router-dom";
+
 
 const CategoryCard = (category) => {
+    const history = useHistory();
   const getProductCount = (products) => {
     let sum = 0;
     products.forEach((val) => {
@@ -14,7 +17,7 @@ const CategoryCard = (category) => {
     });
     return sum;
   };
-
+  const category_id = category.category.pk;
   const category_name = category.category.name;
   const count = getProductCount(category.category.products);
 
@@ -29,10 +32,11 @@ const CategoryCard = (category) => {
   const backgroundColor = {
     background: "#FBEDDE",
   };
-
   return (
     <>
-      <div className="mb-2 p-6 rounded relative flex flex-row md:flex-col justify-content items-center rounded-lg border border-betterfit-light-blue">
+      <div 
+      className="mb-2 p-6 rounded relative flex flex-row md:flex-col justify-content items-center rounded-lg border border-betterfit-light-blue hover:bg-betterfit-pale-blue hover:border-betterfit-basic-blue"
+      onClick={() => history.push(history.location.pathname + category_name+'/'+category_id)} >
         <div
           className="rounded-full h-18 w-18 flex items-center mr-2 "
           style={backgroundColor}

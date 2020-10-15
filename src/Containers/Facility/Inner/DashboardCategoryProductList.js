@@ -6,62 +6,33 @@ import ProductCard from "Components/Order/ProductCard"
 import image from "Images/example_product.png"; //remove this later
 const api = new Api();
 
-const DashboardCategoryProductList = () => {
-    //const { match } = props
-    //const CategoryId = parseInt(match.params.id);
-    const CategoryId = 234;
-    const [lastCategory , setLastCategory] = useState(CategoryId);
-    // TODO : restructure data when we have an api
-    let [CategoryData , setCategoryData] = useState(null);
-    const getData = async () => await api.getCategory(CategoryId)
-    .then((response) => {
-        setCategoryData(response.data)
-    })
-    .catch((err) => console.log(err));
-    if(!CategoryId){
-        getData();
-    }
+const DashboardCategoryProductList = (props) => {
+    const { match } = props
+    const CategoryID = parseInt(match.params.id);
+    const [isLoading, setIsLoading] = useState(true);
+    const [CategoryData , setCategoryData] = useState(null);
+    const [isError, setIsError] = useState(false);
 
-    // console.log(JSON.stringify(ProductData))
-    useEffect(() => {
-        //if(lastCategory !== CategoryId){
-            console.log('getting data');
-        //    setLastProduct(CategoryId);
-        //    getData();
-       // }
-    }); 
 
-    CategoryData = {
-        "name": "IV Solutions",
-        "icon": {
-            "color": "#4D2CAE",
-            "background-color": "#EDEBFC",
-            "svg": "",
-        },
-        "products": [ 
-            {
-            "name": "testproduct1",
-            "size": "5ml",
-            "image": {image},
-            "Description": "Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-            },
-            {
-            "name": "testproduct2",
-            "size": "200ml",
-            "image": "",
-            "Description": "Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-            },
-            {
-            "name": "testproduct3",
-            "size": "1L",
-            "image": "",
-            "Description": "Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-            },
-        ]
+    const getData = async () =>
+    await api
+      .getCategory(CategoryID)
+      .then((response) => {
+        setCategoryData(response.data);
+        setIsError(false);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsError(true);
+      });
 
-    }
-    console.log(CategoryData.products)
-    console.log(Image)
+  useEffect(() => {
+    console.log("getting data");
+    getData();
+  }, []);
+
+
     return(
         <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
 
@@ -73,7 +44,7 @@ const DashboardCategoryProductList = () => {
                     <div className="grid md:grid-cols-3 gap-2 mb-6 md:mb-10">
                     {CategoryData.products.map(p =>{
                                     return(
-                                    <ProductCard key={`${p.name}`} product={p} category={CategoryData.name}/>
+                                    <ProductCard key={`${p.name}`} product={p} category={CategoryData.name} extra ={CategoryData} />
                                     )
                                 })}
                     </div>

@@ -5,7 +5,7 @@ import image from "Images/example_product.png"; //remove this later
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 const api = new Api();
 
-const DashboardCategoryList = () => {
+const DashboardCategoryList = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategory] = useState({ hits: [] });
   const [isError, setIsError] = useState(false);
@@ -23,61 +23,13 @@ const DashboardCategoryList = () => {
         setIsError(true);
       });
 
-  // console.log(JSON.stringify(ProductData))
   useEffect(() => {
-    //if(lastCategory !== CategoryId){
     console.log("getting data");
-    //    setLastProduct(CategoryId);
     getData();
-    // }
   }, []);
 
-  let CategoryData = {
-    name: "IV Solutions",
-    icon: {
-      color: "#4D2CAE",
-      "background-color": "#EDEBFC",
-      svg: "",
-    },
-    products: [
-      {
-        name: "testproduct1",
-        size: "5ml",
-        image: { image },
-        Description:
-          "Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-      },
-      {
-        name: "testproduct2",
-        size: "200ml",
-        image: "",
-        Description:
-          "Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-      },
-      {
-        name: "testproduct3",
-        size: "1L",
-        image: "",
-        Description:
-          "Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-      },
-      {
-        name: "testproduct2",
-        size: "200ml",
-        image: "",
-        Description:
-          "Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-      },
-      {
-        name: "testproduct3",
-        size: "1L",
-        image: "",
-        Description:
-          "Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-      },
-    ],
-  };
-  console.log("he", categories);
+
+
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
       {isError && <div>Something went wrong ...</div>}

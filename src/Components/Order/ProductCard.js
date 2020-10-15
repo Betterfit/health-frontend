@@ -26,10 +26,11 @@ const ProductImage = ({ product_image, product_name, hover }) => {
   );
 };
 
-const ProductCard = ({ product, category }) => {
+const ProductCard = ({ product, category, extra }) => {
   const [active, setActive] = useState(false);
+  console.log("Iner", extra)
   const name = product.name;
-  const image = product.image;
+  const image = (product.image ? product.image : "");
   const size = product.size;
   return (
     <>

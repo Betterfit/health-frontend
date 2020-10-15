@@ -40,10 +40,13 @@ const DashboardNewOrder = () =>{
                     <OrderCart/>
             </DashboardSideBar>
             <div className="w-full md:w-3/5 mx-auto h-screen md:overflow-y-scroll">
-                <DashboardCategoryList/>
-                {/* <Route exact path='/dashboard/new-order/category/:id' exact render={(props) => {
-                    return ( <DashboardProductList {...props } /> )
+                <Route exact path='/dashboard/new-order/category/' exact render={(props) => {
+                    return ( <DashboardCategoryList {...props } /> )
                 }} />
+                <Route path='/dashboard/new-order/category/:categoryName/:id?' exact render={(props) => {
+                    return ( <DashboardCategoryProductList edit={true} {...props } /> )
+                }} />
+                 {/*
                 <Route path='/dashboard/new-order/category/product/:id/detail/:oid?' exact render={(props) => {
                     return ( <DashboardProductDetail edit={true} {...props } /> )
                 }} />

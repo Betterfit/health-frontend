@@ -45,6 +45,12 @@ export default class Api {
   getProductCategories = () => {
     return this.init().get("product-categories/"); 
   }
+
+  //get products under a particular category id
+  getCategory = (id) => {
+    return this.init().get(`product-categories/${id}`); 
+  }
+  
   getProduct = (id) => {
     return this.init().get(`products/${id}`); 
   }
@@ -65,5 +71,8 @@ export default class Api {
     //stub until relevent api can be included
     return this.init().post("api/password_reset/", data)
   }
+
+    //To request a password reset email
+
 
 }
