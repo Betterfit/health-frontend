@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState,useEffect} from 'react';
 import logo from './logo.svg';
 // components
 import {
@@ -16,18 +16,11 @@ import store from 'Store/store.js';
 // ================ PAGES ================
 import Login from './Pages/Login/Login';
 import LogOut from './Pages/Logout';
-import DashboardSupplier from './Pages/Dashboards/DashboardSupplier';
-import DashboardFacility from './Pages/Dashboards/DashboardFacility';
+import Dashboard from './Pages/Dashboard';
 
-function App() {
+function App({userType}) {
   const token = localStorage.getItem('token');
   const {userData,addUserData} = useContext(UserAuthContext);
-  // const type = "facility";
-  let type = localStorage.getItem('user');
-  if(type){
-    type = JSON.parse(type);
-  }
-  console.log(type.user_profile.user_type);
   return (
     <Provider store={store}>
       <Router>
@@ -52,12 +45,7 @@ function App() {
               <Login />
             </Route>
             <Route path="/dashboard">
-              {type.user_profile.user_type === "facility_admin" && (
-                <DashboardFacility/>
-              )}
-              {type.user_profile.user_type === "supplier_admin" && (
-                <DashboardSupplier/>
-              )}
+              <Dashboard/>
             </Route>
 
           </Switch>
