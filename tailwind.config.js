@@ -42,6 +42,8 @@ module.exports = {
         'status-dark-yellow': '#8D7825',
         'status-blue': '#BECBFF',
         'status-dark-blue': '#1D2A93',
+        'table-row':'#F7FAFD'
+
       },
       padding: {
         '7': '1.75rem',

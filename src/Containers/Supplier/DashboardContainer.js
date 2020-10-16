@@ -2,14 +2,14 @@ import React , {useState} from 'react';
 import {
     Switch,
     Route,
-    useParams
+    useParams,
+    Redirect
 } from "react-router-dom";
 import ReactCSSTransitionGroup from 'react-transition-group';
 import { AnimatedSwitch } from 'react-router-transition';
-
 import DashboardInventory from './Inner/DashboardInventory'
-import DashboardOrders from './Inner/DashboardOrders'
-
+import DashboardTickets from './Inner/DashboardTickets'
+import DashboardTicketDetail from './Inner/DashboardTicketDetail';
 
 const DashboardContainer = () =>{
     const [title , setTitle] = useState('');
@@ -25,11 +25,19 @@ const DashboardContainer = () =>{
                     atActive={{ opacity: 1 }}
                     className="switch-wrapper"
                 >
-                    <Route path="/dashboard/orders" exact>
-                        <DashboardOrders changeTitle={(title) => changeTitle(title)} />
+                    <Route exact path="/dashboard" render={() => (
+                        <Redirect to="/dashboard/inventory"/>
+                    )}/>
+                    <Route path="/dashboard/tickets" exact>
+                        <DashboardTickets />
                     </Route>
+
+                    <Route path="/dashboard/tickets/:id" exact>
+                        <DashboardTicketDetail/>
+                    </Route>
+
                     <Route path="/dashboard/inventory" >
-                        <DashboardInventory changeTitle={(title) => changeTitle(title)} />
+                        <DashboardInventory initial changeTitle={(title) => changeTitle(title)} />
                     </Route>
                 </AnimatedSwitch>
         

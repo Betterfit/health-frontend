@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Tabs from 'Components/Tabs/Tabs';
 import BoxLink from 'Components/Content/BoxLink';
 import Search from 'Components/Search/Search';
-import Table from 'Components/Table/Table';
+import Table from 'Components/Table/Basic/Table';
 import Api from "Helpers/api";
 import OrderHeader from "Components/Order/NewOrderHeader"
 import Spinner from "Images/spinner.gif";

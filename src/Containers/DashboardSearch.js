@@ -4,7 +4,7 @@ import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 import API from 'Helpers/api';
 import BackNavigation from 'Components/Helpers/BackNavigation';
 import TitleUnderLine from 'Components/Content/TitleUnderLine';
-import Table from 'Components/Table/Table';
+import Table from 'Components/Table/Basic/Table';
 import Search from 'Components/Search/Search';
 function useQuery() {
     return new URLSearchParams(useLocation().search);

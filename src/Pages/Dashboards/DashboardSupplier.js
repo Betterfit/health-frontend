@@ -19,7 +19,7 @@ const DashboardSupplier = () => {
 
     const navItemsList = [
         {
-            to:'/dashboard/orders',
+            to:'/dashboard/tickets',
             name:'Tickets'
         },
         {

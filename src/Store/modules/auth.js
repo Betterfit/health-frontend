@@ -4,5 +4,5 @@ export default class authStore {
     constructor() {
     }
     
-  @observable userData = "Tyler";
+  @observable userData = localStorage.getItem("user") ? localStorage.getItem("user")  : null ;
 }

@@ -41,3 +41,10 @@ a.nav[aria-current="page"]{
     outline: none !important
 }
 
+
+.table-row{
+    &:hover{
+        outline:auto;
+        outline-color:#9EB9FF;
+    }
+}
