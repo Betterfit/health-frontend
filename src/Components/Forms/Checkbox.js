@@ -5,7 +5,7 @@ function Checkbox({ id_tag, name, value = false, setValue }) {
 
   return (
     <>
-      <label class="flex items-center px-4">
+      <label class="flex items-center">
         <div
           class={
             "select-none uppercase text-xxs tracking-extra-wide pr-3 " +
@@ -16,7 +16,7 @@ function Checkbox({ id_tag, name, value = false, setValue }) {
         </div>
         <div
           class={
-            "bg-white border rounded w-6 h-6 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500 " +
+            "bg-white border rounded w-6 h-6 flex flex-shrink-0 justify-center items-center focus-within:border-blue-500 " +
             (value ? "border-betterfit-highlight-red" : "border-gray-400")
           }
         >

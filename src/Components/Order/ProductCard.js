@@ -73,7 +73,7 @@ const ProductCard = ({ product, product_details, category, extra }) => {
           <FlatButton
             text="View Details"
             onClick={() =>
-              history.push(history.location.pathname + "/" + product_details.pk)
+              history.push(history.location.pathname + "/product/" + product.pk + "/" + product_details.pk)
             }
             extras="hidden md:inline-block"
           />
