@@ -17,7 +17,6 @@ const DashboardTickets = () => {
   //   order_date: "Sept 01, 2020",
   //   is_draft: true,
   // };
-
   const [searchActive , setSearchActive] = useState(false);
 
   const tableData = [

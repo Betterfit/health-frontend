@@ -34,7 +34,7 @@ module.exports = {
         'betterfit-highlight-darkred':'#7A1A37',
         'status-grey': 'E1EBF6',
         'status-dark-grey': '#43537B',
-        'status-red': '#FFDDCF',
+        'status-red': '#F9E9E8',
         'status-dark-red': '#932B42',
         'status-green': '#B3F2A7',
         'status-dark-green':'#217C3A',

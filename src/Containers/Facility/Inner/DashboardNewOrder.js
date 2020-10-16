@@ -35,7 +35,7 @@ const DashboardNewOrder = () =>{
     return(
         <div className="flex flex-col md:flex-row">
             <DashboardSideBar addonStyles=" flex flex-col">
-                    <OrderHeader/>
+                    <OrderHeader />
                     <OrderCart/>
             </DashboardSideBar>
             <div className="w-3/5 mx-auto h-screen overflow-y-scroll">

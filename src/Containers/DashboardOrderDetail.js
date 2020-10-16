@@ -10,10 +10,11 @@ const dummmydata = {
   is_draft: true,
 };
 
-const DashboadOrderDetail = ({actionComponent}) => {
+const DashboadOrderDetail = ({children,actionComponent}) => {
     return(
         <div className="w-full py-4 pt-6 px-4 sm:px-6 md:px-8">
             <OrderDetailHeader order={dummmydata} actionComponent={actionComponent} />
+            {children}
         </div>
     )
 }

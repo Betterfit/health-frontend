@@ -48,3 +48,10 @@ a.nav[aria-current="page"]{
         outline-color:#9EB9FF;
     }
 }
+
+
+.pill {
+    border-radius: 35px !important;
+    padding: .3rem 1.5rem !important;
+    min-width: auto !important;
+}

@@ -6,20 +6,18 @@ import Edit from "Images/Icons/edit.svg";
 //So if svgName = 'plus' will call the Plus component
 
 
-const Button = ({ text, onClick, solid = true, text_size = "text-lg",color, extraClasses }) => {
+const Button = ({ text, onClick, solid = true, text_size = "text-lg",color, extraClasses, pill}) => {
   let css_add_on = solid
-    ? `text-white bg-${color} hover:bg-betterfit-darker-blue px-4`
+    ? `text-white bg-${color} px-4`
     : "text-betterfit-betterfit-navy bg-transparent border border-betterfit-grey";
   return (
-
       <button
         onClick={ onClick }
         type="submit"
         className={
           ` ${css_add_on}
            rounded-md flex no-wrap justify-center py-3 border border-transparent font-semibold px-4
-           focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 
-           transition duration-150 ease-in-out capitalize uppercase ${text_size} ${extraClasses}`
+           transition duration-150 ease-in-out capitalize uppercase ${text_size} ${extraClasses} ${pill ? "pill" : ""}`
         }
         style={{minWidth:100}}
       >
@@ -28,5 +26,7 @@ const Button = ({ text, onClick, solid = true, text_size = "text-lg",color, extr
     
   );
 };
+
+// focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 hover:bg-betterfit-darker-blue
 
 export default Button;
