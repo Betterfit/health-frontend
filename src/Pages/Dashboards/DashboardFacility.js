@@ -17,7 +17,7 @@ const DashboardFacility = () => {
     // usestate to save user and pass
     const navItemsList = [
         {
-            to:'/dashboard/new-order',
+            to:'/dashboard/new-order/category/',
             name:'New Order'
         },
         {

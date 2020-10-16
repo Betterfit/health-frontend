@@ -7,7 +7,7 @@ const CircleButton = ({ hover }) => {
     <button
       className={
         (hover ? "bg-betterfit-basic-blue" : "bg-betterfit-light-blue") +
-        " p-0 w-10 h-10 rounded-full active:shadow-lg mouse shadow transition ease-in focus:outline-none"
+        " p-0 w-10 h-10 rounded-full active:shadow-lg mouse shadow transition ease-in focus:outline-none "
       }
     >
       <svg

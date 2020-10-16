@@ -26,7 +26,7 @@ const DashboardContainer = () =>{
                     atActive={{ opacity: 1 }}
                     className="switch-wrapper"
                 >
-                <Route path="/dashboard/new-order">
+                <Route path="/dashboard/new-order/category">
                     <DashboardNewOrder/>
                 </Route>
                 </AnimatedSwitch>
