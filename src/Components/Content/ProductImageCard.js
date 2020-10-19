@@ -27,7 +27,6 @@ const ProductImage = ({ product_image, product_name }) => {
 };
 
 const ProductImageCard = ({image, name, children}) => {
-    console.log(children)
   return (
     <>
       <div className="mb-2 rounded relative flex lg:flex-col justify-content bg-betterfit-soft-blue self-start">

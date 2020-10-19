@@ -5,6 +5,9 @@ import DashboardContainer from 'Containers/Facility/DashboardContainer';
 import {
     BrowserRouter as Router,
 } from "react-router-dom";
+import Order from "Images/Icons/order.svg";
+import Resources from "Images/Icons/resources.svg";
+import NewOrder from "Images/Icons/new-order.svg";
 
 // const [isOpen, setIsOpen] = useState(false)
 
@@ -18,15 +21,18 @@ const DashboardFacility = () => {
     const navItemsList = [
         {
             to:'/dashboard/new-order/category/',
-            name:'New Order'
+            name:'New Order',
+            icon: NewOrder,
         },
         {
             to:'/dashboard/orders',
-            name:'Orders'
+            name:'Orders',
+            icon:Order,
         },
         {
           to:'/dashboard/resources',
-          name:'Resources'
+          name:'Resources',
+          icon: Resources,
       }
     ]
     return(
