@@ -20,17 +20,10 @@ const CategoryCard = (category) => {
   const category_id = category.category.pk;
   const category_name = category.category.name;
   const count = getProductCount(category.category.products);
-
-  //TODO - pull out svg into circle below once included in api
-  //    const backgroundColor = {
-  //     background: category.icon.backgroundcolor;
-  //  }
-  //const color = category.icon.color
-  //const svg = category.icon.svg;
-  //const category_name = category.name;
-  //const count = category.count;
+  const color = (category?.category?.main_color!="" ? category.category.main_color : "#234499")
+  const svg = category.category.icon
   const backgroundColor = {
-    background: "#FBEDDE",
+    background: (category?.category?.background_color!="" ? category.category.background_color : '#E4EFFC'),
   };
   return (
     <>
@@ -40,7 +33,13 @@ const CategoryCard = (category) => {
         <div
           className="rounded-full h-18 w-18 flex items-center mr-2 "
           style={backgroundColor}
-        ></div>
+        >
+   <svg>
+      <use href={svg}>
+
+      </use>
+    </svg>
+        </div>
         <div className="flex flex-col">
           <p className="font-semibold text-betterfit-graphite md:text-center text-base leading-tight md:pt-4">
             {category_name}

@@ -46,10 +46,10 @@ const DashboardNewOrder = () =>{
                 <Route path='/dashboard/new-order/category/:categoryName/:id?' exact render={(props) => {
                     return ( <DashboardCategoryProductList edit={true} {...props } /> )
                 }} />
-                 {/*
-                <Route path='/dashboard/new-order/category/product/:id/detail/:oid?' exact render={(props) => {
+                 {
+                <Route path='/dashboard/new-order/category/:categoryName/:cid/product/:pid/:id?' exact render={(props) => {
                     return ( <DashboardProductDetail edit={true} {...props } /> )
-                }} />
+                }} />/*
                 <Route path='/dashboard/inventory/search:query?'>
                     <DashboardSearch />
                 </Route> */}

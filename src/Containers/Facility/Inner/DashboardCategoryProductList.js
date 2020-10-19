@@ -43,6 +43,8 @@ const DashboardCategoryProductList = (props) => {
           <CategoryTitle
             title={`${CategoryData.name}`}
             icon={CategoryData.icon}
+            background_color={CategoryData.background_color}
+            color={CategoryData.color}
           />
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2 mb-6 md:mb-10">
             {CategoryData.products.map((p) =>
