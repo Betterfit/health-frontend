@@ -4,19 +4,23 @@ import Button from "Components/Content/Button";
 import DashboadOrderDetail from 'Containers/DashboardOrderDetail';
 import Table from "Components/Table/Detail/Table";
 import Api from "Helpers/api";
+import useStores from 'Helpers/useStores';
 import image from "Images/example_product.png"; //remove this later
 import { set } from 'js-cookie';
 
 const api = new Api();
 
 const DashboardTicketDetail = (props) => {
+    const { store } = useStores();
     const { match } = props;
     const TicketId = parseInt(match.params.id);
     // ======================== Ticket Data ========================
     const [ticketData , setTicketData ] = useState(null);
     const [ticketDataRaw , setTicketRaw ] = useState(null);
     const [ticketHeader , setTicketHeader] = useState(); 
-    const getData = async () => await api.getSupplierTicketOrder(TicketId)
+    const userData = JSON.parse(store.authStore.userData);
+    const supplierId = userData.user_profile.supplier;
+    const getData = async () => await api.getSupplierTicketOrder(supplierId,TicketId)
     .then((response) => {
         // need ticket facility and info
         setTicketHeader ({
@@ -26,6 +30,7 @@ const DashboardTicketDetail = (props) => {
             unit: "Emergency",
             shipping_address:"1234 Street NW"
         }) 
+        console.log(response.data);
         let arr = response.data.order.order_products;
         setTicketRaw(response.data)
         arr = arr.map(item => {
@@ -60,14 +65,20 @@ const DashboardTicketDetail = (props) => {
     const confirmCallBack = () => {
         let arr = ticketDataRaw;
         arr.status = "shipped";
-        api.setUpdateOrder(ticketDataRaw.pk,arr).then((response)=>{
+        let obj = {
+            "status":"shipped"
+        }
+        api.setUpdateTicket(supplierId,ticketDataRaw.pk,obj).then((response)=>{
             getData();
             setModal(!modal);
+        }).catch(error => {
+            console.error('Error', error);
         });
     }
 
     const excludeKeys = ["pk","product_image"];
     const excludeValues = ["pk"];
+
 
 
     return(

@@ -1,8 +1,10 @@
 
 import * as axios from "axios";
 import Cookies from 'js-cookie'
-
+import useStores from 'Helpers/useStores';
 export default class Api {
+
+
   constructor() {
     this.api_token = Cookies.get('token') ? Cookies.get('token') : null ;
     this.client = null;
@@ -76,16 +78,16 @@ export default class Api {
 
   // ============================   TICKETS API  =====================================
 
-  getSupplierTickets = () => {
-    return this.init().get(`/suppliers/1/tickets/`)
+  getSupplierTickets = (userId) => {
+    return this.init().get(`/suppliers/${userId}/tickets/`)
   }
 
-  getSupplierTicketOrder = (id) => {
-    return this.init().get(`/suppliers/1/tickets/${id}`)
+  getSupplierTicketOrder = (userId,id) => {
+    return this.init().get(`/suppliers/${userId}/tickets/${id}`)
   }
 
-  setUpdateOrder = (id,data) => {
-    return this.init().post(`/orders/${id}`,data)
+  setUpdateTicket = (userId,id,data) => {
+    return this.init().put(`/suppliers/${userId}/tickets/${id}`,data)
   }
 
 }

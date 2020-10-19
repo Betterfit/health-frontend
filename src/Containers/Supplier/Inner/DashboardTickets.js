@@ -3,6 +3,7 @@ import Tabs from 'Components/Tabs/Tabs';
 import TicketSearch from 'Components/Search/TicketSearch';
 import Table from 'Components/Table/List/Table';
 import Api from "Helpers/api";
+import useStores from 'Helpers/useStores';
 // import OrderHeader from 'Components/Order/OrderHeader'
 // import BackNavigation from 'Components/Helpers/BackNavigation'
 
@@ -18,11 +19,14 @@ const DashboardTickets = () => {
   //   order_date: "Sept 01, 2020",
   //   is_draft: true,
   // };
+  const { store } = useStores();
   const [searchActive , setSearchActive] = useState(false);
   const [ticketData , setTickData ] = useState(null);
   const [openTickets, setOpenTickets] = useState(null);
   const [shippedTickets, setShippedTickets] = useState(null);
-  const getData = async () => await api.getSupplierTickets()
+  const userData = JSON.parse(store.authStore.userData);
+  const supplierId = userData.user_profile.supplier;
+  const getData = async () => await api.getSupplierTickets(supplierId)
   .then((response) => {
       let data = response.data;
       let open = data.filter( item => {

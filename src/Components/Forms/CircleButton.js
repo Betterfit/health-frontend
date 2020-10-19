@@ -2,9 +2,10 @@ import React from "react";
 import { ReactSVG } from "react-svg";
 import Plus from "Images/Icons/plus.svg";
 
-const CircleButton = ({ hover }) => {
+const CircleButton = ({ hover, onClick }) => {
   return (
     <button
+      onClick={onClick}
       className={
         (hover ? "bg-betterfit-basic-blue" : "bg-betterfit-light-blue") +
         " p-0 w-10 h-10 rounded-full active:shadow-lg mouse shadow transition ease-in focus:outline-none "

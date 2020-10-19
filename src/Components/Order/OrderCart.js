@@ -2,8 +2,10 @@ import React from "react";
 import Button from "Components/Forms/Button";
 import { ReactSVG } from "react-svg";
 import EmptyCart from "Images/Icons/shopping-cart-empty.svg";
+import useStores from 'Helpers/useStores';
 
 const OrderCart = ({ products }) => {
+  const { store } = useStores();
   return (
     <>
       <div className="flex-grow flex flex-col justify-center">

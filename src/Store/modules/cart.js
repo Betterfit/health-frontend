@@ -1,9 +1,22 @@
 import { observable, action, reaction, computed } from 'mobx';
 
 export default class cartStore {
-    @observable cart = localStorage.getItem('cart') ?  localStorage.getItem('cart') : [];
+    @observable cart = [];
  
-    @action addToCart = (item) => {
-        this.cart.push(item)
+    @action addToCart = (item,quantity) => {
+        let obj = {
+            "pk" : item,
+            "quantity" : quantity
+        }
+        this.cart = [
+            ...this.cart,
+            obj
+        ];
+        console.log(this.cart);
+        this.updateLocalCartStorage();
+
     }
+    @action updateLocalCartStorage = () => {
+        localStorage.setItem("cart",this.cart);
+    }   
 }

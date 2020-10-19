@@ -4,10 +4,13 @@ import SideBarDashboardTypeCTA from './SideBarDashboardTypeCTA';
 import SideBarProfile from './SideBarProfile';
 import SideBarProfileMobile from './SideBarProfileMobile';
 import logo from 'Images/Icons/logo-full.svg';
-
+import useStores from 'Helpers/useStores';
 
 
 const SideBar = ({navItemsList}) => {
+  const { store } = useStores();
+  const userData = JSON.parse(store.authStore.userData);
+  const userName = userData.user_profile.supplier_name;
   const [active , setActive] = useState(false)
   const activateMenu = ()=>{
     setActive(!active);
@@ -21,7 +24,7 @@ const SideBar = ({navItemsList}) => {
                   <img className="w-48 md:w-56" src={logo} alt="Workflow"/>
                 </div>
                 <div className="flex flex-row md:flex-col items-end md:items-start justify-between ">
-                  <SideBarDashboardTypeCTA name="Supplier Name" location="Edmonton,AB" />
+                  <SideBarDashboardTypeCTA name={userName} location="Edmonton,AB" />
                   <SideBarProfileMobile />
                 </div>
                  
