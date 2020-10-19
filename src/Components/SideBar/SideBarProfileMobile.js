@@ -13,10 +13,10 @@ const SideBarProfileMobile = ({userName}) => {
     }
     return(
         <>
-        <div className="p-0 block flex-shrink-0 flex border-gray-400 md:p-4 relative z-10">
+        <div className="p-0 block flex-shrink-0 flex border-gray-400 md:p-4 relative z-10 ">
             <div className="flex flex-row items-center md:hidden">
-                <ReactSVG src={Profile} className="text-gray-600"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 30px;')}}  />
-                <ReactSVG onClick={ToggleProfileNavigation} src={DotMenu} className="text-gray-600"/>
+                <span className = "text-white font-sm opacity-75">{userName}</span>
+                <ReactSVG onClick={ToggleProfileNavigation} src={DotMenu} className="text-white opacity-50"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 15px;height:15px')}}/>
             </div>
         </div>
         <div className="w-4/5 absolute bottom-0 right-0 px-4 py-4">
