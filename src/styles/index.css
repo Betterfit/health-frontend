@@ -1,5 +1,6 @@
 @import 'type.css';
 @import 'dashboard.css';
+@import 'form.css';
 @tailwind base;
 @tailwind utilities;
 @tailwind components;
