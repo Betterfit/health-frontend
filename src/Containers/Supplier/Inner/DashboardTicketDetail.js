@@ -33,7 +33,7 @@ const DashboardTicketDetail = (props) => {
                 product_image: item.product_option.product_image,
                 item: item.order,  
                 ...item.product_option,
-                priortity: 1,
+                priority: 1,
             };
             return obj;
         });

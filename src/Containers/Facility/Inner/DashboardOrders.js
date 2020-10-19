@@ -1,13 +1,16 @@
 import React, {useState, useEffect} from "react";
 import Tabs from 'Components/Tabs/Tabs';
-import TicketSearch from 'Components/Search/TicketSearch';
-import Table from 'Components/Table/List/Table';
+import OrderSearch from 'Components/Search/OrderSearch';
+import Table from "Components/Table/Full/Table";
 import Api from "Helpers/api";
 // import OrderHeader from 'Components/Order/OrderHeader'
 // import BackNavigation from 'Components/Helpers/BackNavigation'
 
+import FacilityOrderTabs from "Data/FacilityOrderTabs";
+import OrderProducts from "Data/OrderProducts";
+
 const api = new Api();
-const DashboardTickets = () => {
+const DashboardOrders = () => {
     //TODO For testing and developing only
   // const Info = {
   //   facility: "Royal Alexandra",
@@ -69,33 +72,58 @@ const DashboardTickets = () => {
   useEffect(() => {
     getData();
   }, []);
-  
+
+  const excludeKeys = ["pk","product_image"];
+  const excludeValues = ["pk"];
 
   const TabData = [ 
     {
-        heading:'Open',
-        content: openTickets ? <Table TableData={openTickets} link={'/dashboard/tickets/'} /> : <div>No Tickets</div> ,
-        key:'opened',
-        amount:6
+        "heading":"All",
+        "content":  <Table TableData={OrderProducts} excludeKeys={excludeKeys} excludeValues={excludeValues} /> ,
+        "key":"all",
+        "amount":82
     },
     {
-        heading:'Shipped',
-        content: shippedTickets ? <Table TableData={shippedTickets} link={'/dashboard/tickets/'} /> : <div>No Tickets</div>,
-        key:'shipped',
-        amount:12
+        "heading":"Draft",
+        "content":"DRAFT",
+        "key":"draft",
+        "amount":2
+    },
+    {
+      "heading":"Open",
+      "content":"OPEN",
+      "key":"open",
+      "amount":1
+    },
+    {
+      "heading":"Approved",
+      "content":"APPROVED",
+      "key":"approved",
+      "amount":12
+    },
+    {
+      "heading":"Delivered",
+      "content":"DELIVERED",
+      "key":"delivered",
+      "amount":67
+    },
+    {
+      "heading":"Cancelled",
+      "content":"CANCELLED",
+      "key":"cancelled",
+      "amount":2
     }
-  ]
-  
+  ];
 
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-10">
-      <h2 className="text-3xl text-dark-blue my-3">Tickets</h2>
+      <h2 className="text-3xl text-dark-blue my-3">Orders</h2>
       {ticketData && (
-        <Tabs tabs={TabData} amount={true} headingComp={<TicketSearch callBack={(e) => setSearchActive(e)} searchActive={searchActive} />} />
+        <Tabs tabs={TabData} amount={true} headingComp={<OrderSearch callBack={(e) => setSearchActive(e)} searchActive={searchActive} />} />
       )}
     </div>  
       
   );
 };
 
-export default DashboardTickets;
+export default DashboardOrders;

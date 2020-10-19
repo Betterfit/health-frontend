@@ -11,7 +11,8 @@ const Tabs = ({tabs,headingComp,amount}) => {
     const Headings = tabs.map(tab => {
         return({
                 heading:tab.heading,
-                key:tab.key
+                key:tab.key,
+                amount:tab.amount
             }   
         )
     });
@@ -23,7 +24,7 @@ const Tabs = ({tabs,headingComp,amount}) => {
 
     return(
         <div>
-            <TabHeadings headings={Headings} headingFunction={headingChangeActive} headingComp={headingComp} amount={amount ? 6 : null}   />
+            <TabHeadings headings={Headings} headingFunction={headingChangeActive} headingComp={headingComp} amount={amount ? amount : false}   />
             {tabs.map(tab => {
                 return(
                     <div className={`${tab.key === activeTab ? 'opacity-100 visible' : 'opacity-0 hidden' }`} >

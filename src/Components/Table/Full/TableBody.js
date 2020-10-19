@@ -11,7 +11,7 @@ const TableBody = ({TableBody}) => {
             {
                 TableBody.map((row,index) =>{
                     let imageIndex;
-                    if(index%2 == 0 ){
+                    if(!index%2 == 0 ){
                         return(
                             <tr className="bg-white border border-white">
                                 {
@@ -26,7 +26,7 @@ const TableBody = ({TableBody}) => {
                                                             color={r[1] === 1 ? "status-red" :"status-blue" } 
                                                             text_size="text-sm" 
                                                             pill={true}
-                                                            extraClasses={"text-status-dark-red border-4 border-white hover:status-red"}
+                                                            extraClasses={ r[1] === 1 ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
                                                         />
                                                     </td>
                                                 )

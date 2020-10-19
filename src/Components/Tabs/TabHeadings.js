@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 
 const TabHeadings = ({headings,headingFunction,headingComp,amount}) => {
     const [activeHeading , setActiveHeading ] = useState(headings[0].key);
+    console.log(amount);
     // console.log(activeHeading);
     return(
         <div className="flex flex-col-reverse md:flex-row mb-8 flex-1 md:items-center relative ">
@@ -10,10 +11,10 @@ const TabHeadings = ({headings,headingFunction,headingComp,amount}) => {
                 {headings.map(heading =>{
                     return(
                         <div className="pr-6 text-blue" key={heading.key}>
-                            <button className={`text-blue py-4 focus:outline-none relative ${heading.key === activeHeading ? 'border-b-2 border-blue font-semibold':''}`} onClick={() => {headingFunction(heading.key); setActiveHeading(heading.key) }}>
+                            <button className={`text-blue py-4 focus:outline-none relative mr-2 ${heading.key === activeHeading ? 'border-b-2 border-blue font-semibold':''}`} onClick={() => {headingFunction(heading.key); setActiveHeading(heading.key) }}>
                                 {heading.heading}
                                 {amount && (
-                                    <span className="absolute text-sm text-blue ml-1" style={{marginTop:-5}}>{amount}</span>
+                                    <span className="absolute text-sm text-blue ml-1" style={{marginTop:-5}}>{heading.amount}</span>
                                 )}
                             </button>
                         </div>
