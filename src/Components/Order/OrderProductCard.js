@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Button from "../Forms/Button";
-import Inventory_Description from "../Inventory/Inventory_Description";
 import Quantity_Input from "Components/Forms/Quantity_Input"
 import Checkbox from "Components/Forms/Checkbox"
 
@@ -52,7 +50,7 @@ const OrderProductCard = ({ product }) => {
           </div>
           <div className = "flex flex-row items-center justify-end py-3">
             <Quantity_Input id="quantity" name="Quantity" value={quantity} readValue={getQuantity} />
-            <Checkbox id="priority" name="Priority" value={priority} setValue = {setPriority} />
+            <Checkbox id="priority" name="Stat" value={priority} setValue = {setPriority} />
           </div>
       </div>
     </>
