@@ -5,6 +5,9 @@ import DashboardContainer from 'Containers/Supplier/DashboardContainer';
 import {
     BrowserRouter as Router,
 } from "react-router-dom";
+import Ticket from "Images/Icons/ticket.svg";
+import Resources from "Images/Icons/resources.svg";
+import Inventory from "Images/Icons/inventory.svg";
 
 // const [isOpen, setIsOpen] = useState(false)
 
@@ -20,15 +23,18 @@ const DashboardSupplier = () => {
     const navItemsList = [
         {
             to:'/dashboard/tickets',
-            name:'Tickets'
+            name:'Tickets',
+            icon: Ticket,
         },
         {
             to:'/dashboard/inventory',
-            name:'Inventory'
+            name:'Inventory',
+            icon: Inventory,
         },
         {
           to:'/dashboard/Resources',
-          name:'Resources'
+          name:'Resources',
+          icon: Resources,
       }
     ]
 
