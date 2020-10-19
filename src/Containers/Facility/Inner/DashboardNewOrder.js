@@ -8,7 +8,8 @@ import OrderHeader from "Components/Order/NewOrderHeader"
 import Spinner from "Images/spinner.gif";
 import OrderCart from "Components/Order/OrderCart"
 import DashboardCategoryProductList from "Containers/Facility/Inner/DashboardCategoryProductList"
-
+import DashboardProductDetail from "Containers/Facility/Inner/DashboardProductDetail"
+import DashboardCategoryList from "Containers/Facility/Inner/DashboardCategoryList"
 import {
     Switch,
     Route,
@@ -38,14 +39,17 @@ const DashboardNewOrder = () =>{
                     <OrderHeader />
                     <OrderCart/>
             </DashboardSideBar>
-            <div className="w-3/5 mx-auto h-screen overflow-y-scroll">
-                <DashboardCategoryProductList/>
-                {/* <Route exact path='/dashboard/order/product/:id' exact render={(props) => {
-                    return ( <DashboardProductList {...props } /> )
+            <div className="w-full md:w-3/5 mx-auto h-screen md:overflow-y-scroll">
+                <Route exact path='/dashboard/new-order/category/' exact render={(props) => {
+                    return ( <DashboardCategoryList {...props } /> )
                 }} />
-                <Route path='/dashboard/inventory/product/:id/detail/:oid?' exact render={(props) => {
+                <Route path='/dashboard/new-order/category/:categoryName/:id?' exact render={(props) => {
+                    return ( <DashboardCategoryProductList edit={true} {...props } /> )
+                }} />
+                 {
+                <Route path='/dashboard/new-order/category/:categoryName/:cid/product/:pid/:id?' exact render={(props) => {
                     return ( <DashboardProductDetail edit={true} {...props } /> )
-                }} />
+                }} />/*
                 <Route path='/dashboard/inventory/search:query?'>
                     <DashboardSearch />
                 </Route> */}

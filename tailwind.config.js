@@ -11,7 +11,6 @@ module.exports = {
       'body': ['Open Sans'],
     },
 
-
     extend: {
       colors: {
         'light-text': '#444444',
@@ -44,6 +43,9 @@ module.exports = {
         'status-dark-blue': '#1D2A93',
         'table-row':'#F7FAFD'
 
+      },
+      spacing: {
+        '18': '4.5rem',
       },
       padding: {
         '7': '1.75rem',

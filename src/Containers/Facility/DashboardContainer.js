@@ -30,7 +30,7 @@ const DashboardContainer = () =>{
                 <Route path="/dashboard/orders">
                     <DashboardOrders/>
                 </Route>
-                <Route path="/dashboard/new-order">
+                <Route path="/dashboard/new-order/category">
                     <DashboardNewOrder/>
                 </Route>
                 </AnimatedSwitch>
