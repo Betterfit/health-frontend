@@ -2,14 +2,15 @@ import React, {useState} from 'react';
 import Tabs from 'Components/Tabs/Tabs';
 import BoxLink from 'Components/Content/BoxLink';
 import Search from 'Components/Search/Search';
-import Table from 'Components/Table/Table';
+import Table from 'Components/Table/Basic/Table';
 import Api from "Helpers/api";
 import Spinner from "Images/spinner.gif";
 
 import {
     Switch,
     Route,
-    useParams
+    useParams,
+    useLocation
 } from "react-router-dom";
 import { AnimatedSwitch } from 'react-router-transition';
 import DashboardSideBar from 'Components/DashboardSideBar/DashboardSideBar';
@@ -21,8 +22,8 @@ const api = new Api();
 const DashboardInventory = () =>{ 
     const [title , setTitle] = useState('Inventory');
     const [ProductData , setProductData] = useState(null);
-    const [searchActive , setSearchActive] = useState(false)
-    
+    const [searchActive , setSearchActive] = useState(false);
+    const location = useLocation();
     const getData = async () => await api.getProductCategories()
     .then((response) => {
         setProductData(response.data)
@@ -61,9 +62,9 @@ const DashboardInventory = () =>{
             <div className="flex flex-col md:flex-row">
                 <DashboardSideBar>
                     <h2 className="text-3xl text-dark-blue my-3">{title}</h2>
-                    <Tabs tabs={TabData} headingComp={<Search type="icon" callBack={(e) => setSearchActive(e)} searchActive={searchActive} />} />
+                    <Tabs tabs={TabData} headingComp={<Search type="icon" amount={false} callBack={(e) => setSearchActive(e)} searchActive={searchActive} />} />
                 </DashboardSideBar>
-                <div className="w-3/5 mx-auto h-screen overflow-y-scroll">
+                <div className={`absolute w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll ${location.pathname === "/dashboard/inventory" ? `z-0`: `z-10`}`}>
                     <Route exact path='/dashboard/inventory/product/:id' exact render={(props) => {
                         return ( <DashboardProductList {...props } /> )
                     }} />

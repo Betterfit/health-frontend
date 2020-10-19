@@ -19,16 +19,21 @@ const LoginTemplate = () => {
   const [email, setEmail] = useState("");
 
   const history = useHistory();
+  if(localStorage.getItem('token')){
+    history.push("/dashboard/");
+  }
   const api = new Api();
   const signIn = (e) => {
     e.preventDefault();
     console.log("sign in");
     api
-      .signIn({ username: "lift", password: "L1f7is0wly!" })
+      .signIn({ username: email, password: password })
       //.signIn({ username: email, password: password })
-      .then((response) => {
-        localStorage.setItem("token", response.data);
-        history.push("/dashboard/inventory");
+      .then( async (response) => {
+        console.log(response.data.user);
+        await localStorage.setItem("token", response.data.token);
+        await localStorage.setItem("user", JSON.stringify(response.data.user));
+        history.push("/dashboard/");
       })
       .catch((err) => {
         console.log(err);

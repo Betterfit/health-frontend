@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState,useEffect} from 'react';
 import logo from './logo.svg';
 // components
 import {
@@ -15,42 +15,37 @@ import store from 'Store/store.js';
 
 // ================ PAGES ================
 import Login from './Pages/Login/Login';
-import DashboardSupplier from './Pages/Dashboards/DashboardSupplier';
-import DashboardFacility from './Pages/Dashboards/DashboardFacility';
+import LogOut from './Pages/Logout';
+import Dashboard from './Pages/Dashboard';
 
-function App() {
-  const token = localStorage.getItem('token');
+function App({userType}) {
+  const token = store.authStore.token;
   const {userData,addUserData} = useContext(UserAuthContext);
-
-  const type = "facility";
-  // const type = "supplier";
   return (
     <Provider store={store}>
       <Router>
         <div className="App">
           <Switch>
 
-            {/* <Route exact path="/" render={() => (
+            <Route exact path="/" render={() => (
               token ? (
-                <Redirect to="/dashboard/inventory"/>
+                <Redirect to="/dashboard"/>
               ) : (
                 <Redirect to="/login/"/>
               )
-            )}/> */}
+            )}/>
 
             <Route path="/login" initial >
               <Login />
+            </Route>
+            <Route path="/logout" initial >
+              <LogOut />
             </Route>
             <Route path="/login/forgotpassword" initial >
               <Login />
             </Route>
             <Route path="/dashboard">
-              {type === "facility" && (
-                <DashboardFacility/>
-              )}
-              {type === "supplier" && (
-                <DashboardSupplier/>
-              )}
+              <Dashboard/>
             </Route>
 
           </Switch>

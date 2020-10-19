@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Tabs from 'Components/Tabs/Tabs';
 import BoxLink from 'Components/Content/BoxLink';
 import Search from 'Components/Search/Search';
-import Table from 'Components/Table/Table';
+import Table from 'Components/Table/Basic/Table';
 import Api from "Helpers/api";
 import OrderHeader from "Components/Order/NewOrderHeader"
 import Spinner from "Images/spinner.gif";
@@ -36,7 +36,7 @@ const DashboardNewOrder = () =>{
     return(
         <div className="flex flex-col md:flex-row">
             <DashboardSideBar addonStyles=" flex flex-col">
-                    <OrderHeader/>
+                    <OrderHeader />
                     <OrderCart/>
             </DashboardSideBar>
             <div className="w-full md:w-3/5 mx-auto h-screen md:overflow-y-scroll">

@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import BackNavigation from 'Components/Helpers/BackNavigation'
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
-import Table from 'Components/Table/Table';
+import Table from 'Components/Table/Basic/Table';
 import Api from "Helpers/api";
 const api = new Api();
 
@@ -28,9 +28,12 @@ const DashboardProductList = (props) => {
         }
     }); 
     return(
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
+        <div className="lg:max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
 
             {/* product title */}
+            <div class="lg:hidden">
+                <BackNavigation link="Back to products" />
+            </div>
             {ProductData && (
                 <div className="pt-8 md:pt-12">
                     <TitleUnderLine title={`${ProductData.name}`} />

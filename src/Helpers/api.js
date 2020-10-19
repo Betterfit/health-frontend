@@ -30,9 +30,20 @@ export default class Api {
     return this.client;
   };
 
-//   getUserList = (params) => {
-//     return this.init().get("/users", { params: params });
-//   };
+
+  // ============================   AUTH API  =====================================
+
+
+  addNewUser = (data) => {
+    return this.init().post("users/", data);
+  };
+
+  //To request a password reset email
+  passwordResetRequest = (data) => {
+    //stub until relevent api can be included
+    return this.init().post("api/password_reset/", data)
+  }
+
 
   signIn = (data) => {
     return this.init().post("api-token-auth/", data);
@@ -42,6 +53,8 @@ export default class Api {
     return this.init().post("api-token-auth/", data);
   }
 
+
+// ============================   PRODUCTS API  =====================================
   getProductCategories = () => {
     return this.init().get("product-categories/"); 
   }
@@ -57,22 +70,23 @@ export default class Api {
   getProductVariant = (id) => {
     return this.init().get(`product-variations/${id}`); 
   }
-
   getSearchResults = (query) => {
     return this.init().get(`product-categories/?q=${query}`)
   }
 
-  addNewUser = (data) => {
-    return this.init().post("users/", data);
-  };
+  // ============================   TICKETS API  =====================================
 
-  //To request a password reset email
-  passwordResetRequest = (data) => {
-    //stub until relevent api can be included
-    return this.init().post("api/password_reset/", data)
+  getSupplierTickets = () => {
+    return this.init().get(`/suppliers/1/tickets/`)
   }
 
-    //To request a password reset email
+  getSupplierTicketOrder = (id) => {
+    return this.init().get(`/suppliers/1/tickets/${id}`)
+  }
 
+  setUpdateOrder = (id,data) => {
+    return this.init().post(`/orders/${id}`,data)
+  }
 
 }
+

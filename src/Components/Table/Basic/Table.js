@@ -3,42 +3,59 @@ import TableHead from './TableHead'
 import TableBody from './TableBody'
 const Table = ({TableData}) => {
 
-    const TableHeadData = [];
-    const TableBodyData = [];
+    let TableHeadData = [];
+    let TableBodyData = [];
     let nooptions = false;
-    let removeAtIndex;
     if(TableData.product_options && TableData.product_options.length){
-        TableData.product_options.map(variant => {
+            const excludeKeys = ["pk","product_image"];
+            const excludeValues = ["pk","product_image"];
+            TableData.product_options.map(variant => {
             let keys = Object.keys(variant);
-            let values = Object.values(variant);
+            let values = Object.entries(variant);
             keys.forEach((key,index) => {
                 if(!TableHeadData.includes(key)){
-                    if(key !== "pk"){
-                        // console.log(`key ${variant[key]}`);
-                        TableHeadData.push(key);
-                    }else{
-                        removeAtIndex = index;
-                    }
+                    TableHeadData.push(key); 
                 }
             });
             TableBodyData.push(values);
+            });
+            // exclude keys from filter
+            TableHeadData = TableHeadData.filter(item => !excludeKeys.includes(item));
+            TableBodyData = TableBodyData.map((row,index) => {
+            return(
+                row.filter((item,index) => {
+                    if( !excludeValues.includes(item[0]) ){
+                        return(item);
+                    }
+                })
+            )
+            
         });
     }else{
         nooptions = true;
+        const excludeKeys = ["pk","product_image","product_options","product_variations"];
+        const excludeValues = ["pk","product_image"];
         let keys = Object.keys(TableData);
-        let values = Object.values(TableData);
+        let values = Object.entries(TableData);
         keys.forEach((key,index) => {
             if(!TableHeadData.includes(key)){
-                if(key !== "pk" && key !=="product_options" &&  key !=="product_variations"){
-                    TableHeadData.push(key);
-                }else{
-                    if(key === "pk"){
-                     removeAtIndex = index;   
-                    }
-                }
+                TableHeadData.push(key); 
             }
         });
         TableBodyData.push(values);
+        
+        // exclude keys from filter
+        TableHeadData = TableHeadData.filter(item => !excludeKeys.includes(item));
+        TableBodyData = TableBodyData.map((row,index) => {
+            return  (
+                row.filter((item,index) => {
+                    if( !excludeValues.includes(item[0]) ){
+                        return(item);
+                    }
+                })
+            )
+        });
+
       
     }
     return(
@@ -52,7 +69,7 @@ const Table = ({TableData}) => {
                         <div className="p-4 bg-white">
                            <table className="min-w-full divide-y divide-gray-200 p-4">
                             <TableHead TableHead={TableHeadData} />
-                            <TableBody NoOptions={nooptions} TableBody={TableBodyData} removeAtIndex={removeAtIndex} variantID={TableData.pk} />                            
+                            <TableBody NoOptions={nooptions} TableBody={TableBodyData} variantID={TableData.pk} />                            
                             </table>  
                         </div>
                        

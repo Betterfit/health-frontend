@@ -4,7 +4,7 @@ import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 import API from 'Helpers/api';
 import BackNavigation from 'Components/Helpers/BackNavigation';
 import TitleUnderLine from 'Components/Content/TitleUnderLine';
-import Table from 'Components/Table/Table';
+import Table from 'Components/Table/Basic/Table';
 import Search from 'Components/Search/Search';
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -41,6 +41,7 @@ const DashboardSearch = () => {
                         searchData.map(productCat => {
                             return(
                                 productCat.products.map(product=> {
+                                    console.log(product);
                                     return(
                                         <>
                                         <h2 className="text-2xl text-gray-700 font-bold">{product.name}</h2>
