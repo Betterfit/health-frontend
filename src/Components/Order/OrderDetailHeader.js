@@ -31,16 +31,8 @@ const OrderComponentTitle = ({ value, classes }) => {
 
 
 const OrderDetailHeader = ({ order , actionComponent }) => {
-
-    let orderDate = dayjs().format('MMM DD, YYYY');
-
-    //TODO - pull this out of store eventually
-    const facility2= {
-      facility: ("Royal Alex") ,
-      unit: "Emergency",
-      shipping_address:"1234 Street NW"
-    };
-
+  
+  let orderDate = dayjs(order.order_date).format('MMM DD, YYYY');
   return (
     <div className="flex flex-col border-b pb-4 border-gray-400 relative">
         <BackNavigation link={"Back"} />
@@ -50,15 +42,15 @@ const OrderDetailHeader = ({ order , actionComponent }) => {
         <div className="flex flex-row mt-4">
             <OrderComponent
                 title="Facility"
-                value={facility2["facility"]}
+                value={order.facility}
             />
             <OrderComponent
                 title="Unit"
-                value={facility2["unit"]}
+                value={order.unit}
             />
             <OrderComponent
                 title="Shipping Address"
-                value={facility2["shipping_address"]}
+                value={order.shipping_address}
             />
             <OrderComponent
                 title="Order Date"

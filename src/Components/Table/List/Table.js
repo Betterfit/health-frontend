@@ -13,7 +13,7 @@ const Table = ({TableData,link}) => {
         let values = Object.values(variant);
         keys.forEach((key,index) => {
             if(!TableHeadData.includes(key)){
-                if(key !== "pk" && key !== "id" ){
+                if(key !== "pk"){
                     // console.log(`key ${variant[key]}`);
                     TableHeadData.push(key);
                     if(key == "status"){

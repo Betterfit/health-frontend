@@ -31,11 +31,9 @@ const DashboardContainer = () =>{
                     <Route path="/dashboard/tickets" exact>
                         <DashboardTickets />
                     </Route>
-
-                    <Route path="/dashboard/tickets/:id" exact>
-                        <DashboardTicketDetail/>
-                    </Route>
-
+                    <Route exact path="/dashboard/tickets/:id" render={(props) => {
+                        return ( <DashboardTicketDetail {...props } /> )
+                    }} />
                     <Route path="/dashboard/inventory" >
                         <DashboardInventory initial changeTitle={(title) => changeTitle(title)} />
                     </Route>

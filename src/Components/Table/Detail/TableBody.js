@@ -22,8 +22,8 @@ const TableBody = ({TableBody}) => {
                                                 return(
                                                     <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
                                                         <Button
-                                                            text={r[1]} 
-                                                            color={r[1] === "stat" ? "status-red" :"status-blue" } 
+                                                            text={r[1] === 1 ? "Stat" : "Regular"} 
+                                                            color={r[1] === 1 ? "status-red" :"status-blue" } 
                                                             text_size="text-sm" 
                                                             pill={true}
                                                             extraClasses={"text-status-dark-red border-4 border-white hover:status-red"}
@@ -31,7 +31,7 @@ const TableBody = ({TableBody}) => {
                                                     </td>
                                                 )
                                             break;
-                                            case "image":
+                                            case "product_image":
                                                 imageIndex = index;
                                                 return(false)
                                             break;
@@ -73,8 +73,8 @@ const TableBody = ({TableBody}) => {
                                                 return(
                                                     <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
                                                         <Button
-                                                            text={r[1]} 
-                                                            color={r[1] === "stat" ? "status-red" :"status-blue" } 
+                                                            text={r[1] === 1 ? "Stat" : "Regular"} 
+                                                            color={r[1] === 1 ? "status-red" :"status-blue" } 
                                                             text_size="text-sm" 
                                                             pill={true}
                                                             extraClasses={"text-status-dark-red border-4 border-white hover:status-red"}
@@ -82,7 +82,7 @@ const TableBody = ({TableBody}) => {
                                                     </td>
                                                 )
                                             break;
-                                            case "image":
+                                            case "product_image":
                                                 imageIndex = index;
                                                 return(false)
                                             break;

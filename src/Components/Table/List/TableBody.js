@@ -4,7 +4,7 @@ import Edit from 'Images/Icons/edit.svg'
 import {NavLink} from "react-router-dom";
 import Button from "Components/Content/Button";
 
-const TableBody = ({TableBody,removeAtIndex,statusIndex,variantID,NoOptions,link}) => {
+const TableBody = ({TableBody,removeAtIndex,statusIndex,link}) => {
     // console.log(`slide ${TableBody}`)
     return(
         <tbody>  

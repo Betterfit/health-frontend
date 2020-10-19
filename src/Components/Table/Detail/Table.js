@@ -28,7 +28,7 @@ const Table = ({TableData,excludeKeys,excludeValues,}) => {
             })
         )
     });
-    
+
     return(
         <div className="flex flex-col mt-10 mb-4">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

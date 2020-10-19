@@ -30,31 +30,9 @@ export default class Api {
     return this.client;
   };
 
-//   getUserList = (params) => {
-//     return this.init().get("/users", { params: params });
-//   };
 
-  signIn = (data) => {
-    return this.init().post("api-token-auth/", data);
-  }
+  // ============================   AUTH API  =====================================
 
-  getUserData = (data) => {
-    return this.init().post("api-token-auth/", data);
-  }
-
-  getProductCategories = () => {
-    return this.init().get("product-categories/"); 
-  }
-  getProduct = (id) => {
-    return this.init().get(`products/${id}`); 
-  }
-  getProductVariant = (id) => {
-    return this.init().get(`product-variations/${id}`); 
-  }
-
-  getSearchResults = (query) => {
-    return this.init().get(`product-categories/?q=${query}`)
-  }
 
   addNewUser = (data) => {
     return this.init().post("users/", data);
@@ -66,4 +44,43 @@ export default class Api {
     return this.init().post("api/password_reset/", data)
   }
 
+
+  signIn = (data) => {
+    return this.init().post("api-token-auth/", data);
+  }
+
+  getUserData = (data) => {
+    return this.init().post("api-token-auth/", data);
+  }
+
+
+// ============================   PRODUCTS API  =====================================
+  getProductCategories = () => {
+    return this.init().get("product-categories/"); 
+  }
+  getProduct = (id) => {
+    return this.init().get(`products/${id}`); 
+  }
+  getProductVariant = (id) => {
+    return this.init().get(`product-variations/${id}`); 
+  }
+  getSearchResults = (query) => {
+    return this.init().get(`product-categories/?q=${query}`)
+  }
+
+  // ============================   TICKETS API  =====================================
+
+  getSupplierTickets = () => {
+    return this.init().get(`/suppliers/1/tickets/`)
+  }
+
+  getSupplierTicketOrder = (id) => {
+    return this.init().get(`/suppliers/1/tickets/${id}`)
+  }
+
+  setUpdateOrder = (id,data) => {
+    return this.init().post(`/orders/${id}`,data)
+  }
+
 }
+
