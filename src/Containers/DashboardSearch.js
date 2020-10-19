@@ -41,6 +41,7 @@ const DashboardSearch = () => {
                         searchData.map(productCat => {
                             return(
                                 productCat.products.map(product=> {
+                                    console.log(product);
                                     return(
                                         <>
                                         <h2 className="text-2xl text-gray-700 font-bold">{product.name}</h2>
