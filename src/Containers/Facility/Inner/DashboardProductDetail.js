@@ -6,9 +6,11 @@ import ProductDetailsCard from "Components/Content/ProductDetailsCard"
 import image from "Images/example_product.png"; //remove this later
 import Api from "Helpers/api";
 import { set } from "js-cookie";
+
 const api = new Api();
 
 const DashboardProductDetail = (props) => {
+
   const { match } = props;
   const product_id = parseInt(match.params.pid);
   const product_details_id = parseInt(match.params.id);
@@ -41,6 +43,7 @@ const DashboardProductDetail = (props) => {
       product_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
       product_size: product_options.name,
+      pk:product_options.pk
     };
     return clean_product;
   };

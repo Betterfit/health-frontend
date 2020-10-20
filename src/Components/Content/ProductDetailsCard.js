@@ -4,6 +4,7 @@ import Inventory_Description from "../Inventory/Inventory_Description";
 import Quantity_Input from "Components/Forms/Quantity_Input";
 import ProductImageCard from "Components/Content/ProductImageCard"
 import AddProductForm from "Components/Forms/AddProductForm"
+import {useCartStore} from "Context/cartContext";
 
 //This will either return the attribute if it exists, or
 // return the passed in 'default_value' if not
@@ -33,6 +34,10 @@ const ProductImage = ({ product_image, product_name }) => {
 };
 
 const ProductDetailCard = ({ product, edit }) => {
+  const cartStore = useCartStore();
+  const addToCart = () => {
+    cartStore.addToCart(product.pk,0)
+  }
   console.log(product)
   return (
     <>
@@ -51,7 +56,7 @@ const ProductDetailCard = ({ product, edit }) => {
             </div>
             <div className="xl:w-2/5 lg:w-1/2 py-4 mx-2">
             <ProductImageCard product_image={(product?.image)} product_name ={product.name}>
-                <AddProductForm />
+                <AddProductForm addToCart={() => addToCart()} />
             </ProductImageCard>
             </div>
           </div>

@@ -18,15 +18,9 @@ export function createCartStore (){
             }
         },
         removeFromCart(id){
-            console.log(id)
             let arr = JSON.stringify(this.cart);
             arr = JSON.parse(arr);
-            for (var i in arr) {
-                if (arr[i].pk == id) {
-                   arr.splice(i,1)
-                   break; //Stop this loop, we found it!
-                }
-            }
+            arr = arr.filter(item => item.pk !== parseInt(id));
             this.cart = arr;
         },
         updateItemQuantity(id,quantity){

@@ -24,7 +24,7 @@ const DashboardTickets = () => {
   const [ticketData , setTickData ] = useState(null);
   const [openTickets, setOpenTickets] = useState(null);
   const [shippedTickets, setShippedTickets] = useState(null);
-  const userData = JSON.parse(store.authStore.userData);
+  const userData = JSON.parse(localStorage.getItem('user'));
   const supplierId = userData.user_profile.supplier;
   let [openCount , setOpen] = useState(0);
   let [closedCount , setClosed] = useState(0);

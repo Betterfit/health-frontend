@@ -58,7 +58,7 @@ const DashboardTicketDetail = (props) => {
     const actionComponent = 
         <Button 
             text={ticketDataRaw && ticketDataRaw.status === "shipped" ? "Shipped" : "Mark as Shipped"} 
-            color={ticketDataRaw && ticketDataRaw.status === "shipped" ? "status-dark-blue" : "status-dark-green"}
+            color={"status-dark-green"}
             text_size="text-sm" 
             onClick={ticketDataRaw && ticketDataRaw.status === "shipped" ? () => {return false} : () => setModal(!modal)}
         />
@@ -93,7 +93,7 @@ const DashboardTicketDetail = (props) => {
                 </DashboadOrderDetail> 
                 <>
                     {modal && (
-                        <Modal  cancelCallBack ={() => setModal(!modal)} confirmCallBack = {confirmCallBack}>
+                        <Modal  cancelCallBack ={() => setModal(!modal)} confirmCallBack = {confirmCallBack} buttonText="Mark as Shipped">
                             <div className="px-6 py-4 border-b border-gray-300">
                                 <h2 className="text-betterfit-navy text-xl">Mark Order As Shipped</h2>
                             </div>

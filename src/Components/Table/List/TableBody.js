@@ -24,7 +24,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link}) => {
                                                         <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500" to={`${link}${row[removeAtIndex]}`}>
                                                             <Button 
                                                                 text={r} 
-                                                                color={r === "shipped" || r === "approved" ? "status-dark-green" :"betterfit-basic-blue" } 
+                                                                color={r === "shipped"  ? "status-dark-green" :"betterfit-basic-blue" } 
                                                                 text_size="text-sm" 
                                                             />
                                                         </NavLink>
@@ -56,7 +56,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link}) => {
                                                         <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500" to={`${link}${row[removeAtIndex]}`}>
                                                             <Button 
                                                                 text={r} 
-                                                                color={r === "shipped" || r === "approved" ? "status-dark-green" :"betterfit-basic-blue" } 
+                                                                color={r === "shipped" ? "status-dark-green" : "betterfit-basic-blue" } 
                                                                 text_size="text-sm" 
                                                             />
                                                         </NavLink>
@@ -88,7 +88,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link}) => {
                                                     <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
                                                         <Button 
                                                             text={r} 
-                                                            color={r === "shipped" || r === "approved" ? "status-dark-green" :"betterfit-basic-blue" } 
+                                                            color={r === "shipped" ? "status-dark-green" :"betterfit-basic-blue" } 
                                                             text_size="text-sm" 
                                                         />
                                                         
@@ -116,7 +116,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link}) => {
                                                     <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
                                                         <Button 
                                                             text={r} 
-                                                            color={r === "shipped" || r === "approved" ? "status-dark-green" :"betterfit-basic-blue" } 
+                                                            color={r === "shipped"  ? "status-dark-green" :"betterfit-basic-blue" } 
                                                             text_size="text-sm" 
                                                         />
                                                         
