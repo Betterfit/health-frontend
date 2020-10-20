@@ -3,6 +3,7 @@ import { ReactSVG } from 'react-svg'
 import Edit from 'Images/Icons/edit.svg'
 import {NavLink} from "react-router-dom";
 import Button from "Components/Content/Button";
+import EmptyImage from "Images/emptyImage.png"
 
 const TableBody = ({TableBody}) => {
     // console.log(`slide ${TableBody}`)
@@ -39,7 +40,7 @@ const TableBody = ({TableBody}) => {
                                                 return(
                                                     <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                                         <div class="flex items-center">
-                                                            <img className="w-24 mr-2" src={`${row[imageIndex][1]}`} /> 
+                                                            <img className="w-24 mr-2" src={(row[imageIndex][1] ? `${row[imageIndex][1]}` : EmptyImage)} /> 
                                                             <span className="font-bold text-betterfit-basic-blue">{r[1]}</span>
                                                         </div>
                                                     </td>
@@ -90,7 +91,7 @@ const TableBody = ({TableBody}) => {
                                                 return(
                                                     <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                                         <div class="flex items-center">
-                                                            <img className="w-24 mr-2" src={`${row[imageIndex][1]}`} /> 
+                                                            <img className="w-24 mr-2" src={(row[imageIndex][1] ? `${row[imageIndex][1]}` : EmptyImage)}  /> 
                                                             <span className="font-bold text-betterfit-basic-blue">{r[1]}</span>
                                                         </div>
                                                     </td>

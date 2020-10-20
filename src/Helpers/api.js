@@ -90,5 +90,11 @@ export default class Api {
     return this.init().put(`/suppliers/${userId}/tickets/${id}`,data)
   }
 
+  // ============================   ORDERS API  =====================================
+
+  getOrderList = (facilityId) => {
+    return this.init().get(`/facilities/${facilityId}/orders/`)
+  }
+
 }
 
