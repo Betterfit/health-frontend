@@ -27,7 +27,7 @@ const OrderComponentTitle = ({ value, classes, isDraft }) => {
         </h1>
 
         {isDraft && (
-          <div class="flex flex-row items-center">
+          <div className="flex flex-row items-center">
             <Status type="draft" />
             <ReactSVG
               src={Edit}

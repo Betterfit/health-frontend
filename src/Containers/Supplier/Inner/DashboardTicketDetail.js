@@ -23,6 +23,7 @@ const DashboardTicketDetail = (props) => {
     const getData = async () => await api.getSupplierTicketOrder(supplierId,TicketId)
     .then((response) => {
         // need ticket facility and info
+        console.log(response.data);
         setTicketHeader ({
             order_number: response.data.ticket_no,
             order_date: response.data.ticket_date,
@@ -56,10 +57,10 @@ const DashboardTicketDetail = (props) => {
 
     const actionComponent = 
         <Button 
-            text={"Mark as Shipped"} 
-            color='status-dark-green' 
+            text={ticketDataRaw && ticketDataRaw.status === "shipped" ? "Shipped" : "Mark as Shipped"} 
+            color={ticketDataRaw && ticketDataRaw.status === "shipped" ? "status-dark-blue" : "status-dark-green"}
             text_size="text-sm" 
-            onClick={() => setModal(!modal)}
+            onClick={ticketDataRaw && ticketDataRaw.status === "shipped" ? () => {return false} : () => setModal(!modal)}
         />
     ;
     const confirmCallBack = () => {
@@ -94,7 +95,7 @@ const DashboardTicketDetail = (props) => {
                     {modal && (
                         <Modal  cancelCallBack ={() => setModal(!modal)} confirmCallBack = {confirmCallBack}>
                             <div className="px-6 py-4 border-b border-gray-300">
-                                <h2 class="text-betterfit-navy text-xl">Mark Order As Shipped</h2>
+                                <h2 className="text-betterfit-navy text-xl">Mark Order As Shipped</h2>
                             </div>
                             <div className="py-6 px-6">
                                 <p className="text-paragraph text-base">Are you sure you’re ready to mark this order as shipped and close the ticket? </p>

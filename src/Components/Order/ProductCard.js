@@ -3,7 +3,7 @@ import CircleButton from "Components/Forms/CircleButton";
 import FlatButton from "Components/Forms/FlatDetailButton";
 import EmptyImage from "Images/emptyImage.png";
 import { useHistory } from "react-router-dom";
-import useStores from 'Helpers/useStores';
+import {useCartStore} from "Context/cartContext";
 
 //This will either return the attribute if it exists, or
 // return the passed in 'default_value' if not
@@ -29,7 +29,7 @@ const ProductImage = ({ product_image, product_name, hover }) => {
 };
 
 const ProductCard = ({ product, product_details, category, extra }) => {
-  const { store } = useStores();
+  const cartStore = useCartStore();
   const history = useHistory();
   const [active, setActive] = useState(false);
   const name = product.name;
@@ -37,7 +37,7 @@ const ProductCard = ({ product, product_details, category, extra }) => {
   const size = product_details.name;
 
   const addToCart = () => {
-    store.cartStore.addToCart(product.pk,0)
+    cartStore.addToCart(product_details.pk,0)
   }
 
   return (

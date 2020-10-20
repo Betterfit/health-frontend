@@ -39,7 +39,6 @@ const SideBar = ({navItemsList}) => {
                 <div className="flex flex-row md:flex-col items-end md:items-start justify-between ">
                   <SideBarDashboardTypeCTA name={orgName} location="Edmonton,AB" />
                 </div>
-                 
                 <SideBarNavigation navList={navItemsList} /> 
               </div>
               <SideBarProfile active={active} userName={userName} />

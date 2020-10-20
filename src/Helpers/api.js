@@ -76,6 +76,11 @@ export default class Api {
     return this.init().get(`product-categories/?q=${query}`)
   }
 
+
+  updateSupplierProductQuantity = (userId,id,quantity) => {
+    return this.init().get(`/suppliers/${userId}/product-options/${id}/`)
+  }
+
   // ============================   TICKETS API  =====================================
 
   getSupplierTickets = (userId) => {
@@ -89,6 +94,8 @@ export default class Api {
   setUpdateTicket = (userId,id,data) => {
     return this.init().put(`/suppliers/${userId}/tickets/${id}`,data)
   }
+
+
 
 }
 

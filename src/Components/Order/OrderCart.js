@@ -1,14 +1,20 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
+import { useObserver} from "mobx-react"
 import Button from "Components/Forms/Button";
 import { ReactSVG } from "react-svg";
 import EmptyCart from "Images/Icons/shopping-cart-empty.svg";
 import useStores from 'Helpers/useStores';
-
-const OrderCart = ({ products }) => {
-  const { store } = useStores();
-  return (
+import Api from "Helpers/api";
+import cartStore from "Store/modules/cart";
+import {useCartStore} from "Context/cartContext";
+const api = new Api();
+const OrderCart =({Cart}) => {
+  const cartStore = useCartStore();
+  const products = null;
+  return useObserver(() => (
     <>
       <div className="flex-grow flex flex-col justify-center">
+      <div>{JSON.stringify(cartStore.cart)}</div>
         {!products && (
             <>
             <ReactSVG
@@ -28,7 +34,7 @@ const OrderCart = ({ products }) => {
         <Button text="Submit Order" text_size="text-sm" />
       </div>
     </>
-  );
+  ));
 };
 
 export default OrderCart;
