@@ -24,7 +24,7 @@ function Checkbox({ id_tag, name, value = false, setValue }) {
             type="checkbox"
             className="opacity-0 absolute"
             onChange={(e) => {
-                setValue(!value);
+                setValue();
             }}
           />
           <svg

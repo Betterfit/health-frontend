@@ -19,7 +19,7 @@ const UserInfo = (profile) => {
 
 const SideBar = ({navItemsList}) => {
   const { store } = useStores();
-  const userData = JSON.parse(store.authStore.userData);
+  const [userData , setUserType] = useState(JSON.parse(localStorage.getItem('user')));
   const userName = userData.username;
   const orgName = UserInfo(userData.user_profile)
   console.log(userData)
@@ -27,6 +27,7 @@ const SideBar = ({navItemsList}) => {
   const activateMenu = ()=>{
     setActive(!active);
   }
+  console.log(orgName);
     return(
         <div className="md:flex md:flex-shrink-0">
           <div className="flex flex-col sidebar md:p-4 md:pr-0">

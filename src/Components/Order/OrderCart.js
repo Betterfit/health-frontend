@@ -3,7 +3,6 @@ import { useObserver} from "mobx-react"
 import Button from "Components/Forms/Button";
 import { ReactSVG } from "react-svg";
 import EmptyCart from "Images/Icons/shopping-cart-empty.svg";
-import useStores from 'Helpers/useStores';
 import Api from "Helpers/api";
 
 import OrderProductCard from "Components/Order/OrderProductCard";
@@ -24,6 +23,7 @@ const OrderCart =({Cart}) => {
   }
 
   useEffect(() => {
+    console.log(JSON.stringify(Cart));
     if(CartData){
       if(!cartItems){
         getCartItems(); 
@@ -37,8 +37,8 @@ const OrderCart =({Cart}) => {
 
   return useObserver(() => (
     <>
-      <div className="flex-grow flex flex-col justify-center">
-      <div className="p-3 my-4">
+      <div className="flex-grow flex flex-col overflow-hidden">
+      <div className="p-3 my-4 overflow-y-scroll">
         {cartItems && (
           cartItems.map(item => {
             

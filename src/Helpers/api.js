@@ -80,8 +80,8 @@ export default class Api {
     return this.init().get(`/product-options/${id}`)
   }
 
-  updateSupplierProductQuantity = (userId,id,quantity) => {
-    return this.init().get(`/suppliers/${userId}/product-options/${id}/`)
+  updateSupplierProductQuantity = (userId,id,data) => {
+    return this.init().put(`/suppliers/${userId}/product-options/${id}/`,data)
   }
 
   // ============================   TICKETS API  =====================================

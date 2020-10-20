@@ -3,6 +3,7 @@ import BackNavigation from "Components/Helpers/BackNavigation";
 import CategoryTitle from "Components/Content/CategoryTitle";
 import Api from "Helpers/api";
 import ProductCard from "Components/Order/ProductCard";
+import Search from 'Components/Search/Search';
 import image from "Images/example_product.png"; //remove this later
 const api = new Api();
 
@@ -40,12 +41,15 @@ const DashboardCategoryProductList = (props) => {
       ) : (
         <>
           <BackNavigation link={`Back to Product Categories`} />
-          <CategoryTitle
-            title={`${CategoryData.name}`}
-            icon={CategoryData.icon}
-            background_color={CategoryData.background_color}
-            color={CategoryData.color}
-          />
+          <div className="flex justify-between items-center pb-4 mb-8 border-b border-gray-400">
+            <CategoryTitle
+                title={`${CategoryData.name}`}
+                icon={CategoryData.icon}
+                background_color={CategoryData.background_color}
+                color={CategoryData.color}
+            />
+            <Search />
+          </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2 mb-6 md:mb-10">
             {CategoryData.products.map((p) =>
               p.product_variations.map((p2) =>

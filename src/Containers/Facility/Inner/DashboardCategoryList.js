@@ -3,6 +3,7 @@ import Api from "Helpers/api";
 import CategoryCard from "Components/Order/CategoryCard";
 import image from "Images/example_product.png"; //remove this later
 import TitleUnderLine from "Components/Content/TitleUnderLine";
+import Search from 'Components/Search/Search';
 const api = new Api();
 
 const DashboardCategoryList = (props) => {
@@ -38,7 +39,10 @@ const DashboardCategoryList = (props) => {
         <p>Loading ...</p>
       ) : (
         <>
-          <TitleUnderLine title="Products" extraclasses=" hidden md:block" />
+          <div className="flex justify-between items-center pb-4 mb-8 border-b border-gray-400">
+            <TitleUnderLine title="Products" nounderline={true} extraclasses=" hidden md:block no-margin" />
+            <Search />
+          </div>
           <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-2 mb-6 md:mb-10">
             {categories.map((p) => {
               return <CategoryCard key={`${p.name}`} category={p} />;

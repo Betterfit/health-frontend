@@ -17,19 +17,41 @@ export function createCartStore (){
                 this.updateLocalCartStorage();
             }
         },
-        removeFromCart(item,quantity){
-            let newObj = {
-                "pk" : item,
-                "quantity" : quantity
+        removeFromCart(id){
+            console.log(id)
+            let arr = JSON.stringify(this.cart);
+            arr = JSON.parse(arr);
+            for (var i in arr) {
+                if (arr[i].pk == id) {
+                   arr.splice(i,1)
+                   break; //Stop this loop, we found it!
+                }
             }
-            const checkProduct = obj => obj.pk === newObj.pk;
-            if(!this.cart.some(checkProduct)){
-                this.cart = [
-                    ...this.cart,
-                    newObj
-                ];
-                this.updateLocalCartStorage();
+            this.cart = arr;
+        },
+        updateItemQuantity(id,quantity){
+            let arr = JSON.stringify(this.cart);
+            arr = JSON.parse(arr);
+            for (var i in arr) {
+                if (arr[i].pk == id) {
+                    console.log('found');
+                   arr[i].quantity = parseInt(quantity);
+                   break; //Stop this loop, we found it!
+                }
             }
+            this.cart = arr;
+        },
+        updateItemPriority(id,priority){
+            let arr = JSON.stringify(this.cart);
+            arr = JSON.parse(arr);
+            for (var i in arr) {
+                if (arr[i].pk == id) {
+                    console.log('found');
+                   arr[i].priority = priority;
+                   break; //Stop this loop, we found it!
+                }
+            }
+            this.cart = arr;
         },
         updateLocalCartStorage() {
             localStorage.setItem("cart",JSON.stringify(this.cart));

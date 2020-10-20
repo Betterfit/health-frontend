@@ -1,6 +1,6 @@
 import React from "react";
-
-function Quantity_Input({ id_tag, name, readOnly=false, value, readValue }) {
+let timeout;
+function Quantity_Input({ id_tag, name, readOnly=false, value, readValue , quantityUpdate}) {
  let readOnlyStyle = "focus:outline-none bg-betterfit-soft-blue shadow-none"
   return (
     <>
@@ -18,9 +18,13 @@ function Quantity_Input({ id_tag, name, readOnly=false, value, readValue }) {
           value={value}
           readOnly={readOnly}
           onChange={(e) => {
-             if (readValue)
-                readValue(e.target.value);
-            
+            if (readValue)
+              readValue(e.target.value);
+              var val = e.target.value;
+              clearTimeout(timeout);
+              timeout = setTimeout( () => {
+                quantityUpdate(1,{"quantity":val})    
+              },1000);
           }}
 
         />

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "../Forms/Button";
 import Inventory_Description from "../Inventory/Inventory_Description";
 import Quantity_Input from "Components/Forms/Quantity_Input";
+import UpdateQuantitySupplier from "Components/Helpers/UpdateQuantitySupplier";
 
 //This will either return the attribute if it exists, or
 // return the passed in 'default_value' if not
@@ -34,6 +35,10 @@ const Inventory = ({ product, edit }) => {
   const [available, readAvailble] = useState(
     Read_Product(product.product_available, 0)
   );
+  const [quantityData,setQuantityData] = useState({
+    id:"",
+    data:""
+  })
   return (
     <>
       <div className="flex md:flex-row flex-col-reverse">
@@ -67,10 +72,12 @@ const Inventory = ({ product, edit }) => {
                 name="Available"
                 value={available}
                 readValue={readAvailble}
+                quantityUpdate={(id,data) => setQuantityData({ id:id,data:data})}
+                id_tag={product.pk}
               ></Quantity_Input>
             </div>
             <div className="py-2 md:py-8 md:mx-2">
-              <Button text="Save Changes" text_size="text-base"></Button>
+              <Button onClick={() => UpdateQuantitySupplier(quantityData.id,quantityData.data)} text="Save Changes" text_size="text-base"></Button>
             </div>
           </div>
         </div>
