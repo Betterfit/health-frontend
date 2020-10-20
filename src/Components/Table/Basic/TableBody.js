@@ -23,7 +23,7 @@ const TableBody = ({TableBody,variantID,NoOptions}) => {
                                 }
                                 <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
                                     <NavLink to={`${variantID}/detail/${ NoOptions ? 'edit' : row['pk']+'/edit'}`} >
-                                        <ReactSVG src={Edit} className=" text-gray-800"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
+                                        <ReactSVG src={Edit} className=" text-gray-500"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
                                     </NavLink>
                                 </td>
                             </tr>
@@ -43,7 +43,7 @@ const TableBody = ({TableBody,variantID,NoOptions}) => {
                                 }
                                 <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                     <NavLink to={`${variantID}/detail/${ NoOptions ? 'edit' : row['pk']+'/edit'}`} >
-                                        <ReactSVG src={Edit} className=" text-gray-800"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
+                                        <ReactSVG src={Edit} className=" text-gray-500"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
                                     </NavLink>
                                 </td>
                             </tr>
