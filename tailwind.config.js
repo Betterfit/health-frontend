@@ -41,7 +41,15 @@ module.exports = {
         'status-dark-yellow': '#8D7825',
         'status-blue': '#BECBFF',
         'status-dark-blue': '#1D2A93',
-        'table-row':'#F7FAFD'
+        'table-row':'#F7FAFD',
+        'tag-light-green': '#E3F6ED',
+        'tag-light-green-txt': '#235340',
+        'tag-light-red': '#F9E9F2',
+        'tag-light-red-txt': '#8C254B',
+        'tag-light-blue': '#E4EFFC',
+        'tag-light-blue-txt': '#234499',
+        'tag-light-orange': '#FBEDDE',
+        'tag-light-orange-txt': '#803319',
 
       },
       spacing: {
