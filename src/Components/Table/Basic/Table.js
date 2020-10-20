@@ -6,9 +6,10 @@ const Table = ({TableData}) => {
     let TableHeadData = [];
     let TableBodyData = [];
     let nooptions = false;
+    let removeAtIndex;
     if(TableData.product_options && TableData.product_options.length){
             const excludeKeys = ["pk","product_image"];
-            const excludeValues = ["pk","product_image"];
+            const excludeValues = ["product_image"];
             TableData.product_options.map(variant => {
             let keys = Object.keys(variant);
             let values = Object.entries(variant);
@@ -34,7 +35,7 @@ const Table = ({TableData}) => {
     }else{
         nooptions = true;
         const excludeKeys = ["pk","product_image","product_options","product_variations"];
-        const excludeValues = ["pk","product_image"];
+        const excludeValues = ["product_image"];
         let keys = Object.keys(TableData);
         let values = Object.entries(TableData);
         keys.forEach((key,index) => {

@@ -4,6 +4,7 @@ import Edit from 'Images/Icons/edit.svg'
 import {NavLink} from "react-router-dom";
 const TableBody = ({TableBody,variantID,NoOptions}) => {
     console.log(`search - ${TableBody}`)
+    let setIndex;
     return(
         <tbody>  
             {
@@ -13,16 +14,20 @@ const TableBody = ({TableBody,variantID,NoOptions}) => {
                             <tr className="bg-gray-100 border-t border-gray-200">
                                 {
                                     row.map((r, index)=>{
+                                        if(r[0] !== "pk" ){
+                                            return(
+                                                <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                                    {r[1]}
+                                                </td>
+                                            )  
+                                        }else{
+                                            setIndex = r[1];
+                                        }
                                         
-                                        return(
-                                            <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                                {r[1]}
-                                            </td>
-                                        )
                                     })
                                 }
                                 <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
-                                    <NavLink to={`${variantID}/detail/${ NoOptions ? 'edit' : row['pk']+'/edit'}`} >
+                                    <NavLink to={`${variantID}/detail/${ NoOptions ? 'edit' : setIndex+'/edit'}`} >
                                         <ReactSVG src={Edit} className=" text-gray-500"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
                                     </NavLink>
                                 </td>
@@ -34,15 +39,21 @@ const TableBody = ({TableBody,variantID,NoOptions}) => {
                                 {
                                     row.map((r,index)=>{
                                         
-                                        return(
-                                            <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                                {r[1]}
-                                            </td>
-                                        )
+                                        if(r[0] !== "pk" ){
+                                            return(
+                                                <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                                    {r[1]}
+                                                </td>
+                                            )  
+                                        }
+                                        else{
+                                            setIndex = r[1];
+                                        }
+                                        
                                     })
                                 }
                                 <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                    <NavLink to={`${variantID}/detail/${ NoOptions ? 'edit' : row['pk']+'/edit'}`} >
+                                    <NavLink to={`${variantID}/detail/${ NoOptions ? 'edit' : setIndex+'/edit'}`} >
                                         <ReactSVG src={Edit} className=" text-gray-500"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
                                     </NavLink>
                                 </td>
