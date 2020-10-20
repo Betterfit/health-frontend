@@ -55,3 +55,7 @@ a.nav[aria-current="page"]{
     padding: .3rem 1.5rem !important;
     min-width: auto !important;
 }
+
+.no-margin{
+    margin-bottom: 0 !important;
+}

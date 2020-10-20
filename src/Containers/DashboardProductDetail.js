@@ -29,6 +29,7 @@ const DashboardProductDetail = (props) =>{
                 "product_alloted": 244,
                 "product_available": 430,
                 "product_image": {image},
+                "pk":response.data.pk,
             })
         }else{
             setOptionData(OptionData)
@@ -39,6 +40,7 @@ const DashboardProductDetail = (props) =>{
                 "product_alloted": 244,
                 "product_available": 430,
                 "product_image": {image},
+                "pk":response.data.pk,
             })
         }
     })

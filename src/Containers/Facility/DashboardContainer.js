@@ -13,6 +13,7 @@ import DashboardOrders from './Inner/DashboardOrders'
 // import DashboardProductList from './DashboardProductList'
 // import DashboardProductDetail from './DashboardProductDetail'
 // import DashboardSearch from './DashboardSearch';
+import {CartProvider} from "Context/cartContext";
 const DashboardContainer = () =>{
     const [title , setTitle] = useState('');
     const changeTitle = (title) => {
@@ -31,7 +32,9 @@ const DashboardContainer = () =>{
                     <DashboardOrders/>
                 </Route>
                 <Route path="/dashboard/new-order/category">
-                    <DashboardNewOrder/>
+                    <CartProvider>
+                        <DashboardNewOrder/>
+                    </CartProvider>
                 </Route>
                 </AnimatedSwitch>
                 {/* <!-- /End replace --> */}

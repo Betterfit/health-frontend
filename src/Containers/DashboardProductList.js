@@ -31,7 +31,7 @@ const DashboardProductList = (props) => {
         <div className="lg:max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
 
             {/* product title */}
-            <div class="lg:hidden">
+            <div className="lg:hidden">
                 <BackNavigation link="Back to products" />
             </div>
             {ProductData && (

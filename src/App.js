@@ -18,8 +18,9 @@ import Login from './Pages/Login/Login';
 import LogOut from './Pages/Logout';
 import Dashboard from './Pages/Dashboard';
 
-function App({userType}) {
-  const token = store.authStore.token;
+
+const App = ({userType}) => {
+  const token = localStorage.getItem('token');
   const {userData,addUserData} = useContext(UserAuthContext);
   return (
     <Provider store={store}>

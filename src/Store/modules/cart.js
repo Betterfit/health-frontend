@@ -1,8 +1,8 @@
 import { observable, action, reaction, computed } from 'mobx';
 
 export default class cartStore {
-    @observable cart = [];
- 
+    @observable cart;
+    
     @action addToCart = (item,quantity) => {
         let obj = {
             "pk" : item,
@@ -12,11 +12,17 @@ export default class cartStore {
             ...this.cart,
             obj
         ];
-        console.log(this.cart);
         this.updateLocalCartStorage();
-
     }
     @action updateLocalCartStorage = () => {
-        localStorage.setItem("cart",this.cart);
+        localStorage.setItem("cart",JSON.stringify(this.cart));
     }   
+    @action getLocalCartStorage = () => {
+        let cartData = localStorage.getItem("cart");
+        if(cartData){
+            this.cart = JSON.parse(cartData);
+        }else{
+            this.cart = [];
+        }
+    } 
 }

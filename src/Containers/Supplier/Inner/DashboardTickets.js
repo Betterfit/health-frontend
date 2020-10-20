@@ -26,11 +26,14 @@ const DashboardTickets = () => {
   const [shippedTickets, setShippedTickets] = useState(null);
   const userData = JSON.parse(store.authStore.userData);
   const supplierId = userData.user_profile.supplier;
+  let [openCount , setOpen] = useState(0);
+  let [closedCount , setClosed] = useState(0);
   const getData = async () => await api.getSupplierTickets(supplierId)
   .then((response) => {
       let data = response.data;
       let open = data.filter( item => {
         if(item.status == "open"){
+          setOpen(openCount + 1);
           let filterItem = item;
           let filterItemStatus = filterItem.status; //save status to re-sort
 
@@ -49,6 +52,7 @@ const DashboardTickets = () => {
       });
       let ship = data.filter( item => {
         if(item.status == "shipped"){
+          setClosed(closedCount + 1);
           let filterItem = item;
           let filterItemStatus = filterItem.status;//save status to re-sort
 
@@ -56,6 +60,7 @@ const DashboardTickets = () => {
           
           delete filterItem.supplier; 
           delete filterItem.order; 
+          delete filterItem.status;
           
           filterItem.status = filterItemStatus;// set status
 
@@ -74,19 +79,18 @@ const DashboardTickets = () => {
     getData();
   }, []);
   
-
   const TabData = [ 
     {
         heading:'Open',
         content: openTickets ? <Table TableData={openTickets} link={'/dashboard/tickets/'} /> : <div>No Tickets</div> ,
         key:'opened',
-        amount:6
+        amount:openCount
     },
     {
         heading:'Shipped',
         content: shippedTickets ? <Table TableData={shippedTickets} link={'/dashboard/tickets/'} /> : <div>No Tickets</div>,
         key:'shipped',
-        amount:12
+        amount:closedCount
     }
   ]
   

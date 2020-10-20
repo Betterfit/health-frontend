@@ -25,3 +25,14 @@
     }
     
 }
+
+
+
+.orderCartCard .removeCartItem{
+    transition:opacity .3s ease;
+}
+
+
+.orderCartCard:hover .removeCartItem{
+    opacity: 1 !important;
+}

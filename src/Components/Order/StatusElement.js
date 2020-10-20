@@ -21,7 +21,7 @@ const Status = ({ type = "draft" }) => {
     }
   }
   return (
-    <div class="flex flex-shrink-0 items-center pl-3 pr-2">
+    <div className="flex flex-shrink-0 items-center pl-3 pr-2">
       <div class={"uppercase text-sm px-2 py-1 rounded " + css_add_on}>
         {" "}
         {title}
