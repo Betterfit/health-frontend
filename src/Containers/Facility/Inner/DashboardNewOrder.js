@@ -28,7 +28,6 @@ import {useCartStore} from "Context/cartContext";
 const api = new Api();
 const DashboardNewOrder = observer(() =>{ 
     const cartStore = useCartStore();
-    cartStore.getLocalCartStorage();
     const [title , setTitle] = useState('New Order');
     const [ProductData , setProductData] = useState(null);
     const [searchActive , setSearchActive] = useState(false)
@@ -37,12 +36,14 @@ const DashboardNewOrder = observer(() =>{
         setProductData(response.data)
     })
     .catch((err) => console.log(err));
-     
+    useEffect(() => {
+        cartStore.getLocalCartStorage();
+    }, []);
     return(
         <div className="flex flex-col md:flex-row">
             <DashboardSideBar addonStyles=" flex flex-col">
                     <OrderHeader />
-                    <OrderCart />
+                    <OrderCart Cart={cartStore.cart}/>
             </DashboardSideBar>
             <div className="w-full md:w-3/5 mx-auto h-screen md:overflow-y-scroll">
                 <Route exact path='/dashboard/new-order/category/' exact render={(props) => {

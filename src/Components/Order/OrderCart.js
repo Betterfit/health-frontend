@@ -5,17 +5,48 @@ import { ReactSVG } from "react-svg";
 import EmptyCart from "Images/Icons/shopping-cart-empty.svg";
 import useStores from 'Helpers/useStores';
 import Api from "Helpers/api";
-import cartStore from "Store/modules/cart";
-import {useCartStore} from "Context/cartContext";
+
+import OrderProductCard from "Components/Order/OrderProductCard";
 const api = new Api();
 const OrderCart =({Cart}) => {
-  const cartStore = useCartStore();
-  const products = null;
+  let CartData = JSON.stringify(Cart);
+  CartData = JSON.parse(CartData);
+  const [cartItems , setCartItems] = useState();
+  const getCartItems = () => {
+    const promises = CartData.map((item, i) => api.getProductOption(item.pk).then(data => {
+      return data.data;
+    }));
+
+    // resolve all the api calls in parallel and populate the messageData object as they resolve
+    Promise.all(promises).then(responses => {
+        setCartItems(responses);
+    });
+  }
+
+  useEffect(() => {
+    if(CartData){
+      if(!cartItems){
+        getCartItems(); 
+      }else{
+        if(cartItems.length !== CartData.length){
+          getCartItems(); 
+        }
+      } 
+    } 
+  });
+
   return useObserver(() => (
     <>
       <div className="flex-grow flex flex-col justify-center">
-      <div>{JSON.stringify(cartStore.cart)}</div>
-        {!products && (
+      <div className="p-3 my-4">
+        {cartItems && (
+          cartItems.map(item => {
+            
+            return(<OrderProductCard product={item}/>)
+          })
+        )}
+      </div>
+        {!cartItems && (
             <>
             <ReactSVG
               src={EmptyCart}
