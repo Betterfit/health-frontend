@@ -34,6 +34,7 @@ export function createCartStore (){
                 }
             }
             this.cart = arr;
+            this.updateLocalCartStorage();
         },
         updateItemPriority(id,priority){
             let arr = JSON.stringify(this.cart);

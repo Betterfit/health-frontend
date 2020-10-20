@@ -18,7 +18,7 @@ const DashboardTicketDetail = (props) => {
     const [ticketData , setTicketData ] = useState(null);
     const [ticketDataRaw , setTicketRaw ] = useState(null);
     const [ticketHeader , setTicketHeader] = useState(); 
-    const userData = JSON.parse(store.authStore.userData);
+    const userData = JSON.parse(localStorage.getItem('user'));
     const supplierId = userData.user_profile.supplier;
     const getData = async () => await api.getSupplierTicketOrder(supplierId,TicketId)
     .then((response) => {

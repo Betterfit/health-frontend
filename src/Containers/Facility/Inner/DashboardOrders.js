@@ -81,7 +81,7 @@ const cleanOrders2 = (data) => {
 
 const DashboardOrders = () => {
   const { store } = useStores();
-  const userData = JSON.parse(localStorage.getItem('user'))
+  const userData = JSON.parse(localStorage.getItem('user')) 
   const userId = userData.user_profile.facility;
   const [HeaderData, setHeaderData] = useState(null);
   const [orderData, setOrderData] = useState(null);
