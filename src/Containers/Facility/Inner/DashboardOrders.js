@@ -82,8 +82,8 @@ const DashboardOrders = () => {
     getData();
   }, []);
 
-  const excludeKeys = ["pk", "product_image"];
-  const excludeValues = ["pk"];
+  const excludeKeys = ["pk", "product_image", "order_no", "status"];
+  const excludeValues = ["pk", "order_no", "status"];
 
   const TabData = (() => {
     if (orderData && HeaderData) {
