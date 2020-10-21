@@ -12,8 +12,24 @@ import OrderProducts from "Data/OrderProducts";
 
 const api = new Api();
 
+const Content = (data, HeaderData, excludeKeys, excludeValues, filterName) => {
+  return data
+    .filter((order, i) => order[0].status === filterName)
+    .map((filteredOrder) => (
+      <Table
+        TableHeaderData={HeaderData.filter(
+          (e) => e.data["Order Number"] === filteredOrder[0].order_no
+        )}
+        TableData={filteredOrder}
+        excludeKeys={excludeKeys}
+        excludeValues={excludeValues}
+      />
+    ));
+};
+
+//set Header for title
 const setHeader = (data) => {
-  const HeaderData = {
+  return {
     data: {
       "Purchase Order": "#513AB – 420BC",
       "Ordered By": "Lift",
@@ -22,62 +38,25 @@ const setHeader = (data) => {
     },
     status: data.status,
   };
-  return HeaderData;
 };
 
-const filterItems = (data, filterName) => {
-  let filtered = data.filter((item) => {
-    if (item.status == filterName) {
-      let filterItem = item;
-      let filterItemStatus = filterItem.status; //save status to re-sort
-
-      filterItem.facility = item.facility.name;
-
-      delete filterItem.suppliaer;
-      delete filterItem.order;
-      delete filterItem.status;
-
-      filterItem.status = filterItemStatus; // set status
-
-      return filterItem;
-    }
-  });
-  return filtered;
-};
-
-const cleanOrders = (data) => {
-  let clean = []
-  data.forEach((order) => {
-    let size = clean.push([])
-    order.forEach((e, i)=> {
-      clean[size-1].push({
-      product_image: e.product_option.image,
-      item: "Item"+(i+1),
-      size: e.product_option.name,
-      quantity: e.quantity,
-      priority: e.priority,
-      pk: e.product_option.pk,
-    })
-  })
+//flatten the orders for easier manipulation with components
+const cleanOrders = (data, order_no, status) => {
+  let clean = [];
+  data.forEach((order, i) => {
+    clean.push({
+      product_image: order.product_option.image,
+      item: "Item" + (i + 1),
+      size: order.product_option.name,
+      quantity: order.quantity,
+      priority: order.priority,
+      pk: order.product_option.pk,
+      order_no: order_no,
+      status: status,
+    });
   });
   return clean;
 };
-
-const cleanOrders2 = (data) => {
-  console.log("HERECLENA", data);
-  data.forEach((e) => {
-    console.log("HERECLENA", e);
-    return {
-      product_image: e.product_option.image,
-      size: e.product_option.name,
-      quantity: e.quantity,
-      priority: e.priority,
-      item: "Item1",
-      pk: e.product_option.pk,
-    };
-  });
-};
-
 
 const DashboardOrders = () => {
   const { store } = useStores();
@@ -85,22 +64,17 @@ const DashboardOrders = () => {
   const userId = userData.user_profile.facility;
   const [HeaderData, setHeaderData] = useState(null);
   const [orderData, setOrderData] = useState(null);
-  const [HeaderData2, setHeaderData2] = useState(null);
   const [searchActive, setSearchActive] = useState(false);
-  const [orderData2, setOrderData2] = useState(null);
-  const [openOrders, setOpenOrders] = useState(null);
-  const [shippedTickets, setShippedTickets] = useState(null);
   const getData = async () =>
     await api
       .getOrderList(userId)
       .then((response) => {
         console.log(response.data);
-        let data = cleanOrders(response.data.map((orders) => orders.order_products));
-        setHeaderData2(setHeader(response.data[0]));
+        let data = response.data.map((orders) =>
+          cleanOrders(orders.order_products, orders.order_no, orders.status)
+        );
         setOrderData(data);
         setHeaderData(response.data.map((orders) => setHeader(orders)));
-        setOpenOrders(data);//hardcode for demo
-        //setShippedTickets(ship);
       })
       .catch((err) => console.log(err));
 
@@ -112,7 +86,7 @@ const DashboardOrders = () => {
   const excludeValues = ["pk"];
 
   const TabData = (() => {
-    if (orderData && HeaderData && openOrders) {
+    if (orderData && HeaderData) {
       return [
         {
           heading: "All",
@@ -120,7 +94,9 @@ const DashboardOrders = () => {
           content: orderData.map((order, i) => {
             return (
               <Table
-                TableHeaderData={HeaderData[i]}
+                TableHeaderData={HeaderData.filter(
+                  (e) => e.data["Order Number"] === order[0].order_no
+                )}
                 TableData={order}
                 excludeKeys={excludeKeys}
                 excludeValues={excludeValues}
@@ -132,49 +108,68 @@ const DashboardOrders = () => {
         },
         {
           heading: "Draft",
-          content: "DRAFT",
+          content: Content(
+            orderData,
+            HeaderData,
+            excludeKeys,
+            excludeValues,
+            "draft"
+          ),
           key: "draft",
           amount: 0,
         },
         {
           heading: "Open",
-          content: openOrders.map((order, i) => {
-            return (
-              <Table
-                TableHeaderData={HeaderData[i]}
-                TableData={order}
-                excludeKeys={excludeKeys}
-                excludeValues={excludeValues}
-              />
-            );
-          }),
+          content: Content(
+            orderData,
+            HeaderData,
+            excludeKeys,
+            excludeValues,
+            "open"
+          ),
           key: "open",
           amount: 1,
         },
         {
           heading: "Approved",
-          content: "APPROVED",
+          content: Content(
+            orderData,
+            HeaderData,
+            excludeKeys,
+            excludeValues,
+            "approved"
+          ),
           key: "approved",
           amount: 0,
         },
         {
           heading: "Delivered",
-          content: "DELIVERED",
+          content: Content(
+            orderData,
+            HeaderData,
+            excludeKeys,
+            excludeValues,
+            "delivered"
+          ),
           key: "delivered",
           amount: 0,
         },
         {
           heading: "Cancelled",
-          content: "CANCELLED",
+          content: Content(
+            orderData,
+            HeaderData,
+            excludeKeys,
+            excludeValues,
+            "cancelled"
+          ),
           key: "cancelled",
           amount: 0,
         },
       ];
     }
   })();
-  console.log("Header", HeaderData);
-  console.log("Data", orderData);
-  console.log("TAb", orderData);
+
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-10">
       <h2 className="text-3xl text-dark-blue my-3">Orders</h2>
