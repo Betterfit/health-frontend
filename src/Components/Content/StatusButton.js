@@ -46,7 +46,7 @@ const StatusButton = ({ status }) => {
   const styles = StatStyles(status);
   return (
     <div
-      className={`uppercase rounded-full py-2 px-10 ${styles.bg} ${styles.text}`}
+      className={`uppercase rounded-full py-2 md:px-10 px-4 text-xxs md:text-xs ${styles.bg} ${styles.text}`}
     >
       {styles.title}
     </div>

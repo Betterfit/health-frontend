@@ -15,9 +15,9 @@ const PlusButton = () => (
   />
 );
 
-const Button = ({ text, onClick, solid = true, text_size = "text-lg"  }) => {
+const Button = ({ text, onClick, solid = true, text_size = "text-lg", color=" bg-betterfit-basic-blue", hoverColor="bg-betterfit-darker-blue"}) => {
   let css_add_on = solid
-    ? "text-white bg-betterfit-basic-blue hover:bg-betterfit-darker-blue"
+    ? ("text-white hover:" + hoverColor + " " + color)
     : "text-betterfit-betterfit-navy bg-transparent border border-betterfit-grey";
   return (
     <span className="block w-full shadow-sm flex items-baseline">

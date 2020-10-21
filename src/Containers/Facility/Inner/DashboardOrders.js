@@ -4,22 +4,14 @@ import OrderSearch from "Components/Search/OrderSearch";
 import Table from "Components/Table/Full/Table";
 import Api from "Helpers/api";
 import useStores from "Helpers/useStores";
-// import OrderHeader from 'Components/Order/OrderHeader'
-// import BackNavigation from 'Components/Helpers/BackNavigation'
-
-import FacilityOrderTabs from "Data/FacilityOrderTabs";
-import OrderProducts from "Data/OrderProducts";
 
 const api = new Api();
 
-const Content = (data, HeaderData, excludeKeys, excludeValues, filterName) => {
+const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
   return data
-    .filter((order, i) => order[0].status === filterName)
+    .filter((order, i) => order.status === filterName)
     .map((filteredOrder) => (
       <Table
-        TableHeaderData={HeaderData.filter(
-          (e) => e.data["Order Number"] === filteredOrder[0].order_no
-        )}
         TableData={filteredOrder}
         excludeKeys={excludeKeys}
         excludeValues={excludeValues}
@@ -30,18 +22,16 @@ const Content = (data, HeaderData, excludeKeys, excludeValues, filterName) => {
 //set Header for title
 const setHeader = (data) => {
   return {
-    data: {
-      "Purchase Order": "#513AB – 420BC",
-      "Ordered By": "Lift",
-      "Ordered On": "Oct 10, 2020 12:32PM",
-      "Order Number": data.order_no,
-    },
+    purchase_ord: "#513AB – 420BC",
+    ordered_by: "Lift",
+    ordered_on: "Oct 10, 2020 12:32PM",
+    order_no: data.order_no,
     status: data.status,
   };
 };
 
 //flatten the orders for easier manipulation with components
-const cleanOrders = (data, order_no, status) => {
+const cleanOrderItems = (data) => {
   let clean = [];
   data.forEach((order, i) => {
     clean.push({
@@ -51,10 +41,21 @@ const cleanOrders = (data, order_no, status) => {
       quantity: order.quantity,
       priority: order.priority,
       pk: order.product_option.pk,
-      order_no: order_no,
-      status: status,
     });
   });
+  return clean;
+};
+
+//flatten the orders for easier manipulation with components
+const cleanOrders = (data) => {
+  let clean = [];
+  data.forEach((order, i) => {
+    let header = setHeader(order);
+    let products = cleanOrderItems(order.order_products);
+    header.order_products = products;
+    clean.push(header);
+  });
+
   return clean;
 };
 
@@ -62,7 +63,6 @@ const DashboardOrders = () => {
   const { store } = useStores();
   const userData = JSON.parse(localStorage.getItem('user')) 
   const userId = userData.user_profile.facility;
-  const [HeaderData, setHeaderData] = useState(null);
   const [orderData, setOrderData] = useState(null);
   const [searchActive, setSearchActive] = useState(false);
   const getData = async () =>
@@ -70,11 +70,7 @@ const DashboardOrders = () => {
       .getOrderList(userId)
       .then((response) => {
         console.log(response.data);
-        let data = response.data.map((orders) =>
-          cleanOrders(orders.order_products, orders.order_no, orders.status)
-        );
-        setOrderData(data);
-        setHeaderData(response.data.map((orders) => setHeader(orders)));
+        setOrderData(cleanOrders(response.data));
       })
       .catch((err) => console.log(err));
 
@@ -86,7 +82,7 @@ const DashboardOrders = () => {
   const excludeValues = ["pk"];
 
   const TabData = (() => {
-    if (orderData && HeaderData) {
+    if (orderData) {
       return [
         {
           heading: "All",
@@ -94,9 +90,6 @@ const DashboardOrders = () => {
           content: orderData.map((order, i) => {
             return (
               <Table
-                TableHeaderData={HeaderData.filter(
-                  (e) => e.data["Order Number"] === order[0].order_no
-                )}
                 TableData={order}
                 excludeKeys={excludeKeys}
                 excludeValues={excludeValues}
@@ -108,33 +101,20 @@ const DashboardOrders = () => {
         },
         {
           heading: "Draft",
-          content: Content(
-            orderData,
-            HeaderData,
-            excludeKeys,
-            excludeValues,
-            "draft"
-          ),
+          content: FilterOrders(orderData, excludeKeys, excludeValues, "draft"),
           key: "draft",
           amount: 0,
         },
         {
           heading: "Open",
-          content: Content(
-            orderData,
-            HeaderData,
-            excludeKeys,
-            excludeValues,
-            "open"
-          ),
+          content: FilterOrders(orderData, excludeKeys, excludeValues, "open"),
           key: "open",
           amount: 1,
         },
         {
           heading: "Approved",
-          content: Content(
+          content: FilterOrders(
             orderData,
-            HeaderData,
             excludeKeys,
             excludeValues,
             "approved"
@@ -144,9 +124,8 @@ const DashboardOrders = () => {
         },
         {
           heading: "Delivered",
-          content: Content(
+          content: FilterOrders(
             orderData,
-            HeaderData,
             excludeKeys,
             excludeValues,
             "delivered"
@@ -156,9 +135,8 @@ const DashboardOrders = () => {
         },
         {
           heading: "Cancelled",
-          content: Content(
+          content: FilterOrders(
             orderData,
-            HeaderData,
             excludeKeys,
             excludeValues,
             "cancelled"
@@ -169,7 +147,6 @@ const DashboardOrders = () => {
       ];
     }
   })();
-
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-10">
       <h2 className="text-3xl text-dark-blue my-3">Orders</h2>
