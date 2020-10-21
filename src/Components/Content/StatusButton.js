@@ -1,6 +1,6 @@
 import React from "react";
 
-const StatStyles = (stat) => {
+const StatStyles = (stat = "open") => {
   switch (stat.toLowerCase()) {
     case "draft":
       return {
@@ -8,19 +8,33 @@ const StatStyles = (stat) => {
         text: "text-status-dark-grey",
         title: "Draft",
       };
+      break;
     case "open":
       return {
         bg: "bg-tag-light-green",
         text: "text-tag-light-green-txt",
         title: "Open",
       };
-    case "cancel":
+      break;
+    case "cancelled":
       return {
         bg: "bg-tag-light-red",
         text: "text-tag-light-red-txt",
         title: "Cancelled",
       };
+    case "delivered":
+      return {
+        bg: "bg-tag-light-blue",
+        text: "text-tag-light-blue-txt",
+        title: "Delivered",
+      };
     case "approved":
+      return {
+        bg: "bg-tag-light-blue",
+        text: "text-tag-light-blue-txt",
+        title: "Delivered",
+      };
+    default:
       return {
         bg: "bg-tag-light-blue",
         text: "text-tag-light-blue-txt",

@@ -30,10 +30,9 @@ const Table = ({TableHeaderData, TableData,excludeKeys,excludeValues,}) => {
             })
         )
     });
-
     return(
         <div className="flex flex-col mt-10 mb-4 p-4 pt-4 bg-paragraph rounded-md">
-            {TableHeaderData && (<TableHeader HeaderData = {TableHeaderData.data} Status={TableHeaderData.status}/>)}
+            {TableHeaderData[0] && (<TableHeader HeaderData = {TableHeaderData[0].data} Status={TableHeaderData[0].status}/>)}
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="border-b border-gray-200">
