@@ -4,9 +4,9 @@ import StatusButton from "Components/Content/StatusButton";
 const TableHeader = ({ HeaderData, Status }) => {
   return (
     <div className="flex flex-row justify-between p-4">
-      {HeaderData &&
+      {HeaderData && 
         Object.keys(HeaderData).map((head, i) => (
-          <div className="flex flex-col">
+          <div className="flex flex-col" key={i}>
             <span className="text-left text-xs leading-4 font-normal uppercase tracking-wider uppercase text-white">
               {head}
             </span>
@@ -14,8 +14,10 @@ const TableHeader = ({ HeaderData, Status }) => {
               {HeaderData[head]}
             </span>
           </div>
-        ))}
-      <StatusButton status={Status} />
+        ))
+
+      }
+        <StatusButton status={Status} />
     </div>
   );
 };
