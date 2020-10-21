@@ -3,7 +3,7 @@ import StatusButton from "Components/Content/StatusButton";
 
 const TableHeader = ({ HeaderData, Status }) => {
   return (
-    <div className="flex flex-row justify-between p-4">
+    <div className="flex md:flex-row justify-between p-4">
       {HeaderData && 
         Object.keys(HeaderData).map((head, i) => (
           <div className="flex flex-col" key={i}>
