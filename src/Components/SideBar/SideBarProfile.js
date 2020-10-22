@@ -5,7 +5,7 @@ import { ReactSVG } from 'react-svg'
 import SideBarProfileNavigation  from './SideBarProfileNavigation';
 import Profile from 'Images/Icons/profile.svg';
 import DotMenu from 'Images/Icons/dot-menu.svg';
-
+import ProfileCard from "Components/Profile/ProfileCard";
 const SideBarProfile = ({userName,active}) => {
     const [ShowNav , SetProfile ] = useState(active);
     const ToggleProfileNavigation = () => {
@@ -25,13 +25,15 @@ const SideBarProfile = ({userName,active}) => {
             >
                 <SideBarProfileNavigation />
             </Transition>
-            <a href="#" className="flex-shrink-0 w-full group block profile-container hidden md:block">
+            <div className="h-20 w-20 bg-white fixed top-0 right-0"
+>here</div>            <a href="#" className="flex-shrink-0 w-full group block profile-container hidden md:block">
                 <div className="flex items-center">
                     <div className="ml-3">
                         <p className="text-md leading-5 font-medium text-white opacity-75 group-hover:text-gray-900">
                             {userName}
                         </p>
                     </div>
+                    <ProfileCard/>
                 </div>
             </a>
       </div>
