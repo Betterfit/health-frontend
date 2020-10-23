@@ -9,16 +9,7 @@ import useStores from 'Helpers/useStores';
 
 const api = new Api();
 const DashboardTickets = () => {
-    //TODO For testing and developing only
-  // const Info = {
-  //   facility: "Royal Alexandra",
-  //   unit: "Emergency",
-  // };
-  // const dummmydata = {
-  //   order_number: "123124124",
-  //   order_date: "Sept 01, 2020",
-  //   is_draft: true,
-  // };
+
   const { store } = useStores();
   const [searchActive , setSearchActive] = useState(false);
   const [ticketData , setTickData ] = useState(null);
@@ -91,7 +82,7 @@ const DashboardTickets = () => {
         content: shippedTickets ? <Table TableData={shippedTickets} link={'/dashboard/tickets/'} /> : <div>No Tickets</div>,
         key:'shipped',
         amount:closedCount
-    }
+    },
   ]
   
 

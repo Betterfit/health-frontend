@@ -8,6 +8,7 @@ import ReactCSSTransitionGroup from 'react-transition-group';
 import { AnimatedSwitch } from 'react-router-transition';
 import DashboardNewOrder from './Inner/DashboardNewOrder'
 import DashboardOrders from './Inner/DashboardOrders'
+import DashboardFacilityOrder from './Inner/DashboardFacilityOrderDetail';
 // import DashboardInventory from '../Supplier/DashboardInventory'
 // import DashboardOrders from '../Supplier/DashboardOrders'
 // import DashboardProductList from './DashboardProductList'
@@ -28,9 +29,12 @@ const DashboardContainer = () =>{
                     atActive={{ opacity: 1 }}
                     className="switch-wrapper"
                 >
-                <Route path="/dashboard/orders">
+                <Route path="/dashboard/orders" exact>
                     <DashboardOrders/>
                 </Route>
+                <Route exact path="/dashboard/orders/detail/:id" render={(props) => {
+                        return ( <DashboardFacilityOrder {...props } /> )
+                }} />
                 <Route path="/dashboard/new-order/category">
                     <CartProvider>
                         <DashboardNewOrder/>
