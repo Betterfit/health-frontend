@@ -15,7 +15,7 @@ const ProfileCard = ({}) => {
 
   const [email, setEmail] = useState(userData.email);
   const [name, setName] = useState(userData.username);
-  const fixedName = useState(userData.username);
+  const [fixedName, setFixedName] = useState(userData.username);
 
   const setLanguage = (lang) => {
     return lang === "en" ? true : false;
@@ -32,18 +32,15 @@ const ProfileCard = ({}) => {
     setLang(active ? "en" : "fr");
   }, [active]);
 
-  const confirmCallBack = () => {
-    // api.setProfile(lang, ticketDataRaw.pk,obj).then((response)=>{
-    //     getData();
-    // }).catch(error => {
-    //     console.error('Error', error);
-    // });
+  const updateInfo = () => {
+    //update with api when ready
+    console.log(email, name, lang);
   };
 
   return (
     <>
-      <CardTitle name={name} label="User Profile"></CardTitle>
-      <form className="relative">
+      <CardTitle name={fixedName} label="User Profile"></CardTitle>
+      <form className="relative" onSubmit={updateInfo}>
         <div className="space-y-6">
           <h2 className="text-xl text-betterfit-graphite">Base Profile</h2>
           <div className="text-base leading-none border-2 border-gray-200 rounded flex">
@@ -56,6 +53,7 @@ const ProfileCard = ({}) => {
               }
               id="grid"
               onClick={toggle}
+              type="button"
             >
               <span>English</span>
             </button>
@@ -68,6 +66,7 @@ const ProfileCard = ({}) => {
               }
               id="list"
               onClick={toggle}
+              type="button"
             >
               <span>French</span>
             </button>
