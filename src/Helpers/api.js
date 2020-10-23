@@ -18,7 +18,6 @@ export default class Api {
     };
 
     if (this.api_token) {
-        // console.log(this.api_token)
         headers.Authorization = `Token ${this.api_token}`;
     }
 
@@ -53,6 +52,10 @@ export default class Api {
 
   getUserData = (data) => {
     return this.init().post("api-token-auth/", data);
+  }
+
+  getFacilityData = (id) => {
+    return this.init().get(`facilities/${id}`);
   }
 
 
