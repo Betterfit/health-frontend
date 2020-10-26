@@ -22,18 +22,42 @@ const StatStyles = (stat = "open") => {
         text: "text-status-dark-red",
         title: "Cancelled",
       };
+      break;
     case "delivered":
       return {
         bg: "bg-tag-light-purple",
         text: "text-tag-light-purple-txt",
         title: "Delivered",
       };
+      break;
     case "approved":
       return {
         bg: "bg-tag-light-green",
         text: "text-tag-light-green-txt",
         title: "Delivered",
       };
+      break;
+    case "matched":
+      return {
+        bg: "bg-tag-light-green",
+        text: "text-tag-light-green-txt",
+        title: "Matched",
+      };
+      break;
+    case "collecting":
+      return {
+        bg: "bg-tag-light-blue",
+        text: "text-tag-light-blue-txt",
+        title: "Collecting",
+      };
+      break;
+    case "closed":
+      return {
+        bg: "bg-betterfit-pale-blue",
+        text: "text-paragraph",
+        title: "Closed",
+      };
+      break; 
     default:
       return {
         bg: "bg-tag-light-blue",
@@ -46,7 +70,8 @@ const StatusButton = ({ status }) => {
   const styles = StatStyles(status);
   return (
     <div
-      className={`uppercase rounded-full py-2 md:px-10 px-4 text-xxs md:text-xs ${styles.bg} ${styles.text}`}
+      className={`uppercase rounded-full py-2 md:px-10 px-4 text-xxs text-center md:text-xs ${styles.bg} ${styles.text}`}
+      // className={`uppercase rounded-full py-2 px-10 ${styles.bg ? styles.bg : "" } ${styles.text ? styles.text : "  "}`}
     >
       {styles.title}
     </div>
