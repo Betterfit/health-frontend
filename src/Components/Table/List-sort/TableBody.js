@@ -1,178 +1,103 @@
-import React, {FC,useState} from 'react'
+import React, {FC,useState,useEffect} from 'react'
 import { ReactSortable } from "react-sortablejs";
 import { ReactSVG } from 'react-svg'
 import Edit from 'Images/Icons/edit.svg'
+import Moveable from 'Images/Icons/moveable.svg'
 import {NavLink} from "react-router-dom";
 import Button from "Components/Content/Button";
 import StatusButton from "Components/Content/StatusButton";
-const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
-    // console.log(`slide ${TableBody}`)
-    const [rowState , setRowState ] = useState(null);
-    setTimeout(()=> {
-        setRowState(TableBody);
-    });
-    if(rowState){
-            return(
-         
+const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) => {
+    const [rowState , setRowState ] = useState(TableBodyData);
+    console.log(rowState);
+    return(
+        <>
+        {rowState && (
             <ReactSortable tag="tbody" className="w-full"  list={rowState} setList={setRowState}>
 
             {
-                TableBody.map((row,index) =>{
+                rowState.map((row,index) =>{
                     if(index%2 == 0 ){
                         return(
-                            <>
-                            {link && (
-                                <tr className="table-row bg-white border border-white  ">
-                                    {
-                                        row.map((r, index)=>{
-                                            if(index !== removeAtIndex)
-                                                if(index == statusIndex)
-                                                    return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
-                                                        <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500 block" to={`${link}${row[removeAtIndex]}`}>
-                                                            {buttonType === "statusbutton" && (
-                                                                <StatusButton status={r} />
-                                                            )} 
-                                                            {buttonType !== "statusbutton" && (
-                                                                <Button 
-                                                                    text={r} 
-                                                                    color={r === "shipped"  ? "status-dark-green" :"betterfit-basic-blue" } 
-                                                                    text_size="text-sm" 
-                                                                />
-                                                            )} 
-                                                        </NavLink>
-                                                        
-                                                    </td>)
-                                                else
-                                                    return(
-                                                        
-                                                        <td className="whitespace-no-wrap px-4 py-4">
-                                                            <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row[removeAtIndex]}`}>
-                                                                {r}
-                                                            </NavLink>
-                                                        </td>
-                                                
-                                                    )
-                                        })
-                                    }
-                                </tr>
-
-                            )}
-                            {!link && (
-                                <tr className="bg-white border border-white">
-                                    {
-                                        row.map((r, index)=>{
-                                            if(index !== removeAtIndex)
-                                                if(index == statusIndex)
-                                                    return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
-                                                        <span className="px-4 py-4 text-sm leading-5 text-gray-500">
-                                                            {buttonType === "statusbutton" && (
-                                                                <StatusButton status={r} />
-                                                            )} 
-                                                            {buttonType !== "statusbutton" && (
-                                                                <Button 
-                                                                    text={r} 
-                                                                    color={r === "shipped"  ? "status-dark-green" :"betterfit-basic-blue" } 
-                                                                    text_size="text-sm" 
-                                                                />
-                                                            )} 
-                                                        </span>
-                                                        
-                                                    </td>)
-                                                else
-                                                    return(
-                                                        <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                                            {r}
-                                                        </td>
-                                                    )
-                                        })
-                                    }
-                                </tr>  
-                            )}
-                            </>
+                            <tr className="table-row bg-white border border-white  ">
+                                <td className="whitespace-no-wrap px-4 py-4">
+                                    <span className="flex items-center">
+                                        <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
+                                        <NavLink className="text-sm leading-5 text-gray-500 ml-3" to={`${link}${row.id}`}>
+                                            {row.match_number}
+                                        </NavLink>
+                                    </span>
+                                </td>
+                                <td className="whitespace-no-wrap px-4 py-4">
+                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                        {row.province}
+                                    </NavLink>
+                                </td> 
+                                <td className="whitespace-no-wrap px-4 py-4">
+                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                        {row.facility}
+                                    </NavLink>
+                                </td> 
+                                <td className="whitespace-no-wrap px-4 py-4">
+                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                        {row.supplier}
+                                    </NavLink>
+                                </td> 
+                                <td className="whitespace-no-wrap px-4 py-4">
+                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                        {row.order_date}
+                                    </NavLink>
+                                </td> 
+                                <td className="whitespace-no-wrap px-4 py-4">
+                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                        {row.rank}
+                                    </NavLink>
+                                </td>    
+                            </tr>
                         )
                     }else{
                         return(
-                            <>
-                            {link && (
-                                
-                                <tr className="bg-table-row border m-1 border-table-row relative ">
-                                    {
-                                        row.map((r, index)=>{
-                                            if(index !== removeAtIndex)
-                                                if(index == statusIndex)
-                                                    return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
-                                                        <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500 block" to={`${link}${row[removeAtIndex]}`}>
-                                                            {buttonType === "statusbutton" && (
-                                                                <StatusButton status={r} />
-                                                            )} 
-                                                            {buttonType !== "statusbutton" && (
-                                                                <Button 
-                                                                    text={r} 
-                                                                    color={r === "shipped"  ? "status-dark-green" :"betterfit-basic-blue" } 
-                                                                    text_size="text-sm" 
-                                                                />
-                                                            )} 
-                                                        </NavLink>
-                                                        
-                                                    </td>)
-                                                else
-                                                    return(
-                                                        <td className="whitespace-no-wrap px-4 py-4 ">
-                                                            <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row[removeAtIndex]}`}>
-                                                                    {r}
-                                                            </NavLink>
-                                                        </td>
-                                                    )
-                                        })
-                                    }
-                                </tr>
-                                
-                            )}
-                            {!link && (
-                                <tr className="bg-table-row border border-table-row">
-                                    {
-                                        row.map((r, index)=>{
-                                            if(index !== removeAtIndex)
-                                                if(index == statusIndex)
-                                                    return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
-                                                        <span className="px-4 py-4 text-sm leading-5 text-gray-500">
-                                                            {buttonType === "statusbutton" && (
-                                                                <StatusButton status={r} />
-                                                            )} 
-                                                            {buttonType !== "statusbutton" && (
-                                                                <Button 
-                                                                    text={r} 
-                                                                    color={r === "shipped"  ? "status-dark-green" :"betterfit-basic-blue" } 
-                                                                    text_size="text-sm" 
-                                                                />
-                                                            )} 
-                                                        </span>
-                                                    </td>)
-                                                else
-                                                    return(
-                                                        <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                                            {r}
-                                                        </td>
-                                                    )
-                                        })
-                                    }
-                                </tr>  
-                            )}
-                            </>
+                            <tr className="bg-table-row border m-1 border-table-row relative ">    
+                                <td className="whitespace-no-wrap px-4 py-4">
+                                    <span className="flex items-center">
+                                        <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
+                                        <NavLink className="text-sm leading-5 text-gray-500 ml-3" to={`${link}${row.id}`}>
+                                            {row.match_number}
+                                        </NavLink>
+                                    </span>
+                                </td>
+                                <td className="whitespace-no-wrap px-4 py-4">
+                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                        {row.province}
+                                    </NavLink>
+                                </td> 
+                                <td className="whitespace-no-wrap px-4 py-4">
+                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                        {row.facility}
+                                    </NavLink>
+                                </td> 
+                                <td className="whitespace-no-wrap px-4 py-4">
+                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                        {row.supplier}
+                                    </NavLink>
+                                </td> 
+                                <td className="whitespace-no-wrap px-4 py-4">
+                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                        {row.order_date}
+                                    </NavLink>
+                                </td> 
+                                <td className="whitespace-no-wrap px-4 py-4">
+                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                        {row.rank}
+                                    </NavLink>
+                                </td> 
+                            </tr>
                         )
                     }
                 })
             }
             </ReactSortable>
+        )}
+        </>
      )
-    }else{
-        return(
-            <div>Loading</div>
-        )
-    }
 }
 export default TableBody;
