@@ -6,7 +6,7 @@ import Table from "Components/Table/Detail/Table";
 import Api from "Helpers/api";
 import useStores from 'Helpers/useStores';
 import image from "Images/example_product.png"; //remove this later
-import { set } from 'js-cookie';
+
 
 const api = new Api();
 
