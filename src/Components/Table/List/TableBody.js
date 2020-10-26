@@ -3,8 +3,8 @@ import { ReactSVG } from 'react-svg'
 import Edit from 'Images/Icons/edit.svg'
 import {NavLink} from "react-router-dom";
 import Button from "Components/Content/Button";
-
-const TableBody = ({TableBody,removeAtIndex,statusIndex,link}) => {
+import StatusButton from "Components/Content/StatusButton";
+const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
     // console.log(`slide ${TableBody}`)
     return(
         <tbody>  
@@ -21,20 +21,25 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link}) => {
                                                 if(index == statusIndex)
                                                     return(
                                                     <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
-                                                        <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500" to={`${link}${row[removeAtIndex]}`}>
-                                                            <Button 
-                                                                text={r} 
-                                                                color={r === "shipped"  ? "status-dark-green" :"betterfit-basic-blue" } 
-                                                                text_size="text-sm" 
-                                                            />
+                                                        <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500 block" to={`${link}${row[removeAtIndex]}`}>
+                                                            {buttonType === "statusbutton" && (
+                                                                <StatusButton status={r} />
+                                                            )} 
+                                                            {buttonType !== "statusbutton" && (
+                                                                <Button 
+                                                                    text={r} 
+                                                                    color={r === "shipped"  ? "status-dark-green" :"betterfit-basic-blue" } 
+                                                                    text_size="text-sm" 
+                                                                />
+                                                            )} 
                                                         </NavLink>
                                                         
                                                     </td>)
                                                 else
                                                     return(
                                                         
-                                                        <td className="whitespace-no-wrap">
-                                                            <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500" to={`${link}${row[removeAtIndex]}`}>
+                                                        <td className="whitespace-no-wrap px-4 py-4">
+                                                            <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row[removeAtIndex]}`}>
                                                                 {r}
                                                             </NavLink>
                                                         </td>
@@ -53,13 +58,18 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link}) => {
                                                 if(index == statusIndex)
                                                     return(
                                                     <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
-                                                        <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500" to={`${link}${row[removeAtIndex]}`}>
-                                                            <Button 
-                                                                text={r} 
-                                                                color={r === "shipped" ? "status-dark-green" : "betterfit-basic-blue" } 
-                                                                text_size="text-sm" 
-                                                            />
-                                                        </NavLink>
+                                                        <span className="px-4 py-4 text-sm leading-5 text-gray-500">
+                                                            {buttonType === "statusbutton" && (
+                                                                <StatusButton status={r} />
+                                                            )} 
+                                                            {buttonType !== "statusbutton" && (
+                                                                <Button 
+                                                                    text={r} 
+                                                                    color={r === "shipped"  ? "status-dark-green" :"betterfit-basic-blue" } 
+                                                                    text_size="text-sm" 
+                                                                />
+                                                            )} 
+                                                        </span>
                                                         
                                                     </td>)
                                                 else
@@ -86,17 +96,24 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link}) => {
                                                 if(index == statusIndex)
                                                     return(
                                                     <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
-                                                        <Button 
-                                                            text={r} 
-                                                            color={r === "shipped" ? "status-dark-green" :"betterfit-basic-blue" } 
-                                                            text_size="text-sm" 
-                                                        />
+                                                        <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500 block" to={`${link}${row[removeAtIndex]}`}>
+                                                            {buttonType === "statusbutton" && (
+                                                                <StatusButton status={r} />
+                                                            )} 
+                                                            {buttonType !== "statusbutton" && (
+                                                                <Button 
+                                                                    text={r} 
+                                                                    color={r === "shipped"  ? "status-dark-green" :"betterfit-basic-blue" } 
+                                                                    text_size="text-sm" 
+                                                                />
+                                                            )} 
+                                                        </NavLink>
                                                         
                                                     </td>)
                                                 else
                                                     return(
-                                                        <td className="whitespace-no-wrap">
-                                                            <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500" to={`${link}${row[removeAtIndex]}`}>
+                                                        <td className="whitespace-no-wrap px-4 py-4 ">
+                                                            <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row[removeAtIndex]}`}>
                                                                     {r}
                                                             </NavLink>
                                                         </td>
@@ -114,12 +131,18 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link}) => {
                                                 if(index == statusIndex)
                                                     return(
                                                     <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
-                                                        <Button 
-                                                            text={r} 
-                                                            color={r === "shipped"  ? "status-dark-green" :"betterfit-basic-blue" } 
-                                                            text_size="text-sm" 
-                                                        />
-                                                        
+                                                        <span className="px-4 py-4 text-sm leading-5 text-gray-500">
+                                                            {buttonType === "statusbutton" && (
+                                                                <StatusButton status={r} />
+                                                            )} 
+                                                            {buttonType !== "statusbutton" && (
+                                                                <Button 
+                                                                    text={r} 
+                                                                    color={r === "shipped"  ? "status-dark-green" :"betterfit-basic-blue" } 
+                                                                    text_size="text-sm" 
+                                                                />
+                                                            )} 
+                                                        </span>
                                                     </td>)
                                                 else
                                                     return(
