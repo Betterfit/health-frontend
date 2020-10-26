@@ -18,7 +18,6 @@ const ProfileCard = ({ language = "en" }) => {
     setActive(!active);
   };
   useEffect(() => {
-    console.log("HEre");
     setLang(active ? "en" : "fr");
     console.log(language);
   }, [active]);
