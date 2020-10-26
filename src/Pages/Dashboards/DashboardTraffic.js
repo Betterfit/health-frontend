@@ -5,9 +5,11 @@ import DashboardContainer from 'Containers/Traffic/DashboardContainer';
 import {
     BrowserRouter as Router,
 } from "react-router-dom";
+
 import Order from "Images/Icons/order.svg";
 import Resources from "Images/Icons/resources.svg";
 import NewOrder from "Images/Icons/new-order.svg";
+
 
 // const [isOpen, setIsOpen] = useState(false)
 
@@ -27,17 +29,17 @@ const DashboardTraffic = () => {
         {
             to:'/dashboard/matches',
             name:'Matches',
-            icon:Matches,
+            icon:NewOrder,
         },
         {
             to:'/dashboard/orders',
             name:'Orders',
-            icon: Orders,
+            icon: Order,
         },
         {
             to:'/dashboard/inventory',
-            name:'Resources',
-            icon: Iventory,
+            // name:'Resources',
+            // icon: Iventory,
         },
         {
             to:'/dashboard/resources',

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {FC,useState} from 'react'
+import { ReactSortable } from "react-sortablejs";
 import { ReactSVG } from 'react-svg'
 import Edit from 'Images/Icons/edit.svg'
 import {NavLink} from "react-router-dom";
@@ -6,15 +7,22 @@ import Button from "Components/Content/Button";
 import StatusButton from "Components/Content/StatusButton";
 const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
     // console.log(`slide ${TableBody}`)
-    return(
-        <tbody>  
+    const [rowState , setRowState ] = useState(null);
+    setTimeout(()=> {
+        setRowState(TableBody);
+    });
+    if(rowState){
+            return(
+         
+            <ReactSortable tag="tbody" className="w-full"  list={rowState} setList={setRowState}>
+
             {
                 TableBody.map((row,index) =>{
                     if(index%2 == 0 ){
                         return(
                             <>
                             {link && (
-                                <tr className="table-row bg-white border border-white  hover:border-betterfit-highlight-blue">
+                                <tr className="table-row bg-white border border-white  ">
                                     {
                                         row.map((r, index)=>{
                                             if(index !== removeAtIndex)
@@ -89,7 +97,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                             <>
                             {link && (
                                 
-                                <tr className="bg-table-row border m-1 border-table-row relative hover:border-betterfit-highlight-blue">
+                                <tr className="bg-table-row border m-1 border-table-row relative ">
                                     {
                                         row.map((r, index)=>{
                                             if(index !== removeAtIndex)
@@ -159,8 +167,12 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                     }
                 })
             }
-
-        </tbody>
-    )
+            </ReactSortable>
+     )
+    }else{
+        return(
+            <div>Loading</div>
+        )
+    }
 }
 export default TableBody;

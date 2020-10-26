@@ -7,9 +7,13 @@ import {
 } from "react-router-dom";
 import ReactCSSTransitionGroup from 'react-transition-group';
 import { AnimatedSwitch } from 'react-router-transition';
-import DashboardInventory from './Inner/DashboardInventory'
-import DashboardTickets from './Inner/DashboardTickets'
-import DashboardTicketDetail from './Inner/DashboardTicketDetail';
+
+import DashboardMatches from "./Inner/DashboardMatches";
+import DashboardMatchesDetail from "./Inner/DashboardMatchesDetail";
+import DashboardMatchesOrderDetail from "./Inner/DashboardMatchesOrderDetail";
+// import DashboardInventory from './Inner/DashboardInventory'
+// import DashboardTickets from './Inner/DashboardTickets'
+// import DashboardTicketDetail from './Inner/DashboardTicketDetail';
 
 const DashboardContainer = () =>{
     const [title , setTitle] = useState('');
@@ -26,26 +30,20 @@ const DashboardContainer = () =>{
                     className="switch-wrapper"
                 >
                     <Route exact path="/dashboard" render={() => (
-                        <Redirect to="/dashboard/inventory"/>
+                        <Redirect to="/dashboard/matches"/>
                     )}/>
-                    <Route path="/dashboard/tickets" exact>
-                        <DashboardTickets />
+                    <Route path="/dashboard/matches" exact>
+                        <DashboardMatches />
                     </Route>
-                    <Route exact path="/dashboard/tickets/:id" render={(props) => {
-                        return ( <DashboardTicketDetail {...props } /> )
-                    }} />
-                    <Route path="/dashboard/inventory" >
-                        <DashboardInventory initial changeTitle={(title) => changeTitle(title)} />
-                    </Route>
+                    <Route exact path="/dashboard/matches/:id" render={(props) => {
+                        return ( <DashboardMatchesDetail {...props } /> )
+                    }} /> 
+                     <Route exact path="/dashboard/matches/:id/:oid" render={(props) => {
+                        return ( <DashboardMatchesOrderDetail {...props } /> )
+                    }} /> 
+
                 </AnimatedSwitch>
-        
-                {/* <!-- /End replace --> */}
             </main>
-            {/* <div className="w-full hidden md:block bg-white border-b border-gray-400 mb-8 px-6 py-4 sm:px-6 md:px-8">
-                <h1 className="text-2xl font-semibold text-gray-700">
-                    {title}
-                </h1>
-            </div> */}
         </div>
     )
 }

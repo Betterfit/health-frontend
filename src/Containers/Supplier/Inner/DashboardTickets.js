@@ -73,13 +73,13 @@ const DashboardTickets = () => {
   const TabData = [ 
     {
         heading:'Open',
-        content: openTickets ? <Table TableData={openTickets} link={'/dashboard/tickets/'} /> : <div>No Tickets</div> ,
+        content: openTickets ? <Table TableData={openTickets} link={'/dashboard/tickets/'} buttonType="normal"  /> : <div>No Tickets</div> ,
         key:'opened',
         amount:openCount
     },
     {
         heading:'Shipped',
-        content: shippedTickets ? <Table TableData={shippedTickets} link={'/dashboard/tickets/'} /> : <div>No Tickets</div>,
+        content: shippedTickets ? <Table TableData={shippedTickets} link={'/dashboard/tickets/'} buttonType="normal"  /> : <div>No Tickets</div>,
         key:'shipped',
         amount:closedCount
     },
