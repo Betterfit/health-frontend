@@ -50,6 +50,11 @@ module.exports = {
         'tag-light-blue-txt': '#234499',
         'tag-light-orange': '#FBEDDE',
         'tag-light-orange-txt': '#803319',
+        'tag-light-yellow': '#FEFAE2',
+        'tag-light-yellow-txt': '#6B3D1D',
+        'tag-light-purple': '#EDEBFC',
+        'tag-light-purple-txt': '#234499',
+
 
       },
       spacing: {
