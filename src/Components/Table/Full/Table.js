@@ -2,14 +2,20 @@ import React from 'react'
 import TableHead from './TableHead'
 import TableHeader from './TableHeader'
 import TableBody from './TableBody'
-const Table = ({TableHeaderData, TableData,excludeKeys,excludeValues,}) => {
+const Table = ({TableData, excludeKeys,excludeValues,}) => {
+
+    const TableDataProducts = TableData.order_products;
+
+    //Create the Table Data infoormation. 
+    let TableHeaderData = Object.assign({}, TableData);
+    delete TableHeaderData.order_products;
 
     let TableHeadData = [];
     let TableBodyData = [];
     let TableHeaderDataOnly = {};
 
     let nooptions = false;
-    TableData.map(variant => {
+    TableDataProducts.map(variant => {
         let keys = Object.keys(variant);
         let values = Object.entries(variant);
         keys.forEach((key,index) => {
@@ -32,7 +38,7 @@ const Table = ({TableHeaderData, TableData,excludeKeys,excludeValues,}) => {
     });
     return(
         <div className="flex flex-col mt-10 mb-4 p-4 pt-4 bg-paragraph rounded-md">
-            {TableHeaderData[0] && (<TableHeader HeaderData = {TableHeaderData[0].data} Status={TableHeaderData[0].status}/>)}
+            {TableHeaderData && (<TableHeader HeaderData = {TableHeaderData}/>)}
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="border-b border-gray-200">

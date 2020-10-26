@@ -20,7 +20,7 @@ const TableBody = ({TableBody}) => {
                                             case "priority":
                                               // code block
                                                 return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
+                                                    <td className="px-4 py-4  w-8 text-sm leading-5 text-gray-500">
                                                         <Button
                                                             text={r[1] === 1 ? "Stat" : "Regular"} 
                                                             color={r[1] === 1 ? "status-red" :"status-blue" } 
@@ -38,7 +38,7 @@ const TableBody = ({TableBody}) => {
                                             case "item":
                                                 return(
                                                     <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                                        <div className="flex items-center">
+                                                        <div className="flex items-center" style={{width:"max-content"}}>
                                                             <img className="w-24 mr-2" src={`${row[imageIndex][1]}`} /> 
                                                             <span className="font-bold text-betterfit-basic-blue">{r[1]}</span>
                                                         </div>
@@ -47,7 +47,7 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             default:
                                                 return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                                    <td className="px-4 py-4  text-sm leading-5 text-gray-500">
                                                         <div className="flex items-center">
                                                             {/* <img className="w-24 mr-2" src={`${row[imageIndex]}`} /> */}
                                                             {/* <span className="font-bold text-betterfit-basic-blue">{r}</span> */}
@@ -71,7 +71,7 @@ const TableBody = ({TableBody}) => {
                                             case "priority":
                                               // code block
                                                 return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
+                                                    <td className="px-4 py-4  w-8 text-sm leading-5 text-gray-500">
                                                         <Button
                                                             text={r[1] === 1 ? "Stat" : "Regular"} 
                                                             color={r[1] === 1 ? "status-red" :"status-blue" } 
@@ -88,8 +88,8 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             case "item":
                                                 return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                                        <div className="flex items-center">
+                                                    <td className="px-4 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500">
+                                                        <div className="flex items-center" style={{width:"max-content"}}>
                                                             <img className="w-24 mr-2" src={`${row[imageIndex][1]}`} /> 
                                                             <span className="font-bold text-betterfit-basic-blue">{r[1]}</span>
                                                         </div>
@@ -98,7 +98,7 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             default:
                                                 return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                                    <td className="px-4 py-4  text-sm leading-5 text-gray-500">
                                                         <div className="flex items-center">
                                                             {/* <img className="w-24 mr-2" src={`${row[imageIndex]}`} /> */}
                                                             {/* <span className="font-bold text-betterfit-basic-blue">{r}</span> */}

@@ -11,4 +11,4 @@ export const CartProvider = ({children}) => {
     </CartContext.Provider>
 }
 
-export const useCartStore = () => React.useContext(CartContext)
+export const useCartStore = () => React.useContext(CartContext);

@@ -36,3 +36,10 @@
 .orderCartCard:hover .removeCartItem{
     opacity: 1 !important;
 }
+
+
+
+.shortColumn td {
+    padding-top:0 !important;
+    padding-bottom: 0 !important;
+}

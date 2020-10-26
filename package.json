@@ -22,8 +22,10 @@
     "react-router-dom": "^5.2.0",
     "react-router-transition": "^2.0.0",
     "react-scripts": "3.4.3",
+    "react-sortablejs": "^6.0.0",
     "react-svg": "^11.0.40",
     "redux": "^4.0.5",
+    "sortablejs": "^1.12.0",
     "tailwind-react-ui": "^0.8.1"
   },
   "scripts": {
@@ -49,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@types/sortablejs": "^1.10.6",
     "autoprefixer": "^10.0.0",
     "postcss-cli": "^7.1.2",
     "postcss-import": "^12.0.1",
