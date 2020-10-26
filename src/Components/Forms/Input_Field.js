@@ -1,7 +1,6 @@
 import React from "react";
 
 function Input_Field({ id_tag, name, type, value, onChange }) {
-  const t = onChange;
   return (
     <>
       <label htmlFor={id_tag} className="sr-only">
