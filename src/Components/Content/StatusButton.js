@@ -4,34 +4,34 @@ const StatStyles = (stat = "open") => {
   switch (stat.toLowerCase()) {
     case "draft":
       return {
-        bg: "bg-status-grey",
-        text: "text-status-dark-grey",
+        bg: "bg-tag-light-blue",
+        text: "text-tag-light-blue-txt",
         title: "Draft",
       };
       break;
     case "open":
       return {
-        bg: "bg-tag-light-green",
-        text: "text-tag-light-green-txt",
+        bg: "bg-tag-light-yellow",
+        text: "text-tag-light-yellow-txt",
         title: "Open",
       };
       break;
     case "cancelled":
       return {
-        bg: "bg-tag-light-red",
-        text: "text-tag-light-red-txt",
+        bg: "bg-status-red",
+        text: "text-status-dark-red",
         title: "Cancelled",
       };
     case "delivered":
       return {
-        bg: "bg-tag-light-blue",
-        text: "text-tag-light-blue-txt",
+        bg: "bg-tag-light-purple",
+        text: "text-tag-light-purple-txt",
         title: "Delivered",
       };
     case "approved":
       return {
-        bg: "bg-tag-light-blue",
-        text: "text-tag-light-blue-txt",
+        bg: "bg-tag-light-green",
+        text: "text-tag-light-green-txt",
         title: "Delivered",
       };
     default:

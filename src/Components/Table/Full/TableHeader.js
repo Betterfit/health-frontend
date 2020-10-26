@@ -35,7 +35,7 @@ const TableHeader = ({ HeaderData }) => {
   return (
     <>
       <div className="relative">
-        <div className="flex flex-col md:flex-row justify-between md:py-4 pb-2">
+        <div className="flex flex-col md:flex-row justify-between md:py-4 py-3">
           <div>
             <HeaderText
               title="Purchase Order"
