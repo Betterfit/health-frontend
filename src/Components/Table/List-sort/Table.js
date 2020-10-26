@@ -16,9 +16,9 @@ const Table = ({TableData,link,extraClasses,buttonType}) => {
             province: variant.province,
             facility:variant.facility,
             supplier: variant.supplier,
-            order_date: "Oct 15, 2020",
-            rank:99,
-            id:1
+            order_date: variant.order_date,
+            rank:variant.rank,
+            id:variant.pk
         }
         keys.forEach((key,index) => {
             if(!TableHeadData.includes(key)){

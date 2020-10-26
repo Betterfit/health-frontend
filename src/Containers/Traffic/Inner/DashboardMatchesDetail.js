@@ -1,13 +1,15 @@
 import React , {useState,useEffect} from 'react'
+import { ReactSVG } from 'react-svg';
 import Table from 'Components/Table/List-sort/Table';
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import BackNavigation from 'Components/Helpers/BackNavigation'
+import Reload from 'Images/Icons/reload.svg';
 import Api from "Helpers/api";
+
 const api = new Api();
 const DashboardMatchesDetail = (props) => {
     const { match } = props;
     const matchId = parseInt(match.params.id);
-    console.log(matchId);
     const [matchesData , setMatchesData] = useState({
         order_date:"October 18, 2020",
         matches:"11/12",
@@ -58,7 +60,7 @@ const DashboardMatchesDetail = (props) => {
 
     const matchData = [
         {
-            match_number: "1001-2020-001240",
+            match_number: "1001-2020-001242",
             province: "AB",
             facility:"Royal Alexandra Ho...",
             supplier: "Air Liquide",
@@ -67,13 +69,31 @@ const DashboardMatchesDetail = (props) => {
             pk:1
         },
         {
-            match_number: "1001-2020-021240",
+            match_number: "1001-2020-021246",
             province: "AB",
             facility:"Grey Nuns Hospital",
             supplier: "Lift Medical",
             order_date: "Oct 15, 2020",
             rank:99,
             pk:2
+        },
+        {
+            match_number: "2001-2020-221249",
+            province: "AB",
+            facility:"Grey Nuns Hospital",
+            supplier: "Lift Medical",
+            order_date: "Oct 15, 2020",
+            rank:53,
+            pk:3
+        },
+        {
+            match_number: "4201-2020-25340",
+            province: "AB",
+            facility:"Grey Nuns Hospital",
+            supplier: "Lift Medical",
+            order_date: "Oct 15, 2020",
+            rank:103,
+            pk:4
         },
     ]
 
@@ -100,11 +120,12 @@ const DashboardMatchesDetail = (props) => {
                         <button
                             // onClick={ onClick }
                             type="submit"
-                            className={`flex-0 rounded-md flex no-wrap justify-center py-3 border border-transparent font-semibold px-4
+                            className={`flex-0 rounded-md flex items-center no-wrap justify-center py-3 border border-transparent px-4
                             transition duration-150 ease-in-out capitalize uppercase text-lg text-bettfit-navy bg-betterfit-pale-blue px-4`
                             }
                             style={{minWidth:100}}
                         >
+                            <ReactSVG src={Reload} className="flex items-center mr-3"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
                             Update Suppliers
                         </button>
                     </div>
@@ -114,7 +135,7 @@ const DashboardMatchesDetail = (props) => {
             <div>
                 <Table 
                     TableData={matchData} 
-                    link={'/dashboard/matches/'} 
+                    link={`/dashboard/matches/${matchId}/`} 
                 />
             </div>
 
