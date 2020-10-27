@@ -9,28 +9,10 @@ import OpenClose from "Images/Icons/open-close.svg";
 import FaciltyCard from "Components/Profile/FacilityCard";
 import Slider from "Components/Slider/Slider";
 
-const SideBarProfile = ({ userName, active, userType }) => {
+const SideBarProfile = ({ userName, active, userType, showFacility, showProfile}) => {
   const [ShowNav, SetNav] = useState(active);
   const ToggleProfileNavigation = () => {
-    console.log("HERE");
     SetNav(!ShowNav);
-  };
-  const [userData, setUserType] = useState(
-    JSON.parse(localStorage.getItem("user"))
-  );
-  const [ShowProfile, SetProfile] = useState({
-    profile: false,
-    facility: false,
-  });
-
-  const ToggleOptions = (type) => {
-    if (type === "profile") {
-      SetProfile({ profile: true, facility: false });
-    } else if (type === "facility") {
-      SetProfile({ profile: false, facility: true });
-    } else {
-      SetProfile({ profile: false, facility: false });
-    }
   };
 
   return (
@@ -38,6 +20,7 @@ const SideBarProfile = ({ userName, active, userType }) => {
       <div
         style={{ borderColor: "rgba(255,255,255,0.2)" }}
         className="p-0 block flex-shrink-0 flex md:border-t md:p-4 md:relative z-10 md:m-0 fixed mt-5 right-0 mr-4"
+
       >
         <Transition
           show={ShowNav}
@@ -50,17 +33,19 @@ const SideBarProfile = ({ userName, active, userType }) => {
         >
           <SideBarProfileNavigation
             userType={userType}
-            showFacility={() => ToggleOptions("facility")}
-            showProfile={() => ToggleOptions("profile")}
+            showFacility={showFacility}
+            showProfile={showProfile}
+            onMouseOut= {ToggleProfileNavigation}
           ></SideBarProfileNavigation>
         </Transition>
-        <a href="#" className="flex-shrink-0 w-full group profile-container">
+        <a href="#" className="flex-shrink-0 w-full group profile-container" 
+        onClick={ToggleProfileNavigation}
+>
           <div className="ml-3 flex flex-row items-center justify-between">
             <p className=" text-sm md:text-md leading-5 font-medium text-white opacity-75 group-hover:text-gray-900">
               {userName}
             </p>
             <ReactSVG
-              onClick={ToggleProfileNavigation}
               src={OpenClose}
               className=" opacity-50 m-2 hidden md:block"
               beforeInjection={(svg) => {
@@ -68,7 +53,6 @@ const SideBarProfile = ({ userName, active, userType }) => {
               }}
             />
             <ReactSVG
-              onClick={ToggleProfileNavigation}
               src={DotMenu}
               className="text-white opacity-50 md:hidden pointer-events-auto"
               beforeInjection={(svg) => {
@@ -78,12 +62,6 @@ const SideBarProfile = ({ userName, active, userType }) => {
           </div>
         </a>
       </div>
-      <Slider active={ShowProfile.facility} close={ToggleOptions}>
-        <FaciltyCard></FaciltyCard>
-      </Slider>
-      <Slider active={ShowProfile.profile} close={ToggleOptions}>
-        <ProfileCard></ProfileCard>
-      </Slider>
     </>
   );
 };
