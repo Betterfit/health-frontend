@@ -43,3 +43,8 @@
     padding-top:0 !important;
     padding-bottom: 0 !important;
 }
+
+.sortable-chosen {
+    background-color: rgba(31, 69, 168,0.1)!important;
+    
+}
