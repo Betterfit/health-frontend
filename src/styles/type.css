@@ -43,11 +43,11 @@ p {
   outline: none !important;
 }
 
-.table-row {
-  &:hover {
-    outline: auto;
-    outline-color: #9eb9ff;
-  }
+
+.table-row:hover{
+    outline:auto;
+    outline-color:#9EB9FF;
+    background-color: rgba(31, 69, 168,0.1)!important;
 }
 
 .pill {
@@ -56,6 +56,7 @@ p {
   min-width: auto !important;
 }
 
-.no-margin {
-  margin-bottom: 0 !important;
+.no-margin{
+    margin-bottom: 0 !important;
 }
+

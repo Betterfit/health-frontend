@@ -41,7 +41,7 @@ const DashboardTrafficDashboard = () => {
                                                 // supply - the quantity of supply
                                                 let cardData = {
                                                     name: p.name,
-                                                    status:'normal',
+                                                    status:p.status,
                                                     orders:p.orders_count,
                                                     supply:p.supply_count,
                                                 };

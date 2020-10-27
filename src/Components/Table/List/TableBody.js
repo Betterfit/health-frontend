@@ -51,7 +51,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
 
                             )}
                             {!link && (
-                                <tr className="bg-white border border-white">
+                                <tr className="bg-white border border-white table-row">
                                     {
                                         row.map((r, index)=>{
                                             if(index !== removeAtIndex)
@@ -89,7 +89,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                             <React.Fragment key={`table_row_${pindex}`}>
                             {link && (
                                 
-                                <tr className="bg-table-row border m-1 border-table-row relative hover:border-betterfit-highlight-blue">
+                                <tr className="table-row bg-table-row border m-1 border-table-row relative hover:border-betterfit-highlight-blue">
                                     {
                                         row.map((r, index)=>{
                                             if(index !== removeAtIndex)
@@ -124,7 +124,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                 
                             )}
                             {!link && (
-                                <tr className="bg-table-row border border-table-row">
+                                <tr className="bg-table-row border border-table-row table-row">
                                     {
                                         row.map((r, index)=>{
                                             if(index !== removeAtIndex)
