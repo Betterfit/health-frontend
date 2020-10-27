@@ -151,7 +151,6 @@ const DashboardOrders = () => {
       ];
     }
   })();
-  console.log("orderCount", orderCount)
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-10">
       <h2 className="text-3xl text-dark-blue my-3">Orders</h2>
