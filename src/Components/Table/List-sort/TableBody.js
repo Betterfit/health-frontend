@@ -23,7 +23,7 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                     today = dayjs(today).format('D')
                     if(pindex%2 == 0 ){
                         return(
-                            <tr key={`table_row_${pindex}`} className="table-row bg-white border border-white  ">
+                            <tr key={`table_row_${pindex}`} className="table-row bg-white border border-white table-row ">
                                 <td className="whitespace-no-wrap px-4 py-4">
                                     <span className="flex items-center">
                                         <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
@@ -81,7 +81,7 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                         )
                     }else{
                         return(
-                            <tr key={`table_row_${pindex}`} className="bg-table-row border m-1 border-table-row relative ">    
+                            <tr key={`table_row_${pindex}`} className="bg-table-row border m-1 border-table-row relative table-row">    
                                 <td className="whitespace-no-wrap px-4 py-4">
                                     <span className="flex items-center">
                                         <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />

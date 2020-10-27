@@ -13,7 +13,7 @@ const StatStyles = (status = "normal") => {
         text: "text-tag-light-blue-txt",
       };
       break;
-    case "warn":
+    case "warning":
       return {
         bg: "bg-tag-light-yellow",
         text: "text-tag-light-yellow-txt",

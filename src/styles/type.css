@@ -42,11 +42,10 @@ a.nav[aria-current="page"]{
 }
 
 
-.table-row{
-    &:hover{
-        outline:auto;
-        outline-color:#9EB9FF;
-    }
+.table-row:hover{
+    outline:auto;
+    outline-color:#9EB9FF;
+    background-color: rgba(31, 69, 168,0.1)!important;
 }
 
 
@@ -59,3 +58,4 @@ a.nav[aria-current="page"]{
 .no-margin{
     margin-bottom: 0 !important;
 }
+
