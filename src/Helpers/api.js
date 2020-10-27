@@ -5,7 +5,7 @@ export default class Api {
 
   
   constructor() {
-    this.api_token = localStorage.getItem('token') ? localStorage.getItem('token') : null ;
+    this.api_token = localStorage.getItem('token');
     this.client = null;
     this.api_url = 'http://betterfit.l1f7.com/'  
   }
@@ -104,6 +104,10 @@ export default class Api {
 
   getOrderList = (facilityId) => {
     return this.init().get(`/facilities/${facilityId}/orders/`)
+  }
+
+  getTrafficControllerSupply = () => {
+    return this.init().get(`/traffic-controllers/product-categories/`)
   }
 
 }

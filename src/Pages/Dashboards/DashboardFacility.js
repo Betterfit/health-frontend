@@ -23,17 +23,20 @@ const DashboardFacility = () => {
             to:'/dashboard/new-order/category/',
             name:'New Order',
             icon: NewOrder,
+            key:'new-order',
         },
         {
             to:'/dashboard/orders',
             name:'Orders',
             icon:Order,
+            key:'order',
         },
         {
-          to:'/dashboard/resources',
-          name:'Resources',
-          icon: Resources,
-      }
+            to:'/dashboard/resources',
+            name:'Resources',
+            icon: Resources,
+            key:'resources',
+        }
     ]
     return(
         <div className="md:h-screen flex-col md:flex-row flex overflow-hidden bg-white min-h-screen" style={{backgroundColor:'#F7FAFC'}}>

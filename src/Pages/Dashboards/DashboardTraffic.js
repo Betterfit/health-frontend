@@ -28,26 +28,31 @@ const DashboardTraffic = () => {
             to:'/dashboard/traffic-dashboard',
             name:'Dashboard',
             icon: Dashboard,
+            key:'traffic-dashboard',
         },
         {
             to:'/dashboard/matches',
             name:'Matches',
             icon:Matches,
+            key:'matches',
         },
         {
             to:'/dashboard/orders',
             name:'Orders',
             icon: Order,
+            key:'orders',
         },
         {
             to:'/dashboard/inventory',
             name:'Inventory',
             icon: Inventory,
+            key:'inventory',
         },
         {
             to:'/dashboard/resources',
             name:'Resources',
             icon: Resources,
+            key:'resources',
         },     
     ]
     return(

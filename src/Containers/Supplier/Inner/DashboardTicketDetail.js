@@ -37,7 +37,7 @@ const DashboardTicketDetail = (props) => {
         arr = arr.map(item => {
             let obj = {
                 product_image: item.product_option.product_image,
-                item: item.order,  
+                item: item.product_option.name,  
                 ...item.product_option,
                 priority: 1,
             };
@@ -77,8 +77,8 @@ const DashboardTicketDetail = (props) => {
         });
     }
 
-    const excludeKeys = ["pk","product_image"];
-    const excludeValues = ["pk"];
+    const excludeKeys = ["pk","product_image","name","product_variation"];
+    const excludeValues = ["pk","product_variation","name"];
 
 
 
