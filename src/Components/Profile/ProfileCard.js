@@ -6,6 +6,7 @@ import useStores from "Helpers/useStores";
 import InputFieldLabel from "Components/Forms/InputFieldLabel";
 import Button from "Components/Forms/Button";
 import CardTitle from "Components/Profile/CardTitle";
+import ButtonToggle from "Components/Forms/ToggleButton";
 
 const ProfileCard = ({}) => {
   const { store } = useStores();
@@ -15,26 +16,13 @@ const ProfileCard = ({}) => {
 
   const [email, setEmail] = useState(userData.email);
   const [name, setName] = useState(userData.username);
+  const [lang, setLanguage] = useState("en");
   const [fixedName, setFixedName] = useState(userData.username);
 
-  const setLanguage = (lang) => {
-    return lang === "en" ? true : false;
-  };
 
-  const [lang, setLang] = useState("en");
-  const [active, setActive] = useState(setLanguage(lang));
-
-  const toggle = () => {
-    setActive(!active);
-  };
-
-  useEffect(() => {
-    setLang(active ? "en" : "fr");
-  }, [active]);
-
-  const updateInfo = () => {
+  function updateInfo() {
     //update with api when ready
-    console.log(email, name, lang);
+    console.log("updating");
   };
 
   return (
@@ -43,34 +31,15 @@ const ProfileCard = ({}) => {
       <form className="relative" onSubmit={updateInfo}>
         <div className="space-y-6">
           <h2 className="text-xl text-betterfit-graphite">Base Profile</h2>
-          <div className="text-base leading-none border-2 border-gray-200 rounded flex">
-            <button
-              className={
-                "flex items-center flex-grow py-3 m-1 justify-center transition-colors duration-300 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 rounded px-4 py-2 " +
-                (active
-                  ? " pointer-events-none active bg-betterfit-basic-blue text-white"
-                  : "bg-white text-betterfit-navy'")
-              }
-              id="grid"
-              onClick={toggle}
-              type="button"
-            >
-              <span>English</span>
-            </button>
-            <button
-              className={
-                "flex items-center flex-grow justify-center py-3 m-1 transition-colors duration-300 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 rounded px-4 py-2" +
-                (active
-                  ? "bg-white"
-                  : " pointer-events-none active bg-betterfit-basic-blue text-white text-betterfit-navy'")
-              }
-              id="list"
-              onClick={toggle}
-              type="button"
-            >
-              <span>French</span>
-            </button>
-          </div>
+          {lang}
+          <ButtonToggle
+            option1={{ label: "English", active: lang === "en", value:"en" }}
+            option2={{ label: "French", active: lang === "fr", value:"fr" }}
+            value={lang}
+            callback ={(value) => {
+              setLanguage(value);
+            }}
+          ></ButtonToggle>
 
           <InputFieldLabel
             id_tag="Name"

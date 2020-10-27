@@ -23,7 +23,7 @@ const Slider = ({ children, active, close }) => {
               <div className="flex flex-col min-h-full mr-2 pb-6 pt-3 bg-white shadow-xl rounded-lg m-3">
                 <div className="border-grey-700 border-t-4 mx-2 p-2"></div>
                 <div
-                  className="absolute w-12 h-12 mt-3 mr-2 left-0 top-0 border cursor-pointer shadow-lg bg-white z-10 rounded-full flex"
+                  className="absolute w-12 h-12 mt-3 mr-2 left-0 top-0 border cursor-pointer shadow-lg bg-white z-10 rounded-full hidden md:flex"
                   onClick={close}
                 >
                   <ReactSVG
