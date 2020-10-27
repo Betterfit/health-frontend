@@ -1,12 +1,11 @@
 
 import * as axios from "axios";
-import Cookies from 'js-cookie'
 import useStores from 'Helpers/useStores';
 export default class Api {
 
-
+  
   constructor() {
-    this.api_token = Cookies.get('token') ? Cookies.get('token') : null ;
+    this.api_token = localStorage.getItem('token') ? localStorage.getItem('token') : null ;
     this.client = null;
     this.api_url = 'http://betterfit.l1f7.com/'  
   }
@@ -61,7 +60,7 @@ export default class Api {
 
 // ============================   PRODUCTS API  =====================================
   getProductCategories = () => {
-    return this.init().get("product-categories/"); 
+    return this.init().get(`product-categories` ); 
   }
 
   //get products under a particular category id
