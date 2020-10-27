@@ -35,7 +35,7 @@ const SideBarProfile = ({ userName, active, userType, showFacility, showProfile}
             userType={userType}
             showFacility={showFacility}
             showProfile={showProfile}
-            onMouseOut= {ToggleProfileNavigation}
+            close= {ToggleProfileNavigation}
           ></SideBarProfileNavigation>
         </Transition>
         <a href="#" className="flex-shrink-0 w-full group profile-container" 
