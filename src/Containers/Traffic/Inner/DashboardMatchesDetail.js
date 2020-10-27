@@ -81,7 +81,7 @@ const DashboardMatchesDetail = (props) => {
             province: "AB",
             facility:"Royal Alexandra Ho...",
             supplier: "Air Liquide",
-            order_date: "Oct 15, 2020",
+            order_date: "Oct 27, 2020",
             rank:99,
             pk:1
         },
@@ -90,7 +90,7 @@ const DashboardMatchesDetail = (props) => {
             province: "AB",
             facility:"Grey Nuns Hospital",
             supplier: "Lift Medical",
-            order_date: "Oct 15, 2020",
+            order_date: "Oct 26, 2020",
             rank:99,
             pk:2
         },
@@ -99,7 +99,7 @@ const DashboardMatchesDetail = (props) => {
             province: "AB",
             facility:"Grey Nuns Hospital",
             supplier: "Lift Medical",
-            order_date: "Oct 15, 2020",
+            order_date: "Oct 25, 2020",
             rank:53,
             pk:3
         },
@@ -108,9 +108,27 @@ const DashboardMatchesDetail = (props) => {
             province: "AB",
             facility:"Grey Nuns Hospital",
             supplier: "Lift Medical",
-            order_date: "Oct 15, 2020",
+            order_date: "Oct 27, 2020",
             rank:103,
             pk:4
+        },
+        {
+            match_number: "4201-2020-25349",
+            province: "AB",
+            facility:"Grey Nuns Hospital",
+            supplier: null,
+            order_date: "Oct 27, 2020",
+            rank:103,
+            pk:4
+        },
+        {
+            match_number: "4001-2020-021246",
+            province: "AB",
+            facility:"University of Alberta Hospital",
+            supplier: "Lift Medical",
+            order_date: "Oct 24, 2020",
+            rank:99,
+            pk:2
         },
     ]
 
@@ -124,7 +142,7 @@ const DashboardMatchesDetail = (props) => {
                         value={`${matchesData.order_date}`}
                     />
                 </div>
-                <div class="w-full md:w-1/2 flex justify-end ">
+                <div className="w-full md:w-1/2 flex justify-end ">
                     <div className="flex flex-row mt-4 items-center">
                         <HeadingComponent
                             title="Matches"
@@ -139,7 +157,7 @@ const DashboardMatchesDetail = (props) => {
                             // onClick={ onClick }
                             type="submit"
                             className={`flex-0 rounded-md flex items-center no-wrap justify-center py-3 border border-transparent px-4
-                            transition duration-150 ease-in-out capitalize uppercase text-lg text-bettfit-navy bg-betterfit-pale-blue px-4`
+                            transition duration-150 ease-in-out capitalize uppercase text-lg text-bettfit-navy hover:opacity-75 focus:outline-none bg-betterfit-pale-blue px-4 outline-none `
                             }
                             style={{minWidth:100}}
                         >

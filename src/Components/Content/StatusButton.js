@@ -37,11 +37,25 @@ const StatStyles = (stat = "open") => {
         title: "Delivered",
       };
       break;
+    case "review":
+      return {
+        bg: "bg-tag-light-green",
+        text: "text-tag-light-green-txt",
+        title: "Needs Review",
+      };
+      break;
     case "matched":
       return {
         bg: "bg-tag-light-green",
         text: "text-tag-light-green-txt",
         title: "Matched",
+      };
+      break;
+    case "no-match":
+      return {
+        bg: "bg-tag-light-yellow",
+        text: "text-tag-light-yellow-txt",
+        title: "No Match",
       };
       break;
     case "collecting":

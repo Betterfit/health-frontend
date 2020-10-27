@@ -23,7 +23,7 @@ const DashboardContainer = () =>{
     }
     return(
         <div className="flex flex-col w-full md:w-0 flex-1 overflow-hidden md:flex-row">
-            <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none" tabindex="0">
+            <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none" tabIndex="0">
                 <AnimatedSwitch
                     atEnter={{ opacity: 0 }}
                     atLeave={{ opacity: 0 }}
@@ -31,7 +31,7 @@ const DashboardContainer = () =>{
                     className="switch-wrapper"
                 >
                 <Route exact path="/dashboard" render={() => (
-                    <Redirect to="/dashboard/new-order"/>
+                    <Redirect to="/dashboard/new-order/category/"/>
                 )}/>
                 <Route path="/dashboard/orders" exact>
                     <DashboardOrders/>

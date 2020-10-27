@@ -25,16 +25,19 @@ const DashboardSupplier = () => {
             to:'/dashboard/tickets',
             name:'Tickets',
             icon: Ticket,
+            key:'tickets',
         },
         {
             to:'/dashboard/inventory',
             name:'Inventory',
             icon: Inventory,
+            key:'inventory',
         },
         {
           to:'/dashboard/Resources',
           name:'Resources',
           icon: Resources,
+          key:'resources',
       }
     ]
 

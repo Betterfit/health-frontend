@@ -33,16 +33,15 @@ const DashboardMatchesOrderDetail = (props) => {
     const order = {
         order_creation_date: "Oct 14, 2020",
         order_number:"1001-2020-001237",
-        match_date: "Oct 15, 2020",
+        match_date: "Oct 26, 2020",
         ordered_by: "Adrian Gyuricska",
         supplier: "Lift Medical",
         shipping_address: "10240 Kingsway NW, Edmonton, AB T5H 3V9",
         facility: "Royal Alexandra",
         unit: "Emergency",
-
     }
 
-    const actionComponent = <StatusButton status="matched" /> ;
+    const actionComponent = <StatusButton status={`${order.match_date ? "matched" : "no-match"}`} /> ;
     const excludeKeys = ["pk","product_image","name","product_variation"];
     const excludeValues = ["pk","product_variation","name"];
     return(

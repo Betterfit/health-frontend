@@ -35,7 +35,7 @@ const MatchOrderDetailHeader = ({ order , actionComponent }) => {
   let orderDate = dayjs(order.order_date).format('MMM DD, YYYY');
   return (
     <div className="flex flex-col border-b pb-4 border-gray-400 relative">
-        <BackNavigation link={"Back"} />
+        <BackNavigation link={"Back to Match"} />
         <MatchHeaderComponentTitle
         value={`#${order.order_number}`}
         />
@@ -45,10 +45,12 @@ const MatchOrderDetailHeader = ({ order , actionComponent }) => {
                 title="Order Creation Data"
                 value={order.order_creation_date  }
             />
-              <MatchHeaderComponent
+              {order.match_date && (
+                <MatchHeaderComponent
                   title="Match Date"
                   value={order.match_date}
-              />
+                />
+              )}
               <MatchHeaderComponent
                   title="Unit"
                   value={order.unit}

@@ -46,13 +46,13 @@ const ControllerCard = ({ products }) => {
       </span>
       <div className="space-x-1 flex flex-row">
         <ControllerCardStatus
-          value={products.orders.toLocaleString()}
+          value={products.orders}
           textStyle={styles.text}
           background={styles.bg}
           left={true}
         ></ControllerCardStatus>
         <ControllerCardStatus
-          value={products.supply.toLocaleString()}
+          value={products.supply}
           textStyle={styles.text}
           background={styles.bg}
           left={false}

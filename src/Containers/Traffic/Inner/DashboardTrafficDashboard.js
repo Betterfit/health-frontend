@@ -7,7 +7,7 @@ import Api from "Helpers/api";
 const api = new Api();
 const DashboardTrafficDashboard = () => {
     const [ProductData , setProductData] = useState(null);
-    const getData = async () => await api.getProductCategories()
+    const getData = async () => await api.getTrafficControllerSupply()
     .then((response) => {
         setProductData(response.data)
     })
@@ -24,9 +24,8 @@ const DashboardTrafficDashboard = () => {
                     <>
                         {
                             ProductData.map(product => {
-                                console.log(product);
                                 return(
-                                    <div className="flex flex-col mb-4">
+                                    <div key={`controllercard_${product.name}_parent`} className="flex flex-col mb-4">
                                         <div className="flex flex-row justify-between m-1 px-4">
                                             <span className="text-xs leading-4 font-medium uppercase tracking-wider uppercase text-betterfit-graphite">{product.name}</span>
                                             <div>
@@ -35,7 +34,7 @@ const DashboardTrafficDashboard = () => {
                                             </div>
                                         </div>
                                         {
-                                            product.products.map(p => {
+                                            product.products.map((p,index) => {
                                                 // status [critical,normal,warn],
                                                 // name - the name of the product
                                                 // orders - the quantity of orders
@@ -43,11 +42,11 @@ const DashboardTrafficDashboard = () => {
                                                 let cardData = {
                                                     name: p.name,
                                                     status:'normal',
-                                                    orders:2902,
-                                                    supply:23423,
+                                                    orders:p.orders_count,
+                                                    supply:p.supply_count,
                                                 };
                                                 return(
-                                                    <ControllerCard products={cardData} />
+                                                    <ControllerCard key={`controllercard_${product.name}_${index}`} products={cardData} />
                                                 )
                                             })
                                         }

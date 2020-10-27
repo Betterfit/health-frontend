@@ -9,10 +9,10 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
     return(
         <tbody>  
             {
-                TableBody.map((row,index) =>{
-                    if(index%2 == 0 ){
+                TableBody.map((row,pindex) =>{
+                    if(pindex%2 == 0 ){
                         return(
-                            <>
+                            <React.Fragment key={`table_row_${pindex}`} >
                             {link && (
                                 <tr className="table-row bg-white border border-white  hover:border-betterfit-highlight-blue">
                                     {
@@ -20,7 +20,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                             if(index !== removeAtIndex)
                                                 if(index == statusIndex)
                                                     return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
+                                                    <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
                                                         <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500 block" to={`${link}${row[removeAtIndex]}`}>
                                                             {buttonType === "statusbutton" && (
                                                                 <StatusButton status={r} />
@@ -38,7 +38,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                                 else
                                                     return(
                                                         
-                                                        <td className="whitespace-no-wrap px-4 py-4">
+                                                        <td key={`table_td_${pindex}_${index}`} className="whitespace-no-wrap px-4 py-4">
                                                             <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row[removeAtIndex]}`}>
                                                                 {r}
                                                             </NavLink>
@@ -57,7 +57,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                             if(index !== removeAtIndex)
                                                 if(index == statusIndex)
                                                     return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
+                                                    <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
                                                         <span className="px-4 py-4 text-sm leading-5 text-gray-500">
                                                             {buttonType === "statusbutton" && (
                                                                 <StatusButton status={r} />
@@ -74,7 +74,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                                     </td>)
                                                 else
                                                     return(
-                                                        <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                                        <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                                             {r}
                                                         </td>
                                                     )
@@ -82,11 +82,11 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                     }
                                 </tr>  
                             )}
-                            </>
+                            </React.Fragment>
                         )
                     }else{
                         return(
-                            <>
+                            <React.Fragment key={`table_row_${pindex}`}>
                             {link && (
                                 
                                 <tr className="bg-table-row border m-1 border-table-row relative hover:border-betterfit-highlight-blue">
@@ -95,7 +95,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                             if(index !== removeAtIndex)
                                                 if(index == statusIndex)
                                                     return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
+                                                    <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
                                                         <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500 block" to={`${link}${row[removeAtIndex]}`}>
                                                             {buttonType === "statusbutton" && (
                                                                 <StatusButton status={r} />
@@ -112,7 +112,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                                     </td>)
                                                 else
                                                     return(
-                                                        <td className="whitespace-no-wrap px-4 py-4 ">
+                                                        <td key={`table_td_${pindex}_${index}`} className="whitespace-no-wrap px-4 py-4 ">
                                                             <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row[removeAtIndex]}`}>
                                                                     {r}
                                                             </NavLink>
@@ -130,7 +130,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                             if(index !== removeAtIndex)
                                                 if(index == statusIndex)
                                                     return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
+                                                    <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
                                                         <span className="px-4 py-4 text-sm leading-5 text-gray-500">
                                                             {buttonType === "statusbutton" && (
                                                                 <StatusButton status={r} />
@@ -146,7 +146,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                                     </td>)
                                                 else
                                                     return(
-                                                        <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                                        <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                                             {r}
                                                         </td>
                                                     )
@@ -154,7 +154,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                     }
                                 </tr>  
                             )}
-                            </>
+                            </React.Fragment>
                         )
                     }
                 })

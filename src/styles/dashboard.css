@@ -44,9 +44,10 @@
     padding-bottom: 0 !important;
 }
 
-.sortable-chosen {
-    background-color: rgba(31, 69, 168,0.2)!important;
-    
+tr.sortable-chosen {
+    background-color: rgba(31, 69, 168,0.1)!important;
+    border:1px solid #9EB9FF;
+    outline:#9EB9FF;
 }
 
 .background-blur{

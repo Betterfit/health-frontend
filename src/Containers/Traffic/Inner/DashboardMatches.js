@@ -22,13 +22,19 @@ const DashboardMatches = () => {
     
     const matchData = [
         {
-            match_dates: "October 18th 2020",
+            match_dates: "October 28th 2020",
             number_of_orders: 135,
             status:"collecting",
             pk:1
         },
         {
-            match_dates: "October 17th 2020",
+            match_dates: "October 27th 2020",
+            number_of_orders: 405,
+            status:"review",
+            pk:1
+        },
+        {
+            match_dates: "October 26th 2020",
             number_of_orders: 405,
             status:"closed",
             pk:1
