@@ -55,7 +55,6 @@ module.exports = {
         'tag-light-yellow-txt': '#6B3D1D',
         'tag-light-purple': '#EDEBFC',
         'tag-light-purple-txt': '#234499',
-
       },
       spacing: {
         '18': '4.5rem',

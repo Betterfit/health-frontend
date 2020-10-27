@@ -11,6 +11,8 @@ import { AnimatedSwitch } from 'react-router-transition';
 import DashboardMatches from "./Inner/DashboardMatches";
 import DashboardMatchesDetail from "./Inner/DashboardMatchesDetail";
 import DashboardMatchesOrderDetail from "./Inner/DashboardMatchesOrderDetail";
+import DashboardTrafficDashboard from "./Inner/DashboardTrafficDashboard";
+import DashboardInventory from 'Containers/Supplier/Inner/DashboardInventory'
 // import DashboardInventory from './Inner/DashboardInventory'
 // import DashboardTickets from './Inner/DashboardTickets'
 // import DashboardTicketDetail from './Inner/DashboardTicketDetail';
@@ -41,8 +43,13 @@ const DashboardContainer = () =>{
                      <Route exact path="/dashboard/matches/:id/:oid" render={(props) => {
                         return ( <DashboardMatchesOrderDetail {...props } /> )
                     }} /> 
-
-                </AnimatedSwitch>
+                    <Route path="/dashboard/traffic-dashboard">
+                        <DashboardTrafficDashboard />
+                    </Route>
+                    <Route path="/dashboard/inventory" >
+                        <DashboardInventory initial changeTitle={(title) => changeTitle(title)} />
+                    </Route>
+                </AnimatedSwitch> 
             </main>
         </div>
     )

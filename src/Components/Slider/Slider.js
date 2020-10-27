@@ -17,7 +17,7 @@ const Slider = ({ children, active, close }) => {
       leaveTo="opacity-0"
     >
       <div className="fixed inset-0 overflow-y-scroll z-50 ">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 background-blur">
           <section className="absolute inset-y-0 right-0 pl-10 max-w-full flex">
             <div className="w-screen max-w-md">
               <div className="flex flex-col min-h-full mr-2 pb-6 pt-3 bg-white shadow-xl rounded-lg m-3">

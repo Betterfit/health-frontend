@@ -4,6 +4,7 @@ import Table from 'Components/Table/List-sort/Table';
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import BackNavigation from 'Components/Helpers/BackNavigation'
 import Reload from 'Images/Icons/reload.svg';
+import Countdown from 'react-countdown';
 import Api from "Helpers/api";
 
 const api = new Api();
@@ -11,7 +12,7 @@ const DashboardMatchesDetail = (props) => {
     const { match } = props;
     const matchId = parseInt(match.params.id);
     const [matchesData , setMatchesData] = useState({
-        order_date:"October 18, 2020",
+        order_date:"October 28, 2020",
         matches:"11/12",
         time_till_processed: "2:32:04"
     });
@@ -31,18 +32,34 @@ const DashboardMatchesDetail = (props) => {
 
     
 
-    const HeadingComponent = ({ title, value, classes }) => {
-        return (
-          <div
-            className={
-              "flex flex-col pr-6 md:pr-12 lg:pr-16 md:pb-3 py-3 md:py-1 max-w-1/2 items-end" +
-              (classes ? classes : "")
-            }
-          >
-            <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
-            <span className="text-betterfit-graphite text-base word break-words text-2xl">{value}</span>
-          </div>
-        );
+    const HeadingComponent = ({ title, value, classes, time }) => {
+        if(time){
+            return (
+                <div
+                  className={
+                    "flex flex-col pr-6 md:pr-12 lg:pr-16 md:pb-3 py-3 md:py-1 max-w-1/2 items-end" +
+                    (classes ? classes : "")
+                  }
+                >
+                    <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
+                    <span className="text-betterfit-graphite text-base word break-words text-2xl">
+                        <Countdown daysInHours={true} date={Date.parse(value)}></Countdown>
+                    </span>
+                </div>
+            );
+        }else{
+            return (
+                <div
+                  className={
+                    "flex flex-col pr-6 md:pr-12 lg:pr-16 md:pb-3 py-3 md:py-1 max-w-1/2 items-end" +
+                    (classes ? classes : "")
+                  }
+                >
+                  <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
+                  <span className="text-betterfit-graphite text-base word break-words text-2xl">{value}</span>
+                </div>
+            );
+        }
     };
 
     const HeadingComponentTitle = ({ value, classes }) => {
@@ -115,7 +132,8 @@ const DashboardMatchesDetail = (props) => {
                         />
                         <HeadingComponent
                             title="Time Till Processed"
-                            value={matchesData.time_till_processed }
+                            value={matchesData.order_date}
+                            time={true}
                         />
                         <button
                             // onClick={ onClick }

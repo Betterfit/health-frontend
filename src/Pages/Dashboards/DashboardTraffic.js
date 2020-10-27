@@ -9,6 +9,9 @@ import {
 import Order from "Images/Icons/order.svg";
 import Resources from "Images/Icons/resources.svg";
 import NewOrder from "Images/Icons/new-order.svg";
+import Dashboard from "Images/Icons/dashboard.svg";
+import Matches from "Images/Icons/matches.svg";
+import Inventory from "Images/Icons/inventory.svg";
 
 
 // const [isOpen, setIsOpen] = useState(false)
@@ -23,13 +26,13 @@ const DashboardTraffic = () => {
     const navItemsList = [
         {
             to:'/dashboard/traffic-dashboard',
-            name:'New Order',
-            icon: NewOrder,
+            name:'Dashboard',
+            icon: Dashboard,
         },
         {
             to:'/dashboard/matches',
             name:'Matches',
-            icon:NewOrder,
+            icon:Matches,
         },
         {
             to:'/dashboard/orders',
@@ -38,8 +41,8 @@ const DashboardTraffic = () => {
         },
         {
             to:'/dashboard/inventory',
-            // name:'Resources',
-            // icon: Iventory,
+            name:'Inventory',
+            icon: Inventory,
         },
         {
             to:'/dashboard/resources',

@@ -2,6 +2,7 @@ import React , {useState} from 'react';
 import {
     Switch,
     Route,
+    Redirect,
     useParams
 } from "react-router-dom";
 import ReactCSSTransitionGroup from 'react-transition-group';
@@ -29,6 +30,9 @@ const DashboardContainer = () =>{
                     atActive={{ opacity: 1 }}
                     className="switch-wrapper"
                 >
+                <Route exact path="/dashboard" render={() => (
+                    <Redirect to="/dashboard/new-order"/>
+                )}/>
                 <Route path="/dashboard/orders" exact>
                     <DashboardOrders/>
                 </Route>
