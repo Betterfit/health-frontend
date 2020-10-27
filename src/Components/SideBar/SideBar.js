@@ -2,7 +2,6 @@ import React,{useState} from 'react';
 import SideBarNavigation from './SideBarNavigation';
 import SideBarDashboardTypeCTA from './SideBarDashboardTypeCTA';
 import SideBarProfile from './SideBarProfile';
-import SideBarProfileMobile from './SideBarProfileMobile';
 import logo from 'Images/Icons/logo-full.svg';
 import useStores from 'Helpers/useStores';
 
@@ -35,7 +34,6 @@ const SideBar = ({navItemsList}) => {
               <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto px-4">
                 <div className="flex items-center flex-shrink-0 flex flex-row items-center justify-between">
                   <img className="w-30 md:w-56" src={logo} alt="Workflow"/>
-                  <SideBarProfileMobile userName={userName} />
                 </div>
                 <div className="flex flex-row md:flex-col items-end md:items-start justify-between ">
                   <SideBarDashboardTypeCTA name={orgName} location="Edmonton,AB" />
