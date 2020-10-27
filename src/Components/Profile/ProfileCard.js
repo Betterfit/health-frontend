@@ -20,6 +20,10 @@ const ProfileCard = ({}) => {
   const [fixedName, setFixedName] = useState(userData.username);
 
 
+  const changeLang = (value) => {
+    setLanguage(value);
+  };
+
   function updateInfo() {
     //update with api when ready
     console.log("updating");
@@ -31,14 +35,11 @@ const ProfileCard = ({}) => {
       <form className="relative" onSubmit={updateInfo}>
         <div className="space-y-6">
           <h2 className="text-xl text-betterfit-graphite">Base Profile</h2>
-          {lang}
           <ButtonToggle
             option1={{ label: "English", active: lang === "en", value:"en" }}
             option2={{ label: "French", active: lang === "fr", value:"fr" }}
             value={lang}
-            callback ={(value) => {
-              setLanguage(value);
-            }}
+            changeValue={changeLang}
           ></ButtonToggle>
 
           <InputFieldLabel

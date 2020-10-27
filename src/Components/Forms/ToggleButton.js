@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 const Button = ({ toggle, active, value }) => {
   return (
@@ -10,6 +10,7 @@ const Button = ({ toggle, active, value }) => {
           : "bg-white text-betterfit-navy'")
       }
       id="grid"
+      value={value}
       onClick={toggle}
       type="button"
     >
@@ -17,12 +18,12 @@ const Button = ({ toggle, active, value }) => {
     </button>
   );
 };
-const ToggleButton = ({ option1, option2 }, value, callback) => {
-  const [active, setActive] = useState(option1.active);
 
+const ToggleButton = ({ option1, option2, changeValue}) => {
+  const [active, setActive] = useState(option1.active);
   const toggle = () => {
     setActive(!active);
-    //active ? callback(option1.value) : callback(option2.value)
+    active ? changeValue(option2.value) : changeValue(option1.value)
   };
 
   return (
@@ -31,8 +32,8 @@ const ToggleButton = ({ option1, option2 }, value, callback) => {
         Default Language
       </span>
       <div className="text-base leading-none border-2 border-gray-200 rounded flex">
-        <Button toggle={toggle} active={active} value={option1.label}></Button>
-        <Button toggle={toggle} active={!active} value={option2.label}></Button>
+        <Button toggle={toggle} onChange={changeValue} active={active} value={option1.label}></Button>
+        <Button toggle={toggle} onChange={changeValue}  active={!active} value={option2.label}></Button>
       </div>
     </div>
   );
