@@ -54,11 +54,15 @@ tr.sortable-chosen *{
     color:#fff !important;
 }
 
-.background-blur{
-    /* position: absolute;
-    width: 100%;
-    left:0;
-    height: 100%;
-    filter: blur(4px); */
-    backdrop-filter: blur(4px);
-}
+
+
+@media screen and (min-width:768px){
+    .background-blur{
+        /* position: absolute;
+        width: 100%;
+        left:0;
+        height: 100%;
+        filter: blur(4px); */
+        backdrop-filter: blur(4px);  
+    }
+  }
