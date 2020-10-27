@@ -26,7 +26,7 @@ const HeaderText = ({ title, value, addOn_styles }) => {
 const TableHeader = ({ HeaderData }) => {
   const [open, setActive] = useState(false);
   const [ShowOpt, SetOptions] = useState(false);
-  const ToggleProfileNavigation = () => {
+  const ToggleOptions = () => {
     SetOptions(!ShowOpt);
   };
   const ToggleShowHide = () => {
@@ -57,7 +57,7 @@ const TableHeader = ({ HeaderData }) => {
             <StatusButton status={HeaderData.status} />
             <ReactSVG
               src={DotMenu}
-              onClick={ToggleProfileNavigation}
+              onClick={ToggleOptions}
               className="text-white opacity-50 pl-2"
               beforeInjection={(svg) => {
                 svg.setAttribute("style", "width: 18px;height:18px");
