@@ -17,52 +17,36 @@ const FacilityCard = ({}) => {
   const facilityName = userData.user_profile.facility_name;
   const facilityId = userData.user_profile.facility;
 
+  //TODO =fix once api complete
   const setData = (data) => {
     return {
       contact: ["123-123-1234", "email@testemail.com"],
       address: [data.street, data.city + " " + data.province, data.postal_code],
-      shipping_address: [
-        data.shipping_street,
-        data.shipping_city + " " + data.shipping_province,
-        data.shipping_postal_code,
-      ],
+      //shipping_address: [
+       // data.shipping_street,
+      //  data.shipping_city + " " + data.shipping_province,
+      //  data.shipping_postal_code,
+    //  ],
+      shipping_address: [data.street, data.city + " " + data.province, data.postal_code],
       units: ["Emergency", "Cardiology", "Urology", "Oncology"],
     };
   };
 
-  //testdata -  delete when api is ready
-  let testdata = {
-    name: "Royal Crom Hospital",
-    pk: 1,
-    region: "Western Canada",
-    street: "10139 81 Ave NW",
-    city: "Edmonton",
-    province: "AB",
-    postal_code: "T8N6V7",
-    shipping_street: "10139 81 Ave NW",
-    shipping_city: "Edmonton",
-    shipping_province: "AB",
-    shipping_postal_code: "T8N6V7",
-  };
 
   const getData = async () => {
     api
       .getFacilityData(facilityId)
       .then(async (response) => {
-        //let data = setData(response.data)
-        let data = setData(testdata);
+        let data = setData(response.data)
         setFacility(data);
       })
       .catch((err) => {
         //delete when api is working
-        let data = setData(testdata);
-        setFacility(data);
         console.log(err);
       });
   };
 
   useEffect(() => {
-    console.log("getting data");
     getData();
   }, []);
 
