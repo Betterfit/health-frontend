@@ -45,6 +45,15 @@
 }
 
 .sortable-chosen {
-    background-color: rgba(31, 69, 168,0.1)!important;
+    background-color: rgba(31, 69, 168,0.2)!important;
     
+}
+
+.background-blur{
+    /* position: absolute;
+    width: 100%;
+    left:0;
+    height: 100%;
+    filter: blur(4px); */
+    backdrop-filter: blur(4px);
 }
