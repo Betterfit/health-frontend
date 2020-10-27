@@ -55,7 +55,6 @@ module.exports = {
         'tag-light-yellow-txt': '#6B3D1D',
         'tag-light-purple': '#EDEBFC',
         'tag-light-purple-txt': '#234499',
-
       },
       spacing: {
         '18': '4.5rem',
@@ -65,6 +64,10 @@ module.exports = {
       },
       fontSize: {
         'xxs':'0.60rem',
+        '9': '9px',
+        '10': '10px',
+        '14': '14px',
+        '16': '16px',
         '3xl': '1.75rem',
       },
       letterSpacing: {
