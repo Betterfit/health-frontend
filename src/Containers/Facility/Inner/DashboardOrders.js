@@ -21,6 +21,11 @@ const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
 
 //set Header for title
 const setHeader = (data, url) => {
+  let options = [
+    {text: "Edit", action:"#", type: 'text'},
+    {text: "Delete", action:"#", type: 'text'},
+    {text: "Submit", action:"#", type: 'button'},
+  ];
   return {
     purchase_ord: data.purchase_no,
     ordered_by: data.facility_admin.user.first_name + " " + data.facility_admin.user.last_name,
@@ -28,7 +33,8 @@ const setHeader = (data, url) => {
     order_no: data.order_no,
     status: data.status,
     id:data.pk, 
-    url:`${url}/detail/${data.pk}`
+    url:`${url}/detail/${data.pk}`,
+    options: data.status==='draft' ? options : []
   };
 };
 

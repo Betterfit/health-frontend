@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import Api from "Helpers/api";
 import useStores from "Helpers/useStores";
 import dayjs from "dayjs";
+import { _allowStateChangesInsideComputed } from "mobx";
 
 //components
-import Modal from "Components/Content/Modal";
 import DashboadOrderDetail from "Containers/DashboardOrderDetail";
 import Table from "Components/Table/Detail/Table";
 import StatusButton from "Components/Content/StatusButton";
 import Button from "Components/Forms/Button";
-import { _allowStateChangesInsideComputed } from "mobx";
+
 
 const api = new Api();
 
@@ -90,15 +90,14 @@ const DashboardFacilityOrderDetail = (props) => {
 
   const confirmCallBack = () => {
     let arr = orderDataRaw;
-    arr.status = "shipped";
+    arr.status = "open";
     let obj = {
-      status: "shipped",
+      status: "open",
     };
     api
       .setUpdateTicket(supplierId, orderDataRaw.pk, obj)
       .then((response) => {
         getData();
-        setModal(!modal);
       })
       .catch((error) => {
         console.error("Error", error);
