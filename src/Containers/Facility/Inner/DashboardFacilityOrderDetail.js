@@ -5,7 +5,7 @@ import DashboadOrderDetail from 'Containers/DashboardOrderDetail';
 import Table from "Components/Table/Detail/Table";
 import Api from "Helpers/api";
 import useStores from 'Helpers/useStores';
-import image from "Images/example_product.png"; //remove this later
+import dayjs from "dayjs";
 
 
 const api = new Api();
@@ -27,7 +27,7 @@ const DashboardFacilityOrderDetail = (props) => {
         console.log(response.data);
         setOrderHeader ({
             order_number: response.data.order_no,
-            order_date: response.data.order_date,
+            order_date: dayjs(response.data.order_date).format("MMM DD, YYYY"),
             facility: response.data.facility.name,
             unit: "Emergency",
         }) 

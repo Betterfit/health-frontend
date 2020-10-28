@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import dayjs from 'dayjs';
-import BackNavigation from 'Components/Helpers/BackNavigation'
+
+import BackNavigation from "Components/Helpers/BackNavigation";
 
 const OrderComponent = ({ title, value, classes }) => {
   return (
@@ -10,56 +10,41 @@ const OrderComponent = ({ title, value, classes }) => {
         (classes ? classes : "")
       }
     >
-      <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
-      <span className="text-betterfit-graphite text-base word break-words">{value}</span>
+      <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">
+        {title.replace(/_|-/g, ' ')}
+      </span>
+      <span className="text-betterfit-graphite text-base word break-words">
+        {value}
+      </span>
     </div>
   );
 };
 
 const OrderComponentTitle = ({ value, classes }) => {
-    return (
-      <div
-        className={
-          "flex flex-col pr-4 md:pb-3 py-3 md:py-1 " +
-          (classes ? classes : "")
-        }
-      >
-        <span className="text-betterfit-graphite text-3xl">{value}</span>
-      </div>
-    );
-  };
+  return (
+    <div
+      className={
+        "flex flex-col pr-4 md:pb-3 py-3 md:py-1 " + (classes ? classes : "")
+      }
+    >
+      <span className="text-betterfit-graphite text-3xl">{value}</span>
+    </div>
+  );
+};
 
-
-const OrderDetailHeader = ({ order , actionComponent }) => {
-  
-  let orderDate = dayjs(order.order_date).format('MMM DD, YYYY');
+const OrderDetailHeader = ({ order, actionComponent }) => {
   return (
     <div className="flex flex-col border-b pb-4 border-gray-400 relative">
-        <BackNavigation link={"Back"} />
-        <OrderComponentTitle
-        value={`#${order.order_number}`}
-        />
-        <div className="flex flex-row mt-4">
-            <OrderComponent
-                title="Facility"
-                value={order.facility}
-            />
-            <OrderComponent
-                title="Unit"
-                value={order.unit}
-            />
-            <OrderComponent
-                title="Shipping Address"
-                value={order.shipping_address}
-            />
-            <OrderComponent
-                title="Order Date"
-                value={orderDate}
-            />
-        </div>
-        <div className="absolute top-0 right-0">
-            {actionComponent}
-        </div>
+      <BackNavigation link={"Back"} />
+      <OrderComponentTitle value={`#${order.order_number}`} />
+      <div className="flex flex-row mt-4">
+        {Object.keys(order)
+          .filter((key, i) => i > 0)
+          .map((key, i) => {
+            return <OrderComponent title={key} value={order[key]} />;
+          })}
+      </div>
+      <div className="absolute top-0 right-0">{actionComponent}</div>
     </div>
   );
 };
