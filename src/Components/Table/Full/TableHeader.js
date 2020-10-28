@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ReactSVG } from "react-svg";
 import { Transition } from "@tailwindui/react";
+import {NavLink} from "react-router-dom";
 // components
 import StatusButton from "Components/Content/StatusButton";
 //images
@@ -17,7 +18,7 @@ const HeaderText = ({ title, value, addOn_styles }) => {
       <span
         className={`md:pt-1 text-left md:text-base leading-4 text-white md:pb-0 ${addOn_styles}`}
       >
-        {value}
+        {value ? value : "N/A"}
       </span>
     </div>
   );
@@ -54,7 +55,9 @@ const TableHeader = ({ HeaderData }) => {
             <HeaderText title="Order Number" value={HeaderData.order_no} />
           </div>
           <div className="flex flex-row items-center absolute md:static top-0 right-0">
+          <NavLink className="p-2" to={HeaderData.url}>
             <StatusButton status={HeaderData.status} />
+            </NavLink>
             <ReactSVG
               src={DotMenu}
               onClick={ToggleOptions}

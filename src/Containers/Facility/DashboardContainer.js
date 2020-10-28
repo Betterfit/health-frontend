@@ -33,9 +33,9 @@ const DashboardContainer = () =>{
                 <Route exact path="/dashboard" render={() => (
                     <Redirect to="/dashboard/new-order/category/"/>
                 )}/>
-                <Route path="/dashboard/orders" exact>
-                    <DashboardOrders/>
-                </Route>
+                <Route path="/dashboard/orders" exact render={(props) =>{
+                    return ( <DashboardOrders {...props } /> )
+                }} />
                 <Route exact path="/dashboard/orders/detail/:id" render={(props) => {
                         return ( <DashboardFacilityOrder {...props } /> )
                 }} />
