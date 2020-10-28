@@ -41,7 +41,7 @@ const OrderDetailHeader = ({ order, actionComponent }) => {
         {Object.keys(order)
           .filter((key, i) => i > 0)
           .map((key, i) => {
-            return <OrderComponent title={key} value={order[key]} />;
+            return <OrderComponent key={key} title={key} value={order[key]} />;
           })}
       </div>
       <div className="absolute top-0 right-0">{actionComponent}</div>
