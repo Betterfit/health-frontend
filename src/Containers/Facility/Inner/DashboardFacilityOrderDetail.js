@@ -13,38 +13,40 @@ const api = new Api();
 const DashboardFacilityOrderDetail = (props) => {
     const { store } = useStores();
     const { match } = props;
-    const OrderId = parseInt(match.params.id);
+    //const orderId = parseInt(match.params.id);
+    const orderId = 1;
     // ======================== Ticket Data ========================
-    const [ticketData , setTicketData ] = useState(null);
+    const [orderData , setOrderData ] = useState(null);
     const [ticketDataRaw , setTicketRaw ] = useState(null);
-    const [ticketHeader , setTicketHeader] = useState(); 
+    const [orderHeader , setOrderHeader] = useState(); 
     const userData = JSON.parse(localStorage.getItem('user'));
     const supplierId = userData.user_profile.supplier;
-    const getData = async () => await api.getSupplierTicketOrder(1,1)
+    const getData = async () => await api.getOrder(orderId)
     .then((response) => {
         // need ticket facility and info
         console.log(response.data);
-        setTicketHeader ({
-            order_number: response.data.ticket_no,
-            order_date: response.data.ticket_date,
-            facility: ("Royal Alex") ,
+        setOrderHeader ({
+            order_number: response.data.order_no,
+            order_date: response.data.order_date,
+            facility: response.data.facility.name,
             unit: "Emergency",
-            shipping_address:"1234 Street NW"
         }) 
         console.log(response.data);
-        let arr = response.data.order.order_products;
+        let arr = response.data.order_products;
         setTicketRaw(response.data)
         arr = arr.map(item => {
             let obj = {
+
                 product_image: item.product_option.product_image,
-                item: item.order,  
-                ...item.product_option,
-                priority: 1,
+                item: item.product_option.product_variation,
+                [item.product_option.option_label]: item.product_option.name,
+                quantity: item.quantity, 
+                priority: item.priority,
+
             };
             return obj;
         });
-        console.log(arr);
-        setTicketData(arr);
+        setOrderData(arr);
     })
     .catch((err) => console.log(err));
     
@@ -86,11 +88,11 @@ const DashboardFacilityOrderDetail = (props) => {
 
     return(
         <>
-        {ticketData && (
+        {orderData && (
             <>
-                <DashboadOrderDetail actionComponent={actionComponent} headerData={ticketHeader} >
+                <DashboadOrderDetail actionComponent={actionComponent} headerData={orderHeader} >
                  
-                    <Table TableData={ticketData} excludeKeys={excludeKeys} excludeValues={excludeValues} />
+                    <Table TableData={orderData} excludeKeys={excludeKeys} excludeValues={excludeValues} />
                 
                 </DashboadOrderDetail> 
                 <>
