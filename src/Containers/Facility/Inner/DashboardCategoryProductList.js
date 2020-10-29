@@ -24,6 +24,7 @@ const DashboardCategoryProductList = (props) => {
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
         setIsError(true);
       });
 
