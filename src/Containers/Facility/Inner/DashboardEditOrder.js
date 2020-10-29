@@ -19,7 +19,6 @@ import dayjs from "dayjs";
 const api = new Api();
 const DashboardEditOrder = observer((props) => {
   const history = useHistory();
-  console.log("INSIDE", props);
   const { match } = props;
   const orderId = parseInt(match.params.oid);
 
@@ -42,7 +41,6 @@ const DashboardEditOrder = observer((props) => {
         });
 
         setOrderData(response.data);
-        console.log("RESPONCE");
         setOrderHeader({
           order_number: response.data.order_no,
           order_date: dayjs(response.data.order_date).format("MMM DD, YYYY"),
@@ -52,7 +50,6 @@ const DashboardEditOrder = observer((props) => {
         cartStore.getLocalCartStorage();
         cartStore.clearCart();
         cartStore.importCart(arr);
-        console.log("ORDER INOF", order);
       })
       .catch((err) => console.log(err));
   useEffect(() => {

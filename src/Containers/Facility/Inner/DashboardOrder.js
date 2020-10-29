@@ -22,7 +22,6 @@ import { CartProvider } from "Context/cartContext";
 
 const api = new Api();
 const DashboardOrder = ({props, type}) => {
-  console.log(type, "HERE");
   const history = useHistory();
   const { match } = props;
 
@@ -51,7 +50,6 @@ const DashboardOrder = ({props, type}) => {
           path={`${match.path}/:categoryName/:id?`}
           exact
           render={(props) => {
-              console.log("THIS MATCHES");
             return <DashboardCategoryProductList edit={true} {...props} />;
           }}
         />
