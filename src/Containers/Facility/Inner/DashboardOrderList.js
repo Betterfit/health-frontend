@@ -67,7 +67,7 @@ const cleanOrders = (data, url) => {
   return clean;
 };
 
-const DashboardOrders = (props) => {
+const DashboardOrderList = (props) => {
   const url = props.match.path;
   const userData = JSON.parse(localStorage.getItem('user')) 
   const userId = userData.user_profile.facility;
@@ -177,4 +177,4 @@ const DashboardOrders = (props) => {
   );
 };
 
-export default DashboardOrders;
+export default DashboardOrderList;

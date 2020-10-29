@@ -10,7 +10,9 @@ import OrderProductCard from "Components/Order/OrderProductCard";
 const api = new Api();
 const OrderCart =({Cart}) => {
   let CartData = JSON.stringify(Cart);
+  console.log("CARD", Cart)
   CartData = JSON.parse(CartData);
+  console.log("CARDData", CartData)
   const [cartItems , setCartItems] = useState();
   const [modalOrder , setModalOrder ] = useState(false);
   const [modalDraft , setModalDraft ] = useState(false);
