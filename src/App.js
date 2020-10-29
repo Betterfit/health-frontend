@@ -8,22 +8,19 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
-import {UserAuthContext} from 'Context/UserAuth'
 
-import { Provider } from 'mobx-react';
 import store from 'Store/store.js';
 
 // ================ PAGES ================
 import Login from './Pages/Login/Login';
 import LogOut from './Pages/Logout';
 import Dashboard from './Pages/Dashboard';
-
+import {useAuthStore} from "Context/authContext";
 
 const App = ({userType}) => {
-  const token = localStorage.getItem('token');
-  const {userData,addUserData} = useContext(UserAuthContext);
+  const authStore = useAuthStore();
+  const token = authStore.token;
   return (
-    <Provider store={store}>
       <Router>
         <div className="App">
           <Switch>
@@ -52,7 +49,6 @@ const App = ({userType}) => {
           </Switch>
         </div>
       </Router>
-    </Provider>
   );
 }
 

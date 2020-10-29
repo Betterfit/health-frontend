@@ -1,7 +1,6 @@
 import { Transition } from "@tailwindui/react";
 import React, { useState, useEffect } from "react";
-import useStores from "Helpers/useStores";
-
+import {useAuthStore} from "Context/authContext";
 //components
 import InputFieldLabel from "Components/Forms/InputFieldLabel";
 import Button from "Components/Forms/Button";
@@ -9,16 +8,15 @@ import CardTitle from "Components/Profile/CardTitle";
 import ButtonToggle from "Components/Forms/ToggleButton";
 
 const ProfileCard = ({}) => {
-  const { store } = useStores();
+  const authStore = useAuthStore();
   const [userData, setUserType] = useState(
-    JSON.parse(localStorage.getItem("user"))
+    JSON.parse(authStore.user)
   );
-
+    
   const [email, setEmail] = useState(userData.email);
   const [name, setName] = useState(userData.username);
   const [lang, setLanguage] = useState("en");
   const [fixedName, setFixedName] = useState(userData.username);
-
 
   const changeLang = (value) => {
     setLanguage(value);

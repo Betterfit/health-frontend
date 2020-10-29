@@ -41,17 +41,17 @@ const OrderCart =({Cart}) => {
 
 
   const confirmCallBack = () => {
-    // let arr = ticketDataRaw;
-    // arr.status = "shipped";
-    // let obj = {
-    //     "status":"shipped"
-    // }
-    // api.setUpdateTicket(supplierId,ticketDataRaw.pk,obj).then((response)=>{
-    //     getData();
-    //     setModal(!modal);
-    // }).catch(error => {
-    //     console.error('Error', error);
-    // });
+    let order = {
+      "facility": 1,
+      "facility_admin": 3,
+      "purchase_no": "ShgbAsdi",
+      "order_products": [
+        {
+          "quantity":12,
+          "product_option": 2,
+          "priority": "stat"
+      }]
+    };  
     setModalOrder(false)
     setModalDraft(false)
   }

@@ -45,7 +45,7 @@ p {
 
 
 .table-row:hover{
-    outline:auto;
+    outline:auto; 
     outline-color:#9EB9FF;
     background-color: rgba(31, 69, 168,0.1)!important;
 }

@@ -1,5 +1,3 @@
-import { observer } from "mobx-react";
-
 export function createCartStore (){
     return{
         cart:[],

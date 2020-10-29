@@ -2,16 +2,16 @@ import { Transition } from "@tailwindui/react";
 import React, { useState, useEffect } from "react";
 import useStores from "Helpers/useStores";
 import Api from "Helpers/api";
-
+import {useAuthStore} from "Context/authContext";
 //components
 import FacilityDescriptions from "Components/Profile/FacilityDescription";
 import CardTitle from "Components/Profile/CardTitle";
 
 const FacilityCard = ({}) => {
   const api = new Api();
-  const { store } = useStores();
+  const authStore = useAuthStore();
   const [userData, setUserType] = useState(
-    JSON.parse(localStorage.getItem("user"))
+    JSON.parse(authStore.user)
   );
   const [facilityData, setFacility] = useState();
   const facilityName = userData.user_profile.facility_name;

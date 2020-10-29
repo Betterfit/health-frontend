@@ -6,7 +6,6 @@ import image from "Images/example_product.png"; //remove this later
 import Api from "Helpers/api";
 const api = new Api();
 
-
 const DashboardProductDetail = (props) =>{
     const { match } = props
     const VariantId = parseInt(match.params.id);

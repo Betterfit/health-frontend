@@ -3,19 +3,18 @@ import Tabs from 'Components/Tabs/Tabs';
 import TicketSearch from 'Components/Search/TicketSearch';
 import Table from 'Components/Table/List/Table';
 import Api from "Helpers/api";
-import useStores from 'Helpers/useStores';
+import {useAuthStore} from "Context/authContext";
 // import OrderHeader from 'Components/Order/OrderHeader'
 // import BackNavigation from 'Components/Helpers/BackNavigation'
 
 const api = new Api();
 const DashboardTickets = () => {
-
-  const { store } = useStores();
+  const authStore = useAuthStore();
   const [searchActive , setSearchActive] = useState(false);
   const [ticketData , setTickData ] = useState(null);
   const [openTickets, setOpenTickets] = useState(null);
   const [shippedTickets, setShippedTickets] = useState(null);
-  const userData = JSON.parse(localStorage.getItem('user'));
+  const userData = JSON.parse(authStore.user);
   const supplierId = userData.user_profile.supplier;
   let [openCount , setOpen] = useState(0);
   let [closedCount , setClosed] = useState(0);
@@ -93,7 +92,6 @@ const DashboardTickets = () => {
         <Tabs tabs={TabData} amount={true} headingComp={<TicketSearch callBack={(e) => setSearchActive(e)} searchActive={searchActive} />} />
       )}
     </div>  
-      
   );
 };
 

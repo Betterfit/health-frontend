@@ -4,21 +4,19 @@ import Button from "Components/Content/Button";
 import DashboadOrderDetail from 'Containers/DashboardOrderDetail';
 import Table from "Components/Table/Detail/Table";
 import Api from "Helpers/api";
-import useStores from 'Helpers/useStores';
-import image from "Images/example_product.png"; //remove this later
-
+import {useAuthStore} from "Context/authContext";
 
 const api = new Api();
 
 const DashboardFacilityOrderDetail = (props) => {
-    const { store } = useStores();
+    const authStore = useAuthStore();
     const { match } = props;
     const OrderId = parseInt(match.params.id);
     // ======================== Ticket Data ========================
     const [ticketData , setTicketData ] = useState(null);
     const [ticketDataRaw , setTicketRaw ] = useState(null);
     const [ticketHeader , setTicketHeader] = useState(); 
-    const userData = JSON.parse(localStorage.getItem('user'));
+    const userData = JSON.parse(authStore.user);
     const supplierId = userData.user_profile.supplier;
     const getData = async () => await api.getSupplierTicketOrder(1,1)
     .then((response) => {

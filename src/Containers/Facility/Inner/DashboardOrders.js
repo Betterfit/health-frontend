@@ -5,7 +5,7 @@ import Table from "Components/Table/Full/Table";
 import Api from "Helpers/api";
 import useStores from "Helpers/useStores";
 import dayjs from 'dayjs';
-
+import {useAuthStore} from "Context/authContext";
 const api = new Api();
 
 const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
@@ -61,8 +61,8 @@ const cleanOrders = (data) => {
 };
 
 const DashboardOrders = () => {
-  const { store } = useStores();
-  const userData = JSON.parse(localStorage.getItem('user')) 
+  const authStore = useAuthStore();
+  const userData = JSON.parse(authStore.user);
   const userId = userData.user_profile.facility;
   const [orderData, setOrderData] = useState(null);
   const [orderCount, setOrderCountData] = useState(null);
