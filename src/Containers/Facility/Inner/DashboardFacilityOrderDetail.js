@@ -3,6 +3,7 @@ import Api from "Helpers/api";
 import useStores from "Helpers/useStores";
 import dayjs from "dayjs";
 import { _allowStateChangesInsideComputed } from "mobx";
+import { useHistory } from 'react-router-dom';
 
 //components
 import DashboadOrderDetail from "Containers/DashboardOrderDetail";
@@ -17,6 +18,8 @@ const DashboardFacilityOrderDetail = (props) => {
   const { store } = useStores();
   const { match } = props;
   const orderId = parseInt(match.params.id);
+  const history = useHistory();
+ 
   // ======================== Order Data ========================
   const [orderData, setOrderData] = useState(null);
   const [orderDataRaw, setOrderRaw] = useState(null);
@@ -52,9 +55,17 @@ const DashboardFacilityOrderDetail = (props) => {
   useEffect(() => {
     getData();
   }, []);
-  // ======================== End Ticket Data ========================
+ 
 
   const [modal, setModal] = useState(false);
+
+
+  const routeChange=()=> {
+    let path = `edit-order/${orderId}`;
+    history.goBack();
+    history.push(path);
+    
+  }
 
   //Status for order
   const ActionComponent = (() => {
@@ -72,7 +83,11 @@ const DashboardFacilityOrderDetail = (props) => {
       return (
         <div className="flex flex-row w-full justify-end px-7">
           <div className="flex flex-row space-x-3 sm:w-1/2 md:w-2/5 w-full">
-            <Button text="Edit Order" solid={false} text_size="text-sm" />
+            <Button 
+            text="Edit Order" 
+            solid={false} 
+            text_size="text-sm"
+            onClick={routeChange}  />
 
             <Button
               onClick={confirmCallBack}
