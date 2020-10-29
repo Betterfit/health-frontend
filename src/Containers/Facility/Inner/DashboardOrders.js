@@ -22,7 +22,7 @@ const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
 //set Header for title
 const setHeader = (data, url) => {
   let options = [
-    {text: "Edit", action:"#", type: 'text'},
+    {text: "Edit", action:`edit-order/${data.pk}`, type: 'text'},
     {text: "Delete", action:"#", type: 'text'},
     {text: "Submit", action:"#", type: 'button'},
   ];
