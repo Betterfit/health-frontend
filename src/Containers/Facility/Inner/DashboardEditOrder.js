@@ -13,7 +13,7 @@ import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 // import DashboardProductList from 'Containers/DashboardProductList'
 // import DashboardProductDetail from 'Containers/DashboardProductDetail'
 import DashboardSearch from "Containers/DashboardSearch";
-import { useCartStore } from "Context/editCartContext";
+import { useCartStore } from "Context/cartContext";
 import dayjs from "dayjs";
 
 const api = new Api();

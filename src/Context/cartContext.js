@@ -4,8 +4,8 @@ import {useLocalStore} from 'mobx-react';
 
 const CartContext = React.createContext(null);
 
-export const CartProvider = ({children}) => {
-    const cartStore = useLocalStore(createCartStore)
+export const CartProvider = ({children, value}) => {
+    const cartStore = useLocalStore(() => createCartStore(value));
     return <CartContext.Provider value={cartStore}>
         {children}
     </CartContext.Provider>

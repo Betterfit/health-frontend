@@ -12,13 +12,9 @@ import DashboardNewOrder from './Inner/DashboardNewOrder'
 import DashboardOrderList from './Inner/DashboardOrderList'
 import DashboardOrder from './Inner/DashboardOrder'
 import DashboardFacilityOrder from './Inner/DashboardFacilityOrderDetail';
-// import DashboardInventory from '../Supplier/DashboardInventory'
-// import DashboardOrders from '../Supplier/DashboardOrders'
-// import DashboardProductList from './DashboardProductList'
-// import DashboardProductDetail from './DashboardProductDetail'
-// import DashboardSearch from './DashboardSearch';
 import {CartProvider} from "Context/cartContext";
-import { EditCartProvider } from 'Context/editCartContext';
+
+
 const DashboardContainer = () =>{
     const [title , setTitle] = useState('');
     const changeTitle = (title) => {
@@ -46,9 +42,9 @@ const DashboardContainer = () =>{
                 )}}/>
                 <Route path="/dashboard/edit-order/:oid/category" render={(props) => {
                     return ( 
-                        <editCartProvider>
+                        <CartProvider value="editCart">
                         <DashboardOrder props={props} type='edit'/>
-                        </editCartProvider>
+                        </CartProvider>
                     )
                 }} />
                 <Route exact path="/dashboard/orders/detail/:id" render={(props) => {
@@ -56,7 +52,7 @@ const DashboardContainer = () =>{
                 }} />
                 <Route path="/dashboard/new-order/category" render={(props) => {
                         return ( 
-                            <CartProvider>
+                            <CartProvider value="cart">
                             <DashboardOrder props={props}   type='new' />
                             </CartProvider>
                 )}} />
