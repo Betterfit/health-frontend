@@ -3,26 +3,33 @@ import Api from "Helpers/api";
 import useStores from "Helpers/useStores";
 import dayjs from "dayjs";
 import { _allowStateChangesInsideComputed } from "mobx";
+import { useHistory } from "react-router-dom";
+import {useAuthStore} from "Context/authContext";
 
 //components
 import DashboadOrderDetail from "Containers/DashboardOrderDetail";
 import Table from "Components/Table/Detail/Table";
 import StatusButton from "Components/Content/StatusButton";
 import Button from "Components/Forms/Button";
-
+import Modal from "Components/Content/AlertModal";
 
 const api = new Api();
 
 const DashboardFacilityOrderDetail = (props) => {
-  const { store } = useStores();
+  const authStore = useAuthStore();
   const { match } = props;
-  const orderId = parseInt(match.params.id);
+  const orderId = parseInt(match.params.id);  
+  const { store } = useStores();
+  const history = useHistory();
+
   // ======================== Order Data ========================
   const [orderData, setOrderData] = useState(null);
   const [orderDataRaw, setOrderRaw] = useState(null);
   const [orderHeader, setOrderHeader] = useState();
-  const userData = JSON.parse(localStorage.getItem("user"));
-  const supplierId = userData.user_profile.supplier;
+  const [modal, setModal] = useState(false);
+  const [error, setError] = useState(false);
+
+
   const getData = async () =>
     await api
       .getOrder(orderId)
@@ -52,19 +59,36 @@ const DashboardFacilityOrderDetail = (props) => {
   useEffect(() => {
     getData();
   }, []);
-  // ======================== End Ticket Data ========================
 
-  const [modal, setModal] = useState(false);
+  const routeChange = () => {
+    let path = `edit-order/${orderId}`;
+    history.goBack();
+    history.push(path);
+  };
 
   //Status for order
-  const ActionComponent = (() => {
-      return (
-        <StatusButton
-          status={orderDataRaw.status}
-          extraClasses="font-semibold"
-        />
-      );
-  })
+  const ActionComponent = () => {
+    return (
+      <StatusButton status={orderDataRaw.status} extraClasses="font-semibold" />
+    );
+  };
+
+  const confirmCallBack = () => {
+    let arr = {...orderDataRaw};
+    arr.status = "open";
+    api
+      .submitOrder(orderId, arr)
+      .then((response) => {
+        getData();
+        setError(false);
+        setModal(!modal);
+      })
+      .catch((error) => {
+        console.error("Error", error);
+        setError(true);
+        setModal(!modal);
+      });
+  };
 
   //Status for order
   const ActionButtons = () => {
@@ -72,7 +96,12 @@ const DashboardFacilityOrderDetail = (props) => {
       return (
         <div className="flex flex-row w-full justify-end px-7">
           <div className="flex flex-row space-x-3 sm:w-1/2 md:w-2/5 w-full">
-            <Button text="Edit Order" solid={false} text_size="text-sm" />
+            <Button
+              text="Edit Order"
+              solid={false}
+              text_size="text-sm"
+              onClick={routeChange}
+            />
 
             <Button
               onClick={confirmCallBack}
@@ -86,22 +115,6 @@ const DashboardFacilityOrderDetail = (props) => {
       );
     }
     return "";
-  };
-
-  const confirmCallBack = () => {
-    let arr = orderDataRaw;
-    arr.status = "open";
-    let obj = {
-      status: "open",
-    };
-    api
-      .setUpdateTicket(supplierId, orderDataRaw.pk, obj)
-      .then((response) => {
-        getData();
-      })
-      .catch((error) => {
-        console.error("Error", error);
-      });
   };
 
   const excludeKeys = ["pk", "product_image"];
@@ -122,6 +135,14 @@ const DashboardFacilityOrderDetail = (props) => {
             />
           </DashboadOrderDetail>
           <ActionButtons></ActionButtons>
+          {modal && (
+            <Modal error={error} updateState={()=> setModal(!modal) }>
+              {error &&
+                `There was an error and we are unable to submit the order at this
+                time.`}
+              {!error && `Your order has been submitted.`}
+            </Modal>
+          )}
         </>
       )}
     </>

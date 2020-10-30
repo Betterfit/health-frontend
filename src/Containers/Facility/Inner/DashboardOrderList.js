@@ -4,7 +4,7 @@ import OrderSearch from "Components/Search/OrderSearch";
 import Table from "Components/Table/Full/Table";
 import Api from "Helpers/api";
 import dayjs from 'dayjs';
-
+import {useAuthStore} from "Context/authContext";
 const api = new Api();
 
 const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
@@ -68,8 +68,9 @@ const cleanOrders = (data, url) => {
 };
 
 const DashboardOrderList = (props) => {
+  const authStore = useAuthStore();
+  const userData = JSON.parse(authStore.user);
   const url = props.match.path;
-  const userData = JSON.parse(localStorage.getItem('user')) 
   const userId = userData.user_profile.facility;
   const [orderData, setOrderData] = useState(null);
   const [orderCount, setOrderCountData] = useState(null);

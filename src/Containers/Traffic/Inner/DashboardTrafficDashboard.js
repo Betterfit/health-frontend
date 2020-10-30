@@ -2,6 +2,7 @@ import React , {useState, useEffect} from 'react';
 import DashboardSideBar from 'Components/DashboardSideBar/DashboardSideBar';
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import ControllerCard from 'Components/TrafficControllerSideBar/ControllerCard';
+
 import Api from "Helpers/api";
 
 const api = new Api();
@@ -67,7 +68,7 @@ const DashboardTrafficDashboard = () => {
                         </>
                 )}
             </DashboardSideBar>
-            <div className={`w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll mt-8`}   >
+            <div className={`w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll mt-8`}>
                 graphs here
             </div>
         </div>
