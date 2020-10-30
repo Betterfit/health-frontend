@@ -44,7 +44,6 @@ export default class Api {
     return this.init().post("api/password_reset/", data)
   }
 
-
   signIn = (data) => {
     return this.init().post("api-token-auth/", data);
   }
@@ -53,8 +52,20 @@ export default class Api {
     return this.init().post("api-token-auth/", data);
   }
 
+  getUser = (id) => {
+    return this.init().get(`users/${id}/`);
+  }
+
   getFacilityData = (id) => {
     return this.init().get(`facilities/${id}`);
+  }
+
+  changePassword = (data) => {
+    return this.init().get(`change-password/`, data); 
+  }
+
+  changeProfile = (id, data) => {
+    return this.init().patch(`users/${id}/`, data); 
   }
 
 
@@ -114,9 +125,16 @@ export default class Api {
     return this.init().put(`/orders/${orderId}`, data)
   }
 
+  deleteOrder = (orderId) => {
+    return this.init().delete(`/orders/${orderId}`)
+  }
+
+
   getTrafficControllerSupply = () => {
     return this.init().get(`/traffic-controllers/product-categories/`)
   }
+
+   // ============================   Profiles API  =====================================
 
 }
 
