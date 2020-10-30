@@ -7,24 +7,54 @@ import dayjs from 'dayjs';
 
 const api = new Api();
 
-const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
-  return data
-    .filter((order, i) => order.status === filterName)
-    .map((filteredOrder) => (
-      <Table
-        TableData={filteredOrder}
-        excludeKeys={excludeKeys}
-        excludeValues={excludeValues}
-      />
-    ));
-};
 
-//set Header for title
+const DashboardOrders = (props) => {
+  const url = props.match.path;
+  const userData = JSON.parse(localStorage.getItem('user')) 
+  const userId = userData.user_profile.facility;
+  const [orderData, setOrderData] = useState(null);
+  const [orderCount, setOrderCountData] = useState(null);
+  const [searchActive, setSearchActive] = useState(false);
+  const getData = async () =>
+    await api
+      .getOrderList(userId)
+      .then((response) => {
+        console.log(response.data);
+        setOrderData(cleanOrders(response.data.orders, url));
+        setOrderCountData(response.data.summary);
+
+      })
+      .catch((err) => console.log(err));
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const deleteCallBack = () => {
+    api.deleteOrder().then((response)=>{
+        getData();
+        console.log("e")
+    }).catch(error => {
+        console.error('Error', error);
+    });
+}
+const submitCallBack = () => {
+  api.submitOrder().then((response)=>{
+      getData();
+      console.log("e")
+  }).catch(error => {
+      console.error('Error', error);
+  });
+}
+
+
+  //set Header for title
 const setHeader = (data, url) => {
+
   let options = [
     {text: "Edit", action:`edit-order/${data.pk}`, type: 'text'},
-    {text: "Delete", action:"#", type: 'text'},
-    {text: "Submit", action:"#", type: 'button'},
+    {text: "Delete", action:{deleteCallBack}, type: 'text'},
+    {text: "Submit", action:{submitCallBack}, type: 'button'},
   ];
   return {
     purchase_ord: data.purchase_no,
@@ -37,6 +67,21 @@ const setHeader = (data, url) => {
     options: data.status==='draft' ? options : []
   };
 };
+
+
+const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
+  return data
+    .filter((order, i) => order.status === filterName)
+    .map((filteredOrder) => (
+      <Table
+        TableData={filteredOrder}
+        excludeKeys={excludeKeys}
+        excludeValues={excludeValues}
+      />
+    ));
+};
+
+
 
 //flatten the orders for easier manipulation with components
 const cleanOrderItems = (data) => {
@@ -66,28 +111,6 @@ const cleanOrders = (data, url) => {
 
   return clean;
 };
-
-const DashboardOrders = (props) => {
-  const url = props.match.path;
-  const userData = JSON.parse(localStorage.getItem('user')) 
-  const userId = userData.user_profile.facility;
-  const [orderData, setOrderData] = useState(null);
-  const [orderCount, setOrderCountData] = useState(null);
-  const [searchActive, setSearchActive] = useState(false);
-  const getData = async () =>
-    await api
-      .getOrderList(userId)
-      .then((response) => {
-        console.log(response.data);
-        setOrderData(cleanOrders(response.data.orders, url));
-        setOrderCountData(response.data.summary);
-
-      })
-      .catch((err) => console.log(err));
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   const excludeKeys = ["pk", "product_image"];
   const excludeValues = ["pk"];
