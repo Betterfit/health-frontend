@@ -3,18 +3,67 @@ import DashboardSideBar from 'Components/DashboardSideBar/DashboardSideBar';
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import ControllerCard from 'Components/TrafficControllerSideBar/ControllerCard';
 import Api from "Helpers/api";
+import GraphApi from "Helpers/graphApi";
+import parseGraphQL from "Helpers/parseGraphQL";
+
+import moment from 'moment';
+import { LineChart } from "@toast-ui/react-chart";
+
+const options = {
+    chart: {
+        width: 350,
+        height: 400,
+        title: "Data By Health Regions",
+    },
+    yAxis: {
+        title: "Health Regions"
+    },
+    xAxis: {
+        title: "Date",
+        type: "datetime",
+    },
+    series: {
+        showDot: false,
+        zoomable: true,
+        spline: true,
+    },
+    legend: {
+        align: 'bottom'
+    }
+};
 
 const api = new Api();
+const graphApi = new GraphApi();
+// get todays date
+// and end range for date
+const today = moment();
+const endDate = moment().subtract(7, 'days');
 const DashboardTrafficDashboard = () => {
     const [ProductData , setProductData] = useState(null);
+    const [CaseData, setCaseData] = useState(null);
+    const [DisplayData, setDisplayData] = useState({'categories': [], 'series': []});
+    const parseDataToVisualData = (data) => {
+        let cases = data['data']['allCases']['edges'];
+        console.log(parseGraphQL(cases, today, endDate));
+    }
+
     const getData = async () => await api.getTrafficControllerSupply()
     .then((response) => {
         setProductData(response.data)
     })
     .catch((err) => console.log(err));
+
+    const getGraphData = async () => await graphApi.getCaseData(`reportedDateGt: "${endDate.format('YYYY-M-D')}", first: 800, sortBy: "reportedDate"`)
+    .then((response) => {
+        parseDataToVisualData(response.data);
+    })
+    .catch((err) => console.log(err));
+
     useEffect(() => {
         getData();
+        getGraphData();
     }, []);
+
     
     return(
         <div className="flex flex-col md:flex-row">
@@ -68,7 +117,7 @@ const DashboardTrafficDashboard = () => {
                 )}
             </DashboardSideBar>
             <div className={`w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll mt-8`}   >
-                graphs here
+                <LineChart data={DisplayData} options={options} />
             </div>
         </div>
     )
