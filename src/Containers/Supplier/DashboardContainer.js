@@ -41,11 +41,6 @@ const DashboardContainer = () =>{
         
                 {/* <!-- /End replace --> */}
             </main>
-            {/* <div className="w-full hidden md:block bg-white border-b border-gray-400 mb-8 px-6 py-4 sm:px-6 md:px-8">
-                <h1 className="text-2xl font-semibold text-gray-700">
-                    {title}
-                </h1>
-            </div> */}
         </div>
     )
 }

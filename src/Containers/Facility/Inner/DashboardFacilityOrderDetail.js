@@ -4,6 +4,7 @@ import useStores from "Helpers/useStores";
 import dayjs from "dayjs";
 import { _allowStateChangesInsideComputed } from "mobx";
 import { useHistory } from "react-router-dom";
+import {useAuthStore} from "Context/authContext";
 
 //components
 import DashboadOrderDetail from "Containers/DashboardOrderDetail";
@@ -15,9 +16,10 @@ import Modal from "Components/Content/AlertModal";
 const api = new Api();
 
 const DashboardFacilityOrderDetail = (props) => {
-  const { store } = useStores();
+  const authStore = useAuthStore();
   const { match } = props;
-  const orderId = parseInt(match.params.id);
+  const orderId = parseInt(match.params.id);  
+  const { store } = useStores();
   const history = useHistory();
 
   // ======================== Order Data ========================
@@ -26,8 +28,7 @@ const DashboardFacilityOrderDetail = (props) => {
   const [orderHeader, setOrderHeader] = useState();
   const [modal, setModal] = useState(false);
   const [error, setError] = useState(false);
-  const userData = JSON.parse(localStorage.getItem("user"));
-  const supplierId = userData.user_profile.supplier;
+
 
   const getData = async () =>
     await api

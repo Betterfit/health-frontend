@@ -1,9 +1,7 @@
-
 import * as axios from "axios";
 import useStores from 'Helpers/useStores';
 export default class Api {
 
-  
   constructor() {
     this.api_token = localStorage.getItem('token');
     this.client = null;
@@ -33,7 +31,6 @@ export default class Api {
 
   // ============================   AUTH API  =====================================
 
-
   addNewUser = (data) => {
     return this.init().post("users/", data);
   };
@@ -43,7 +40,6 @@ export default class Api {
     //stub until relevent api can be included
     return this.init().post("api/password_reset/", data)
   }
-
 
   signIn = (data) => {
     return this.init().post("api-token-auth/", data);
@@ -56,7 +52,6 @@ export default class Api {
   getFacilityData = (id) => {
     return this.init().get(`facilities/${id}`);
   }
-
 
 // ============================   PRODUCTS API  =====================================
   getProductCategories = () => {
@@ -116,6 +111,10 @@ export default class Api {
 
   getTrafficControllerSupply = () => {
     return this.init().get(`/traffic-controllers/product-categories/`)
+  }
+
+  setNewOrder = (order) => {
+    return this.init().post(`/orders/`,order)
   }
 
 }
