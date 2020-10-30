@@ -1,9 +1,7 @@
-
 import * as axios from "axios";
 import useStores from 'Helpers/useStores';
 export default class Api {
 
-  
   constructor() {
     this.api_token = localStorage.getItem('token');
     this.client = null;
@@ -32,7 +30,6 @@ export default class Api {
 
 
   // ============================   AUTH API  =====================================
-
 
   addNewUser = (data) => {
     return this.init().post("users/", data);
@@ -134,7 +131,9 @@ export default class Api {
     return this.init().get(`/traffic-controllers/product-categories/`)
   }
 
-   // ============================   Profiles API  =====================================
+  setNewOrder = (order) => {
+    return this.init().post(`/orders/`,order)
+  }
 
 }
 

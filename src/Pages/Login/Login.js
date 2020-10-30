@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import { ReactSVG } from "react-svg";
-// store context hook
-import useStores from 'Helpers/useStores';
-// end store context hook
 import Logo from "Images/logo.svg";
 import LowerBackgroundBlob from "Images/Login/login_lower_right.svg";
 import UpperBackgroundBlob from "Images/Login/login_upper_left.svg";
@@ -12,9 +9,9 @@ import PasswordReset from "./PasswordReset";
 // import Cookies from "js-cookie";
 import Button from "Components/Forms/Button";
 import { useHistory, Route, useRouteMatch } from "react-router-dom";
-
+import {useAuthStore} from "Context/authContext";
 const LoginTemplate = () => {
-  const { store } = useStores();
+  const authStore = useAuthStore();
   const [password, setPW] = useState("");
   const [email, setEmail] = useState("");
 
@@ -32,7 +29,9 @@ const LoginTemplate = () => {
       .then( async (response) => {
         console.log(response.data.user);
         await localStorage.setItem("token", response.data.token);
+        authStore.token = response.data.token;
         await localStorage.setItem("user", JSON.stringify(response.data.user));
+        authStore.user = response.data.user;
         history.push("/dashboard/");
       })
       .catch((err) => {

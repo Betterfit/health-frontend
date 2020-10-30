@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import useStores from "Helpers/useStores";
+import {useAuthStore} from "Context/authContext";
 import Api from "Helpers/api";
-
 //components
 import InputFieldLabel from "Components/Forms/InputFieldLabel";
 import Button from "Components/Forms/Button";
@@ -11,9 +10,9 @@ import ButtonToggle from "Components/Forms/ToggleButton";
 
 const api = new Api();
 const ProfileCard = ({}) => {
-  const { store } = useStores();
+  const authStore = useAuthStore();
   const [userData, setUserType] = useState(
-    JSON.parse(localStorage.getItem("user"))
+    JSON.parse(authStore.user)
   );
   const userId = userData.pk;
 
