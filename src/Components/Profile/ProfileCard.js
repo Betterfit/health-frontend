@@ -71,9 +71,9 @@ const ProfileCard = ({}) => {
   };
 
 
-  useEffect(() => {
-    profileCallBack();
-  }, []);
+  // useEffect(() => {
+  //   profileCallBack();
+  // }, []);
 
 const getData = () => {
     console.log("sign in");
@@ -122,7 +122,7 @@ const getData = () => {
     api
       .changeProfile(userId, arr)
       .then((response) => {
-        console.log("e");
+        console.log(response);
 
       })
       .catch((error) => {
@@ -193,7 +193,10 @@ const getData = () => {
           color=" bg-betterfit-green"
           hoverColor="bg-green-800"
           text_size="text-sm"
-          onClick={profileCallBack}
+          onClick={(e) => {
+            e.preventDefault();
+            profileCallBack();
+          }}
         ></Button>
       </form>
     </>
