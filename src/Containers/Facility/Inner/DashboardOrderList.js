@@ -67,7 +67,7 @@ const cleanOrders = (data, url) => {
   return clean;
 };
 
-const DashboardOrders = (props) => {
+const DashboardOrderList = (props) => {
   const authStore = useAuthStore();
   const userData = JSON.parse(authStore.user);
   const url = props.match.path;
@@ -178,4 +178,4 @@ const DashboardOrders = (props) => {
   );
 };
 
-export default DashboardOrders;
+export default DashboardOrderList;

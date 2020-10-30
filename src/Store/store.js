@@ -8,6 +8,7 @@ class Store {
     constructor(){
       this.authStore = new authStore(this);
       this.cartStore = new cartStore(this);
+      this.editCartStore = new cartStore(this);
     } 
 }
 
