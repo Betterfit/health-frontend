@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 
-function Checkbox({ id_tag, name, value = false, setValue }) {
+function CheckboxConfirm({ id_tag, name, value = false, setValue }) {
   const [checked , setChecked] = useState(false);
   return (
     <>
@@ -24,12 +24,12 @@ function Checkbox({ id_tag, name, value = false, setValue }) {
             type="checkbox"
             className="opacity-0 absolute"
             onChange={(e) => {
-              setChecked(!checked);
+              setChecked(!checked)
               setValue(!checked);
             }}
           />
           <svg
-            className="fill-current hidden w-4 h-4 text-betterfit-highlight-red pointer-events-none"
+            className="fill-current hidden w-4 h-4 text-betterfit-highlight-green pointer-events-none"
             viewBox="0 0 20 20"
           >
             <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />

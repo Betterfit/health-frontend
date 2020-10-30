@@ -12,12 +12,15 @@ import { AnimatedSwitch } from "react-router-transition";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 // import DashboardProductList from 'Containers/DashboardProductList'
 // import DashboardProductDetail from 'Containers/DashboardProductDetail'
-
+import { useCartStore } from "Context/cartContext";
 const api = new Api();
 const DashboardOrder = ({props, type}) => {
+  const cartStore = useCartStore();
   const history = useHistory();
   const { match } = props;
-
+  useEffect(() => {
+    cartStore.getLocalCartStorage();
+  }, []);
   return (
     <div className="flex flex-col md:flex-row">
       <DashboardSideBar addonStyles=" flex flex-col">

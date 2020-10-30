@@ -33,9 +33,9 @@ const DashboardNewOrder = observer(() => {
         setProductData(response.data);
       })
       .catch((err) => console.log(err));
-  useEffect(() => {
-    cartStore.getLocalCartStorage();
-  }, []);
+//   useEffect(() => {
+//     cartStore.getLocalCartStorage();
+//   }, []);
 
   return (
     <>

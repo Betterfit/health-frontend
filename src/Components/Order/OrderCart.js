@@ -4,22 +4,27 @@ import Button from "Components/Forms/Button";
 import { ReactSVG } from "react-svg";
 import EmptyCart from "Images/Icons/shopping-cart-empty.svg";
 import Api from "Helpers/api";
-import Modal from "Components/Content/Modal";
+import {useAuthStore} from "Context/authContext";
 
+import Modal from "Components/Content/Modal";
 import OrderProductCard from "Components/Order/OrderProductCard";
 const api = new Api();
 const OrderCart =({Cart}) => {
   let CartData = JSON.stringify(Cart);
   CartData = JSON.parse(CartData);
+  const authStore = useAuthStore();
   const [cartItems , setCartItems] = useState();
   const [modalOrder , setModalOrder ] = useState(false);
   const [modalDraft , setModalDraft ] = useState(false);
 
   const getCartItems = () => {
     const promises = CartData.map((item, i) => api.getProductOption(item.pk).then(data => {
-      return data.data;
+      return {
+        ...data.data,
+        priority: item.priority 
+      };
     }));
-
+    
     // resolve all the api calls in parallel and populate the messageData object as they resolve
     Promise.all(promises).then(responses => {
         setCartItems(responses);
@@ -27,7 +32,6 @@ const OrderCart =({Cart}) => {
   }
 
   useEffect(() => {
-    console.log(JSON.stringify(Cart));
     if(CartData){
       if(!cartItems){
         getCartItems(); 
@@ -41,17 +45,20 @@ const OrderCart =({Cart}) => {
 
 
   const confirmCallBack = () => {
+    const userData = JSON.parse(authStore.user);
     let order = {
-      "facility": 1,
-      "facility_admin": 3,
+      "facility": userData.user_profile.facility,
+      "facility_admin": userData.pk,
       "purchase_no": "ShgbAsdi",
-      "order_products": [
-        {
-          "quantity":12,
-          "product_option": 2,
-          "priority": "stat"
-      }]
+      "order_products": CartData.map(item =>{
+        return{
+          "quantity": item.quantity,
+          "product_option":item.pk,
+          "priority":item.priority ? "stat" : "normal"
+        }
+      })
     };  
+    console.log(order);
     setModalOrder(false)
     setModalDraft(false)
   }
@@ -64,7 +71,6 @@ const OrderCart =({Cart}) => {
       <div className="p-3 my-4 overflow-y-scroll">
         {cartItems && (
           cartItems.map(item => {
-            
             return(<OrderProductCard product={item}/>)
           })
         )}
@@ -96,6 +102,9 @@ const OrderCart =({Cart}) => {
                 <div className="py-6 px-6">
                   <p className="text-paragraph text-base">Are you sure you’re ready to submit this order? 
                   Would you like to add a purchase order to it? </p>
+                </div>
+                <div>
+
                 </div>
             </Modal> 
         )}

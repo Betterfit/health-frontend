@@ -15,15 +15,6 @@ export function createCartStore (){
                 this.updateLocalCartStorage();
             }
         },
-        importCart(items) {
-          items.map((item) => {
-              this.addToCart(item.pk, item.quantity)
-          });
-        },
-        clearCart() {
-          let arr = [];
-          this.cart = arr;
-        },
         removeFromCart(id){
             let arr = JSON.stringify(this.cart);
             arr = JSON.parse(arr);
