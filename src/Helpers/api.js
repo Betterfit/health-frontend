@@ -101,6 +101,14 @@ export default class Api {
     return this.init().get(`/facilities/${facilityId}/orders/`)
   }
 
+  getOrder = (orderId) => {
+    return this.init().get(`/orders/${orderId}`)
+  }
+
+  submitOrder = (orderId, data) => {
+    return this.init().put(`/orders/${orderId}`, data)
+  }
+
   getTrafficControllerSupply = () => {
     return this.init().get(`/traffic-controllers/product-categories/`)
   }

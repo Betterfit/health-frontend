@@ -3,7 +3,6 @@ import Tabs from "Components/Tabs/Tabs";
 import OrderSearch from "Components/Search/OrderSearch";
 import Table from "Components/Table/Full/Table";
 import Api from "Helpers/api";
-import useStores from "Helpers/useStores";
 import dayjs from 'dayjs';
 import {useAuthStore} from "Context/authContext";
 const api = new Api();
@@ -21,13 +20,21 @@ const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
 };
 
 //set Header for title
-const setHeader = (data) => {
+const setHeader = (data, url) => {
+  let options = [
+    {text: "Edit", action:`edit-order/${data.pk}`, type: 'text'},
+    {text: "Delete", action:"#", type: 'text'},
+    {text: "Submit", action:"#", type: 'button'},
+  ];
   return {
     purchase_ord: data.purchase_no,
     ordered_by: data.facility_admin.user.first_name + " " + data.facility_admin.user.last_name,
     ordered_on: dayjs(data.order_date).format("MMM D, YYYY hh:mmA"), 
     order_no: data.order_no,
     status: data.status,
+    id:data.pk, 
+    url:`${url}/detail/${data.pk}`,
+    options: data.status==='draft' ? options : []
   };
 };
 
@@ -48,10 +55,10 @@ const cleanOrderItems = (data) => {
 };
 
 //flatten the orders for easier manipulation with components
-const cleanOrders = (data) => {
+const cleanOrders = (data, url) => {
   let clean = [];
   data.forEach((order, i) => {
-    let header = setHeader(order);
+    let header = setHeader(order, url);
     let products = cleanOrderItems(order.order_products);
     header.order_products = products;
     clean.push(header);
@@ -60,9 +67,10 @@ const cleanOrders = (data) => {
   return clean;
 };
 
-const DashboardOrders = () => {
+const DashboardOrders = (props) => {
   const authStore = useAuthStore();
   const userData = JSON.parse(authStore.user);
+  const url = props.match.path;
   const userId = userData.user_profile.facility;
   const [orderData, setOrderData] = useState(null);
   const [orderCount, setOrderCountData] = useState(null);
@@ -72,9 +80,9 @@ const DashboardOrders = () => {
       .getOrderList(userId)
       .then((response) => {
         console.log(response.data);
-        setOrderData(cleanOrders(response.data.orders));
+        setOrderData(cleanOrders(response.data.orders, url));
         setOrderCountData(response.data.summary);
-        console.log("orderCount", orderCount)
+
       })
       .catch((err) => console.log(err));
 
