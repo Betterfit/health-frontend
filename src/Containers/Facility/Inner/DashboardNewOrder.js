@@ -19,10 +19,12 @@ import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 // import DashboardProductDetail from 'Containers/DashboardProductDetail'
 import DashboardSearch from "Containers/DashboardSearch";
 import { useCartStore } from "Context/cartContext";
-
+import {useAuthStore} from "Context/authContext";
 const api = new Api();
 const DashboardNewOrder = observer(() => {
   const cartStore = useCartStore();
+  const authStore = useAuthStore();
+  const userData = JSON.parse(authStore.user);
   const [title, setTitle] = useState("New Order");
   const [ProductData, setProductData] = useState(null);
   const [searchActive, setSearchActive] = useState(false);
@@ -33,13 +35,14 @@ const DashboardNewOrder = observer(() => {
         setProductData(response.data);
       })
       .catch((err) => console.log(err));
-  useEffect(() => {
-    cartStore.getLocalCartStorage();
-  }, []);
+  let headerData = {
+    facility: userData.user_profile.facility_name,
+    unit: userData.user_profile.facility_unit ? userData.user_profile.facility_unit : null
+  }
 
   return (
     <>
-      <OrderHeader />
+      <OrderHeader data={headerData} />
       <OrderCart Cart={cartStore.cart} />
     </>
   );

@@ -31,11 +31,11 @@ const OrderComponentTitle = ({ title, value, classes }) => {
 
 
 const NewOrderHeader = ({ data }) => {
-
+    console.log(data);
     let orderDate = dayjs().format('MMM DD, YYYY');
     const order_no = (data?.order_number ? data.order_number : "New Order")
     const facility = data?.facility;
-    const unit = "Emergency"
+    const unit = data?.unit;
 
   return (
     <div className="flex flex-col">
@@ -44,14 +44,18 @@ const NewOrderHeader = ({ data }) => {
         value={order_no}
       />
     <div className="flex flex-row">
-      <OrderComponent
-        title="Facility"
-        value={facility}
-      />
-      <OrderComponent
-        title="Unit"
-        value={unit}
-      />
+      {facility && (
+        <OrderComponent
+          title="Facility"
+          value={facility}
+        />
+      )}
+      {unit && (
+        <OrderComponent
+          title="Unit"
+          value={unit}
+        />
+      )}
       </div>
     </div>
   );
