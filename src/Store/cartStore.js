@@ -36,6 +36,15 @@ export function createCartStore (){
             this.cart = arr;
             this.updateLocalCartStorage();
         },
+        importCart(items) {
+            items.map((item) => {
+                this.addToCart(item.pk, item.quantity, item.priority)
+            });
+          },
+        clearCart() {
+            let arr = [];
+            this.cart = arr;
+        },  
         updateItemPriority(id,priority){
             let arr = JSON.stringify(this.cart);
             arr = JSON.parse(arr);

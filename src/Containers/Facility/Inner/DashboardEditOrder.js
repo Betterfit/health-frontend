@@ -27,6 +27,7 @@ const DashboardEditOrder = observer((props) => {
           let obj = {
             pk: item.product_option.pk,
             quantity: item.quantity,
+            priority: item.priority,
           };
           return obj;
         });
