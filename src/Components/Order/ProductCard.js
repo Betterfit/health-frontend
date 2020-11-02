@@ -37,7 +37,7 @@ const ProductCard = ({ product, product_details, category, extra }) => {
   const size = product_details.name;
 
   const addToCart = () => {
-    cartStore.addToCart(product_details.pk,0)
+    cartStore.addToCart(product_details.pk,1,false)
   }
 
   return (

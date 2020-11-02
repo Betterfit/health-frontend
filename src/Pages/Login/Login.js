@@ -16,7 +16,7 @@ const LoginTemplate = () => {
   const [email, setEmail] = useState("");
 
   const history = useHistory();
-  if(localStorage.getItem('token')){
+  if(authStore.token){
     history.push("/dashboard/");
   }
   const api = new Api();

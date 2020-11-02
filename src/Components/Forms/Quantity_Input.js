@@ -21,10 +21,12 @@ function Quantity_Input({ id_tag, name, readOnly=false, value, readValue , quant
             if (readValue)
               readValue(e.target.value);
               var val = e.target.value;
-              clearTimeout(timeout);
-              timeout = setTimeout( () => {
-                // quantityUpdate(1,{"quantity":val})    
-              },1000);
+              if(quantityUpdate){
+                clearTimeout(timeout);
+                timeout = setTimeout( () => {
+                  quantityUpdate({"quantity":val})    
+                },1000);
+              }
           }}
 
         />

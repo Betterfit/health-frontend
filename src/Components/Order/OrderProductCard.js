@@ -33,14 +33,17 @@ const ProductImage = ({ product_image, product_name }) => {
 };
 
 const OrderProductCard = ({ product }) => {
+  // console.log(product);
   const cartStore = useCartStore();
-  const [priority, setPriority] = useState(product.priority ? product.priority : false );
-  const [quantity, getQuantity] = useState(0);  
-  const changeQuantity = (id,data) => {
+  const [priority, setPriority] = useState(product.priority);
+  const [quantity, getQuantity] = useState(product.quantity ? product.quantity: 1);  
+  const changeQuantity = (data) => {
+    console.log(data)
     cartStore.updateItemQuantity(product.pk,data.quantity)
   }
-  const changePriority = (id) => {
-    cartStore.updateItemPriority(product.pk, priority ? 0 : 1)
+  const changePriority = (value) => {
+    setPriority(value)
+    cartStore.updateItemPriority(product.pk, value ? 1 : 0)
   }
   return (
     <>
@@ -69,7 +72,7 @@ const OrderProductCard = ({ product }) => {
                   changeQuantity(id,data);
               } } value={quantity} readValue={getQuantity} />
             </div>
-            <Checkbox id="priority" name="Stat" value={priority} setValue = { (value) =>{  setPriority(!priority) ;setTimeout(()=>{changePriority()},500);}} />
+            <Checkbox id="priority" name="Stat" value={priority} setValue = { (value) => { changePriority(value) }} />
           </div>
       </div>
     </>
