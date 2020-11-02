@@ -29,19 +29,26 @@ const ProfileCard = ({}) => {
   const [pwFormValues, setPWFormValues] = useState(intialPWValues);
   const [pwFormErrors, setPWFormErrors] = useState({});
 
-  const [submitted, setSubmitted] = useState(false);
+  const [submitPWError, setSubmitPWError] = useState();
+  const [submitBaseError, setSubmitBaseError] = useState();
 
   const changeLang = (value) => {
     setLanguage(value);
   };
 
+  //Base section form changes
   const handleBaseChange = (e) => {
     const { id, value } = e.target;
+    //clear any errors on input
+    setSubmitBaseError();
     setBaseFormValues({ ...baseFormValues, [id]: value });
   };
 
-  const handleChange = (e) => {
+  //PW section form changes
+  const handlePWChange = (e) => {
     const { id, value } = e.target;
+    //clear any errors on input
+    setSubmitPWError();
     setPWFormValues({ ...pwFormValues, [id]: value });
   };
 
@@ -49,6 +56,7 @@ const ProfileCard = ({}) => {
     setPWFormErrors(validatePW(pwFormValues));
   }, [pwFormValues]);
 
+  //Validate PW changes
   const validatePW = (values) => {
     let errors = {};
     //only run if any pw field has text
@@ -93,7 +101,8 @@ const ProfileCard = ({}) => {
   const pwCallBack = async () => {
     let arrPWerrors = pwFormErrors;
     let arrPW = pwFormValues;
-    //first ensure the pw section is set
+
+    //first ensure the pw section is set properly
     if (
       Object.keys(arrPWerrors).length > 0 ||
       Object.values(arrPW).reduce(
@@ -101,7 +110,6 @@ const ProfileCard = ({}) => {
         0
       ) > 0
     ) {
-      console.log("NO change in pw");
       return;
     }
     const pwArr = {
@@ -111,9 +119,13 @@ const ProfileCard = ({}) => {
     await api
       .changePassword(pwArr)
       .then((response) => {
-        console.log("e");
+        //update user token
+        localStorage.setItem("token", response.data.token);
       })
       .catch((error) => {
+        setSubmitPWError(
+          "There was an error updating your password. Please ensure you are entering your old password correctly."
+        );
         console.error("Error", error);
       });
   };
@@ -133,10 +145,15 @@ const ProfileCard = ({}) => {
         getUserData();
       })
       .catch((error) => {
+        setSubmitBaseError("There was an error updating your profile.");
         console.error("Error", error);
       });
   };
 
+  //general callback for entire form
+  //broken into two api calls
+  // one for base profile
+  // one for pw
   const callBack = () => {
     profileCallBack();
     pwCallBack();
@@ -184,7 +201,7 @@ const ProfileCard = ({}) => {
             id_tag="oldPW"
             name="Old Password"
             value={pwFormValues.oldPW}
-            onChange={handleChange}
+            onChange={handlePWChange}
             error={pwFormErrors.oldPW}
             required={false}
             type="password"
@@ -192,7 +209,7 @@ const ProfileCard = ({}) => {
           <InputFieldLabel
             id_tag="newPW"
             name="New Password"
-            onChange={handleChange}
+            onChange={handlePWChange}
             value={pwFormValues.newPW}
             error={pwFormErrors.newPW}
             required={false}
@@ -201,13 +218,23 @@ const ProfileCard = ({}) => {
           <InputFieldLabel
             name="Confirm Password"
             id_tag="confirmPW"
-            onChange={handleChange}
+            onChange={handlePWChange}
             value={pwFormValues.confirmPW}
             error={pwFormErrors.confirmPW}
             required={false}
             type="password"
           ></InputFieldLabel>
         </div>
+        {submitBaseError && (
+          <p className="text-sm text-status-dark-red pb-2 leading-tight">
+            {submitBaseError}
+          </p>
+        )}
+        {submitPWError && (
+          <p className="text-sm text-status-dark-red pb-2 leading-tight">
+            {submitPWError}
+          </p>
+        )}
         <Button
           text="Save Profile"
           color=" bg-betterfit-green"
