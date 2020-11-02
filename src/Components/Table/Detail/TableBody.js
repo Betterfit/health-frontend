@@ -5,7 +5,6 @@ import {NavLink} from "react-router-dom";
 import Button from "Components/Content/Button";
 
 const TableBody = ({TableBody}) => {
-    console.log(`slide ${TableBody}`)
     return(
         <tbody>  
             {
@@ -22,11 +21,11 @@ const TableBody = ({TableBody}) => {
                                                 return(
                                                     <td key={index} className="px-4 py-4  w-8 text-sm leading-5 text-gray-500">
                                                         <Button
-                                                            text={r[1] === 1 || r[1] === "stat" ?  "Stat" : "Regular"} 
-                                                            color={r[1] === 1 || r[1] === "stat" ? "status-red" :"status-blue" } 
+                                                            text={r[1] === "stat" ?  "Stat" : "Regular"} 
+                                                            color={r[1] === "stat" ? "status-red" :"status-blue" } 
                                                             text_size="text-sm" 
                                                             pill={true}
-                                                            extraClasses={r[1] === 1 || r[1] === "stat" ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
+                                                            extraClasses={r[1] === "stat" ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
                                                         />
                                                     </td>
                                                 )
@@ -73,11 +72,11 @@ const TableBody = ({TableBody}) => {
                                                 return(
                                                     <td key={index} className="px-4 py-4  w-8 text-sm leading-5 text-gray-500">
                                                         <Button
-                                                            text={r[1] === 1 || r[1] === "stat"  ?  "Stat" : "Regular"} 
-                                                            color={r[1] === 1 || r[1] === "stat" ? "status-red" :"status-blue" } 
+                                                            text={r[1] === "stat"  ?  "Stat" : "Regular"} 
+                                                            color={r[1] === "stat" ? "status-red" :"status-blue" } 
                                                             text_size="text-sm" 
                                                             pill={true}
-                                                            extraClasses={r[1] === 1 || r[1] === "stat" ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
+                                                            extraClasses={r[1] === "stat" ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
                                                         />
                                                     </td>
                                                 )
