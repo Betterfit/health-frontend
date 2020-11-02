@@ -66,7 +66,7 @@ const DashboardOrderList = (props) => {
   const setHeader = (data, url) => {
     let options2 = [
       <PopupText value="Edit" href={`edit-order/${data.pk}`}></PopupText>,
-      <PopupText value="Delete" onClick={callbackDelete(data.pk) }></PopupText>,
+      //<PopupText value="Delete" onClick={callbackDelete(data.pk) }></PopupText>,
     ];
     let options = [
       {text: "Edit", action:`edit-order/${data.pk}`, type: 'text'},
