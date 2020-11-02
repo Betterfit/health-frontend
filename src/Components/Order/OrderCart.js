@@ -5,9 +5,10 @@ import { ReactSVG } from "react-svg";
 import EmptyCart from "Images/Icons/shopping-cart-empty.svg";
 import Api from "Helpers/api";
 import {useAuthStore} from "Context/authContext";
-
 import Modal from "Components/Content/Modal";
 import OrderProductCard from "Components/Order/OrderProductCard";
+import OrderName from "Components/Forms/OrderName"
+import Checkbox from 'Components/Forms/CheckboxConfirm';
 const api = new Api();
 let rawCart;
 const OrderCart =({Cart}) => {
@@ -18,6 +19,8 @@ const OrderCart =({Cart}) => {
   const [cartRaw , setCartRaw] = useState();
   const [modalOrder , setModalOrder ] = useState(false);
   const [modalDraft , setModalDraft ] = useState(false);
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [agreeTermsError, setAgreeTermsError] = useState(false);
   const getCartItems = () => {
     const promises = CartData.map((item, i) => api.getProductOption(item.pk).then(data => {
       return {
@@ -49,46 +52,59 @@ const OrderCart =({Cart}) => {
 
   const confirmCallBackOrder = () => {
     const userData = JSON.parse(authStore.user);
-    let order = {
-      "facility": userData.user_profile.facility,
-      "facility_admin": userData.pk,
-      "purchase_no": "sdfasdfasdfa",
-      "status":"open",
-      "order_products": CartData.map(item =>{
-        return{
-          "quantity": item.quantity,
-          "product_option":item.pk,
-          "priority":item.priority ? "stat" : "normal"
-        }
-      })
-    }; 
-    api.setNewOrder(order).then(response => {
-      console.log(response);
-      setModalOrder(false)
-      setModalDraft(false)
-    }); 
+    if(agreeTerms){
+      let order = {
+        "facility": userData.user_profile.facility,
+        "facility_admin": userData.pk,
+        "purchase_no": authStore.newOrderName,
+        "status":"open",
+        "order_products": CartData.map(item =>{
+          return{
+            "quantity": item.quantity,
+            "product_option":item.pk,
+            "priority":item.priority ? "stat" : "normal"
+          }
+        })
+      }; 
+      api.setNewOrder(order).then(response => {
+        setModalOrder(false)
+        setModalDraft(false)
+        authStore.newOrderName = "";
+      }); 
+    }else{
+      setAgreeTermsError(true)
+    }
   }
 
   const confirmCallBackDraft = () => {
     const userData = JSON.parse(authStore.user);
-    let order = {
-      "facility": userData.user_profile.facility,
-      "facility_admin": userData.pk,
-      "purchase_no": "sdfasdfasdfa",
-      "status":"draft",
-      "order_products": CartData.map(item =>{
-        return{
-          "quantity": item.quantity,
-          "product_option":item.pk,
-          "priority":item.priority ? "stat" : "normal"
-        }
-      })
-    }; 
-    api.setNewOrder(order).then(response => {
-      console.log(response);
-      setModalOrder(false)
-      setModalDraft(false)
-    }); 
+    if(agreeTerms){
+      let order = {
+        "facility": userData.user_profile.facility,
+        "facility_admin": userData.pk,
+        "purchase_no": authStore.newOrderName,
+        "status":"draft",
+        "order_products": CartData.map(item =>{
+          return{
+            "quantity": item.quantity,
+            "product_option":item.pk,
+            "priority":item.priority ? "stat" : "normal"
+          }
+        })
+      }; 
+      api.setNewOrder(order).then(response => {
+        setModalOrder(false)
+        setModalDraft(false)
+        authStore.newOrderName = "";
+      });
+    }else{
+      setAgreeTermsError(true)
+    } 
+  }
+
+
+  const setOrderName = (name) => {
+    authStore.newOrderName = name;
   }
 
 
@@ -118,8 +134,8 @@ const OrderCart =({Cart}) => {
         )}
       </div>
       <div className="flex flex-row space-x-2">
-        <Button text="Save Draft" solid={false} text_size="text-sm" onClick={() => setModalDraft(!modalOrder)} />
-        <Button text="Submit Order" text_size="text-sm" onClick={() => setModalOrder(!modalOrder)} />
+        <Button text="Save Draft" solid={false} text_size="text-sm" onClick={() => {setModalDraft(!modalOrder);setAgreeTermsError(false);}} />
+        <Button text="Submit Order" text_size="text-sm" onClick={() => {setModalOrder(!modalOrder); setAgreeTermsError(false); }} />
       </div>
       <>
         {modalOrder && (
@@ -131,8 +147,12 @@ const OrderCart =({Cart}) => {
                   <p className="text-paragraph text-base">Are you sure you’re ready to submit this order? 
                   Would you like to add a purchase order to it? </p>
                 </div>
-                <div>
-
+                <OrderName name={authStore.newOrderName} callBack = {(name)=> setOrderName(name)}/>
+                <div className="mb-6 px-6">
+                  <Checkbox name="Agree To Terms" value={agreeTerms} setValue = {(val) => setAgreeTerms(val)} resetErrors = { () => setAgreeTermsError(false)} />
+                  {agreeTermsError && (
+                    <div className="mt-4 text-status-dark-red text-xs uppercase font-bold">Please agree to terms</div>
+                  )}
                 </div>
             </Modal> 
         )}
@@ -145,6 +165,13 @@ const OrderCart =({Cart}) => {
                 </div>
                 <div className="py-6 px-6">
                   <p className="text-paragraph text-base">Would you like to add a purchase order to it?</p>
+                </div>
+                <OrderName name={authStore.newOrderName} callBack = {(name)=> setOrderName(name)}/>
+                <div className="mb-6 px-6">
+                  <Checkbox name="Agree To Terms" value={agreeTerms} setValue = {(val) => setAgreeTerms(val)} resetErrors = { () => setAgreeTermsError(false)}  />
+                  {agreeTermsError && (
+                    <div className="mt-4 text-status-dark-red text-xs uppercase font-bold">Please agree to terms</div>
+                  )}
                 </div>
             </Modal> 
         )}

@@ -1,6 +1,7 @@
 export function createCartStore (){
     return{
         cart:[],
+        newOrderName:"",
         addToCart(item,quantity,priority){
             let newObj = {
                 "pk" : item,
