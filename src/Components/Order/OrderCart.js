@@ -14,7 +14,7 @@ import Checkbox from 'Components/Forms/CheckboxConfirm';
 const api = new Api();
 let rawCart;
 
-const OrderCart =({Cart}) => {
+const OrderCart =({Cart, OrderID}) => {
   let CartData = JSON.stringify(Cart);
   CartData = JSON.parse(CartData);
   const authStore = useAuthStore();
@@ -86,7 +86,6 @@ const OrderCart =({Cart}) => {
 
   const confirmCallBackDraft = () => {
     const userData = JSON.parse(authStore.user);
-    if(agreeTerms){
       let order = {
         "facility": userData.user_profile.facility,
         "facility_admin": userData.pk,
@@ -108,9 +107,6 @@ const OrderCart =({Cart}) => {
         cartStore.updateLocalCartStorage();
         setCartItems(null);
       });
-    }else{
-      setAgreeTermsError(true)
-    } 
   }
 
 
@@ -178,12 +174,6 @@ const OrderCart =({Cart}) => {
                   <p className="text-paragraph text-base">Would you like to add a purchase order to it?</p>
                 </div>
                 <OrderName name={cartStore.newOrderName} callBack = {(name)=> setOrderName(name)}/>
-                <div className="mb-6 px-6">
-                  <Checkbox name="Agree To Terms" value={agreeTerms} setValue = {(val) => setAgreeTerms(val)} resetErrors = { () => setAgreeTermsError(false)}  />
-                  {agreeTermsError && (
-                    <div className="mt-4 text-status-dark-red text-xs uppercase font-bold">Please agree to terms</div>
-                  )}
-                </div>
             </Modal> 
         )}
       </> 
