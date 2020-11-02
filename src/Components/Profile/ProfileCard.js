@@ -1,31 +1,33 @@
 import React, { useState, useEffect } from "react";
-import {useAuthStore} from "Context/authContext";
+import { useAuthStore } from "Context/authContext";
 import Api from "Helpers/api";
+import { isEqual } from "lodash";
+
 //components
 import InputFieldLabel from "Components/Forms/InputFieldLabel";
 import Button from "Components/Forms/Button";
 import CardTitle from "Components/Profile/CardTitle";
 import ButtonToggle from "Components/Forms/ToggleButton";
 
-
 const api = new Api();
 const ProfileCard = ({}) => {
   const authStore = useAuthStore();
-  const [userData, setUserType] = useState(
-    JSON.parse(authStore.user)
-  );
+  const [userData, setUserType] = useState(JSON.parse(authStore.user));
+  let userName = userData.username;
   const userId = userData.pk;
 
   const [lang, setLanguage] = useState("en");
 
-  const intialBaseValues = { email: userData.email, username:userData.username};
+  const intialBaseValues = {
+    email: userData.email,
+    username: userData.username,
+  };
   const [baseFormValues, setBaseFormValues] = useState(intialBaseValues);
   const [baseFormErrors, setBaseFormErrors] = useState({});
 
   const intialPWValues = { oldPW: "", newPW: "", confirmPW: "" };
   const [pwFormValues, setPWFormValues] = useState(intialPWValues);
   const [pwFormErrors, setPWFormErrors] = useState({});
-
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -34,17 +36,15 @@ const ProfileCard = ({}) => {
   };
 
   const handleBaseChange = (e) => {
-    console.log("Handle Base Change");
     const { id, value } = e.target;
     setBaseFormValues({ ...baseFormValues, [id]: value });
   };
 
-
   const handleChange = (e) => {
-    console.log("Handle Change");
     const { id, value } = e.target;
     setPWFormValues({ ...pwFormValues, [id]: value });
   };
+
   useEffect(() => {
     setPWFormErrors(validatePW(pwFormValues));
   }, [pwFormValues]);
@@ -70,39 +70,44 @@ const ProfileCard = ({}) => {
     return errors;
   };
 
-
-  useEffect(() => {
-    profileCallBack();
-  }, []);
-
-const getData = () => {
-    console.log("sign in");
+  //get user data and reset the local storage with update info
+  const getUserData = () => {
     api
       .getUser(userId)
-      .then( async (response) => {
-        console.log(response.data);
+      .then(async (response) => {
         let arr = JSON.stringify(response.data.user);
         localStorage.setItem("user", JSON.stringify(response.data));
+        setUserType(response.data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-
+  //Only run if userData has been updated
+  useEffect(() => {
+    userName = userData.username;
+  }, [userData]);
 
   //callback for submit order
-  
-
   const pwCallBack = async () => {
     let arrPWerrors = pwFormErrors;
     let arrPW = pwFormValues;
     //first ensure the pw section is set
-    if (Object.keys(arrPWerrors).length > 0 || 
-    Object.values(arrPW).reduce((total,val) => val==="" ? total+1 : total+0, 0) > 0  ){
+    if (
+      Object.keys(arrPWerrors).length > 0 ||
+      Object.values(arrPW).reduce(
+        (total, val) => (val === "" ? total + 1 : total + 0),
+        0
+      ) > 0
+    ) {
+      console.log("NO change in pw");
       return;
     }
-    const pwArr = {old_password:pwFormValues.oldPW, new_password:pwFormValues.newPW}
+    const pwArr = {
+      old_password: pwFormValues.oldPW,
+      new_password: pwFormValues.newPW,
+    };
     await api
       .changePassword(pwArr)
       .then((response) => {
@@ -111,30 +116,42 @@ const getData = () => {
       .catch((error) => {
         console.error("Error", error);
       });
-
   };
 
-
-
-  //callback for submit order
+  //callback for update baseprofile
   const profileCallBack = () => {
     let arr = baseFormValues;
+
+    //Only call if initial form values have changed
+    if (isEqual(intialBaseValues, arr)) {
+      return;
+    }
     api
       .changeProfile(userId, arr)
       .then((response) => {
-        console.log("e");
-
+        //update localstorage with updated userdata
+        getUserData();
       })
       .catch((error) => {
         console.error("Error", error);
       });
+  };
 
+  const callBack = () => {
+    profileCallBack();
+    pwCallBack();
   };
 
   return (
     <>
-      <CardTitle name={userData.username} label="User Profile"></CardTitle>
-      <form className="relative" >
+      <CardTitle name={userName} label="User Profile"></CardTitle>
+      <form
+        className="relative"
+        onSubmit={(e) => {
+          e.preventDefault();
+          callBack();
+        }}
+      >
         <div className="space-y-6">
           <h2 className="text-xl text-betterfit-graphite">Base Profile</h2>
           <ButtonToggle
@@ -168,24 +185,27 @@ const getData = () => {
             name="Old Password"
             value={pwFormValues.oldPW}
             onChange={handleChange}
-            error = {pwFormErrors.oldPW}
+            error={pwFormErrors.oldPW}
             required={false}
+            type="password"
           ></InputFieldLabel>
           <InputFieldLabel
             id_tag="newPW"
             name="New Password"
             onChange={handleChange}
             value={pwFormValues.newPW}
-            error = {pwFormErrors.newPW}
+            error={pwFormErrors.newPW}
             required={false}
+            type="password"
           ></InputFieldLabel>
           <InputFieldLabel
             name="Confirm Password"
             id_tag="confirmPW"
             onChange={handleChange}
             value={pwFormValues.confirmPW}
-            error = {pwFormErrors.confirmPW}
+            error={pwFormErrors.confirmPW}
             required={false}
+            type="password"
           ></InputFieldLabel>
         </div>
         <Button

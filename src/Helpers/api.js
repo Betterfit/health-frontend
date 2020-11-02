@@ -58,7 +58,7 @@ export default class Api {
   }
 
   changePassword = (data) => {
-    return this.init().get(`change-password/`, data); 
+    return this.init().put(`change-password/`, data); 
   }
 
   changeProfile = (id, data) => {
