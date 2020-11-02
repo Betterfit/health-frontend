@@ -35,9 +35,10 @@ const ProductImage = ({ product_image, product_name }) => {
 const OrderProductCard = ({ product }) => {
   // console.log(product);
   const cartStore = useCartStore();
-  const [priority, setPriority] = useState(product.priority ? product.priority : false );
-  const [quantity, getQuantity] = useState(0);  
-  const changeQuantity = (id,data) => {
+  const [priority, setPriority] = useState(product.priority);
+  const [quantity, getQuantity] = useState(product.quantity ? product.quantity: 1);  
+  const changeQuantity = (data) => {
+    console.log(data)
     cartStore.updateItemQuantity(product.pk,data.quantity)
   }
   const changePriority = (value) => {

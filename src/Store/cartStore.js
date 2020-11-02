@@ -1,10 +1,11 @@
 export function createCartStore (){
     return{
         cart:[],
-        addToCart(item,quantity){
+        addToCart(item,quantity,priority){
             let newObj = {
                 "pk" : item,
-                "quantity" : quantity
+                "quantity" : quantity,
+                "priority": priority
             }
             const checkProduct = obj => obj.pk === newObj.pk;
             if(!this.cart.some(checkProduct)){
@@ -20,13 +21,13 @@ export function createCartStore (){
             arr = JSON.parse(arr);
             arr = arr.filter(item => item.pk !== parseInt(id));
             this.cart = arr;
+            this.updateLocalCartStorage();
         },
         updateItemQuantity(id,quantity){
             let arr = JSON.stringify(this.cart);
             arr = JSON.parse(arr);
             for (var i in arr) {
                 if (arr[i].pk == id) {
-                    console.log('found');
                    arr[i].quantity = parseInt(quantity);
                    break; //Stop this loop, we found it!
                 }
@@ -39,12 +40,12 @@ export function createCartStore (){
             arr = JSON.parse(arr);
             for (var i in arr) {
                 if (arr[i].pk == id) {
-                    console.log('found');
                    arr[i].priority = priority;
                    break; //Stop this loop, we found it!
                 }
             }
             this.cart = arr;
+            this.updateLocalCartStorage();
         },
         updateLocalCartStorage() {
             localStorage.setItem("cart",JSON.stringify(this.cart));

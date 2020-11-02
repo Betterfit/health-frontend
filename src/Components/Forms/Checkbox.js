@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 
 function Checkbox({ id_tag, name, value = false, setValue }) {
-  const [checked , setChecked] = useState(false);
+  const [checked , setChecked] = useState(value);
   return (
     <>
       <label className="flex items-center">
@@ -26,10 +26,10 @@ function Checkbox({ id_tag, name, value = false, setValue }) {
             onChange={(e) => {
               setChecked(!checked);
               setValue(!checked);
-            }}
+            }}  
           />
           <svg
-            className="fill-current hidden w-4 h-4 text-betterfit-highlight-red pointer-events-none"
+            className={`fill-current w-4 h-4 text-betterfit-highlight-red pointer-events-none ${checked ? `block` : `hidden`} `}
             viewBox="0 0 20 20"
           >
             <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />

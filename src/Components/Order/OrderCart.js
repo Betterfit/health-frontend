@@ -9,25 +9,28 @@ import {useAuthStore} from "Context/authContext";
 import Modal from "Components/Content/Modal";
 import OrderProductCard from "Components/Order/OrderProductCard";
 const api = new Api();
+let rawCart;
 const OrderCart =({Cart}) => {
   let CartData = JSON.stringify(Cart);
   CartData = JSON.parse(CartData);
   const authStore = useAuthStore();
   const [cartItems , setCartItems] = useState();
+  const [cartRaw , setCartRaw] = useState();
   const [modalOrder , setModalOrder ] = useState(false);
   const [modalDraft , setModalDraft ] = useState(false);
-
   const getCartItems = () => {
     const promises = CartData.map((item, i) => api.getProductOption(item.pk).then(data => {
       return {
         ...data.data,
-        priority: item.priority 
+        quantity:item.quantity,
+        priority: item.priority
       };
     }));
     
     // resolve all the api calls in parallel and populate the messageData object as they resolve
     Promise.all(promises).then(responses => {
-        setCartItems(responses);
+      rawCart = CartData;
+      setCartItems(responses);
     });
   }
 
@@ -36,7 +39,7 @@ const OrderCart =({Cart}) => {
       if(!cartItems){
         getCartItems(); 
       }else{
-        if(cartItems.length !== CartData.length){
+        if(JSON.stringify(rawCart) !==  JSON.stringify(CartData)){
           getCartItems(); 
         }
       } 
@@ -58,7 +61,6 @@ const OrderCart =({Cart}) => {
         }
       })
     };  
-    console.log(order);
     setModalOrder(false)
     setModalDraft(false)
   }
