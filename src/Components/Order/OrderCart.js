@@ -47,12 +47,13 @@ const OrderCart =({Cart}) => {
   });
 
 
-  const confirmCallBack = () => {
+  const confirmCallBackOrder = () => {
     const userData = JSON.parse(authStore.user);
     let order = {
       "facility": userData.user_profile.facility,
       "facility_admin": userData.pk,
-      "purchase_no": "ShgbAsdi",
+      "purchase_no": "sdfasdfasdfa",
+      "status":"open",
       "order_products": CartData.map(item =>{
         return{
           "quantity": item.quantity,
@@ -60,9 +61,34 @@ const OrderCart =({Cart}) => {
           "priority":item.priority ? "stat" : "normal"
         }
       })
-    };  
-    setModalOrder(false)
-    setModalDraft(false)
+    }; 
+    api.setNewOrder(order).then(response => {
+      console.log(response);
+      setModalOrder(false)
+      setModalDraft(false)
+    }); 
+  }
+
+  const confirmCallBackDraft = () => {
+    const userData = JSON.parse(authStore.user);
+    let order = {
+      "facility": userData.user_profile.facility,
+      "facility_admin": userData.pk,
+      "purchase_no": "sdfasdfasdfa",
+      "status":"draft",
+      "order_products": CartData.map(item =>{
+        return{
+          "quantity": item.quantity,
+          "product_option":item.pk,
+          "priority":item.priority ? "stat" : "normal"
+        }
+      })
+    }; 
+    api.setNewOrder(order).then(response => {
+      console.log(response);
+      setModalOrder(false)
+      setModalDraft(false)
+    }); 
   }
 
 
@@ -97,7 +123,7 @@ const OrderCart =({Cart}) => {
       </div>
       <>
         {modalOrder && (
-            <Modal  cancelCallBack ={() => setModalOrder(!modalOrder)} confirmCallBack = {confirmCallBack} buttonText="Place Order">
+            <Modal  cancelCallBack ={() => setModalOrder(!modalOrder)} confirmCallBack = {confirmCallBackOrder} buttonText="Place Order">
                 <div className="px-6 py-4 border-b border-gray-300">
                     <h2 className="text-betterfit-navy text-xl">Confirm Order</h2>
                 </div>
@@ -113,7 +139,7 @@ const OrderCart =({Cart}) => {
       </> 
       <>
         {modalDraft && (
-            <Modal  cancelCallBack ={() => setModalDraft(!modalDraft)} confirmCallBack = {confirmCallBack} buttonText="Save Draft">
+            <Modal  cancelCallBack ={() => setModalDraft(!modalDraft)} confirmCallBack = {confirmCallBackDraft} buttonText="Save Draft">
                 <div className="px-6 py-4 border-b border-gray-300">
                     <h2 className="text-betterfit-navy text-xl">Save as Draft</h2>
                 </div>
