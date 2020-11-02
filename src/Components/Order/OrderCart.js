@@ -115,7 +115,7 @@ const OrderCart =({Cart}) => {
 
 
   const setOrderName = (name) => {
-    authStore.newOrderName = name;
+    cartStore.newOrderName = name;
   }
 
 
