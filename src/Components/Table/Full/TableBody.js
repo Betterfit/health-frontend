@@ -12,6 +12,7 @@ const TableBody = ({TableBody}) => {
             {
                 TableBody.map((row,index) =>{
                     let imageIndex;
+                    console.log(row);
                     if(!index%2 == 0 ){
                         return(
                             <tr className="bg-white border border-white">
@@ -23,11 +24,11 @@ const TableBody = ({TableBody}) => {
                                                 return(
                                                     <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
                                                         <Button
-                                                            text={r[1] === 1 ? "Stat" : "Regular"} 
-                                                            color={r[1] === 1 ? "status-red" :"status-blue" } 
+                                                            text={r[1] === "stat" ? "Stat" : "Regular"} 
+                                                            color={r[1] === "stat" ? "status-red" :"status-blue" } 
                                                             text_size="text-sm" 
                                                             pill={true}
-                                                            extraClasses={ r[1] === 1 ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
+                                                            extraClasses={ r[1] === "stat" ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
                                                         />
                                                     </td>
                                                 )
@@ -74,11 +75,11 @@ const TableBody = ({TableBody}) => {
                                                 return(
                                                     <td className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
                                                         <Button
-                                                            text={r[1] === 1 ? "Stat" : "Regular"} 
-                                                            color={r[1] === 1 ? "status-red" :"status-blue" } 
+                                                            text={r[1] === "stat" ? "Stat" : "Regular"} 
+                                                            color={r[1] === "stat" ? "status-red" :"status-blue" } 
                                                             text_size="text-sm" 
                                                             pill={true}
-                                                            extraClasses={ r[1] === 1 ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
+                                                            extraClasses={ r[1] === "stat" ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
                                                         />
                                                     </td>
                                                 )
