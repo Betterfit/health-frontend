@@ -19,7 +19,7 @@ const PopulateMenu = ({ value, link, type }) => {
   const PopupText = ({ value, link }) => {
     return (
       <a
-        href={link}
+        onClick={link}
         className="block py-3 text-sm focus:outline-none focus:bg-gray-100 capitalize "
         role="menuitem"
       >

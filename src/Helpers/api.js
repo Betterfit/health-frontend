@@ -105,6 +105,10 @@ export default class Api {
     return this.init().get(`/orders/${orderId}`)
   }
 
+  deleteOrder = (orderId) => {
+    return this.init().delete(`/orders/${orderId}/`)
+  }
+  
   submitOrder = (orderId, data) => {
     return this.init().put(`/orders/${orderId}`, data)
   }

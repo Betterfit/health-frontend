@@ -5,67 +5,13 @@ import Table from "Components/Table/Full/Table";
 import Api from "Helpers/api";
 import dayjs from 'dayjs';
 import {useAuthStore} from "Context/authContext";
+
+import PopupButton from "Components/Content/PopUpMenu1"
+import PopupText from "Components/Content/PopUpmenu2"
+import PopupMenu from "Components/Content/PopUpMenu3"
 const api = new Api();
 
-const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
-  return data
-    .filter((order, i) => order.status === filterName)
-    .map((filteredOrder) => (
-      <Table
-        TableData={filteredOrder}
-        excludeKeys={excludeKeys}
-        excludeValues={excludeValues}
-      />
-    ));
-};
 
-//set Header for title
-const setHeader = (data, url) => {
-  let options = [
-    {text: "Edit", action:`edit-order/${data.pk}`, type: 'text'},
-    {text: "Delete", action:"#", type: 'text'},
-    {text: "Submit", action:"#", type: 'button'},
-  ];
-  return {
-    purchase_ord: data.purchase_no,
-    ordered_by: data.facility_admin.user.first_name + " " + data.facility_admin.user.last_name,
-    ordered_on: dayjs(data.order_date).format("MMM D, YYYY hh:mmA"), 
-    order_no: data.order_no,
-    status: data.status,
-    id:data.pk, 
-    url:`${url}/detail/${data.pk}`,
-    options: data.status==='draft' ? options : []
-  };
-};
-
-//flatten the orders for easier manipulation with components
-const cleanOrderItems = (data) => {
-  let clean = [];
-  data.forEach((order, i) => {
-    clean.push({
-      product_image: order.product_option.product_image,
-      item: order.product_option.product_variation,
-      size: order.product_option.name,
-      quantity: order.quantity,
-      priority: order.priority,
-      pk: order.product_option.pk,
-    });
-  });
-  return clean;
-};
-
-//flatten the orders for easier manipulation with components
-const cleanOrders = (data, url) => {
-  let clean = [];
-  data.forEach((order, i) => {
-    let header = setHeader(order, url);
-    let products = cleanOrderItems(order.order_products);
-    header.order_products = products;
-    clean.push(header);
-  });
-
-  return clean;
-};
 
 const DashboardOrderList = (props) => {
   const authStore = useAuthStore();
@@ -75,6 +21,8 @@ const DashboardOrderList = (props) => {
   const [orderData, setOrderData] = useState(null);
   const [orderCount, setOrderCountData] = useState(null);
   const [searchActive, setSearchActive] = useState(false);
+
+
   const getData = async () =>
     await api
       .getOrderList(userId)
@@ -89,6 +37,82 @@ const DashboardOrderList = (props) => {
   useEffect(() => {
     getData();
   }, []);
+
+
+  const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
+    return data
+      .filter((order, i) => order.status === filterName)
+      .map((filteredOrder) => (
+        <Table
+          TableData={filteredOrder}
+          excludeKeys={excludeKeys}
+          excludeValues={excludeValues}
+        />
+      ));
+  };
+  
+  const callbackDelete = (orderId) => {
+    api
+      .deleteOrder(orderId)
+      .then((response) => {
+        getData();
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  };
+
+  //set Header for title
+  const setHeader = (data, url) => {
+    let options2 = [
+      <PopupText value="Edit" href={`edit-order/${data.pk}`}></PopupText>,
+      <PopupText value="Delete" onClick={callbackDelete(data.pk) }></PopupText>,
+    ];
+    let options = [
+      {text: "Edit", action:`edit-order/${data.pk}`, type: 'text'},
+      {text: "Delete", action:"#", type: 'text'},
+      {text: "Submit", action:"#", type: 'button'},
+    ];
+    return {
+      purchase_ord: data.purchase_no,
+      ordered_by: data.facility_admin.user.first_name + " " + data.facility_admin.user.last_name,
+      ordered_on: dayjs(data.order_date).format("MMM D, YYYY hh:mmA"), 
+      order_no: data.order_no,
+      status: data.status,
+      id:data.pk, 
+      url:`${url}/detail/${data.pk}`,
+      options: data.status==='draft' ? options : []
+    };
+  };
+  
+  //flatten the orders for easier manipulation with components
+  const cleanOrderItems = (data) => {
+    let clean = [];
+    data.forEach((order, i) => {
+      clean.push({
+        product_image: order.product_option.product_image,
+        item: order.product_option.product_variation,
+        size: order.product_option.name,
+        quantity: order.quantity,
+        priority: order.priority,
+        pk: order.product_option.pk,
+      });
+    });
+    return clean;
+  };
+  
+  //flatten the orders for easier manipulation with components
+  const cleanOrders = (data, url) => {
+    let clean = [];
+    data.forEach((order, i) => {
+      let header = setHeader(order, url);
+      let products = cleanOrderItems(order.order_products);
+      header.order_products = products;
+      clean.push(header);
+    });
+  
+    return clean;
+  };
 
   const excludeKeys = ["pk", "product_image"];
   const excludeValues = ["pk"];
