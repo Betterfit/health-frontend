@@ -1,4 +1,4 @@
-export function createCartStore (){
+export function createCartStore (name="cart"){
     return{
         cart:[],
         newOrderName:"",
@@ -58,11 +58,11 @@ export function createCartStore (){
             this.updateLocalCartStorage();
         },
         updateLocalCartStorage() {
-            localStorage.setItem("cart",JSON.stringify(this.cart));
+            localStorage.setItem(name,JSON.stringify(this.cart));
         },
         getLocalCartStorage(){
             // localStorage.removeItem("cart")
-            let cartData = localStorage.getItem("cart");
+            let cartData = localStorage.getItem(name);
             if(cartData){
                 this.cart = JSON.parse(cartData);
             }else{
