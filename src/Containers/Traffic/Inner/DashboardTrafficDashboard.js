@@ -4,14 +4,14 @@ import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import ControllerCard from 'Components/TrafficControllerSideBar/ControllerCard';
 import Api from "Helpers/api";
 import GraphApi from "Helpers/graphApi";
-import parseGraphQL from "Helpers/parseGraphQL";
+import FilterFields from "Components/Graph/FilterFields";
 
 import moment from 'moment';
 import { LineChart } from "@toast-ui/react-chart";
 
 const options = {
     chart: {
-        width: 350,
+        width: 500,
         height: 400,
         title: "Data By Health Regions",
     },
@@ -20,7 +20,7 @@ const options = {
     },
     xAxis: {
         title: "Date",
-        type: "datetime",
+        type: "date",
     },
     series: {
         showDot: false,
@@ -32,20 +32,170 @@ const options = {
     }
 };
 
+const allRegion = {
+  "New Brunswick": [
+    "Zone 7: Central East Region (Miramichi)",
+    "Zone 6: North East Region (Bathurst)",
+    "Zone 5: North Central Region (Campbellton)",
+    "Zone 4: North West Region (Edmundston)",
+    "Zone 3: Central West Region (Fredericton)",
+    "Zone 2: South Central Region (Saint John)",
+    "Zone 1: South East Region (Moncton)"
+  ],
+  "Ontario": [
+    "York Region Public Health Services",
+    "Windsor-Essex County Health Unit",
+    "Wellington-Dufferin-Guelph Public Health",
+    "Toronto Public Health",
+    "Timiskaming Health Unit",
+    "Thunder Bay District Health Unit",
+    "Sudbury & District Health Unit",
+    "Southwestern Public Health",
+    "Simcoe Muskoka District Health Unit",
+    "Renfrew County and District Health Unit",
+    "Region of Waterloo, Public Health",
+    "Porcupine Health Unit",
+    "Peterborough Public Health",
+    "Peel Public Health",
+    "Ottawa Public Health",
+    "Northwestern Health Unit",
+    "North Bay Parry Sound District Health Unit",
+    "Niagara Region Public Health Department",
+    "Middlesex-London Health Unit",
+    "Leeds, Grenville and Lanark District Health Unit",
+    "Lambton Public Health",
+    "Kingston, Frontenac and Lennox & Addington Public Health",
+    "Huron Perth District Health Unit",
+    "Hastings and Prince Edward Counties Health Unit",
+    "Hamilton Public Health Services",
+    "Halton Region Health Department",
+    "Haliburton, Kawartha, Pine Ridge District Health Unit",
+    "Haldimand-Norfolk Health Unit",
+    "Grey Bruce Health Unit",
+    "Eastern Ontario Health Unit",
+    "Durham Region Health Department",
+    "Chatham-Kent Health Unit",
+    "Brant County Health Unit",
+    "Algoma Public Health Unit"
+  ],
+  "Manitoba": [
+    "Winnipeg",
+    "Southern Health-Santé Sud",
+    "Prairie Mountain Health",
+    "Northern",
+    "Interlake-Eastern"
+  ],
+  "Newfoundland and Labrador": [
+    "Western Regional Health Authority",
+    "Labrador-Grenfell Regional Health Authority",
+    "Eastern Regional Health Authority",
+    "Central Regional Health Authority"
+  ],
+  "Alberta": [
+    "South Zone",
+    "North Zone",
+    "Edmonton Zone",
+    "Central Zone",
+    "Calgary Zone"
+  ],
+  "Prince Edward Island": [
+    "Prince Edward Island"
+  ],
+  "Nova Scotia": [
+    "Western",
+    "Northern",
+    "Eastern",
+    "Central",
+    "Nova Scotia"
+  ],
+  "Quebec": [
+    "Abitibi-Témiscamingue",
+    "Estrie",
+    "Outaouais",
+    "Capitale-Nationale",
+    "Chaudière-Appalaches",
+    "Côte-Nord",
+    "Gaspésie – Îles-de-la-Madeleine",
+    "Mauricie-et-Centre-du-Québec",
+    "Montérégie",
+    "Lanaudière",
+    "Laurentides",
+    "Laval",
+    "Montréal",
+    "Terres-Cries-de-la-Baie-James",
+    "Bas-Saint-Laurent",
+    "Nord-du-Québec",
+    "Nunavik",
+    "Saguenay – Lac-Saint-Jean"
+  ],
+  "Saskatchewan": [
+    "Far North Zone",
+    "North Zone",
+    "Regina",
+    "Saskatoon",
+    "South Zone",
+    "Central Zone"
+  ],
+  "British Columbia": [
+    "Vancouver Coastal",
+    "Fraser",
+    "Northern",
+    "Vancouver Island",
+    "Interior"
+  ]
+}
+
+const parseGraphQL = (data, today, endDate) => {
+
+    let parsedData = {
+        'British Columbia': {},
+        'Alberta': {},
+        'Manitoba': {},
+        'Saskatchewan': {},
+        'Ontario': {},
+        'Quebec': {},
+        'Newfoundland and Labrador': {},
+        'Prince Edward Island': {},
+        'Nova Scotia': {},
+        'New Brunswick': {}
+    }
+
+    let cases = data['data']['allCases']['edges'];
+    // generate an array of dates that we are displaying on the graph
+    let reportedDate = [];
+    while (endDate <= today) {
+        reportedDate.push(endDate.format('YYYY-M-D'));
+        endDate = endDate.clone().add(1, 'd');
+    }
+    parsedData['reportedDate'] = reportedDate;
+
+    // loop through our case data and append it to each regions array so we can easily display it
+    cases.forEach(element => {
+        let healthRegion = element.node.healthRegion.healthRegion;
+        let province = element.node.healthRegion.province;
+
+        if(healthRegion in parsedData[province]){
+            parsedData[province][healthRegion].activeCases.push(element.node.activeCases)
+
+        }else{
+            let caseData = {'activeCases': [element.node.activeCases]}
+            parsedData[province][healthRegion] = caseData;
+        }
+    });
+
+    return parsedData;
+};
+
 const api = new Api();
 const graphApi = new GraphApi();
 // get todays date
 // and end range for date
-const today = moment();
+const today = moment().subtract(1, 'days');
 const endDate = moment().subtract(7, 'days');
 const DashboardTrafficDashboard = () => {
     const [ProductData , setProductData] = useState(null);
     const [CaseData, setCaseData] = useState(null);
     const [DisplayData, setDisplayData] = useState({'categories': [], 'series': []});
-    const parseDataToVisualData = (data) => {
-        let cases = data['data']['allCases']['edges'];
-        console.log(parseGraphQL(cases, today, endDate));
-    }
 
     const getData = async () => await api.getTrafficControllerSupply()
     .then((response) => {
@@ -55,7 +205,10 @@ const DashboardTrafficDashboard = () => {
 
     const getGraphData = async () => await graphApi.getCaseData(`reportedDateGt: "${endDate.format('YYYY-M-D')}", first: 800, sortBy: "reportedDate"`)
     .then((response) => {
-        parseDataToVisualData(response.data);
+        console.log(response.data)
+        let caseData = parseGraphQL(response.data, today, endDate)
+        setCaseData(caseData);
+        setDisplayData({'categories': caseData.reportedDate, 'series': []})
     })
     .catch((err) => console.log(err));
 
@@ -63,6 +216,38 @@ const DashboardTrafficDashboard = () => {
         getData();
         getGraphData();
     }, []);
+
+    const FilterData = (() => {
+        return Object.keys(allRegion).map((key, idx) => {
+            return {
+                heading: key,
+                content: allRegion[key],
+            }
+        })
+    })();
+
+    // add a region to the graph
+    const addRegionToGraph = (e, province, region) => {
+        e.preventDefault();
+
+        let series = DisplayData.series.concat();
+        let categories = DisplayData.categories.concat()
+
+        // break out of onclick if region has already been added
+        // TODO does checking if the element exists in the graph already have any issues
+        for(let i = 0; i < series.length; i++){
+            if(series[i].name === region){
+                return 
+            }
+        }
+
+        series.push({'name': region, 'data': CaseData[province][region]['activeCases']});
+
+        setDisplayData({
+            'categories': categories,
+            'series': series
+        });
+    }
 
     
     return(
@@ -118,6 +303,7 @@ const DashboardTrafficDashboard = () => {
             </DashboardSideBar>
             <div className={`w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll mt-8`}   >
                 <LineChart data={DisplayData} options={options} />
+                <FilterFields filterData={FilterData} onClickEvent={addRegionToGraph}/>
             </div>
         </div>
     )
