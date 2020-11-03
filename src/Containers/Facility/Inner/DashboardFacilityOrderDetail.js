@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 import { _allowStateChangesInsideComputed } from "mobx";
 import { useHistory } from "react-router-dom";
 import {useAuthStore} from "Context/authContext";
-import { Redirect } from 'react-router';
 
 //components
 import DashboadOrderDetail from "Containers/DashboardOrderDetail";
@@ -62,9 +61,7 @@ const DashboardFacilityOrderDetail = (props) => {
   }, []);
 
   const routeChange = () => {
-    let path = `edit-order/${orderId}`;
-    history.goBack()
-    history.goBack();
+    let path = `/dashboard/edit-order/${orderId}`;
     history.push(path);
   };
 
