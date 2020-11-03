@@ -74,10 +74,9 @@ const DashboardFacilityOrderDetail = (props) => {
   };
 
   const confirmCallBack = () => {
-    let arr = {...orderDataRaw};
-    arr.status = "open";
+    let data = { status: "open", order_no: orderDataRaw.order_no };
     api
-      .submitOrder(orderId, arr)
+      .submitDraft(orderId, data)
       .then((response) => {
         getData();
         setError(false);
