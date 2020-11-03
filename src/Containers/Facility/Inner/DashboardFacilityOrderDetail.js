@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import { _allowStateChangesInsideComputed } from "mobx";
 import { useHistory } from "react-router-dom";
 import {useAuthStore} from "Context/authContext";
+import { Redirect } from 'react-router';
 
 //components
 import DashboadOrderDetail from "Containers/DashboardOrderDetail";
@@ -62,6 +63,7 @@ const DashboardFacilityOrderDetail = (props) => {
 
   const routeChange = () => {
     let path = `edit-order/${orderId}`;
+    history.goBack()
     history.goBack();
     history.push(path);
   };
@@ -74,9 +76,8 @@ const DashboardFacilityOrderDetail = (props) => {
   };
 
   const confirmCallBack = () => {
-    let data = { status: "open", order_no: orderDataRaw.order_no };
     api
-      .submitDraft(orderId, data)
+      .submitDraft(orderId, orderDataRaw.order_no)
       .then((response) => {
         getData();
         setError(false);

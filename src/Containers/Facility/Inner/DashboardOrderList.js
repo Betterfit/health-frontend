@@ -18,6 +18,7 @@ const api = new Api();
 
 const DashboardOrderList = (props) => {
   const authStore = useAuthStore();
+  console.log("HERE2")
   const userData = JSON.parse(authStore.user);
   const url = props.match.path;
   const userId = userData.user_profile.facility;
@@ -66,9 +67,9 @@ const DashboardOrderList = (props) => {
   };
 
   //delete a draft order
-  const callbackDelete = (orderId) => {
+  const callbackDelete = (orderId, orderNo) => {
     api
-      .deleteOrder(orderId)
+      .deleteOrder(orderId, orderNo)
       .then((response) => {
         getData();
       })
@@ -79,9 +80,8 @@ const DashboardOrderList = (props) => {
 
   //submit a draft order.
   const callbackSubmit = (orderId, orderNo) => {
-    let data = { status: "open", order_no: orderNo };
     api
-      .submitDraft(orderId, data)
+      .submitDraft(orderId, orderNo)
       .then((response) => {
         getData();
       })
@@ -92,19 +92,6 @@ const DashboardOrderList = (props) => {
 
   //set Header for title
   const setHeader = (data) => {
-    let options2 = (
-      <PopupMenu>
-        <TextOptions value="Edit" href={`edit-order/${data.pk}`}></TextOptions>
-        <TextOptions
-          value="Delete"
-          onClick={() => callbackDelete(data.pk)}
-        ></TextOptions>
-        <ButtonOption
-          value="Submit"
-          onClick={() => callbackSubmit(data.pk, data.order_no)}
-        ></ButtonOption>
-      </PopupMenu>
-    );
     //set options for menu for header
     const setOptions = (data) => {
       return (
@@ -115,7 +102,7 @@ const DashboardOrderList = (props) => {
           ></TextOptions>
           <TextOptions
             value="Delete"
-            onClick={() => callbackDelete(data.pk)}
+            onClick={() => callbackDelete(data.pk, data.order_no)}
           ></TextOptions>
           <ButtonOption
             value="Submit"
