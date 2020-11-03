@@ -27,6 +27,7 @@ const DashboardEditOrder = observer((props) => {
           let obj = {
             pk: item.product_option.pk,
             quantity: item.quantity,
+            priority: item.priority,
           };
           return obj;
         });
@@ -35,11 +36,13 @@ const DashboardEditOrder = observer((props) => {
         setOrderHeader({
           order_number: response.data.order_no,
           order_date: dayjs(response.data.order_date).format("MMM DD, YYYY"),
+          purchase_order: response.data.purchase_no,
           facility: response.data.facility.name,
           unit: "Emergency",
         });
         cartStore.getLocalCartStorage();
         cartStore.clearCart();
+        cartStore.newOrderName = response.data.purchase_no;
         cartStore.importCart(arr);
       })
       .catch((err) => console.log(err));
@@ -49,10 +52,14 @@ const DashboardEditOrder = observer((props) => {
 
   return (
     <>
-      {orderHeader && <OrderHeader data={orderHeader} />}
-
-      <OrderCart Cart={cartStore.cart} />
+    {orderHeader && (    
+    <>
+      <OrderHeader data={orderHeader} />
+      <OrderCart Cart={cartStore.cart} OrderID={orderHeader.purchase_order} />
     </>
+    )}
+    </>
+
   );
 });
 
