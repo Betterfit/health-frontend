@@ -108,7 +108,6 @@ export default class Api {
   //to cancel an order - change to 'cancelled' status
   // data - should be json of {order_no:[######], status:"open"}
   deleteOrder = (orderId, orderNo) => {
-    console.log("HERE")
     let data = { status: "cancelled", order_no: orderNo };
     return this.init().put(`/orders/${orderId}/`, data)
   }
