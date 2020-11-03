@@ -47,7 +47,7 @@ const OrderCart =({Cart, OrderID}) => {
       if(!cartItems){
         getCartItems(); 
       }else{
-        if(JSON.stringify(rawCart) !==  JSON.stringify(CartData)){
+        if(cartItems.length !==  CartData.length){
           getCartItems(); 
         }
       } 
@@ -121,8 +121,8 @@ const OrderCart =({Cart, OrderID}) => {
       <div className="flex-grow flex flex-col overflow-hidden">
       <div className="p-3 my-4 overflow-y-scroll">
         {cartItems && cartItems.length >= 1 && (
-          cartItems.map(item => {
-            return(<OrderProductCard product={item}/>)
+          cartItems.map((item,index) => {
+            return(<OrderProductCard key={`${item.name.replace(/\s/g, '')}-${item.pk}`} product={item}/>)
           })
         )}
       </div>

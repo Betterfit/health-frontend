@@ -11,7 +11,7 @@ const OrderName = ({name,callBack}) => {
             <input
             id="order-number"
             type="text"
-            class= {"py-2 pl-2 pr-2 form-input w-full text-base border-gray-400 border rounded shadow-inner focus:outline-none " }
+            className= {"py-2 pl-2 pr-2 form-input w-full text-base border-gray-400 border rounded shadow-inner focus:outline-none " }
             value={inputValue}
             placeholder="eg:#123456-AG"
             onChange={(e) => {

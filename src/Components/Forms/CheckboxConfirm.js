@@ -9,7 +9,7 @@ function Checkbox({ id_tag, name, value = false, setValue, resetErrors }) {
     <>
       <label className="flex items-center">
         <div
-          class={
+          className={
             "select-none uppercase text-xxs tracking-extra-wide pr-3 " +
             (checked ? "text-betterfit-green  font-semibold" : "text-betterfit-blue font-medium")
           }
@@ -17,7 +17,7 @@ function Checkbox({ id_tag, name, value = false, setValue, resetErrors }) {
           {name}
         </div>
         <div
-          class={
+          className={
             "bg-white border rounded w-6 h-6 flex flex-shrink-0 justify-center items-center focus-within:border-blue-500 " +
             (checked ? "border-betterfit-green " : "border-gray-400")
           }

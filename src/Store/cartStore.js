@@ -44,6 +44,7 @@ export function createCartStore (name="cart"){
         clearCart() {
             let arr = [];
             this.cart = arr;
+            this.updateLocalCartStorage();
         },  
         updateItemPriority(id,priority){
             let arr = JSON.stringify(this.cart);

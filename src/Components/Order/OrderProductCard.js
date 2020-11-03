@@ -33,14 +33,16 @@ const ProductImage = ({ product_image, product_name }) => {
 };
 
 const OrderProductCard = ({ product }) => {
-  // console.log(product);
+  // cart store
   const cartStore = useCartStore();
+  // product state
   const [priority, setPriority] = useState(product.priority);
   const [quantity, getQuantity] = useState(product.quantity ? product.quantity: 1);  
+  // change product quantity 
   const changeQuantity = (data) => {
-    console.log(data)
     cartStore.updateItemQuantity(product.pk,data.quantity)
   }
+  // change product priority 
   const changePriority = (value) => {
     setPriority(value)
     cartStore.updateItemPriority(product.pk, value ? 1 : 0)
@@ -61,19 +63,27 @@ const OrderProductCard = ({ product }) => {
               {Read_Product(product.name, "")}
             </h1>
             <span className="text-betterfit-grey-blue text-xs">
-              {Read_Product(product.product_size, "N/A")}
+              {Read_Product(product.product_variation, "N/A")}
             </span>
           </div>
-          </div>
-          <div className = "flex flex-row items-center justify-end py-3 pr-3">
-            <div className="pr-2">
-              <Quantity_Input id="quantity" name="Quantity" 
+        </div>
+        <div className = "flex flex-row items-center justify-end py-3 pr-3">
+          <div className="pr-2">
+            <Quantity_Input 
+              id="quantity" 
+              name="Quantity" 
               quantityUpdate={(id,data) =>{
                   changeQuantity(id,data);
-              } } value={quantity} readValue={getQuantity} />
-            </div>
-            <Checkbox id="priority" name="Stat" value={priority} setValue = { (value) => { changePriority(value) }} />
+              } } value={quantity} readValue={getQuantity} 
+            />
           </div>
+          <Checkbox 
+            id="priority" 
+            name="Stat" 
+            value={priority} 
+            setValue = { (value) => { changePriority(value) }} 
+          />
+        </div>
       </div>
     </>
   );
