@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import Expand from "Images/Icons/expand.svg";
+import { ReactSVG } from 'react-svg'
 
 
 const Collapsible = ({heading, children, onClickEvent}) => {
@@ -9,17 +11,25 @@ const Collapsible = ({heading, children, onClickEvent}) => {
 	}
 
 	return (
-        <div className="bg-gray-300 w-6/12 rounded flex flex-col items-center justify-center py-3">
-        	<button 
-            className="text-betterfit-graphite" 
-            onClick={collapsibleChangeIsOpen}
-          >
-        		{heading}
-        	</button>
-            <div className="px-3 overflow-y-scroll">
+        <div className="bg-gray-300 w-6/12 rounded flex flex-col items-start justify-center p-2">
+          <div className="flex flex-row justify-between m-1 px-4">
+          	 <button 
+                className="text-betterfit-graphite text-sm" 
+                onClick={collapsibleChangeIsOpen}
+              >
+          		  {heading}
+          	 </button>
+             <ReactSVG 
+              className={isOpen ? 'transform rotate-180' : 'transform rotate-0'}
+              src={Expand} 
+              beforeInjection={
+                (svg) => { 
+                  svg.setAttribute('style', 'width: 20px')}}  />
+          </div>
+            {isOpen &&
+            <div className="h-32 px-1 overflow-y-scroll">
               <div className="bg-white rounded relative z-20border-transparent">
-                {isOpen &&
-                  children.map((region) => {
+                  {children.map((region) => {
                   	return <button className="text-betterfit-grey-blue text-xs"
                   				onClick={(e) => onClickEvent(e, heading, region)}
                   			>
@@ -29,6 +39,7 @@ const Collapsible = ({heading, children, onClickEvent}) => {
               	 }
               </div>
             </div>
+          }
           </div>
 	)
 }

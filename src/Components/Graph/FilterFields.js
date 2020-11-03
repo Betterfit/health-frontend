@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 
 const FilterFields = ({filterData, onClickEvent}) => {
         return (
-          <div className="flex flex-wrap justify-start items-start">
+          <div className="h-16 flex flex-wrap justify-start items-start">
             {filterData.map(field => {
               return (
                 <Collapsible 
