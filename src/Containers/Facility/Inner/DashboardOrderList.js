@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
+
+import Api from "Helpers/api";
+import dayjs from "dayjs";
+import { useAuthStore } from "Context/authContext";
+
+// <----------- Components ------------->//
 import Tabs from "Components/Tabs/Tabs";
 import OrderSearch from "Components/Search/OrderSearch";
 import Table from "Components/Table/Full/Table";
-import Api from "Helpers/api";
-import dayjs from 'dayjs';
-import {useAuthStore} from "Context/authContext";
+//  <---- Menu Components ----> //
+import ButtonOption from "Components/Content/Menu/ButtonOption";
+import TextOptions from "Components/Content/Menu/TextOption";
+import PopupMenu from "Components/Content/Menu/PopUpMenu";
+import { keys } from "mobx";
 
-import PopupButton from "Components/Content/PopUpMenu1"
-import PopupText from "Components/Content/PopUpmenu2"
-import PopupMenu from "Components/Content/PopUpMenu3"
 const api = new Api();
-
-
 
 const DashboardOrderList = (props) => {
   const authStore = useAuthStore();
@@ -22,22 +25,33 @@ const DashboardOrderList = (props) => {
   const [orderCount, setOrderCountData] = useState(null);
   const [searchActive, setSearchActive] = useState(false);
 
-
   const getData = async () =>
     await api
       .getOrderList(userId)
       .then((response) => {
-        console.log(response.data);
-        setOrderData(cleanOrders(response.data.orders, url));
+        let arr = response.data.orders.map((item) => {
+          let header = setHeader(item);
+          header.order_products = item.order_products.map((products) => {
+            let obj = {
+              product_image: products.product_option.product_image,
+              item: products.product_option.product_variation,
+              size: products.product_option.name,
+              quantity: products.quantity,
+              priority: products.priority,
+              pk: products.product_option.pk,
+            };
+            return obj;
+          });
+          return header;
+        });
+        setOrderData(arr);
         setOrderCountData(response.data.summary);
-
       })
       .catch((err) => console.log(err));
 
   useEffect(() => {
     getData();
   }, []);
-
 
   const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
     return data
@@ -50,7 +64,8 @@ const DashboardOrderList = (props) => {
         />
       ));
   };
-  
+
+  //delete a draft order
   const callbackDelete = (orderId) => {
     api
       .deleteOrder(orderId)
@@ -58,62 +73,71 @@ const DashboardOrderList = (props) => {
         getData();
       })
       .catch((error) => {
-        console.error("Error", error);
+        console.error("Delete Error", error);
+      });
+  };
+
+  //submit a draft order.
+  const callbackSubmit = (orderId, orderNo) => {
+    let data = { status: "open", order_no: orderNo };
+    api
+      .submitDraft(orderId, data)
+      .then((response) => {
+        getData();
+      })
+      .catch((error) => {
+        console.error("Submit Error", error);
       });
   };
 
   //set Header for title
-  const setHeader = (data, url) => {
-    let options2 = 
-    <PopupMenu>
-      <PopupText value="Edit" href={`edit-order/${data.pk}`}></PopupText>
-      <PopupText value="Delete" onClick={()=>callbackDelete(data.pk) }></PopupText>
+  const setHeader = (data) => {
+    let options2 = (
+      <PopupMenu>
+        <TextOptions value="Edit" href={`edit-order/${data.pk}`}></TextOptions>
+        <TextOptions
+          value="Delete"
+          onClick={() => callbackDelete(data.pk)}
+        ></TextOptions>
+        <ButtonOption
+          value="Submit"
+          onClick={() => callbackSubmit(data.pk, data.order_no)}
+        ></ButtonOption>
       </PopupMenu>
-    let options = [
-      {text: "Edit", action:`edit-order/${data.pk}`, type: 'text'},
-      {text: "Delete", action:"#", type: 'text'},
-      {text: "Submit", action:"#", type: 'button'},
-    ];
+    );
+    //set options for menu for header
+    const setOptions = (data) => {
+      return (
+        <PopupMenu>
+          <TextOptions
+            value="Edit"
+            href={`edit-order/${data.pk}`}
+          ></TextOptions>
+          <TextOptions
+            value="Delete"
+            onClick={() => callbackDelete(data.pk)}
+          ></TextOptions>
+          <ButtonOption
+            value="Submit"
+            onClick={() => callbackSubmit(data.pk, data.order_no)}
+          ></ButtonOption>
+        </PopupMenu>
+      );
+    };
+
     return {
       purchase_ord: data.purchase_no,
-      ordered_by: data.facility_admin.user.first_name + " " + data.facility_admin.user.last_name,
-      ordered_on: dayjs(data.order_date).format("MMM D, YYYY hh:mmA"), 
+      ordered_by:
+        data.facility_admin.user.first_name +
+        " " +
+        data.facility_admin.user.last_name,
+      ordered_on: dayjs(data.order_date).format("MMM D, YYYY hh:mmA"),
       order_no: data.order_no,
       status: data.status,
-      id:data.pk, 
-      url:`${url}/detail/${data.pk}`,
-      options: data.status==='draft' ? options : [],
-      options2: data.status==='draft' ? options2 : [],
+      id: data.pk,
+      url: `${url}/detail/${data.pk}`,
+      options: data.status === "draft" ? setOptions(data) : [],
     };
-  };
-  
-  //flatten the orders for easier manipulation with components
-  const cleanOrderItems = (data) => {
-    let clean = [];
-    data.forEach((order, i) => {
-      clean.push({
-        product_image: order.product_option.product_image,
-        item: order.product_option.product_variation,
-        size: order.product_option.name,
-        quantity: order.quantity,
-        priority: order.priority,
-        pk: order.product_option.pk,
-      });
-    });
-    return clean;
-  };
-  
-  //flatten the orders for easier manipulation with components
-  const cleanOrders = (data, url) => {
-    let clean = [];
-    data.forEach((order, i) => {
-      let header = setHeader(order, url);
-      let products = cleanOrderItems(order.order_products);
-      header.order_products = products;
-      clean.push(header);
-    });
-  
-    return clean;
   };
 
   const excludeKeys = ["pk", "product_image"];
@@ -147,7 +171,7 @@ const DashboardOrderList = (props) => {
           heading: "Open",
           content: FilterOrders(orderData, excludeKeys, excludeValues, "open"),
           key: "open",
-          amount: orderCount.open, 
+          amount: orderCount.open,
         },
         {
           heading: "Approved",
@@ -158,7 +182,7 @@ const DashboardOrderList = (props) => {
             "approved"
           ),
           key: "approved",
-          amount: orderCount.approved, 
+          amount: orderCount.approved,
         },
         {
           heading: "Delivered",
@@ -169,7 +193,7 @@ const DashboardOrderList = (props) => {
             "delivered"
           ),
           key: "delivered",
-          amount: orderCount.delivered, 
+          amount: orderCount.delivered,
         },
         {
           heading: "Cancelled",
@@ -180,11 +204,13 @@ const DashboardOrderList = (props) => {
             "cancelled"
           ),
           key: "cancelled",
-          amount: orderCount.cancelled, 
+          amount: orderCount.cancelled,
         },
       ];
     }
   })();
+
+  
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-10">
       <h2 className="text-3xl text-dark-blue my-3">Orders</h2>
