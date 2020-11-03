@@ -5,8 +5,7 @@ import { NavLink } from "react-router-dom";
 import StatusButton from "Components/Content/StatusButton";
 //images
 import OpenClose from "Images/Icons/open-close.svg";
-import DotMenu from "Images/Icons/dot-menu.svg";
-import PopUpMenu from "Components/Content/PopUpMenu";
+
 
 const HeaderText = ({ title, value, addOn_styles }) => {
   return (
@@ -25,10 +24,6 @@ const HeaderText = ({ title, value, addOn_styles }) => {
 
 const TableHeader = ({ HeaderData }) => {
   const [open, setActive] = useState(false);
-  const [ShowOpt, SetOptions] = useState(false);
-  const ToggleOptions = () => {
-    SetOptions(!ShowOpt);
-  };
   const ToggleShowHide = () => {
     setActive(!open);
   };
@@ -57,20 +52,7 @@ const TableHeader = ({ HeaderData }) => {
             <NavLink className="p-2" to={HeaderData.url}>
               <StatusButton status={HeaderData.status} />
             </NavLink>
-
-            {HeaderData.options.length > 0 && (
-              <>
-                <ReactSVG
-                  src={DotMenu}
-                  onClick={ToggleOptions}
-                  className="text-white opacity-50 pl-2"
-                  beforeInjection={(svg) => {
-                    svg.setAttribute("style", "width: 18px;height:18px");
-                  }}
-                />
-{HeaderData.options2}
-              </>
-            )}
+            {HeaderData.options}
             <ReactSVG
               src={OpenClose}
               onClick={ToggleShowHide}
