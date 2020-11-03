@@ -13,7 +13,7 @@ const CircleButton = ({ hover, onClick }) => {
     >
       <svg
         viewBox="0 0 20 20"
-        enable-background="new 0 0 20 20"
+        enableBackground="new 0 0 20 20"
         className="w-6 h-6 inline-block"
       >
         <path

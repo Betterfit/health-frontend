@@ -13,12 +13,12 @@ import ButtonOption from "Components/Content/Menu/ButtonOption";
 import TextOptions from "Components/Content/Menu/TextOption";
 import PopupMenu from "Components/Content/Menu/PopUpMenu";
 import { keys } from "mobx";
-
+import uuid from 'react-uuid'
 const api = new Api();
 
 const DashboardOrderList = (props) => {
   const authStore = useAuthStore();
-  console.log("HERE2")
+  // console.log("HERE2")
   const userData = JSON.parse(authStore.user);
   const url = props.match.path;
   const userId = userData.user_profile.facility;
@@ -57,11 +57,12 @@ const DashboardOrderList = (props) => {
   const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
     return data
       .filter((order, i) => order.status === filterName)
-      .map((filteredOrder) => (
+      .map((filteredOrder) =>(
         <Table
           TableData={filteredOrder}
           excludeKeys={excludeKeys}
           excludeValues={excludeValues}
+          key={uuid()}
         />
       ));
   };
@@ -142,6 +143,7 @@ const DashboardOrderList = (props) => {
                 TableData={order}
                 excludeKeys={excludeKeys}
                 excludeValues={excludeValues}
+                key={uuid()}
               />
             );
           }),
@@ -203,6 +205,7 @@ const DashboardOrderList = (props) => {
       <h2 className="text-3xl text-dark-blue my-3">Orders</h2>
       {TabData && (
         <Tabs
+          key={uuid()}
           tabs={TabData}
           amount={true}
           headingComp={

@@ -24,7 +24,6 @@ const ProfileCard = ({}) => {
 
   function updateInfo() {
     //update with api when ready
-    console.log("updating");
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-
+import uuid from 'react-uuid'
 // components
 import TabHeadings from './TabHeadings';
 
@@ -26,7 +26,7 @@ const Tabs = ({tabs,headingComp,amount}) => {
             <TabHeadings headings={Headings} headingFunction={headingChangeActive} headingComp={headingComp} amount={amount ? amount : false}   />
             {tabs.map((tab, index) => {
                 return(
-                    <div key={index} className={`${tab.key === activeTab ? 'opacity-100 visible' : 'opacity-0 hidden' }`} >
+                    <div key={uuid()} className={`${tab.key === activeTab ? 'opacity-100 visible' : 'opacity-0 hidden' }`} >
                         {tab.content}
                     </div>
                 )

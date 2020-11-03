@@ -24,13 +24,13 @@ const DashboardCategoryProductList = (props) => {
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         setIsLoading(false);
         setIsError(true);
       });
 
   useEffect(() => {
-    console.log("getting data");
+    // console.log("getting data");
     getData();
   }, []);
 

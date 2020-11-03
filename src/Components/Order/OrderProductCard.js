@@ -18,7 +18,7 @@ const Read_Product = (product_attr, default_value) => {
 //If no image can be found - return nothing
 const ProductImage = ({ product_image, product_name }) => {
   if (product_image === undefined ) {
-    console.log('no image');
+    // console.log('no image');
     return null;
   }
   return (

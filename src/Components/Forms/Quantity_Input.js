@@ -6,7 +6,7 @@ function Quantity_Input({ id_tag, name, readOnly=false, value, readValue , quant
     <>
       <div className="inline-block ">
         <label
-          for={id_tag}
+          htmlFor={id_tag}
           className="uppercase font-medium text-betterfit-graphite text-xxs tracking-extra-wide pr-3 "
         >
           {name}

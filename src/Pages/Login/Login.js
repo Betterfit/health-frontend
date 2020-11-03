@@ -22,12 +22,11 @@ const LoginTemplate = () => {
   const api = new Api();
   const signIn = (e) => {
     e.preventDefault();
-    console.log("sign in");
+    // console.log("sign in");
     api
       .signIn({ username: email, password: password })
       //.signIn({ username: email, password: password })
       .then( async (response) => {
-        console.log(response.data.user);
         await localStorage.setItem("token", response.data.token);
         authStore.token = response.data.token;
         await localStorage.setItem("user", JSON.stringify(response.data.user));

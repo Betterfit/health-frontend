@@ -17,7 +17,7 @@ const DashboardSearch = () => {
     const [searchData , setSearchData] = useState();
     const getSearchResults = async () => await api.getSearchResults(query.get('search'))
     .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setSearchData(response.data)
     })
     .catch((err) => console.log(err));
@@ -41,7 +41,7 @@ const DashboardSearch = () => {
                         searchData.map(productCat => {
                             return(
                                 productCat.products.map(product=> {
-                                    console.log(product);
+                                    // console.log(product);
                                     return(
                                         <>
                                         <h2 className="text-2xl text-gray-700 font-bold">{product.name}</h2>
