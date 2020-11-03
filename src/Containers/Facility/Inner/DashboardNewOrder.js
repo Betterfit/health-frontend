@@ -7,7 +7,6 @@ import Table from "Components/Table/Basic/Table";
 import Api from "Helpers/api";
 import useStores from "Helpers/useStores";
 import OrderHeader from "Components/Order/NewOrderHeader";
-import Spinner from "Images/spinner.gif";
 import OrderCart from "Components/Order/OrderCart";
 import DashboardCategoryProductList from "Containers/Facility/Inner/DashboardCategoryProductList";
 import DashboardProductDetail from "Containers/Facility/Inner/DashboardProductDetail";

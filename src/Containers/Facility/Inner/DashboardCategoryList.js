@@ -4,6 +4,7 @@ import CategoryCard from "Components/Order/CategoryCard";
 import image from "Images/example_product.png"; //remove this later
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 import Search from 'Components/Search/Search';
+import Spinner from "Images/spinner.gif";
 const api = new Api();
 
 const DashboardCategoryList = (props) => {
@@ -32,11 +33,13 @@ const DashboardCategoryList = (props) => {
 
 
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative">
       {isError && <div>Something went wrong ...</div>}
 
       {isLoading ? (
-        <p>Loading ...</p>
+        <div className="relative w-3/4 min-h-screen" style={{margin:'0 auto',}}> 
+          <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
+        </div>
       ) : (
         <>
           <div className="flex justify-between items-center pb-4 mb-8 border-b border-gray-400">

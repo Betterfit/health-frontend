@@ -6,7 +6,7 @@ import ProductDetailsCard from "Components/Content/ProductDetailsCard"
 import image from "Images/example_product.png"; //remove this later
 import Api from "Helpers/api";
 import { set } from "js-cookie";
-
+import Spinner from "Images/spinner.gif";
 const api = new Api();
 
 const DashboardProductDetail = (props) => {
@@ -48,7 +48,12 @@ const DashboardProductDetail = (props) => {
     return clean_product;
   };
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative">
+      {isLoading && (
+        <div className="relative w-3/4 min-h-screen" style={{margin:'0 auto',}}> 
+          <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
+        </div>
+      )}
       {product && (
         <>
           <BackNavigation link={`Back to Products`} />
