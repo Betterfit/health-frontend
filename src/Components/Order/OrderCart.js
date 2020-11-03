@@ -10,7 +10,7 @@ import Modal from "Components/Content/Modal";
 import OrderProductCard from "Components/Order/OrderProductCard";
 import OrderName from "Components/Forms/OrderName"
 import Checkbox from 'Components/Forms/CheckboxConfirm';
-
+import { useHistory } from "react-router-dom";
 const api = new Api();
 let rawCart;
 
@@ -72,12 +72,16 @@ const OrderCart =({Cart, OrderID}) => {
         })
       }; 
       api.setNewOrder(order).then(response => {
+        console.log(response);
         setModalOrder(false)
         setModalDraft(false)
         cartStore.newOrderName = "";
         cartStore.cart = [];
         cartStore.updateLocalCartStorage();
         setCartItems(null);
+        // history.push(
+        //   history.location.pathname + category_name + "/" + category_id
+        // )
       }); 
     }else{
       setAgreeTermsError(true)

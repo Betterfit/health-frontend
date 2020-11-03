@@ -77,3 +77,9 @@ tr.sortable-chosen *{
     background: transparent;
     width: 6px;
 }
+
+@media screen and (min-width:768px){
+    .sidebar{
+        min-width:320px;
+    }
+}
