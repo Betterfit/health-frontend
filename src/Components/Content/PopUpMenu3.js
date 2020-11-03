@@ -9,7 +9,7 @@ import { Transition } from "@tailwindui/react";
 const PopUpMenu = ({ data, showPopup, children}) => {
   return (
     <Transition
-    show={showPopup}
+    show={true}
     enter="transition-opacity duration-75"
     enterFrom="opacity-0"
     enterTo="opacity-100"

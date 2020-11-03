@@ -64,10 +64,11 @@ const DashboardOrderList = (props) => {
 
   //set Header for title
   const setHeader = (data, url) => {
-    let options2 = [
-      <PopupText value="Edit" href={`edit-order/${data.pk}`}></PopupText>,
-      //<PopupText value="Delete" onClick={callbackDelete(data.pk) }></PopupText>,
-    ];
+    let options2 = 
+    <PopupMenu>
+      <PopupText value="Edit" href={`edit-order/${data.pk}`}></PopupText>
+      <PopupText value="Delete" onClick={()=>callbackDelete(data.pk) }></PopupText>
+      </PopupMenu>
     let options = [
       {text: "Edit", action:`edit-order/${data.pk}`, type: 'text'},
       {text: "Delete", action:"#", type: 'text'},
@@ -81,7 +82,8 @@ const DashboardOrderList = (props) => {
       status: data.status,
       id:data.pk, 
       url:`${url}/detail/${data.pk}`,
-      options: data.status==='draft' ? options : []
+      options: data.status==='draft' ? options : [],
+      options2: data.status==='draft' ? options2 : [],
     };
   };
   

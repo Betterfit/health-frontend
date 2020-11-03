@@ -68,10 +68,7 @@ const TableHeader = ({ HeaderData }) => {
                     svg.setAttribute("style", "width: 18px;height:18px");
                   }}
                 />
-                <PopUpMenu
-                  data={HeaderData.options}
-                  showPopup={ShowOpt}
-                ></PopUpMenu>
+{HeaderData.options2}
               </>
             )}
             <ReactSVG
