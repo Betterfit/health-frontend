@@ -203,7 +203,7 @@ const DashboardTrafficDashboard = () => {
     })
     .catch((err) => console.log(err));
 
-    const getGraphData = async () => await graphApi.getCaseData(`reportedDateGt: "${endDate.format('YYYY-M-D')}", first: 800, sortBy: "reportedDate"`)
+    const getGraphData = async () => await graphApi.getCaseData(`reportedDateGt: "${endDate.format('YYYY-M-D')}", first: 800, sortBy: "reportedDateAsc"`)
     .then((response) => {
         console.log(response.data)
         let caseData = parseGraphQL(response.data, today, endDate)
