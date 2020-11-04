@@ -37,7 +37,7 @@ const Notification = ({ head, text, success = false }) => {
        {success && <SuccessSVG></SuccessSVG>}
        {!success && <FailSVG></FailSVG>}
       <p className={`text-xs leading-5 ${css_text} `}>
-        <span className="font-bold ml-2">{head} </span>
+        <span className="font-bold ml-2 mr-2">{head} </span>
         {text}
       </p>
     </div>
