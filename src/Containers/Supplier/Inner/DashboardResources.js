@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ListLink from 'Components/Content/ListLink';
 import TagLink from 'Components/Content/TagLink';
 import ResourceLink from 'Components/Content/ResourceLink';
@@ -7,9 +7,8 @@ import Api from "Helpers/api";
 import Slider from "Components/Slider/Slider";
 import DashboardSideBar from 'Components/DashboardSideBar/DashboardSideBar';
 
-
-const api = new Api();
 const DashboardResources = () => {
+    const api = new Api();
     const [title , setTitle] = useState('Resources');
     const [searchActive , setSearchActive] = useState(false);
     const resourceTypes = {
@@ -30,6 +29,26 @@ const DashboardResources = () => {
         'IV Solution',
         'Vaccine',
     ]
+    const [something, setSomething] = useState({});
+    const getResourceList = async () =>
+        await api
+            .getResources()
+            .then((response) => {
+            console.log(response.data);
+            })
+            .catch((err) => console.log(err));
+    const getTagList = async () =>
+        await api
+            .getTags()
+            .then((response) => {
+            console.log(response.data);
+            })
+            .catch((err) => console.log(err));
+    useEffect(() => {
+        console.log("getting data");
+        getResourceList();
+        getTagList();
+      }, []);
     /* mock data to be replaced */
     const resourceList = {
         resource1: {

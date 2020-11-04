@@ -110,5 +110,13 @@ export default class Api {
     return this.init().get(`/traffic-controllers/product-categories/`)
   }
 
+  // ============================   RESOURCES API  =====================================
+  getResources = () => {
+    return this.init().get(`/resources/`); 
+  }
+
+  getTags = () => {
+    return this.init().get(`/tags/`); 
+  }
 }
 
