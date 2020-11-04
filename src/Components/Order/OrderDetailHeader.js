@@ -32,7 +32,8 @@ const OrderComponentTitle = ({ value, classes }) => {
   );
 };
 
-const OrderDetailHeader = ({ order, actionComponent }) => {
+const OrderDetailHeader = ({ order, actionComponent, children}) => {
+  console.log("HERE")
   return (
     <div className="flex flex-col border-b pb-4 border-gray-400 relative">
       <BackNavigation link={"Back"} />
@@ -44,7 +45,7 @@ const OrderDetailHeader = ({ order, actionComponent }) => {
             return <OrderComponent key={key} title={key} value={order[key]} />;
           })}
       </div>
-      <div className="absolute top-0 right-0">{actionComponent}</div>
+      {children}
     </div>
   );
 };

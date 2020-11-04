@@ -65,7 +65,9 @@ const DashboardFacilityOrderDetail = (props) => {
   //Status for order
   const ActionComponent = () => {
     return (
+      <div className="absolute bottom-0 mb-6 right-0">
       <StatusButton status={orderDataRaw.status} extraClasses="font-semibold" />
+      </div>
     );
   };
 
