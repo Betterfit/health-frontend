@@ -11,11 +11,10 @@ const Collapsible = ({heading, children, onClickEvent}) => {
 	}
 
 	return (
-        <div className="bg-gray-300 w-6/12 rounded flex flex-col items-start justify-center p-2 border-2 border-gray-100">
-          <div className="flex flex-row justify-between m-1 px-4">
+        <div className="bg-gray-300 w-6/12 rounded flex flex-col items-start justify-center p-2 border-2 border-white">
+          <div className="w-full flex flex-row justify-between m-1 px-4" onClick={collapsibleChangeIsOpen}>
           	 <button 
                 className="text-betterfit-graphite text-sm" 
-                onClick={collapsibleChangeIsOpen}
               >
           		  {heading}
           	 </button>
@@ -24,7 +23,7 @@ const Collapsible = ({heading, children, onClickEvent}) => {
               src={Expand} 
               beforeInjection={
                 (svg) => { 
-                  svg.setAttribute('style', 'width: 20px')}}  />
+                  svg.setAttribute('style', 'width: 22px')}}  />
           </div>
             {isOpen &&
             <div className="h-32 overflow-y-scroll">

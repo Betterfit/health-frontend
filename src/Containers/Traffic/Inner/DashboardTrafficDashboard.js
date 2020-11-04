@@ -7,11 +7,12 @@ import GraphApi from "Helpers/graphApi";
 import FilterFields from "Components/Graph/FilterFields";
 
 import moment from 'moment';
+import 'tui-chart/dist/tui-chart.css'
 import { LineChart } from "@toast-ui/react-chart";
 
 const options = {
     chart: {
-        width: 500,
+        width: 525,
         height: 400,
         title: "Data By Health Regions",
     },
@@ -25,7 +26,6 @@ const options = {
     series: {
         showDot: false,
         zoomable: true,
-        spline: true,
     },
     legend: {
         align: 'bottom'
