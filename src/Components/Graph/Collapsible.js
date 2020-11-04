@@ -11,7 +11,7 @@ const Collapsible = ({heading, children, onClickEvent}) => {
 	}
 
 	return (
-        <div className="bg-gray-300 w-6/12 rounded flex flex-col items-start justify-center p-2">
+        <div className="bg-gray-300 w-6/12 rounded flex flex-col items-start justify-center p-2 border-2 border-gray-100">
           <div className="flex flex-row justify-between m-1 px-4">
           	 <button 
                 className="text-betterfit-graphite text-sm" 
@@ -27,7 +27,7 @@ const Collapsible = ({heading, children, onClickEvent}) => {
                   svg.setAttribute('style', 'width: 20px')}}  />
           </div>
             {isOpen &&
-            <div className="h-32 px-1 overflow-y-scroll">
+            <div className="h-32 overflow-y-scroll">
               <div className="bg-white rounded relative z-20border-transparent">
                   {children.map((region) => {
                   	return <button className="text-betterfit-grey-blue text-xs"
