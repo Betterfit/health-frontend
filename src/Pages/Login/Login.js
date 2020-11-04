@@ -6,7 +6,7 @@ import UpperBackgroundBlob from "Images/Login/login_upper_left.svg";
 import Input_Field from "Components/Forms/Input_Field";
 import Api from "Helpers/api";
 import PasswordReset from "./PasswordReset";
-// import Cookies from "js-cookie";
+import Notfications from "Components/Helpers/Notifications"
 import Button from "Components/Forms/Button";
 import { useHistory, Route, useRouteMatch } from "react-router-dom";
 import {useAuthStore} from "Context/authContext";
@@ -14,6 +14,7 @@ const LoginTemplate = () => {
   const authStore = useAuthStore();
   const [password, setPW] = useState("");
   const [email, setEmail] = useState("");
+  const [Error, setError] = useState()
 
   const history = useHistory();
   if(authStore.token){
@@ -22,10 +23,8 @@ const LoginTemplate = () => {
   const api = new Api();
   const signIn = (e) => {
     e.preventDefault();
-    console.log("sign in");
     api
       .signIn({ username: email, password: password })
-      //.signIn({ username: email, password: password })
       .then( async (response) => {
         console.log(response.data.user);
         await localStorage.setItem("token", response.data.token);
@@ -35,10 +34,16 @@ const LoginTemplate = () => {
         history.push("/dashboard/");
       })
       .catch((err) => {
+        setError({head:"Unable to login",text: "please ensure your email and password are correct."})
         console.log(err);
       });
   };
   return (
+    <>
+    {Error && (
+      <Notfications head={Error.head} text={Error.text} success={false}></Notfications>
+    )
+    }
     <form className="pb-12" onSubmit={signIn}>
       <div>
         <Input_Field
@@ -77,6 +82,7 @@ const LoginTemplate = () => {
         </div>
       </div>
     </form>
+    </>
   );
 };
 
