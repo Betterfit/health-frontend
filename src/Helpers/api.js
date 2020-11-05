@@ -132,11 +132,6 @@ export default class Api {
     return this.init().put(`/orders/${orderId}/`, data)
   }
 
-  deleteOrder = (orderId) => {
-    return this.init().delete(`/orders/${orderId}`)
-  }
-
-
   getTrafficControllerSupply = () => {
     return this.init().get(`/traffic-controllers/product-categories/`)
   }
