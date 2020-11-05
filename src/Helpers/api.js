@@ -49,9 +49,22 @@ export default class Api {
     return this.init().post("api-token-auth/", data);
   }
 
+  getUser = (id) => {
+    return this.init().get(`users/${id}/`);
+  }
+
   getFacilityData = (id) => {
     return this.init().get(`facilities/${id}`);
   }
+
+  changePassword = (data) => {
+    return this.init().put(`change-password/`, data); 
+  }
+
+  changeProfile = (id, data) => {
+    return this.init().patch(`users/${id}/`, data); 
+  }
+
 
 // ============================   PRODUCTS API  =====================================
   getProductCategories = () => {

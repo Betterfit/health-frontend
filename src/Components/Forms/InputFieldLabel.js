@@ -1,6 +1,6 @@
 import React from "react";
 
-function InputFieldLabel({ id_tag, name, type, value, onChange }) {
+function InputFieldLabel({ id_tag, name, type, value, onChange, error, required=true }) {
   return (
     <div>
       <label htmlFor={id_tag} className="block uppercase betterfit-graphite text-10 tracking-extra-wide opacity-50 py-2">
@@ -14,9 +14,12 @@ function InputFieldLabel({ id_tag, name, type, value, onChange }) {
           placeholder={name}
           value={value}
           onChange={onChange}
-          required
+          required={required}
         />
       </div>
+      <span className="error text-sm text-status-dark-red pt-1">
+          {error}
+        </span>
     </div>
   );
 }
