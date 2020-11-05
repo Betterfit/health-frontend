@@ -28,7 +28,6 @@ const FacilityCard = ({}) => {
       //  data.shipping_postal_code,
     //  ],
       shipping_address: [data.street, data.city + " " + data.province, data.postal_code],
-      units: ["Emergency", "Cardiology", "Urology", "Oncology"],
     };
   };
 
@@ -68,10 +67,6 @@ const FacilityCard = ({}) => {
             <FacilityDescriptions
               label="Shipping Address"
               items={facilityData.shipping_address}
-            ></FacilityDescriptions>
-            <FacilityDescriptions
-              label="Units Accessible"
-              items={facilityData.units}
             ></FacilityDescriptions>
           </div>
         </>
