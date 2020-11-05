@@ -29,7 +29,7 @@ const Collapsible = ({heading, children, onClickEvent}) => {
             <div className="h-32 overflow-y-scroll">
               <div className="bg-white rounded relative z-20border-transparent">
                   {children.map((region) => {
-                  	return <button className="text-betterfit-grey-blue text-xs"
+                  	return <button className="text-betterfit-grey-blue text-xs mx-1"
                   				onClick={(e) => onClickEvent(e, heading, region)}
                   			>
                   				{region}
