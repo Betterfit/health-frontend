@@ -11,7 +11,7 @@ const Collapsible = ({heading, children, onClickEvent}) => {
 	}
 
 	return (
-        <div className="bg-betterfit-light-blue w-6/12 rounded flex flex-col items-start justify-center p-2 border-2 border-white">
+        <div className="bg-gray-300  w-6/12 rounded flex flex-col items-start justify-center p-2 border-2 border-white">
           <div className="w-full flex flex-row justify-between m-1 px-4" onClick={collapsibleChangeIsOpen}>
           	 <button 
                 className="text-betterfit-graphite text-sm" 

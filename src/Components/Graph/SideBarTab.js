@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
 
-const SideBarTabs = ({tabs}) => {
+const SideBarTabs = ({tabs, activeTab, handleClick}) => {
 
-	const [activeTab , setActiveTab] = useState(tabs[0].key)
-
-	const tabChangeActive = (key) => {
+	const tabChangeActive = (key, heading) => {
         // console.log(key)
-        setActiveTab(key);   
+        handleClick(key, heading);   
     }
 
 	return (
@@ -14,10 +12,10 @@ const SideBarTabs = ({tabs}) => {
 		{
 			tabs.map(tab => {
 			  return (                    
-				<div key={tab.key} className={`mb-1 flex justify-center rounded-l-lg bg-tag-light-blue ${tab.key === activeTab ? 'border-betterfit-basic-blue border' : 'border-0'}`}>
+				<div key={tab.key} className={`mb-2 py-2 flex justify-center rounded-l-lg ${tab.key === activeTab ? 'border-betterfit-basic-blue border bg-white' : 'bg-gray-300 border-0'}`}>
                   <button 
-                  	className={`text-xs ${tab.key === activeTab ? 'text-betterfit-basic-blue' :'text-betterfit-graphite'}`}
-                  	onClick={() => {tabChangeActive(tab.key)}}
+                  	className={`text-xs ${tab.key === activeTab ? 'text-betterfit-basic-blue font-semibold' :'text-blue'}`}
+                  	onClick={() => {tabChangeActive(tab.key, tab.heading)}}
                   >
                   	{tab.heading}
                   </button>

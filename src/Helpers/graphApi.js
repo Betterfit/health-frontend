@@ -42,6 +42,8 @@ export default class GraphApi {
             province
           } 
           activeCases
+          newCases
+          deaths
         }  
       }}}`,"variables":null,"operationName":null}
 

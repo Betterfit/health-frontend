@@ -1,38 +1,12 @@
 import React , {useState, useEffect} from 'react';
-import DashboardSideBar from 'Components/DashboardSideBar/DashboardSideBar';
-import TitleUnderLine from 'Components/Content/TitleUnderLine'
-import ControllerCard from 'Components/TrafficControllerSideBar/ControllerCard';
-import Api from "Helpers/api";
+
 import GraphApi from "Helpers/graphApi";
 import FilterFields from "Components/Graph/FilterFields";
 import SideBarTabs from "Components/Graph/SideBarTab";
-import Graph from "./DashboardGraph";
 
 import moment from 'moment';
 import 'tui-chart/dist/tui-chart.css'
 import { LineChart } from "@toast-ui/react-chart";
-
-const options = {
-    chart: {
-        width: 525,
-        height: 400,
-        title: "Data By Health Regions",
-    },
-    yAxis: {
-        title: "Health Regions"
-    },
-    xAxis: {
-        title: "Date",
-        type: "date",
-    },
-    series: {
-        showDot: false,
-        zoomable: true,
-    },
-    legend: {
-        align: 'bottom'
-    }
-};
 
 const allRegion = {
   "New Brunswick": [
@@ -147,12 +121,6 @@ const allRegion = {
   ]
 }
 
-const graphTabs = [
-    {heading: 'Active Cases', key: 'activeCases'},
-    {heading: 'New Cases', key: 'newCases'},
-    {heading: 'Daily Deaths', key: 'deaths'},
-]
-
 const parseGraphQL = (data, today, endDate) => {
 
     let parsedData = {
@@ -202,78 +170,128 @@ const parseGraphQL = (data, today, endDate) => {
     return parsedData;
 };
 
-const api = new Api();
-const DashboardTrafficDashboard = () => {
-    const [ProductData , setProductData] = useState(null);
+const options = {
+    chart: {
+        width: 525,
+        height: 400,
+        title: "Data By Health Regions",
+    },
+    yAxis: {
+        title: "Health Regions"
+    },
+    xAxis: {
+        title: "Date",
+        type: "date",
+    },
+    series: {
+        showDot: false,
+        zoomable: true,
+    },
+    legend: {
+        align: 'bottom'
+    }
+};
 
-    const getData = async () => await api.getTrafficControllerSupply()
+const graphTabs = [
+    {heading: 'Active Cases', key: 'activeCases'},
+    {heading: 'New Cases', key: 'newCases'},
+    {heading: 'Daily Deaths', key: 'deaths'},
+]
+
+const graphApi = new GraphApi();
+// get todays date
+// and end range for date
+const today = moment().subtract(1, 'days');
+const endDate = moment().subtract(7, 'days');
+
+const Graph = () => {
+	const [CaseData, setCaseData] = useState(null);
+    const [DisplayData, setDisplayData] = useState({'categories': [], 'series': []});
+    // these states might be unecessary, however we have to distinguish between provinces
+    // since some health regions have the same name
+    const [SelectedRegions, setSelectedRegions] = useState([]);
+    const [CurTab, setCurTab] = useState(graphTabs[0].key);
+
+    const getGraphData = async () => await graphApi.getCaseData(`reportedDateGt: "${endDate.format('YYYY-M-D')}", first: 800, sortBy: "reportedDateAsc"`)
     .then((response) => {
-        setProductData(response.data)
+        let caseData = parseGraphQL(response.data, today, endDate)
+        setCaseData(caseData);
+        setDisplayData({'categories': caseData.reportedDate, 'series': []})
     })
     .catch((err) => console.log(err));
 
     useEffect(() => {
-        getData();
+        getGraphData();
     }, []);
 
-    
-    return(
-        <div className="flex flex-col md:flex-row">
-            <DashboardSideBar>
-                <TitleUnderLine title={`Supply`} /> 
-                {ProductData && (
-                    <>
-                        {
-                            ProductData.map(product => {
-                                return(
-                                    <div key={`controllercard_${product.name}_parent`} className="flex flex-col mb-4">
-                                        <div className="flex flex-row justify-between m-1 px-4">
-                                            <span className="text-xs leading-4 font-medium uppercase tracking-wider uppercase text-betterfit-graphite">{product.name}</span>
-                                            <div>
-                                                <span className="text-xs leading-4 uppercase tracking-wider uppercase text-betterfit-graphite mr-2">Orders</span>
-                                                <span className="text-xs leading-4 uppercase tracking-wider uppercase text-betterfit-graphite ml-2">Supply</span>
-                                            </div>
-                                        </div>
-                                        {
-                                            product.products.map((p,index) => {
-                                                // status [critical,normal,warn],
-                                                // name - the name of the product
-                                                // orders - the quantity of orders
-                                                // supply - the quantity of supply
-                                                let cardData = {
-                                                    name: p.name,
-                                                    status:p.status,
-                                                    orders:p.orders_count,
-                                                    supply:p.supply_count,
-                                                };
-                                                return(
-                                                    <ControllerCard key={`controllercard_${product.name}_${index}`} products={cardData} />
-                                                )
-                                            })
-                                        }
-                                    </div>
-                                    // <div>
-                                    //     <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-6 uppercase font-bold tracking-wider">{product.name}</h3>
-                                    //     <div className="grid md:grid-cols-1 gap-2 mb-6 md:mb-10">
-                                    //         {product.products.map(p =>{
-                                    //             return(
-                                    //             <BoxLink key={`${p.name}`} to="/dashboard/inventory/product/" link={p.name} textColor='dark-blue' id={p.pk}/>
-                                    //             )
-                                    //         })}
-                                    //     </div>
-                                    // </div>
-                                )
-                            })
-                        } 
-                        </>
-                )}
-            </DashboardSideBar>
-            <div className={`w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll mt-8`}   >
-                <Graph />
-            </div>
-        </div>
+    const FilterData = (() => {
+        return Object.keys(allRegion).map((key, idx) => {
+            return {
+                heading: key,
+                content: allRegion[key],
+            }
+        })
+    })();
+
+    // add a region to the graph
+    const addRegionToGraph = (e, province, region) => {
+        e.preventDefault();
+
+        let series = DisplayData.series.concat();
+        let categories = DisplayData.categories.concat()
+        let selectedRegions = SelectedRegions.concat()
+
+        // break out of onclick if region has already been added
+        // TODO does checking if the element exists in the graph already have any issues
+        for(let i = 0; i < series.length; i++){
+            if(series[i].name === region){
+                return 
+            }
+        }
+
+        series.push({'name': region, 'data': CaseData[province][region][CurTab]});
+        selectedRegions.push({'province': province, 'healthRegion': region});
+
+        setDisplayData({
+            'categories': categories,
+            'series': series
+        });
+        setSelectedRegions(selectedRegions)
+    }
+
+    // handle click when changing tabs so display data is reflected
+    const handleTabChange = (key) => {
+        setCurTab(key);
+
+        let categories = DisplayData.categories.concat()
+        let newData = SelectedRegions.map(region => {
+            return {
+                'name': region.healthRegion, 
+                'data': CaseData[region.province][region.healthRegion][key]
+            }
+        })
+
+        setDisplayData({
+            'categories': categories,
+            'series': newData
+        })
+
+    }
+
+    return (
+      <div>
+    	<div className="flex w-full flex-row ">
+          <div className="w-1/12 flex-col h-full py-2 sm:flex md:block">
+            <SideBarTabs tabs={graphTabs} activeTab={CurTab} handleClick={handleTabChange}/>
+          </div>
+          <div className="w-11/12 flex">
+            <LineChart data={DisplayData} options={options}/>
+          </div>
+         </div>
+         <FilterFields filterData={FilterData} onClickEvent={addRegionToGraph}/>
+       </div>
     )
+
 }
 
-export default DashboardTrafficDashboard;
-
+export default Graph;
