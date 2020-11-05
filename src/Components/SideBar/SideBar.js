@@ -45,8 +45,8 @@ const SideBar = ({ navItemsList }) => {
     }
   };
   return (
-    <div className="md:flex md:flex-shrink-0">
-      <div className="flex flex-col sidebar md:p-4 md:pr-0">
+    <div className="md:flex md:flex-shrink-0 sidebar">
+      <div className="flex flex-col sidebar md:p-4 md:pr-0 w-full">
         <div className="flex flex-col md:h-0 flex-1 bg-blue relative rounded-lg m-2 mb-0 md:m-0">
           <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto px-4">
             <div className="flex items-center flex-shrink-0 flex flex-row items-center justify-between">

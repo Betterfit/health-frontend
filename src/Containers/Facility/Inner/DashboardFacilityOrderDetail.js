@@ -61,8 +61,7 @@ const DashboardFacilityOrderDetail = (props) => {
   }, []);
 
   const routeChange = () => {
-    let path = `edit-order/${orderId}`;
-    history.goBack();
+    let path = `/dashboard/edit-order/${orderId}`;
     history.push(path);
   };
 
@@ -74,10 +73,8 @@ const DashboardFacilityOrderDetail = (props) => {
   };
 
   const confirmCallBack = () => {
-    let arr = {...orderDataRaw};
-    arr.status = "open";
     api
-      .submitOrder(orderId, arr)
+      .submitDraft(orderId, orderDataRaw.order_no)
       .then((response) => {
         getData();
         setError(false);

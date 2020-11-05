@@ -118,8 +118,18 @@ export default class Api {
     return this.init().get(`/orders/${orderId}`)
   }
 
-  submitOrder = (orderId, data) => {
-    return this.init().put(`/orders/${orderId}`, data)
+  //to cancel an order - change to 'cancelled' status
+  // data - should be json of {order_no:[######], status:"open"}
+  deleteOrder = (orderId, orderNo) => {
+    let data = { status: "cancelled", order_no: orderNo };
+    return this.init().put(`/orders/${orderId}/`, data)
+  }
+  
+  //to submit a draft - change to 'open' status
+  // data - should be json of {order_no:[######], status:"open"}
+  submitDraft = (orderId, orderNo) => {
+    let data = { status: "open", order_no: orderNo };
+    return this.init().put(`/orders/${orderId}/`, data)
   }
 
   deleteOrder = (orderId) => {

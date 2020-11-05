@@ -8,7 +8,7 @@ import {useCartStore} from "Context/cartContext";
 //This will either return the attribute if it exists, or
 // return the passed in 'default_value' if not
 const Read_Product = (product_attr, default_value) => {
-  if (product_attr === undefined) {
+  if (product_attr === undefined || product_attr === null) {
     return default_value;
   }
   return product_attr;
@@ -20,7 +20,7 @@ const ProductImage = ({ product_image, product_name, hover }) => {
   return (
     <img
       className={"w-1/4 md:w-auto " + (hover ? "opacity-50" : "")}
-      src={Read_Product(product_image.image, EmptyImage)}
+      src={Read_Product(product_image, EmptyImage)}
       alt={Read_Product(product_name + " Product Image", "Product Image")}
       loading="lazy"
       data-sizes="auto"
@@ -33,11 +33,10 @@ const ProductCard = ({ product, product_details, category, extra }) => {
   const history = useHistory();
   const [active, setActive] = useState(false);
   const name = product.name;
-  const image = product.image ? product.image : "";
+  const image = product_details.product_image ? product_details.product_image : null;
   const size = product_details.name;
-
   const addToCart = () => {
-    cartStore.addToCart(product_details.pk,0)
+    cartStore.addToCart(product_details.pk,1,false)
   }
 
   return (

@@ -4,6 +4,7 @@ import Button from "Components/Content/Button";
 import DashboadOrderDetail from 'Containers/DashboardOrderDetail';
 import Table from "Components/Table/Detail/Table";
 import Api from "Helpers/api";
+import dayjs from "dayjs";
 import {useAuthStore} from "Context/authContext";
 
 const api = new Api();
@@ -21,27 +22,28 @@ const DashboardTicketDetail = (props) => {
     const getData = async () => await api.getSupplierTicketOrder(supplierId,TicketId)
     .then((response) => {
         // need ticket facility and info
-        console.log(response.data);
+        let facility = response.data.order.facility
         setTicketHeader ({
             order_number: response.data.ticket_no,
-            order_date: response.data.ticket_date,
-            facility: ("Royal Alex") ,
+            facility: facility.name,
             unit: "Emergency",
-            shipping_address:"1234 Street NW"
+            order_date: dayjs(response.data.ticket_date).format("MMM DD, YYYY"),
+            shipping_address: `${facility.street}, ${facility.city}, ${facility.province}, ${facility.postal_code}`,
         }) 
-        console.log(response.data);
+        // console.log(response.data);
         let arr = response.data.order.order_products;
         setTicketRaw(response.data)
         arr = arr.map(item => {
             let obj = {
                 product_image: item.product_option.product_image,
-                item: item.product_option.name,  
-                ...item.product_option,
-                priority: 1,
+                item: item.product_option.product_variation,
+                [item.product_option.option_label]: item.product_option.name,
+                quantity: item.quantity,
+                priority: item.priority,
             };
             return obj;
         });
-        console.log(arr);
+        // console.log(arr);
         setTicketData(arr);
     })
     .catch((err) => console.log(err));
