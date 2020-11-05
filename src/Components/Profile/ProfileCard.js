@@ -8,6 +8,7 @@ import InputFieldLabel from "Components/Forms/InputFieldLabel";
 import Button from "Components/Forms/Button";
 import CardTitle from "Components/Profile/CardTitle";
 import ButtonToggle from "Components/Forms/ToggleButton";
+import Notification from "Components/Helpers/Notifications"
 
 const api = new Api();
 const ProfileCard = ({}) => {
@@ -22,6 +23,7 @@ const ProfileCard = ({}) => {
     email: userData.email,
     username: userData.username,
   };
+
   const [baseFormValues, setBaseFormValues] = useState(intialBaseValues);
   const [baseFormErrors, setBaseFormErrors] = useState({});
 
@@ -29,8 +31,8 @@ const ProfileCard = ({}) => {
   const [pwFormValues, setPWFormValues] = useState(intialPWValues);
   const [pwFormErrors, setPWFormErrors] = useState({});
 
-  const [submitPWError, setSubmitPWError] = useState();
-  const [submitBaseError, setSubmitBaseError] = useState();
+  const [pwNotification, setPWNotification] = useState();
+  const [baseNotification, setBaseNotification] = useState();
 
   const changeLang = (value) => {
     setLanguage(value);
@@ -40,7 +42,7 @@ const ProfileCard = ({}) => {
   const handleBaseChange = (e) => {
     const { id, value } = e.target;
     //clear any errors on input
-    setSubmitBaseError();
+    setBaseNotification();
     setBaseFormValues({ ...baseFormValues, [id]: value });
   };
 
@@ -48,7 +50,7 @@ const ProfileCard = ({}) => {
   const handlePWChange = (e) => {
     const { id, value } = e.target;
     //clear any errors on input
-    setSubmitPWError();
+    setPWNotification();
     setPWFormValues({ ...pwFormValues, [id]: value });
   };
 
@@ -121,11 +123,10 @@ const ProfileCard = ({}) => {
       .then((response) => {
         //update user token
         localStorage.setItem("token", response.data.token);
+        setPWNotification({head:"Success", text: "Your password has been updated", value:true});
       })
       .catch((error) => {
-        setSubmitPWError(
-          "There was an error updating your password. Please ensure you are entering your old password correctly."
-        );
+        setPWNotification({head:"Error", text: "There was an error updating your password. Please ensure you are entering your old password correctly.", value:false});
         console.error("Error", error);
       });
   };
@@ -143,9 +144,10 @@ const ProfileCard = ({}) => {
       .then((response) => {
         //update localstorage with updated userdata
         getUserData();
+        setBaseNotification({head:"Success", text: "Profile has been updated", value:true});
       })
       .catch((error) => {
-        setSubmitBaseError("There was an error updating your profile.");
+        setBaseNotification({head:"Error", text: "There was an error updating your profile.", value:false});
         console.error("Error", error);
       });
   };
@@ -225,15 +227,11 @@ const ProfileCard = ({}) => {
             type="password"
           ></InputFieldLabel>
         </div>
-        {submitBaseError && (
-          <p className="text-sm text-status-dark-red pb-2 leading-tight">
-            {submitBaseError}
-          </p>
+        {baseNotification &&  (
+          <Notification head={baseNotification.head} text={baseNotification.text} success={baseNotification.value}></Notification>    
         )}
-        {submitPWError && (
-          <p className="text-sm text-status-dark-red pb-2 leading-tight">
-            {submitPWError}
-          </p>
+        {pwNotification && (
+          <Notification head={pwNotification.head} text={pwNotification.text} success={pwNotification.value}></Notification>    
         )}
         <Button
           text="Save Profile"
