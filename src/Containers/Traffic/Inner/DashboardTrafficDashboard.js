@@ -5,6 +5,7 @@ import ControllerCard from 'Components/TrafficControllerSideBar/ControllerCard';
 import Api from "Helpers/api";
 import GraphApi from "Helpers/graphApi";
 import FilterFields from "Components/Graph/FilterFields";
+import SideBarTabs from "Components/Graph/SideBarTab";
 
 import moment from 'moment';
 import 'tui-chart/dist/tui-chart.css'
@@ -249,6 +250,12 @@ const DashboardTrafficDashboard = () => {
         });
     }
 
+    const graphTabs = [
+        {heading: 'Active Cases', key: 'active'},
+        {heading: 'New Cases', key: 'new'},
+        {heading: 'Daily Deaths', key: 'deaths'},
+    ]
+
     
     return(
         <div className="flex flex-col md:flex-row">
@@ -302,7 +309,14 @@ const DashboardTrafficDashboard = () => {
                 )}
             </DashboardSideBar>
             <div className={`w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll mt-8`}   >
-                <LineChart data={DisplayData} options={options} />
+                <div className="flex w-full flex-row ">
+                  <div className="w-1/12 flex-col h-full py-2 sm:flex md:block">
+                    <SideBarTabs tabs={graphTabs}/>
+                  </div>
+                  <div className="w-11/12 flex">
+                    <LineChart data={DisplayData} options={options}/>
+                  </div>
+                </div>
                 <FilterFields filterData={FilterData} onClickEvent={addRegionToGraph}/>
             </div>
         </div>
