@@ -198,6 +198,8 @@ const graphTabs = [
     {heading: 'Daily Deaths', key: 'deaths'},
 ]
 
+const clearTab = {heading: 'Clear All', key: 'clear'}
+
 const graphApi = new GraphApi();
 // get todays date
 // and end range for date
@@ -260,29 +262,40 @@ const Graph = () => {
     }
 
     // handle click when changing tabs so display data is reflected
-    const handleTabChange = (key) => {
-        setCurTab(key);
+    // also handle clicking the clear tab
+    const handleTabChange = (key, heading) => {
+        let categories = DisplayData.categories.concat();
 
-        let categories = DisplayData.categories.concat()
-        let newData = SelectedRegions.map(region => {
-            return {
-                'name': region.healthRegion, 
-                'data': CaseData[region.province][region.healthRegion][key]
-            }
-        })
+        if(key === clearTab.key){
+            setSelectedRegions([]);
+            setDisplayData({
+                'categories': categories,
+                'series': []
+            });
 
-        setDisplayData({
-            'categories': categories,
-            'series': newData
-        })
+        }else{
+            setCurTab(key);
+
+            let newData = SelectedRegions.map(region => {
+                return {
+                    'name': region.healthRegion, 
+                    'data': CaseData[region.province][region.healthRegion][key]
+                }
+            });
+
+            setDisplayData({
+                'categories': categories,
+                'series': newData
+            });
+        }
 
     }
 
     return (
       <div>
     	<div className="flex w-full flex-row ">
-          <div className="w-1/12 flex-col h-full py-2 sm:flex md:block">
-            <SideBarTabs tabs={graphTabs} activeTab={CurTab} handleClick={handleTabChange}/>
+          <div className="w-1/12 flex">
+            <SideBarTabs tabs={graphTabs} activeTab={CurTab} handleClick={handleTabChange} clearTab={clearTab}/>
           </div>
           <div className="w-11/12 flex">
             <LineChart data={DisplayData} options={options}/>
