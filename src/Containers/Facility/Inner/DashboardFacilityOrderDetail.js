@@ -4,21 +4,21 @@ import useStores from "Helpers/useStores";
 import dayjs from "dayjs";
 import { _allowStateChangesInsideComputed } from "mobx";
 import { useHistory } from "react-router-dom";
-import {useAuthStore} from "Context/authContext";
+import { useAuthStore } from "Context/authContext";
 
 //components
 import DashboadOrderDetail from "Containers/DashboardOrderDetail";
 import Table from "Components/Table/Detail/Table";
 import StatusButton from "Components/Content/StatusButton";
 import Button from "Components/Forms/Button";
-import Modal from "Components/Content/AlertModal";
+import Notification from "Components/Helpers/Notifications";
 
 const api = new Api();
 
 const DashboardFacilityOrderDetail = (props) => {
   const authStore = useAuthStore();
   const { match } = props;
-  const orderId = parseInt(match.params.id);  
+  const orderId = parseInt(match.params.id);
   const { store } = useStores();
   const history = useHistory();
 
@@ -26,9 +26,7 @@ const DashboardFacilityOrderDetail = (props) => {
   const [orderData, setOrderData] = useState(null);
   const [orderDataRaw, setOrderRaw] = useState(null);
   const [orderHeader, setOrderHeader] = useState();
-  const [modal, setModal] = useState(false);
-  const [error, setError] = useState(false);
-
+  const [notification, setNotification] = useState();
 
   const getData = async () =>
     await api
@@ -38,7 +36,6 @@ const DashboardFacilityOrderDetail = (props) => {
           order_number: response.data.order_no,
           order_date: dayjs(response.data.order_date).format("MMM DD, YYYY"),
           facility: response.data.facility.name,
-          unit: "Emergency",
         });
         let arr = response.data.order_products;
         setOrderRaw(response.data);
@@ -68,7 +65,9 @@ const DashboardFacilityOrderDetail = (props) => {
   //Status for order
   const ActionComponent = () => {
     return (
+      <div className="absolute bottom-0 mb-6 right-0">
       <StatusButton status={orderDataRaw.status} extraClasses="font-semibold" />
+      </div>
     );
   };
 
@@ -77,13 +76,19 @@ const DashboardFacilityOrderDetail = (props) => {
       .submitDraft(orderId, orderDataRaw.order_no)
       .then((response) => {
         getData();
-        setError(false);
-        setModal(!modal);
+        setNotification({
+          head: "Success",
+          text: "Your order has been submitted",
+          value: true,
+        });
       })
       .catch((error) => {
         console.error("Error", error);
-        setError(true);
-        setModal(!modal);
+        setNotification({
+          head: "Error",
+          text: "There was an error submitting your order",
+          value: false,
+        });
       });
   };
 
@@ -125,6 +130,13 @@ const DashboardFacilityOrderDetail = (props) => {
             actionComponent={<ActionComponent></ActionComponent>}
             headerData={orderHeader}
           >
+            {notification && (
+              <Notification
+                head={notification.head}
+                text={notification.text}
+                success={notification.value}
+              ></Notification>
+            )}
             <Table
               TableData={orderData}
               excludeKeys={excludeKeys}
@@ -132,14 +144,6 @@ const DashboardFacilityOrderDetail = (props) => {
             />
           </DashboadOrderDetail>
           <ActionButtons></ActionButtons>
-          {modal && (
-            <Modal error={error} updateState={()=> setModal(!modal) }>
-              {error &&
-                `There was an error and we are unable to submit the order at this
-                time.`}
-              {!error && `Your order has been submitted.`}
-            </Modal>
-          )}
         </>
       )}
     </>

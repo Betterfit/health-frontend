@@ -56,12 +56,14 @@ const DashboardTicketDetail = (props) => {
     const [modal , setModal ] = useState(false);
 
     const actionComponent = 
-        <Button 
-            text={ticketDataRaw && ticketDataRaw.status === "shipped" ? "Shipped" : "Mark as Shipped"} 
-            color={"status-dark-green"}
-            text_size="text-sm" 
-            onClick={ticketDataRaw && ticketDataRaw.status === "shipped" ? () => {return false} : () => setModal(!modal)}
-        />
+        <div className="absolute top-0 right-0">
+            <Button 
+                text={ticketDataRaw && ticketDataRaw.status === "shipped" ? "Shipped" : "Mark as Shipped"} 
+                color={"status-dark-green"}
+                text_size="text-sm" 
+                onClick={ticketDataRaw && ticketDataRaw.status === "shipped" ? () => {return false} : () => setModal(!modal)}
+            />
+        </div>
     ;
     const confirmCallBack = () => {
         let arr = ticketDataRaw;
