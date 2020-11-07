@@ -1,10 +1,12 @@
 export function createCartStore (name="cart"){
     return{
+        cartType:name,
         cart:[],
         newOrderName:"",
-        addToCart(item,quantity,priority){
+        addToCart(item,quantity,priority,product_pk){
             let newObj = {
                 "pk" : item,
+                "product_pk" : product_pk,
                 "quantity" : quantity,
                 "priority": priority
             }
@@ -38,7 +40,7 @@ export function createCartStore (name="cart"){
         },
         importCart(items) {
             items.map((item) => {
-                this.addToCart(item.pk, item.quantity, item.priority)
+                this.addToCart(item.pk, item.quantity, item.priority, item.product_pk)
             });
           },
         clearCart() {

@@ -4,6 +4,13 @@ import TicketSearch from 'Components/Search/TicketSearch';
 import Table from 'Components/Table/List/Table';
 import Api from "Helpers/api";
 import {useAuthStore} from "Context/authContext";
+import DashboardTicketSearch from "./DashboardTicketSearch";
+import {
+  Switch,
+  Route,
+  useParams,
+  useLocation
+} from "react-router-dom";
 // import OrderHeader from 'Components/Order/OrderHeader'
 // import BackNavigation from 'Components/Helpers/BackNavigation'
 
@@ -87,10 +94,20 @@ const DashboardTickets = () => {
 
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-10">
-      <h2 className="text-3xl text-dark-blue my-3">Tickets</h2>
-      {ticketData && (
-        <Tabs tabs={TabData} amount={true} headingComp={<TicketSearch callBack={(e) => setSearchActive(e)} searchActive={searchActive} />} />
-      )}
+      <Route exact path='/dashboard/tickets'>
+        <h2 className="text-3xl text-dark-blue my-3">Tickets</h2>
+      </Route>
+        {ticketData && (
+          <>          
+            <TicketSearch extraClasses="float-right clear-both"  callBack={(e) => setSearchActive(e)} searchActive={searchActive} />
+            <Route exact path='/dashboard/tickets'>
+              <Tabs tabs={TabData} amount={true}  />
+            </Route>
+          </>
+        )}
+      <Route path='/dashboard/tickets/search:query?'>
+            <DashboardTicketSearch supplierId={supplierId} />
+      </Route>
     </div>  
   );
 };

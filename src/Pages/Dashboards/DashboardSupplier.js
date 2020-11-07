@@ -8,22 +8,14 @@ import {
 import Ticket from "Images/Icons/ticket.svg";
 import Resources from "Images/Icons/resources.svg";
 import Inventory from "Images/Icons/inventory.svg";
-
-// const [isOpen, setIsOpen] = useState(false)
-
-
-// const sideBarToggle = () => {
-
-// }
-
-
+import Translator from "Helpers/Translator";
 const DashboardSupplier = () => {
     // usestate to save user and pass
 
     const navItemsList = [
         {
             to:'/dashboard/tickets',
-            name:'Tickets',
+            name:Translator('tickets'),
             icon: Ticket,
             key:'tickets',
         },

@@ -22,7 +22,7 @@ const Tabs = ({tabs,headingComp,amount}) => {
     }
 
     return(
-        <div>
+        <div className="flex-1">
             <TabHeadings headings={Headings} headingFunction={headingChangeActive} headingComp={headingComp} amount={amount ? amount : false}   />
             {tabs.map((tab, index) => {
                 return(

@@ -16,8 +16,8 @@ import Login from './Pages/Login/Login';
 import LogOut from './Pages/Logout';
 import Dashboard from './Pages/Dashboard';
 import {useAuthStore} from "Context/authContext";
-
-const App = ({userType}) => {
+import { observer } from "mobx-react"
+const App = observer(({userType}) => {
   const authStore = useAuthStore();
   const token = authStore.token;
   return (
@@ -43,13 +43,12 @@ const App = ({userType}) => {
               <Login />
             </Route>
             <Route path="/dashboard">
-              <Dashboard/>
+              <Dashboard language={authStore.language}/>
             </Route>
-
           </Switch>
         </div>
       </Router>
   );
-}
+})
 
 export default App;

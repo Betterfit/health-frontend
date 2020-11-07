@@ -7,7 +7,7 @@ import useStores from "Helpers/useStores";
 import ProfileCard from "Components/Profile/ProfileCard";
 import FaciltyCard from "Components/Profile/FacilityCard";
 import Slider from "Components/Slider/Slider";
-
+import {useAuthStore} from "Context/authContext";
 const UserInfo = (profile) => {
   switch (profile.user_type) {
     case "facility_admin":

@@ -1,10 +1,9 @@
 import React from "react";
 import { ReactSVG } from "react-svg";
-
 import { NavLink } from "react-router-dom";
 
 const SideBarNavigation = ({ navList }) => {
-  return (
+  return(
     <nav className="flex-1 flex-row md:flex-col flex-wrap flex md:block justify-around items-baseline space-y-3 mt-4 md:my-4 text-light-text">
       {navList.map((navItem) => {
         return (

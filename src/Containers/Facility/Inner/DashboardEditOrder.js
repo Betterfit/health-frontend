@@ -22,10 +22,12 @@ const DashboardEditOrder = observer((props) => {
     await api
       .getOrder(orderId)
       .then((response) => {
+        console.log(response.data);
         let arr = response.data.order_products;
         arr = arr.map((item) => {
           let obj = {
             pk: item.product_option.pk,
+            product_pk:item.pk,
             quantity: item.quantity,
             priority: item.priority,
           };
@@ -55,7 +57,7 @@ const DashboardEditOrder = observer((props) => {
     {orderHeader && (    
     <>
       <OrderHeader data={orderHeader} />
-      <OrderCart Cart={cartStore.cart} OrderID={orderHeader.purchase_order} />
+      <OrderCart Cart={cartStore.cart} OrderID={orderHeader.purchase_order} id={orderId} />
     </>
     )}
     </>

@@ -15,10 +15,12 @@ const ProfileCard = ({}) => {
     
   const [email, setEmail] = useState(userData.email);
   const [name, setName] = useState(userData.username);
-  const [lang, setLanguage] = useState("en");
+  const [lang, setLanguage] = useState(authStore.language);
   const [fixedName, setFixedName] = useState(userData.username);
 
   const changeLang = (value) => {
+    localStorage.setItem('language',value);
+    authStore.language = value;
     setLanguage(value);
   };
 
@@ -36,7 +38,7 @@ const ProfileCard = ({}) => {
             option1={{ label: "English", active: lang === "en", value:"en" }}
             option2={{ label: "French", active: lang === "fr", value:"fr" }}
             value={lang}
-            changeValue={changeLang}
+            changeValue={(value) => changeLang(value)}
           ></ButtonToggle>
 
           <InputFieldLabel

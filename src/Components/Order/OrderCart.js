@@ -14,7 +14,8 @@ import { useHistory } from "react-router-dom";
 const api = new Api();
 let rawCart;
 
-const OrderCart =({Cart, OrderID}) => {
+const OrderCart =({Cart, OrderID , id}) => {
+
   let CartData = JSON.stringify(Cart);
   CartData = JSON.parse(CartData);
   const authStore = useAuthStore();
@@ -58,34 +59,54 @@ const OrderCart =({Cart, OrderID}) => {
   const confirmCallBack = (status) => {
     const userData = JSON.parse(authStore.user);
     if(agreeTerms || status == "draft"){
-      let order = {
-        "facility": userData.user_profile.facility,
-        "facility_admin": userData.pk,
-        "purchase_no": cartStore.newOrderName,
-        "status":status,
-        "order_products": CartData.map(item =>{
-          return{
-            "quantity": item.quantity,
-            "product_option":item.pk,
-            "priority":item.priority ? "stat" : "normal"
-          }
-        })
-      }; 
-      api.setNewOrder(order).then(response => {
-        console.log(response);
-        setModalOrder(false)
-        setModalDraft(false)
-        cartStore.newOrderName = "";
-        cartStore.cart = [];
-        cartStore.updateLocalCartStorage();
-        setCartItems(null);
-        // history.push(
-        //   history.location.pathname + category_name + "/" + category_id
-        // )
-      }); 
-    }else{
-      setAgreeTermsError(true)
-    }
+        let order = {
+          "facility": userData.user_profile.facility,
+          "facility_admin": userData.pk,
+          "purchase_no": cartStore.newOrderName,
+          "status":status,
+          "order_products": CartData.map(item =>{
+            return{
+              "quantity": item.quantity,
+              "product_option":item.pk,
+              "pk":item.product_pk,
+              "priority":item.priority ? "stat" : "normal"
+            }
+          })
+        }; 
+        if(cartStore.cartType == "editCart"){
+          delete order.facility;
+          delete order.facility_admin;
+          api.editOrder(order,id).then(response => {
+            console.log(response.error);
+            setModalOrder(false)
+            setModalDraft(false)
+            cartStore.newOrderName = "";
+            cartStore.cart = [];
+            cartStore.updateLocalCartStorage();
+            setCartItems(null);
+            // history.push(
+            //   history.location.pathname + category_name + "/" + category_id
+            // )
+          });
+        }else{
+          api.setNewOrder(order).then(response => {
+            console.log(response);
+            setModalOrder(false)
+            setModalDraft(false)
+            cartStore.newOrderName = "";
+            cartStore.cart = [];
+            cartStore.updateLocalCartStorage();
+            setCartItems(null);
+            // history.push(
+            //   history.location.pathname + category_name + "/" + category_id
+            // )
+          });
+        } 
+      }else{
+        setAgreeTermsError(true)
+      }
+    
+
   }
 
 

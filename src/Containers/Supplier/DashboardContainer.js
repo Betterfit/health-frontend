@@ -28,7 +28,7 @@ const DashboardContainer = () =>{
                     <Route exact path="/dashboard" render={() => (
                         <Redirect to="/dashboard/inventory"/>
                     )}/>
-                    <Route path="/dashboard/tickets" exact>
+                    <Route path="/dashboard/tickets">
                         <DashboardTickets />
                     </Route>
                     <Route exact path="/dashboard/tickets/:id" render={(props) => {

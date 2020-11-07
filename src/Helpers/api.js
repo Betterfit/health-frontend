@@ -95,6 +95,10 @@ export default class Api {
     return this.init().put(`/suppliers/${userId}/tickets/${id}`,data)
   }
 
+  getSearchTickets = (userId,query) => {
+    return this.init().post(`/suppliers/${userId}/tickets/?search=${query}`)
+  }
+
   // ============================   ORDERS API  =====================================
 
   getOrderList = (facilityId) => {
@@ -125,6 +129,11 @@ export default class Api {
 
   setNewOrder = (order) => {
     return this.init().post(`/orders/`,order)
+  }
+
+  editOrder = (order,id) => {
+    console.log(order,id);
+    return this.init().patch(`/orders/${id}/`,order)
   }
 
 }

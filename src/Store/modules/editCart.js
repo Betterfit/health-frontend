@@ -6,7 +6,8 @@ export default class editCartStore {
     @action addToCart = (item,quantity) => {
         let obj = {
             "pk" : item,
-            "quantity" : quantity
+            "quantity" : quantity,
+            
         }
         this.cart = [
             ...this.cart,
