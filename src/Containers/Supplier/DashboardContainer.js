@@ -10,7 +10,7 @@ import { AnimatedSwitch } from 'react-router-transition';
 import DashboardInventory from './Inner/DashboardInventory'
 import DashboardTickets from './Inner/DashboardTickets'
 import DashboardTicketDetail from './Inner/DashboardTicketDetail';
-import DashboardResources from './Inner/DashboardResources'
+import DashboardResources from '../DashboardResources'
 
 const DashboardContainer = () =>{
     const [title , setTitle] = useState('');

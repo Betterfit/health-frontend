@@ -13,6 +13,7 @@ import DashboardMatchesDetail from "./Inner/DashboardMatchesDetail";
 import DashboardMatchesOrderDetail from "./Inner/DashboardMatchesOrderDetail";
 import DashboardTrafficDashboard from "./Inner/DashboardTrafficDashboard";
 import DashboardInventory from 'Containers/Supplier/Inner/DashboardInventory'
+import DashboardResources from '../DashboardResources'
 // import DashboardInventory from './Inner/DashboardInventory'
 // import DashboardTickets from './Inner/DashboardTickets'
 // import DashboardTicketDetail from './Inner/DashboardTicketDetail';
@@ -48,6 +49,9 @@ const DashboardContainer = () =>{
                     </Route>
                     <Route path="/dashboard/inventory" >
                         <DashboardInventory initial changeTitle={(title) => changeTitle(title)} />
+                    </Route>
+                    <Route path="/dashboard/resources" >
+                        <DashboardResources initial changeTitle={(title) => changeTitle(title)} />
                     </Route>
                 </AnimatedSwitch> 
             </main>
