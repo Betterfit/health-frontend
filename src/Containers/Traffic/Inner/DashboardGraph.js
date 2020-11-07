@@ -139,8 +139,10 @@ const parseGraphQL = (data, today, endDate) => {
     let cases = data['data']['allCases']['edges'];
     // generate an array of dates that we are displaying on the graph
     let reportedDate = [];
-    while (endDate <= today) {
-        reportedDate.push(endDate.format('YYYY-M-D'));
+    // console.log(endDate.subtract(1, 'days').format('YYYY-M-D'));
+
+    while (endDate.set({hour:0,minute:0,second:0,millisecond:0}) <= today.set({hour:0,minute:0,second:0,millisecond:0})) {
+        reportedDate.push(endDate.format('YYYY-MM-DD'));
         endDate = endDate.clone().add(1, 'd');
     }
     parsedData['reportedDate'] = reportedDate;
@@ -150,18 +152,26 @@ const parseGraphQL = (data, today, endDate) => {
         let healthRegion = element.node.healthRegion.healthRegion;
         let province = element.node.healthRegion.province;
 
+        // since some cases may be missing reporting dates, find the index of
+        // of the date and insert the case data there, so the arrays line up
         if(healthRegion in parsedData[province]){
-            parsedData[province][healthRegion].activeCases.push(element.node.activeCases)
-            parsedData[province][healthRegion].newCases.push(element.node.newCases)
-            parsedData[province][healthRegion].deaths.push(element.node.deaths)
+            let idx = parsedData.reportedDate.indexOf(element.node.reportedDate);
+
+            parsedData[province][healthRegion].activeCases[idx] = element.node.activeCases;
+            parsedData[province][healthRegion].newCases[idx] = element.node.newCases;
+            parsedData[province][healthRegion].deaths[idx] = element.node.deaths;
 
         }else{
             let data = {
-                'activeCases': [element.node.activeCases],
-                'newCases': [element.node.newCases],
-                'deaths' : [element.node.deaths]
-
+                'activeCases': [0, 0, 0, 0, 0, 0, 0],
+                'newCases': [0, 0, 0, 0, 0, 0, 0],
+                'deaths' : [0, 0, 0, 0, 0, 0, 0]
             }
+
+            let idx = parsedData.reportedDate.indexOf(element.node.reportedDate)
+            data.activeCases[idx] = element.node.activeCases;
+            data.newCases[idx] = element.node.newCases;
+            data.deaths[idx] = element.node.deaths
 
             parsedData[province][healthRegion] = data;
         }
@@ -214,7 +224,7 @@ const Graph = () => {
     const [SelectedRegions, setSelectedRegions] = useState([]);
     const [CurTab, setCurTab] = useState(graphTabs[0].key);
 
-    const getGraphData = async () => await graphApi.getCaseData(`reportedDateGt: "${endDate.format('YYYY-M-D')}", first: 800, sortBy: "reportedDateAsc"`)
+    const getGraphData = async () => await graphApi.getCaseData(`reportedDateGt: "${endDate.clone().subtract(1, 'days').format('YYYY-M-D')}", first: 800, sortBy: "reportedDateAsc"`)
     .then((response) => {
         let caseData = parseGraphQL(response.data, today, endDate)
         setCaseData(caseData);
