@@ -303,7 +303,7 @@ const Graph = () => {
 
     return (
       <div>
-    	<div className="flex w-full flex-row ">
+    	<div className="flex w-full flex-row pb-2">
           <div className="w-1/12 flex">
             <SideBarTabs tabs={graphTabs} activeTab={CurTab} handleClick={handleTabChange} clearTab={clearTab}/>
           </div>
