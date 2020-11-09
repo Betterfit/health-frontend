@@ -1,6 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-const TagLink = ({ tagType }) => {
+const TagLink = ({ tag }) => {
     const tagList = {
         1: ["#E3EFFC", "#244499", "Masks"],
         2: ["#DBF4F5", "#235340", "Gowns"],
@@ -13,17 +12,17 @@ const TagLink = ({ tagType }) => {
         9: ["#ED6537", "#FFFFFF", "Vaccine"],
     };
     return (
-        <button className="my-2 mx-1">
+        <div className="my-2 mx-1">
             <div
                 className="resource-tag font-black text-gray-700 font-body uppercase tracking-widest"
-                style={{
-                    background: tagList[tagType][0],
-                    color: tagList[tagType][1],
-                }}
+                //     style={{
+                //         background: tag
+                //         color: tagList[tagType][1],
+                //     }}
             >
-                {tagList[tagType][2]}
+                {tag?.title}
             </div>
-        </button>
+        </div>
     );
 };
 
