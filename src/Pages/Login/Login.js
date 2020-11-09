@@ -15,11 +15,11 @@ const LoginTemplate = () => {
   const [password, setPW] = useState("");
   const [email, setEmail] = useState("");
   const [Error, setError] = useState()
-
   const history = useHistory();
   if(authStore.token){
     history.push("/dashboard/");
   }
+
   const api = new Api();
   const signIn = (e) => {
     e.preventDefault();
@@ -28,9 +28,9 @@ const LoginTemplate = () => {
       .then( async (response) => {
         console.log(response.data.user);
         await localStorage.setItem("token", response.data.token);
-        authStore.token = response.data.token;
         await localStorage.setItem("user", JSON.stringify(response.data.user));
         authStore.user = JSON.stringify(response.data.user);
+        authStore.token = response.data.token;
         history.push("/dashboard/");
       })
       .catch((err) => {
@@ -88,6 +88,7 @@ const LoginTemplate = () => {
 
 const Login = () => {
   const match = useRouteMatch();
+
 
   return (
     <div className="min-h-screen bg-betterfit-basic-blue flex flex-col justify-center py-12 sm:px-6 lg:px-8">
