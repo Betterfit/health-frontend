@@ -8,23 +8,16 @@ import LabCard from "Components/ResourceProfile/LabCard";
 import FacilityCard from "Components/ResourceProfile/FacilityCard";
 
 const ResourceLink = ({resourceColor, resourceType, resourceName, tagList, resourceDetails, resourceCode}) => {
-    const filterTagCodes = () => {
-        const tagCodes = []
-        for (let i=0; i<tagList.length; i++) {
-            tagCodes.push(tagList[i].pk);
-        }
-        return tagCodes
-    }
-    const resourceCard = (function(resourceCode) {
+   const resourceCard = (function(resourceCode) {
     switch (resourceCode) {
         case 'facility':
-            return <FacilityCard name={resourceName} tagList={filterTagCodes()} details={resourceDetails} color={resourceColor}/>;
+            return <FacilityCard name={resourceName} tagList={tagList} details={resourceDetails} color={resourceColor}/>;
         case 'lab':
-            return <LabCard name={resourceName} tagList={filterTagCodes()} details={resourceDetails} color={resourceColor}/>;
+            return <LabCard name={resourceName} tagList={tagList} details={resourceDetails} color={resourceColor}/>;
         case 'research':
-            return <ResearchCard name={resourceName} tagList={filterTagCodes()} details={resourceDetails} color={resourceColor}/>;
+            return <ResearchCard name={resourceName} tagList={tagList} details={resourceDetails} color={resourceColor}/>;
         case 'supplier':
-            return <SupplierCard name={resourceName} tagList={filterTagCodes()} details={resourceDetails} color={resourceColor}/>;
+            return <SupplierCard name={resourceName} tagList={tagList} details={resourceDetails} color={resourceColor}/>;
         default:
             return <div/>;
         }
@@ -52,11 +45,9 @@ const ResourceLink = ({resourceColor, resourceType, resourceName, tagList, resou
             </button>
             <div className="flex-grow float-right flex px-2 flex-shrink-0">
                 <div className="ml-auto inline-flex my-auto">
-                    {filterTagCodes().map(p =>{
-                        return(
-                            <TagLink tagType={p} />
-                        )
-                    })}
+                    {tagList.map(tag => 
+                        <TagLink tag={tag} key={'tag'+tag.pk}/>
+                    )}
                 </div>
             </div>
             <Slider active={ShowResourceDetails.show} close={toggleSlider}>

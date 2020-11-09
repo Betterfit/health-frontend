@@ -37,7 +37,7 @@ const DashboardResearch = () => {
                         Tags
                     </h3>
                     {tagList.map((tag: Tag) => {
-                        return <TagLink tag={tag} />;
+                        return <TagLink tag={tag} key={"tag" + tag.pk} />;
                     })}
                 </div>
             </DashboardSideBar>

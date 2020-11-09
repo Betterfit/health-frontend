@@ -34,16 +34,21 @@ const ResourceDisplay = ({ resources }: ResourceDisplayProps) => {
         <div className="flex-grow wrap max-h-screen p-4 h-full rounded-lg overflow-scroll ">
             <div className="py-8 flex flex-col ">
                 {resources.map((resource) => (
-                    <ResourceLink
-                        resourceColor={matchResourceColor(
-                            resource.resource_type
-                        )}
-                        resourceType={resource.resource_type}
-                        resourceName={resource.title}
-                        resourceCode={resource.resource_type}
-                        resourceDetails={resource?.details}
-                        tagList={resource.tags}
-                    />
+                    <div
+                        className="resource-container m-2 rounded-md cursor-pointer"
+                        key={"resource" + resource.pk}
+                    >
+                        <ResourceLink
+                            resourceColor={matchResourceColor(
+                                resource.resource_type
+                            )}
+                            resourceType={resource.resource_type}
+                            resourceName={resource.title}
+                            resourceCode={resource.resource_type}
+                            resourceDetails={resource?.details}
+                            tagList={resource.tags}
+                        />
+                    </div>
                 ))}
             </div>
         </div>
