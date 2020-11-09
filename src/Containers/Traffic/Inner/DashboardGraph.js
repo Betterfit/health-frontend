@@ -224,7 +224,7 @@ const Graph = () => {
     const [SelectedRegions, setSelectedRegions] = useState([]);
     const [CurTab, setCurTab] = useState(graphTabs[0].key);
 
-    const getGraphData = async () => await graphApi.getCaseData(`reportedDateGt: "${endDate.clone().subtract(1, 'days').format('YYYY-M-D')}", first: 800, sortBy: "reportedDateAsc"`)
+    const getGraphData = async () => await graphApi.getCaseData(`reportedDateGt: "${endDate.clone().subtract(1, 'days').format('YYYY-MM-DD')}", first: 800, sortBy: "reportedDateAsc"`)
     .then((response) => {
         let caseData = parseGraphQL(response.data, today, endDate)
         setCaseData(caseData);

@@ -46,6 +46,7 @@ export default class GraphApi {
           deaths
         }  
       }}}`,"variables":null,"operationName":null}
+    console.log(query);
 
     return this.init().post("graphql", query)
   };
