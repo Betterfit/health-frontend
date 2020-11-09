@@ -1,6 +1,8 @@
 export interface Tag {
     pk: number;
     title: string;
+    main_color: string;
+    background_color: string;
 }
 
 export interface ResourceDetails {

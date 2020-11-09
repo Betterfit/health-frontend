@@ -1,5 +1,6 @@
 import React from "react";
 const TagLink = ({ tag }) => {
+    // These colors are not needed here, but should be moved to database
     const tagList = {
         1: ["#E3EFFC", "#244499", "Masks"],
         2: ["#DBF4F5", "#235340", "Gowns"],
@@ -15,10 +16,10 @@ const TagLink = ({ tag }) => {
         <div className="my-2 mx-1">
             <div
                 className="resource-tag font-black text-gray-700 font-body uppercase tracking-widest"
-                //     style={{
-                //         background: tag
-                //         color: tagList[tagType][1],
-                //     }}
+                style={{
+                    background: tag.background_color,
+                    color: tag.main_color,
+                }}
             >
                 {tag?.title}
             </div>
