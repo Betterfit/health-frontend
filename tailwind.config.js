@@ -78,6 +78,7 @@ module.exports = {
       },
       margin: {
         'tiny': '0.05rem',
+        '.5': '0.10rem'
       },
       inset: {
         '1/4': '25%',

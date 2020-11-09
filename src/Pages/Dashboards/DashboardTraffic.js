@@ -12,6 +12,7 @@ import NewOrder from "Images/Icons/new-order.svg";
 import Dashboard from "Images/Icons/dashboard.svg";
 import Matches from "Images/Icons/matches.svg";
 import Inventory from "Images/Icons/inventory.svg";
+import authStore from 'Store/modules/auth';
 
 
 // const [isOpen, setIsOpen] = useState(false)
@@ -26,7 +27,7 @@ const DashboardTraffic = () => {
     const navItemsList = [
         {
             to:'/dashboard/traffic-dashboard',
-            name:'Dashboard',
+            name:`${authStore.language == "en" ? `Dashboard` : `French Dashboard` }`,
             icon: Dashboard,
             key:'traffic-dashboard',
         },

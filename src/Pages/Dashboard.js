@@ -2,13 +2,12 @@ import React , {useState, useEffect} from 'react';
 import DashboardSupplier from 'Pages/Dashboards/DashboardSupplier';
 import DashboardFacility from 'Pages/Dashboards/DashboardFacility';
 import DashboardTraffic from 'Pages/Dashboards/DashboardTraffic';
-import useStores from 'Helpers/useStores';
+import {useAuthStore} from "Context/authContext";
 
 const Dashboard  = () => {
-    const { store } = useStores();
-    const [userType , setUserType] = useState(JSON.parse(localStorage.getItem('user')));
-    console.log(userType);
-    return(
+    const authStore = useAuthStore();
+    const [userType , setUserType] = useState(JSON.parse(authStore.user));
+    return (
         <>
         {userType.user_profile.user_type === "facility_admin" && (
             <DashboardFacility/>

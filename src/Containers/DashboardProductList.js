@@ -3,6 +3,7 @@ import BackNavigation from 'Components/Helpers/BackNavigation'
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import Table from 'Components/Table/Basic/Table';
 import Api from "Helpers/api";
+import Spinner from "Images/spinner.gif";
 const api = new Api();
 
 const DashboardProductList = (props) => {
@@ -22,7 +23,7 @@ const DashboardProductList = (props) => {
     // console.log(JSON.stringify(ProductData))
     useEffect(() => {
         if(lastProductId !== ProductId){
-            console.log('getting data');
+            // console.log('getting data');
             setLastProductId(ProductId);
             getData();
         }

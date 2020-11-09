@@ -5,7 +5,6 @@ import Search from 'Components/Search/Search';
 import Table from 'Components/Table/Basic/Table';
 import Api from "Helpers/api";
 import Spinner from "Images/spinner.gif";
-
 import {
     Switch,
     Route,

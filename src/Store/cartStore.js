@@ -1,12 +1,14 @@
-import { observer } from "mobx-react";
-
-export function createCartStore (){
+export function createCartStore (name="cart"){
     return{
+        cartType:name,
         cart:[],
-        addToCart(item,quantity){
+        newOrderName:"",
+        addToCart(item,quantity,priority,product_pk){
             let newObj = {
                 "pk" : item,
-                "quantity" : quantity
+                "product_pk" : product_pk,
+                "quantity" : quantity,
+                "priority": priority
             }
             const checkProduct = obj => obj.pk === newObj.pk;
             if(!this.cart.some(checkProduct)){
@@ -22,13 +24,13 @@ export function createCartStore (){
             arr = JSON.parse(arr);
             arr = arr.filter(item => item.pk !== parseInt(id));
             this.cart = arr;
+            this.updateLocalCartStorage();
         },
         updateItemQuantity(id,quantity){
             let arr = JSON.stringify(this.cart);
             arr = JSON.parse(arr);
             for (var i in arr) {
                 if (arr[i].pk == id) {
-                    console.log('found');
                    arr[i].quantity = parseInt(quantity);
                    break; //Stop this loop, we found it!
                 }
@@ -36,24 +38,34 @@ export function createCartStore (){
             this.cart = arr;
             this.updateLocalCartStorage();
         },
+        importCart(items) {
+            items.map((item) => {
+                this.addToCart(item.pk, item.quantity, item.priority, item.product_pk)
+            });
+          },
+        clearCart() {
+            let arr = [];
+            this.cart = arr;
+            this.updateLocalCartStorage();
+        },  
         updateItemPriority(id,priority){
             let arr = JSON.stringify(this.cart);
             arr = JSON.parse(arr);
             for (var i in arr) {
                 if (arr[i].pk == id) {
-                    console.log('found');
                    arr[i].priority = priority;
                    break; //Stop this loop, we found it!
                 }
             }
             this.cart = arr;
+            this.updateLocalCartStorage();
         },
         updateLocalCartStorage() {
-            localStorage.setItem("cart",JSON.stringify(this.cart));
+            localStorage.setItem(name,JSON.stringify(this.cart));
         },
         getLocalCartStorage(){
             // localStorage.removeItem("cart")
-            let cartData = localStorage.getItem("cart");
+            let cartData = localStorage.getItem(name);
             if(cartData){
                 this.cart = JSON.parse(cartData);
             }else{

@@ -28,12 +28,12 @@ const DashboardContainer = () =>{
                     <Route exact path="/dashboard" render={() => (
                         <Redirect to="/dashboard/inventory"/>
                     )}/>
-                    <Route path="/dashboard/tickets" exact>
-                        <DashboardTickets />
-                    </Route>
                     <Route exact path="/dashboard/tickets/:id" render={(props) => {
                         return ( <DashboardTicketDetail {...props } /> )
                     }} />
+                    <Route path="/dashboard/tickets">
+                        <DashboardTickets />
+                    </Route>
                     <Route path="/dashboard/inventory" >
                         <DashboardInventory initial changeTitle={(title) => changeTitle(title)} />
                     </Route>
@@ -41,11 +41,6 @@ const DashboardContainer = () =>{
         
                 {/* <!-- /End replace --> */}
             </main>
-            {/* <div className="w-full hidden md:block bg-white border-b border-gray-400 mb-8 px-6 py-4 sm:px-6 md:px-8">
-                <h1 className="text-2xl font-semibold text-gray-700">
-                    {title}
-                </h1>
-            </div> */}
         </div>
     )
 }

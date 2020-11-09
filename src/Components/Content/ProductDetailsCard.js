@@ -35,10 +35,10 @@ const ProductImage = ({ product_image, product_name }) => {
 
 const ProductDetailCard = ({ product, edit }) => {
   const cartStore = useCartStore();
-  const addToCart = () => {
-    cartStore.addToCart(product.pk,0)
+  const addToCart = (quantity,priority) => {
+    // console.log(quantity,priority)
+    cartStore.addToCart(product.pk,quantity,priority)
   }
-  console.log(product)
   return (
     <>
           <div className="flex lg:flex-row flex-col-reverse">
@@ -56,7 +56,7 @@ const ProductDetailCard = ({ product, edit }) => {
             </div>
             <div className="xl:w-2/5 lg:w-1/2 py-4 mx-2">
             <ProductImageCard product_image={(product?.image)} product_name ={product.name}>
-                <AddProductForm addToCart={() => addToCart()} />
+                <AddProductForm addToCart={(quantity,priority) => addToCart(quantity,priority)} />
             </ProductImageCard>
             </div>
           </div>

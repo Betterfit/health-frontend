@@ -6,7 +6,7 @@ function Quantity_Input({ id_tag, name, readOnly=false, value, readValue , quant
     <>
       <div className="inline-block ">
         <label
-          for={id_tag}
+          htmlFor={id_tag}
           className="uppercase font-medium text-betterfit-graphite text-xxs tracking-extra-wide pr-3 "
         >
           {name}
@@ -14,17 +14,19 @@ function Quantity_Input({ id_tag, name, readOnly=false, value, readValue , quant
         <input
           id={id_tag}
           type="number"
-          class= {"py-2 pl-2 pr-2 form-input w-20 text-base border-gray-400 border rounded shadow-inner focus:outline-none " + (readOnly ? readOnlyStyle : "" ) }
+          className= {"py-2 pl-2 pr-2 form-input w-20 text-base border-gray-400 border rounded shadow-inner focus:outline-none " + (readOnly ? readOnlyStyle : "" ) }
           value={value}
           readOnly={readOnly}
           onChange={(e) => {
             if (readValue)
               readValue(e.target.value);
               var val = e.target.value;
-              clearTimeout(timeout);
-              timeout = setTimeout( () => {
-                // quantityUpdate(1,{"quantity":val})    
-              },1000);
+              if(quantityUpdate){
+                clearTimeout(timeout);
+                timeout = setTimeout( () => {
+                  quantityUpdate({"quantity":val})    
+                },1000);
+              }
           }}
 
         />
