@@ -53,7 +53,7 @@ const DashboardContainer = () =>{
                     <Route path="/dashboard/resources" >
                         <DashboardResources initial changeTitle={(title) => changeTitle(title)} />
                     </Route>
-                </AnimatedSwitch> 
+               </AnimatedSwitch> 
             </main>
         </div>
     )

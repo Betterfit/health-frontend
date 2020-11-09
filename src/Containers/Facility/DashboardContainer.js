@@ -11,6 +11,7 @@ import DashboardNewOrder from './Inner/DashboardNewOrder'
 import DashboardOrders from './Inner/DashboardOrders'
 import DashboardFacilityOrder from './Inner/DashboardFacilityOrderDetail';
 import DashboardResources from '../DashboardResources'
+import DashboardResearch from '../DashboardResearch'
 // import DashboardInventory from '../Supplier/DashboardInventory'
 // import DashboardOrders from '../Supplier/DashboardOrders'
 // import DashboardProductList from './DashboardProductList'
@@ -48,6 +49,10 @@ const DashboardContainer = () =>{
                 <Route path="/dashboard/resources" >
                     <DashboardResources initial changeTitle={(title) => changeTitle(title)} />
                 </Route>
+                <Route path="/dashboard/research" >
+                    <DashboardResearch initial changeTitle={(title) => changeTitle(title)} />
+                </Route>
+
                 </AnimatedSwitch>
                 {/* <!-- /End replace --> */}
             </main>

@@ -36,6 +36,13 @@ const DashboardFacility = () => {
             name:'Resources',
             icon: Resources,
             key:'resources',
+        },
+        {
+            to: '/dashboard/research',
+            name: 'Research',
+            // placeholder
+            icon: Resources,
+            key: 'research'
         }
     ]
     return(
