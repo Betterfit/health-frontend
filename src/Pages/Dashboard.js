@@ -3,7 +3,7 @@ import DashboardSupplier from 'Pages/Dashboards/DashboardSupplier';
 import DashboardFacility from 'Pages/Dashboards/DashboardFacility';
 import DashboardTraffic from 'Pages/Dashboards/DashboardTraffic';
 import useStores from 'Helpers/useStores';
-import {useAuthStore} from "Context/authContext";
+
 const Dashboard  = () => {
     const authStore = useAuthStore();
     const [userType , setUserType] = useState(JSON.parse(authStore.user));
