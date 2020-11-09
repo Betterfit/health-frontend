@@ -13,16 +13,6 @@ import Notification from "Components/Helpers/Notifications"
 const api = new Api();
 const ProfileCard = ({}) => {
   const authStore = useAuthStore();
-<<<<<<< HEAD
-  const [userData, setUserType] = useState(
-    JSON.parse(authStore.user)
-  );
-    
-  const [email, setEmail] = useState(userData.email);
-  const [name, setName] = useState(userData.username);
-  const [lang, setLanguage] = useState(authStore.language);
-  const [fixedName, setFixedName] = useState(userData.username);
-=======
   const [userData, setUserType] = useState(JSON.parse(authStore.user));
   let userName = userData.username;
   const userId = userData.pk;
@@ -43,7 +33,6 @@ const ProfileCard = ({}) => {
 
   const [pwNotification, setPWNotification] = useState();
   const [baseNotification, setBaseNotification] = useState();
->>>>>>> 3c19186237de6211c1d203b27e82f3609aa861ff
 
   const changeLang = (value) => {
     localStorage.setItem('language',value);
