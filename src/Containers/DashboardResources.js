@@ -13,11 +13,11 @@ const DashboardResources = () => {
     const [tagList, setTaglist] = useState([]);
     const [resourceList, setResourceList] = useState([]);
     const resourceTypes = {
-        '1': ['#56BAC8', 'Health Care Provider'],
-        '2': ['#61C091', 'Lab'],
-        '3': ['#A799F3', 'Researcher'],
-        '4': ['#EA8683', 'Supplier'],
-        '5': ['#7FAAF4', 'Regulation'],
+        'facility': ['#56BAC8', 'Health Care Provider'],
+        'lab': ['#61C091', 'Lab'],
+        'research': ['#A799F3', 'Researcher'],
+        'supplier': ['#EA8683', 'Supplier'],
+        'regulation': ['#7FAAF4', 'Regulation'],
     }
     const [something, setSomething] = useState({});
     const getResourceList = async () =>
@@ -83,7 +83,7 @@ const DashboardResources = () => {
                     {resourceList.map(resource =>{
                         return(
                             <div className="resource-container m-2 rounded-md cursor-pointer">
-                                <ResourceLink resourceColor={matchResourceColor(resource.pk)} resourceType={matchResourceName(resource.pk)} resourceName={resource.title} tagList={resource.tags} resourceDetails={resource.details} resourceCode={resource.pk} />
+                                <ResourceLink resourceColor={matchResourceColor(resource.resource_type)} resourceType={matchResourceName(resource.resource_type)} resourceName={resource.title} tagList={resource.tags} resourceDetails={resource.details} resourceCode={resource.resource_type} />
                             </div>
                         )
                     })}

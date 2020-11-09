@@ -17,13 +17,13 @@ const ResourceLink = ({resourceColor, resourceType, resourceName, tagList, resou
     }
     const resourceCard = (function(resourceCode) {
     switch (resourceCode) {
-        case 1:
+        case 'facility':
             return <FacilityCard name={resourceName} tagList={filterTagCodes()} details={resourceDetails} color={resourceColor}/>;
-        case 2:
+        case 'lab':
             return <LabCard name={resourceName} tagList={filterTagCodes()} details={resourceDetails} color={resourceColor}/>;
-        case 3:
+        case 'research':
             return <ResearchCard name={resourceName} tagList={filterTagCodes()} details={resourceDetails} color={resourceColor}/>;
-        case 4:
+        case 'supplier':
             return <SupplierCard name={resourceName} tagList={filterTagCodes()} details={resourceDetails} color={resourceColor}/>;
         default:
             return <div/>;
@@ -50,7 +50,7 @@ const ResourceLink = ({resourceColor, resourceType, resourceName, tagList, resou
                     {resourceName}
                 </div>
             </div>
-            <div className="flex-grow float-right flex px-2">
+            <div className="flex-grow float-right flex px-2 flex-shrink-0">
                 <div className="ml-auto inline-flex my-auto">
                     {filterTagCodes().map(p =>{
                         return(
