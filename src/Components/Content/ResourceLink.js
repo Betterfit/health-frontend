@@ -42,14 +42,14 @@ const ResourceLink = ({resourceColor, resourceType, resourceName, tagList, resou
     return(
         <div className="flex p-1" onClick={toggleSlider}>
             <div className="w-1 rounded-md mr-2" style={{background:resourceColor}}/>
-            <div className="p-2">
+            <button className="p-2 text-left">
                 <div className="font-medium text-gray-700 font-body uppercase tracking-widest text-xs">
                     {resourceType}
                 </div>
                 <div className="font-semibold text-base tracking-wide">
                     {resourceName}
                 </div>
-            </div>
+            </button>
             <div className="flex-grow float-right flex px-2 flex-shrink-0">
                 <div className="ml-auto inline-flex my-auto">
                     {filterTagCodes().map(p =>{
