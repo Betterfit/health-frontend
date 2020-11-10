@@ -11,7 +11,7 @@ import DashboardNewOrder from './Inner/DashboardNewOrder'
 import DashboardOrders from './Inner/DashboardOrders'
 import DashboardFacilityOrder from './Inner/DashboardFacilityOrderDetail';
 import DashboardResources from '../DashboardResources'
-import DashboardResearch from '../DashboardResearch'
+import DashboardResearch from '../DashboardResearch.tsx'
 // import DashboardInventory from '../Supplier/DashboardInventory'
 // import DashboardOrders from '../Supplier/DashboardOrders'
 // import DashboardProductList from './DashboardProductList'
