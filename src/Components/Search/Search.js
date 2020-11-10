@@ -19,7 +19,7 @@ const Search = ({type}) => {
   if(type === "icon" ){
     return(
       <div className={`flex items-center h-full bg-gray-300 ${showInput ? 'absolute w-full z-10  border-b-2 border-gray-400 ' : 'relative'}`}> 
-        <button className="button-reset" onClick={() => setShowInput(!showInput)}>
+        <button className="button-reset" aria-label="button-reset" onClick={() => setShowInput(!showInput)}>
           <ReactSVG src={SearchIcon} />
         </button>
         {showInput && (

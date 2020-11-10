@@ -40,7 +40,7 @@ const TableBody = ({TableBody}) => {
                                                 return(
                                                     <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-betterfit-graphite">
                                                         <div className="flex items-center">
-                                                            <img className="w-24 mr-2" src={(row[imageIndex][1] ? `${row[imageIndex][1]}` : EmptyImage)}  /> 
+                                                            <img className="w-24 mr-2" role="none" src={(row[imageIndex][1] ? `${row[imageIndex][1]}` : EmptyImage)}  /> 
                                                             <span className="font-bold text-betterfit-basic-blue">{r[1]}</span>
                                                         </div>
                                                     </td>
@@ -91,7 +91,7 @@ const TableBody = ({TableBody}) => {
                                                 return(
                                                     <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-betterfit-graphite">
                                                         <div className="flex items-center">
-                                                            <img className="w-24 mr-2" src={(row[imageIndex][1] ? `${row[imageIndex][1]}` : EmptyImage)}  /> 
+                                                            <img className="w-24 mr-2" role="none" src={(row[imageIndex][1] ? `${row[imageIndex][1]}` : EmptyImage)}  /> 
                                                             <span className="font-bold text-betterfit-basic-blue">{r[1]}</span>
                                                         </div>
                                                     </td>
