@@ -31,7 +31,7 @@ const resourceCardTypes: {
 const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
     const ResourceCardType = resourceCardTypes[resource.resource_type];
     const resourceCard =
-        ResourceCardType === null ? (
+        ResourceCardType !== null ? (
             //@ts-ignore
             <ResourceCardType
                 name={resource.title}
@@ -43,14 +43,9 @@ const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
             <div />
         );
 
-    const [ShowResourceDetails, SetShowDetails] = useState({
-        show: false,
-    });
+    const [showDetails, setShowDetails] = useState(false);
     const toggleSlider = () => {
-        if (ShowResourceDetails.show) SetShowDetails({ show: false });
-        else {
-            SetShowDetails({ show: true });
-        }
+        setShowDetails(!showDetails);
     };
     return (
         <div className="flex p-1" onClick={toggleSlider}>
@@ -73,7 +68,7 @@ const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
                     ))}
                 </div>
             </div>
-            <Slider active={ShowResourceDetails.show} close={toggleSlider}>
+            <Slider active={showDetails} close={toggleSlider}>
                 {resourceCard}
             </Slider>
         </div>
