@@ -122,6 +122,10 @@ export default class Api {
     return this.init().get(`/orders/${orderId}`)
   }
 
+  getSearchOrders = (query) => {
+    return this.init().get(`orders/?search=${query}`);
+  }
+
   //to cancel an order - change to 'cancelled' status
   // data - should be json of {order_no:[######], status:"open"}
   deleteOrder = (orderId, orderNo) => {
