@@ -109,7 +109,7 @@ const DashboardOrderList = (props) => {
             href={`edit-order/${data.pk}`}
           ></TextOptions>
           <TextOptions
-            value="Delete"
+            value="Cancel"
             onClick={() => callbackDelete(data.pk, data.order_no)}
           ></TextOptions>
           <ButtonOption
