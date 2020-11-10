@@ -52,11 +52,12 @@ const DashboardContainer = () =>{
                 <Route exact path="/dashboard/orders/detail/:id" render={(props) => {
                         return ( <DashboardFacilityOrder {...props } /> )
                 }} />
-                <Route path="/dashboard/new-order/category">
-                    <CartProvider>
-                        <DashboardNewOrder/>
-                    </CartProvider>
-                </Route>
+                <Route path="/dashboard/new-order/category" render={(props) => {
+                        return ( 
+                            <CartProvider value="cart">
+                            <DashboardOrder props={props}   type='new' />
+                            </CartProvider>
+                )}} />
                 <Route path="/dashboard/resources" >
                     <DashboardResources initial changeTitle={(title) => changeTitle(title)} />
                 </Route>
