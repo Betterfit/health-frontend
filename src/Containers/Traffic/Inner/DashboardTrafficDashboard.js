@@ -4,18 +4,22 @@ import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import ControllerCard from 'Components/TrafficControllerSideBar/ControllerCard';
 
 import Api from "Helpers/api";
+import Graph from "./DashboardGraph";
 
 const api = new Api();
 const DashboardTrafficDashboard = () => {
     const [ProductData , setProductData] = useState(null);
+
     const getData = async () => await api.getTrafficControllerSupply()
     .then((response) => {
         setProductData(response.data)
     })
     .catch((err) => console.log(err));
+
     useEffect(() => {
         getData();
     }, []);
+
     
     return(
         <div className="flex flex-col md:flex-row">
@@ -68,8 +72,8 @@ const DashboardTrafficDashboard = () => {
                         </>
                 )}
             </DashboardSideBar>
-            <div className={`w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll mt-8`}>
-                graphs here
+            <div className={`w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll mt-8`}   >
+                <Graph />
             </div>
         </div>
     )
