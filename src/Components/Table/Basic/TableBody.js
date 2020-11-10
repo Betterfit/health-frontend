@@ -16,7 +16,7 @@ const TableBody = ({TableBody,variantID,NoOptions}) => {
                                     row.map((r, index)=>{
                                         if(r[0] !== "pk" ){
                                             return(
-                                                <td className="px-4 py-4 text-sm leading-5 text-gray-500">
+                                                <td className="px-4 py-4 text-sm leading-5 text-betterfit-graphite">
                                                     {r[1]}
                                                 </td>
                                             )  
@@ -26,7 +26,7 @@ const TableBody = ({TableBody,variantID,NoOptions}) => {
                                         
                                     })
                                 }
-                                <td className="px-4 py-4 w-8 text-sm leading-5 text-gray-500">
+                                <td className="px-4 py-4 w-8 text-sm leading-5 text-betterfit-graphite">
                                     <NavLink to={`${variantID}/detail/${ NoOptions ? 'edit' : setIndex+'/edit'}`} >
                                         <ReactSVG src={Edit} className=" text-gray-500"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
                                     </NavLink>
@@ -41,7 +41,7 @@ const TableBody = ({TableBody,variantID,NoOptions}) => {
                                         
                                         if(r[0] !== "pk" ){
                                             return(
-                                                <td className="px-4 py-4 text-sm leading-5 text-gray-500">
+                                                <td className="px-4 py-4 text-sm leading-5 text-betterfit-graphite">
                                                     {r[1]}
                                                 </td>
                                             )  
@@ -52,7 +52,7 @@ const TableBody = ({TableBody,variantID,NoOptions}) => {
                                         
                                     })
                                 }
-                                <td className="px-4 py-4 text-sm leading-5 text-gray-500">
+                                <td className="px-4 py-4 text-sm leading-5 text-betterfit-graphite">
                                     <NavLink to={`${variantID}/detail/${ NoOptions ? 'edit' : setIndex+'/edit'}`} >
                                         <ReactSVG src={Edit} className=" text-gray-500"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
                                     </NavLink>
