@@ -8,7 +8,7 @@ import Countdown from 'react-countdown';
 import Api from "Helpers/api";
 
 const api = new Api();
-const DashboardMatchesDetail = (props) => {
+const DashboardMatchesHistory = (props) => {
     const { match } = props;
     const matchId = parseInt(match.params.id);
     const [matchesData , setMatchesData] = useState({
@@ -178,4 +178,4 @@ const DashboardMatchesDetail = (props) => {
         </div>
     )
 }
-export default DashboardMatchesDetail
+export default DashboardMatchesHistory

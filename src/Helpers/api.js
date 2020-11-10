@@ -161,5 +161,14 @@ export default class Api {
   getTags = () => {
     return this.init().get(`/tags/`); 
   }
+
+  // ============================  MATCHES API  =====================================
+
+  getMatchHistory = () => {
+    return this.init().get(`/matches/history/`); 
+  }
+  getMatches = () => {
+    return this.init().get('/matches/');
+  }
 }
 
