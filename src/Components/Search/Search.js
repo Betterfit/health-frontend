@@ -27,7 +27,7 @@ const Search = ({type}) => {
             <div className="flex ml-2 flex-1 ">
               <div className="relative flex-grow">
                 <div className="absolute inset-y-0 left-0 pl-1 flex items-center pointer-events-none"></div>
-                <label for="search" className="hidden">Search</label>
+                <label htmlFor="search" aria-label="Search"></label>
                 <input
                   id="search"
                   className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-lg bg-transparent"
