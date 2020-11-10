@@ -197,6 +197,7 @@ const ProfileCard = ({}) => {
             option1={{ label: "English", active: baseFormValues.lang === "en", value: "en" }}
             option2={{ label: "French", active: baseFormValues.lang === "fr", value: "fr" }}
             changeValue={handleBaseChange}
+            id="lang"
           ></ButtonToggle>
 
           <InputFieldLabel
@@ -263,7 +264,7 @@ const ProfileCard = ({}) => {
         <Button
           text="Save Profile"
           color=" bg-betterfit-green"
-          hoverColor="bg-green-800"
+          hoverColor="bg-green-900"
           text_size="text-sm"
         ></Button>
       </form>

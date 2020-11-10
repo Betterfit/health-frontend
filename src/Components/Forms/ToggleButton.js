@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 
-const Button = ({ toggle, active, value, onChange, text }) => {
+const Button = ({ toggle, active, value, text }) => {
   return (
     <button
       className={
@@ -9,7 +9,7 @@ const Button = ({ toggle, active, value, onChange, text }) => {
           ? " pointer-events-none active bg-betterfit-basic-blue text-white"
           : "bg-white text-betterfit-navy'")
       }
-      id="lang"
+      id={text}
       value={value}
       onClick={toggle}
       type="button"
@@ -19,10 +19,11 @@ const Button = ({ toggle, active, value, onChange, text }) => {
   );
 };
 
-const ToggleButton = ({ option1, option2, changeValue }) => {
+const ToggleButton = ({ option1, option2, changeValue, id }) => {
   const [active, setActive] = useState(option1.active);
   const toggle = (e) => {
     setActive(!active);
+    e.target.id=id;
     changeValue(e);
   };
 
