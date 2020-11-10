@@ -23,10 +23,16 @@ const DashboardMatches = () => {
         let arr = response.data;
 
         arr = arr.map(item => {
-            if(item.supplier === "No Match"){
-                item.supplier = null;
+            let obj = {
+                order_no: item.order_no,
+                province: item.province,
+                facility: item.facility,
+                supplier: item.supplier !== "No Match" ? item.supplier : null ,
+                order_date: item.order_date,
+                rank:item.rank,
+                pk:item.pk
             }
-            return(item);
+            return(obj);
         });
         console.log(arr);
         setMatchesData(arr)
