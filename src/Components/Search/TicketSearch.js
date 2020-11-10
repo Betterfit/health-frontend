@@ -12,10 +12,10 @@ const TicketSearch = ({type,extraClasses}) => {
   
   const searchQuery = () => {
     setSearchValue(searchRef.current.value)
-    history.push(`/dashboard/inventory/search?search=${searchRef.current.value}`);
+    history.push(`/dashboard/tickets/search?search=${searchRef.current.value}`);
   }
   const clearSearchQuery = () => {
-    history.push(`/dashboard/inventory`);
+    history.push(`/dashboard/tickets`);
   }
 
   const [showInput , setShowInput ] = useState(false);

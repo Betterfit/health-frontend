@@ -108,8 +108,8 @@ export default class Api {
     return this.init().put(`/suppliers/${userId}/tickets/${id}`,data)
   }
 
-  getSearchTickets = (userId,query) => {
-    return this.init().post(`/suppliers/${userId}/tickets/?search=${query}`)
+  getSearchTickets = (supplierId,query) => {
+    return this.init().get(`/suppliers/${supplierId}/tickets/?search=${query}`)
   }
 
   // ============================   ORDERS API  =====================================

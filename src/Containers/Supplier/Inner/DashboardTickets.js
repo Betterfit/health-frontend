@@ -5,6 +5,7 @@ import Table from 'Components/Table/List/Table';
 import Api from "Helpers/api";
 import {useAuthStore} from "Context/authContext";
 import DashboardTicketSearch from "./DashboardTicketSearch";
+import uuid from 'react-uuid'
 import {
   Switch,
   Route,
@@ -79,13 +80,13 @@ const DashboardTickets = () => {
   const TabData = [ 
     {
         heading:'Open',
-        content: openTickets ? <Table TableData={openTickets} link={'/dashboard/tickets/'} buttonType="normal"  /> : <div>No Tickets</div> ,
+        content: openTickets ? <Table key={uuid()}  TableData={openTickets} link={'/dashboard/ticket/'} buttonType="normal"  /> : <div>No Tickets</div> ,
         key:'opened',
         amount:openCount
     },
     {
         heading:'Shipped',
-        content: shippedTickets ? <Table TableData={shippedTickets} link={'/dashboard/tickets/'} buttonType="normal"  /> : <div>No Tickets</div>,
+        content: shippedTickets ? <Table key={uuid()} TableData={shippedTickets} link={'/dashboard/ticket/'} buttonType="normal"  /> : <div>No Tickets</div>,
         key:'shipped',
         amount:closedCount
     },
@@ -105,7 +106,7 @@ const DashboardTickets = () => {
             </Route>
           </>
         )}
-      <Route path='/dashboard/tickets/search:query?'>
+      <Route path="/dashboard/tickets/search:query?">
             <DashboardTicketSearch supplierId={supplierId} />
       </Route>
     </div>  
