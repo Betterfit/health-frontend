@@ -12,6 +12,13 @@ import DashboardNewOrder from './Inner/DashboardNewOrder'
 import DashboardOrderList from './Inner/DashboardOrderList'
 import DashboardOrder from './Inner/DashboardOrder'
 import DashboardFacilityOrder from './Inner/DashboardFacilityOrderDetail';
+import DashboardResources from '../DashboardResources'
+import DashboardResearch from '../DashboardResearch.tsx'
+// import DashboardInventory from '../Supplier/DashboardInventory'
+// import DashboardOrders from '../Supplier/DashboardOrders'
+// import DashboardProductList from './DashboardProductList'
+// import DashboardProductDetail from './DashboardProductDetail'
+// import DashboardSearch from './DashboardSearch';
 import {CartProvider} from "Context/cartContext";
 
 
@@ -32,7 +39,7 @@ const DashboardContainer = () =>{
                 <Route exact path="/dashboard" render={() => (
                     <Redirect to="/dashboard/new-order/category/"/>
                 )}/>
-                <Route path="/dashboard/orders" exact render={(props) =>{
+                <Route exact path={["/dashboard/orders", "/dashboard/orders/search:query?"]} render={(props) =>{
                     return ( <DashboardOrderList {...props} /> )
                 }} />
                 <Route path="/dashboard/edit-order/:oid" exact render={(props) => {
@@ -50,12 +57,21 @@ const DashboardContainer = () =>{
                 <Route exact path="/dashboard/orders/detail/:id" render={(props) => {
                         return ( <DashboardFacilityOrder {...props } /> )
                 }} />
+                
                 <Route path="/dashboard/new-order/category" render={(props) => {
                         return ( 
                             <CartProvider value="cart">
                             <DashboardOrder props={props}   type='new' />
                             </CartProvider>
                 )}} />
+    
+                <Route path="/dashboard/resources" >
+                    <DashboardResources initial changeTitle={(title) => changeTitle(title)} />
+                </Route>
+                <Route path="/dashboard/research" >
+                    <DashboardResearch initial changeTitle={(title) => changeTitle(title)} />
+                </Route>
+
                 </AnimatedSwitch>
                 {/* <!-- /End replace --> */}
             </main>

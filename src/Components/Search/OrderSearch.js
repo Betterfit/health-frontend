@@ -5,24 +5,29 @@ import SearchIcon from 'Images/Icons/search-icon.svg'
 import Close from 'Images/Icons/close.svg';
 
 
-const OrderSearch = ({type}) => {
+const OrderSearch = ({type,extraClasses}) => {
   const [searchValue, setSearchValue ] = useState('');
   const searchRef = useRef(null);
   const history = useHistory();
   
   const searchQuery = () => {
     setSearchValue(searchRef.current.value)
-    history.push(`/dashboard/orders/search?search=${searchRef.current.value}`);
+    if(searchRef.current.value.length == 0){
+      history.push(`/dashboard/orders`);
+
+    }else{
+      history.push(`/dashboard/orders/search?search=${searchRef.current.value}`);
+    }
   }
   const clearSearchQuery = () => {
     history.push(`/dashboard/orders`);
   }
 
-  const [showInput , setShowInput] = useState(false);
+  const [showInput , setShowInput ] = useState(false);
   
     return(
-      <div className={`flex items-center h-full bg-betterfit-pale-blue items-center px-6 py-1`} style={{borderRadius:30}}> 
-        <ReactSVG className="ml-2 mr-2" src={SearchIcon} /> 
+      <div className={`flex items-center h-full bg-betterfit-pale-blue items-center px-6 py-1 ${extraClasses}`} style={{borderRadius:30}}> 
+        <ReactSVG className="ml-2 mr-2" src={SearchIcon} />
         <div className="relative flex-grow">
         <label htmlFor="search" aria-label="Search"></label>
           <input

@@ -20,7 +20,7 @@ const Slider = ({ children, active, close }) => {
       <div className="md:fixed inset-0 md:overflow-y-scroll z-50 md:bg-transparent">
         <div className="md:fixed inset-0 background-blur overflow-y-scroll">
           <section className="md:absolute inset-y-0 right-0 md:pl-10 max-w-full flex">
-            <div className="w-screen md:max-w-md">
+            <div className="w-screen md:max-w-md md:overflow-y-scroll">
               <div className="flex flex-col min-h-full md:mr-2 pb-6 md:pt-3 bg-white md:shadow-xl rounded-lg md:m-3">
                 <div className="border-grey-700 md:border-t-4 mx-2 md:p-2"></div>
 
