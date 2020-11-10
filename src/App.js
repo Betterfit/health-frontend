@@ -9,8 +9,6 @@ import {
   Redirect
 } from "react-router-dom";
 
-import store from 'Store/store.js';
-
 // ================ PAGES ================
 import Login from './Pages/Login/Login';
 import LogOut from './Pages/Logout';

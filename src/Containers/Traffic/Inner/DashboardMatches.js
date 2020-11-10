@@ -100,51 +100,6 @@ const DashboardMatches = () => {
             rank:99,
             pk:1
         },
-        {
-            match_number: "1001-2020-021246",
-            province: "AB",
-            facility:"Grey Nuns Hospital",
-            supplier: "Lift Medical",
-            order_date: "Oct 26, 2020",
-            rank:99,
-            pk:2
-        },
-        {
-            match_number: "2001-2020-221249",
-            province: "AB",
-            facility:"Grey Nuns Hospital",
-            supplier: "Lift Medical",
-            order_date: "Oct 25, 2020",
-            rank:53,
-            pk:3
-        },
-        {
-            match_number: "4201-2020-25340",
-            province: "AB",
-            facility:"Grey Nuns Hospital",
-            supplier: "Lift Medical",
-            order_date: "Oct 27, 2020",
-            rank:103,
-            pk:4
-        },
-        {
-            match_number: "4201-2020-25349",
-            province: "AB",
-            facility:"Grey Nuns Hospital",
-            supplier: null,
-            order_date: "Oct 27, 2020",
-            rank:103,
-            pk:4
-        },
-        {
-            match_number: "4001-2020-021246",
-            province: "AB",
-            facility:"University of Alberta Hospital",
-            supplier: "Lift Medical",
-            order_date: "Oct 24, 2020",
-            rank:99,
-            pk:2
-        },
     ]
 
     return(
