@@ -20,9 +20,9 @@ const ResearchCard = ({name, tagList, details, color}) => {
                     items={[]}
                 />
                 <div className="ml-auto inline-flex" style={{margin:0}}>
-                    {tagList.map(p =>{
+                    {tagList.map(tag =>{
                         return(
-                            <TagLink tagType={p} />
+                            <TagLink tag={tag} />
                         )
                     })}
                 </div>

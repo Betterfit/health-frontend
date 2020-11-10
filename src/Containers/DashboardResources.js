@@ -1,96 +1,75 @@
-import React, {useState, useEffect} from 'react';
-import ListLink from 'Components/Content/ListLink';
-import TagLink from 'Components/Content/TagLink';
-import ResourceLink from 'Components/Content/ResourceLink';
-import Search from 'Components/Search/Search';
+import React, { useState, useEffect } from "react";
+import ListLink from "Components/Content/ListLink";
+import TagLink from "Components/Content/TagLink";
+import ResourceLink from "Components/Content/ResourceLink";
+import Search from "Components/Search/Search";
 import Api from "Helpers/api";
-import DashboardSideBar from 'Components/DashboardSideBar/DashboardSideBar';
+import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
+import { useQuery } from "react-query";
+import ResourceDisplay from "Components/Resources/ResourceDisplay";
 
 const DashboardResources = () => {
+    const [title, setTitle] = useState("Resources");
     const api = new Api();
-    const [title , setTitle] = useState('Resources');
-    const [searchActive , setSearchActive] = useState(false);
-    const [tagList, setTaglist] = useState([]);
-    const [resourceList, setResourceList] = useState([]);
-    const resourceTypes = {
-        'facility': ['#56BAC8', 'Health Care Provider'],
-        'lab': ['#61C091', 'Lab'],
-        'research': ['#A799F3', 'Researcher'],
-        'supplier': ['#EA8683', 'Supplier'],
-        'regulation': ['#7FAAF4', 'Regulation'],
+    // react-query allows us to automatically do some pretty nifty caching
+    const {
+        data: resources,
+        isLoading: resourcesLoading,
+    } = useQuery("resources", () =>
+        api.getResources().then((resp) => resp.data)
+    );
+    const { data: tagList, isLoading: tagsLoading } = useQuery("tags", () =>
+        api.getTags().then((resp) => resp.data)
+    );
+    if (resourcesLoading || tagsLoading) {
+        return <div>Loading</div>;
     }
-    const [something, setSomething] = useState({});
-    const getResourceList = async () =>
-        await api
-            .getResources()
-            .then((response) => {
-                const resourceListData = Object.entries(response.data);
-                const resourceList = [];
-                for (let i=0; i<resourceListData.length; i++) {
-                    resourceList.push(resourceListData[i][1]);
-                    console.log(resourceListData[i][1]);
-                }
-                setResourceList(resourceList);
-            })
-            .catch((err) => console.log(err));
-    const getTagList = async () =>
-        await api
-            .getTags()
-            .then((response) => {
-                const tagListData = Object.entries(response.data);
-                const tagList = [];
-                for (let i=0; i<tagListData.length; i++) {
-                    tagList.push(tagListData[i]['1'].pk);
-                }
-                setTaglist(tagList);
-            })
-            .catch((err) => console.log(err));
-    useEffect(() => {
-        getResourceList();
-        getTagList();
-      }, []);    
-    const matchResourceColor = (type) => {
-        return resourceTypes[type][0];
+
+    const resourceColors = {
+        facility: "#56BAC8",
+        lab: "#61C091",
+        research: "#A799F3",
+        supplier: "#EA8683",
+        regulation: "#7FAAF4",
     };
-    const matchResourceName = (type) => {
-        return resourceTypes[type][1];
-    };
+
     return (
-        <div className="resource-dashboard">
+        <div className="flex flex-col md:flex-row overflow-x-hidden">
             <DashboardSideBar>
                 <h2 className="text-3xl text-dark-blue my-3">{title}</h2>
                 <Search type="bar" />
                 <div className="border-b border-gray-400 mt-5" />
                 <div>
-                    <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">Resource Type</h3>
-                    {Object.entries(resourceTypes).map(([key, value]) => {
-                        return(
-                            <ListLink bulletColor={value[0]} text={value[1]} />
-                        )
-                    })}
+                    <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
+                        Resource Type
+                    </h3>
+                    {Object.entries(resourceColors).map(
+                        ([resourceTitle, resourceColor]) => {
+                            return (
+                                <ListLink
+                                    bulletColor={resourceColor}
+                                    text={resourceTitle}
+                                    textStyle={{ textTransform: "capitalize" }}
+                                />
+                            );
+                        }
+                    )}
                 </div>
                 <div>
-                    <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">Tags</h3>
-                    {tagList.map(p =>{
-                        return(
-                            <TagLink tagType={p} />
-                        )
+                    <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
+                        Tags
+                    </h3>
+                    {tagList.map((tag) => {
+                        return <TagLink tag={tag} />;
                     })}
                 </div>
             </DashboardSideBar>
-            <div className="flex-grow wrap max-h-screen p-4 h-full rounded-lg overflow-scroll">
-                <div className="py-8">
-                    {resourceList.map(resource =>{
-                        return(
-                            <div className="resource-container m-2 rounded-md cursor-pointer">
-                                <ResourceLink resourceColor={matchResourceColor(resource.resource_type)} resourceType={matchResourceName(resource.resource_type)} resourceName={resource.title} tagList={resource.tags} resourceDetails={resource.details} resourceCode={resource.resource_type} />
-                            </div>
-                        )
-                    })}
-                </div>
+
+            <div className="resource-dashboard">
+                <ResourceDisplay resources={resources} />
             </div>
         </div>
     );
-}
+};
 
-export default DashboardResources
+export default DashboardResources;
