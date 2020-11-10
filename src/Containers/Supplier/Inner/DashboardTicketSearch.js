@@ -53,7 +53,7 @@ const DashboardTicketSearch = ({supplierId}) => {
                         searchData.map(table => {
                             return(
                                 <>
-                                    <Table TableData={searchData} link={'/dashboard/tickets/'} buttonType="normal"  /> 
+                                    <Table TableData={searchData} link={'/dashboard/ticket/'} buttonType="normal"  /> 
                                 </>
                             );
                         })
