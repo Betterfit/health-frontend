@@ -47,7 +47,7 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                         {!row.supplier && (
                                             <span className="flex items-center">
                                                 <ReactSVG src={Attention} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                                                <span style={{color:'#DAA239'}} className="font-bold pl-1">No Match!</span>
+                                                <span style={{color:'#B36200'}} className="font-bold pl-1">No Match!</span>
                                             </span>
                                         )}
                                         {row.supplier && ( 
@@ -62,7 +62,7 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                         {today - orderDate >= 2 && (
                                             <span className="flex items-center">
                                                 <ReactSVG src={Attention} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                                                <span style={{color:'#DAA239'}} className="font-bold pl-1">{row.order_date}</span>
+                                                <span style={{color:'#B36200'}} className="font-bold pl-1">{row.order_date}</span>
                                             </span>
                                         )}
                                         {today - orderDate < 2 && (

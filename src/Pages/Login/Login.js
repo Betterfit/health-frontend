@@ -75,7 +75,7 @@ const LoginTemplate = () => {
         <div className="text-base leading-5">
           <a
             href={history.location.pathname + "forgotpassword"}
-            className="font-medium text-gray-600 hover:text-gray-700 focus:outline-none focus:underline transition ease-in-out duration-150"
+            className="font-medium text-betterfit-graphite opacity-75 hover:text-gray-700 focus:outline-none focus:underline transition ease-in-out duration-150"
           >
             Forgot password?
           </a>
