@@ -1,7 +1,6 @@
 import React from "react";
 import Inventory from "./Inventory";
 
-
 function Inventory_Description_Only(props) {
   const description = props.description;
   return (
@@ -30,10 +29,10 @@ function Inventory_Description({ title, description, class_addons, edit }) {
   }
 
   return (
-    <>
+    <dl>
       <dt className={standard_dt_styles}>{title}</dt>
       {description_type}
-    </>
+    </dl>
   );
 }
 
