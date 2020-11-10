@@ -36,10 +36,17 @@ const DashboardFacility = () => {
             name:'Resources',
             icon: Resources,
             key:'resources',
+        },
+        {
+            to: '/dashboard/research',
+            name: 'Research',
+            // placeholder
+            icon: Resources,
+            key: 'research'
         }
     ]
     return(
-        <div className="md:h-screen flex-col md:flex-row flex overflow-hidden bg-white min-h-screen" style={{backgroundColor:'#F7FAFC'}}>
+        <div className="md:h-screen flex-col md:flex-row flex overflow-hidden bg-white min-h-screen">
             <Router>
                 <SideBar navItemsList={navItemsList} />
                 <DashboardContainer />

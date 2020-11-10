@@ -12,6 +12,13 @@ import DashboardNewOrder from './Inner/DashboardNewOrder'
 import DashboardOrderList from './Inner/DashboardOrderList'
 import DashboardOrder from './Inner/DashboardOrder'
 import DashboardFacilityOrder from './Inner/DashboardFacilityOrderDetail';
+import DashboardResources from '../DashboardResources'
+import DashboardResearch from '../DashboardResearch.tsx'
+// import DashboardInventory from '../Supplier/DashboardInventory'
+// import DashboardOrders from '../Supplier/DashboardOrders'
+// import DashboardProductList from './DashboardProductList'
+// import DashboardProductDetail from './DashboardProductDetail'
+// import DashboardSearch from './DashboardSearch';
 import {CartProvider} from "Context/cartContext";
 
 
@@ -57,6 +64,14 @@ const DashboardContainer = () =>{
                             <DashboardOrder props={props}   type='new' />
                             </CartProvider>
                 )}} />
+    
+                <Route path="/dashboard/resources" >
+                    <DashboardResources initial changeTitle={(title) => changeTitle(title)} />
+                </Route>
+                <Route path="/dashboard/research" >
+                    <DashboardResearch initial changeTitle={(title) => changeTitle(title)} />
+                </Route>
+
                 </AnimatedSwitch>
                 {/* <!-- /End replace --> */}
             </main>

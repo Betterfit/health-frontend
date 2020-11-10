@@ -153,5 +153,13 @@ export default class Api {
     return this.init().patch(`/orders/${id}/`,order)
   }
 
+  // ============================   RESOURCES API  =====================================
+  getResources = () => {
+    return this.init().get(`/resources/`); 
+  }
+
+  getTags = () => {
+    return this.init().get(`/tags/`); 
+  }
 }
 
