@@ -1,4 +1,5 @@
 import React , {useState} from 'react';
+import dayjs from "dayjs";
 import {
     Switch,
     Route,
@@ -8,16 +9,14 @@ import {
 import ReactCSSTransitionGroup from 'react-transition-group';
 import { AnimatedSwitch } from 'react-router-transition';
 import DashboardNewOrder from './Inner/DashboardNewOrder'
-import DashboardOrders from './Inner/DashboardOrders'
+import DashboardOrderList from './Inner/DashboardOrderList'
+import DashboardOrder from './Inner/DashboardOrder'
 import DashboardFacilityOrder from './Inner/DashboardFacilityOrderDetail';
 import DashboardResources from '../DashboardResources'
 import DashboardResearch from '../DashboardResearch'
-// import DashboardInventory from '../Supplier/DashboardInventory'
-// import DashboardOrders from '../Supplier/DashboardOrders'
-// import DashboardProductList from './DashboardProductList'
-// import DashboardProductDetail from './DashboardProductDetail'
-// import DashboardSearch from './DashboardSearch';
 import {CartProvider} from "Context/cartContext";
+
+
 const DashboardContainer = () =>{
     const [title , setTitle] = useState('');
     const changeTitle = (title) => {
@@ -35,9 +34,21 @@ const DashboardContainer = () =>{
                 <Route exact path="/dashboard" render={() => (
                     <Redirect to="/dashboard/new-order/category/"/>
                 )}/>
-                <Route path="/dashboard/orders" exact>
-                    <DashboardOrders/>
-                </Route>
+                <Route path="/dashboard/orders" exact render={(props) =>{
+                    return ( <DashboardOrderList {...props} /> )
+                }} />
+                <Route path="/dashboard/edit-order/:oid" exact render={(props) => {
+                    let id = props.match.params.oid;
+                    return (
+                    <Redirect to={`/dashboard/edit-order/${id}/category/`}/>
+                )}}/>
+                <Route path="/dashboard/edit-order/:oid/category" render={(props) => {
+                    return ( 
+                        <CartProvider value="editCart">
+                        <DashboardOrder props={props} type='edit'/>
+                        </CartProvider>
+                    )
+                }} />
                 <Route exact path="/dashboard/orders/detail/:id" render={(props) => {
                         return ( <DashboardFacilityOrder {...props } /> )
                 }} />
@@ -52,7 +63,6 @@ const DashboardContainer = () =>{
                 <Route path="/dashboard/research" >
                     <DashboardResearch initial changeTitle={(title) => changeTitle(title)} />
                 </Route>
-
                 </AnimatedSwitch>
                 {/* <!-- /End replace --> */}
             </main>

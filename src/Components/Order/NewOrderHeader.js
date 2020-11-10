@@ -30,31 +30,38 @@ const OrderComponentTitle = ({ title, value, classes }) => {
   };
 
 
-const NewOrderHeader = ({ order }) => {
-
+const NewOrderHeader = ({ data }) => {
     let orderDate = dayjs().format('MMM DD, YYYY');
-
-    //TODO - pull this out of store eventually
-    const facility2= {
-      facility: ("Royal Alex") ,
-      unit: "Emergency",
-    };
+    const order_no = (data?.order_number ? data.order_number : "New Order")
+    const facility = data?.facility;
+    const unit = data?.unit;
+    const purchase_order = data?.purchase_order;
 
   return (
     <div className="flex flex-col">
       <OrderComponentTitle
         title={orderDate}
-        value={"New Order"}
+        value={order_no}
       />
+      {purchase_order && (
+        <OrderComponent
+          title="Purchase Order"
+          value={purchase_order}
+        />
+      )}
     <div className="flex flex-row">
-      <OrderComponent
-        title="Facility"
-        value={facility2["facility"]}
-      />
-      <OrderComponent
-        title="Unit"
-        value={facility2["unit"]}
-      />
+      {facility && (
+        <OrderComponent
+          title="Facility"
+          value={facility}
+        />
+      )}
+      {unit && (
+        <OrderComponent
+          title="Unit"
+          value={unit}
+        />
+      )}
       </div>
     </div>
   );

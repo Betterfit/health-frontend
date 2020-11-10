@@ -10,7 +10,7 @@ const DashboardMatchesOrderDetail = (props) => {
     const { match } = props;
     const MatchOrderId = parseInt(match.params.oid);
     const [orderData , setOrderData] = useState(null);
-    const getData = async () => await api.getSupplierTicketOrder(1,1)
+    const getData = async () => await api.getSupplierTicketOrder(1,2)
     .then((response) => {
         let arr = response.data.order.order_products;
         arr = arr.map(item => {

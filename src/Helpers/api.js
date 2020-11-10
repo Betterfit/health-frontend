@@ -1,9 +1,7 @@
-
 import * as axios from "axios";
 import useStores from 'Helpers/useStores';
 export default class Api {
 
-  
   constructor() {
     this.api_token = localStorage.getItem('token');
     this.client = null;
@@ -33,7 +31,6 @@ export default class Api {
 
   // ============================   AUTH API  =====================================
 
-
   addNewUser = (data) => {
     return this.init().post("users/", data);
   };
@@ -44,7 +41,6 @@ export default class Api {
     return this.init().post("api/password_reset/", data)
   }
 
-
   signIn = (data) => {
     return this.init().post("api-token-auth/", data);
   }
@@ -53,8 +49,20 @@ export default class Api {
     return this.init().post("api-token-auth/", data);
   }
 
+  getUser = (id) => {
+    return this.init().get(`users/${id}/`);
+  }
+
   getFacilityData = (id) => {
     return this.init().get(`facilities/${id}`);
+  }
+
+  changePassword = (data) => {
+    return this.init().put(`change-password/`, data); 
+  }
+
+  changeProfile = (id, data) => {
+    return this.init().patch(`users/${id}/`, data); 
   }
 
 
@@ -100,14 +108,45 @@ export default class Api {
     return this.init().put(`/suppliers/${userId}/tickets/${id}`,data)
   }
 
+  getSearchTickets = (userId,query) => {
+    return this.init().post(`/suppliers/${userId}/tickets/?search=${query}`)
+  }
+
   // ============================   ORDERS API  =====================================
 
   getOrderList = (facilityId) => {
     return this.init().get(`/facilities/${facilityId}/orders/`)
   }
 
+  getOrder = (orderId) => {
+    return this.init().get(`/orders/${orderId}`)
+  }
+
+  //to cancel an order - change to 'cancelled' status
+  // data - should be json of {order_no:[######], status:"open"}
+  deleteOrder = (orderId, orderNo) => {
+    let data = { status: "cancelled", order_no: orderNo };
+    return this.init().put(`/orders/${orderId}/`, data)
+  }
+  
+  //to submit a draft - change to 'open' status
+  // data - should be json of {order_no:[######], status:"open"}
+  submitDraft = (orderId, orderNo) => {
+    let data = { status: "open", order_no: orderNo };
+    return this.init().put(`/orders/${orderId}/`, data)
+  }
+
   getTrafficControllerSupply = () => {
     return this.init().get(`/traffic-controllers/product-categories/`)
+  }
+
+  setNewOrder = (order) => {
+    return this.init().post(`/orders/`,order)
+  }
+
+  editOrder = (order,id) => {
+    console.log(order,id);
+    return this.init().patch(`/orders/${id}/`,order)
   }
 
   // ============================   RESOURCES API  =====================================
@@ -118,5 +157,6 @@ export default class Api {
   getTags = () => {
     return this.init().get(`/tags/`); 
   }
+
 }
 

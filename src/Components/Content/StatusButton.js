@@ -80,12 +80,11 @@ const StatStyles = (stat = "open") => {
       };
   }
 };
-const StatusButton = ({ status }) => {
+const StatusButton = ({ status, extraClasses }) => {
   const styles = StatStyles(status);
   return (
     <div
-      className={`uppercase rounded-full py-2 md:px-10 px-4 text-xxs text-center md:text-xs ${styles.bg} ${styles.text}`}
-      // className={`uppercase rounded-full py-2 px-10 ${styles.bg ? styles.bg : "" } ${styles.text ? styles.text : "  "}`}
+      className={`uppercase rounded-full py-2 md:px-10 px-4 text-xxs text-center md:text-xs ${styles.bg} ${styles.text} ${extraClasses}`}
     >
       {styles.title}
     </div>

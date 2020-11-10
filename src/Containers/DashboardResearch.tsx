@@ -32,7 +32,9 @@ const DashboardResearch = () => {
                 <h2 className="text-3xl text-dark-blue my-3">Research</h2>
                 <Search type="bar" />
                 <div className="border-b border-gray-400 mt-5" />
-                <AddResearch />
+                <div className="mt-2">
+                    <AddResearch />
+                </div>
                 <div>
                     <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest ">
                         Tags

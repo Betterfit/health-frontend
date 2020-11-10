@@ -5,7 +5,7 @@ import SearchIcon from 'Images/Icons/search-icon.svg'
 import Close from 'Images/Icons/close.svg';
 
 
-const TicketSearch = ({type}) => {
+const TicketSearch = ({type,extraClasses}) => {
   const [searchValue, setSearchValue ] = useState('');
   const searchRef = useRef(null);
   const history = useHistory();
@@ -18,16 +18,16 @@ const TicketSearch = ({type}) => {
     history.push(`/dashboard/inventory`);
   }
 
-  const [showInput , setShowInput] = useState(false);
+  const [showInput , setShowInput ] = useState(false);
   
     return(
-      <div className={`flex items-center h-full bg-betterfit-pale-blue items-center px-6 py-1`} style={{borderRadius:30}}> 
+      <div className={`flex items-center h-full bg-betterfit-pale-blue items-center px-6 py-1 ${extraClasses}`} style={{borderRadius:30}}> 
         <ReactSVG className="ml-2 mr-2" src={SearchIcon} />
         <div className="relative flex-grow">
           <input
             id="search"
             className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-lg bg-transparent"
-            placeholder="Search Orders"
+            placeholder="Search Tickets"
             ref={searchRef}
             onChange={()=>{
               clearTimeout();

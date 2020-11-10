@@ -8,7 +8,7 @@ import {
 import Order from "Images/Icons/order.svg";
 import Resources from "Images/Icons/resources.svg";
 import NewOrder from "Images/Icons/new-order.svg";
-
+import {CartProvider} from "Context/cartContext";
 // const [isOpen, setIsOpen] = useState(false)
 
 

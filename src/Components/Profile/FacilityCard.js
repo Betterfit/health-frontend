@@ -2,16 +2,16 @@ import { Transition } from "@tailwindui/react";
 import React, { useState, useEffect } from "react";
 import useStores from "Helpers/useStores";
 import Api from "Helpers/api";
-
+import {useAuthStore} from "Context/authContext";
 //components
 import FacilityDescriptions from "Components/Profile/FacilityDescription";
 import CardTitle from "Components/Profile/CardTitle";
 
 const FacilityCard = ({}) => {
   const api = new Api();
-  const { store } = useStores();
+  const authStore = useAuthStore();
   const [userData, setUserType] = useState(
-    JSON.parse(localStorage.getItem("user"))
+    JSON.parse(authStore.user)
   );
   const [facilityData, setFacility] = useState();
   const facilityName = userData.user_profile.facility_name;
@@ -28,7 +28,6 @@ const FacilityCard = ({}) => {
       //  data.shipping_postal_code,
     //  ],
       shipping_address: [data.street, data.city + " " + data.province, data.postal_code],
-      units: ["Emergency", "Cardiology", "Urology", "Oncology"],
     };
   };
 
@@ -42,7 +41,7 @@ const FacilityCard = ({}) => {
       })
       .catch((err) => {
         //delete when api is working
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -68,10 +67,6 @@ const FacilityCard = ({}) => {
             <FacilityDescriptions
               label="Shipping Address"
               items={facilityData.shipping_address}
-            ></FacilityDescriptions>
-            <FacilityDescriptions
-              label="Units Accessible"
-              items={facilityData.units}
             ></FacilityDescriptions>
           </div>
         </>

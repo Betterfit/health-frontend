@@ -4,46 +4,46 @@ import Button from "Components/Content/Button";
 import DashboadOrderDetail from 'Containers/DashboardOrderDetail';
 import Table from "Components/Table/Detail/Table";
 import Api from "Helpers/api";
-import useStores from 'Helpers/useStores';
-import image from "Images/example_product.png"; //remove this later
-import { set } from 'js-cookie';
+import dayjs from "dayjs";
+import {useAuthStore} from "Context/authContext";
 
 const api = new Api();
 
 const DashboardTicketDetail = (props) => {
-    const { store } = useStores();
+    const authStore = useAuthStore();
     const { match } = props;
     const TicketId = parseInt(match.params.id);
     // ======================== Ticket Data ========================
     const [ticketData , setTicketData ] = useState(null);
     const [ticketDataRaw , setTicketRaw ] = useState(null);
     const [ticketHeader , setTicketHeader] = useState(); 
-    const userData = JSON.parse(localStorage.getItem('user'));
+    const userData = JSON.parse(authStore.user);
     const supplierId = userData.user_profile.supplier;
     const getData = async () => await api.getSupplierTicketOrder(supplierId,TicketId)
     .then((response) => {
         // need ticket facility and info
-        console.log(response.data);
+        let facility = response.data.order.facility
         setTicketHeader ({
             order_number: response.data.ticket_no,
-            order_date: response.data.ticket_date,
-            facility: ("Royal Alex") ,
+            facility: facility.name,
             unit: "Emergency",
-            shipping_address:"1234 Street NW"
+            order_date: dayjs(response.data.ticket_date).format("MMM DD, YYYY"),
+            shipping_address: `${facility.street}, ${facility.city}, ${facility.province}, ${facility.postal_code}`,
         }) 
-        console.log(response.data);
+        // console.log(response.data);
         let arr = response.data.order.order_products;
         setTicketRaw(response.data)
         arr = arr.map(item => {
             let obj = {
                 product_image: item.product_option.product_image,
-                item: item.product_option.name,  
-                ...item.product_option,
-                priority: 1,
+                item: item.product_option.product_variation,
+                [item.product_option.option_label]: item.product_option.name,
+                quantity: item.quantity,
+                priority: item.priority,
             };
             return obj;
         });
-        console.log(arr);
+        // console.log(arr);
         setTicketData(arr);
     })
     .catch((err) => console.log(err));
@@ -56,12 +56,14 @@ const DashboardTicketDetail = (props) => {
     const [modal , setModal ] = useState(false);
 
     const actionComponent = 
-        <Button 
-            text={ticketDataRaw && ticketDataRaw.status === "shipped" ? "Shipped" : "Mark as Shipped"} 
-            color={"status-dark-green"}
-            text_size="text-sm" 
-            onClick={ticketDataRaw && ticketDataRaw.status === "shipped" ? () => {return false} : () => setModal(!modal)}
-        />
+        <div className="absolute top-0 right-0">
+            <Button 
+                text={ticketDataRaw && ticketDataRaw.status === "shipped" ? "Shipped" : "Mark as Shipped"} 
+                color={"status-dark-green"}
+                text_size="text-sm" 
+                onClick={ticketDataRaw && ticketDataRaw.status === "shipped" ? () => {return false} : () => setModal(!modal)}
+            />
+        </div>
     ;
     const confirmCallBack = () => {
         let arr = ticketDataRaw;
@@ -87,9 +89,7 @@ const DashboardTicketDetail = (props) => {
         {ticketData && (
             <>
                 <DashboadOrderDetail actionComponent={actionComponent} headerData={ticketHeader} >
-                 
-                    <Table TableData={ticketData} excludeKeys={excludeKeys} excludeValues={excludeValues} />
-                
+                    <Table TableData={ticketData} excludeKeys={excludeKeys} excludeValues={excludeValues} />             
                 </DashboadOrderDetail> 
                 <>
                     {modal && (
@@ -101,7 +101,6 @@ const DashboardTicketDetail = (props) => {
                                 <p className="text-paragraph text-base">Are you sure you’re ready to mark this order as shipped and close the ticket? </p>
                             </div>
                         </Modal> 
-                    
                     )}
                 </> 
             </>

@@ -3,9 +3,8 @@ import { ReactSVG } from 'react-svg'
 import Edit from 'Images/Icons/edit.svg'
 import {NavLink} from "react-router-dom";
 import Button from "Components/Content/Button";
-
+import EmptyImage from "Images/emptyImage.png";
 const TableBody = ({TableBody}) => {
-    // console.log(`slide ${TableBody}`)
     return(
         <tbody>  
             {
@@ -13,20 +12,20 @@ const TableBody = ({TableBody}) => {
                     let imageIndex;
                     if(index%2 == 0 ){
                         return(
-                            <tr className="bg-white border border-white">
+                            <tr key={index} className="bg-white border border-white">
                                 {
                                     row.map((r, index)=>{
                                         switch(r[0]) {
                                             case "priority":
                                               // code block
                                                 return(
-                                                    <td className="px-4 py-4  w-8 text-sm leading-5 text-gray-500">
+                                                    <td key={index} className="px-4 py-4  w-8 text-sm leading-5 text-gray-500">
                                                         <Button
-                                                            text={r[1] === 1 ? "Stat" : "Regular"} 
-                                                            color={r[1] === 1 ? "status-red" :"status-blue" } 
+                                                            text={r[1] === "stat" ?  "Stat" : "Regular"} 
+                                                            color={r[1] === "stat" ? "status-red" :"status-blue" } 
                                                             text_size="text-sm" 
                                                             pill={true}
-                                                            extraClasses={"text-status-dark-red border-4 border-white hover:status-red"}
+                                                            extraClasses={r[1] === "stat" ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
                                                         />
                                                     </td>
                                                 )
@@ -37,9 +36,9 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             case "item":
                                                 return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                                    <td key={index} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                                         <div className="flex items-center" style={{width:"max-content"}}>
-                                                            <img className="w-24 mr-2" src={`${row[imageIndex][1]}`} /> 
+                                                            <img className="w-24 mr-2" src={`${row[imageIndex][1] ? row[imageIndex][1] : EmptyImage}`} /> 
                                                             <span className="font-bold text-betterfit-graphite">{r[1]}</span>
                                                         </div>
                                                     </td>
@@ -47,7 +46,7 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             default:
                                                 return(
-                                                    <td className="px-4 py-4  text-sm leading-5 text-gray-500">
+                                                    <td key={index} className="px-4 py-4  text-sm leading-5 text-gray-500">
                                                         <div className="flex items-center">
                                                             {/* <img className="w-24 mr-2" src={`${row[imageIndex]}`} /> */}
                                                             {/* <span className="font-bold text-betterfit-graphite">{r}</span> */}
@@ -64,20 +63,20 @@ const TableBody = ({TableBody}) => {
                         )
                     }else{
                         return(
-                            <tr className="bg-table-row border border-table-row">
+                            <tr key={index} className="bg-table-row border border-table-row">
                                 {
                                     row.map((r, index)=>{
                                         switch(r[0]) {
                                             case "priority":
                                               // code block
                                                 return(
-                                                    <td className="px-4 py-4  w-8 text-sm leading-5 text-gray-500">
+                                                    <td key={index} className="px-4 py-4  w-8 text-sm leading-5 text-gray-500">
                                                         <Button
-                                                            text={r[1] === 1 ? "Stat" : "Regular"} 
-                                                            color={r[1] === 1 ? "status-red" :"status-blue" } 
+                                                            text={r[1] === "stat"  ?  "Stat" : "Regular"} 
+                                                            color={r[1] === "stat" ? "status-red" :"status-blue" } 
                                                             text_size="text-sm" 
                                                             pill={true}
-                                                            extraClasses={ r[1] === 1 ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
+                                                            extraClasses={r[1] === "stat" ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
                                                         />
                                                     </td>
                                                 )
@@ -88,9 +87,9 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             case "item":
                                                 return(
-                                                    <td className="px-4 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500">
+                                                    <td key={index} className="px-4 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500">
                                                         <div className="flex items-center" style={{width:"max-content"}}>
-                                                            <img className="w-24 mr-2" src={`${row[imageIndex][1]}`} /> 
+                                                            <img className="w-24 mr-2" src={`${row[imageIndex][1] ? row[imageIndex][1] : EmptyImage}`} /> 
                                                             <span className="font-bold text-betterfit-graphite">{r[1]}</span>
                                                         </div>
                                                     </td>
@@ -98,7 +97,7 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             default:
                                                 return(
-                                                    <td className="px-4 py-4  text-sm leading-5 text-gray-500">
+                                                    <td key={index} className="px-4 py-4  text-sm leading-5 text-gray-500">
                                                         <div className="flex items-center">
                                                             {/* <img className="w-24 mr-2" src={`${row[imageIndex]}`} /> */}
                                                             {/* <span className="font-bold text-betterfit-graphite">{r}</span> */}

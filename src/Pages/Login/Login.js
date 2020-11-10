@@ -1,45 +1,49 @@
 import React, { useState } from "react";
 import { ReactSVG } from "react-svg";
-// store context hook
-import useStores from 'Helpers/useStores';
-// end store context hook
 import Logo from "Images/logo.svg";
 import LowerBackgroundBlob from "Images/Login/login_lower_right.svg";
 import UpperBackgroundBlob from "Images/Login/login_upper_left.svg";
 import Input_Field from "Components/Forms/Input_Field";
 import Api from "Helpers/api";
 import PasswordReset from "./PasswordReset";
-// import Cookies from "js-cookie";
+import Notfications from "Components/Helpers/Notifications"
 import Button from "Components/Forms/Button";
 import { useHistory, Route, useRouteMatch } from "react-router-dom";
-
+import {useAuthStore} from "Context/authContext";
 const LoginTemplate = () => {
-  const { store } = useStores();
+  const authStore = useAuthStore();
   const [password, setPW] = useState("");
   const [email, setEmail] = useState("");
-
+  const [Error, setError] = useState()
   const history = useHistory();
-  if(localStorage.getItem('token')){
+  if(authStore.token){
     history.push("/dashboard/");
   }
+
   const api = new Api();
   const signIn = (e) => {
     e.preventDefault();
-    console.log("sign in");
     api
       .signIn({ username: email, password: password })
-      //.signIn({ username: email, password: password })
       .then( async (response) => {
         console.log(response.data.user);
         await localStorage.setItem("token", response.data.token);
         await localStorage.setItem("user", JSON.stringify(response.data.user));
+        authStore.user = JSON.stringify(response.data.user);
+        authStore.token = response.data.token;
         history.push("/dashboard/");
       })
       .catch((err) => {
+        setError({head:"Unable to login",text: "please ensure your email and password are correct."})
         console.log(err);
       });
   };
   return (
+    <>
+    {Error && (
+      <Notfications head={Error.head} text={Error.text} success={false}></Notfications>
+    )
+    }
     <form className="pb-12" onSubmit={signIn}>
       <div>
         <Input_Field
@@ -78,11 +82,13 @@ const LoginTemplate = () => {
         </div>
       </div>
     </form>
+    </>
   );
 };
 
 const Login = () => {
   const match = useRouteMatch();
+
 
   return (
     <div className="min-h-screen bg-betterfit-basic-blue flex flex-col justify-center py-12 sm:px-6 lg:px-8">
