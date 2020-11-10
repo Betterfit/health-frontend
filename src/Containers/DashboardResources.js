@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from "react";
 import ListLink from "Components/Content/ListLink";
 import TagLink from "Components/Content/TagLink";
-import ResourceLink from "Components/Content/ResourceLink";
 import Search from "Components/Search/Search";
 import Api from "Helpers/api";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import { useQuery } from "react-query";
 import ResourceDisplay from "Components/Resources/ResourceDisplay";
+import useResources from "Helpers/useResources";
+import SearchBar from "Components/Search/SearchBar";
 
 const DashboardResources = () => {
-    const [title, setTitle] = useState("Resources");
     const api = new Api();
-    // react-query allows us to automatically do some pretty nifty caching
-    const {
-        data: resources,
-        isLoading: resourcesLoading,
-    } = useQuery("resources", () =>
-        api.getResources().then((resp) => resp.data)
-    );
+    // the useResources hook handles caching, searching, filtering for us
+    const { resourcesLoading, resources, setSearchTerm } = useResources([]);
     const { data: tagList, isLoading: tagsLoading } = useQuery("tags", () =>
         api.getTags().then((resp) => resp.data)
     );
@@ -36,8 +31,8 @@ const DashboardResources = () => {
     return (
         <div className="flex flex-col md:flex-row overflow-x-hidden">
             <DashboardSideBar>
-                <h2 className="text-3xl text-dark-blue my-3">{title}</h2>
-                <Search type="bar" />
+                <h2 className="text-3xl text-dark-blue my-3">Resources</h2>
+                <SearchBar performSearch={setSearchTerm} />
                 <div className="border-b border-gray-400 mt-5" />
                 <div>
                     <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
