@@ -34,7 +34,7 @@ const DashboardResources = () => {
     };
 
     return (
-        <div className="resource-dashboard">
+        <div className="flex flex-col md:flex-row overflow-x-hidden">
             <DashboardSideBar>
                 <h2 className="text-3xl text-dark-blue my-3">{title}</h2>
                 <Search type="bar" />

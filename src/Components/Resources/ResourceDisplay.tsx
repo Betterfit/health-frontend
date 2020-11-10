@@ -31,7 +31,7 @@ const ResourceDisplay = ({ resources }: ResourceDisplayProps) => {
     // const openSlider = (resource: Resource) => setSelectedResource(resource);
     // const closeSlider = () => setSelectedResource(null);
     return (
-        <div className="flex-grow wrap max-h-screen p-4 h-full rounded-lg overflow-scroll ">
+        <div className="flex-grow wrap max-h-screen p-4 h-full rounded-lg overflow-visible md:overflow-scroll ">
             <div className="py-8 flex flex-col ">
                 {resources.map((resource) => (
                     <div
