@@ -65,6 +65,7 @@ const Search = ({type}) => {
       <div className={`flex items-center h-full bg-betterfit-pale-blue items-center px-6 py-1`} style={{borderRadius:30}}> 
         <ReactSVG className="ml-2 mr-2" src={SearchIcon} />
         <div className="relative flex-grow">
+        <label htmlFor="search" aria-label="Search"></label>
           <input
             id="search"
             className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-lg bg-transparent"

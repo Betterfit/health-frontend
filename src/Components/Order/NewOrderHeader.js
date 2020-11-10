@@ -23,7 +23,7 @@ const OrderComponentTitle = ({ title, value, classes }) => {
           (classes ? classes : "")
         }
       >
-        <span className="uppercase text-betterfit-graphite text-xs tracking-extra-wide opacity-50">{title}</span>
+        <span className="uppercase text-betterfit-graphite text-xs tracking-extra-wide opacity-75">{title}</span>
         <span className="text-betterfit-graphite text-3xl">{value}</span>
       </div>
     );

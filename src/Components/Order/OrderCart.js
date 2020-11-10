@@ -134,7 +134,7 @@ const OrderCart =({Cart, OrderID , id}) => {
                 svg.setAttribute("style", "display:block;margin:auto");
               }}
             ></ReactSVG>
-            <p className="text-base text-betterfit-grey-blue text-center">
+            <p className="text-base text-betterfit-graphite opacity-75 text-center">
               No products added
             </p>
             </>

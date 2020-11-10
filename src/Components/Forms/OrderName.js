@@ -8,6 +8,7 @@ const OrderName = ({name,callBack}) => {
                 <span className="uppercase font-medium text-betterfit-graphite text-xxs tracking-extra-wide pr-3 ">Purchase Order</span>
                 <span className="uppercase font-medium text-betterfit-graphite text-xxs tracking-extra-wide pr-3 divide-opacity-50 ">Optional</span>
             </div>
+            <label aria-label="order number" htmlFor="order-number"></label>
             <input
             id="order-number"
             type="text"
