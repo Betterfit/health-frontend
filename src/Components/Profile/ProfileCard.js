@@ -88,8 +88,9 @@ const ProfileCard = ({}) => {
     api
       .getUser(userId)
       .then(async (response) => {
-        let arr = JSON.stringify(response.data.user);
-        localStorage.setItem("user", JSON.stringify(response.data));
+        let arr = JSON.stringify(response.data);
+        authStore.user = JSON.stringify(arr);
+        localStorage.setItem("user", arr);
         setUserType(response.data);
       })
       .catch((err) => {
@@ -125,7 +126,9 @@ const ProfileCard = ({}) => {
       .changePassword(pwArr)
       .then((response) => {
         //update user token
-        localStorage.setItem("token", response.data.token);
+        let token = response.data.data.token;
+        localStorage.setItem("token", token);
+        authStore.token = token;
         setPWNotification({
           head: "Success",
           text: "Your password has been updated",
