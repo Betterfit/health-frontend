@@ -48,23 +48,23 @@ const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
         setShowDetails(!showDetails);
     };
     return (
-        <div className="flex p-1" onClick={toggleSlider}>
+        <div className="flex p-1" onClick={toggleSlider} role="button">
             <div
                 className="w-1 rounded-md mr-2 flex-shrink-0"
                 style={{ backgroundColor: color }}
             />
-            <button className="p-2 text-left">
+            <div className="p-2 text-left">
                 <div className="font-medium text-gray-700 font-body uppercase tracking-widest text-xs">
                     {resource.resource_type}
                 </div>
                 <div className="font-semibold text-base tracking-wide">
                     {resource.title}
                 </div>
-            </button>
+            </div>
             <div className="flex-grow float-right flex px-2 flex-shrink-0">
                 <div className="ml-auto inline-flex my-auto">
-                    {resource.tags.map((tag) => (
-                        <TagLink tag={tag} key={"tag" + tag.pk} />
+                    {resource.tags.map((tag, i) => (
+                        <TagLink tag={tag} key={i} />
                     ))}
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, getByText } from "@testing-library/react";
 import ResourceLink from "./ResourceLink";
+import userEvent from "@testing-library/user-event";
 
 const tags = [
     {
@@ -47,11 +48,16 @@ describe("Resource Link", () => {
         render(<ResourceLink resource={resources[0]} color="red" />);
         // each tag should be visible on the resource link
         for (let tag of resources[0].tags) {
-            expect(screen.getByText(tag.title));
+            expect(screen.getByText(tag.title)).toBeInTheDocument();
         }
     });
-    it("Opens card when clicked", () => {
-        render(<ResourceLink resource={resources[0]} color="red" />);
-        screen.debug();
+    it("Opens card when clicked", async () => {
+        const resource = resources[0];
+        render(<ResourceLink resource={resource} color="red" />);
+        const link = screen.getByRole("button", { name: /royal crom/i });
+        userEvent.click(link);
+        const resourceCard = await screen.findByRole("dialog");
+        // the facility card shouldn't be empty
+        expect(getByText(resourceCard, /royal crom/i)).toBeInTheDocument();
     });
 });

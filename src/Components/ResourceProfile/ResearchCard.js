@@ -11,7 +11,7 @@ const ResearchCard = ({name, tagList, details, color}) => {
     const description = [details.description];
 
     return(
-        <div>
+        <div role='dialog'>
             <div className="h-1 rounded-md mb-5 -mx-4" style={{background:color}}/>
             <CardTitle label="Research Project" name={name} color={color}></CardTitle>
             <div className="space-y-6">
