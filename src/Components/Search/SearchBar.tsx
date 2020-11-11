@@ -12,9 +12,8 @@ interface SearchBarProps {
 const SearchBar = ({ performSearch, msDelay = 1000 }: SearchBarProps) => {
     const searchRef = useRef<HTMLInputElement>(null);
     const afterDelay = () => {
-        performSearch(
-            (searchRef as MutableRefObject<HTMLInputElement>).current.value
-        );
+        const searchString = searchRef.current?.value;
+        if (searchString) performSearch(searchString);
     };
     return (
         <div
