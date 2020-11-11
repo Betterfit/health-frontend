@@ -8,8 +8,9 @@ import {
 import ReactCSSTransitionGroup from 'react-transition-group';
 import { AnimatedSwitch } from 'react-router-transition';
 
+import DashboardMatchesListing from "./Inner/DashboardMatchesListing";
 import DashboardMatches from "./Inner/DashboardMatches";
-import DashboardMatchesDetail from "./Inner/DashboardMatchesDetail";
+import DashboardMatchesHistory from "./Inner/DashboardMatchesHistory";
 import DashboardMatchesOrderDetail from "./Inner/DashboardMatchesOrderDetail";
 import DashboardTrafficDashboard from "./Inner/DashboardTrafficDashboard";
 import DashboardInventory from 'Containers/Supplier/Inner/DashboardInventory'
@@ -33,13 +34,16 @@ const DashboardContainer = () =>{
                     className="switch-wrapper"
                 >
                     <Route exact path="/dashboard" render={() => (
-                        <Redirect to="/dashboard/matches"/>
+                        <Redirect to="/dashboard/match-listing"/>
                     )}/>
-                    <Route path="/dashboard/matches" exact>
-                        <DashboardMatches />
+                    <Route path="/dashboard/match-listing" exact>
+                        <DashboardMatchesListing />
                     </Route>
-                    <Route exact path="/dashboard/matches/:id" render={(props) => {
-                        return ( <DashboardMatchesDetail {...props } /> )
+                    <Route exact path="/dashboard/matches">
+                         <DashboardMatches/> 
+                    </Route>
+                    <Route exact path="/dashboard/matches/history:query?" render={(props) => {
+                        return ( <DashboardMatchesHistory {...props } /> )
                     }} /> 
                      <Route exact path="/dashboard/matches/:id/:oid" render={(props) => {
                         return ( <DashboardMatchesOrderDetail {...props } /> )

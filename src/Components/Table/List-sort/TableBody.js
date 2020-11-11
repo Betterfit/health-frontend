@@ -28,7 +28,7 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                     <span className="flex items-center">
                                         <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
                                         <NavLink className="text-sm leading-5 text-gray-500 ml-3" to={`${link}${row.id}`}>
-                                            {row.match_number}
+                                            {row.order_no}
                                         </NavLink>
                                     </span>
                                 </td>
@@ -86,7 +86,7 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                     <span className="flex items-center">
                                         <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
                                         <NavLink className="text-sm leading-5 text-gray-500 ml-3" to={`${link}${row.id}`}>
-                                            {row.match_number}
+                                            {row.order_no}
                                         </NavLink>
                                     </span>
                                 </td>
