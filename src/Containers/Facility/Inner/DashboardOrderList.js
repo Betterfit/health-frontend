@@ -8,12 +8,19 @@ import { useAuthStore } from "Context/authContext";
 import Tabs from "Components/Tabs/Tabs";
 import OrderSearch from "Components/Search/OrderSearch";
 import Table from "Components/Table/Full/Table";
+import DashboardOrderSearch from "./DashboardOrderSearch";
 //  <---- Menu Components ----> //
 import ButtonOption from "Components/Content/Menu/ButtonOption";
 import TextOptions from "Components/Content/Menu/TextOption";
 import PopupMenu from "Components/Content/Menu/PopUpMenu";
 import { keys } from "mobx";
-import uuid from 'react-uuid'
+import uuid from 'react-uuid';
+import {
+  Switch,
+  Route,
+  useParams,
+  useLocation
+} from "react-router-dom";
 const api = new Api();
 
 const DashboardOrderList = (props) => {
@@ -102,7 +109,7 @@ const DashboardOrderList = (props) => {
             href={`edit-order/${data.pk}`}
           ></TextOptions>
           <TextOptions
-            value="Delete"
+            value="Cancel"
             onClick={() => callbackDelete(data.pk, data.order_no)}
           ></TextOptions>
           <ButtonOption
@@ -123,7 +130,7 @@ const DashboardOrderList = (props) => {
       order_no: data.order_no,
       status: data.status,
       id: data.pk,
-      url: `${url}/detail/${data.pk}`,
+      url: `/dashboard/orders/detail/${data.pk}`,
       options: data.status === "draft" ? setOptions(data) : [],
     };
   };
@@ -202,21 +209,22 @@ const DashboardOrderList = (props) => {
   
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-10">
-      <h2 className="text-3xl text-dark-blue my-3">Orders</h2>
+      <Route exact path='/dashboard/orders'>
+        <h2 className="text-3xl text-dark-blue my-3">Orders</h2>
+      </Route>
       {TabData && (
-        <Tabs
-          key={uuid()}
-          tabs={TabData}
-          amount={true}
-          headingComp={
-            <OrderSearch
-              callBack={(e) => setSearchActive(e)}
-              searchActive={searchActive}
-            />
-          }
-        />
-      )}
+          <>          
+            <OrderSearch extraClasses="float-right clear-both"  callBack={(e) => setSearchActive(e)} searchActive={searchActive} />
+            <Route exact path='/dashboard/orders'>
+              <Tabs tabs={TabData} amount={true}  />
+            </Route>
+          </>
+        )}
+      <Route path="/dashboard/orders/search:query?">
+            <DashboardOrderSearch />
+      </Route>
     </div>
+    
   );
 };
 

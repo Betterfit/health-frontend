@@ -108,8 +108,8 @@ export default class Api {
     return this.init().put(`/suppliers/${userId}/tickets/${id}`,data)
   }
 
-  getSearchTickets = (userId,query) => {
-    return this.init().post(`/suppliers/${userId}/tickets/?search=${query}`)
+  getSearchTickets = (supplierId,query) => {
+    return this.init().get(`/suppliers/${supplierId}/tickets/?search=${query}`)
   }
 
   // ============================   ORDERS API  =====================================
@@ -120,6 +120,10 @@ export default class Api {
 
   getOrder = (orderId) => {
     return this.init().get(`/orders/${orderId}`)
+  }
+
+  getSearchOrders = (query) => {
+    return this.init().get(`orders/?search=${query}`);
   }
 
   //to cancel an order - change to 'cancelled' status
@@ -159,6 +163,5 @@ export default class Api {
   getTags = () => {
     return this.init().get(`/tags/`); 
   }
-
 }
 

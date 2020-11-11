@@ -12,18 +12,30 @@ function useQuery() {
 const DashboardTicketSearch = ({supplierId}) => {
     const api = new API;
     let query = useQuery();    
-    
+    console.log(supplierId, query.get('search'));
     const [searchQuery , setSearchQuery] = useState(query.get('search'));
     const [searchData , setSearchData] = useState();
     const getSearchResults = async () => await api.getSearchTickets(supplierId,query.get('search'))
     .then((response) => {
-        // console.log(response.data);
-        setSearchData(response.data)
+        let data = response.data;
+        data = data.map(item => {
+            let filterItemStatus = item.status
+            item.facility = item.supplier.name;
+            delete item.supplier; 
+            delete item.order; 
+            delete item.status;
+            item.status = filterItemStatus;
+            return(item);
+        });
+        console.log(data);
+        setSearchData(data);
     })
     .catch((err) => console.log(err));
-    if(!searchData){
+    
+    useEffect(() => {
         getSearchResults();
-    }
+    }, []);
+    
     if (query.get('search')!== searchQuery){
         setSearchQuery(query.get('search'));
         getSearchResults();
@@ -37,15 +49,18 @@ const DashboardTicketSearch = ({supplierId}) => {
                     <div className="flex justify-between mt-8">
                         <TitleUnderLine extraclasses="title-no-margin pt-0" nounderline={true} title={`Ticket search results for "${query.get('search')}"`} />
                     </div>
-                    {/* {searchData.length > 0 && (
+                    {searchData.length > 0 ? (
                         searchData.map(table => {
                             return(
                                 <>
-                                    <Table TableData={shippedTickets} link={'/dashboard/tickets/'} buttonType="normal"  /> : <div>No Tickets</div>
+                                    <Table TableData={searchData} link={'/dashboard/ticket/'} buttonType="normal"  /> 
                                 </>
                             );
                         })
-                    )} */}
+                    ):(
+                        <div>No results for {query.get('search')}</div>
+                    )
+                    }
                 </>
                 
             )}          

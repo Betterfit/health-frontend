@@ -9,6 +9,7 @@ const Table = ({TableData,link,extraClasses,buttonType}) => {
     let nooptions = false;
     let removeAtIndex;
     let statusIndex;
+    console.log(TableData);
     TableData.map(variant => {
         let keys = Object.keys(variant);
         let values = Object.values(variant);
