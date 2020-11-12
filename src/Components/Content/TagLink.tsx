@@ -1,5 +1,11 @@
 import React from "react";
-const TagLink = ({ tag }) => {
+import { Tag } from "Types";
+
+interface TagLinkProps {
+    tag: Tag;
+    buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
+}
+const TagLink = ({ tag, buttonProps }: TagLinkProps) => {
     // These colors are not needed here, but should be moved to database
     const tagList = {
         1: ["#E3EFFC", "#244499", "Masks"],
@@ -13,7 +19,7 @@ const TagLink = ({ tag }) => {
         9: ["#ED6537", "#FFFFFF", "Vaccine"],
     };
     return (
-        <div className="my-2 mx-1">
+        <button {...buttonProps} className="my-2 mx-1">
             <div
                 className="resource-tag font-black text-gray-700 font-body uppercase tracking-widest"
                 style={{
@@ -23,7 +29,7 @@ const TagLink = ({ tag }) => {
             >
                 {tag?.title}
             </div>
-        </div>
+        </button>
     );
 };
 

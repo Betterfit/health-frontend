@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
 import TagLink from "Components/Content/TagLink";
-import Slider from "Components/Slider/Slider";
-import SupplierCard from "Components/ResourceProfile/SupplierCard";
-import ResearchCard from "Components/ResourceProfile/ResearchCard";
-import LabCard from "Components/ResourceProfile/LabCard";
 import FacilityCard from "Components/ResourceProfile/FacilityCard";
+import LabCard from "Components/ResourceProfile/LabCard";
+import ResearchCard from "Components/ResourceProfile/ResearchCard";
+import SupplierCard from "Components/ResourceProfile/SupplierCard";
+import Slider from "Components/Slider/Slider";
+import React, { useState } from "react";
 import { Resource, ResourceDetails, Tag } from "Types";
 
 interface ResourceLinkProps {
@@ -64,7 +64,12 @@ const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
             <div className="flex-grow float-right flex px-2 flex-shrink-0">
                 <div className="ml-auto inline-flex my-auto">
                     {resource.tags.map((tag, i) => (
-                        <TagLink tag={tag} key={i} />
+                        <TagLink
+                            tag={tag}
+                            key={i}
+                            // these tags are just labels and should not be clickable/focusable
+                            buttonProps={{ disabled: true }}
+                        />
                     ))}
                 </div>
             </div>

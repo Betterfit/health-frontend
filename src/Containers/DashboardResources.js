@@ -1,7 +1,7 @@
 import ListLink from "Components/Content/ListLink";
-import TagLink from "Components/Content/TagLink";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import ResourceDisplay from "Components/Resources/ResourceDisplay";
+import TagFilterList from "Components/Resources/TagFilterList";
 import SearchBar from "Components/Search/SearchBar";
 import Api from "Helpers/api";
 import { findAllUniqueTags, useResources } from "Helpers/resourceUtils";
@@ -10,7 +10,12 @@ import React from "react";
 const DashboardResources = () => {
     const api = new Api();
     // the useResources hook handles caching, searching, filtering for us
-    const { resourcesLoading, resources, setSearchTerm } = useResources([]);
+    const {
+        resourcesLoading,
+        resources,
+        setSearchTerm,
+        toggleTagSelect,
+    } = useResources([]);
     const tagList = findAllUniqueTags(resources);
     if (resourcesLoading) return <div>Loading</div>;
 
@@ -44,14 +49,7 @@ const DashboardResources = () => {
                         }
                     )}
                 </div>
-                <div>
-                    <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
-                        Tags
-                    </h3>
-                    {tagList.map((tag) => {
-                        return <TagLink tag={tag} />;
-                    })}
-                </div>
+                <TagFilterList {...{ tagList, toggleTagSelect }} />
             </DashboardSideBar>
 
             <div className="resource-dashboard">
