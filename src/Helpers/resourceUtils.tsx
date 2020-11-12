@@ -9,7 +9,7 @@ type ResourceFilter = (resource: Resource) => boolean;
  * This hook simplifies the fetching, searching and filtering of resources.
  * @param customFilters A list of filters to apply in addition to search and tag matching
  */
-const useResources = (customFilters: ResourceFilter[] = []) => {
+export const useResources = (customFilters: ResourceFilter[] = []) => {
     const [searchTerm, setSearchTerm] = useState<string>("");
     // stores tag pks (primary key) rather than whole tag
     const [selectedTags, setSelectedTags] = useState<number[]>([]);
@@ -63,4 +63,19 @@ const findResourcesMatchingTagPKList = (
     return matchingResources;
 };
 
-export default useResources;
+/**
+ * Returns a list (without duplicates) of all tags found in a list of resources
+ */
+export const findAllUniqueTags = (resources: Resource[]): Tag[] => {
+    const uniqueTags = [];
+    const tagPKs = new Set();
+    for (const resource of resources) {
+        for (const tag of resource.tags) {
+            if (!tagPKs.has(tag.pk)) {
+                tagPKs.add(tag.pk);
+                uniqueTags.push(tag);
+            }
+        }
+    }
+    return uniqueTags;
+};

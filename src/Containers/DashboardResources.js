@@ -1,24 +1,18 @@
-import React, { useState, useEffect } from "react";
 import ListLink from "Components/Content/ListLink";
 import TagLink from "Components/Content/TagLink";
-import Search from "Components/Search/Search";
-import Api from "Helpers/api";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
-import { useQuery } from "react-query";
 import ResourceDisplay from "Components/Resources/ResourceDisplay";
-import useResources from "Helpers/useResources";
 import SearchBar from "Components/Search/SearchBar";
+import Api from "Helpers/api";
+import { findAllUniqueTags, useResources } from "Helpers/resourceUtils";
+import React from "react";
 
 const DashboardResources = () => {
     const api = new Api();
     // the useResources hook handles caching, searching, filtering for us
     const { resourcesLoading, resources, setSearchTerm } = useResources([]);
-    const { data: tagList, isLoading: tagsLoading } = useQuery("tags", () =>
-        api.getTags().then((resp) => resp.data)
-    );
-    if (resourcesLoading || tagsLoading) {
-        return <div>Loading</div>;
-    }
+    const tagList = findAllUniqueTags(resources);
+    if (resourcesLoading) return <div>Loading</div>;
 
     const resourceColors = {
         facility: "#56BAC8",

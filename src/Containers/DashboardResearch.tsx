@@ -1,13 +1,12 @@
-import React from "react";
-import ResourceDisplay from "Components/Resources/ResourceDisplay";
-import { useQuery } from "react-query";
-import Api from "Helpers/api";
 import TagLink from "Components/Content/TagLink";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import AddResearch from "Components/Resources/AddResearch";
-import { Resource, Tag } from "Types";
-import useResources from "Helpers/useResources";
+import ResourceDisplay from "Components/Resources/ResourceDisplay";
 import SearchBar from "Components/Search/SearchBar";
+import Api from "Helpers/api";
+import { findAllUniqueTags, useResources } from "Helpers/resourceUtils";
+import React from "react";
+import { Resource, Tag } from "Types";
 
 const DashboardResearch = () => {
     const api = new Api();
@@ -17,12 +16,9 @@ const DashboardResearch = () => {
     const { resourcesLoading, resources, setSearchTerm } = useResources([
         researchFilter,
     ]);
-    const { data: tagList, isLoading: tagsLoading } = useQuery("tags", () =>
-        api.getTags().then((resp: any) => resp.data)
-    );
-    if (resourcesLoading || tagsLoading) {
-        return <div>Loading</div>;
-    }
+    const tagList = findAllUniqueTags(resources);
+
+    if (resourcesLoading) return <div>Loading</div>;
 
     return (
         <div className="flex flex-col md:flex-row overflow-x-hidden">
