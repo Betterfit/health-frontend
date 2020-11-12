@@ -4,7 +4,7 @@ import ResourceDisplay from "Components/Resources/ResourceDisplay";
 import TagFilterList from "Components/Resources/TagFilterList";
 import SearchBar from "Components/Search/SearchBar";
 import Api from "Helpers/api";
-import { findAllUniqueTags, useResources } from "Helpers/resourceUtils";
+import { useResources } from "Helpers/resourceUtils";
 import React from "react";
 
 const DashboardResources = () => {
@@ -14,9 +14,10 @@ const DashboardResources = () => {
         resourcesLoading,
         resources,
         setSearchTerm,
+        selectedTagPKs,
+        tagList,
         toggleTagSelect,
     } = useResources([]);
-    const tagList = findAllUniqueTags(resources);
     if (resourcesLoading) return <div>Loading</div>;
 
     const resourceColors = {
@@ -29,32 +30,39 @@ const DashboardResources = () => {
 
     return (
         <div className="flex flex-col md:flex-row overflow-x-hidden">
-            <DashboardSideBar>
-                <h2 className="text-3xl text-dark-blue my-3">Resources</h2>
-                <SearchBar performSearch={setSearchTerm} />
-                <div className="border-b border-gray-400 mt-5" />
-                <div>
-                    <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
-                        Resource Type
-                    </h3>
-                    {Object.entries(resourceColors).map(
-                        ([resourceTitle, resourceColor]) => {
-                            return (
-                                <ListLink
-                                    bulletColor={resourceColor}
-                                    text={resourceTitle}
-                                    textStyle={{ textTransform: "capitalize" }}
-                                />
-                            );
-                        }
-                    )}
-                </div>
-                <TagFilterList {...{ tagList, toggleTagSelect }} />
-            </DashboardSideBar>
-
-            <div className="resource-dashboard">
-                <ResourceDisplay resources={resources} />
+            <div style={{ flex: "0 0 320px" }}>
+                <DashboardSideBar>
+                    <h2 className="text-3xl text-dark-blue my-3">Resources</h2>
+                    <SearchBar
+                        performSearch={setSearchTerm}
+                        placeholderText="Search Resources"
+                    />
+                    <div className="border-b border-gray-400 mt-5" />
+                    <div>
+                        <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
+                            Resource Type
+                        </h3>
+                        {Object.entries(resourceColors).map(
+                            ([resourceTitle, resourceColor]) => {
+                                return (
+                                    <ListLink
+                                        bulletColor={resourceColor}
+                                        text={resourceTitle}
+                                        textStyle={{
+                                            textTransform: "capitalize",
+                                        }}
+                                    />
+                                );
+                            }
+                        )}
+                    </div>
+                    <TagFilterList
+                        {...{ tagList, toggleTagSelect, selectedTagPKs }}
+                    />
+                </DashboardSideBar>
             </div>
+
+            <ResourceDisplay resources={resources} />
         </div>
     );
 };

@@ -12,7 +12,7 @@ type ResourceFilter = (resource: Resource) => boolean;
 export const useResources = (customFilters: ResourceFilter[] = []) => {
     const [searchTerm, setSearchTerm] = useState<string>("");
     // stores tag pks (primary key) rather than whole tag
-    const [selectedTags, setSelectedTags] = useState<number[]>([]);
+    const [selectedTagPKs, setSelectedTagPKs] = useState<number[]>([]);
     const api = new Api();
     const { data, isLoading: resourcesLoading } = useQuery<Resource[]>(
         // the key is the combination of 'resources' and the search term, used for caching
@@ -26,16 +26,19 @@ export const useResources = (customFilters: ResourceFilter[] = []) => {
     const filteredResources: Resource[] = resources.filter((resource) =>
         customFilters.every((filter) => filter(resource))
     );
+
+    const tagList = findAllUniqueTags(filteredResources);
+
     // filters out resources that don't match every selected tag
     const tagMatchingResources = findResourcesMatchingTagPKList(
         filteredResources,
-        selectedTags
+        selectedTagPKs
     );
 
-    const toggleTagSelect = (tag: Tag) => {
-        if (selectedTags.includes(tag.pk))
-            setSelectedTags(selectedTags.filter((tagPK) => tagPK === tag.pk));
-        else setSelectedTags([...selectedTags, tag.pk]);
+    const toggleTagSelect = (pk: number) => {
+        if (selectedTagPKs.includes(pk))
+            setSelectedTagPKs(selectedTagPKs.filter((tagPK) => tagPK !== pk));
+        else setSelectedTagPKs([...selectedTagPKs, pk]);
     };
 
     return {
@@ -43,24 +46,32 @@ export const useResources = (customFilters: ResourceFilter[] = []) => {
         resourcesLoading,
         setSearchTerm,
         searchTerm,
+        tagList,
         toggleTagSelect,
-        selectedTags,
+        selectedTagPKs,
     };
 };
 
+/**
+ * Returns a list of resources that match all the given tags
+ */
 const findResourcesMatchingTagPKList = (
     resources: Resource[],
     tagPKs: number[]
 ): Resource[] => {
     if (tagPKs.length === 0) return resources;
-    const matchingResources = [];
-    // not the nicest time complexity but tagPKs will normally be quite small
+    const badResourcePKs = new Set<number>();
+    // not the nicest time complexity but tagPKs and resource.tags won't be very long
     for (const resource of resources) {
-        for (const tag of resource.tags) {
-            if (tagPKs.includes(tag.pk)) matchingResources.push(resource);
+        // check that the resource has every tag
+        for (const tagPK of tagPKs) {
+            if (!resource.tags.some((tag) => tag.pk === tagPK)) {
+                badResourcePKs.add(resource.pk);
+                continue;
+            }
         }
     }
-    return matchingResources;
+    return resources.filter((res) => !badResourcePKs.has(res.pk));
 };
 
 /**
