@@ -3,12 +3,17 @@ import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import ResourceDisplay from "Components/Resources/ResourceDisplay";
 import TagFilterList from "Components/Resources/TagFilterList";
 import SearchBar from "Components/Search/SearchBar";
-import Api from "Helpers/api";
 import { useResources } from "Helpers/resourceUtils";
-import React from "react";
+import React, { useState } from "react";
 
 const DashboardResources = () => {
-    const api = new Api();
+    // resources will be filtered by selected resource type
+    const [selectedResType, setSelectedResType] = useState(null);
+    const resourceFilters = [];
+    const resourceTypeFilter = (resource) =>
+        resource.resource_type === selectedResType;
+    if (selectedResType) resourceFilters.push(resourceTypeFilter);
+
     // the useResources hook handles caching, searching, filtering for us
     const {
         resourcesLoading,
@@ -17,7 +22,7 @@ const DashboardResources = () => {
         selectedTagPKs,
         tagList,
         toggleTagSelect,
-    } = useResources([]);
+    } = useResources(resourceFilters);
     if (resourcesLoading) return <div>Loading</div>;
 
     const resourceColors = {
@@ -26,6 +31,11 @@ const DashboardResources = () => {
         research: "#A799F3",
         supplier: "#EA8683",
         regulation: "#7FAAF4",
+    };
+
+    const onResTypeClick = (resType) => () => {
+        if (selectedResType === resType) setSelectedResType(null);
+        else setSelectedResType(resType);
     };
 
     return (
@@ -42,19 +52,28 @@ const DashboardResources = () => {
                         <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
                             Resource Type
                         </h3>
-                        {Object.entries(resourceColors).map(
-                            ([resourceTitle, resourceColor]) => {
-                                return (
-                                    <ListLink
-                                        bulletColor={resourceColor}
-                                        text={resourceTitle}
-                                        textStyle={{
-                                            textTransform: "capitalize",
-                                        }}
-                                    />
-                                );
-                            }
-                        )}
+                        <div className="flex flex-col items-start">
+                            {Object.entries(resourceColors).map(
+                                ([resourceType, resourceColor]) => {
+                                    return (
+                                        <ListLink
+                                            bulletColor={resourceColor}
+                                            key={resourceType}
+                                            text={resourceType}
+                                            textStyle={{
+                                                textTransform: "capitalize",
+                                            }}
+                                            selected={
+                                                resourceType === selectedResType
+                                            }
+                                            toggleSelection={onResTypeClick(
+                                                resourceType
+                                            )}
+                                        />
+                                    );
+                                }
+                            )}
+                        </div>
                     </div>
                     <TagFilterList
                         {...{ tagList, toggleTagSelect, selectedTagPKs }}

@@ -19,15 +19,14 @@ const TagLink = ({ tag, buttonProps, bold }: TagLinkProps) => {
         8: ["#5456E3", "#FFFFFF", "IV Solution"],
         9: ["#ED6537", "#FFFFFF", "Vaccine"],
     };
-    const fontStyling = bold ? "border-2" : "";
     return (
         <button {...buttonProps} className="my-2 mx-1">
             <div
-                className={`${fontStyling} resource-tag font-black text-gray-700 uppercase tracking-widest`}
+                className="border-2 resource-tag font-black text-gray-700 uppercase tracking-widest"
                 style={{
                     background: tag.background_color,
                     color: tag.main_color,
-                    borderColor: tag.main_color,
+                    borderColor: bold ? tag.main_color : "transparent",
                 }}
             >
                 {tag?.title}
