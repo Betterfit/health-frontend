@@ -94,6 +94,9 @@ export default class Api {
     return this.init().put(`/suppliers/${userId}/product-options/${id}/`,data)
   }
 
+  getSupplierProductQuantity = (userId,id) => {
+    return this.init().get(`/suppliers/${userId}/product-options/${id}/`)
+  }
   // ============================   TICKETS API  =====================================
 
   getSupplierTickets = (userId) => {

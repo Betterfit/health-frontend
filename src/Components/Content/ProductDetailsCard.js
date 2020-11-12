@@ -15,24 +15,6 @@ const Read_Product = (product_attr, default_value) => {
   return product_attr;
 };
 
-//The html component for the product image
-//If no image can be found - return nothing
-const ProductImage = ({ product_image, product_name }) => {
-  if (product_image === undefined || !product_image.hasOwnProperty("image")) {
-    return null;
-  }
-  return (
-    <div className="product_image bg-white rounded-lg m-2 w-5/12 md:w-auto">
-      <img
-        src={Read_Product(product_image.image, "")}
-        alt={Read_Product(product_name + " Product Image", "Product Image")}
-        loading="lazy"
-        data-sizes="auto"
-      ></img>
-    </div>
-  );
-};
-
 const ProductDetailCard = ({ product, edit }) => {
   const cartStore = useCartStore();
   const addToCart = (quantity,priority) => {

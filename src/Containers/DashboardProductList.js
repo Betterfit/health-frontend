@@ -21,6 +21,7 @@ const DashboardProductList = (props) => {
                 matched: "TODO",
                 available: "TODO",
                 total: 'TODO',
+                pk: options.pk,
               };
               return obj;
             });
