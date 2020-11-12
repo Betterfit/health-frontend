@@ -3,18 +3,31 @@ import BackNavigation from 'Components/Helpers/BackNavigation'
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import Table from 'Components/Table/Basic/Table';
 import Api from "Helpers/api";
-import Spinner from "Images/spinner.gif";
 const api = new Api();
 
 const DashboardProductList = (props) => {
     const { match } = props
     const ProductId = parseInt(match.params.id);
     const [lastProductId , setLastProductId] = useState(ProductId);
-    // TODO : restructure data when we have an api
     const [ProductData , setProductData] = useState(null);
     const getData = async () => await api.getProduct(ProductId)
     .then((response) => {
-        setProductData(response.data)
+        let arr = response.data;
+        arr.product_variations = response.data.product_variations.map((variations) => {
+            let variation = variations;
+            variation.product_options = variations.product_options.map((options) => {
+              let obj = {
+                [options.option_label]: options.name,
+                matched: "TODO",
+                available: "TODO",
+                total: 'TODO',
+              };
+              return obj;
+            });
+            return variation;
+          });
+        
+        setProductData(arr)
     })
     .catch((err) => console.log(err));
     if(!ProductData){
@@ -39,7 +52,7 @@ const DashboardProductList = (props) => {
                 <div className="pt-8 md:pt-12">
                     <TitleUnderLine title={`${ProductData.name}`} />
                     {/* product description */}
-                    <p className="text-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras iaculis scelerisque enim, et venenatis arcu dictum nec. Praesent tristique lacinia nisi, pulvinar congue dui malesuada vitae.</p>
+                    <p className="text-paragraph">{ProductData.description}</p>
                     {ProductData.product_variations.map(product => {
                         return <Table TableData={product} ProductId={ProductId} /> 
                     })}
