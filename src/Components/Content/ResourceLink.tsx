@@ -48,7 +48,7 @@ const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
         setShowDetails(!showDetails);
     };
     return (
-        <div className="flex p-1" onClick={toggleSlider} role="button">
+        <div className="flex p-1 w-full" onClick={toggleSlider} role="button">
             <div
                 className="w-1 rounded-md mr-2 flex-shrink-0"
                 style={{ backgroundColor: color }}
