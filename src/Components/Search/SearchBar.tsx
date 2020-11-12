@@ -1,6 +1,6 @@
-import React, { MutableRefObject, useRef } from "react";
-import { ReactSVG } from "react-svg";
 import SearchIcon from "Images/Icons/search-icon.svg";
+import React, { useRef } from "react";
+import { ReactSVG } from "react-svg";
 
 interface SearchBarProps {
     performSearch: (searchTerm: string) => void;
@@ -9,11 +9,13 @@ interface SearchBarProps {
 /**
  * This search bar component allows for a delay between changing search terms
  */
-const SearchBar = ({ performSearch, msDelay = 1000 }: SearchBarProps) => {
+const SearchBar = ({ performSearch, msDelay = 500 }: SearchBarProps) => {
     const searchRef = useRef<HTMLInputElement>(null);
+
+    const searchTimeoutID = useRef<any>(null);
     const afterDelay = () => {
         const searchString = searchRef.current?.value;
-        if (searchString) performSearch(searchString);
+        if (searchString || searchString === "") performSearch(searchString);
     };
     return (
         <div
@@ -28,8 +30,15 @@ const SearchBar = ({ performSearch, msDelay = 1000 }: SearchBarProps) => {
                     placeholder="Search Resources"
                     ref={searchRef}
                     onChange={(e) => {
-                        clearTimeout();
-                        setTimeout(afterDelay, msDelay);
+                        // Removes the previously queued up search
+                        // Prevents excessive requests being sent
+                        if (searchTimeoutID.current)
+                            clearTimeout(searchTimeoutID.current);
+                        // search will be performed after msDelay microseconds without input change
+                        searchTimeoutID.current = setTimeout(
+                            afterDelay,
+                            msDelay
+                        );
                     }}
                 />
             </div>

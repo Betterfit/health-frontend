@@ -1,6 +1,6 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import React from "react";
 import SearchBar from "./SearchBar";
 
 describe("SearchBar", () => {
@@ -35,9 +35,6 @@ describe("SearchBar", () => {
         jest.runAllTimers();
         expect(searchMock).toHaveBeenCalled();
         expect(searchMock).toHaveBeenCalledWith("a");
-        userEvent.type(searchBar, "hello");
-        userEvent.type(searchBar, "hello");
-        console.log(searchBar.value);
     });
 
     it("Does not call the search function prematurely", () => {
@@ -50,5 +47,21 @@ describe("SearchBar", () => {
         // After the full 5 ms, search should be called
         jest.advanceTimersByTime(5);
         expect(searchMock).toHaveBeenCalled();
+    });
+
+    // this checks for an issue where the user would be stuck on the search results
+    // after clearing the search bar
+    it("Performs search once it has been cleared", () => {
+        render(<SearchBar performSearch={searchMock} />);
+        const searchBar = screen.getByRole("textbox");
+        // user enters 'a' and those search results are shown
+        userEvent.type(searchBar, "abc");
+        jest.runAllTimers();
+        // then they clear out the search bar
+        fireEvent.change(searchBar, { target: { value: "" } });
+        jest.runAllTimers();
+        console.log(searchBar.value);
+        expect(searchMock).toHaveBeenCalledTimes(2);
+        expect(searchMock).toHaveBeenNthCalledWith(2, "");
     });
 });
