@@ -14,11 +14,6 @@ import DashboardOrder from './Inner/DashboardOrder'
 import DashboardFacilityOrder from './Inner/DashboardFacilityOrderDetail';
 import DashboardResources from '../DashboardResources'
 import DashboardResearch from '../DashboardResearch.tsx'
-// import DashboardInventory from '../Supplier/DashboardInventory'
-// import DashboardOrders from '../Supplier/DashboardOrders'
-// import DashboardProductList from './DashboardProductList'
-// import DashboardProductDetail from './DashboardProductDetail'
-// import DashboardSearch from './DashboardSearch';
 import {CartProvider} from "Context/cartContext";
 
 
