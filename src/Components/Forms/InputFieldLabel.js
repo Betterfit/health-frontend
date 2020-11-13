@@ -3,7 +3,7 @@ import React from "react";
 function InputFieldLabel({ id_tag, name, type, value, onChange, error, required=true }) {
   return (
     <div>
-      <label htmlFor={id_tag} className="block uppercase betterfit-graphite text-10 tracking-extra-wide opacity-50 py-2">
+      <label htmlFor={id_tag} className="block uppercase text-betterfit-graphite text-10 tracking-extra-wide opacity-75 py-2">
       {name}
         </label>
       <div className="relative">

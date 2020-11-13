@@ -3,7 +3,6 @@ import TableHead from './TableHead'
 import TableHeader from './TableHeader'
 import TableBody from './TableBody'
 const Table = ({TableData, excludeKeys,excludeValues,}) => {
-    console.log(TableData);
     const TableDataProducts = TableData.order_products;
 
     //Create the Table Data infoormation. 

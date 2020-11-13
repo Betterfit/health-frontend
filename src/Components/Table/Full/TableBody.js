@@ -6,7 +6,6 @@ import Button from "Components/Content/Button";
 import EmptyImage from "Images/emptyImage.png"
 import uuid from 'react-uuid'
 const TableBody = ({TableBody}) => {
-    // console.log(`slide ${TableBody}`)
     return(
         <tbody>  
             {
@@ -21,7 +20,7 @@ const TableBody = ({TableBody}) => {
                                             case "priority":
                                               // code block
                                                 return(
-                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
+                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-betterfit-graphite">
                                                         <Button
                                                             text={r[1] === "stat" ? "Stat" : "Regular"} 
                                                             color={r[1] === "stat" ? "status-red" :"status-blue" } 
@@ -38,9 +37,9 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             case "item":
                                                 return(
-                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-betterfit-graphite">
                                                         <div className="flex items-center">
-                                                            <img className="w-24 mr-2" src={(row[imageIndex][1] ? `${row[imageIndex][1]}` : EmptyImage)}  /> 
+                                                            <img className="w-24 mr-2" role="none" src={(row[imageIndex][1] ? `${row[imageIndex][1]}` : EmptyImage)}  /> 
                                                             <span className="font-bold text-betterfit-basic-blue">{r[1]}</span>
                                                         </div>
                                                     </td>
@@ -48,7 +47,7 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             default:
                                                 return(
-                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-betterfit-graphite">
                                                         <div className="flex items-center">
                                                             {/* <img className="w-24 mr-2" src={`${row[imageIndex]}`} /> */}
                                                             {/* <span className="font-bold text-betterfit-basic-blue">{r}</span> */}
@@ -72,7 +71,7 @@ const TableBody = ({TableBody}) => {
                                             case "priority":
                                               // code block
                                                 return(
-                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
+                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-betterfit-graphite">
                                                         <Button
                                                             text={r[1] === "stat" ? "Stat" : "Regular"} 
                                                             color={r[1] === "stat" ? "status-red" :"status-blue" } 
@@ -89,9 +88,9 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             case "item":
                                                 return(
-                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-betterfit-graphite">
                                                         <div className="flex items-center">
-                                                            <img className="w-24 mr-2" src={(row[imageIndex][1] ? `${row[imageIndex][1]}` : EmptyImage)}  /> 
+                                                            <img className="w-24 mr-2" role="none" src={(row[imageIndex][1] ? `${row[imageIndex][1]}` : EmptyImage)}  /> 
                                                             <span className="font-bold text-betterfit-basic-blue">{r[1]}</span>
                                                         </div>
                                                     </td>
@@ -99,7 +98,7 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             default:
                                                 return(
-                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-betterfit-graphite">
                                                         <div className="flex items-center">
                                                              {/* <img className="w-24 mr-2" src={`${row[imageIndex]}`} /> */}
                                                             {/* <span className="font-bold text-betterfit-basic-blue">{r}</span> */}

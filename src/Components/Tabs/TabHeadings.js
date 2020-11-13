@@ -3,7 +3,6 @@ import uuid from 'react-uuid'
 
 const TabHeadings = ({headings,headingFunction,headingComp,amount}) => {
     const [activeHeading , setActiveHeading ] = useState(headings[0].key);
-    // console.log(activeHeading);
     return(
         <div key={uuid()} className="flex flex-col-reverse md:flex-row mb-8 flex-1 md:items-center relative ">
             <div className="flex flex-row flex-1 h-full border-b border-gray-400 mr-3">

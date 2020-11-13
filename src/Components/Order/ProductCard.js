@@ -67,7 +67,7 @@ const ProductCard = ({ product, product_details, category, extra }) => {
           </div>
 
           <div className="flex flex-row pl-4 pr-2 py-1 justify-between  items-center ml-auto mt-0 md:ml-0 md:mt-auto">
-            <p className="text-betterfit-basic-blue uppercase opacity-50 text-xxs font-semibold hidden md:block">
+            <p className="text-betterfit-graphite uppercase text-xxs font-semibold hidden md:block">
               {category}
             </p>
             <CircleButton hover={active} onClick={() => addToCart() } />

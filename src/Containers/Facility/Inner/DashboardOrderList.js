@@ -25,7 +25,6 @@ const api = new Api();
 
 const DashboardOrderList = (props) => {
   const authStore = useAuthStore();
-  // console.log("HERE2")
   const userData = JSON.parse(authStore.user);
   const url = props.match.path;
   const userId = userData.user_profile.facility;

@@ -17,7 +17,6 @@ const Tabs = ({tabs,headingComp,amount}) => {
     });
  
     const headingChangeActive = (key) => {
-        // console.log(key)
         setActiveTab(key);   
     }
 

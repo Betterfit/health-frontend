@@ -26,7 +26,6 @@ const LoginTemplate = () => {
     api
       .signIn({ username: email, password: password })
       .then( async (response) => {
-        console.log(response.data.user);
         await localStorage.setItem("token", response.data.token);
         await localStorage.setItem("user", JSON.stringify(response.data.user));
         authStore.user = JSON.stringify(response.data.user);
@@ -35,7 +34,6 @@ const LoginTemplate = () => {
       })
       .catch((err) => {
         setError({head:"Unable to login",text: "please ensure your email and password are correct."})
-        console.log(err);
       });
   };
   return (
@@ -75,7 +73,7 @@ const LoginTemplate = () => {
         <div className="text-base leading-5">
           <a
             href={history.location.pathname + "forgotpassword"}
-            className="font-medium text-gray-600 hover:text-gray-700 focus:outline-none focus:underline transition ease-in-out duration-150"
+            className="font-medium text-betterfit-graphite opacity-75 hover:text-gray-700 focus:outline-none focus:underline transition ease-in-out duration-150"
           >
             Forgot password?
           </a>

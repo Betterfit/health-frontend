@@ -8,7 +8,7 @@ import InputFieldLabel from "Components/Forms/InputFieldLabel";
 import Button from "Components/Forms/Button";
 import CardTitle from "Components/Profile/CardTitle";
 import ButtonToggle from "Components/Forms/ToggleButton";
-import Notification from "Components/Helpers/Notifications"
+import Notification from "Components/Helpers/Notifications";
 
 const api = new Api();
 const ProfileCard = ({}) => {
@@ -17,11 +17,10 @@ const ProfileCard = ({}) => {
   let userName = userData.username;
   const userId = userData.pk;
 
-  const [lang, setLanguage] = useState("en");
-
   const intialBaseValues = {
     email: userData.email,
     username: userData.username,
+    lang: "en",
   };
 
   const [baseFormValues, setBaseFormValues] = useState(intialBaseValues);
@@ -35,14 +34,16 @@ const ProfileCard = ({}) => {
   const [baseNotification, setBaseNotification] = useState();
 
   const changeLang = (value) => {
-    localStorage.setItem('language',value);
+    localStorage.setItem("language", value);
     authStore.language = value;
-    setLanguage(value);
   };
 
   //Base section form changes
   const handleBaseChange = (e) => {
     const { id, value } = e.target;
+    if (id === "lang") {
+      changeLang(value);
+    }
     //clear any errors on input
     setBaseNotification();
     setBaseFormValues({ ...baseFormValues, [id]: value });
@@ -87,8 +88,9 @@ const ProfileCard = ({}) => {
     api
       .getUser(userId)
       .then(async (response) => {
-        let arr = JSON.stringify(response.data.user);
-        localStorage.setItem("user", JSON.stringify(response.data));
+        let arr = JSON.stringify(response.data);
+        authStore.user = JSON.stringify(arr);
+        localStorage.setItem("user", arr);
         setUserType(response.data);
       })
       .catch((err) => {
@@ -124,11 +126,22 @@ const ProfileCard = ({}) => {
       .changePassword(pwArr)
       .then((response) => {
         //update user token
-        localStorage.setItem("token", response.data.token);
-        setPWNotification({head:"Success", text: "Your password has been updated", value:true});
+        let token = response.data.data.token;
+        localStorage.setItem("token", token);
+        authStore.token = token;
+        setPWNotification({
+          head: "Success",
+          text: "Your password has been updated",
+          value: true,
+        });
       })
       .catch((error) => {
-        setPWNotification({head:"Error", text: "There was an error updating your password. Please ensure you are entering your old password correctly.", value:false});
+        setPWNotification({
+          head: "Error",
+          text:
+            "There was an error updating your password. Please ensure you are entering your old password correctly.",
+          value: false,
+        });
         console.error("Error", error);
       });
   };
@@ -146,10 +159,18 @@ const ProfileCard = ({}) => {
       .then((response) => {
         //update localstorage with updated userdata
         getUserData();
-        setBaseNotification({head:"Success", text: "Profile has been updated", value:true});
+        setBaseNotification({
+          head: "Success",
+          text: "Profile has been updated",
+          value: true,
+        });
       })
       .catch((error) => {
-        setBaseNotification({head:"Error", text: "There was an error updating your profile.", value:false});
+        setBaseNotification({
+          head: "Error",
+          text: "There was an error updating your profile.",
+          value: false,
+        });
         console.error("Error", error);
       });
   };
@@ -176,10 +197,10 @@ const ProfileCard = ({}) => {
         <div className="space-y-6">
           <h2 className="text-xl text-betterfit-graphite">Base Profile</h2>
           <ButtonToggle
-            option1={{ label: "English", active: lang === "en", value: "en" }}
-            option2={{ label: "French", active: lang === "fr", value: "fr" }}
-            value={lang}
-            changeValue={(value) => changeLang(value)}
+            option1={{ label: "English", active: baseFormValues.lang === "en", value: "en" }}
+            option2={{ label: "French", active: baseFormValues.lang === "fr", value: "fr" }}
+            changeValue={handleBaseChange}
+            id="lang"
           ></ButtonToggle>
 
           <InputFieldLabel
@@ -229,16 +250,24 @@ const ProfileCard = ({}) => {
             type="password"
           ></InputFieldLabel>
         </div>
-        {baseNotification &&  (
-          <Notification head={baseNotification.head} text={baseNotification.text} success={baseNotification.value}></Notification>    
+        {baseNotification && (
+          <Notification
+            head={baseNotification.head}
+            text={baseNotification.text}
+            success={baseNotification.value}
+          ></Notification>
         )}
         {pwNotification && (
-          <Notification head={pwNotification.head} text={pwNotification.text} success={pwNotification.value}></Notification>    
+          <Notification
+            head={pwNotification.head}
+            text={pwNotification.text}
+            success={pwNotification.value}
+          ></Notification>
         )}
         <Button
           text="Save Profile"
           color=" bg-betterfit-green"
-          hoverColor="bg-green-800"
+          hoverColor="bg-green-900"
           text_size="text-sm"
         ></Button>
       </form>

@@ -65,6 +65,7 @@ const Inventory = ({ product, edit }) => {
                 name="Allotted"
                 value={Read_Product(product.product_alloted, 0)}
                 readOnly={true}
+                id_tag="alloted"
               ></Quantity_Input>
             </div>
             <div className="py-2 flex justify-end">
@@ -73,7 +74,7 @@ const Inventory = ({ product, edit }) => {
                 value={available}
                 readValue={readAvailble}
                 quantityUpdate={(id,data) => setQuantityData({ id:id,data:data})}
-                id_tag={product.pk}
+                id_tag="available"
               ></Quantity_Input>
             </div>
             <div className="py-2 md:py-8 md:mx-2">

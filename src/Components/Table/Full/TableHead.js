@@ -6,7 +6,7 @@ const TableHead = ({TableHead}) => {
             <tr>
                 {TableHead.map((head, index) => {
                     return(
-                        <th key={uuid()} className="px-4 pb-2 pt-6 text-left text-xs leading-4 font-normal uppercase tracking-wider uppercase text-gray-600">
+                        <th key={uuid()} className="px-4 pb-2 pt-6 text-left text-xs leading-4 font-normal uppercase tracking-wider uppercase text-betterfit-graphite">
                             {head}
                         </th>
                     )                 

@@ -30,7 +30,6 @@ const DashboardProductDetail = (props) => {
       });
 
   useEffect(() => {
-    // console.log("getting data");
     getData();
   }, []);
 

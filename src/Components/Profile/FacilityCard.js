@@ -41,7 +41,6 @@ const FacilityCard = ({}) => {
       })
       .catch((err) => {
         //delete when api is working
-        // console.log(err);
       });
   };
 

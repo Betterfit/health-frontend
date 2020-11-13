@@ -27,27 +27,27 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                 <td className="whitespace-no-wrap px-4 py-4">
                                     <span className="flex items-center">
                                         <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                                        <NavLink className="text-sm leading-5 text-gray-500 ml-3" to={`${link}${row.id}`}>
-                                            {row.order_no}
+                                        <NavLink className="text-sm leading-5 text-betterfit-graphite ml-3" to={`${link}${row.id}`}>
+                                             {row.order_no}
                                         </NavLink>
                                     </span>
                                 </td>
                                 <td className="whitespace-no-wrap px-4 py-4">
-                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                    <NavLink className="text-sm leading-5 text-betterfit-graphite" to={`${link}${row.id}`}>
                                         {row.province}
                                     </NavLink>
                                 </td> 
                                 <td className="whitespace-no-wrap px-4 py-4">
-                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                    <NavLink className="text-sm leading-5 text-betterfit-graphite" to={`${link}${row.id}`}>
                                         {row.facility}
                                     </NavLink>
                                 </td> 
                                 <td className="whitespace-no-wrap px-4 py-4">
-                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                    <NavLink className="text-sm leading-5 text-betterfit-graphite" to={`${link}${row.id}`}>
                                         {!row.supplier && (
                                             <span className="flex items-center">
                                                 <ReactSVG src={Attention} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                                                <span style={{color:'#DAA239'}} className="font-bold pl-1">No Match!</span>
+                                                <span style={{color:'#B36200'}} className="font-bold pl-1">No Match!</span>
                                             </span>
                                         )}
                                         {row.supplier && ( 
@@ -58,11 +58,11 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                     </NavLink>
                                 </td> 
                                 <td className="whitespace-no-wrap px-4 py-4">
-                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                    <NavLink className="text-sm leading-5 text-betterfit-graphite" to={`${link}${row.id}`}>
                                         {today - orderDate >= 2 && (
                                             <span className="flex items-center">
                                                 <ReactSVG src={Attention} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                                                <span style={{color:'#DAA239'}} className="font-bold pl-1">{row.order_date}</span>
+                                                <span style={{color:'#B36200'}} className="font-bold pl-1">{row.order_date}</span>
                                             </span>
                                         )}
                                         {today - orderDate < 2 && (
@@ -73,7 +73,7 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                     </NavLink>
                                 </td> 
                                 <td className="whitespace-no-wrap px-4 py-4">
-                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                    <NavLink className="text-sm leading-5 text-betterfit-graphite" to={`${link}${row.id}`}>
                                         {row.rank}
                                     </NavLink>
                                 </td>    
@@ -85,23 +85,23 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                 <td className="whitespace-no-wrap px-4 py-4">
                                     <span className="flex items-center">
                                         <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                                        <NavLink className="text-sm leading-5 text-gray-500 ml-3" to={`${link}${row.id}`}>
+                                        <NavLink className="text-sm leading-5 text-betterfit-graphite ml-3" to={`${link}${row.id}`}>
                                             {row.order_no}
                                         </NavLink>
                                     </span>
                                 </td>
                                 <td className="whitespace-no-wrap px-4 py-4">
-                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                    <NavLink className="text-sm leading-5 text-betterfit-graphite" to={`${link}${row.id}`}>
                                         {row.province}
                                     </NavLink>
                                 </td> 
                                 <td className="whitespace-no-wrap px-4 py-4">
-                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                    <NavLink className="text-sm leading-5 text-betterfit-graphite" to={`${link}${row.id}`}>
                                         {row.facility}
                                     </NavLink>
                                 </td> 
                                 <td className="whitespace-no-wrap px-4 py-4">
-                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                    <NavLink className="text-sm leading-5 text-betterfit-graphite" to={`${link}${row.id}`}>
                                         {!row.supplier && (
                                             <span className="flex items-center">
                                                 <ReactSVG src={Attention} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
@@ -116,7 +116,7 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                     </NavLink>
                                 </td> 
                                 <td className="whitespace-no-wrap px-4 py-4">
-                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                    <NavLink className="text-sm leading-5 text-betterfit-graphite" to={`${link}${row.id}`}>
                                         {today - orderDate >= 2 && (
                                             <span className="flex items-center">
                                                 <ReactSVG src={Attention} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
@@ -131,7 +131,7 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                     </NavLink>
                                 </td> 
                                 <td className="whitespace-no-wrap px-4 py-4">
-                                    <NavLink className="text-sm leading-5 text-gray-500" to={`${link}${row.id}`}>
+                                    <NavLink className="text-sm leading-5 text-betterfit-graphite" to={`${link}${row.id}`}>
                                         {row.rank}
                                     </NavLink>
                                 </td> 

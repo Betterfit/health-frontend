@@ -10,7 +10,7 @@ const OrderComponent = ({ title, value, classes }) => {
         (classes ? classes : "")
       }
     >
-      <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">
+      <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-75">
         {title.replace(/_|-/g, ' ')}
       </span>
       <span className="text-betterfit-graphite text-base word break-words">
@@ -33,7 +33,6 @@ const OrderComponentTitle = ({ value, classes }) => {
 };
 
 const OrderDetailHeader = ({ order, actionComponent, children}) => {
-  console.log("HERE")
   return (
     <div className="flex flex-col border-b pb-4 border-gray-400 relative">
       <BackNavigation link={"Back"} />

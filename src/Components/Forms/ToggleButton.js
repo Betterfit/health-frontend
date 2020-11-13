@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 
-const Button = ({ toggle, active, value }) => {
+const Button = ({ toggle, active, value, text }) => {
   return (
     <button
       className={
@@ -9,21 +9,22 @@ const Button = ({ toggle, active, value }) => {
           ? " pointer-events-none active bg-betterfit-basic-blue text-white"
           : "bg-white text-betterfit-navy'")
       }
-      id="grid"
+      id={text}
       value={value}
       onClick={toggle}
       type="button"
     >
-      <span>{value}</span>
+      {text}
     </button>
   );
 };
 
-const ToggleButton = ({ option1, option2, changeValue}) => {
+const ToggleButton = ({ option1, option2, changeValue, id }) => {
   const [active, setActive] = useState(option1.active);
-  const toggle = () => {
+  const toggle = (e) => {
     setActive(!active);
-    active ? changeValue(option2.value) : changeValue(option1.value)
+    e.target.id=id;
+    changeValue(e);
   };
 
   return (
@@ -32,8 +33,22 @@ const ToggleButton = ({ option1, option2, changeValue}) => {
         Default Language
       </span>
       <div className="text-base leading-none border-2 border-gray-200 rounded flex">
-        <Button toggle={toggle} onChange={changeValue} active={active} value={option1.label}></Button>
-        <Button toggle={toggle} onChange={changeValue}  active={!active} value={option2.label}></Button>
+        <Button
+          key={option1.label}
+          toggle={toggle}
+          onChange={changeValue}
+          active={active}
+          value={option1.value}
+          text={option1.label}
+        ></Button>
+        <Button
+          key={option2.label}
+          toggle={toggle}
+          onChange={changeValue}
+          active={!active}
+          value={option2.value}
+          text={option2.label}
+        ></Button>
       </div>
     </div>
   );
