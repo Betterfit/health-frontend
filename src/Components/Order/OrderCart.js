@@ -40,7 +40,7 @@ const OrderCart =({Cart, OrderID , id}) => {
       rawCart = CartData;
       setCartItems(responses);
       
-    });
+    }).catch((err) => console.log(err));;
   }
 
   useEffect(() => {

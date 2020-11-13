@@ -9,7 +9,6 @@ const AddProductForm = ({id}) => {
   const [quantity, getQuantity] = useState(1);
   const cartStore = useCartStore();
   const addToCart = (quantity, priority) => {
-    console.log ("HEREEE")
     cartStore.addToCart(id, quantity, priority);
   };
   return (
