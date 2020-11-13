@@ -19,7 +19,7 @@ const Button = ({ toggle, active, value }) => {
   );
 };
 
-const ToggleButton = ({ option1, option2, changeValue}) => {
+const ToggleButton = ({ option1, option2, changeValue, name}) => {
   const [active, setActive] = useState(option1.active);
   const toggle = () => {
     setActive(!active);
@@ -29,7 +29,7 @@ const ToggleButton = ({ option1, option2, changeValue}) => {
   return (
     <div>
       <span className="uppercase text-betterfit-graphite text-10 tracking-extra-wide ">
-        Default Language
+        {name}
       </span>
       <div className="text-base leading-none border-2 border-gray-200 rounded flex">
         <Button toggle={toggle} onChange={changeValue} active={active} value={option1.label}></Button>
