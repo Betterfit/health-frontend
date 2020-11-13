@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import Button from "../Forms/Button";
+import React from "react";
 import Inventory_Description from "../Inventory/Inventory_Description";
-import Quantity_Input from "Components/Forms/Quantity_Input";
-import UpdateQuantitySupplier from "Components/Helpers/UpdateQuantitySupplier";
 import ProductImageCard from "Components/Content/ProductImageCard"
 import EditProductForm from "Components/Forms/EditProductForm"
 
@@ -15,32 +12,7 @@ const Read_Product = (product_attr, default_value) => {
   return product_attr;
 };
 
-//The html component for the product image
-//If no image can be found - return nothing
-const ProductImage = ({ product_image, product_name }) => {
-  if (product_image === undefined) {
-    return null;
-  }
-  return (
-    <div className="product_image bg-white rounded-lg m-2 w-5/12 md:w-auto">
-      <img
-        src={Read_Product(product_image, "")}
-        alt={Read_Product(product_name + " Product Image", "Product Image")}
-        loading="lazy"
-        data-sizes="auto"
-      ></img>
-    </div>
-  );
-};
-
 const Inventory = ({ product, edit }) => {
-  const [available, readAvailable] = useState(
-    Read_Product(product.product_available, 0)
-  );
-  const [quantityData,setQuantityData] = useState({
-    id:"",
-    data:""
-  })
   return (
     <>
       <div className="flex lg:flex-row flex-col-reverse">

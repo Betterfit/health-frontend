@@ -15,10 +15,9 @@ const Read_Product = (product_attr, default_value) => {
   return product_attr;
 };
 
-const ProductDetailCard = ({ product, edit }) => {
+const ProductDetailCard = ({ product }) => {
   const cartStore = useCartStore();
   const addToCart = (quantity,priority) => {
-    // console.log(quantity,priority)
     cartStore.addToCart(product.pk,quantity,priority)
   }
   return (
@@ -26,18 +25,18 @@ const ProductDetailCard = ({ product, edit }) => {
           <div className="flex lg:flex-row flex-col-reverse">
             <div className="xl:w-3/5 lg:w-1/2 lg:pr-12 py-4 mx-2">
               <Inventory_Description
-                title="Size"
-                description={Read_Product(product.product_size, "N/A")}
+                title={product.product_label}
+                description={Read_Product(product.product_label_value, "N/A")}
                 class_addons="pb-2"
               ></Inventory_Description>
               <Inventory_Description
                 title="Description"
                 class_addons="pb-2 pt-4"
-                description={Read_Product(product.product_description, "")}
+                description={Read_Product(product.product_description, "N/A")}
               ></Inventory_Description>
             </div>
             <div className="xl:w-2/5 lg:w-1/2 py-4 mx-2">
-            <ProductImageCard product_image={(product?.image)} product_name ={product.name}>
+            <ProductImageCard image={product.product_image} name ={product.name}>
                 <AddProductForm addToCart={(quantity,priority) => addToCart(quantity,priority)} />
             </ProductImageCard>
             </div>
