@@ -12,7 +12,7 @@ const Table = ({TableData,link,extraClasses,buttonType}) => {
     TableData.map(variant => {
         let keys = Object.keys(variant);
         let values = {
-            match_number: variant.match_number,
+            order_no: variant.order_no,
             province: variant.province,
             facility:variant.facility,
             supplier: variant.supplier,

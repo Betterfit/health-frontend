@@ -10,12 +10,14 @@ const Table = ({TableData,link,extraClasses,buttonType}) => {
     let nooptions = false;
     let removeAtIndex;
     let statusIndex;
+    console.log(TableData);
     TableData.map(variant => {
         let keys = Object.keys(variant);
         let values = Object.values(variant);
         keys.forEach((key,index) => {
             if(!TableHeadData.includes(key)){
                 if(key !== "pk"){
+                    // console.log(`key ${variant[key]}`);
                     TableHeadData.push(key);
                     if(key == "status"){
                         statusIndex = index;
