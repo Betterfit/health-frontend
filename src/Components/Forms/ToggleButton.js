@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
+import Translator from "Helpers/Translator";
 
 const Button = ({ toggle, active, value }) => {
   return (
@@ -14,7 +15,7 @@ const Button = ({ toggle, active, value }) => {
       onClick={toggle}
       type="button"
     >
-      <span>{value}</span>
+      {Translator(value)}
     </button>
   );
 };
@@ -29,7 +30,7 @@ const ToggleButton = ({ option1, option2, changeValue, name}) => {
   return (
     <div>
       <span className="uppercase text-betterfit-graphite text-10 tracking-extra-wide ">
-        {name}
+        {Translator(name)}
       </span>
       <div className="text-base leading-none border-2 border-gray-200 rounded flex">
         <Button toggle={toggle} onChange={changeValue} active={active} value={option1.label}></Button>

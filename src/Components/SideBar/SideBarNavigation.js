@@ -1,6 +1,7 @@
 import React from "react";
 import { ReactSVG } from "react-svg";
 import { NavLink } from "react-router-dom";
+import Translator from "Helpers/Translator";
 
 const SideBarNavigation = ({ navList }) => {
   return(
@@ -21,7 +22,7 @@ const SideBarNavigation = ({ navList }) => {
                 }}
               />
               <span className="group flex items-center py-2 text-sm leading-5 font-medium sm:text-xl font-body text-white">
-                {navItem.name}
+                {Translator(navItem.name)}
               </span>
             </NavLink>
           </div>

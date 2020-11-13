@@ -166,7 +166,7 @@ const ProfileCard = ({}) => {
 
   return (
     <>
-      <CardTitle name={userName} label={Translator("User Profile")}></CardTitle>
+      <CardTitle name={userName} label="User Profile"></CardTitle>
       <form
         className="relative"
         onSubmit={(e) => {
@@ -177,23 +177,23 @@ const ProfileCard = ({}) => {
         <div className="space-y-6">
           <h2 className="text-xl text-betterfit-graphite">{Translator("Base Profile")}</h2>
           <ButtonToggle
-            option1={{ label: Translator("English"), active: lang === "en", value: "en" }}
-            option2={{ label:  Translator("French"), active: lang === "fr", value: "fr" }}
+            option1={{ label:"English", active: lang === "en", value: "en" }}
+            option2={{ label:"French", active: lang === "fr", value: "fr" }}
             value={lang}
             changeValue={(value) => changeLang(value)}
-            name = {Translator("Default Language")}
+            name = "Default Language"
           ></ButtonToggle>
 
           <InputFieldLabel
             id_tag="username"
-            name={Translator("Name")}
+            name="Name"
             type="text"
             value={baseFormValues.username}
             onChange={handleBaseChange}
           ></InputFieldLabel>
           <InputFieldLabel
             id_tag="email"
-            name={Translator("email")}
+            name="email"
             type="email"
             value={baseFormValues.email}
             onChange={handleBaseChange}
@@ -205,7 +205,7 @@ const ProfileCard = ({}) => {
           </h2>
           <InputFieldLabel
             id_tag="oldPW"
-            name={Translator("Old Password")}
+            name="Old Password"
             value={pwFormValues.oldPW}
             onChange={handlePWChange}
             error={pwFormErrors.oldPW}
@@ -214,7 +214,7 @@ const ProfileCard = ({}) => {
           ></InputFieldLabel>
           <InputFieldLabel
             id_tag="newPW"
-            name={Translator("New Password")}
+            name="New Password"
             onChange={handlePWChange}
             value={pwFormValues.newPW}
             error={pwFormErrors.newPW}
@@ -222,7 +222,7 @@ const ProfileCard = ({}) => {
             type="password"
           ></InputFieldLabel>
           <InputFieldLabel
-            name={Translator("Confirm Password")}
+            name="Confirm Password"
             id_tag="confirmPW"
             onChange={handlePWChange}
             value={pwFormValues.confirmPW}
@@ -238,7 +238,7 @@ const ProfileCard = ({}) => {
           <Notification head={pwNotification.head} text={pwNotification.text} success={pwNotification.value}></Notification>    
         )}
         <Button
-          text={Translator("Save Profile")}
+          text="Save Profile"
           color=" bg-betterfit-green"
           hoverColor="bg-green-800"
           text_size="text-sm"
