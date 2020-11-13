@@ -1,16 +1,19 @@
 import React, {useState, useEffect} from 'react';
+import Api from "Helpers/api";
+
+//Components
 import BackNavigation from 'Components/Helpers/BackNavigation'
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
-import Inventory from 'Components/Inventory/Inventory'
-import Api from "Helpers/api";
+import ProductDetailsCard from "Components/Content/ProductDetailsCard"
+
 const api = new Api();
 
 const DashboardProductDetail = (props) =>{
     const { match } = props
-    const VariantId = parseInt(match.params.id);
-    const OptionId = parseInt(match.params.oid);
+    const optionId = parseInt(match.params.oid);
+    let supplier_id = JSON.parse(localStorage.getItem("user")).user_profile?.supplier;
     const [ProductData , setProductData] = useState(null);
-    const getData = async () => await api.getSupplierProductQuantity (1, OptionId)
+    const getData = async () => await api.getSupplierProductQuantity (supplier_id, optionId)
     .then((response) => {
         let data = response.data;
         setProductData({ 
@@ -30,7 +33,6 @@ const DashboardProductDetail = (props) =>{
   useEffect(() => {
     getData();
   }, ProductData);
-console.log("PRODU", ProductData)
 
 
     return(
@@ -41,7 +43,7 @@ console.log("PRODU", ProductData)
                     <TitleUnderLine title={ProductData.product_name} />  
                     <div className="w-full flex place-self-center justify-self-center m-auto">
                         {ProductData && (
-                            <Inventory product={ProductData} edit={props.edit}></Inventory>
+                            <ProductDetailsCard product={ProductData} edit={true}></ProductDetailsCard>
                         )}
                     </div>
                 </>

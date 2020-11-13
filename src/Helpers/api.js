@@ -91,7 +91,8 @@ export default class Api {
   }
 
   updateSupplierProductQuantity = (userId,id,data) => {
-    return this.init().put(`/suppliers/${userId}/product-options/${id}/`,data)
+    let quantity = {"quantity":data}
+    return this.init().put(`/suppliers/${userId}/product-options/${id}/`, quantity)
   }
 
   getSupplierProductQuantity = (userId,id) => {
