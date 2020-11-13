@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactSVG } from "react-svg";
 import Plus from "Images/Icons/plus.svg";
-import Edit from "Images/Icons/edit.svg";
+import Translator from "Helpers/Translator";
 //To add an svg icon - add component to svg and add to svgMap
 //So if svgName = 'plus' will call the Plus component
 
@@ -40,7 +40,7 @@ const Button = ({
           text_size
         }
       >
-        {text}
+        {Translator(text)}
       </button>
     </span>
   );

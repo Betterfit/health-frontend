@@ -1,4 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
+import Translator from "Helpers/Translator";
+
 
 import BackNavigation from "Components/Helpers/BackNavigation";
 
@@ -11,7 +13,7 @@ const OrderComponent = ({ title, value, classes }) => {
       }
     >
       <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">
-        {title.replace(/_|-/g, ' ')}
+        {Translator(title.replace(/_|-/g, ' '))}
       </span>
       <span className="text-betterfit-graphite text-base word break-words">
         {value}
@@ -27,7 +29,7 @@ const OrderComponentTitle = ({ value, classes }) => {
         "flex flex-col pr-4 md:pb-3 py-3 md:py-1 " + (classes ? classes : "")
       }
     >
-      <span className="text-betterfit-graphite text-3xl">{value}</span>
+      <span className="text-betterfit-graphite text-3xl">{Translator(value)}</span>
     </div>
   );
 };
