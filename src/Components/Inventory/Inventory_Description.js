@@ -1,6 +1,5 @@
 import React from "react";
-import Inventory from "./Inventory";
-
+import Translator from "Helpers/Translator";
 
 function Inventory_Description_Only(props) {
   const description = props.description;
@@ -31,7 +30,7 @@ function Inventory_Description({ title, description, class_addons, edit }) {
 
   return (
     <>
-      <dt className={standard_dt_styles}>{title}</dt>
+      <dt className={standard_dt_styles}>{Translator(title)}</dt>
       {description_type}
     </>
   );

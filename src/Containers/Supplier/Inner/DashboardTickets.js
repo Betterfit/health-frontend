@@ -5,6 +5,7 @@ import Table from 'Components/Table/List/Table';
 import Api from "Helpers/api";
 import {useAuthStore} from "Context/authContext";
 import DashboardTicketSearch from "./DashboardTicketSearch";
+import Translator from "Helpers/Translator";
 import uuid from 'react-uuid'
 import {
   Switch,
@@ -96,7 +97,7 @@ const DashboardTickets = () => {
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-10">
       <Route exact path='/dashboard/tickets'>
-        <h2 className="text-3xl text-dark-blue my-3">Tickets</h2>
+        <h2 className="text-3xl text-dark-blue my-3">{Translator("Tickets")}</h2>
       </Route>
         {ticketData && (
           <>          

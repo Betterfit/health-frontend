@@ -1,11 +1,12 @@
 import React from "react";
+import Translator from "Helpers/Translator";
 
 function Input_Field({ id_tag, name, type, value, onChange }) {
 
   return (
     <>
       <label htmlFor={id_tag} className="sr-only">
-        {name}
+        {Translator(name)}
       </label>
       <div className="relative">
         <input

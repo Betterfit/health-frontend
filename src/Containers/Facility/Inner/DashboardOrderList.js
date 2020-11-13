@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Api from "Helpers/api";
 import dayjs from "dayjs";
 import { useAuthStore } from "Context/authContext";
-
+import Translator from "Helpers/Translator";
 // <----------- Components ------------->//
 import Tabs from "Components/Tabs/Tabs";
 import OrderSearch from "Components/Search/OrderSearch";
@@ -210,7 +210,7 @@ const DashboardOrderList = (props) => {
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-10">
       <Route exact path='/dashboard/orders'>
-        <h2 className="text-3xl text-dark-blue my-3">Orders</h2>
+        <h2 className="text-3xl text-dark-blue my-3">{Translator("Orders")}</h2>
       </Route>
       {TabData && (
           <>          

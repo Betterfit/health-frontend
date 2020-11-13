@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React  from "react";
+import Translator from "Helpers/Translator";
 const tranform = {
   transform: "translateX(" + -50 + "%)",
 };
@@ -14,7 +15,7 @@ function FlatButton({ text, onClick, extras }) {
       }
       style={tranform}
     >
-      {text}
+      {Translator(text)}
     </button>
   );
 }

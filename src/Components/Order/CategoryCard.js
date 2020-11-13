@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { ReactSVG } from "react-svg";
 import RightArrow from "Images/Icons/right-arrow.svg";
 import { useHistory } from "react-router-dom";
+import Translator from "Helpers/Translator";
 
 const CategoryCard = (category) => {
   const history = useHistory();
@@ -50,7 +51,7 @@ const CategoryCard = (category) => {
             {category_name}
           </p>
           <p className="text-xxs uppercase opacity-50 text-betterfit-basic-blue md:text-center leading-tight pt-2">
-            {count + " product" + (count > 1 ? "s" : "")}
+            {count + " " + Translator("product" + (count > 1 ? "s" : ""))}
           </p>
         </div>
         <ReactSVG
