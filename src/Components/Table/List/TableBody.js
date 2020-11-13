@@ -5,7 +5,6 @@ import {NavLink} from "react-router-dom";
 import Button from "Components/Content/Button";
 import StatusButton from "Components/Content/StatusButton";
 const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
-    // console.log(`slide ${TableBody}`)
     return(
         <tbody>  
             {

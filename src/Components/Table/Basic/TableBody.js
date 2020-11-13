@@ -3,7 +3,6 @@ import { ReactSVG } from 'react-svg'
 import Edit from 'Images/Icons/edit.svg'
 import {NavLink} from "react-router-dom";
 const TableBody = ({TableBody,variantID,NoOptions}) => {
-    // console.log(`search - ${TableBody}`)
     let setIndex;
     return(
         <tbody>  

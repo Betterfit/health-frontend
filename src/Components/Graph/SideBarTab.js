@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 const SideBarTabs = ({tabs, activeTab, handleClick, clearTab}) => {
 
 	const tabChangeActive = (key, heading) => {
-        // console.log(key)
         handleClick(key, heading);   
     }
 

@@ -34,7 +34,6 @@ const ProductImage = ({ product_image, product_name }) => {
 const ProductDetailCard = ({ product, edit }) => {
   const cartStore = useCartStore();
   const addToCart = (quantity,priority) => {
-    // console.log(quantity,priority)
     cartStore.addToCart(product.pk,quantity,priority)
   }
   return (

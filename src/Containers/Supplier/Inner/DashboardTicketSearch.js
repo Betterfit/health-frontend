@@ -12,7 +12,6 @@ function useQuery() {
 const DashboardTicketSearch = ({supplierId}) => {
     const api = new API;
     let query = useQuery();    
-    console.log(supplierId, query.get('search'));
     const [searchQuery , setSearchQuery] = useState(query.get('search'));
     const [searchData , setSearchData] = useState();
     const getSearchResults = async () => await api.getSearchTickets(supplierId,query.get('search'))
@@ -27,7 +26,6 @@ const DashboardTicketSearch = ({supplierId}) => {
             item.status = filterItemStatus;
             return(item);
         });
-        console.log(data);
         setSearchData(data);
     })
     .catch((err) => console.log(err));

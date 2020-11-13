@@ -30,12 +30,10 @@ const DashboardInventory = () =>{
     .catch((err) => console.log(err));
     //  setSearchActive(1)  
     if(ProductData){
-        // console.log(ProductData);
         const TabData = [ 
             {
                 heading:'My Inventory',
                 content:ProductData.map(product => {
-                    // console.log(product);
                     return(
                         <div>
                             <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-6 uppercase font-bold tracking-wider">{product.name}</h3>
@@ -54,7 +52,6 @@ const DashboardInventory = () =>{
             {
                 heading:'All Products',
                 content:ProductData.map(product => {
-                    // console.log(product);
                     return(
                         <div>
                             <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-6 uppercase font-bold tracking-wider">{product.name}</h3>

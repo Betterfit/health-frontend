@@ -19,7 +19,6 @@ const PasswordReset = () => {
   const [email, setEmail] = useState("");
   const api = new Api();
   const resetPW = (e) => {
-    // console.log("Reset PW");
     e.preventDefault();
     api
       .passwordResetRequest({ email: email })

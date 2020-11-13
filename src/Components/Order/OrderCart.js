@@ -77,7 +77,6 @@ const OrderCart =({Cart, OrderID , id}) => {
           delete order.facility;
           delete order.facility_admin;
           api.editOrder(order,id).then(response => {
-            console.log(response.error);
             setModalOrder(false)
             setModalDraft(false)
             cartStore.newOrderName = "";
@@ -90,7 +89,6 @@ const OrderCart =({Cart, OrderID , id}) => {
           });
         }else{
           api.setNewOrder(order).then(response => {
-            console.log(response);
             setModalOrder(false)
             setModalDraft(false)
             cartStore.newOrderName = "";

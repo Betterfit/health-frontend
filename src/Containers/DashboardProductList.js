@@ -20,10 +20,8 @@ const DashboardProductList = (props) => {
     if(!ProductData){
         getData();
     }
-    // console.log(JSON.stringify(ProductData))
     useEffect(() => {
         if(lastProductId !== ProductId){
-            // console.log('getting data');
             setLastProductId(ProductId);
             getData();
         }

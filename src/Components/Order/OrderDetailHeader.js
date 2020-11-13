@@ -33,7 +33,6 @@ const OrderComponentTitle = ({ value, classes }) => {
 };
 
 const OrderDetailHeader = ({ order, actionComponent, children}) => {
-  console.log("HERE")
   return (
     <div className="flex flex-col border-b pb-4 border-gray-400 relative">
       <BackNavigation link={"Back"} />

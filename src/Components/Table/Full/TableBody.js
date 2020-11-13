@@ -6,7 +6,6 @@ import Button from "Components/Content/Button";
 import EmptyImage from "Images/emptyImage.png"
 import uuid from 'react-uuid'
 const TableBody = ({TableBody}) => {
-    // console.log(`slide ${TableBody}`)
     return(
         <tbody>  
             {

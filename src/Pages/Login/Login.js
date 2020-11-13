@@ -26,7 +26,6 @@ const LoginTemplate = () => {
     api
       .signIn({ username: email, password: password })
       .then( async (response) => {
-        console.log(response.data.user);
         await localStorage.setItem("token", response.data.token);
         await localStorage.setItem("user", JSON.stringify(response.data.user));
         authStore.user = JSON.stringify(response.data.user);
@@ -35,7 +34,6 @@ const LoginTemplate = () => {
       })
       .catch((err) => {
         setError({head:"Unable to login",text: "please ensure your email and password are correct."})
-        console.log(err);
       });
   };
   return (
