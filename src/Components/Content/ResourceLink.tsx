@@ -1,6 +1,7 @@
 import TagLink from "Components/Content/TagLink";
 import FacilityCard from "Components/ResourceProfile/FacilityCard";
 import LabCard from "Components/ResourceProfile/LabCard";
+import RegulationCard from "Components/ResourceProfile/RegulationCard";
 import ResearchCard from "Components/ResourceProfile/ResearchCard";
 import SupplierCard from "Components/ResourceProfile/SupplierCard";
 import Slider from "Components/Slider/Slider";
@@ -26,22 +27,22 @@ const resourceCardTypes: {
     lab: LabCard,
     research: ResearchCard,
     supplier: SupplierCard,
+    regulation: RegulationCard,
 };
 
 const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
     const ResourceCardType = resourceCardTypes[resource.resource_type];
-    const resourceCard =
-        ResourceCardType !== null ? (
-            //@ts-ignore
-            <ResourceCardType
-                name={resource.title}
-                tagList={resource.tags}
-                details={resource.details}
-                color={color}
-            />
-        ) : (
-            <div />
-        );
+    const resourceCard = ResourceCardType ? (
+        //@ts-ignore
+        <ResourceCardType
+            name={resource.title}
+            tagList={resource.tags}
+            details={resource.details}
+            color={color}
+        />
+    ) : (
+        <div />
+    );
 
     const [showDetails, setShowDetails] = useState(false);
     const toggleSlider = () => {
