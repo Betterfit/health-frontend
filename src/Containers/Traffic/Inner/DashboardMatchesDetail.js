@@ -6,6 +6,7 @@ import BackNavigation from 'Components/Helpers/BackNavigation'
 import Reload from 'Images/Icons/reload.svg';
 import Countdown from 'react-countdown';
 import Api from "Helpers/api";
+import Translator from "Helpers/Translator";
 
 const api = new Api();
 const DashboardMatchesDetail = (props) => {
@@ -41,7 +42,7 @@ const DashboardMatchesDetail = (props) => {
                     (classes ? classes : "")
                   }
                 >
-                    <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
+                    <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{Translator(title)}</span>
                     <span className="text-betterfit-graphite text-base word break-words text-2xl">
                         <Countdown daysInHours={true} date={Date.parse(value)}></Countdown>
                     </span>
@@ -55,7 +56,7 @@ const DashboardMatchesDetail = (props) => {
                     (classes ? classes : "")
                   }
                 >
-                  <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
+                  <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{Translator(title)}</span>
                   <span className="text-betterfit-graphite text-base word break-words text-2xl">{value}</span>
                 </div>
             );
@@ -162,7 +163,7 @@ const DashboardMatchesDetail = (props) => {
                             style={{minWidth:100}}
                         >
                             <ReactSVG src={Reload} className="flex items-center mr-3"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                            Update Suppliers
+                            {Translator("Update Suppliers")}
                         </button>
                     </div>
                 </div>

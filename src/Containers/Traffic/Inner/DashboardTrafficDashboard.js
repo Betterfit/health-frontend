@@ -5,6 +5,7 @@ import ControllerCard from 'Components/TrafficControllerSideBar/ControllerCard';
 
 import Api from "Helpers/api";
 import Graph from "./DashboardGraph";
+import Translator from "Helpers/Translator";
 
 const api = new Api();
 const DashboardTrafficDashboard = () => {
@@ -34,8 +35,8 @@ const DashboardTrafficDashboard = () => {
                                         <div className="flex flex-row justify-between m-1 px-4">
                                             <span className="text-xs leading-4 font-medium uppercase tracking-wider uppercase text-betterfit-graphite">{product.name}</span>
                                             <div>
-                                                <span className="text-xs leading-4 uppercase tracking-wider uppercase text-betterfit-graphite mr-2">Orders</span>
-                                                <span className="text-xs leading-4 uppercase tracking-wider uppercase text-betterfit-graphite ml-2">Supply</span>
+                                                <span className="text-xs leading-4 uppercase tracking-wider uppercase text-betterfit-graphite mr-2">{Translator("Orders")}</span>
+                                                <span className="text-xs leading-4 uppercase tracking-wider uppercase text-betterfit-graphite ml-2">{Translator("Supply")}</span>
                                             </div>
                                         </div>
                                         {
