@@ -29,8 +29,8 @@ export const useResources = (customFilters: ResourceFilter[] = []) => {
 
     const tagList = findAllUniqueTags(filteredResources);
 
-    // filters out resources that don't match every selected tag
-    const tagMatchingResources = findResourcesMatchingTagPKList(
+    // filters out resources that don't match at least one selected tag
+    const tagMatchingResources = findResourcesMatchingTagPKs(
         filteredResources,
         selectedTagPKs
     );
@@ -53,9 +53,10 @@ export const useResources = (customFilters: ResourceFilter[] = []) => {
 };
 
 /**
- * Returns a list of resources that match all the given tags
+ * Returns a list of resources that match all the given tags.
+ * Not currently used, but maybe useful if desired behaviour changes.
  */
-const findResourcesMatchingTagPKList = (
+const findResourcesMatchingAllTagPKs = (
     resources: Resource[],
     tagPKs: number[]
 ): Resource[] => {
@@ -65,7 +66,7 @@ const findResourcesMatchingTagPKList = (
     for (const resource of resources) {
         // check that the resource has every tag
         for (const tagPK of tagPKs) {
-            if (!resource.tags.some((tag) => tag.pk === tagPK)) {
+            if (resource.tags.some((tag) => tag.pk !== tagPK)) {
                 badResourcePKs.add(resource.pk);
                 continue;
             }
@@ -74,6 +75,27 @@ const findResourcesMatchingTagPKList = (
     return resources.filter((res) => !badResourcePKs.has(res.pk));
 };
 
+/**
+ * Returns a list of resources that match atleast one of the given tags
+ */
+const findResourcesMatchingTagPKs = (
+    resources: Resource[],
+    tagPKs: number[]
+): Resource[] => {
+    if (tagPKs.length === 0) return resources;
+    const matchingResources = [];
+    // not the nicest time complexity but tagPKs and resource.tags won't be very long
+    for (const resource of resources) {
+        // check that the resource has every tag
+        for (const tagPK of tagPKs) {
+            if (resource.tags.some((tag) => tag.pk === tagPK)) {
+                matchingResources.push(resource);
+                continue;
+            }
+        }
+    }
+    return matchingResources;
+};
 /**
  * Returns a list (without duplicates) of all tags found in a list of resources
  */
