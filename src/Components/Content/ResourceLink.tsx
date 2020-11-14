@@ -54,7 +54,7 @@ const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
                 className="w-1 rounded-md mr-2 flex-shrink-0"
                 style={{ backgroundColor: color }}
             />
-            <div className="p-2 text-left">
+            <div className="p-2 text-left flex-grow">
                 <div className="font-medium text-gray-700 font-body uppercase tracking-widest text-xs">
                     {resource.resource_type}
                 </div>
@@ -62,17 +62,17 @@ const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
                     {resource.title}
                 </div>
             </div>
-            <div className="flex-grow float-right flex px-2 flex-shrink-0">
-                <div className="ml-auto inline-flex my-auto">
-                    {resource.tags.map((tag, i) => (
-                        <TagLink
-                            tag={tag}
-                            key={i}
-                            // these tags are just labels and should not be clickable/focusable
-                            buttonProps={{ disabled: true }}
-                        />
-                    ))}
-                </div>
+            <div className="flex flex-row-reverse flex-wrap px-2">
+                {resource.tags.map((tag, i) => (
+                    <TagLink
+                        tag={tag}
+                        key={i}
+                        // these tags are just labels and should not be clickable/focusable
+                        buttonProps={{
+                            disabled: true,
+                        }}
+                    />
+                ))}
             </div>
             <Slider active={showDetails} close={toggleSlider}>
                 {resourceCard}
