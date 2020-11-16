@@ -24,13 +24,14 @@ const App = observer(({userType}) => {
           <Switch>
 
             <Route exact path="/" render={() => (
-              token ? (
-                <Redirect to="/dashboard"/>
-              ) : (
-                <Redirect to="/login/"/>
-              )
+              <Redirect to="/dashboard"/>
             )}/>
 
+            {!token && (
+              <Route path="/login" initial >
+                <Login />
+              </Route>
+            )}
             <Route path="/login" initial >
               <Login />
             </Route>
