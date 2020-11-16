@@ -1,4 +1,5 @@
 import React from 'react'
+import Translator from "Helpers/Translator";
 
 const TableHead = ({TableHead}) => {
     return(
