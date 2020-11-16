@@ -10,6 +10,8 @@ import Notfications from "Components/Helpers/Notifications"
 import Button from "Components/Forms/Button";
 import { useHistory, Route, useRouteMatch } from "react-router-dom";
 import {useAuthStore} from "Context/authContext";
+import Translator from "Helpers/Translator";
+
 const LoginTemplate = () => {
   const authStore = useAuthStore();
   const [password, setPW] = useState("");
@@ -77,7 +79,7 @@ const LoginTemplate = () => {
             href={history.location.pathname + "forgotpassword"}
             className="font-medium text-gray-600 hover:text-gray-700 focus:outline-none focus:underline transition ease-in-out duration-150"
           >
-            Forgot password?
+            {Translator("Forgot password?")}
           </a>
         </div>
       </div>

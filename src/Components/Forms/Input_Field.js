@@ -13,7 +13,7 @@ function Input_Field({ id_tag, name, type, value, onChange }) {
           id={id_tag}
           type={type}
           className="py-3 pl-4 form-input block w-full text-lg border-gray-400 border rounded"
-          placeholder={name}
+          placeholder={Translator(name)}
           value={value}
           onChange={onChange}
           required
