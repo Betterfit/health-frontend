@@ -3,7 +3,7 @@ import Button from "../Forms/Button";
 import Inventory_Description from "../Inventory/Inventory_Description";
 import Quantity_Input from "Components/Forms/Quantity_Input";
 import UpdateQuantitySupplier from "Components/Helpers/UpdateQuantitySupplier";
-
+import {useAuthStore} from "Context/authContext";
 //This will either return the attribute if it exists, or
 // return the passed in 'default_value' if not
 const Read_Product = (product_attr, default_value) => {
@@ -39,6 +39,9 @@ const Inventory = ({ product, edit }) => {
     id:"",
     data:""
   })
+  const authStore = useAuthStore();
+  const userData = JSON.parse(authStore.user);
+  const supplierId = userData.user_profile.supplier;
   return (
     <>
       <div className="flex md:flex-row flex-col-reverse">
@@ -73,12 +76,12 @@ const Inventory = ({ product, edit }) => {
                 name="Available"
                 value={available}
                 readValue={readAvailble}
-                quantityUpdate={(id,data) => setQuantityData({ id:id,data:data})}
-                id_tag="available"
+                quantityUpdate={(data) => setQuantityData({ id:product.pk,data:data.quantity})}
+                id_tag={product.pk}
               ></Quantity_Input>
             </div>
             <div className="py-2 md:py-8 md:mx-2">
-              <Button onClick={() => UpdateQuantitySupplier(quantityData.id,quantityData.data)} text="Save Changes" text_size="text-base"></Button>
+              <Button onClick={() => UpdateQuantitySupplier(supplierId,quantityData.id,quantityData.data)} text="Save Changes" text_size="text-base"></Button>
             </div>
           </div>
         </div>

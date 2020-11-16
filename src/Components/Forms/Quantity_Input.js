@@ -24,7 +24,8 @@ function Quantity_Input({ id_tag, name, readOnly=false, value, readValue , quant
               if(quantityUpdate){
                 clearTimeout(timeout);
                 timeout = setTimeout( () => {
-                  quantityUpdate({"quantity":val})    
+                  console.log(val);
+                  quantityUpdate({"quantity":val,})    
                 },1000);
               }
           }}
