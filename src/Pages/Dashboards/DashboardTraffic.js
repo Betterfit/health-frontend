@@ -21,7 +21,7 @@ const DashboardTraffic = () => {
     const navItemsList = [
         {
             to:'/dashboard/traffic-dashboard',
-            name:`${authStore.language == "en" ? `Dashboard` : `French Dashboard` }`,
+            name: "Dashboard",
             icon: Dashboard,
             key:'traffic-dashboard',
         },

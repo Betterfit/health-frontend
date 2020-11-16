@@ -1,4 +1,5 @@
 import React from "react";
+import Translator from "Helpers/Translator";
 
 const StatStyles = (stat = "open") => {
   switch (stat.toLowerCase()) {
@@ -86,7 +87,7 @@ const StatusButton = ({ status, extraClasses }) => {
     <div
       className={`uppercase rounded-full py-2 md:px-10 px-4 text-xxs text-center md:text-xs ${styles.bg} ${styles.text} ${extraClasses}`}
     >
-      {styles.title}
+      {Translator(styles.title)}
     </div>
   );
 };

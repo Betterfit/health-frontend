@@ -10,7 +10,8 @@ import Modal from "Components/Content/Modal";
 import OrderProductCard from "Components/Order/OrderProductCard";
 import OrderName from "Components/Forms/OrderName"
 import Checkbox from 'Components/Forms/CheckboxConfirm';
-import { useHistory } from "react-router-dom";
+import Translator from "Helpers/Translator";
+
 const api = new Api();
 let rawCart;
 
@@ -133,7 +134,7 @@ const OrderCart =({Cart, OrderID , id}) => {
               }}
             ></ReactSVG>
             <p className="text-base text-betterfit-graphite opacity-75 text-center">
-              No products added
+              {Translator("No products added")}
             </p>
             </>
         )}
@@ -146,11 +147,12 @@ const OrderCart =({Cart, OrderID , id}) => {
         {modalOrder && (
             <Modal  cancelCallBack ={() => setModalOrder(!modalOrder)} confirmCallBack = {() => confirmCallBack("open")} buttonText="Place Order">
                 <div className="px-6 py-4 border-b border-gray-300">
-                    <h2 className="text-betterfit-navy text-xl">Confirm Order</h2>
+                    <h2 className="text-betterfit-navy text-xl"> {Translator("Confirm Order")}</h2>
                 </div>
                 <div className="py-6 px-6">
-                  <p className="text-paragraph text-base">Are you sure you’re ready to submit this order? 
-                  Would you like to add a purchase order to it? </p>
+                  <p className="text-paragraph text-base">
+                    {Translator("Are you sure you’re ready to submit this order? Would you like to add a purchase order to it?")}
+                    </p>
                 </div>
                 <OrderName name={cartStore.newOrderName} callBack = {(name)=> setOrderName(name)}/>
                 <div className="mb-6 px-6">
@@ -166,10 +168,10 @@ const OrderCart =({Cart, OrderID , id}) => {
         {modalDraft && (
             <Modal  cancelCallBack ={() => setModalDraft(!modalDraft)} confirmCallBack = {() => confirmCallBack("draft")} buttonText="Save Draft">
                 <div className="px-6 py-4 border-b border-gray-300">
-                    <h2 className="text-betterfit-navy text-xl">Save as Draft</h2>
+                    <h2 className="text-betterfit-navy text-xl">{Translator("Save as Draft")}</h2>
                 </div>
                 <div className="py-6 px-6">
-                  <p className="text-paragraph text-base">Would you like to add a purchase order to it?</p>
+                  <p className="text-paragraph text-base">{Translator("Would you like to add a purchase order to it?")}</p>
                 </div>
                 <OrderName name={cartStore.newOrderName} callBack = {(name)=> setOrderName(name)}/>
             </Modal> 
