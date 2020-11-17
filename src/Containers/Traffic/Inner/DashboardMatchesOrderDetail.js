@@ -58,7 +58,7 @@ const DashboardMatchesOrderDetail = (props) => {
         getData();
     }, []);
 
-    const actionComponent = <StatusButton status={`${orderHeader.match_date ? "matched" : "no-match"}`} /> ;
+    const actionComponent = <StatusButton status={`${orderHeader.match_date !== "No match date" ? "matched" : "no-match"}`} /> ;
     const excludeKeys = ["pk","product_image","name","product_variation","product_category"];
     const excludeValues = ["pk","product_variation","name","product_category"];
     return(
