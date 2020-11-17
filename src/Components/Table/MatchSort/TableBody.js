@@ -1,14 +1,12 @@
-import React, {FC,useState,useEffect} from 'react'
+import React, { useState } from 'react'
 import { ReactSortable } from "react-sortablejs";
 import { ReactSVG } from 'react-svg';
-import Edit from 'Images/Icons/edit.svg';
 import Moveable from 'Images/Icons/moveable.svg';
 import Attention from 'Images/Icons/yellow-attention.svg';
 import {NavLink} from "react-router-dom";
-import Button from "Components/Content/Button";
-import StatusButton from "Components/Content/StatusButton";
 import dayjs from 'dayjs';
 import Api from "Helpers/api";
+import Translator from "Helpers/Translator";
 const TableBody = ({TableBodyData,updateRow,removeAtIndex,statusIndex,link,buttonType}) => {
     const api = new Api();
     const [rowState , setRowState ] = useState(TableBodyData);
@@ -68,7 +66,7 @@ const TableBody = ({TableBodyData,updateRow,removeAtIndex,statusIndex,link,butto
                                         {!row.supplier && (
                                             <span className="flex items-center">
                                                 <ReactSVG src={Attention} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                                                <span style={{color:'#B36200'}} className="font-bold pl-1">No Match!</span>
+                                                <span style={{color:'#B36200'}} className="font-bold pl-1">{Translator("No Match")}</span>
                                             </span>
                                         )}
                                         {row.supplier && ( 

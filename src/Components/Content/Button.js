@@ -1,9 +1,5 @@
 import React from "react";
-import { ReactSVG } from "react-svg";
-import Plus from "Images/Icons/plus.svg";
-import Edit from "Images/Icons/edit.svg";
-//To add an svg icon - add component to svg and add to svgMap
-//So if svgName = 'plus' will call the Plus component
+import Translator from "Helpers/Translator";
 
 
 const Button = ({ text, onClick, solid = true, text_size = "text-lg",color, extraClasses, pill}) => {
@@ -21,7 +17,7 @@ const Button = ({ text, onClick, solid = true, text_size = "text-lg",color, extr
         }
         style={{minWidth:100}}
       >
-        {text}
+        {Translator(text)}
       </button>
     
   );

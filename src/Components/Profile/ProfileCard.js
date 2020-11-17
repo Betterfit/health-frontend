@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuthStore } from "Context/authContext";
 import Api from "Helpers/api";
 import { isEqual } from "lodash";
+import Translator from "Helpers/Translator";
 
 //components
 import InputFieldLabel from "Components/Forms/InputFieldLabel";
@@ -195,12 +196,13 @@ const ProfileCard = ({}) => {
         }}
       >
         <div className="space-y-6">
-          <h2 className="text-xl text-betterfit-graphite">Base Profile</h2>
+          <h2 className="text-xl text-betterfit-graphite">{Translator("Base Profile")}</h2>
           <ButtonToggle
             option1={{ label: "English", active: baseFormValues.lang === "en", value: "en" }}
             option2={{ label: "French", active: baseFormValues.lang === "fr", value: "fr" }}
             changeValue={handleBaseChange}
             id="lang"
+            name = "Default Language"
           ></ButtonToggle>
 
           <InputFieldLabel
@@ -220,7 +222,7 @@ const ProfileCard = ({}) => {
         </div>
         <div className="space-y-6 pb-4">
           <h2 className="text-xl text-betterfit-graphite pt-6">
-            Change Password
+            {Translator("Change Password")}
           </h2>
           <InputFieldLabel
             id_tag="oldPW"
