@@ -13,6 +13,9 @@ import store from 'Store/store.js';
 
 // ================ PAGES ================
 import Login from './Pages/Login/Login';
+import ForgotPassword from './Pages/Login/ForgotPassword';
+import ResetPassword from './Pages/Login/ResetPassword';
+import LoginContainer from './Pages/Login/LoginContainer';
 import LogOut from './Pages/Logout';
 import Dashboard from './Pages/Dashboard';
 import {useAuthStore} from "Context/authContext";
@@ -32,16 +35,25 @@ const App = observer(({userType}) => {
                 <Redirect to="/login/"/>
               )
             )}/>
-
+            <Route path="/login/forgotpassword" initial >
+             <LoginContainer> 
+                <ForgotPassword></ForgotPassword>
+              </LoginContainer>
+            </Route>
+            <Route path="/resetpassword" initial >
+             <LoginContainer> 
+                <ResetPassword></ResetPassword>
+              </LoginContainer>
+            </Route>
             <Route path="/login" initial >
-              <Login />
+              <LoginContainer> 
+                <Login></Login>
+              </LoginContainer>
             </Route>
             <Route path="/logout" initial >
               <LogOut />
             </Route>
-            <Route path="/login/forgotpassword" initial >
-              <Login />
-            </Route>
+
             <Route path="/dashboard">
               <Dashboard language={authStore.language}/>
             </Route>
