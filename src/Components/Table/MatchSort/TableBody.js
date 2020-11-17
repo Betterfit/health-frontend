@@ -11,20 +11,6 @@ const TableBody = ({TableBodyData,updateRow,removeAtIndex,statusIndex,link,butto
     const api = new Api();
     const [rowState , setRowState ] = useState(TableBodyData);
     const sortFunction = () => {
-        // let arr = rowState;
-        // arr = arr.map((item,index) => {
-        //     console.log(item);
-        //     let obj = {
-        //         pk:item.id,
-        //         order:index,
-        //     }
-        //     return obj;
-        // });
-        // console.log(arr);
-        // api.postSortedMatches(arr)
-        // .then((response) => {
-        //     console.log(response.data);
-        // })
         updateRow(rowState)
     } 
     return(

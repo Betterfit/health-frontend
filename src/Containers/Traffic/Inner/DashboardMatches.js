@@ -29,7 +29,7 @@ const DashboardMatches = () => {
             time_till_processed:response.data.cutoff_time_2
         })
         let arr = response.data;
-
+        // console.log(arr);
         arr = arr.matches.map(item => {
             let obj = {
                 order_no: item.order_no,
@@ -57,19 +57,36 @@ const DashboardMatches = () => {
             setRefresh(true);
             setTimeout(()=>{
                 setRefresh(null); 
+                setIsLoading(true);
             },2500);
             let arr = rowState;
             arr = arr.map((item,index) => {
-                console.log(item);
+             
                 let obj = {
                     pk:item.id,
                     order:index,
                 }
                 return obj;
             });
-            console.log(arr);
+         
             api.postSortedMatches(arr)
             .then((response) => {
+                let data = response.data;
+                let arr = response.data;
+                arr = arr.matches.map(item => {
+                    let obj = {
+                        order_no: item.order_no,
+                        province: item.province,
+                        facility: item.facility,
+                        supplier: item.supplier !== "No match" ? item.supplier : null ,
+                        order_date: item.order_date,
+                        rank:item.rank,
+                        pk:item.pk
+                    }
+                    return(obj);
+                }); 
+                setIsLoading(false);
+                setMatchesData(arr)
             })
         }
     } 
@@ -78,7 +95,7 @@ const DashboardMatches = () => {
 
     const HeadingComponent = ({ title, value, classes, time }) => {
         if(time){
-            console.log(value);
+            // console.log(value);
             return (
                 <div
                   className={

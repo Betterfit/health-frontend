@@ -4,13 +4,10 @@ import { ReactSVG } from "react-svg";
 // components
 import SideBarProfileNavigation from "./SideBarProfileNavigation";
 import DotMenu from "Images/Icons/dot-menu.svg";
-import ProfileCard from "Components/Profile/ProfileCard";
 import OpenClose from "Images/Icons/open-close.svg";
-import FaciltyCard from "Components/Profile/FacilityCard";
-import Slider from "Components/Slider/Slider";
 
-const SideBarProfile = ({ userName, active, userType, showFacility, showProfile}) => {
-  const [ShowNav, SetNav] = useState(active);
+const SideBarProfile = ({ userName, userType, showFacility, showProfile}) => {
+  const [ShowNav, SetNav] = useState(false);
   const ToggleProfileNavigation = () => {
     SetNav(!ShowNav);
   };
