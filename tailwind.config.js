@@ -73,6 +73,7 @@ module.exports = {
         '10': '10px',
         '14': '14px',
         '16': '16px',
+        '22': '22px',
         '3xl': '1.75rem',
       },
       letterSpacing: {

@@ -9,9 +9,6 @@ p {
   margin: 6px 0px;
 }
 
-/* .active-nav{
-    border-bottom: 2px solid #4A5568;
-} */
 
 @media screen and (min-width: 768px) {
   a.nav.active {
@@ -21,6 +18,9 @@ p {
   a.nav[aria-current="page"] {
     opacity: 1;
     background-color: #18398d;
+  }
+  a.nav.active span{
+    font-weight: 600;
   }
 }
 

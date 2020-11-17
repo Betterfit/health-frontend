@@ -42,7 +42,7 @@ const SideBarProfile = ({ userName, active, userType, showFacility, showProfile}
         onClick={ToggleProfileNavigation}
 >
           <div className="ml-3 flex flex-row items-center justify-between">
-            <p className=" text-sm md:text-md leading-5 font-medium text-white opacity-75 group-hover:text-gray-900">
+            <p className=" text-sm md:text-base leading-5 font-medium text-white opacity-75 group-hover:text-gray-900">
               {userName}
             </p>
             <ReactSVG
