@@ -3,32 +3,28 @@ import SideBarNavigation from "./SideBarNavigation";
 import SideBarDashboardTypeCTA from "./SideBarDashboardTypeCTA";
 import SideBarProfile from "./SideBarProfile";
 import logo from "Images/Icons/logo-full.svg";
-import useStores from "Helpers/useStores";
 import ProfileCard from "Components/Profile/ProfileCard";
 import FaciltyCard from "Components/Profile/FacilityCard";
 import Slider from "Components/Slider/Slider";
-import {useAuthStore} from "Context/authContext";
+
 const UserInfo = (profile) => {
   switch (profile.user_type) {
     case "facility_admin":
       return profile.facility_name;
     case "supplier_admin":
       return profile.supplier_name;
+    case "traffic_controller":
+        return "Traffic Controller";
   }
 };
 
 const SideBar = ({ navItemsList }) => {
-  const { store } = useStores();
   const [userData, setUserType] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
   const userName = userData.username;
   const orgName = UserInfo(userData.user_profile);
   const userType = userData.user_profile.user_type;
-  const [active, setActive] = useState(false);
-  const activateMenu = () => {
-    setActive(!active);
-  };
 
   const [ShowProfile, SetProfile] = useState({
     profile: false,
@@ -60,7 +56,6 @@ const SideBar = ({ navItemsList }) => {
             <SideBarNavigation navList={navItemsList} />
           </div>
           <SideBarProfile
-            active={active}
             userName={userName}
             userType={userType}
             showFacility={() => ToggleOptions("facility")}
