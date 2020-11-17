@@ -2,6 +2,7 @@ import React from "react";
 import { ReactSVG } from "react-svg";
 import critical from "Images/Icons/critical.svg";
 import thumbsup from "Images/Icons/thumbs-up.svg";
+import Translator from "Helpers/Translator";
 
 const SuccessSVG = () => {
   return (
@@ -37,8 +38,8 @@ const Notification = ({ head, text, success = false }) => {
        {success && <SuccessSVG></SuccessSVG>}
        {!success && <FailSVG></FailSVG>}
       <p className={`text-xs leading-5 ${css_text} `}>
-        <span className="font-bold ml-2 mr-2">{head} </span>
-        {text}
+        <span className="font-bold ml-2 mr-2">{Translator(head)} </span>
+        {Translator(text)}
       </p>
     </div>
   );

@@ -12,7 +12,7 @@ const CategoryTitle = ({ title, icon, background_color, color }) => {
         className="rounded-full h-12 w-12 flex items-center mr-2 "
         style={backgroundColor}
       >
-        <img className="m-auto h-8 w-8" src={svg} />
+        <img className="m-auto h-8 w-8" src={svg} alt={title}/>
       </div>
       <h2 className="text-betterfit-graphite text-3xl">{title}</h2>
     </div>

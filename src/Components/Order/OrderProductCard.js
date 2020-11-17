@@ -18,7 +18,6 @@ const Read_Product = (product_attr, default_value) => {
 //If no image can be found - return nothing
 const ProductImage = ({ product_image, product_name }) => {
   if (product_image === undefined ) {
-    // console.log('no image');
     return null;
   }
   return (
@@ -34,6 +33,7 @@ const ProductImage = ({ product_image, product_name }) => {
 
 const OrderProductCard = ({ product }) => {
   // cart store
+  console.log(product);
   const cartStore = useCartStore();
   // product state
   const [priority, setPriority] = useState(product.priority);
@@ -50,7 +50,7 @@ const OrderProductCard = ({ product }) => {
   return (
     <>
       <div className={ "mb-2 bg-white rounded relative orderCartCard z-20" + (priority ? "border border-betterfit-highlight-red" : "border-transparent") }>
-        <button onClick = {() => cartStore.removeFromCart(product.pk)} className="absolute top-0 right-0 transform translate-x-1/2 z-100 opacity-0 removeCartItem">
+        <button onClick = {() => cartStore.removeFromCart(product.pk)} aria-label="remove from cart" className="absolute top-0 right-0 transform translate-x-1/2 z-100 opacity-0 removeCartItem">
             <ReactSVG src={Close} className="flex items-center"/> 
         </button>
         <div className="flex md:flex-row px-4">
@@ -60,7 +60,7 @@ const OrderProductCard = ({ product }) => {
           />
           <div className="flex-col pt-7">
             <h1 className={ "text-base font-semibold " + (priority ? "text-betterfit-highlight-darkred" : "text-betterfit-graphite ") }>
-              {Read_Product(product.name, "")}
+              {product.product ? `${product.product} - `: "" }{Read_Product(product.name, "")}
             </h1>
             <span className="text-betterfit-grey-blue text-xs">
               {Read_Product(product.product_variation, "N/A")}

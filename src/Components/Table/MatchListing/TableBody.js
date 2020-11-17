@@ -4,7 +4,9 @@ import Edit from 'Images/Icons/edit.svg'
 import {NavLink} from "react-router-dom";
 import Button from "Components/Content/Button";
 import StatusButton from "Components/Content/StatusButton";
+import dayjs from 'dayjs';
 const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
+    // console.log(`slide ${TableBody}`)
     return(
         <tbody>  
             {
@@ -19,8 +21,8 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                             if(index !== removeAtIndex)
                                                 if(index == statusIndex)
                                                     return(
-                                                    <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-betterfit-graphite">
-                                                        <NavLink className="px-4 py-4 text-sm leading-5 text-betterfit-graphite block" to={`${link}${row[removeAtIndex]}`}>
+                                                    <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
+                                                        <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500 block" to={`${dayjs().format('YYYY-M-D') === row[0] ? '/dashboard/matches/' : `/dashboard/matches/history?date=${row[0]}`}`}>
                                                             {buttonType === "statusbutton" && (
                                                                 <StatusButton status={r} />
                                                             )} 
@@ -38,7 +40,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                                     return(
                                                         
                                                         <td key={`table_td_${pindex}_${index}`} className="whitespace-no-wrap px-4 py-4">
-                                                            <NavLink className="text-sm leading-5 text-betterfit-graphite" to={`${link}${row[removeAtIndex]}`}>
+                                                            <NavLink className="text-sm leading-5 text-gray-500" to={`${dayjs().format('YYYY-M-D') === row[0] ? '/dashboard/matches/' : `/dashboard/matches/history?date=${row[0]}`}`}>
                                                                 {r}
                                                             </NavLink>
                                                         </td>
@@ -56,8 +58,8 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                             if(index !== removeAtIndex)
                                                 if(index == statusIndex)
                                                     return(
-                                                    <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-betterfit-graphite">
-                                                        <span className="px-4 py-4 text-sm leading-5 text-betterfit-graphite">
+                                                    <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
+                                                        <span className="px-4 py-4 text-sm leading-5 text-gray-500">
                                                             {buttonType === "statusbutton" && (
                                                                 <StatusButton status={r} />
                                                             )} 
@@ -73,7 +75,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                                     </td>)
                                                 else
                                                     return(
-                                                        <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-betterfit-graphite">
+                                                        <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                                             {r}
                                                         </td>
                                                     )
@@ -94,8 +96,8 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                             if(index !== removeAtIndex)
                                                 if(index == statusIndex)
                                                     return(
-                                                    <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-betterfit-graphite">
-                                                        <NavLink className="px-4 py-4 text-sm leading-5 text-betterfit-graphite block" to={`${link}${row[removeAtIndex]}`}>
+                                                    <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
+                                                        <NavLink className="px-4 py-4 text-sm leading-5 text-gray-500 block" to={`${dayjs().format('YYYY-M-D') === row[0] ? '/dashboard/matches/' : `/dashboard/matches/history?date=${row[0]}`}`}>
                                                             {buttonType === "statusbutton" && (
                                                                 <StatusButton status={r} />
                                                             )} 
@@ -112,7 +114,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                                 else
                                                     return(
                                                         <td key={`table_td_${pindex}_${index}`} className="whitespace-no-wrap px-4 py-4 ">
-                                                            <NavLink className="text-sm leading-5 text-betterfit-graphite" to={`${link}${row[removeAtIndex]}`}>
+                                                            <NavLink className="text-sm leading-5 text-gray-500" to={`${dayjs().format('YYYY-M-D') === row[0] ? '/dashboard/matches/' : `/dashboard/matches/history?date=${row[0]}`}`}>
                                                                     {r}
                                                             </NavLink>
                                                         </td>
@@ -129,8 +131,8 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                             if(index !== removeAtIndex)
                                                 if(index == statusIndex)
                                                     return(
-                                                    <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-betterfit-graphite">
-                                                        <span className="px-4 py-4 text-sm leading-5 text-betterfit-graphite">
+                                                    <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-gray-500">
+                                                        <span className="px-4 py-4 text-sm leading-5 text-gray-500">
                                                             {buttonType === "statusbutton" && (
                                                                 <StatusButton status={r} />
                                                             )} 
@@ -145,7 +147,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                                     </td>)
                                                 else
                                                     return(
-                                                        <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-betterfit-graphite">
+                                                        <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                                             {r}
                                                         </td>
                                                     )

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ListLink from "Components/Content/ListLink";
 import TagLink from "Components/Content/TagLink";
-import ResourceLink from "Components/Content/ResourceLink";
+import Translator from "Helpers/Translator";
 import Search from "Components/Search/Search";
 import Api from "Helpers/api";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import { useQuery } from "react-query";
 import ResourceDisplay from "Components/Resources/ResourceDisplay";
+
 
 const DashboardResources = () => {
     const [title, setTitle] = useState("Resources");
@@ -22,7 +23,7 @@ const DashboardResources = () => {
         api.getTags().then((resp) => resp.data)
     );
     if (resourcesLoading || tagsLoading) {
-        return <div>Loading</div>;
+        return <div>{Translator("Loading")}</div>;
     }
 
     const resourceColors = {
@@ -36,12 +37,12 @@ const DashboardResources = () => {
     return (
         <div className="flex flex-col md:flex-row overflow-x-hidden">
             <DashboardSideBar>
-                <h2 className="text-3xl text-dark-blue my-3">{title}</h2>
+                <h2 className="text-3xl text-dark-blue my-3">{Translator(title)}</h2>
                 <Search type="bar" />
                 <div className="border-b border-gray-400 mt-5" />
                 <div>
                     <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
-                        Resource Type
+                        {Translator("Resource Type")}
                     </h3>
                     {Object.entries(resourceColors).map(
                         ([resourceTitle, resourceColor]) => {
@@ -57,7 +58,7 @@ const DashboardResources = () => {
                 </div>
                 <div>
                     <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
-                        Tags
+                    {Translator("Tags")}
                     </h3>
                     {tagList.map((tag) => {
                         return <TagLink tag={tag} />;

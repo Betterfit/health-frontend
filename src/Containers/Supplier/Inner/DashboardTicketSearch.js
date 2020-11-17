@@ -6,13 +6,14 @@ import BackNavigation from 'Components/Helpers/BackNavigation';
 import TitleUnderLine from 'Components/Content/TitleUnderLine';
 import Table from 'Components/Table/List/Table';
 import Search from 'Components/Search/Search';
+import Spinner from "Images/spinner.gif";
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 const DashboardTicketSearch = ({supplierId}) => {
     const api = new API;
     let query = useQuery();    
-    console.log(supplierId, query.get('search'));
+    const [isLoading, setIsLoading] = useState(true);
     const [searchQuery , setSearchQuery] = useState(query.get('search'));
     const [searchData , setSearchData] = useState();
     const getSearchResults = async () => await api.getSearchTickets(supplierId,query.get('search'))
@@ -27,7 +28,7 @@ const DashboardTicketSearch = ({supplierId}) => {
             item.status = filterItemStatus;
             return(item);
         });
-        console.log(data);
+        setIsLoading(false);
         setSearchData(data);
     })
     .catch((err) => console.log(err));
@@ -43,6 +44,7 @@ const DashboardTicketSearch = ({supplierId}) => {
     
     return(
         <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
+            
             {searchData && (
                 <>
                     <BackNavigation link="Back" />
@@ -63,7 +65,13 @@ const DashboardTicketSearch = ({supplierId}) => {
                     }
                 </>
                 
-            )}          
+            )} 
+            {isLoading && (
+                <div className="relative w-3/4 min-h-screen" style={{margin:'0 auto',}}> 
+                    <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
+                </div>
+            )} 
+                    
         </div>
     );
 }

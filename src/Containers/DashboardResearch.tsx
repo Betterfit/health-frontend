@@ -7,6 +7,7 @@ import Search from "Components/Search/Search";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import AddResearch from "Components/Resources/AddResearch";
 import { Resource, Tag } from "Types";
+import Translator from "Helpers/Translator";
 
 const DashboardResearch = () => {
     const api = new Api();
@@ -29,7 +30,7 @@ const DashboardResearch = () => {
     return (
         <div className="flex flex-col md:flex-row overflow-x-hidden">
             <DashboardSideBar addonStyles={null}>
-                <h2 className="text-3xl text-dark-blue my-3">Research</h2>
+                <h2 className="text-3xl text-dark-blue my-3">{Translator("Research")}</h2>
                 <Search type="bar" />
                 <div className="border-b border-gray-400 mt-5" />
                 <AddResearch />

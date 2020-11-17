@@ -22,7 +22,6 @@ const DashboardEditOrder = observer((props) => {
     await api
       .getOrder(orderId)
       .then((response) => {
-        console.log(response.data);
         let arr = response.data.order_products;
         arr = arr.map((item) => {
           let obj = {

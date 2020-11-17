@@ -18,7 +18,6 @@ function useQuery() {
 const DashboardOrderSearch = ({}) => {
     const api = new API;
     let query = useQuery();    
-    console.log(query.get('search'));
     const [searchQuery , setSearchQuery] = useState(query.get('search'));
     const [searchData , setSearchData] = useState();
     const getSearchResults = async () => await api.getSearchOrders(query.get('search'))

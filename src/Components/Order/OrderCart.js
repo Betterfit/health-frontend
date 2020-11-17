@@ -10,7 +10,8 @@ import Modal from "Components/Content/Modal";
 import OrderProductCard from "Components/Order/OrderProductCard";
 import OrderName from "Components/Forms/OrderName"
 import Checkbox from 'Components/Forms/CheckboxConfirm';
-import { useHistory } from "react-router-dom";
+import Translator from "Helpers/Translator";
+
 const api = new Api();
 let rawCart;
 
@@ -28,6 +29,7 @@ const OrderCart =({Cart, OrderID , id}) => {
   const [agreeTermsError, setAgreeTermsError] = useState(false);
   const getCartItems = () => {
     const promises = CartData.map((item, i) => api.getProductOption(item.pk).then(data => {
+      console.log(data);
       return {
         ...data.data,
         quantity:item.quantity,
@@ -77,7 +79,6 @@ const OrderCart =({Cart, OrderID , id}) => {
           delete order.facility;
           delete order.facility_admin;
           api.editOrder(order,id).then(response => {
-            console.log(response.error);
             setModalOrder(false)
             setModalDraft(false)
             cartStore.newOrderName = "";
@@ -90,7 +91,6 @@ const OrderCart =({Cart, OrderID , id}) => {
           });
         }else{
           api.setNewOrder(order).then(response => {
-            console.log(response);
             setModalOrder(false)
             setModalDraft(false)
             cartStore.newOrderName = "";
@@ -122,6 +122,7 @@ const OrderCart =({Cart, OrderID , id}) => {
       <div className="p-3 my-4 overflow-y-scroll">
         {cartItems && cartItems.length >= 1 && (
           cartItems.map((item,index) => {
+            console.log(item);
             return(<OrderProductCard key={`${item.name.replace(/\s/g, '')}-${item.pk}`} product={item}/>)
           })
         )}
@@ -134,8 +135,8 @@ const OrderCart =({Cart, OrderID , id}) => {
                 svg.setAttribute("style", "display:block;margin:auto");
               }}
             ></ReactSVG>
-            <p className="text-base text-betterfit-grey-blue text-center">
-              No products added
+            <p className="text-base text-betterfit-graphite opacity-75 text-center">
+              {Translator("No products added")}
             </p>
             </>
         )}
@@ -148,11 +149,12 @@ const OrderCart =({Cart, OrderID , id}) => {
         {modalOrder && (
             <Modal  cancelCallBack ={() => setModalOrder(!modalOrder)} confirmCallBack = {() => confirmCallBack("open")} buttonText="Place Order">
                 <div className="px-6 py-4 border-b border-gray-300">
-                    <h2 className="text-betterfit-navy text-xl">Confirm Order</h2>
+                    <h2 className="text-betterfit-navy text-xl"> {Translator("Confirm Order")}</h2>
                 </div>
                 <div className="py-6 px-6">
-                  <p className="text-paragraph text-base">Are you sure you’re ready to submit this order? 
-                  Would you like to add a purchase order to it? </p>
+                  <p className="text-paragraph text-base">
+                    {Translator("Are you sure you’re ready to submit this order? Would you like to add a purchase order to it?")}
+                    </p>
                 </div>
                 <OrderName name={cartStore.newOrderName} callBack = {(name)=> setOrderName(name)}/>
                 <div className="mb-6 px-6">
@@ -168,10 +170,10 @@ const OrderCart =({Cart, OrderID , id}) => {
         {modalDraft && (
             <Modal  cancelCallBack ={() => setModalDraft(!modalDraft)} confirmCallBack = {() => confirmCallBack("draft")} buttonText="Save Draft">
                 <div className="px-6 py-4 border-b border-gray-300">
-                    <h2 className="text-betterfit-navy text-xl">Save as Draft</h2>
+                    <h2 className="text-betterfit-navy text-xl">{Translator("Save as Draft")}</h2>
                 </div>
                 <div className="py-6 px-6">
-                  <p className="text-paragraph text-base">Would you like to add a purchase order to it?</p>
+                  <p className="text-paragraph text-base">{Translator("Would you like to add a purchase order to it?")}</p>
                 </div>
                 <OrderName name={cartStore.newOrderName} callBack = {(name)=> setOrderName(name)}/>
             </Modal> 

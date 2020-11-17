@@ -8,31 +8,25 @@ import {
 
 import Order from "Images/Icons/order.svg";
 import Resources from "Images/Icons/resources.svg";
-import NewOrder from "Images/Icons/new-order.svg";
 import Dashboard from "Images/Icons/dashboard.svg";
 import Matches from "Images/Icons/matches.svg";
 import Inventory from "Images/Icons/inventory.svg";
-import authStore from 'Store/modules/auth';
+import { useAuthStore } from 'Context/authContext';
 
 
-// const [isOpen, setIsOpen] = useState(false)
-
-
-// const sideBarToggle = () => {
-
-// }
 
 const DashboardTraffic = () => {
+    const authStore = useAuthStore()
     // usestate to save user and pass
     const navItemsList = [
         {
             to:'/dashboard/traffic-dashboard',
-            name:`${authStore.language == "en" ? `Dashboard` : `French Dashboard` }`,
+            name: "Dashboard",
             icon: Dashboard,
             key:'traffic-dashboard',
         },
         {
-            to:'/dashboard/matches',
+            to:'/dashboard/match-listing',
             name:'Matches',
             icon:Matches,
             key:'matches',

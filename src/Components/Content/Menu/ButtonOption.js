@@ -6,7 +6,7 @@ import Button from "Components/Forms/Button";
         <Button
           text={value}
           color=" bg-betterfit-green"
-          hoverColor="bg-green-800"
+          hoverColor="bg-green-900"
           text_size="text-sm"
           onClick = {onClick}
         ></Button>

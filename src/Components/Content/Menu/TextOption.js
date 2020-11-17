@@ -1,6 +1,5 @@
 import React from "react";
-import Button from "Components/Forms/Button";
-import { Transition } from "@tailwindui/react";
+import Translator from "Helpers/Translator";
 
   const TextOption = ({ value, href, onClick }) => {
     return (
@@ -10,7 +9,7 @@ import { Transition } from "@tailwindui/react";
         role="menuitem"
         href={href}
       >
-        {value}
+        {Translator(value)}
       </a>
     );
   };
