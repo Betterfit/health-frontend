@@ -33,7 +33,7 @@ const ProductImage = ({ product_image, product_name }) => {
 
 const OrderProductCard = ({ product }) => {
   // cart store
-  console.log(product);
+  // console.log(product);
   const cartStore = useCartStore();
   // product state
   const [priority, setPriority] = useState(product.priority);
