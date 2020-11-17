@@ -13,14 +13,14 @@ const SideBarProfileNavigation = ({ userType, showFacility, showProfile, close})
     onMouseLeave = {close}>
       {userType === 'facility_admin' && (
         <a onClick={showFacility}>
-          <span className="opacity-75 my-2">Facility Profile</span>
+          <span className="my-2">Facility Profile</span>
         </a>
       )}
       <a onClick={showProfile}>
-        <span className="opacity-75 my-2">Profile</span>
+        <span className="my-2">Profile</span>
       </a>
       <a href="/logout">
-        <span className="opacity-75 my-2">Logout</span>
+        <span className="my-2">Logout</span>
       </a>
     </div>
 

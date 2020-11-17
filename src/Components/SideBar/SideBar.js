@@ -46,14 +46,16 @@ const SideBar = ({ navItemsList }) => {
   };
   return (
     <div className="md:flex md:flex-shrink-0 sidebar">
-      <div className="flex flex-col sidebar md:p-4 md:pr-0 w-full">
+      <div className="flex flex-col sidebar md:p-2 md:pr-0 w-full">
         <div className="flex flex-col md:h-0 flex-1 bg-blue relative rounded-lg m-2 mb-0 md:m-0">
-          <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto px-4">
+          <div className="flex-1 flex flex-col pt-7 pb-1 overflow-y-auto">
+            <div className="sm:pl-8 px-4 border-white border-b border-opacity-25 mb-2">
             <div className="flex items-center flex-shrink-0 flex flex-row items-center justify-between">
-              <img className="w-30 md:w-56" src={logo} alt="Workflow" />
+              <img className="w-24 md:w-30" src={logo} alt="Betterfit" />
             </div>
             <div className="flex flex-row md:flex-col items-end md:items-start justify-between">
-              <SideBarDashboardTypeCTA name={orgName} location="Edmonton,AB" />
+              <SideBarDashboardTypeCTA name={orgName}/>
+            </div>
             </div>
             <SideBarNavigation navList={navItemsList} />
           </div>

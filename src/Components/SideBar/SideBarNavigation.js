@@ -3,8 +3,8 @@ import { ReactSVG } from "react-svg";
 import { NavLink } from "react-router-dom";
 
 const SideBarNavigation = ({ navList }) => {
-  return(
-    <nav className="flex-1 flex-row md:flex-col flex-wrap flex md:block justify-around items-baseline space-y-3 mt-4 md:my-4 text-light-text">
+  return (
+    <nav className="flex-1 flex-row md:flex-col flex-wrap flex md:block justify-around items-baseline sm:space-y-4 md:my-8 px-4 text-light-text">
       {navList.map((navItem) => {
         return (
           <div key={`menu_item_${navItem.key}`}>
@@ -15,17 +15,17 @@ const SideBarNavigation = ({ navList }) => {
             >
               <ReactSVG
                 src={navItem.icon}
-                className=" text-white sm:p-2"
+                className=" text-white sm:p-3"
                 beforeInjection={(svg) => {
                   svg.setAttribute("style", "width: 24px;height:24px");
                 }}
               />
-              <span className="group flex items-center py-2 text-sm leading-5 font-medium sm:text-xl font-body text-white">
+              <span className="group flex items-center text-10 sm:text-sm leading-5 font-medium sm:text-xl font-body text-white">
                 {navItem.name}
               </span>
             </NavLink>
           </div>
-        )
+        );
       })}
     </nav>
   );

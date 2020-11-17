@@ -13503,6 +13503,10 @@ video {
   font-size: 16px;
 }
 
+.text-22{
+  font-size: 22px;
+}
+
 .text-xs{
   font-size: 0.75rem;
 }
@@ -41239,6 +41243,10 @@ video {
     font-size: 16px;
   }
 
+  .sm\:text-22{
+    font-size: 22px;
+  }
+
   .sm\:text-xs{
     font-size: 0.75rem;
   }
@@ -68908,6 +68916,10 @@ video {
 
   .md\:text-16{
     font-size: 16px;
+  }
+
+  .md\:text-22{
+    font-size: 22px;
   }
 
   .md\:text-xs{
@@ -96581,6 +96593,10 @@ video {
     font-size: 16px;
   }
 
+  .lg\:text-22{
+    font-size: 22px;
+  }
+
   .lg\:text-xs{
     font-size: 0.75rem;
   }
@@ -124250,6 +124266,10 @@ video {
 
   .xl\:text-16{
     font-size: 16px;
+  }
+
+  .xl\:text-22{
+    font-size: 22px;
   }
 
   .xl\:text-xs{
