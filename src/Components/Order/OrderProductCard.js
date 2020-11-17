@@ -33,6 +33,7 @@ const ProductImage = ({ product_image, product_name }) => {
 
 const OrderProductCard = ({ product }) => {
   // cart store
+  console.log(product);
   const cartStore = useCartStore();
   // product state
   const [priority, setPriority] = useState(product.priority);
@@ -59,7 +60,7 @@ const OrderProductCard = ({ product }) => {
           />
           <div className="flex-col pt-7">
             <h1 className={ "text-base font-semibold " + (priority ? "text-betterfit-highlight-darkred" : "text-betterfit-graphite ") }>
-              {Read_Product(product.name, "")}
+              {product.product ? `${product.product} - `: "" }{Read_Product(product.name, "")}
             </h1>
             <span className="text-betterfit-grey-blue text-xs">
               {Read_Product(product.product_variation, "N/A")}

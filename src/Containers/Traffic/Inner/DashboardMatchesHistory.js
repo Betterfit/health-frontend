@@ -1,6 +1,6 @@
 import React , {useState,useEffect} from 'react'
 import { ReactSVG } from 'react-svg';
-import Table from 'Components/Table/List-sort/Table';
+import Table from 'Components/Table/MatchSort/Table';
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import BackNavigation from 'Components/Helpers/BackNavigation'
 import Reload from 'Images/Icons/reload.svg';

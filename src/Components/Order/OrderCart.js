@@ -28,6 +28,7 @@ const OrderCart =({Cart, OrderID , id}) => {
   const [agreeTermsError, setAgreeTermsError] = useState(false);
   const getCartItems = () => {
     const promises = CartData.map((item, i) => api.getProductOption(item.pk).then(data => {
+      console.log(data);
       return {
         ...data.data,
         quantity:item.quantity,
@@ -120,6 +121,7 @@ const OrderCart =({Cart, OrderID , id}) => {
       <div className="p-3 my-4 overflow-y-scroll">
         {cartItems && cartItems.length >= 1 && (
           cartItems.map((item,index) => {
+            console.log(item);
             return(<OrderProductCard key={`${item.name.replace(/\s/g, '')}-${item.pk}`} product={item}/>)
           })
         )}

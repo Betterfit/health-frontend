@@ -8,12 +8,33 @@ import {NavLink} from "react-router-dom";
 import Button from "Components/Content/Button";
 import StatusButton from "Components/Content/StatusButton";
 import dayjs from 'dayjs';
-const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) => {
+import Api from "Helpers/api";
+const TableBody = ({TableBodyData,updateRow,removeAtIndex,statusIndex,link,buttonType}) => {
+    const api = new Api();
     const [rowState , setRowState ] = useState(TableBodyData);
+    const sortFunction = () => {
+        // let arr = rowState;
+        // arr = arr.map((item,index) => {
+        //     console.log(item);
+        //     let obj = {
+        //         pk:item.id,
+        //         order:index,
+        //     }
+        //     return obj;
+        // });
+        // console.log(arr);
+        // api.postSortedMatches(arr)
+        // .then((response) => {
+        //     console.log(response.data);
+        // })
+        updateRow(rowState)
+    } 
     return(
         <>
         {rowState && (
-            <ReactSortable tag="tbody" className="w-full"  list={rowState} setList={setRowState}>
+            <ReactSortable tag="tbody" className="w-full"  list={rowState} setList={setRowState} onSort={() => {
+                sortFunction();  
+            }} >
 
             {
                 rowState.map((row,pindex) =>{
@@ -105,7 +126,7 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                         {!row.supplier && (
                                             <span className="flex items-center">
                                                 <ReactSVG src={Attention} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                                                <span style={{color:'#DAA239'}} className="font-bold pl-1">No Match!</span>
+                                                <span style={{color:'#B36200'}} className="font-bold pl-1">No Match!</span>
                                             </span>
                                         )}
                                         {row.supplier && ( 
@@ -120,7 +141,7 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                         {today - orderDate >= 2 && (
                                             <span className="flex items-center">
                                                 <ReactSVG src={Attention} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                                                <span style={{color:'#DAA239'}} className="font-bold pl-1">{row.order_date}</span>
+                                                <span style={{color:'#B36200'}} className="font-bold pl-1">{row.order_date}</span>
                                             </span>
                                         )}
                                         {today - orderDate < 2 && (

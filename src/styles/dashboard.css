@@ -48,10 +48,15 @@ tr.sortable-chosen {
     outline-color:#9EB9FF;
     
 }
-tr.sortable-chosen *{
+/* tr.sortable-chosen *{
     color:#fff !important;
-}
+} */
 
+tr.sortable-drag , tr.sortable-ghost{
+    background-color: rgba(31, 69, 168,0.3)!important;
+    outline:auto;
+    outline-color:#9EB9FF;  
+}
 
 
 @media screen and (min-width:768px){
@@ -83,3 +88,13 @@ tr.sortable-chosen *{
         min-width:320px;
     }
 }
+
+.rotate-me{
+    -webkit-animation:spin 2.5s linear infinite;
+    -moz-animation:spin 2.5s linear infinite;
+    animation:spin 2.5s linear infinite;
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }

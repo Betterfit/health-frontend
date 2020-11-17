@@ -2,7 +2,7 @@ import React from 'react'
 import TableHead from './TableHead'
 import TableBody from './TableBody'
 
-const Table = ({TableData,link,extraClasses,buttonType}) => {
+const Table = ({TableData,updateRow,link,extraClasses,buttonType}) => {
 
     const TableHeadData = [];
     const TableBodyData = [];
@@ -35,6 +35,7 @@ const Table = ({TableData,link,extraClasses,buttonType}) => {
         TableBodyData.push(values);
     });
 
+
     return(
         <div className="flex flex-col mt-10 mb-4">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -42,7 +43,7 @@ const Table = ({TableData,link,extraClasses,buttonType}) => {
                     <div className="border-b border-gray-200">
                         <table className={`min-w-full p-4 ${extraClasses ? extraClasses : ""}`}>
                             <TableHead TableHead={TableHeadData} />
-                            <TableBody buttonType={buttonType} link={link} NoOptions={nooptions} TableBodyData={TableBodyData} removeAtIndex={removeAtIndex} statusIndex={statusIndex} variantID={TableData.pk} />                            
+                            <TableBody updateRow={(rowState) => updateRow(rowState)} buttonType={buttonType} link={link} NoOptions={nooptions} TableBodyData={TableBodyData} removeAtIndex={removeAtIndex} statusIndex={statusIndex} variantID={TableData.pk} />                            
                         </table>  
                  </div>
                 </div>

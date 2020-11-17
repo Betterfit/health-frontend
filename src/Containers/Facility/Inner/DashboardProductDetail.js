@@ -21,6 +21,7 @@ const DashboardProductDetail = (props) => {
     await api
       .getProductVariant(product_id)
       .then((response) => {
+        console.log(response.data);
         setProduct(CleanUpProduct(response.data, product_details_id));
         setIsError(false);
         setIsLoading(false);

@@ -169,5 +169,8 @@ export default class Api {
   getMatches = () => {
     return this.init().get('/matches/');
   }
+  postSortedMatches = (orders) => {
+    return this.init().post('/match-orders/',orders);
+  }
 }
 

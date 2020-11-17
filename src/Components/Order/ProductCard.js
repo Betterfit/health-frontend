@@ -28,7 +28,8 @@ const ProductImage = ({ product_image, product_name, hover }) => {
   );
 };
 
-const ProductCard = ({ product, product_details, category, extra }) => {
+const ProductCard = ({ product, product_details, category, extra, parent }) => {
+  console.log(category);
   const cartStore = useCartStore();
   const history = useHistory();
   const [active, setActive] = useState(false);
@@ -59,7 +60,7 @@ const ProductCard = ({ product, product_details, category, extra }) => {
           />
           <div className="flex-col pt-7 pl-4">
             <h1 className="text-sm md:text-base font-semibold text-status-dark-blue">
-              {Read_Product(name, "")}
+              { parent ? `${parent} - ` : "" } {Read_Product(name, "")}
             </h1>
             <span className="text-betterfit-grey-blue text-xs">
               {Read_Product(size, "N/A")}

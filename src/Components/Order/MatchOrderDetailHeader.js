@@ -59,7 +59,7 @@ const MatchOrderDetailHeader = ({ order , actionComponent }) => {
           <div className="flex-row flex justify-between">
             <MatchHeaderComponent
                 title="Address"
-                value={order.shipping_address}
+                value={order.address}
             />
             <MatchHeaderComponent
                 title="Shipping Address"
