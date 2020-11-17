@@ -5,7 +5,7 @@ import LowerBackgroundBlob from "Images/Login/login_lower_right.svg";
 import UpperBackgroundBlob from "Images/Login/login_upper_left.svg";
 import Input_Field from "Components/Forms/Input_Field";
 import Api from "Helpers/api";
-import PasswordReset from "./ForgotPassword";
+import ForgotPassword from "./ForgotPassword";
 import Notfications from "Components/Helpers/Notifications";
 import Button from "Components/Forms/Button";
 import { useHistory, Route, useRouteMatch, Link } from "react-router-dom";

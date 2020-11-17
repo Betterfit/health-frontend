@@ -37,10 +37,7 @@ const ResetPassword = () => {
   const validatePW = (values) => {
     let errors = {};
     //only run if any pw field has text
-    if (
-      values.newPW.length != 0 ||
-      values.confirmPW.length != 0
-    ) {
+    if (values.newPW.length != 0 || values.confirmPW.length != 0) {
       if (values.newPW.length < 8) {
         errors.newPW = "Password must be more than 8 characters.";
       }
