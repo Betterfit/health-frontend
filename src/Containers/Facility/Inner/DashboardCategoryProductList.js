@@ -43,7 +43,7 @@ const DashboardCategoryProductList = (props) => {
       ) : (
         <>
           <BackNavigation link={`Back to Product Categories`} />
-          <div className="flex justify-between items-center pb-4 mb-8 border-b border-gray-400">
+          <div className="flex justify-between items-center pb-4 mb-8 border-b border-betterfit-grey">
             <CategoryTitle
                 title={`${CategoryData.name}`}
                 icon={CategoryData.icon}
