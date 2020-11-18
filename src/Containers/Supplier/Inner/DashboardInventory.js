@@ -20,21 +20,34 @@ import DashboardSearch from 'Containers/DashboardSearch';
 const api = new Api();
 const DashboardInventory = () =>{ 
     const [title , setTitle] = useState('Inventory');
-    const [ProductData , setProductData] = useState(null);
+    const [AllCategoryData , setAllCategoryData] = useState(null);
+    const [SupplierCategoryData , setSupplierCategoryData] = useState(null);
     const [searchActive , setSearchActive] = useState(false);
     const location = useLocation();
-    const getData = async () => await api.getProductCategories()
+
+    const getData = () => {
+        getAllCategories();
+        getSupplierCategories();
+    }
+
+    const getAllCategories = async () => await api.getProductCategories()
     .then((response) => {
-        setProductData(response.data)
+        setAllCategoryData(response.data)
+    })
+    .catch((err) => console.log(err));
+
+    const getSupplierCategories = async () => await api.getProductsBySupplier(236)
+    .then((response) => {
+        setSupplierCategoryData(response.data)
     })
     .catch((err) => console.log(err));
     //  setSearchActive(1)  
-    if(ProductData){
+    if(AllCategoryData && SupplierCategoryData){
         // console.log(ProductData);
         const TabData = [ 
             {
                 heading:'My Inventory',
-                content:ProductData.map(product => {
+                content:SupplierCategoryData.map(product => {
                     // console.log(product);
                     return(
                         <div>
@@ -53,7 +66,7 @@ const DashboardInventory = () =>{
             },
             {
                 heading:'All Products',
-                content:ProductData.map(product => {
+                content:AllCategoryData.map(product => {
                     // console.log(product);
                     return(
                         <div>
