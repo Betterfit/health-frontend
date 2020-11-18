@@ -52,7 +52,7 @@ const DashboardProductDetail = (props) => {
     return clean_product;
   };
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative">
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative p-2">
       {isLoading && (
         <div className="relative w-3/4 min-h-screen" style={{margin:'0 auto',}}> 
           <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />

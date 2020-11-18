@@ -31,7 +31,7 @@ const DashboardCategoryList = (props) => {
 
 
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative">
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative p-2">
       {isError && <div>Something went wrong ...</div>}
 
       {isLoading ? (
@@ -44,7 +44,7 @@ const DashboardCategoryList = (props) => {
             <TitleUnderLine title="Products" nounderline={true} extraclasses=" hidden md:block no-margin" />
             <Search />
           </div>
-          <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-2 mb-6 md:mb-10">
+          <div className="mb-6 md:mb-10 flex flex-col md:flex-row md:flex-wrap">
             {categories.map((p) => {
               return <CategoryCard key={`${p.name}`} category={p} />;
             })}

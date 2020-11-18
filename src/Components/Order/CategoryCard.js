@@ -33,7 +33,7 @@ const CategoryCard = (category) => {
   return (
     <>
       <div
-        className="mb-2 p-6 rounded relative flex flex-row md:flex-col justify-content items-center rounded-lg border border-betterfit-grey hover:bg-betterfit-pale-blue hover:border-betterfit-basic-blue"
+        className="md:m-2 md:w-32 lg:w-36 mb-2 p-6 rounded relative flex flex-row md:flex-col justify-content items-center rounded-lg border border-betterfit-grey hover:bg-betterfit-pale-blue hover:border-betterfit-basic-blue"
         onClick={() =>
           history.push(
             history.location.pathname + category_name + "/" + category_id

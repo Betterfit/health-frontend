@@ -33,7 +33,7 @@ const DashboardCategoryProductList = (props) => {
   }, []);
 
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative">
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative p-2">
       {isError && <div>Something went wrong ...</div>}
 
       {isLoading ? (

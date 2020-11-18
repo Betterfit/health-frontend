@@ -31,7 +31,7 @@ const DashboardOrder = ({props, type}) => {
             <DashboardNewOrder {...props} />
         )}
       </DashboardSideBar>
-      <div className="w-full md:w-3/5 mx-auto h-screen md:overflow-y-scroll">
+      <div className="w-full md:w-3/5 mx-auto h-screen md:overflow-y-scroll mt-2">
         <Route
           exact
           path={`${match.path}`}
