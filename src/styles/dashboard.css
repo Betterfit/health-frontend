@@ -89,14 +89,25 @@ tr.sortable-drag , tr.sortable-ghost{
     }
 }
 
+/* Custom sizing for category card grid */
 @media screen and (min-width:768px){
     .customcategorygrid{
-        min-width:320px;
+        min-width:150px;
     }
 }
 
+@media screen and (min-width:1400px){
+    .customcategorygrid{
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;   
+    }
+}
 
-
+@media screen and (min-width:1025px) and (max-width:1150px){
+    .customcategorygrid{
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;      
+    }
+}
+/* End of Custom sizing for category card grid */
 
 .rotate-me{
     -webkit-animation:spin 2.5s linear infinite;

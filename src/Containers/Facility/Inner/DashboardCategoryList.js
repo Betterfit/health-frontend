@@ -44,7 +44,7 @@ const DashboardCategoryList = (props) => {
             <TitleUnderLine title="Products" nounderline={true} extraclasses=" hidden md:block no-margin" />
             <Search />
           </div>
-          <div className="mb-6 md:mb-10 grid grid-cols-1 gap-6 lg:grid-cols-3 xl:grid-cols-4 customcategorygrid">
+          <div className="mb-6 md:mb-10 grid grid-cols-1 gap-2 lg:gap-4 md:grids-cols-2 lg:grid-cols-3 customcategorygrid">
             {categories.map((p) => {
               return <CategoryCard key={`${p.name}`} category={p} />;
             })}
