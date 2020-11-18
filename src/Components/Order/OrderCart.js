@@ -40,8 +40,9 @@ const OrderCart = ({ Cart, OrderID, id }) => {
     Promise.all(promises).then((responses) => {
       rawCart = CartData;
       setCartItems(responses);
-    });
-  };
+      
+    }).catch((err) => console.log(err));;
+  }
 
   useEffect(() => {
     if (CartData) {

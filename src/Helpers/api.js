@@ -71,6 +71,10 @@ export default class Api {
     return this.init().get(`product-categories` ); 
   }
 
+  getProductsBySupplier = (supplierid) => {
+    return this.init().get(`product-categories/?supplier=${supplierid}` ); 
+  }
+
   //get products under a particular category id
   getCategory = (id) => {
     return this.init().get(`product-categories/${id}`); 
@@ -91,9 +95,13 @@ export default class Api {
   }
 
   updateSupplierProductQuantity = (userId,id,data) => {
-    return this.init().put(`/suppliers/${userId}/product-options/${id}/`,data)
+    let quantity = {"quantity":data}
+    return this.init().put(`/suppliers/${userId}/product-options/${id}/`, quantity)
   }
 
+  getSupplierProductQuantity = (userId,id) => {
+    return this.init().get(`/suppliers/${userId}/product-options/${id}/`)
+  }
   // ============================   TICKETS API  =====================================
 
   getSupplierTickets = (userId) => {

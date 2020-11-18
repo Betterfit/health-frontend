@@ -10,8 +10,6 @@ import DashboardCategoryList from "Containers/Facility/Inner/DashboardCategoryLi
 import { Switch, Route, useParams } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
-// import DashboardProductList from 'Containers/DashboardProductList'
-// import DashboardProductDetail from 'Containers/DashboardProductDetail'
 import { useCartStore } from "Context/cartContext";
 const api = new Api();
 const DashboardOrder = ({props, type}) => {
