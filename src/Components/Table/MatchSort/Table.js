@@ -2,7 +2,7 @@ import React from 'react'
 import TableHead from './TableHead'
 import TableBody from './TableBody'
 
-const Table = ({TableData,updateRow,link,extraClasses,buttonType}) => {
+const Table = ({TableData,link,extraClasses,buttonType}) => {
     const TableHeadData = [];
     const TableBodyData = [];
     let nooptions = false;
@@ -42,7 +42,7 @@ const Table = ({TableData,updateRow,link,extraClasses,buttonType}) => {
                     <div className="border-b border-gray-200">
                         <table className={`min-w-full p-4 ${extraClasses ? extraClasses : ""}`}>
                             <TableHead TableHead={TableHeadData} />
-                            <TableBody updateRow={(rowState) => updateRow(rowState)} buttonType={buttonType} link={link} NoOptions={nooptions} TableBodyData={TableBodyData} removeAtIndex={removeAtIndex} statusIndex={statusIndex} variantID={TableData.pk} />                            
+                            <TableBody buttonType={buttonType} link={link} NoOptions={nooptions} TableBodyData={TableBodyData} removeAtIndex={removeAtIndex} statusIndex={statusIndex} variantID={TableData.pk} />                            
                         </table>  
                  </div>
                 </div>

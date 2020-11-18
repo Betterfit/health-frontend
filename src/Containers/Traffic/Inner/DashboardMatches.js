@@ -8,9 +8,11 @@ import Countdown from 'react-countdown';
 import Api from "Helpers/api";
 import dayjs from 'dayjs';
 import Spinner from "Images/spinner.gif";
+import {useMatchStore} from "Context/matchContext";
 
 const api = new Api();
 const DashboardMatches = () => {
+    const matchStore = useMatchStore();
     const [matchesData , setMatchesData] = useState(null);
     const [matchHeaderData , setMatchHeaderData] = useState({
         order_date:"",
@@ -18,8 +20,7 @@ const DashboardMatches = () => {
         time_till_processed: "" 
     });
     const [isLoading, setIsLoading] = useState(true);
-    const [rowState , setRowState ] = useState(null);
-    const [refresh , setRefresh] = useState(null);
+    const [refresh , setRefresh] = useState(false);
 
     const getData = async () => await api.getMatches()
     .then((response) => {
@@ -52,27 +53,25 @@ const DashboardMatches = () => {
     },[]); 
 
     const sortFunction = () => {
-        if(rowState){
+        if(matchStore.matches){
+            matchStore.submitting = true;
             clearTimeout();
             setRefresh(true);
             setTimeout(()=>{
-                setRefresh(null); 
+                setRefresh(false); 
                 setIsLoading(true);
             },2500);
-            let arr = rowState;
+            let arr = JSON.parse(matchStore.matches);
             arr = arr.map((item,index) => {
-             
                 let obj = {
                     pk:item.id,
                     order:index,
                 }
                 return obj;
             });
-            // console.log(arr);
             api.postSortedMatches(arr)
             .then((response) => {
                 let arr = response.data;
-                console.log(response.data);
                 arr = arr.matches.map(item => {
                     let obj = {
                         order_no: item.order_no,
@@ -85,9 +84,10 @@ const DashboardMatches = () => {
                     }
                     return(obj);
                 }); 
-                // console.log(arr);
                 setIsLoading(false);
-                setMatchesData(arr)
+                matchStore.submitting = false;
+                setMatchesData(arr);
+
             })
         }
     } 
@@ -185,13 +185,14 @@ const DashboardMatches = () => {
                                 }
                                 style={{minWidth:100, whiteSpace: 'nowrap'}}
                                 onClick = {() => sortFunction()}
-                            >
-                                {refresh ? (
-                                    <ReactSVG src={Reload} className={`flex items-center mr-3 rotate-me`}  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                                ):(
-                                    <ReactSVG src={Reload} className={`flex items-center mr-3`}  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                                )}
-                                
+                            >   
+                            {refresh ?(
+                               <ReactSVG src={Reload} className={`flex items-center mr-3 rotate-me`}  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
+
+                            ) :(
+                                <ReactSVG src={Reload} className={`flex items-center mr-3`}  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
+
+                            )}
                                 Update Suppliers
                             </button>
                         </div>
@@ -201,7 +202,6 @@ const DashboardMatches = () => {
                     {matchesData && (
                         <Table 
                             TableData={matchesData} 
-                            updateRow = {(rowState) => setRowState(rowState)}
                             link={`/dashboard/matches/`} 
                         />
                     )}
