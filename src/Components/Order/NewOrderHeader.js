@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import dayjs from 'dayjs';
+import Translator from "Helpers/Translator";
 
 const OrderComponent = ({ title, value, classes }) => {
   return (
@@ -9,7 +10,7 @@ const OrderComponent = ({ title, value, classes }) => {
         (classes ? classes : "")
       }
     >
-      <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
+      <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-75">{Translator(title)}</span>
       <span className="text-betterfit-graphite text-base word break-words">{value}</span>
     </div>
   );
@@ -23,7 +24,7 @@ const OrderComponentTitle = ({ title, value, classes }) => {
           (classes ? classes : "")
         }
       >
-        <span className="uppercase text-betterfit-graphite text-xs tracking-extra-wide opacity-50">{title}</span>
+        <span className="uppercase text-betterfit-graphite text-xs tracking-extra-wide opacity-75">{Translator(title)}</span>
         <span className="text-betterfit-graphite text-3xl">{value}</span>
       </div>
     );
@@ -32,7 +33,7 @@ const OrderComponentTitle = ({ title, value, classes }) => {
 
 const NewOrderHeader = ({ data }) => {
     let orderDate = dayjs().format('MMM DD, YYYY');
-    const order_no = (data?.order_number ? data.order_number : "New Order")
+    const order_no = (data?.order_number ? data.order_number : Translator("New Order") )
     const facility = data?.facility;
     const unit = data?.unit;
     const purchase_order = data?.purchase_order;

@@ -157,7 +157,6 @@ export default class Api {
   }
 
   editOrder = (order,id) => {
-    console.log(order,id);
     return this.init().patch(`/orders/${id}/`,order)
   }
 
@@ -168,6 +167,18 @@ export default class Api {
 
   getTags = () => {
     return this.init().get(`/tags/`); 
+  }
+
+  // ============================  MATCHES API  =====================================
+
+  getMatchHistory = () => {
+    return this.init().get(`/matches/history/`); 
+  }
+  getMatches = () => {
+    return this.init().get('/matches/');
+  }
+  postSortedMatches = (orders) => {
+    return this.init().post('/match-orders/',orders);
   }
 }
 

@@ -36,9 +36,9 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             case "item":
                                                 return(
-                                                    <td key={index} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                                    <td key={index} className="px-4 py-4 whitespace-no-wrap text-sm leading-5 text-betterfit-graphite">
                                                         <div className="flex items-center" style={{width:"max-content"}}>
-                                                            <img className="w-24 mr-2" src={`${row[imageIndex][1] ? row[imageIndex][1] : EmptyImage}`} /> 
+                                                            <img className="w-24 mr-2" role="none" src={`${row[imageIndex][1] ? row[imageIndex][1] : EmptyImage}`} /> 
                                                             <span className="font-bold text-betterfit-graphite">{r[1]}</span>
                                                         </div>
                                                     </td>
@@ -46,7 +46,7 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             default:
                                                 return(
-                                                    <td key={index} className="px-4 py-4  text-sm leading-5 text-gray-500">
+                                                    <td key={index} className="px-4 py-4  text-sm leading-5 text-betterfit-graphite">
                                                         <div className="flex items-center">
                                                             {/* <img className="w-24 mr-2" src={`${row[imageIndex]}`} /> */}
                                                             {/* <span className="font-bold text-betterfit-graphite">{r}</span> */}
@@ -87,9 +87,9 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             case "item":
                                                 return(
-                                                    <td key={index} className="px-4 py-4 whitespace-no-wrap  text-sm leading-5 text-gray-500">
+                                                    <td key={index} className="px-4 py-4 whitespace-no-wrap  text-sm leading-5 text-betterfit-graphite">
                                                         <div className="flex items-center" style={{width:"max-content"}}>
-                                                            <img className="w-24 mr-2" src={`${row[imageIndex][1] ? row[imageIndex][1] : EmptyImage}`} /> 
+                                                            <img className="w-24 mr-2"role="none" src={`${row[imageIndex][1] ? row[imageIndex][1] : EmptyImage}`} /> 
                                                             <span className="font-bold text-betterfit-graphite">{r[1]}</span>
                                                         </div>
                                                     </td>
@@ -97,7 +97,7 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             default:
                                                 return(
-                                                    <td key={index} className="px-4 py-4  text-sm leading-5 text-gray-500">
+                                                    <td key={index} className="px-4 py-4  text-sm leading-5 text-betterfit-graphite">
                                                         <div className="flex items-center">
                                                             {/* <img className="w-24 mr-2" src={`${row[imageIndex]}`} /> */}
                                                             {/* <span className="font-bold text-betterfit-graphite">{r}</span> */}

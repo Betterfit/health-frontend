@@ -20,12 +20,10 @@ const DashboardCategoryList = (props) => {
         setIsLoading(false);
       })
       .catch((err) => {
-        // console.log(err);
         setIsError(true);
       });
 
   useEffect(() => {
-    // console.log("getting data");
     getData();
   }, []);
 

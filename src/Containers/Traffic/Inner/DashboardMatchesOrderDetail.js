@@ -4,25 +4,53 @@ import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import MatchOrderDetailHeader from 'Components/Order/MatchOrderDetailHeader'
 import StatusButton from "Components/Content/StatusButton";
 import Table from "Components/Table/Detail/Table";
-
+import Spinner from "Images/spinner.gif";
+import dayjs from 'dayjs';
 const api = new Api();
 const DashboardMatchesOrderDetail = (props) => {
     const { match } = props;
-    const MatchOrderId = parseInt(match.params.oid);
+    const orderId = parseInt(match.params.id);
     const [orderData , setOrderData] = useState(null);
-    const getData = async () => await api.getSupplierTicketOrder(1,2)
+    const [orderHeader , setOrderHeader] = useState({
+        order_creation_date: "",
+        order_number:"",
+        match_date: "",
+        ordered_by: "",
+        supplier: "",
+        shipping_address: "",
+        facility: "",
+        unit: "",
+    });
+    const [isLoading, setIsLoading] = useState(true);
+    const getData = async () => await api.getOrder(orderId)
     .then((response) => {
-        let arr = response.data.order.order_products;
+        const data = response.data;
+        console.log(data);
+        let arr = response.data.order_products;
         arr = arr.map(item => {
             let obj = {
                 product_image: item.product_option.product_image,
-                item: item.product_option.name,  
+                item: item.product_option.product +' - '+ item.product_option.name,  
+                quantity: item.quantity,
                 ...item.product_option,
                 priority: 1,
+
             };
             return obj;
         });
+        setIsLoading(false);
         setOrderData(arr)
+        setOrderHeader({
+            order_creation_date: dayjs(data.order_date).format('MMM d, YYYY'),
+            order_number:data.order_no,
+            match_date: data.match_date !== "No match date" ? dayjs(data.order_date).format('MMM d, YYYY') : "No match date",
+            ordered_by: "Adrian Gyuricska",
+            supplier: "Lift Medical",
+            address: `${data.facility.street}, ${data.facility.city}, ${data.facility.postal_code}`,
+            shipping_address: `${data.facility.shipping_street}, ${data.facility.shipping_city}, ${data.facility.shipping_postal_code}`,
+            facility: "Royal Alexandra",
+            unit: "Emergency",
+        })
     })
     .catch((err) => console.log(err));
 
@@ -30,26 +58,23 @@ const DashboardMatchesOrderDetail = (props) => {
         getData();
     }, []);
 
-    const order = {
-        order_creation_date: "Oct 14, 2020",
-        order_number:"1001-2020-001237",
-        match_date: "Oct 26, 2020",
-        ordered_by: "Adrian Gyuricska",
-        supplier: "Lift Medical",
-        shipping_address: "10240 Kingsway NW, Edmonton, AB T5H 3V9",
-        facility: "Royal Alexandra",
-        unit: "Emergency",
-    }
-
-    const actionComponent = <StatusButton status={`${order.match_date ? "matched" : "no-match"}`} /> ;
-    const excludeKeys = ["pk","product_image","name","product_variation"];
-    const excludeValues = ["pk","product_variation","name"];
+    const actionComponent = <StatusButton status={`${orderHeader.match_date !== "No match date" ? "matched" : "no-match"}`} /> ;
+    const excludeKeys = ["pk","product_image","name","product_variation","product_category"];
+    const excludeValues = ["pk","product_variation","name","product_category"];
     return(
         <div className="px-4 sm:px-6 md:px-8 pt-10">
-            {orderData && (
+            {isLoading ? (
+                <div className="relative w-3/4 min-h-screen" style={{margin:'0 auto',}}> 
+                    <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
+                </div>
+            ) : ( 
                 <>
-                    <MatchOrderDetailHeader order={order} actionComponent={actionComponent} />
-                    <Table TableData={orderData} excludeKeys={excludeKeys} excludeValues={excludeValues} />
+                    {orderData && (
+                        <>
+                            <MatchOrderDetailHeader order={orderHeader} actionComponent={actionComponent} />
+                            <Table TableData={orderData} excludeKeys={excludeKeys} excludeValues={excludeValues} />
+                        </>
+                    )}
                 </>
             )}
         </div>

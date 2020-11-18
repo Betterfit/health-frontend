@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
 import uuid from 'react-uuid'
+
 // components
 import TabHeadings from './TabHeadings';
+
 
 
 const Tabs = ({tabs,headingComp,amount}) => {
@@ -17,7 +19,6 @@ const Tabs = ({tabs,headingComp,amount}) => {
     });
  
     const headingChangeActive = (key) => {
-        // console.log(key)
         setActiveTab(key);   
     }
 

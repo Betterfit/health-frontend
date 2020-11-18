@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import FaciltyCard from "Components/Profile/FacilityCard"
-import Slider from "Components/Slider/Slider"
+import React  from "react";
+import Translator from "Helpers/Translator";
 
 const SideBarProfileNavigation = ({ userType, showFacility, showProfile, close}) => {
 
@@ -13,14 +11,14 @@ const SideBarProfileNavigation = ({ userType, showFacility, showProfile, close})
     onMouseLeave = {close}>
       {userType === 'facility_admin' && (
         <a onClick={showFacility}>
-          <span className="opacity-75 my-2">Facility Profile</span>
+          <span className="my-2">{Translator("Facility Profile")}</span>
         </a>
       )}
       <a onClick={showProfile}>
-        <span className="opacity-75 my-2">Profile</span>
+        <span className="my-2">{Translator("Profile")}</span>
       </a>
       <a href="/logout">
-        <span className="opacity-75 my-2">Logout</span>
+        <span className="my-2">{Translator("Logout")}</span>
       </a>
     </div>
 
