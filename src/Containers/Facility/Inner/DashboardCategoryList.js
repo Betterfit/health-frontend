@@ -40,11 +40,11 @@ const DashboardCategoryList = (props) => {
         </div>
       ) : (
         <>
-          <div className="flex justify-between items-center pb-4 mb-8 border-b border-betterfit-grey">
+          <div className="flex flex-wrap justify-between items-center pb-4 mb-8 border-b border-betterfit-grey">
             <TitleUnderLine title="Products" nounderline={true} extraclasses=" hidden md:block no-margin" />
             <Search />
           </div>
-          <div className="mb-6 md:mb-10 flex flex-col md:flex-row md:flex-wrap">
+          <div className="mb-6 md:mb-10 grid grid-cols-1 gap-6 lg:grid-cols-3 xl:grid-cols-4 customcategorygrid">
             {categories.map((p) => {
               return <CategoryCard key={`${p.name}`} category={p} />;
             })}
