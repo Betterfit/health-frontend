@@ -19,7 +19,7 @@ const Read_Product = (product_attr, default_value) => {
 const ProductImage = ({ product_image, product_name, hover }) => {
   return (
     <img
-      className={"w-1/4 md:w-auto " + (hover ? "opacity-50" : "")}
+      className={"flex-shrink-0 " + (hover ? "opacity-50" : "")}
       src={Read_Product(product_image, EmptyImage)}
       alt={Read_Product(product_name + " Product Image", "Product Image")}
       loading="lazy"
@@ -29,7 +29,6 @@ const ProductImage = ({ product_image, product_name, hover }) => {
 };
 
 const ProductCard = ({ product, product_details, category, extra, parent }) => {
-  console.log(category);
   const cartStore = useCartStore();
   const history = useHistory();
   const [active, setActive] = useState(false);
@@ -52,12 +51,14 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
       >
-        <div className="flex md:flex-col p-1 h-full">
+        <div className="flex md:flex-col p-2 h-full">
+          <div className ="h-2/3">
           <ProductImage
             product_name={name}
             product_image={image}
             hover={active}
           />
+          </div>
           <div className="flex-col pt-7 pl-4">
             <h1 className="text-sm md:text-base font-semibold text-status-dark-blue">
               { parent ? `${parent} - ` : "" } {Read_Product(name, "")}
