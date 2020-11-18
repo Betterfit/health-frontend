@@ -19,26 +19,26 @@ const Button = ({
   text,
   onClick,
   solid = true,
-  text_size = "text-lg",
+  text_size = "text-lg ",
   color = " bg-betterfit-basic-blue",
   hoverColor = "bg-betterfit-darker-blue",
-  type="submit"
+  textColor = "text-white ",
+  borderColor = "",
+  type = "submit",
 }) => {
   let css_add_on = solid
-    ? "text-white hover:" + hoverColor + " " + color
-    : "text-betterfit-betterfit-navy bg-transparent border border-betterfit-grey";
+    ? "hover:" + hoverColor + " " + color
+    : "bg-transparent border border-betterfit-grey";
   return (
     <span className="block w-full shadow-sm flex items-baseline">
       <button
         onClick={onClick}
         type={type}
-        className={
-          css_add_on +
-          " rounded-md w-full flex justify-center py-3 border border-transparent font-semibold " +
-          " focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 " +
-          " transition duration-150 ease-in-out capitalize " +
-          text_size
-        }
+        className={`
+          ${css_add_on}
+          rounded-md w-full flex justify-center py-3 border border-transparent font-bold
+          focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700
+          transition duration-150 ease-in-out capitalize ${text_size} ${textColor} ${borderColor}`}
       >
         {Translator(text)}
       </button>
