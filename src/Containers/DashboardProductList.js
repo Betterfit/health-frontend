@@ -18,9 +18,9 @@ const DashboardProductList = (props) => {
             variation.product_options = variations.product_options.map((options) => {
               let obj = {
                 [options.option_label]: options.name,
-                matched: "TODO",
-                available: "TODO",
-                total: 'TODO',
+                matched: options.allotted,
+                available: options.quantity,
+                total: options.allotted + options.quantity,
                 pk: options.pk,
               };
               return obj;
