@@ -17,7 +17,7 @@ const DashboardProductDetail = (props) =>{
     .then((response) => {
         let data = response.data;
         setProductData({ 
-            "product_name": data.product_option.product_variation,
+            "product_name": data.product_option.product + " - " +  data.product_option.product_variation,
             "product_label": data.product_option.option_label,
             "product_label_value": data.product_option.name,
             "product_description": data.product_option.product_description,

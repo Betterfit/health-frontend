@@ -16,6 +16,7 @@ import DashboardSideBar from 'Components/DashboardSideBar/DashboardSideBar';
 import DashboardProductList from 'Containers/DashboardProductList'
 import DashboardProductDetail from 'Containers/DashboardProductDetail'
 import DashboardSearch from 'Containers/DashboardSearch';
+import {useAuthStore} from "Context/authContext";
 
 const api = new Api();
 const DashboardInventory = () =>{ 
@@ -24,6 +25,9 @@ const DashboardInventory = () =>{
     const [SupplierCategoryData , setSupplierCategoryData] = useState(null);
     const [searchActive , setSearchActive] = useState(false);
     const location = useLocation();
+    const authStore = useAuthStore();
+    const userData = JSON.parse(authStore.user);
+    const supplierId = userData.user_profile.supplier;
 
     const getData = () => {
         getAllCategories();
@@ -36,7 +40,7 @@ const DashboardInventory = () =>{
     })
     .catch((err) => console.log(err));
 
-    const getSupplierCategories = async () => await api.getProductsBySupplier(236)
+    const getSupplierCategories = async () => await api.getProductsBySupplier(supplierId)
     .then((response) => {
         setSupplierCategoryData(response.data)
     })
