@@ -71,8 +71,8 @@ export default class Api {
     return this.init().get(`product-categories` ); 
   }
 
-  getProductsBySupplier = (id) => {
-    return this.init().get(`suppliers/${id}/my-inventory/` ); 
+  getProductsBySupplier = (supplierid) => {
+    return this.init().get(`product-categories/?supplier=${supplierid}` ); 
   }
 
   //get products under a particular category id

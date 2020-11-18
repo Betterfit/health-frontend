@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import Tabs from 'Components/Tabs/Tabs';
 import BoxLink from 'Components/Content/BoxLink';
 import Search from 'Components/Search/Search';
-import Table from 'Components/Table/Basic/Table';
 import Api from "Helpers/api";
 import Spinner from "Images/spinner.gif";
 import {
@@ -11,7 +10,6 @@ import {
     useParams,
     useLocation
 } from "react-router-dom";
-import { AnimatedSwitch } from 'react-router-transition';
 import DashboardSideBar from 'Components/DashboardSideBar/DashboardSideBar';
 import DashboardProductList from 'Containers/DashboardProductList'
 import DashboardProductDetail from 'Containers/DashboardProductDetail'
@@ -36,6 +34,7 @@ const DashboardInventory = () =>{
 
     const getAllCategories = async () => await api.getProductCategories()
     .then((response) => {
+        console.log(response.data)
         setAllCategoryData(response.data)
     })
     .catch((err) => console.log(err));
@@ -70,7 +69,8 @@ const DashboardInventory = () =>{
             },
             {
                 heading:'All Products',
-                content:AllCategoryData.map(product => {
+                content:AllCategoryData.filter((category) => category.products.length >0)
+                .map(product => {
                     // console.log(product);
                     return(
                         <div>
