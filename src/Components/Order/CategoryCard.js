@@ -41,7 +41,7 @@ const CategoryCard = (category) => {
         }
       >
         <div
-          className="rounded-full h-18 w-18 flex items-center mr-2 "
+          className="rounded-full h-18 w-18 flex items-center "
           style={backgroundColor}
         >
           <img className="m-auto" src = {svg} alt={category_name}/>

@@ -10,7 +10,6 @@ import Modal from "Components/Content/Modal";
 import OrderProductCard from "Components/Order/OrderProductCard";
 import OrderName from "Components/Forms/OrderName";
 import Checkbox from "Components/Forms/CheckboxConfirm";
-import { useHistory } from "react-router-dom";
 import Translator from "Helpers/Translator";
 const api = new Api();
 let rawCart;
@@ -116,7 +115,6 @@ const OrderCart = ({ Cart, OrderID, id }) => {
           {cartItems &&
             cartItems.length >= 1 &&
             cartItems.map((item, index) => {
-              // console.log(item);
               return (
                 <OrderProductCard
                   key={`${item.name.replace(/\s/g, "")}-${item.pk}`}
@@ -135,22 +133,27 @@ const OrderCart = ({ Cart, OrderID, id }) => {
                 }}
               ></ReactSVG>
               <p className="text-base text-betterfit-graphite opacity-75 text-center">
-                No products added
+                {Translator("No products added")}
               </p>
             </>
           ))}
       </div>
       <div className="flex flex-row space-x-2">
         <Button
+          color=" bg-white"
+          hoverColor="bg-gray-100"
           text="Save Draft"
-          solid={false}
+          textColor="text-betterfit-navy"
           text_size="text-sm"
+          borderColor="border-betterfit-grey"
           onClick={() => {
             setModalDraft(!modalOrder);
             setAgreeTermsError(false);
           }}
         />
         <Button
+          color=" bg-betterfit-green"
+          hoverColor="bg-green-900"
           text="Submit Order"
           text_size="text-sm"
           onClick={() => {
@@ -167,12 +170,15 @@ const OrderCart = ({ Cart, OrderID, id }) => {
             buttonText="Place Order"
           >
             <div className="px-6 py-4 border-b border-gray-300">
-              <h2 className="text-betterfit-navy text-xl">Confirm Order</h2>
+              <h2 className="text-betterfit-navy text-xl">
+                {Translator("Confirm Order")}
+              </h2>
             </div>
             <div className="py-6 px-6">
               <p className="text-paragraph text-base">
-                Are you sure you’re ready to submit this order? Would you like
-                to add a purchase order to it?{" "}
+                {Translator(
+                  "Are you sure you’re ready to submit this order? Would you like to add a purchase order to it?"
+                )}
               </p>
             </div>
             <OrderName
@@ -203,11 +209,13 @@ const OrderCart = ({ Cart, OrderID, id }) => {
             buttonText="Save Draft"
           >
             <div className="px-6 py-4 border-b border-gray-300">
-              <h2 className="text-betterfit-navy text-xl">Save as Draft</h2>
+              <h2 className="text-betterfit-navy text-xl">
+                {Translator("Save as Draft")}
+              </h2>
             </div>
             <div className="py-6 px-6">
               <p className="text-paragraph text-base">
-                Would you like to add a purchase order to it?
+                {Translator("Would you like to add a purchase order to it?")}
               </p>
             </div>
             <OrderName
