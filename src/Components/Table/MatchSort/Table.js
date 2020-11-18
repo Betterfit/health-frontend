@@ -3,7 +3,6 @@ import TableHead from './TableHead'
 import TableBody from './TableBody'
 
 const Table = ({TableData,updateRow,link,extraClasses,buttonType}) => {
-
     const TableHeadData = [];
     const TableBodyData = [];
     let nooptions = false;

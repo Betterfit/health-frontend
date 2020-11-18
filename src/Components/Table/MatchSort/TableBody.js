@@ -7,11 +7,17 @@ import {NavLink} from "react-router-dom";
 import dayjs from 'dayjs';
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
+
+let updatedData;
 const TableBody = ({TableBodyData,updateRow,removeAtIndex,statusIndex,link,buttonType}) => {
     const api = new Api();
-    const [rowState , setRowState ] = useState(TableBodyData);
+    const [rowState , setRowState ] = useState(updatedData ? updatedData : TableBodyData);
     const sortFunction = () => {
-        updateRow(rowState)
+        setTimeout(()=>{
+            updatedData = rowState;
+            updateRow(rowState)
+        },800);
+        
     } 
     return(
         <>

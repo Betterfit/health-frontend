@@ -42,8 +42,8 @@ const DashboardMatches = () => {
             }
             return(obj);
         }); 
-        setIsLoading(false);
         setMatchesData(arr)
+        setIsLoading(false);
     })
     .catch((err) => console.log(err));
 
@@ -68,11 +68,11 @@ const DashboardMatches = () => {
                 }
                 return obj;
             });
-         
+            // console.log(arr);
             api.postSortedMatches(arr)
             .then((response) => {
-                let data = response.data;
                 let arr = response.data;
+                console.log(response.data);
                 arr = arr.matches.map(item => {
                     let obj = {
                         order_no: item.order_no,
@@ -85,6 +85,7 @@ const DashboardMatches = () => {
                     }
                     return(obj);
                 }); 
+                // console.log(arr);
                 setIsLoading(false);
                 setMatchesData(arr)
             })
