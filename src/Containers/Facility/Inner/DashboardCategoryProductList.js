@@ -52,7 +52,7 @@ const DashboardCategoryProductList = (props) => {
             />
             <Search />
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2 mb-6 md:mb-10">
+          <div className="grid grid-cols-1 gap-4 mb-6 md:mb-10 customproductgrid">
             {CategoryData.products.map((p) =>
               p.product_variations.map((p2) =>{
                 return(

@@ -44,7 +44,7 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
     <>
       <div
         className={
-          "mb-2 rounded relative flex md:flex-col justify-content " +
+          "mb-2 rounded relative flex md:flex-col justify-content flex " +
           (active
             ? "bg-betterfit-pale-blue border border-betterfit-highlight-blue"
             : "bg-betterfit-soft-blue")
