@@ -16,6 +16,7 @@ import Dashboard from './Pages/Dashboard';
 import {useAuthStore} from "Context/authContext";
 import { observer } from "mobx-react";
 import NotFound from './Pages/404';
+import DashboardResearch from 'Containers/DashboardResearch';
 const App = observer(({userType}) => {
   const authStore = useAuthStore();
   const token = authStore.token;
@@ -41,6 +42,9 @@ const App = observer(({userType}) => {
             </Route>
             <Route path="/dashboard">
               <Dashboard language={authStore.language}/>
+            </Route>
+            <Route path="/research">
+              <DashboardResearch />
             </Route>
             <Route path="*">
               <NotFound />

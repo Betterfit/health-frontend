@@ -1,78 +1,97 @@
-import React, { useState, useEffect } from "react";
 import ListLink from "Components/Content/ListLink";
-import TagLink from "Components/Content/TagLink";
-import Translator from "Helpers/Translator";
-import Search from "Components/Search/Search";
-import Api from "Helpers/api";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
-import { useQuery } from "react-query";
 import ResourceDisplay from "Components/Resources/ResourceDisplay";
+import TagFilterList from "Components/Resources/TagFilterList";
+import SearchBar from "Components/Search/SearchBar";
+import { useResources } from "Helpers/resourceUtils";
+import Translator from "Helpers/Translator";
+import React, { useState } from "react";
 import Spinner from "Images/spinner.gif";
 
 const DashboardResources = () => {
-    const [title, setTitle] = useState("Resources");
-    const api = new Api();
-    // react-query allows us to automatically do some pretty nifty caching
-    const {
-        data: resources,
-        isLoading: resourcesLoading,
-    } = useQuery("resources", () =>
-        api.getResources().then((resp) => resp.data)
-    );
-    const { data: tagList, isLoading: tagsLoading } = useQuery("tags", () =>
-        api.getTags().then((resp) => resp.data)
-    );
-    if (resourcesLoading || tagsLoading) {
-        return <div className="relative w-full min-h-screen"> 
-        <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
-    </div>;
-    }
+  // resources will be filtered by selected resource type
+  const [selectedResType, setSelectedResType] = useState(null);
+  const resourceFilters = [];
+  const resourceTypeFilter = (resource) =>
+    resource.resource_type === selectedResType;
 
-    const resourceColors = {
-        facility: "#56BAC8",
-        lab: "#61C091",
-        research: "#A799F3",
-        supplier: "#EA8683",
-        regulation: "#7FAAF4",
-    };
+  // the useResources hook handles caching, searching, filtering for us
+  const {
+    resourcesLoading,
+    resources,
+    setSearchTerm,
+    selectedTagPKs,
+    tagList,
+    toggleTagSelect,
+  } = useResources(resourceFilters);
 
+  if (resourcesLoading) {
     return (
-        <div className="flex flex-col md:flex-row overflow-x-hidden">
-            <DashboardSideBar>
-                <h2 className="text-3xl text-dark-blue my-3">{Translator(title)}</h2>
-                <Search type="bar" />
-                <div className="border-b border-gray-400 mt-5" />
-                <div>
-                    <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
-                        {Translator("Resource Type")}
-                    </h3>
-                    {Object.entries(resourceColors).map(
-                        ([resourceTitle, resourceColor]) => {
-                            return (
-                                <ListLink
-                                    bulletColor={resourceColor}
-                                    text={resourceTitle}
-                                    textStyle={{ textTransform: "capitalize" }}
-                                />
-                            );
-                        }
-                    )}
-                </div>
-                <div>
-                    <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
-                    {Translator("Tags")}
-                    </h3>
-                    {tagList.map((tag) => {
-                        return <TagLink tag={tag} />;
-                    })}
-                </div>
-            </DashboardSideBar>
-
-            <div className="resource-dashboard">
-                <ResourceDisplay resources={resources} />
-            </div>
-        </div>
+      <div className="relative w-full min-h-screen">
+        <img
+          className="absolute left-0 right-0 spinner"
+          style={{ maxWidth: 150 }}
+          src={Spinner}
+        />
+      </div>
     );
+  }
+
+  const resourceColors = {
+    facility: "#56BAC8",
+    lab: "#61C091",
+    research: "#A799F3",
+    supplier: "#EA8683",
+    regulation: "#7FAAF4",
+  };
+
+  const onResTypeClick = (resType) => () => {
+    if (selectedResType === resType) setSelectedResType(null);
+    else setSelectedResType(resType);
+  };
+
+  return (
+    <div className="flex flex-col md:flex-row overflow-x-hidden">
+      <div style={{ flex: "0 0 320px" }}>
+        <DashboardSideBar>
+          <h2 className="text-3xl text-dark-blue my-3">Resources</h2>
+          <SearchBar
+            performSearch={setSearchTerm}
+            placeholderText={
+              Translator("Search") + " " + Translator("Resources")
+            }
+          />
+          <div className="border-b border-gray-400 mt-5" />
+          <div>
+            <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
+              Resource Type
+            </h3>
+            <div className="flex flex-col items-start">
+              {Object.entries(resourceColors).map(
+                ([resourceType, resourceColor]) => {
+                  return (
+                    <ListLink
+                      bulletColor={resourceColor}
+                      key={resourceType}
+                      text={resourceType}
+                      textStyle={{
+                        textTransform: "capitalize",
+                      }}
+                      selected={resourceType === selectedResType}
+                      toggleSelection={onResTypeClick(resourceType)}
+                    />
+                  );
+                }
+              )}
+            </div>
+          </div>
+          <TagFilterList {...{ tagList, toggleTagSelect, selectedTagPKs }} />
+        </DashboardSideBar>
+      </div>
+
+      <ResourceDisplay resources={resources} />
+    </div>
+  );
 };
 
 export default DashboardResources;

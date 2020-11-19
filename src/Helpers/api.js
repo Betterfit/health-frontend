@@ -175,8 +175,10 @@ export default class Api {
   }
 
   // ============================   RESOURCES API  =====================================
-  getResources = () => {
-    return this.init().get(`/resources/`); 
+  getResources = (searchQuery='') => {
+    if (searchQuery !== '')
+      return this.init().get(`/resources?search=${searchQuery}`); 
+    return this.init().get(`/resources/`)
   }
 
   getTags = () => {
