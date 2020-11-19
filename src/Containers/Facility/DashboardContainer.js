@@ -8,7 +8,6 @@ import DashboardOrderList from './Inner/DashboardOrderList'
 import DashboardOrder from './Inner/DashboardOrder'
 import DashboardFacilityOrder from './Inner/DashboardFacilityOrderDetail';
 import DashboardResources from '../DashboardResources'
-import DashboardResearch from '../DashboardResearch'
 import {CartProvider} from "Context/cartContext";
 
 
@@ -55,9 +54,6 @@ const DashboardContainer = () =>{
                 )}} />
                 <Route path="/dashboard/resources" >
                     <DashboardResources initial changeTitle={(title) => changeTitle(title)} />
-                </Route>
-                <Route path="/dashboard/research" >
-                    <DashboardResearch initial changeTitle={(title) => changeTitle(title)} />
                 </Route>
                 </AnimatedSwitch>
                 {/* <!-- /End replace --> */}
