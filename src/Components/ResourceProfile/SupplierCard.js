@@ -17,7 +17,7 @@ const SupplierCard = ({name, tagList, details, color}) => {
     const website = details.website ? [details.website] : ['n/a'];
 
     return(
-        <div>
+        <div role='dialog'>
             <div className="h-1 rounded-md mb-5 -mx-4" style={{background:color}}/>
             <CardTitle label="Supplier" name={name} color={color}></CardTitle>
             <div className="space-y-6">

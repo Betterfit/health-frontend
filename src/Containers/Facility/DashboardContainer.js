@@ -1,20 +1,14 @@
 import React , {useState} from 'react';
-import dayjs from "dayjs";
 import {
-    Switch,
     Route,
     Redirect,
-    useParams
 } from "react-router-dom";
-import ReactCSSTransitionGroup from 'react-transition-group';
 import { AnimatedSwitch } from 'react-router-transition';
-import DashboardNewOrder from './Inner/DashboardNewOrder'
 import DashboardOrderList from './Inner/DashboardOrderList'
 import DashboardOrder from './Inner/DashboardOrder'
 import DashboardFacilityOrder from './Inner/DashboardFacilityOrderDetail';
 import DashboardResources from '../DashboardResources'
-import DashboardResearch from '../DashboardResearch.tsx'
-import NotFound from 'Pages/404';
+import DashboardResearch from '../DashboardResearch'
 import {CartProvider} from "Context/cartContext";
 
 
@@ -53,21 +47,18 @@ const DashboardContainer = () =>{
                 <Route exact path="/dashboard/orders/detail/:id" render={(props) => {
                         return ( <DashboardFacilityOrder {...props } /> )
                 }} />
-                
                 <Route path="/dashboard/new-order/category" render={(props) => {
                         return ( 
                             <CartProvider value="cart">
                             <DashboardOrder props={props}   type='new' />
                             </CartProvider>
                 )}} />
-    
                 <Route path="/dashboard/resources" >
                     <DashboardResources initial changeTitle={(title) => changeTitle(title)} />
                 </Route>
                 <Route path="/dashboard/research" >
                     <DashboardResearch initial changeTitle={(title) => changeTitle(title)} />
                 </Route>
-
                 </AnimatedSwitch>
                 {/* <!-- /End replace --> */}
             </main>
