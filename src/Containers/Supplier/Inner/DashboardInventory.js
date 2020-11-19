@@ -35,12 +35,11 @@ const DashboardInventory = () =>{
 
     const getAllCategories = async () => await api.getProductCategories()
     .then((response) => {
-        console.log(response.data)
         setAllCategoryData(response.data)
     })
     .catch((err) => console.log(err));
 
-    const getSupplierCategories = async () => await api.getProductsBySupplier(supplierId)
+    const getSupplierCategories = async () => await api.getCategoriesBySupplier(supplierId)
     .then((response) => {
         setSupplierCategoryData(response.data)
     })
