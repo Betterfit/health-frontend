@@ -8,6 +8,7 @@ import Api from "Helpers/api";
 import { useResources } from "Helpers/resourceUtils";
 import { Resource, Tag } from "Types";
 import Translator from "Helpers/Translator";
+import Spinner from "Images/spinner.gif";
 
 const DashboardResearch = () => {
   const api = new Api();
@@ -23,7 +24,17 @@ const DashboardResearch = () => {
     toggleTagSelect,
   } = useResources([researchFilter]);
 
-  if (resourcesLoading) return <div>Loading</div>;
+  if (resourcesLoading) {
+    return (
+      <div className="relative w-full min-h-screen">
+        <img
+          className="absolute left-0 right-0 spinner"
+          style={{ maxWidth: 150 }}
+          src={Spinner}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col md:flex-row overflow-x-hidden">
@@ -35,7 +46,7 @@ const DashboardResearch = () => {
           <SearchBar
             performSearch={setSearchTerm}
             placeholderText={
-              Translator("Search") + " " + Translator("Resources")
+              Translator("Search") + " " + Translator("Research")
             }
           />
           <div className="border-b border-gray-400 mt-5" />
