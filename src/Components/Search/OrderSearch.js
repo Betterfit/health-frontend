@@ -19,6 +19,7 @@ const OrderSearch = ({type,extraClasses}) => {
       history.push(`/dashboard/orders/search?search=${searchRef.current.value}`);
     }
   }
+  
   const clearSearchQuery = () => {
     history.push(`/dashboard/orders`);
   }
