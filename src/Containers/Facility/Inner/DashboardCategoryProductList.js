@@ -14,7 +14,6 @@ const DashboardCategoryProductList = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [CategoryData, setCategoryData] = useState(null);
   const [isError, setIsError] = useState(false);
-
   const getData = async () =>
     await api
       .getCategory(CategoryID)

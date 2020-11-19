@@ -6,6 +6,7 @@ import BackNavigation from 'Components/Helpers/BackNavigation';
 import TitleUnderLine from 'Components/Content/TitleUnderLine';
 import Table from 'Components/Table/Basic/Table';
 import Search from 'Components/Search/Search';
+import uuid from 'react-uuid'
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
@@ -17,7 +18,26 @@ const DashboardSearch = () => {
     const [searchData , setSearchData] = useState();
     const getSearchResults = async () => await api.getSearchResults(query.get('search'))
     .then((response) => {
-        setSearchData(response.data)
+        let arr = response.data;
+        arr.map(productCat => {
+            productCat.products.map(products => {
+                products.product_variations = products.product_variations.map((variations) => {
+                    let variation = variations;
+                    variation.product_options = variations.product_options.map((options) => {
+                      let obj = {
+                        [options.option_label]: options.name,
+                        matched: options.allotted,
+                        available: options.quantity,
+                        total: options.allotted + options.quantity,
+                        pk: options.pk,
+                      };
+                      return obj;
+                    });
+                    return variation;
+                });
+            })
+        })
+        setSearchData(arr)
     })
     .catch((err) => console.log(err));
     if(!searchData){
@@ -48,13 +68,13 @@ const DashboardSearch = () => {
                                             product.product_variations.length > 0 && (
                                                 product.product_variations.map(p => {
                                                     return(
-                                                        <Table TableData={p} ProductId={product.pk} /> 
+                                                        <Table  key={uuid()} TableData={p} ProductId={product.pk} /> 
                                                     )
                                                 })
                                             )
                                         }
                                         {product.product_variations.length <= 0 && (
-                                            <Table TableData={product} ProductId={product.pk} />     
+                                            <Table  key={uuid()} TableData={product} ProductId={product.pk} />     
                                         )}
                                         </>
                                         

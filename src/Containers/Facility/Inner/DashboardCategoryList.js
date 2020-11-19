@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Api from "Helpers/api";
 import CategoryCard from "Components/Order/CategoryCard";
-import image from "Images/example_product.png"; //remove this later
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 import Search from 'Components/Search/Search';
 import Spinner from "Images/spinner.gif";

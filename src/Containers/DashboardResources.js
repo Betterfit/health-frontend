@@ -6,6 +6,7 @@ import SearchBar from "Components/Search/SearchBar";
 import { useResources } from "Helpers/resourceUtils";
 import Translator from "Helpers/Translator";
 import React, { useState } from "react";
+import Spinner from "Images/spinner.gif";
 
 const DashboardResources = () => {
   // resources will be filtered by selected resource type
@@ -13,7 +14,6 @@ const DashboardResources = () => {
   const resourceFilters = [];
   const resourceTypeFilter = (resource) =>
     resource.resource_type === selectedResType;
-  if (selectedResType) resourceFilters.push(resourceTypeFilter);
 
   // the useResources hook handles caching, searching, filtering for us
   const {
@@ -24,7 +24,18 @@ const DashboardResources = () => {
     tagList,
     toggleTagSelect,
   } = useResources(resourceFilters);
-  if (resourcesLoading) return <div>{Translator("Loading")}</div>;
+
+  if (resourcesLoading) {
+    return (
+      <div className="relative w-full min-h-screen">
+        <img
+          className="absolute left-0 right-0 spinner"
+          style={{ maxWidth: 150 }}
+          src={Spinner}
+        />
+      </div>
+    );
+  }
 
   const resourceColors = {
     facility: "#56BAC8",

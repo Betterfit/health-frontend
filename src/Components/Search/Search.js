@@ -5,6 +5,7 @@ import SearchIcon from 'Images/Icons/search-icon.svg'
 import Close from 'Images/Icons/close.svg';
 import Translator from "Helpers/Translator";
 
+let myTimeOut;
 const Search = ({type}) => {
   const [searchValue, setSearchValue ] = useState('');
   const searchRef = useRef(null);
@@ -36,8 +37,9 @@ const Search = ({type}) => {
                   placeholder="Search Products"
                   ref={searchRef}
                   onChange={()=>{
-                    clearTimeout();
-                    setTimeout(()=>{
+                    clearTimeout(myTimeOut);
+                    myTimeOut = setTimeout(()=>{
+                      console.log('search!')
                       searchQuery()
                     },1000)
                   }}
@@ -73,8 +75,8 @@ const Search = ({type}) => {
             placeholder={Translator("Search Resources")}
             ref={searchRef}
             onChange={()=>{
-              clearTimeout();
-              setTimeout(()=>{
+              clearTimeout(myTimeOut);
+              myTimeOut = setTimeout(()=>{
                 searchQuery()
               },1000)
             }}
@@ -94,8 +96,8 @@ const Search = ({type}) => {
             placeholder="Search Orders"
             ref={searchRef}
             onChange={()=>{
-              clearTimeout();
-              setTimeout(()=>{
+              clearTimeout(myTimeOut);
+              myTimeOut = setTimeout(()=>{
                 searchQuery()
               },1000)
             }}

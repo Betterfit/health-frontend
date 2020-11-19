@@ -1,14 +1,9 @@
 import React , {useState} from 'react';
-import dayjs from "dayjs";
 import {
-    Switch,
     Route,
     Redirect,
-    useParams
 } from "react-router-dom";
-import ReactCSSTransitionGroup from 'react-transition-group';
 import { AnimatedSwitch } from 'react-router-transition';
-import DashboardNewOrder from './Inner/DashboardNewOrder'
 import DashboardOrderList from './Inner/DashboardOrderList'
 import DashboardOrder from './Inner/DashboardOrder'
 import DashboardFacilityOrder from './Inner/DashboardFacilityOrderDetail';
@@ -30,7 +25,7 @@ const DashboardContainer = () =>{
                     atLeave={{ opacity: 0 }}
                     atActive={{ opacity: 1 }}
                     className="switch-wrapper"
-                >
+                > 
                 <Route exact path="/dashboard" render={() => (
                     <Redirect to="/dashboard/new-order/category/"/>
                 )}/>

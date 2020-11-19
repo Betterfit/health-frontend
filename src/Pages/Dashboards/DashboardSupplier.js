@@ -15,7 +15,7 @@ const DashboardSupplier = () => {
     const navItemsList = [
         {
             to:'/dashboard/tickets',
-            name:Translator('tickets'),
+            name:'tickets',
             icon: Ticket,
             key:'tickets',
         },

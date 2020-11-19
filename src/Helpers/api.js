@@ -20,7 +20,7 @@ export default class Api {
 
 
     this.client = axios.create({
-        baseURL: 'https://api.betterfit.health' ,
+        baseURL: 'https://api.betterfit.health/' ,
         timeout: 31000,
         headers: headers,
     });
@@ -71,6 +71,18 @@ export default class Api {
     return this.init().get(`product-categories` ); 
   }
 
+  getCategoriesBySupplier = (supplierid) => {
+    return this.init().get(`product-categories/?supplier=${supplierid}` ); 
+  }
+
+  getProductsBySupplier = (supplierid) => {
+    return this.init().get(`products/?supplier=${supplierid}`); 
+  }
+
+  getProductBySupplier = (supplierid, productid) => {
+    return this.init().get(`products/${productid}/?supplier=${supplierid}`); 
+  }
+
   //get products under a particular category id
   getCategory = (id) => {
     return this.init().get(`product-categories/${id}`); 
@@ -91,9 +103,13 @@ export default class Api {
   }
 
   updateSupplierProductQuantity = (userId,id,data) => {
-    return this.init().put(`/suppliers/${userId}/product-options/${id}/`,data)
+    let quantity = {"quantity":data}
+    return this.init().put(`/suppliers/${userId}/product-options/${id}/`, quantity)
   }
 
+  getSupplierProductQuantity = (userId,id) => {
+    return this.init().get(`/suppliers/${userId}/product-options/${id}/`)
+  }
   // ============================   TICKETS API  =====================================
 
   getSupplierTickets = (userId) => {
