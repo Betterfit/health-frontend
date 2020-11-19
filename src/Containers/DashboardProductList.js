@@ -16,9 +16,9 @@ const DashboardProductList = (props) => {
     const [ProductData , setProductData] = useState(null);
     //This should get replaced with api request with just the data we need
     //Right now we need to filter too much
-    const getData = async () => await api.getProductsbySupplier(supplierId)
+    const getData = async () => await api.getProductBySupplier(supplierId, ProductId)
     .then((response) => {
-        let arr = response.data.find((categories) => categories.pk === ProductId)
+        let arr = response.data;
         arr.product_variations = arr.product_variations.map((variations) => {
             let variation = variations;
             variation.product_options = variations.product_options.map((options) => {
