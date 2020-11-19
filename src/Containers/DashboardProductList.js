@@ -3,30 +3,38 @@ import BackNavigation from 'Components/Helpers/BackNavigation'
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import Table from 'Components/Table/Basic/Table';
 import Api from "Helpers/api";
+import {useAuthStore} from "Context/authContext";
 const api = new Api();
 
 const DashboardProductList = (props) => {
     const { match } = props
     const ProductId = parseInt(match.params.id);
+    const authStore = useAuthStore();
+    const userData = JSON.parse(authStore.user);
+    const supplierId = userData.user_profile.supplier;
     const [lastProductId , setLastProductId] = useState(ProductId);
     const [ProductData , setProductData] = useState(null);
-    const getData = async () => await api.getProduct(ProductId)
+    //This should get replaced with api request with just the data we need
+    //Right now we need to filter too much
+    const getData = async () => await api.getProductsbySupplier(supplierId)
     .then((response) => {
-        let arr = response.data;
-        arr.product_variations = response.data.product_variations.map((variations) => {
+        let arr = response.data.find((categories) => categories.pk === ProductId)
+        arr.product_variations = arr.product_variations.map((variations) => {
             let variation = variations;
             variation.product_options = variations.product_options.map((options) => {
-              let obj = {
-                [options.option_label]: options.name,
-                matched: options.allotted,
-                available: options.quantity,
-                total: options.allotted + options.quantity,
-                pk: options.pk,
-              };
-              return obj;
+                let obj = {
+                    [options.option_label]: options.name,
+                    matched: options.allotted,
+                    available: options.quantity,
+                    total: options.allotted + options.quantity,
+                    pk: options.pk,
+                };
+                return obj;
             });
             return variation;
           });
+        
+
         
         setProductData(arr)
     })
