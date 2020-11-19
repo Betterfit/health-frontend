@@ -75,8 +75,8 @@ export default class Api {
     return this.init().get(`/product-categories/?supplier=${supplierid}` ); 
   }
 
-  getProductsBySupplier = (supplierid) => {
-    return this.init().get(`/products/?supplier=${supplierid}`); 
+  getProductsBySupplier = (productid) => {
+    return this.init().get(`products/${productid}/`); 
   }
 
   getProductBySupplier = (supplierid, productid) => {

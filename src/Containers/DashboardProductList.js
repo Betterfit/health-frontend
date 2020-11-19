@@ -17,7 +17,7 @@ const DashboardProductList = (props) => {
 
   const getData = async () =>
     await api
-      .getProductBySupplier(supplierId, ProductId)
+      .getProductsBySupplier(ProductId)
       .then((response) => {
         let arr = response.data;
         arr.product_variations = arr.product_variations.map((variations) => {
