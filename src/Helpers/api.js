@@ -5,7 +5,7 @@ export default class Api {
   constructor() {
     this.api_token = localStorage.getItem('token');
     this.client = null;
-    this.api_url = 'https://betterfit.health/'  
+    this.api_url = 'https://api.betterfit.health/'  
   }
 
   init = () => {
@@ -20,7 +20,7 @@ export default class Api {
 
 
     this.client = axios.create({
-        baseURL: 'https://betterfit.health/' ,
+        baseURL: 'https://api.betterfit.health/' ,
         timeout: 31000,
         headers: headers,
     });
