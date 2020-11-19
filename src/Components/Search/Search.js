@@ -6,23 +6,23 @@ import Close from 'Images/Icons/close.svg';
 import Translator from "Helpers/Translator";
 
 let myTimeOut;
-const Search = ({type,callBack,searchActive}) => {
+const Search = ({type}) => {
   const [searchValue, setSearchValue ] = useState('');
   const searchRef = useRef(null);
   const history = useHistory();
   const searchQuery = () => {
     setSearchValue(searchRef.current.value)
-    history.replace(`/dashboard/inventory/search?search=${searchRef.current.value}`);
+    history.push(`/dashboard/inventory/product/search?search=${searchRef.current.value}`);
   }
   const clearSearchQuery = () => {
-    history.replace(`/dashboard/inventory`);
+    history.push(`/dashboard/inventory`);
   }
-  const [showInput , setShowInput] = useState(searchActive);
+  const [showInput , setShowInput] = useState(false);
   
   if(type === "icon" ){
     return(
       <div className={`flex items-center h-full bg-gray-300 ${showInput ? 'absolute w-full z-10  border-b-2 border-gray-400 ' : 'relative'}`}> 
-        <button className="button-reset" aria-label="button-reset" onClick={() =>{ callBack(!showInput); setShowInput(!showInput)}}>
+        <button className="button-reset" aria-label="button-reset" onClick={() => setShowInput(!showInput)}>
           <ReactSVG src={SearchIcon} />
         </button>
         {showInput && (

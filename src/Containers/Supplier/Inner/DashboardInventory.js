@@ -21,12 +21,19 @@ const api = new Api();
 const DashboardInventory = () =>{ 
     const [title , setTitle] = useState('Inventory');
     const [ProductData , setProductData] = useState(null);
+    // const [supplierInventoryData , setProductData] = useState(null);
     const [searchActive , setSearchActive] = useState(false);
     const location = useLocation();
     const getData = async () => await api.getProductCategories()
     .then((response) => {
         setProductData(response.data)
     })
+
+    // const supplierInventory = async() => await api.getSupplierProducts()
+    // .then((response)=> {
+
+    // })
+
     .catch((err) => console.log(err));
     //  setSearchActive(1)  
     if(ProductData){
@@ -71,8 +78,8 @@ const DashboardInventory = () =>{
         return(
             <div className="flex flex-col md:flex-row">
                 <DashboardSideBar>
-                    <h2 className="text-3xl text-dark-blue my-3">{Translator(title)}</h2>
-                    <Tabs tabs={TabData} headingComp={<Search type="icon" callBack={(e) => setSearchActive(e)} searchActive={searchActive} />} />
+                    <h2 className="text-3xl text-dark-blue my-3">{title}</h2>
+                    <Tabs tabs={TabData} amount={false} headingComp={<Search type="icon" />} />
                 </DashboardSideBar>
                 <div className={`absolute w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll ${location.pathname === "/dashboard/inventory" ? `z-0`: `z-10`}`}>
                     <Route exact path='/dashboard/inventory/product/:id' exact render={(props) => {
@@ -81,7 +88,7 @@ const DashboardInventory = () =>{
                     <Route path='/dashboard/inventory/product/:id/detail/:oid?/edit' exact render={(props) => {
                         return ( <DashboardProductDetail edit={true} {...props } /> )
                     }} />
-                    <Route path='/dashboard/inventory/search:query?'>
+                    <Route path='/dashboard/inventory/product/search:query?'>
                         <DashboardSearch />
                     </Route>
                 </div>

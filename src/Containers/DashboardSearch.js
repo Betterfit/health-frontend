@@ -17,7 +17,27 @@ const DashboardSearch = () => {
     const [searchData , setSearchData] = useState();
     const getSearchResults = async () => await api.getSearchResults(query.get('search'))
     .then((response) => {
-        setSearchData(response.data)
+        let arr = response.data;
+        arr.map(productCat => {
+            productCat.products.map(products => {
+                products.product_variations = products.product_variations.map((variations) => {
+                    let variation = variations;
+                    variation.product_options = variations.product_options.map((options) => {
+                      let obj = {
+                        [options.option_label]: options.name,
+                        matched: options.allotted,
+                        available: options.quantity,
+                        total: options.allotted + options.quantity,
+                        pk: options.pk,
+                      };
+                      return obj;
+                    });
+                    return variation;
+                });
+            })
+        })
+        console.log(arr);
+        setSearchData(arr)
     })
     .catch((err) => console.log(err));
     if(!searchData){

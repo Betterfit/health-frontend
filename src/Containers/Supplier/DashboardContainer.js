@@ -36,10 +36,10 @@ const DashboardContainer = () =>{
                         <DashboardTickets />
                     </Route>
                     <Route path="/dashboard/inventory" >
-                        <DashboardInventory initial changeTitle={(title) => changeTitle(title)} />
+                        <DashboardInventory />
                     </Route>
                     <Route path="/dashboard/resources" >
-                        <DashboardResources initial changeTitle={(title) => changeTitle(title)} />
+                        <DashboardResources />
                     </Route>
                 </AnimatedSwitch>
         
