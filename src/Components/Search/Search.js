@@ -12,7 +12,7 @@ const Search = ({type}) => {
   const history = useHistory();
   const searchQuery = () => {
     setSearchValue(searchRef.current.value)
-    history.push(`/dashboard/inventory/product/search?search=${searchRef.current.value}`);
+    history.push(`/dashboard/inventory/search?search=${searchRef.current.value}`);
   }
   const clearSearchQuery = () => {
     history.push(`/dashboard/inventory`);

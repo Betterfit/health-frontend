@@ -6,6 +6,7 @@ import BackNavigation from 'Components/Helpers/BackNavigation';
 import TitleUnderLine from 'Components/Content/TitleUnderLine';
 import Table from 'Components/Table/Basic/Table';
 import Search from 'Components/Search/Search';
+import uuid from 'react-uuid'
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
@@ -36,7 +37,6 @@ const DashboardSearch = () => {
                 });
             })
         })
-        console.log(arr);
         setSearchData(arr)
     })
     .catch((err) => console.log(err));
@@ -68,13 +68,13 @@ const DashboardSearch = () => {
                                             product.product_variations.length > 0 && (
                                                 product.product_variations.map(p => {
                                                     return(
-                                                        <Table TableData={p} ProductId={product.pk} /> 
+                                                        <Table  key={uuid()} TableData={p} ProductId={product.pk} /> 
                                                     )
                                                 })
                                             )
                                         }
                                         {product.product_variations.length <= 0 && (
-                                            <Table TableData={product} ProductId={product.pk} />     
+                                            <Table  key={uuid()} TableData={product} ProductId={product.pk} />     
                                         )}
                                         </>
                                         

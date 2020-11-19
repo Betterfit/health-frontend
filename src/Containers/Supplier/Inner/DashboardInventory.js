@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Tabs from 'Components/Tabs/Tabs';
 import BoxLink from 'Components/Content/BoxLink';
 import Search from 'Components/Search/Search';
-import Translator from "Helpers/Translator";
+import Table from 'Components/Table/Basic/Table';
 import Api from "Helpers/api";
 import Spinner from "Images/spinner.gif";
 import {
@@ -16,38 +16,28 @@ import DashboardSideBar from 'Components/DashboardSideBar/DashboardSideBar';
 import DashboardProductList from 'Containers/DashboardProductList'
 import DashboardProductDetail from 'Containers/DashboardProductDetail'
 import DashboardSearch from 'Containers/DashboardSearch';
-
+import uuid from 'react-uuid'
 const api = new Api();
 const DashboardInventory = () =>{ 
     const [title , setTitle] = useState('Inventory');
     const [ProductData , setProductData] = useState(null);
-    // const [supplierInventoryData , setProductData] = useState(null);
     const [searchActive , setSearchActive] = useState(false);
     const location = useLocation();
+    const [TabData , setTabData] = useState([]);
     const getData = async () => await api.getProductCategories()
     .then((response) => {
-        setProductData(response.data)
-    })
-
-    // const supplierInventory = async() => await api.getSupplierProducts()
-    // .then((response)=> {
-
-    // })
-
-    .catch((err) => console.log(err));
-    //  setSearchActive(1)  
-    if(ProductData){
-        const TabData = [ 
+        setTabData([
             {
                 heading:'My Inventory',
-                content:ProductData.map(product => {
+                content:response.data.map(product => {
+                    // console.log(product);
                     return(
                         <div>
                             <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-6 uppercase font-bold tracking-wider">{product.name}</h3>
                             <div className="grid md:grid-cols-1 gap-2 mb-6 md:mb-10">
                                 {product.products.map(p =>{
                                     return(
-                                    <BoxLink key={`${p.name}`} to="/dashboard/inventory/product/" link={p.name} textColor='dark-blue' id={p.pk}/>
+                                    <BoxLink key={uuid()} to="/dashboard/inventory/product/" link={p.name} textColor='dark-blue' id={p.pk}/>
                                     )
                                 })}
                             </div>
@@ -58,14 +48,15 @@ const DashboardInventory = () =>{
             },
             {
                 heading:'All Products',
-                content:ProductData.map(product => {
+                content:response.data.map(product => {
+                    // console.log(product);
                     return(
                         <div>
                             <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-6 uppercase font-bold tracking-wider">{product.name}</h3>
                             <div className="grid md:grid-cols-1 gap-2 mb-6 md:mb-10">
                                 {product.products.map(p =>{
                                     return(
-                                    <BoxLink key={`${p.name}`} to="/dashboard/inventory/product/" link={p.name} textColor='dark-blue' id={p.pk}/>
+                                    <BoxLink key={uuid()} to="/dashboard/inventory/product/" link={p.name} textColor='dark-blue' id={p.pk}/>
                                     )
                                 })}
                             </div>
@@ -74,12 +65,24 @@ const DashboardInventory = () =>{
                 }),
                 key:'all-products'
             }
-        ]
-        return(
+        ]);
+        setProductData(response.data)
+    })
+    .catch((err) => console.log(err));
+    //  setSearchActive(1)  
+    useEffect(() => {
+        if(!ProductData){
+            getData();
+        }
+    }, []);
+
+    return(
+        <>
+        { ProductData ? (
             <div className="flex flex-col md:flex-row">
                 <DashboardSideBar>
                     <h2 className="text-3xl text-dark-blue my-3">{title}</h2>
-                    <Tabs tabs={TabData} amount={false} headingComp={<Search type="icon" />} />
+                    <Tabs tabs={TabData} headingComp={<Search type="icon" amount={false} callBack={(e) => setSearchActive(e)} searchActive={searchActive} />} />
                 </DashboardSideBar>
                 <div className={`absolute w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll ${location.pathname === "/dashboard/inventory" ? `z-0`: `z-10`}`}>
                     <Route exact path='/dashboard/inventory/product/:id' exact render={(props) => {
@@ -88,23 +91,24 @@ const DashboardInventory = () =>{
                     <Route path='/dashboard/inventory/product/:id/detail/:oid?/edit' exact render={(props) => {
                         return ( <DashboardProductDetail edit={true} {...props } /> )
                     }} />
-                    <Route path='/dashboard/inventory/product/search:query?'>
+                    <Route path='/dashboard/inventory/search:query?'>
                         <DashboardSearch />
                     </Route>
                 </div>
             </div>
-            
         )
-    }else{
-        getData();
-        return(
+        : (
             <div className="relative w-full min-h-screen"> 
                 <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
             </div> 
-        )
-    }
-        
+        )}
+        </>
 
+
+    
+    )
+ 
+    
 }
 
 export default DashboardInventory

@@ -7,7 +7,7 @@ import Api from "Helpers/api";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import { useQuery } from "react-query";
 import ResourceDisplay from "Components/Resources/ResourceDisplay";
-
+import Spinner from "Images/spinner.gif";
 
 const DashboardResources = () => {
     const [title, setTitle] = useState("Resources");
@@ -23,7 +23,9 @@ const DashboardResources = () => {
         api.getTags().then((resp) => resp.data)
     );
     if (resourcesLoading || tagsLoading) {
-        return <div>{Translator("Loading")}</div>;
+        return <div className="relative w-full min-h-screen"> 
+        <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
+    </div>;
     }
 
     const resourceColors = {
