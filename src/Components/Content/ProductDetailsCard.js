@@ -15,6 +15,7 @@ const Read_Product = (product_attr, default_value) => {
 };
 
 const ProductDetailCard = ({ product, edit = false }) => {
+  console.log("LKJLKJEEEE")
   return (
     <>
       <div className="flex lg:flex-row flex-col-reverse">
@@ -24,6 +25,13 @@ const ProductDetailCard = ({ product, edit = false }) => {
             description={Read_Product(product.product_label_value, "N/A")}
             class_addons="pb-2"
           ></Inventory_Description>
+          {product.product_category && (          
+            <Inventory_Description
+              title="Category"
+              class_addons="pb-2 pt-4"
+              description={Read_Product(product.product_category, "N/A")}
+            ></Inventory_Description>
+            )}
           <Inventory_Description
             title="Description"
             class_addons="pb-2 pt-4"

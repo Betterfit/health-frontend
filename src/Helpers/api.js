@@ -5,7 +5,7 @@ export default class Api {
   constructor() {
     this.api_token = localStorage.getItem('token');
     this.client = null;
-    this.api_url = 'http://betterfit.l1f7.com/'  
+    this.api_url = 'https://api.betterfit.health/'  
   }
 
   init = () => {
@@ -20,7 +20,7 @@ export default class Api {
 
 
     this.client = axios.create({
-        baseURL: 'http://betterfit.l1f7.com/' ,
+        baseURL: 'https://api.betterfit.health/' ,
         timeout: 31000,
         headers: headers,
     });
@@ -75,8 +75,12 @@ export default class Api {
     return this.init().get(`product-categories/?supplier=${supplierid}` ); 
   }
 
-  getProductsbySupplier = (supplierid) => {
+  getProductsBySupplier = (supplierid) => {
     return this.init().get(`products/?supplier=${supplierid}`); 
+  }
+
+  getProductBySupplier = (supplierid, productid) => {
+    return this.init().get(`products/${productid}/?supplier=${supplierid}`); 
   }
 
   //get products under a particular category id
