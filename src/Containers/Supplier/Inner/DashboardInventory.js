@@ -32,7 +32,7 @@ const DashboardInventory = () =>{
                 content:response.data.map(product => {
                     // console.log(product);
                     return(
-                        <div>
+                        <div key={uuid()}>
                             <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-6 uppercase font-bold tracking-wider">{product.name}</h3>
                             <div className="grid md:grid-cols-1 gap-2 mb-6 md:mb-10">
                                 {product.products.map(p =>{
@@ -51,7 +51,7 @@ const DashboardInventory = () =>{
                 content:response.data.map(product => {
                     // console.log(product);
                     return(
-                        <div>
+                        <div key={uuid()}>
                             <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-6 uppercase font-bold tracking-wider">{product.name}</h3>
                             <div className="grid md:grid-cols-1 gap-2 mb-6 md:mb-10">
                                 {product.products.map(p =>{
@@ -72,6 +72,7 @@ const DashboardInventory = () =>{
     //  setSearchActive(1)  
     useEffect(() => {
         if(!ProductData){
+            console.log('get data');
             getData();
         }
     }, []);
@@ -82,7 +83,7 @@ const DashboardInventory = () =>{
             <div className="flex flex-col md:flex-row">
                 <DashboardSideBar>
                     <h2 className="text-3xl text-dark-blue my-3">{title}</h2>
-                    <Tabs tabs={TabData} headingComp={<Search type="icon" amount={false} callBack={(e) => setSearchActive(e)} searchActive={searchActive} />} />
+                    <Tabs tabs={TabData}  amount={false} headingComp={<Search type="icon" />} />
                 </DashboardSideBar>
                 <div className={`absolute w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll ${location.pathname === "/dashboard/inventory" ? `z-0`: `z-10`}`}>
                     <Route exact path='/dashboard/inventory/product/:id' exact render={(props) => {
