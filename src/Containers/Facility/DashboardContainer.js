@@ -31,7 +31,7 @@ const DashboardContainer = () =>{
                     atLeave={{ opacity: 0 }}
                     atActive={{ opacity: 1 }}
                     className="switch-wrapper"
-                >
+                > 
                 <Route exact path="/dashboard" render={() => (
                     <Redirect to="/dashboard/new-order/category/"/>
                 )}/>
