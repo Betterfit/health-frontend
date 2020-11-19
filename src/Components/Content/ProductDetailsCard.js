@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import Button from "../Forms/Button";
 import Inventory_Description from "../Inventory/Inventory_Description";
-import Quantity_Input from "Components/Forms/Quantity_Input";
 import ProductImageCard from "Components/Content/ProductImageCard"
 import AddProductForm from "Components/Forms/AddProductForm"
 import {useCartStore} from "Context/cartContext";
@@ -36,7 +34,6 @@ const ProductImage = ({ product_image, product_name }) => {
 const ProductDetailCard = ({ product, edit }) => {
   const cartStore = useCartStore();
   const addToCart = (quantity,priority) => {
-    // console.log(quantity,priority)
     cartStore.addToCart(product.pk,quantity,priority)
   }
   return (

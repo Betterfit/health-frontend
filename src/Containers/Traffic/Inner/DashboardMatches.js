@@ -1,54 +1,102 @@
 import React , {useState,useEffect} from 'react'
 import { ReactSVG } from 'react-svg';
-import Table from 'Components/Table/List-sort/Table';
+import Table from 'Components/Table/MatchSort/Table';
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import BackNavigation from 'Components/Helpers/BackNavigation'
 import Reload from 'Images/Icons/reload.svg';
 import Countdown from 'react-countdown';
 import Api from "Helpers/api";
+import dayjs from 'dayjs';
+import Spinner from "Images/spinner.gif";
 
 const api = new Api();
 const DashboardMatches = () => {
     const [matchesData , setMatchesData] = useState(null);
-
     const [matchHeaderData , setMatchHeaderData] = useState({
-        order_date:"October 28, 2020",
-        matches:"11/12",
-        time_till_processed: "2:32:04" 
+        order_date:"",
+        matches:"",
+        time_till_processed: "" 
     });
+    const [isLoading, setIsLoading] = useState(true);
+    const [rowState , setRowState ] = useState(null);
+    const [refresh , setRefresh] = useState(null);
 
     const getData = async () => await api.getMatches()
     .then((response) => {
-
+        setMatchHeaderData({
+            order_date:dayjs().format('MMM D , YYYY'),
+            matches:`${response.data.total_matches}/${response.data.total_orders}`,
+            time_till_processed:response.data.cutoff_time_2
+        })
         let arr = response.data;
-
-        arr = arr.map(item => {
+        // console.log(arr);
+        arr = arr.matches.map(item => {
             let obj = {
                 order_no: item.order_no,
                 province: item.province,
                 facility: item.facility,
-                supplier: item.supplier !== "No Match" ? item.supplier : null ,
+                supplier: item.supplier !== "No match" ? item.supplier : null ,
                 order_date: item.order_date,
                 rank:item.rank,
                 pk:item.pk
             }
             return(obj);
-        });
-        console.log(arr);
+        }); 
         setMatchesData(arr)
+        setIsLoading(false);
     })
     .catch((err) => console.log(err));
 
-    // console.log(JSON.stringify(ProductData))
-    // uncomment when api is set up
     useEffect(() => {
         getData();
     },[]); 
+
+    const sortFunction = () => {
+        if(rowState){
+            clearTimeout();
+            setRefresh(true);
+            setTimeout(()=>{
+                setRefresh(null); 
+                setIsLoading(true);
+            },2500);
+            let arr = rowState;
+            arr = arr.map((item,index) => {
+             
+                let obj = {
+                    pk:item.id,
+                    order:index,
+                }
+                return obj;
+            });
+            // console.log(arr);
+            api.postSortedMatches(arr)
+            .then((response) => {
+                let arr = response.data;
+                console.log(response.data);
+                arr = arr.matches.map(item => {
+                    let obj = {
+                        order_no: item.order_no,
+                        province: item.province,
+                        facility: item.facility,
+                        supplier: item.supplier !== "No match" ? item.supplier : null ,
+                        order_date: item.order_date,
+                        rank:item.rank,
+                        pk:item.pk
+                    }
+                    return(obj);
+                }); 
+                // console.log(arr);
+                setIsLoading(false);
+                setMatchesData(arr)
+            })
+        }
+    } 
 
     
 
     const HeadingComponent = ({ title, value, classes, time }) => {
         if(time){
+            // console.log(value);
             return (
                 <div
                   className={
@@ -58,7 +106,7 @@ const DashboardMatches = () => {
                 >
                     <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
                     <span className="text-betterfit-graphite text-base word break-words text-2xl">
-                        <Countdown daysInHours={true} date={Date.parse(value)}></Countdown>
+                        <Countdown date={Date.parse(value)}></Countdown>
                     </span>
                 </div>
             );
@@ -105,48 +153,61 @@ const DashboardMatches = () => {
     return(
         <div className="px-4 sm:px-6 md:px-8 pt-10">
             {/* heading */}
-            <div className="flex justify-between items-end">
-                <div>
-                    <BackNavigation link={"Back to matches"} />
-                    <HeadingComponentTitle  
-                        value={`${matchHeaderData.order_date}`}
-                    />
+            {isLoading ? (
+                <div className="relative w-3/4 min-h-screen" style={{margin:'0 auto',}}> 
+                <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
                 </div>
-                <div className="w-full md:w-1/2 flex justify-end ">
-                    <div className="flex flex-row mt-4 items-center">
-                        <HeadingComponent
-                            title="Matches"
-                            value={matchHeaderData.matches}
+            ) : ( 
+            <>
+                <div className="flex justify-between items-end">
+                    <div>
+                        <BackNavigation link={"Back to matches"} />
+                        <HeadingComponentTitle  
+                            value={`${matchHeaderData.order_date}`}
                         />
-                        <HeadingComponent
-                            title="Time Till Processed"
-                            value={matchHeaderData.order_date}
-                            time={true}
-                        />
-                        <button
-                            // onClick={ onClick }
-                            type="submit"
-                            className={`flex-0 rounded-md flex items-center no-wrap justify-center py-3 border border-transparent px-4
-                            transition duration-150 ease-in-out capitalize uppercase text-lg text-bettfit-navy hover:opacity-75 focus:outline-none bg-betterfit-pale-blue px-4 outline-none `
-                            }
-                            style={{minWidth:100}}
-                        >
-                            <ReactSVG src={Reload} className="flex items-center mr-3"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                            Update Suppliers
-                        </button>
+                    </div>
+                    <div className="w-full md:w-1/2 flex justify-end ">
+                        <div className="flex flex-row mt-4 items-center">
+                            <HeadingComponent
+                                title="Matches"
+                                value={matchHeaderData.matches}
+                            />
+                            <HeadingComponent
+                                title="Time Till Processed"
+                                value={matchHeaderData.time_till_processed}
+                                time={true}
+                            />
+                            <button
+
+                                type="submit"
+                                className={`flex-0 rounded-md flex items-center no-wrap justify-center py-3 border border-transparent px-4
+                                transition duration-150 ease-in-out capitalize uppercase text-lg text-bettfit-navy hover:opacity-75  focus:outline-none  bg-betterfit-pale-blue px-4 outline-none `
+                                }
+                                style={{minWidth:100, whiteSpace: 'nowrap'}}
+                                onClick = {() => sortFunction()}
+                            >
+                                {refresh ? (
+                                    <ReactSVG src={Reload} className={`flex items-center mr-3 rotate-me`}  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
+                                ):(
+                                    <ReactSVG src={Reload} className={`flex items-center mr-3`}  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
+                                )}
+                                
+                                Update Suppliers
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            {/* end heading */}
-            <div>
-                {matchesData && (
-                    <Table 
-                        TableData={matchesData} 
-                        link={`/dashboard/matches/`} 
-                    />
-                )}
-            </div>
-
+                <div>
+                    {matchesData && (
+                        <Table 
+                            TableData={matchesData} 
+                            updateRow = {(rowState) => setRowState(rowState)}
+                            link={`/dashboard/matches/`} 
+                        />
+                    )}
+                </div>
+            </>
+            )}      
         </div>
     )
 }

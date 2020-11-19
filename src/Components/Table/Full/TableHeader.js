@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { ReactSVG } from "react-svg";
 import { NavLink } from "react-router-dom";
+import Translator from "Helpers/Translator";
+
 // components
 import StatusButton from "Components/Content/StatusButton";
 //images
@@ -11,7 +13,7 @@ const HeaderText = ({ title, value, addOn_styles }) => {
   return (
     <div className="flex flex-col ">
       <span className="text-left text-xxs md:text-xs leading-4 font-normal uppercase tracking-wider uppercase text-white">
-        {title}
+        {Translator(title)}
       </span>
       <span
         className={`md:pt-1 text-left md:text-base leading-4 text-white md:pb-0 ${addOn_styles}`}

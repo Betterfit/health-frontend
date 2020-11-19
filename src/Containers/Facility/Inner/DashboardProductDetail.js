@@ -21,6 +21,7 @@ const DashboardProductDetail = (props) => {
     await api
       .getProductVariant(product_id)
       .then((response) => {
+        console.log(response.data);
         setProduct(CleanUpProduct(response.data, product_details_id));
         setIsError(false);
         setIsLoading(false);
@@ -30,7 +31,6 @@ const DashboardProductDetail = (props) => {
       });
 
   useEffect(() => {
-    // console.log("getting data");
     getData();
   }, []);
 
@@ -38,11 +38,15 @@ const DashboardProductDetail = (props) => {
     let product_options = product.product_options.find(
       (elem) => elem.pk == details_id
     );
+    // console.log(product);
     const clean_product = {
       name: product.name,
+      parent:product.product,
+      product_parent: product.product,
       product_description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
       product_size: product_options.name,
+      product_parent:product.product,
       pk:product_options.pk
     };
     return clean_product;
@@ -57,7 +61,7 @@ const DashboardProductDetail = (props) => {
       {product && (
         <>
           <BackNavigation link={`Back to Products`} />
-          <TitleUnderLine title={product.name} />
+          <TitleUnderLine title={product.parent} />
           <div className="w-full flex place-self-center justify-self-center m-auto">
             <ProductDetailsCard product={product} />
           </div>

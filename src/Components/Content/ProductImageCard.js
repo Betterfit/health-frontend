@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import Button from "../Forms/Button";
-import Inventory_Description from "../Inventory/Inventory_Description";
-import Quantity_Input from "Components/Forms/Quantity_Input";
 import EmptyImage from "Images/emptyImage.png"
 
 //This will either return the attribute if it exists, or

@@ -24,13 +24,11 @@ const DashboardCategoryProductList = (props) => {
         setIsLoading(false);
       })
       .catch((err) => {
-        // console.log(err);
         setIsLoading(false);
         setIsError(true);
       });
 
   useEffect(() => {
-    // console.log("getting data");
     getData();
   }, []);
 
@@ -56,17 +54,20 @@ const DashboardCategoryProductList = (props) => {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2 mb-6 md:mb-10">
             {CategoryData.products.map((p) =>
-              p.product_variations.map((p2) =>
-                p2.product_options.map((p3) => (
-                  <ProductCard
-                    key={`${p3.name}`}
-                    product={p2}
-                    product_details={p3}
-                    category={CategoryData.name}
-                    extra={CategoryData}
-                  />
-                ))
-              )
+              p.product_variations.map((p2) =>{
+                return(
+                  p2.product_options.map((p3) => (
+                    <ProductCard
+                      key={`${p3.name}`}
+                      product={p2}
+                      product_details={p3}
+                      category={CategoryData.name}
+                      extra={CategoryData}
+                      parent={p.name ? p.name : null}
+                    />
+                  ))
+                )
+              })
             )}
           </div>
         </>

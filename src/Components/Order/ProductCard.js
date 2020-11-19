@@ -28,7 +28,8 @@ const ProductImage = ({ product_image, product_name, hover }) => {
   );
 };
 
-const ProductCard = ({ product, product_details, category, extra }) => {
+const ProductCard = ({ product, product_details, category, extra, parent }) => {
+  console.log(category);
   const cartStore = useCartStore();
   const history = useHistory();
   const [active, setActive] = useState(false);
@@ -59,7 +60,7 @@ const ProductCard = ({ product, product_details, category, extra }) => {
           />
           <div className="flex-col pt-7 pl-4">
             <h1 className="text-sm md:text-base font-semibold text-status-dark-blue">
-              {Read_Product(name, "")}
+              { parent ? `${parent} - ` : "" } {Read_Product(name, "")}
             </h1>
             <span className="text-betterfit-grey-blue text-xs">
               {Read_Product(size, "N/A")}
@@ -67,7 +68,7 @@ const ProductCard = ({ product, product_details, category, extra }) => {
           </div>
 
           <div className="flex flex-row pl-4 pr-2 py-1 justify-between  items-center ml-auto mt-0 md:ml-0 md:mt-auto">
-            <p className="text-betterfit-basic-blue uppercase opacity-50 text-xxs font-semibold hidden md:block">
+            <p className="text-betterfit-graphite uppercase text-xxs font-semibold hidden md:block">
               {category}
             </p>
             <CircleButton hover={active} onClick={() => addToCart() } />

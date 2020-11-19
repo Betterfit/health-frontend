@@ -7,6 +7,7 @@ import SupplierCard from "Components/ResourceProfile/SupplierCard";
 import Slider from "Components/Slider/Slider";
 import React, { useState } from "react";
 import { Resource, ResourceDetails, Tag } from "Types";
+import Translator from "Helpers/Translator";
 
 interface ResourceLinkProps {
     resource: Resource;
@@ -56,7 +57,7 @@ const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
             />
             <div className="p-2 text-left flex-grow">
                 <div className="font-medium text-gray-700 font-body uppercase tracking-widest text-xs">
-                    {resource.resource_type}
+                    {Translator(resource.resource_type)}
                 </div>
                 <div className="font-semibold text-base tracking-wide">
                     {resource.title}

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Tabs from 'Components/Tabs/Tabs';
 import BoxLink from 'Components/Content/BoxLink';
 import Search from 'Components/Search/Search';
-import Table from 'Components/Table/Basic/Table';
+import Translator from "Helpers/Translator";
 import Api from "Helpers/api";
 import Spinner from "Images/spinner.gif";
 import {
@@ -30,12 +30,10 @@ const DashboardInventory = () =>{
     .catch((err) => console.log(err));
     //  setSearchActive(1)  
     if(ProductData){
-        // console.log(ProductData);
         const TabData = [ 
             {
                 heading:'My Inventory',
                 content:ProductData.map(product => {
-                    // console.log(product);
                     return(
                         <div>
                             <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-6 uppercase font-bold tracking-wider">{product.name}</h3>
@@ -54,7 +52,6 @@ const DashboardInventory = () =>{
             {
                 heading:'All Products',
                 content:ProductData.map(product => {
-                    // console.log(product);
                     return(
                         <div>
                             <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-6 uppercase font-bold tracking-wider">{product.name}</h3>
@@ -74,7 +71,7 @@ const DashboardInventory = () =>{
         return(
             <div className="flex flex-col md:flex-row">
                 <DashboardSideBar>
-                    <h2 className="text-3xl text-dark-blue my-3">{title}</h2>
+                    <h2 className="text-3xl text-dark-blue my-3">{Translator(title)}</h2>
                     <Tabs tabs={TabData} headingComp={<Search type="icon" amount={false} callBack={(e) => setSearchActive(e)} searchActive={searchActive} />} />
                 </DashboardSideBar>
                 <div className={`absolute w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll ${location.pathname === "/dashboard/inventory" ? `z-0`: `z-10`}`}>

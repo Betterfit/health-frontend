@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import dayjs from 'dayjs';
 import BackNavigation from 'Components/Helpers/BackNavigation'
+import Translator from "Helpers/Translator";
 
 const MatchHeaderComponent = ({ title, value, classes }) => {
   return (
@@ -10,7 +11,7 @@ const MatchHeaderComponent = ({ title, value, classes }) => {
         (classes ? classes : "")
       }
     >
-      <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
+      <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-75">{Translator(title)}</span>
       <span className="text-betterfit-graphite text-base word break-words">{value}</span>
     </div>
   );
@@ -24,7 +25,7 @@ const MatchHeaderComponentTitle = ({ value, classes }) => {
           (classes ? classes : "")
         }
       >
-        <span className="text-betterfit-graphite text-3xl">{value}</span>
+        <span className="text-betterfit-graphite text-3xl">{Translator(value)}</span>
       </div>
     );
   };
@@ -59,7 +60,7 @@ const MatchOrderDetailHeader = ({ order , actionComponent }) => {
           <div className="flex-row flex justify-between">
             <MatchHeaderComponent
                 title="Address"
-                value={order.shipping_address}
+                value={order.address}
             />
             <MatchHeaderComponent
                 title="Shipping Address"
