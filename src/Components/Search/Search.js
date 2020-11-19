@@ -5,23 +5,24 @@ import SearchIcon from 'Images/Icons/search-icon.svg'
 import Close from 'Images/Icons/close.svg';
 import Translator from "Helpers/Translator";
 
-const Search = ({type}) => {
+let myTimeOut;
+const Search = ({type,callBack,searchActive}) => {
   const [searchValue, setSearchValue ] = useState('');
   const searchRef = useRef(null);
   const history = useHistory();
   const searchQuery = () => {
     setSearchValue(searchRef.current.value)
-    history.push(`/dashboard/inventory/search?search=${searchRef.current.value}`);
+    history.replace(`/dashboard/inventory/search?search=${searchRef.current.value}`);
   }
   const clearSearchQuery = () => {
-    history.push(`/dashboard/inventory`);
+    history.replace(`/dashboard/inventory`);
   }
-  const [showInput , setShowInput] = useState(false);
+  const [showInput , setShowInput] = useState(searchActive);
   
   if(type === "icon" ){
     return(
       <div className={`flex items-center h-full bg-gray-300 ${showInput ? 'absolute w-full z-10  border-b-2 border-gray-400 ' : 'relative'}`}> 
-        <button className="button-reset" aria-label="button-reset" onClick={() => setShowInput(!showInput)}>
+        <button className="button-reset" aria-label="button-reset" onClick={() =>{ callBack(!showInput); setShowInput(!showInput)}}>
           <ReactSVG src={SearchIcon} />
         </button>
         {showInput && (
@@ -36,8 +37,9 @@ const Search = ({type}) => {
                   placeholder="Search Products"
                   ref={searchRef}
                   onChange={()=>{
-                    clearTimeout();
-                    setTimeout(()=>{
+                    clearTimeout(myTimeOut);
+                    myTimeOut = setTimeout(()=>{
+                      console.log('search!')
                       searchQuery()
                     },1000)
                   }}
@@ -73,8 +75,8 @@ const Search = ({type}) => {
             placeholder={Translator("Search Resources")}
             ref={searchRef}
             onChange={()=>{
-              clearTimeout();
-              setTimeout(()=>{
+              clearTimeout(myTimeOut);
+              myTimeOut = setTimeout(()=>{
                 searchQuery()
               },1000)
             }}
@@ -94,8 +96,8 @@ const Search = ({type}) => {
             placeholder="Search Orders"
             ref={searchRef}
             onChange={()=>{
-              clearTimeout();
-              setTimeout(()=>{
+              clearTimeout(myTimeOut);
+              myTimeOut = setTimeout(()=>{
                 searchQuery()
               },1000)
             }}
