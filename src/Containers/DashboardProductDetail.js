@@ -32,7 +32,7 @@ const DashboardProductDetail = (props) =>{
     
   useEffect(() => {
     getData();
-  }, ProductData);
+  }, []);
 
 
     return(
@@ -40,6 +40,7 @@ const DashboardProductDetail = (props) =>{
             {ProductData && (
                 <>
                     <BackNavigation link={`Back`} />
+                    <p>{ProductData.product_category}</p>
                     <TitleUnderLine title={ProductData.product_name} />  
                     <div className="w-full flex place-self-center justify-self-center m-auto">
                         {ProductData && (

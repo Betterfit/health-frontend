@@ -4,7 +4,7 @@ import EmptyImage from "Images/emptyImage.png"
 //This will either return the attribute if it exists, or
 // return the passed in 'default_value' if not
 const Read_Product = (product_attr, default_value) => {
-  if (product_attr === undefined) {
+  if (product_attr === undefined || product_attr === null) {
     return default_value;
   }
   return product_attr;
