@@ -1,6 +1,5 @@
 import ResourceLink from "Components/Content/ResourceLink";
-import Slider from "Components/Slider/Slider";
-import React, { useState } from "react";
+import React from "react";
 import { Resource } from "Types";
 
 interface ResourceDisplayProps {
@@ -25,8 +24,8 @@ const matchResourceColor = (resourceType: string): string => {
 
 const ResourceDisplay = ({ resources }: ResourceDisplayProps) => {
     return (
-        <div className="flex-grow wrap max-h-screen p-4 h-full rounded-lg overflow-visible md:overflow-scroll ">
-            <div className="py-8 flex flex-col ">
+        <div className="flex-grow wrap max-h-screen p-0 h-full rounded-lg overflow-visible md:p-4 md:overflow-scroll ">
+            <div className="flex flex-col md:py-8 ">
                 {resources.map((resource) => (
                     <div
                         className="resource-container m-2 rounded-md cursor-pointer"

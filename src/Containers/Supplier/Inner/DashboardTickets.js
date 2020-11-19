@@ -13,6 +13,7 @@ import {
   useParams,
   useLocation
 } from "react-router-dom";
+import Spinner from "Images/spinner.gif";
 // import OrderHeader from 'Components/Order/OrderHeader'
 // import BackNavigation from 'Components/Helpers/BackNavigation'
 
@@ -99,13 +100,17 @@ const DashboardTickets = () => {
       <Route exact path='/dashboard/tickets'>
         <h2 className="text-3xl text-dark-blue my-3">{Translator("Tickets")}</h2>
       </Route>
-        {ticketData && (
+        {ticketData ? (
           <>          
             <TicketSearch extraClasses="float-right clear-both"  callBack={(e) => setSearchActive(e)} searchActive={searchActive} />
             <Route exact path='/dashboard/tickets'>
               <Tabs tabs={TabData} amount={true}  />
             </Route>
           </>
+        ):(
+          <div className="relative w-full min-h-screen"> 
+            <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
+          </div> 
         )}
       <Route path="/dashboard/tickets/search:query?">
             <DashboardTicketSearch supplierId={supplierId} />

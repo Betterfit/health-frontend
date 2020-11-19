@@ -1,17 +1,27 @@
-import React, {useState,useRef} from "react";
+import React, {useState,useRef,propTypes} from "react";
 import { useHistory } from 'react-router-dom'
 import { ReactSVG } from 'react-svg'
 import SearchIcon from 'Images/Icons/search-icon.svg'
 import Close from 'Images/Icons/close.svg';
 import Translator from "Helpers/Translator";
-
-const Search = ({type}) => {
+import {useAuthStore} from "Context/authContext";
+let myTimeOut;
+const Search = ({type,activeTab = null}) => {
+  const authStore = useAuthStore();
   const [searchValue, setSearchValue ] = useState('');
   const searchRef = useRef(null);
   const history = useHistory();
+  const userData = JSON.parse(authStore.user);
+  const supplierId = userData.user_profile.supplier;
   const searchQuery = () => {
     setSearchValue(searchRef.current.value)
-    history.push(`/dashboard/inventory/search?search=${searchRef.current.value}`);
+    if(activeTab){
+      if(activeTab == "my-inventory"){
+        history.push(`/dashboard/inventory/search?search=${searchRef.current.value}&supplier=${supplierId}`);
+      }else{
+        history.push(`/dashboard/inventory/search?search=${searchRef.current.value}`);        
+      }
+    }
   }
   const clearSearchQuery = () => {
     history.push(`/dashboard/inventory`);
@@ -36,8 +46,8 @@ const Search = ({type}) => {
                   placeholder="Search Products"
                   ref={searchRef}
                   onChange={()=>{
-                    clearTimeout();
-                    setTimeout(()=>{
+                    clearTimeout(myTimeOut);
+                    myTimeOut = setTimeout(()=>{
                       searchQuery()
                     },1000)
                   }}
@@ -73,8 +83,8 @@ const Search = ({type}) => {
             placeholder={Translator("Search Resources")}
             ref={searchRef}
             onChange={()=>{
-              clearTimeout();
-              setTimeout(()=>{
+              clearTimeout(myTimeOut);
+              myTimeOut = setTimeout(()=>{
                 searchQuery()
               },1000)
             }}
@@ -94,8 +104,8 @@ const Search = ({type}) => {
             placeholder="Search Orders"
             ref={searchRef}
             onChange={()=>{
-              clearTimeout();
-              setTimeout(()=>{
+              clearTimeout(myTimeOut);
+              myTimeOut = setTimeout(()=>{
                 searchQuery()
               },1000)
             }}
@@ -107,6 +117,7 @@ const Search = ({type}) => {
       </div>
     )
   }
-
 };
+
+
 export default Search;

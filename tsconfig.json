@@ -19,7 +19,8 @@
     "jsx": "react",
     "baseUrl": "src",
     "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true
+    "useDefineForClassFields": true,
+    "forceConsistentCasingInFileNames": true,
   },
   "include": [
     "src"
