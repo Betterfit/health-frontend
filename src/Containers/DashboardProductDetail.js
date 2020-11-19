@@ -17,6 +17,7 @@ const DashboardProductDetail = (props) =>{
     .then((response) => {
         let data = response.data;
         setProductData({ 
+            "product_category": data.product_option.product_category,
             "product_name": data.product_option.product + " - " +  data.product_option.product_variation,
             "product_label": data.product_option.option_label,
             "product_label_value": data.product_option.name,
@@ -32,23 +33,26 @@ const DashboardProductDetail = (props) =>{
     
   useEffect(() => {
     getData();
-  }, ProductData);
+  }, []);
 
 
     return(
+        <>
+        {ProductData && (
+
         <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
-            {ProductData && (
-                <>
                     <BackNavigation link={`Back`} />
                     <TitleUnderLine title={ProductData.product_name} />  
                     <div className="w-full flex place-self-center justify-self-center m-auto">
-                        {ProductData && (
-                            <ProductDetailsCard product={ProductData} edit={true}></ProductDetailsCard>
-                        )}
+                        <ProductDetailsCard product={ProductData} edit={true}></ProductDetailsCard>
                     </div>
-                </>
-            )}
+    
+   
         </div>
+
+        )}
+                </>
+
         
     )
 }

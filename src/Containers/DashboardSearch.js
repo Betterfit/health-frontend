@@ -41,6 +41,7 @@ const DashboardSearch = () => {
     })
     const getSupplierSearchResults = async () => await api.getSupplierSearchResults(query.get('search'),query.get('supplier'))
     .then((response) => {
+        console.log(response);
         let arr = response.data;
         arr.map(productCat => {
             productCat.products.map(products => {
@@ -64,7 +65,7 @@ const DashboardSearch = () => {
     })
     .catch((err) => console.log(err));
     if(!searchData){
-        if(query.get('supplier')){
+        if(query.get('supplier')){  
             getSupplierSearchResults();
         }else{
             getSearchResults();
@@ -82,6 +83,7 @@ const DashboardSearch = () => {
         if(query.get('supplier') !== supplierQuery){
             setSupplierQuery(query.get('supplier')); 
             if(query.get('supplier')){
+                console.log('get my products');
                 getSupplierSearchResults();
             }else{
                 getSearchResults();
@@ -102,24 +104,27 @@ const DashboardSearch = () => {
                             return(
                                 productCat.products.map(product=> {
                                     return(
-                                        <div key={uuid()} >
-                                        <h2 className="text-2xl text-gray-700 font-bold">{product.name}</h2>
-
-                                        {
-                                            product.product_variations.length > 0 && (
-                                                product.product_variations.map(p => {
-                                                    return(
-                                                        <Table key={uuid()} TableData={p} ProductId={product.pk} /> 
-                                                    )
-                                                })
-                                            )
-                                        }
-                                        
-                                        {product.product_variations.length <= 0 && (
-                                            <Table key={uuid()} TableData={product} ProductId={product.pk} />  
-                                        )}
-                                        </div>
-                                        
+                                        <>
+                                            {
+                                                product.product_variations.length ? (
+                                                 
+                                                        product.product_variations.map(p => {
+                                                            if(p.product_options.length){
+                                                                return(
+                                                                    <div key={uuid()} >
+                                                                        <h2 className="text-2xl text-gray-700 font-bold">{product.name}</h2>
+                                                                        <Table key={uuid()} TableData={p} ProductId={product.pk} /> 
+                                                                    </div>
+                                                                )
+                                                            }                                                         
+                                                        })
+                                                ) : (
+                                                    <>
+                                                    <div></div>
+                                                    </>
+                                                )
+                                            }
+                                        </>  
                                     )
                                 })
                             )

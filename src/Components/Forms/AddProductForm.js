@@ -12,8 +12,7 @@ const AddProductForm = ({id}) => {
     cartStore.addToCart(id, quantity, priority);
   };
   return (
-    <>
-      <div className="flex flex-col mx-1 lg:pt-2 w-1/2 lg:w-auto justify-end">
+      <div className="flex flex-col mx-1 pt-2">
         <div className="py-1 lg:py-2 flex lg:justify-end ">
           <Quantity_Input
             name="Quantity"
@@ -32,7 +31,6 @@ const AddProductForm = ({id}) => {
           />
         </div>
       </div>
-    </>
   );
 };
 

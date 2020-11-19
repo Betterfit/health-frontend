@@ -8,7 +8,7 @@ const BoxLink = ({borderColor , textColor,link, to, id}) => {
           className={`border border-${borderColor} text-${textColor} px-4 py-5 flex justify-between bg-white rounded-md box-link font-bold`}
         >
             {link}
-            <ReactSVG src={RightLongArrow} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
+            <ReactSVG src={RightLongArrow} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;margin-left:15px;')}}  />
         </NavLink>
     )
 }

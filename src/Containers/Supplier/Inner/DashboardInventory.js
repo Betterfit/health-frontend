@@ -17,6 +17,8 @@ import DashboardProductList from 'Containers/DashboardProductList'
 import DashboardProductDetail from 'Containers/DashboardProductDetail'
 import DashboardSearch from 'Containers/DashboardSearch';
 import uuid from 'react-uuid'
+import {useAuthStore} from "Context/authContext";
+
 const api = new Api();
 
 function useQuery() {
@@ -25,18 +27,35 @@ function useQuery() {
 
 const DashboardInventory = () =>{ 
     const [title , setTitle] = useState('Inventory');
-    const [ProductData , setProductData] = useState(null);
+    const [AllCategoryData , setAllCategoryData] = useState(null);
+    const [SupplierCategoryData , setSupplierCategoryData] = useState(null);
     const [searchActive , setSearchActive] = useState(false);
     const [activeTab , setActiveTab] = useState('my-inventory');
     const location = useLocation();
+    const authStore = useAuthStore();
+    const userData = JSON.parse(authStore.user);
+    const supplierId = userData.user_profile.supplier;
     const [TabData , setTabData] = useState([]);
-    let query = useQuery();    
-    const getData = async () => await api.getProductCategories()
+    let query = useQuery();  
+    const getAllCategories = async () => await api.getProductCategories()
     .then((response) => {
+        setAllCategoryData(response.data)
+    })
+    .catch((err) => console.log(err));
+
+
+    const getSupplierCategories = async () => await api.getCategoriesBySupplier(supplierId)
+    .then((response) => {
+        setSupplierCategoryData(response.data)
+    })
+    .catch((err) => console.log(err));
+
+
+    const setTabs = () =>  {
         setTabData([
             {
                 heading:'My Inventory',
-                content:response.data.map(product => {
+                content:SupplierCategoryData.map(product => {
                     return(
                         <div key={uuid()}>
                             <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-6 uppercase font-bold tracking-wider">{product.name}</h3>
@@ -54,7 +73,8 @@ const DashboardInventory = () =>{
             },
             {
                 heading:'All Products',
-                content:response.data.map(product => {
+                content:AllCategoryData.filter((category) => category.products.length >0)
+                .map(product => {
                     return(
                         <div key={uuid()}>
                             <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-6 uppercase font-bold tracking-wider">{product.name}</h3>
@@ -71,19 +91,26 @@ const DashboardInventory = () =>{
                 key:'all-products'
             }
         ]);
-        setProductData(response.data)
-    })
-    .catch((err) => console.log(err));
-    //  setSearchActive(1)  
+    }
+
     useEffect(() => {
-        if(!ProductData){
-            getData();
-        }
+        getAllCategories();
     }, []);
+    useEffect(() => {
+        if (AllCategoryData) {
+        getSupplierCategories()
+        }
+    }, [AllCategoryData]);
+
+    useEffect(() => {
+        if (SupplierCategoryData) {
+        setTabs()
+        }
+    }, [SupplierCategoryData]);
 
     return(
         <>
-        { ProductData ? (
+        { TabData.length>0 ? (
             <div className="flex flex-col md:flex-row">
                 <DashboardSideBar>
                     <h2 className="text-3xl text-dark-blue my-3">{title}</h2>
