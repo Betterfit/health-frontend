@@ -24,7 +24,7 @@ const DashboardProductDetail = (props) =>{
             "product_label": data.product_option.option_label,
             "product_label_value": data.product_option.name,
             "product_description": data.product_option.product_description,
-            "product_alloted": data.alloted_quantity,
+            "product_allotted": data.allotted_quantity,
             "product_available": data.quantity,
             "product_image": data.product_option.product_image,
             "pk":data.product_option.pk,
@@ -48,7 +48,7 @@ const DashboardProductDetail = (props) =>{
               <div className="w-full flex place-self-center justify-self-center m-auto">
                 <ProductDetailsCard product={ProductData}>
                   <EditProductForm
-                    matched={ProductData.product_alloted}
+                    matched={ProductData.product_allotted}
                     avail={ProductData.product_available}
                     id={ProductData.pk}
                   />
