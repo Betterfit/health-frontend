@@ -6,9 +6,11 @@ import BackNavigation from 'Components/Helpers/BackNavigation'
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import ProductDetailsCard from "Components/Content/ProductDetailsCard"
 import EditProductForm from "Components/Forms/EditProductForm";
-const api = new Api();
+
+
 
 const DashboardProductDetail = (props) =>{
+    const api = new Api();
     const { match } = props
     const optionId = parseInt(match.params.oid);
     let supplier_id = JSON.parse(localStorage.getItem("user")).user_profile?.supplier;

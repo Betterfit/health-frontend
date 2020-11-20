@@ -4,9 +4,10 @@ import CategoryCard from "Components/Order/CategoryCard";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 import Search from 'Components/Search/Search';
 import Spinner from "Images/spinner.gif";
-const api = new Api();
+
 
 const DashboardCategoryList = (props) => {
+  const api = new Api();
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategory] = useState({ hits: [] });
   const [isError, setIsError] = useState(false);

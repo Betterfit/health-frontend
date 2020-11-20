@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ReactSVG } from "react-svg";
 import Logo from "Images/logo.svg";
 import LowerBackgroundBlob from "Images/Login/login_lower_right.svg";
@@ -12,27 +12,37 @@ import { useHistory, Route, useRouteMatch } from "react-router-dom";
 import {useAuthStore} from "Context/authContext";
 import Translator from "Helpers/Translator";
 
+
+const api = new Api();
+
+
 const LoginTemplate = () => {
   const authStore = useAuthStore();
   const [password, setPW] = useState("");
   const [email, setEmail] = useState("");
   const [Error, setError] = useState()
   const history = useHistory();
-  if(authStore.token){
-    history.push("/dashboard/");
-  }
 
-  const api = new Api();
+
+  useEffect(() => {   
+    if(authStore.token){
+      console.log("PUSH3")
+      history.push("/dashboard/");
+    }
+    }, []);
+
+
   const signIn = (e) => {
     e.preventDefault();
     api
       .signIn({ username: email, password: password })
-      .then( async (response) => {
-        await localStorage.setItem("token", response.data.token);
-        await localStorage.setItem("user", JSON.stringify(response.data.user));
+      .then((response) => {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         authStore.user = JSON.stringify(response.data.user);
         authStore.token = response.data.token;
         history.push("/dashboard/");
+
       })
       .catch((err) => {
         setError({head:"Unable to login",text: "please ensure your email and password are correct."})
