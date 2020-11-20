@@ -2,7 +2,7 @@ import React from 'react'
 import TableHead from './TableHead'
 import TableBody from './TableBody'
 
-const Table = ({TableData}) => {
+const Table = ({TableData, edit}) => {
 
     let TableHeadData = [];
     let TableBodyData = [];
@@ -71,7 +71,7 @@ const Table = ({TableData}) => {
                         <div className="p-4 bg-white">
                            <table className="min-w-full divide-y divide-gray-200 p-4">
                                 <TableHead TableHead={TableHeadData} />
-                                <TableBody NoOptions={nooptions} TableBody={TableBodyData} variantID={TableData.pk} />                            
+                                <TableBody NoOptions={nooptions} TableBody={TableBodyData} variantID={TableData.pk} edit={edit} />                            
                             </table>  
                         </div>
                  </div>

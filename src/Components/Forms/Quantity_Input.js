@@ -18,6 +18,7 @@ function Quantity_Input({ id_tag, name, readOnly=false, value, readValue , quant
           className= {"py-2 pl-2 pr-2 form-input w-20 text-base border-gray-400 border rounded shadow-inner focus:outline-none " + (readOnly ? readOnlyStyle : "" ) }
           value={value}
           readOnly={readOnly}
+          min="0"
           onChange={(e) => {
             if (readValue)
               readValue(e.target.value);

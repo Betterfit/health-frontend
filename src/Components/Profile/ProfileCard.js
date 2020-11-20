@@ -11,8 +11,9 @@ import CardTitle from "Components/Profile/CardTitle";
 import ButtonToggle from "Components/Forms/ToggleButton";
 import Notification from "Components/Helpers/Notifications";
 
-const api = new Api();
+
 const ProfileCard = ({}) => {
+  const api = new Api();
   //NOTE - this is not getting or saving lang to user data yet
   //ONLY saving local.
   const authStore = useAuthStore();

@@ -4,9 +4,10 @@ import TitleUnderLine from "Components/Content/TitleUnderLine";
 import Table from "Components/Table/Basic/Table";
 import Api from "Helpers/api";
 import { useAuthStore } from "Context/authContext";
-const api = new Api();
+
 
 const DashboardProductList = (props) => {
+  const api = new Api();
   const { match } = props;
   const ProductId = parseInt(match.params.id);
   const authStore = useAuthStore();
@@ -63,7 +64,7 @@ const DashboardProductList = (props) => {
             {/* product description */}
             <p className="text-paragraph">{ProductData.description}</p>
             {ProductData.product_variations.map((product) => {
-              return <Table TableData={product} ProductId={ProductId} />;
+              return <Table TableData={product} ProductId={ProductId} edit={props.edit} />;
             })}
           </div>
         </div>

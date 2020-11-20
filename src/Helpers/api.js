@@ -99,8 +99,6 @@ export default class Api {
   }
 
   getSupplierSearchResults = (query,id) => {
-    console.log(query);
-    console.log(id);
     return this.init().get(`/product-categories/?q=${query}&supplier=${id}`)
   }
 
@@ -142,6 +140,10 @@ export default class Api {
 
   getOrder = (orderId) => {
     return this.init().get(`/orders/${orderId}`)
+  }
+
+  getAllOrders = (orderId) => {
+    return this.init().get(`/orders/`)
   }
 
   getSearchOrders = (query) => {
