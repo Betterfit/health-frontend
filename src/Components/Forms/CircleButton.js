@@ -1,27 +1,29 @@
 import React from "react";
-import { ReactSVG } from "react-svg";
-import Plus from "Images/Icons/plus.svg";
 
 const CircleButton = ({ hover, onClick }) => {
+  const shadow = {
+    filter: "drop-shadow(0px 4px 8px rgba(31, 69, 168, 0.2))",
+  };
   return (
     <button
       onClick={onClick}
       aria-label="quick add"
       className={
-        (hover ? "bg-betterfit-basic-blue" : "bg-betterfit-light-blue") +
-        " p-0 w-10 h-10 rounded-full active:shadow-lg mouse shadow transition ease-in focus:outline-none "
+        (hover ? "bg-betterfit-basic-blue " : "bg-betterfit-light-blue") +
+        " p-0 w-10 h-10 rounded-full mouse transition ease-in focus:outline-none "
       }
+      style={hover ? shadow : null}
     >
       <svg
-        viewBox="0 0 20 20"
-        enableBackground="new 0 0 20 20"
-        className="w-6 h-6 inline-block"
+        width={12}
+        height={12}
+        viewBox="0 0 12 12"
+        className="block m-auto"
+        reserveAspectRatio="xMaxYMax meet"
       >
         <path
+          d="M0 6C0 6.19891 0.0790176 6.38968 0.21967 6.53033C0.360322 6.67098 0.551088 6.75 0.75 6.75H5.125C5.15815 6.75 5.18995 6.76317 5.21339 6.78661C5.23683 6.81005 5.25 6.84185 5.25 6.875V11.25C5.25 11.4489 5.32902 11.6397 5.46967 11.7803C5.61032 11.921 5.80109 12 6 12C6.19891 12 6.38968 11.921 6.53033 11.7803C6.67098 11.6397 6.75 11.4489 6.75 11.25V6.875C6.75 6.84185 6.76317 6.81005 6.78661 6.78661C6.81005 6.76317 6.84185 6.75 6.875 6.75H11.25C11.4489 6.75 11.6397 6.67098 11.7803 6.53033C11.921 6.38968 12 6.19891 12 6C12 5.80109 11.921 5.61032 11.7803 5.46967C11.6397 5.32902 11.4489 5.25 11.25 5.25H6.875C6.84185 5.25 6.81005 5.23683 6.78661 5.21339C6.76317 5.18995 6.75 5.15815 6.75 5.125V0.75C6.75 0.551088 6.67098 0.360322 6.53033 0.21967C6.38968 0.0790176 6.19891 0 6 0C5.80109 0 5.61032 0.0790176 5.46967 0.21967C5.32902 0.360322 5.25 0.551088 5.25 0.75V5.125C5.25 5.15815 5.23683 5.18995 5.21339 5.21339C5.18995 5.23683 5.15815 5.25 5.125 5.25H0.75C0.551088 5.25 0.360322 5.32902 0.21967 5.46967C0.0790176 5.61032 0 5.80109 0 6H0Z"
           fill={hover ? "#FFFFFF" : "bg-betterfit-basic-blue"}
-          d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
-                    C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
-                    C15.952,9,16,9.447,16,10z"
         />
       </svg>
     </button>
