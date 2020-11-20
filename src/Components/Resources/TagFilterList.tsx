@@ -38,7 +38,7 @@ const TagFilterList = ({
                 return (
                     <TagLink
                         tag={tag}
-                        buttonProps={{ onClick: onTagClick(tag.pk) }}
+                        buttonProps={{ onClick: onTagClick(tag.pk)}}
                         key={tag.pk}
                     />
                 );

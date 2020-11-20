@@ -15,18 +15,7 @@ const ResearchCard = ({name, tagList, details, color}) => {
             <div className="h-1 rounded-md mb-5 -mx-4" style={{background:color}}/>
             <CardTitle label="Research Project" name={name} color={color}></CardTitle>
             <div className="space-y-6">
-                <ResourceDescription
-                    label="Tags"
-                    items={[]}
-                />
-                <div className="ml-auto inline-flex" style={{margin:0}}>
-                    {tagList.map(tag =>{
-                        return(
-                            <TagLink tag={tag} />
-                        )
-                    })}
-                </div>
-                <ResourceDescription
+               <ResourceDescription
                     label="Main Contact"
                     items={researcher}
                 />
@@ -46,6 +35,18 @@ const ResearchCard = ({name, tagList, details, color}) => {
                     label="Description"
                     items={description}
                 />
+                <ResourceDescription
+                    label="Tags"
+                    items={[]}
+                />
+                <div className="ml-auto" style={{margin:0}}>
+                    {tagList.map(tag =>{
+                        return(
+                            <TagLink tag={tag} buttonProps={{disabled: true}}/>
+                        )
+                    })}
+                </div>
+ 
             </div>
         </div>
     )
