@@ -19,7 +19,7 @@ const Read_Product = (product_attr, default_value) => {
 const ProductImage = ({ product_image, product_name, hover }) => {
   return (
     <img
-      className={"w-1/4 md:w-auto " + (hover ? "opacity-50" : "")}
+      className={"max-h-full  " + (hover ? "opacity-50" : "")}
       src={Read_Product(product_image, EmptyImage)}
       alt={Read_Product(product_name + " Product Image", "Product Image")}
       loading="lazy"
@@ -43,7 +43,7 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
     <>
       <div
         className={
-          "mb-2 rounded relative flex md:flex-col justify-content " +
+          "mb-2 rounded relative flex md:flex-col justify-content flex h-24 md:h-auto " +
           (active
             ? "bg-betterfit-pale-blue border border-betterfit-highlight-blue"
             : "bg-betterfit-soft-blue")
@@ -51,14 +51,14 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
       >
-        <div className="flex md:flex-col p-1 h-full">
+        <div className="flex md:flex-col p-2 h-full w-full items-center md:items-stretch">
           <ProductImage
             product_name={name}
             product_image={image}
             hover={active}
           />
-          <div className="flex-col pt-7 pl-4">
-            <h1 className="text-sm md:text-base font-semibold text-status-dark-blue">
+          <div className="flex flex-col md:pt-7 pl-4  w-1/2 md:w-auto">
+            <h1 className="text-sm md:text-base font-semibold text-status-dark-blue ">
               { parent ? `${parent} - ` : "" } {Read_Product(name, "")}
             </h1>
             <span className="text-betterfit-grey-blue text-xs">
@@ -66,7 +66,7 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
             </span>
           </div>
 
-          <div className="flex flex-row pl-4 pr-2 py-1 justify-between  items-center ml-auto mt-0 md:ml-0 md:mt-auto">
+          <div className="flex flex-row pl-4 pr-2 py-1 justify-between items-center ml-auto mt-0 md:ml-0 md:mt-auto">
             <p className="text-betterfit-graphite uppercase text-xxs font-semibold hidden md:block">
               {category}
             </p>
@@ -80,7 +80,7 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
             onClick={() =>
               history.push(history.location.pathname + "/product/" + product.pk + "/" + product_details.pk)
             }
-            extras="hidden md:inline-block"
+            extras="hidden md:block"
           />
         )}
       </div>

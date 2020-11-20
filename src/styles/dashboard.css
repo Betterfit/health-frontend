@@ -89,6 +89,51 @@ tr.sortable-drag , tr.sortable-ghost{
     }
 }
 
+/* Custom sizing for category card grid */
+@media screen and (min-width:768px){
+    .customcategorygrid{
+        min-width:150px;
+    }
+    .customproductgrid{
+        min-width:150px;
+    }
+}
+
+@media screen and (min-width:1400px){
+    .customcategorygrid{
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;   
+    }
+}
+
+@media screen and (min-width:1025px) and (max-width:1150px){
+    .customcategorygrid{
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;      
+    }
+}
+/* End of Custom sizing for category card grid */
+
+/* End of Custom sizing for product card grid */
+@media screen and (min-width:1100px){
+    .customproductgrid{
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;      
+    }
+}
+
+@media screen and (min-width:768px){
+    .customproductgrid > div{
+        max-width: 222px;  
+        min-width: 170px;    
+    }
+}
+
+@media screen and (min-width:1350px){
+    .customproductgrid{
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;      
+    }
+}
+/* End of Custom sizing for product card grid */
+
+
 .rotate-me{
     -webkit-animation:spin 1s linear infinite;
     -moz-animation:spin 1s linear infinite;
