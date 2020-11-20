@@ -6,15 +6,15 @@ import BackNavigation from 'Components/Helpers/BackNavigation';
 import TitleUnderLine from 'Components/Content/TitleUnderLine';
 import Table from 'Components/Table/Basic/Table';
 import Search from 'Components/Search/Search';
-import uuid from 'react-uuid'
+import uuid from 'react-uuid';
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 const DashboardSearch = () => {
     const api = new API;
     let query = useQuery();    
-    
     const [searchQuery , setSearchQuery] = useState(query.get('search'));
+    const [supplierQuery , setSupplierQuery] = useState(query.get('supplier'));
     const [searchData , setSearchData] = useState();
     const getSearchResults = async () => await api.getSearchResults(query.get('search'))
     .then((response) => {
@@ -39,13 +39,56 @@ const DashboardSearch = () => {
         })
         setSearchData(arr)
     })
+    const getSupplierSearchResults = async () => await api.getSupplierSearchResults(query.get('search'),query.get('supplier'))
+    .then((response) => {
+        console.log(response);
+        let arr = response.data;
+        arr.map(productCat => {
+            productCat.products.map(products => {
+                products.product_variations = products.product_variations.map((variations) => {
+                    let variation = variations;
+                    variation.product_options = variations.product_options.map((options) => {
+                      let obj = {
+                        [options.option_label]: options.name,
+                        matched: options.allotted,
+                        available: options.quantity,
+                        total: options.allotted + options.quantity,
+                        pk: options.pk,
+                      };
+                      return obj;
+                    });
+                    return variation;
+                });
+            })
+        })
+        setSearchData(arr)
+    })
     .catch((err) => console.log(err));
     if(!searchData){
-        getSearchResults();
+        if(query.get('supplier')){  
+            getSupplierSearchResults();
+        }else{
+            getSearchResults();
+        }
     }
-    if (query.get('search')!== searchQuery){
+    if (query.get('search') !== searchQuery ){
         setSearchQuery(query.get('search'));
-        getSearchResults();
+        if(query.get('supplier')){
+            getSupplierSearchResults();
+            setSupplierQuery(query.get('supplier')); 
+        }else{
+            getSearchResults();
+        }
+    }else{
+        if(query.get('supplier') !== supplierQuery){
+            setSupplierQuery(query.get('supplier')); 
+            if(query.get('supplier')){
+                console.log('get my products');
+                getSupplierSearchResults();
+            }else{
+                getSearchResults();
+            }  
+        }
     }
     
     return(
@@ -62,22 +105,26 @@ const DashboardSearch = () => {
                                 productCat.products.map(product=> {
                                     return(
                                         <>
-                                        <h2 className="text-2xl text-gray-700 font-bold">{product.name}</h2>
-
-                                        {
-                                            product.product_variations.length > 0 && (
-                                                product.product_variations.map(p => {
-                                                    return(
-                                                        <Table  key={uuid()} TableData={p} ProductId={product.pk} /> 
-                                                    )
-                                                })
-                                            )
-                                        }
-                                        {product.product_variations.length <= 0 && (
-                                            <Table  key={uuid()} TableData={product} ProductId={product.pk} />     
-                                        )}
-                                        </>
-                                        
+                                            {
+                                                product.product_variations.length ? (
+                                                 
+                                                        product.product_variations.map(p => {
+                                                            if(p.product_options.length){
+                                                                return(
+                                                                    <div key={uuid()} >
+                                                                        <h2 className="text-2xl text-gray-700 font-bold">{product.name}</h2>
+                                                                        <Table key={uuid()} TableData={p} ProductId={product.pk} /> 
+                                                                    </div>
+                                                                )
+                                                            }                                                         
+                                                        })
+                                                ) : (
+                                                    <>
+                                                    <div></div>
+                                                    </>
+                                                )
+                                            }
+                                        </>  
                                     )
                                 })
                             )

@@ -20,17 +20,23 @@ import uuid from 'react-uuid'
 import {useAuthStore} from "Context/authContext";
 
 const api = new Api();
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
+
 const DashboardInventory = () =>{ 
     const [title , setTitle] = useState('Inventory');
     const [AllCategoryData , setAllCategoryData] = useState(null);
     const [SupplierCategoryData , setSupplierCategoryData] = useState(null);
     const [searchActive , setSearchActive] = useState(false);
+    const [activeTab , setActiveTab] = useState('my-inventory');
     const location = useLocation();
     const authStore = useAuthStore();
     const userData = JSON.parse(authStore.user);
     const supplierId = userData.user_profile.supplier;
     const [TabData , setTabData] = useState([]);
-    
+    let query = useQuery();  
     const getAllCategories = async () => await api.getProductCategories()
     .then((response) => {
         setAllCategoryData(response.data)
@@ -108,7 +114,7 @@ const DashboardInventory = () =>{
             <div className="flex flex-col md:flex-row">
                 <DashboardSideBar>
                     <h2 className="text-3xl text-dark-blue my-3">{title}</h2>
-                    <Tabs tabs={TabData}  amount={false} headingComp={<Search type="icon" />} />
+                    <Tabs tabs={TabData}  amount={false}  tabCallBack={(val)=>{setActiveTab(val)}}  headingComp={<Search type="icon" activeTab={activeTab} />} setActive={query.get('search') && !query.get('supplier') ? 'all-products' : 'my-inventory' } />
                 </DashboardSideBar>
                 <div className={`absolute w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll ${location.pathname === "/dashboard/inventory" ? `z-0`: `z-10`}`}>
                     <Route exact path='/dashboard/inventory/product/:id' exact render={(props) => {

@@ -112,7 +112,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
   return useObserver(() => (
     <>
       <div className="flex-grow flex flex-col overflow-hidden">
-        <div className="p-3 my-4 overflow-y-scroll">
+        <div className="p-3 my-4 overflow-y-scroll p-4">
           {cartItems &&
             cartItems.length >= 1 &&
             cartItems.map((item, index) => {
@@ -139,7 +139,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
             </>
           ))}
       </div>
-      <div className="flex flex-row space-x-2">
+      <div className="flex flex-row space-x-2 p-4">
         <Button
           color=" bg-white"
           hoverColor="bg-gray-100"

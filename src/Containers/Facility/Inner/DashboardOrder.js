@@ -21,7 +21,7 @@ const DashboardOrder = ({props, type}) => {
   }, []);
   return (
     <div className="flex flex-col md:flex-row">
-      <DashboardSideBar addonStyles=" flex flex-col">
+      <DashboardSideBar addonStyles=" flex flex-col" padding="p-0" >
         {type === "edit" && (
             <DashboardEditOrder {...props} />
         )}

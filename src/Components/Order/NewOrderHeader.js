@@ -39,7 +39,7 @@ const NewOrderHeader = ({ data }) => {
     const purchase_order = data?.purchase_order;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col after-line p-4 pb-2 border-b border-gray-400">
       <OrderComponentTitle
         title={orderDate}
         value={order_no}
