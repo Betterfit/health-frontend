@@ -6,9 +6,10 @@ import ProductCard from "Components/Order/ProductCard";
 import Search from 'Components/Search/Search';
 import image from "Images/example_product.png"; //remove this later
 import Spinner from "Images/spinner.gif";
-const api = new Api();
+
 
 const DashboardCategoryProductList = (props) => {
+  const api = new Api();
   const { match } = props;
   const CategoryID = parseInt(match.params.id);
   const [isLoading, setIsLoading] = useState(true);
@@ -28,6 +29,7 @@ const DashboardCategoryProductList = (props) => {
       });
 
   useEffect(() => {
+    console.log("WAW")
     getData();
   }, []);
 
