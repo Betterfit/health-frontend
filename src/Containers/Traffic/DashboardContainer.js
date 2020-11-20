@@ -20,6 +20,7 @@ import NotFound from 'Pages/404';
 // import DashboardInventory from './Inner/DashboardInventory'
 // import DashboardTickets from './Inner/DashboardTickets'
 // import DashboardTicketDetail from './Inner/DashboardTicketDetail';
+import {MatchProvider} from "Context/matchContext";
 
 const DashboardContainer = () =>{
     const history = useHistory();
@@ -43,7 +44,9 @@ const DashboardContainer = () =>{
                         <DashboardMatchesListing />
                     </Route>
                     <Route exact path="/dashboard/matches">
-                         <DashboardMatches/> 
+                        <MatchProvider>
+                            <DashboardMatches/> 
+                        </MatchProvider>
                     </Route>
                     <Route exact path="/dashboard/matches/history:query?" render={(props) => {
                         return ( <DashboardMatchesHistory {...props } /> )

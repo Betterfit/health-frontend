@@ -61,7 +61,7 @@ const Table = ({TableData}) => {
       
     }
     return(
-        <div className="flex flex-col mt-10 mb-4">
+        <div className="flex flex-col mt-4 mb-10">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -70,11 +70,10 @@ const Table = ({TableData}) => {
                         </div>
                         <div className="p-4 bg-white">
                            <table className="min-w-full divide-y divide-gray-200 p-4">
-                            <TableHead TableHead={TableHeadData} />
-                            <TableBody NoOptions={nooptions} TableBody={TableBodyData} variantID={TableData.pk} />                            
+                                <TableHead TableHead={TableHeadData} />
+                                <TableBody NoOptions={nooptions} TableBody={TableBodyData} variantID={TableData.pk} />                            
                             </table>  
                         </div>
-                       
                  </div>
                 </div>
             </div>

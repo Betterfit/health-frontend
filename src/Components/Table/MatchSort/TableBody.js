@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ReactSortable } from "react-sortablejs";
 import { ReactSVG } from 'react-svg';
 import Moveable from 'Images/Icons/moveable.svg';
@@ -7,22 +7,25 @@ import {NavLink} from "react-router-dom";
 import dayjs from 'dayjs';
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
-
-let updatedData;
-const TableBody = ({TableBodyData,updateRow,removeAtIndex,statusIndex,link,buttonType}) => {
+import {useMatchStore} from "Context/matchContext";
+const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) => {
+    // console.log(TableBodyData);
+    const matchStore = useMatchStore();
     const api = new Api();
-    const [rowState , setRowState ] = useState(updatedData ? updatedData : TableBodyData);
+    const [rowState , setRowState ] = useState(TableBodyData);
     const sortFunction = () => {
-        setTimeout(()=>{
-            updatedData = rowState;
-            updateRow(rowState)
-        },800);
-        
+        matchStore.matches = JSON.stringify(rowState);
     } 
+    useEffect(() => {
+        if(!matchStore.submitting){
+            setRowState(TableBodyData);
+            console.log('prop changed');
+        }
+    }, [TableBodyData]);
     return(
         <>
-        {rowState && (
-            <ReactSortable tag="tbody" className="w-full"  list={rowState} setList={setRowState} onSort={() => {
+        
+            <ReactSortable tag="tbody" className="w-full" list={rowState} setList={setRowState} onSort={() => {
                 sortFunction();  
             }} >
 
@@ -152,7 +155,7 @@ const TableBody = ({TableBodyData,updateRow,removeAtIndex,statusIndex,link,butto
                 })
             }
             </ReactSortable>
-        )}
+        
         </>
      )
 }

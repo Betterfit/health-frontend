@@ -13,15 +13,18 @@ import Notification from "Components/Helpers/Notifications";
 
 const api = new Api();
 const ProfileCard = ({}) => {
+  //NOTE - this is not getting or saving lang to user data yet
+  //ONLY saving local.
   const authStore = useAuthStore();
   const [userData, setUserType] = useState(JSON.parse(authStore.user));
+  const language = authStore.language;
   let userName = userData.username;
   const userId = userData.pk;
 
   const intialBaseValues = {
     email: userData.email,
     username: userData.username,
-    lang: "en",
+    lang: language,
   };
 
   const [baseFormValues, setBaseFormValues] = useState(intialBaseValues);

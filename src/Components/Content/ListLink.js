@@ -1,14 +1,27 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-const ListLink = ({ bulletColor, text, textStyle }) => {
+const ListLink = ({
+    bulletColor,
+    text,
+    textStyle,
+    selected,
+    toggleSelection,
+}) => {
     return (
-        <div
-            className="font-semibold p-1 text-base tracking-wide"
-            style={textStyle}
+        <button
+            onClick={toggleSelection}
+            className="flex justify-between w-full "
         >
-            <div className="bullet" style={{ background: bulletColor }} />
-            {text}
-        </div>
+            <span
+                className={`${
+                    selected ? "font-bold text-xl" : "font-semibold text-base"
+                } p-1 text-base tracking-wide`}
+                style={textStyle}
+            >
+                <div className="bullet" style={{ background: bulletColor }} />
+                {text}
+            </span>
+            {selected && <span className="font-bold text-xl p-1">✖</span>}
+        </button>
     );
 };
 

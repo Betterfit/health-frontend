@@ -8,16 +8,9 @@ import {
 import Order from "Images/Icons/order.svg";
 import Resources from "Images/Icons/resources.svg";
 import NewOrder from "Images/Icons/new-order.svg";
-import {CartProvider} from "Context/cartContext";
-// const [isOpen, setIsOpen] = useState(false)
 
-
-// const sideBarToggle = () => {
-
-// }
 
 const DashboardFacility = () => {
-    // usestate to save user and pass
     const navItemsList = [
         {
             to:'/dashboard/new-order/category/',
@@ -37,13 +30,6 @@ const DashboardFacility = () => {
             icon: Resources,
             key:'resources',
         },
-        {
-            to: '/dashboard/research',
-            name: 'Research',
-            // placeholder
-            icon: Resources,
-            key: 'research'
-        }
     ]
     return(
         <div className="md:h-screen flex-col md:flex-row flex overflow-hidden bg-white min-h-screen">

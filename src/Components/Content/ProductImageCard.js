@@ -4,7 +4,7 @@ import EmptyImage from "Images/emptyImage.png"
 //This will either return the attribute if it exists, or
 // return the passed in 'default_value' if not
 const Read_Product = (product_attr, default_value) => {
-  if (product_attr === undefined) {
+  if (product_attr === undefined || product_attr === null) {
     return default_value;
   }
   return product_attr;
@@ -15,7 +15,7 @@ const Read_Product = (product_attr, default_value) => {
 const ProductImage = ({ product_image, product_name }) => {
     return (<img
       className={"lg:w-auto lg:h-auto h-40 w-40"}
-      src={Read_Product(product_image?.image, EmptyImage)}
+      src={Read_Product(product_image, EmptyImage)}
       alt={Read_Product(product_name + " Product Image", "Product Image")}
       loading="lazy"
       data-sizes="auto"
