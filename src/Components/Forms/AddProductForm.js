@@ -4,12 +4,12 @@ import Quantity_Input from "Components/Forms/Quantity_Input";
 import Checkbox from "Components/Forms/Checkbox";
 import Button from "Components/Forms/Button";
 
-const AddProductForm = ({id}) => {
+const AddProductForm = ({id,product_pk}) => {
   const [priority, setPriority] = useState();
   const [quantity, getQuantity] = useState(1);
   const cartStore = useCartStore();
   const addToCart = (quantity, priority) => {
-    cartStore.addToCart(id, quantity, priority ? priority : false);
+    cartStore.addToCart(id, quantity, priority ? priority : null ,product_pk);
   };
   return (
       <div className="flex flex-col mx-1 pt-2">

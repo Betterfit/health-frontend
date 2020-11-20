@@ -173,6 +173,7 @@ export default class Api {
   }
 
   editOrder = (order,id) => {
+    console.log(id);
     return this.init().patch(`/orders/${id}/`,order)
   }
 
