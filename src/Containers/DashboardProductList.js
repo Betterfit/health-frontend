@@ -63,7 +63,7 @@ const DashboardProductList = (props) => {
             {/* product description */}
             <p className="text-paragraph">{ProductData.description}</p>
             {ProductData.product_variations.map((product) => {
-              return <Table TableData={product} ProductId={ProductId} />;
+              return <Table TableData={product} ProductId={ProductId} edit={props.edit} />;
             })}
           </div>
         </div>

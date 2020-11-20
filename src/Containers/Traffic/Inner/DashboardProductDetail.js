@@ -15,7 +15,7 @@ const DashboardProductDetail = (props) => {
 
   const { match } = props;
   const product_id = parseInt(match.params.pid);
-  const product_details_id = parseInt(match.params.id);
+  const product_details_id = parseInt(match.params.oid);
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState();
   const [isError, setIsError] = useState(false);
@@ -54,8 +54,7 @@ const DashboardProductDetail = (props) => {
           <BackNavigation link={`Back to Products`} />
           <TitleUnderLine title={product.product_name} />
           <div className="w-full flex place-self-center justify-self-center m-auto">
-            <ProductDetailsCard product={product} >
-            </ProductDetailsCard>
+            <ProductDetailsCard product={product} />
           </div>
         </>
       )}

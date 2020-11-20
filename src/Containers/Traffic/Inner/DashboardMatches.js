@@ -60,7 +60,7 @@ const DashboardMatches = () => {
             setTimeout(()=>{
                 setRefresh(false); 
                 setIsLoading(true);
-            },2500);
+            },1000);
             let arr = JSON.parse(matchStore.matches);
             arr = arr.map((item,index) => {
                 let obj = {
