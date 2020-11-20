@@ -1,8 +1,7 @@
 import React from "react";
 import Inventory_Description from "../Inventory/Inventory_Description";
 import ProductImageCard from "Components/Content/ProductImageCard";
-import AddProductForm from "Components/Forms/AddProductForm";
-import EditProductForm from "Components/Forms/EditProductForm";
+
 
 
 //This will either return the attribute if it exists, or

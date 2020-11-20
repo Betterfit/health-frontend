@@ -51,7 +51,7 @@ const DashboardCategoryProductList = (props) => {
                 background_color={CategoryData.background_color}
                 color={CategoryData.color}
             />
-            <Search />
+            {/* <Search /> */}
           </div>
           <div className="grid grid-cols-1 gap-4 mb-6 md:mb-10 customproductgrid">
             {CategoryData.products.map((p) =>

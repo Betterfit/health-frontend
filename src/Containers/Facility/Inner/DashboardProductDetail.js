@@ -57,7 +57,7 @@ const DashboardProductDetail = (props) => {
           <TitleUnderLine title={product.product_name} />
           <div className="w-full flex place-self-center justify-self-center m-auto">
             <ProductDetailsCard product={product}>
-              <AddProductForm id={product.pk}/>
+              <AddProductForm id={product.pk} product_pk={product_id}/>
             </ProductDetailsCard>
           </div>
         </>
