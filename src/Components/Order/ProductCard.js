@@ -31,7 +31,7 @@ const ProductImage = ({ product_image, product_name, hover }) => {
 const ProductCard = ({ product, product_details, category, extra, parent }) => {
   const cartStore = useCartStore();
   const history = useHistory();
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(false);
   const name = product.name;
   const image = product_details.product_image ? product_details.product_image : null;
   const size = product_details.name;
