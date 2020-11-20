@@ -50,7 +50,12 @@ const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
         setShowDetails(!showDetails);
     };
     return (
-        <div className="flex p-1 w-full" onClick={toggleSlider} role="button">
+        <li
+            className="flex p-1 w-full"
+            onClick={toggleSlider}
+            tabIndex={0}
+            aria-label={resource.title}
+        >
             <div
                 className="w-1 rounded-md mr-2 flex-shrink-0"
                 style={{ backgroundColor: color }}
@@ -78,7 +83,7 @@ const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
             <Slider active={showDetails} close={toggleSlider}>
                 {resourceCard}
             </Slider>
-        </div>
+        </li>
     );
 };
 

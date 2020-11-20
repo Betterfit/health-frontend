@@ -1,7 +1,7 @@
 import React from "react";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import AddResearch from "Components/Resources/AddResearch";
-import ResourceDisplay from "Components/Resources/ResourceDisplay";
+import ResourceList from "Components/Resources/ResourceList";
 import TagFilterList from "Components/Resources/TagFilterList";
 import SearchBar from "Components/Search/SearchBar";
 import Api from "Helpers/api";
@@ -56,7 +56,7 @@ const DashboardResearch = () => {
           <TagFilterList {...{ tagList, toggleTagSelect, selectedTagPKs }} />
         </DashboardSideBar>
       </div>
-      <ResourceDisplay resources={resources as Resource[]} />
+      <ResourceList resources={resources as Resource[]} />
     </div>
   );
 };

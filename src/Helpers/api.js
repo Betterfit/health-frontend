@@ -1,11 +1,13 @@
 import * as axios from "axios";
 import useStores from 'Helpers/useStores';
+
+export const apiURL = 'https://api.betterfit.health/'  
 export default class Api {
 
   constructor() {
     this.api_token = localStorage.getItem('token');
     this.client = null;
-    this.api_url = 'https://api.betterfit.health/'  
+    this.api_url = apiURL  
   }
 
   init = () => {
@@ -20,7 +22,7 @@ export default class Api {
 
 
     this.client = axios.create({
-        baseURL: 'https://api.betterfit.health/' ,
+        baseURL: apiURL ,
         timeout: 31000,
         headers: headers,
     });

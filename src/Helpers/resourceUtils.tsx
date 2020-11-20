@@ -90,7 +90,7 @@ const findResourcesMatchingTagPKs = (
         for (const tagPK of tagPKs) {
             if (resource.tags.some((tag) => tag.pk === tagPK)) {
                 matchingResources.push(resource);
-                continue;
+                break;
             }
         }
     }
