@@ -142,6 +142,10 @@ export default class Api {
     return this.init().get(`/orders/${orderId}`)
   }
 
+  getAllOrders = (orderId) => {
+    return this.init().get(`/orders/`)
+  }
+
   getSearchOrders = (query) => {
     return this.init().get(`/orders/?search=${query}`);
   }
