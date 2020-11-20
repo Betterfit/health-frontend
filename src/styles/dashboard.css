@@ -111,12 +111,27 @@ tr.sortable-drag , tr.sortable-ghost{
     }
 }
 /* End of Custom sizing for category card grid */
+
+/* End of Custom sizing for product card grid */
 @media screen and (min-width:1100px){
     .customproductgrid{
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;      
     }
 }
 
+@media screen and (min-width:768px){
+    .customproductgrid > div{
+        max-width: 222px;  
+        min-width: 170px;    
+    }
+}
+
+@media screen and (min-width:1350px){
+    .customproductgrid{
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;      
+    }
+}
+/* End of Custom sizing for product card grid */
 
 
 .rotate-me{
