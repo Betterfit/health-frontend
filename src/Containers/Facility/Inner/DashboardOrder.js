@@ -30,6 +30,7 @@ const DashboardOrder = ({props, type}) => {
         )}
       </DashboardSideBar>
       <div className="w-full md:w-3/5 mx-auto h-screen md:overflow-y-scroll">
+        
         <Route
           exact
           path={`${match.path}`}
@@ -45,18 +46,19 @@ const DashboardOrder = ({props, type}) => {
             return <DashboardCategoryProductList edit={true} {...props} />;
           }}
         />
-        {
+        
           <Route
             path={`${match.path}/:categoryName/:cid/product/:pid/:id?`}
             exact
             render={(props) => {
               return <DashboardProductDetail edit={true} {...props} />;
             }}
-          /> /*
-                <Route path='/dashboard/inventory/search:query?'>
-                    <DashboardSearch />
-                </Route> */
-        }
+          /> 
+          
+          {/* <Route path='/dashboard/inventory/search:query?'>
+            <DashboardSearch />
+          </Route>  */}
+      
       </div>
     </div>
   );

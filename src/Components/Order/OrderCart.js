@@ -73,9 +73,11 @@ const OrderCart = ({ Cart, OrderID, id }) => {
           };
         }),
       };
+      console.log(order);
       if (cartStore.cartType == "editCart") {
         delete order.facility;
         delete order.facility_admin;
+
         api.editOrder(order, id).then((response) => {
           setModalOrder(false);
           setModalDraft(false);
