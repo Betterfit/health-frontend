@@ -121,7 +121,7 @@ const DashboardInventory = () =>{
                     <Route exact path='/dashboard/inventory/product/:id' exact render={(props) => {
                         return ( <DashboardProductList {...props } edit={true} /> )
                     }} />
-                    <Route path='/dashboard/inventory/product/:id/detail/:oid?' exact render={(props) => {
+                    <Route path='/dashboard/inventory/product/:id/detail/:oid?/edit' exact render={(props) => {
                         return ( <DashboardProductDetail edit={true} {...props } /> )
                     }} />
                     <Route path='/dashboard/inventory/search:query?'>
