@@ -9,8 +9,8 @@ const BackNavigation = ({link, onClickOverride}) => {
     const action = (onClickOverride ? onClickOverride : () => history.goBack() )
     return(
         <a onClick={action} className="flex flex-row items-center cursor-pointer ">
-            <ReactSVG src={LeftArrow} className=" text-betterfit-basic-blue"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 15px;')}}  />
-            <span className="ml-2 text-betterfit-basic-blue uppercase text-xs">{Translator(link)}</span>
+            <ReactSVG src={LeftArrow} className=" text-betterfit-basic-blue "  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 15px;')}}  />
+            <span className="ml-2 text-betterfit-basic-blue uppercase text-xs hover:font-semibold">{Translator(link)}</span>
         </a>
     )
 }
