@@ -14,8 +14,7 @@ const Read_Product = (product_attr, default_value) => {
   return product_attr;
 };
 
-const ProductDetailCard = ({ product, edit = false }) => {
-  console.log("LKJLKJEEEE")
+const ProductDetailCard = ({ product, children}) => {
   return (
     <>
       <div className="flex lg:flex-row flex-col-reverse">
@@ -40,16 +39,7 @@ const ProductDetailCard = ({ product, edit = false }) => {
         </div>
         <div className="xl:w-2/5 lg:w-1/2 py-4 mx-2">
           <ProductImageCard image={product.product_image} name={product.name}>
-            {edit && (
-              <EditProductForm
-                matched={product.product_alloted}
-                avail={product.product_available}
-                id={product.pk}
-              />
-            )}
-            {!edit && (
-              <AddProductForm id={product.pk}/>
-            )}
+            {children}
           </ProductImageCard>
         </div>
       </div>

@@ -99,8 +99,6 @@ export default class Api {
   }
 
   getSupplierSearchResults = (query,id) => {
-    console.log(query);
-    console.log(id);
     return this.init().get(`/product-categories/?q=${query}&supplier=${id}`)
   }
 

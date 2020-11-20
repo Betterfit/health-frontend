@@ -14,7 +14,7 @@ import DashboardMatches from "./Inner/DashboardMatches";
 import DashboardMatchesHistory from "./Inner/DashboardMatchesHistory";
 import DashboardMatchesOrderDetail from "./Inner/DashboardMatchesOrderDetail";
 import DashboardTrafficDashboard from "./Inner/DashboardTrafficDashboard";
-import DashboardInventory from 'Containers/Supplier/Inner/DashboardInventory';
+import DashboardTrafficInventory from './Inner/DashboardTrafficInventory';
 import DashboardResources from '../DashboardResources';
 import NotFound from 'Pages/404';
 // import DashboardInventory from './Inner/DashboardInventory'
@@ -58,7 +58,7 @@ const DashboardContainer = () =>{
                         <DashboardTrafficDashboard />
                     </Route>
                     <Route path="/dashboard/inventory" >
-                        <DashboardInventory initial changeTitle={(title) => changeTitle(title)} />
+                        <DashboardTrafficInventory initial changeTitle={(title) => changeTitle(title)} />
                     </Route>
                     <Route path="/dashboard/resources" >
                         <DashboardResources initial changeTitle={(title) => changeTitle(title)} />

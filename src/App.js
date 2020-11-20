@@ -40,6 +40,9 @@ const App = observer(({userType}) => {
             <Route path="/login/forgotpassword" initial >
               <Login />
             </Route>
+            {!token &&(
+              <Redirect to="/login"/>
+            )}
             <Route path="/dashboard">
               <Dashboard language={authStore.language}/>
             </Route>

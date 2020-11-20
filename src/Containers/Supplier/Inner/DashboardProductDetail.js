@@ -5,7 +5,7 @@ import Api from "Helpers/api";
 import BackNavigation from 'Components/Helpers/BackNavigation'
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import ProductDetailsCard from "Components/Content/ProductDetailsCard"
-
+import EditProductForm from "Components/Forms/EditProductForm";
 const api = new Api();
 
 const DashboardProductDetail = (props) =>{
@@ -38,20 +38,24 @@ const DashboardProductDetail = (props) =>{
 
     return(
         <>
-        {ProductData && (
+          {ProductData && (
 
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
-                    <BackNavigation link={`Back`} />
-                    <TitleUnderLine title={ProductData.product_name} />  
-                    <div className="w-full flex place-self-center justify-self-center m-auto">
-                        <ProductDetailsCard product={ProductData} edit={true}></ProductDetailsCard>
-                    </div>
-    
-   
-        </div>
+          <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
+            <BackNavigation link={`Back`} />
+            <TitleUnderLine title={ProductData.product_name} />  
+              <div className="w-full flex place-self-center justify-self-center m-auto">
+                <ProductDetailsCard product={ProductData}>
+                  <EditProductForm
+                    matched={ProductData.product_alloted}
+                    avail={ProductData.product_available}
+                    id={ProductData.pk}
+                  />
+                </ProductDetailsCard>
+              </div>
+          </div>
 
-        )}
-                </>
+          )}
+        </>
 
         
     )

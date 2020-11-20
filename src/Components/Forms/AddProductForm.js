@@ -9,7 +9,7 @@ const AddProductForm = ({id}) => {
   const [quantity, getQuantity] = useState(1);
   const cartStore = useCartStore();
   const addToCart = (quantity, priority) => {
-    cartStore.addToCart(id, quantity, priority);
+    cartStore.addToCart(id, quantity, priority ? priority : false);
   };
   return (
       <div className="flex flex-col mx-1 pt-2">

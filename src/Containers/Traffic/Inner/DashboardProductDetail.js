@@ -5,7 +5,6 @@ import Api from "Helpers/api";
 import BackNavigation from "Components/Helpers/BackNavigation";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 import ProductDetailsCard from "Components/Content/ProductDetailsCard"
-import AddProductForm from "Components/Forms/AddProductForm";
 
 //images
 import Spinner from "Images/spinner.gif";
@@ -21,8 +20,7 @@ const DashboardProductDetail = (props) => {
   const [product, setProduct] = useState();
   const [isError, setIsError] = useState(false);
   const getData = async () =>
-    await api
-      .getProductOption(product_details_id)
+    await api.getProductOption(product_details_id)
       .then((response) => {
         setProduct({ 
           "product_category": response.data.product_category,
@@ -56,8 +54,7 @@ const DashboardProductDetail = (props) => {
           <BackNavigation link={`Back to Products`} />
           <TitleUnderLine title={product.product_name} />
           <div className="w-full flex place-self-center justify-self-center m-auto">
-            <ProductDetailsCard product={product}>
-              <AddProductForm id={product.pk}/>
+            <ProductDetailsCard product={product} >
             </ProductDetailsCard>
           </div>
         </>
