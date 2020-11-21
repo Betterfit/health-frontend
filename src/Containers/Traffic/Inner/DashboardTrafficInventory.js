@@ -87,7 +87,7 @@ const DashboardInventory = () =>{
                     <h2 className="text-3xl text-dark-blue my-3">{title}</h2>
                     <Tabs tabs={TabData}  amount={false}  tabCallBack={(val)=>{setActiveTab(val)}}  headingComp={<Search type="icon" activeTab={activeTab} />} />
                 </DashboardSideBar>
-                <div className={`absolute w-full lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll ${location.pathname === "/dashboard/inventory" ? `z-0`: `z-10`}`}>
+                <div className={`absolute w-full lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll bg-white ${location.pathname === "/dashboard/inventory" ? `z-0`: `z-10`}`}>
                     <Route exact path='/dashboard/inventory/product/:id' exact render={(props) => {
                         return ( <DashboardProductList {...props } edit={false} /> )
                     }} />
