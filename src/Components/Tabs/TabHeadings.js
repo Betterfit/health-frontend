@@ -9,8 +9,8 @@ const TabHeadings = ({headings,headingFunction,headingComp,amount, setActive}) =
             <div className="flex flex-row flex-1 h-full border-b border-gray-400 mr-3">
                 {headings.map((heading) =>{
                     return(
-                        <div key={uuid()} className="pr-6 text-blue" key={heading.key}>
-                            <button className={`text-blue py-4 focus:outline-none relative mr-2 ${heading.key === activeHeading ? 'border-b-2 border-blue font-semibold':''}`} onClick={() => {headingFunction(heading.key); setActiveHeading(heading.key) }}>
+                        <div key={uuid()} className="pr-6 " key={heading.key}>
+                            <button className={` pt-4 pb-2 focus:outline-none relative mr-2 ${heading.key === activeHeading ? 'border-b-2 border-blue text-blue font-semibold':'text-betterfit-navy'}`} onClick={() => {headingFunction(heading.key); setActiveHeading(heading.key) }}>
                                 
                                 {Translator(heading.heading)}
                                 {amount && (

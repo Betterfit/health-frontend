@@ -52,8 +52,8 @@ const DashboardInventory = () =>{
                 .map(product => {
                     return(
                         <div key={uuid()}>
-                            <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-6 uppercase font-bold tracking-wider">{product.name}</h3>
-                            <div className="grid md:grid-cols-1 gap-2 mb-6 md:mb-10">
+                            <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-3 uppercase font-bold tracking-wider">{product.name}</h3>
+                            <div className="grid md:grid-cols-1 gap-2 mb-6 md:mb-8">
                                 {product.products.map(p =>{
                                     return(
                                     <BoxLink key={uuid()} to="/dashboard/inventory/product/" link={p.name} textColor='dark-blue' id={p.pk}/>

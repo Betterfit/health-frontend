@@ -30,7 +30,7 @@ const Search = ({type,activeTab = null}) => {
   
   if(type === "icon" ){
     return(
-      <div className={`flex items-center h-full bg-gray-300 ${showInput ? 'absolute w-full z-10  border-b-2 border-gray-400 ' : 'relative'}`}> 
+      <div className={`flex items-center pt-2 h-full bg-betterfit-pale-blue ${showInput ? 'absolute w-full z-10  border-b-2 border-gray-400 ' : 'relative'}`}> 
         <button className="button-reset" aria-label="button-reset" onClick={() => setShowInput(!showInput)}>
           <ReactSVG src={SearchIcon} />
         </button>
