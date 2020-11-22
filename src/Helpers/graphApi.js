@@ -1,13 +1,13 @@
 
 import * as axios from "axios";
-import useStores from 'Helpers/useStores';
-export default class GraphApi {
 
+const API_URL  = 'https://betterfit.io/'
+export default class GraphApi {
   
   constructor(filterString) {
     this.api_token = null;
     this.client = null;
-    this.api_url = 'http://162.246.157.191:5000/';
+    this.api_url = API_URL;
   }
 
   init = () => {
@@ -22,7 +22,7 @@ export default class GraphApi {
 
 
     this.client = axios.create({
-        baseURL: 'http://162.246.157.191:5000/' ,
+        baseURL: API_URL,
         timeout: 31000,
         headers: headers,
     });
