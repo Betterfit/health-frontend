@@ -34,6 +34,7 @@ const SearchBar = ({
                     id="search"
                     className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-lg bg-transparent"
                     placeholder={placeholderText}
+                    aria-label={placeholderText}
                     ref={searchRef}
                     // clears/resets placeholder text on focus
                     onBlur={(e) => (e.target.placeholder = placeholderText)}

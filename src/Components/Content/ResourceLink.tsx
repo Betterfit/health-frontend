@@ -12,6 +12,7 @@ import Translator from "Helpers/Translator";
 interface ResourceLinkProps {
     resource: Resource;
     color: string;
+    extraClasses?: string;
 }
 
 interface ResourceCardProps {
@@ -31,7 +32,7 @@ const resourceCardTypes: {
     regulation: RegulationCard,
 };
 
-const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
+const ResourceLink = ({ resource, color, extraClasses=' ' }: ResourceLinkProps) => {
     const ResourceCardType = resourceCardTypes[resource.resource_type];
     const resourceCard = ResourceCardType ? (
         //@ts-ignore
@@ -50,35 +51,44 @@ const ResourceLink = ({ resource, color }: ResourceLinkProps) => {
         setShowDetails(!showDetails);
     };
     return (
-        <div className="flex p-1 w-full" onClick={toggleSlider} role="button">
-            <div
-                className="w-1 rounded-md mr-2 flex-shrink-0"
-                style={{ backgroundColor: color }}
-            />
-            <div className="p-2 text-left flex-grow">
-                <div className="font-medium text-gray-700 font-body uppercase tracking-widest text-xs">
-                    {Translator(resource.resource_type)}
+        <>
+            <li
+                className={"flex p-1 w-full m-2 rounded-md cursor-pointer " + extraClasses }
+                onClick={toggleSlider}
+                tabIndex={0}
+                aria-label={resource.title}
+            >
+                <div
+                    className="w-1 rounded-md mr-2 flex-shrink-0"
+                    style={{ backgroundColor: color }}
+                />
+                <div className="p-2 text-left flex-grow">
+                    <div className="font-medium text-gray-700 font-body uppercase tracking-widest text-xs">
+                        {Translator(resource.resource_type)}
+                    </div>
+                    <div className="font-semibold text-base tracking-wide">
+                        {resource.title}
+                    </div>
                 </div>
-                <div className="font-semibold text-base tracking-wide">
-                    {resource.title}
+                <div className="flex flex-row-reverse flex-wrap px-2">
+                    {resource.tags.map((tag, i) => (
+                        <TagLink
+                            tag={tag}
+                            key={i}
+                            // these tags are just labels and should not be clickable/focusable
+                            buttonProps={{
+                                disabled: true,
+                            }}
+                        />
+                    ))}
                 </div>
-            </div>
-            <div className="flex flex-row-reverse flex-wrap px-2">
-                {resource.tags.map((tag, i) => (
-                    <TagLink
-                        tag={tag}
-                        key={i}
-                        // these tags are just labels and should not be clickable/focusable
-                        buttonProps={{
-                            disabled: true,
-                        }}
-                    />
-                ))}
-            </div>
-            <Slider active={showDetails} close={toggleSlider}>
-                {resourceCard}
-            </Slider>
-        </div>
+            </li>
+            {showDetails && (
+                <Slider active={showDetails} close={toggleSlider}>
+                    {resourceCard}
+                </Slider>
+            )}
+        </>
     );
 };
 

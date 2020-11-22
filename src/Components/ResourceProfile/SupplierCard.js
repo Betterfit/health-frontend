@@ -25,10 +25,10 @@ const SupplierCard = ({name, tagList, details, color}) => {
                     label="Tags"
                     items={[]}
                 />
-                <div className="ml-auto inline-flex" style={{margin:0}}>
+                <div className="ml-auto" style={{margin:0}}>
                     {tagList.map(tag =>{
                         return(
-                            <TagLink tag={tag} />
+                            <TagLink tag={tag} buttonProps={{disabled: true}}/>
                         )
                     })}
                 </div>
