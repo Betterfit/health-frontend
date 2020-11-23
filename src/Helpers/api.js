@@ -116,6 +116,11 @@ export default class Api {
   getSupplierProductQuantity = (userId,id) => {
     return this.init().get(`/suppliers/${userId}/product-options/${id}/`)
   }
+
+  getProductOptionsSearch = (query) => {
+    return this.init().get(`/product-options/?q=${query}`)
+  }
+
   // ============================   TICKETS API  =====================================
 
   getSupplierTickets = (userId) => {
@@ -175,7 +180,7 @@ export default class Api {
   }
 
   editOrder = (order,id) => {
-    console.log(id);
+    console.log(order);
     return this.init().patch(`/orders/${id}/`,order)
   }
 

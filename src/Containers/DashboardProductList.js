@@ -15,7 +15,6 @@ const DashboardProductList = (props) => {
   const supplierId = userData.user_profile.supplier;
   const [lastProductId, setLastProductId] = useState(ProductId);
   const [ProductData, setProductData] = useState(null);
-
   const getData = async () =>
     await api
       .getProductsBySupplier(ProductId)

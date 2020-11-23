@@ -31,12 +31,12 @@ const DashboardTraffic = () => {
             icon:Matches,
             key:'matches',
         },
-        {
-            to:'/dashboard/orders',
-            name:'Orders',
-            icon: Order,
-            key:'orders',
-        },
+        // {
+        //     to:'/dashboard/orders',
+        //     name:'Orders',
+        //     icon: Order,
+        //     key:'orders',
+        // },
         {
             to:'/dashboard/inventory',
             name:'Inventory',

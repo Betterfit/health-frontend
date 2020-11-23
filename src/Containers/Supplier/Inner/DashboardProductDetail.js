@@ -21,8 +21,9 @@ const DashboardProductDetail = (props) =>{
         console.log(response.data);
         setProductData({ 
             "product_category": data.product_option.product_category,
-            "product_name": data.product_option.product + " - " +  data.product_option.product_variation,
+            "product_name": data.product_option.product_variation,
             "product_label": data.product_option.option_label,
+            "product_parent": data.product_option.product,
             "product_label_value": data.product_option.name,
             "product_description": data.product_option.product_description,
             "product_alloted": data.allotted_quantity,
@@ -45,7 +46,7 @@ const DashboardProductDetail = (props) =>{
 
           <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
             <BackNavigation link={`Back`} />
-            <TitleUnderLine title={ProductData.product_name} />  
+            <TitleUnderLine title={`${ProductData.product_parent ? ProductData.product_parent + " - " : '' } ${ProductData.product_name}`} /> 
               <div className="w-full flex place-self-center justify-self-center m-auto">
                 <ProductDetailsCard product={ProductData}>
                   <EditProductForm

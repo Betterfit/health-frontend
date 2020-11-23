@@ -26,7 +26,7 @@ const DashboardSupplier = () => {
             key:'inventory',
         },
         {
-          to:'/dashboard/Resources',
+          to:'/dashboard/resources',
           name:'Resources',
           icon: Resources,
           key:'resources',

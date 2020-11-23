@@ -73,12 +73,11 @@ const OrderCart = ({ Cart, OrderID, id }) => {
           };
         }),
       };
-      console.log(order);
       if (cartStore.cartType == "editCart") {
         delete order.facility;
         delete order.facility_admin;
-
         api.editOrder(order, id).then((response) => {
+          console.log(response.data);
           setModalOrder(false);
           setModalDraft(false);
           cartStore.newOrderName = "";
@@ -86,11 +85,12 @@ const OrderCart = ({ Cart, OrderID, id }) => {
           cartStore.updateLocalCartStorage();
           setCartItems(null);
           // history.push(
-          //   history.location.pathname + category_name + "/" + category_id
+          //   `/dashboard/orders/${}`
           // )
         });
       } else {
         api.setNewOrder(order).then((response) => {
+          console.log(response.data);
           setModalOrder(false);
           setModalDraft(false);
           cartStore.newOrderName = "";
@@ -98,7 +98,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
           cartStore.updateLocalCartStorage();
           setCartItems(null);
           // history.push(
-          //   history.location.pathname + category_name + "/" + category_id
+          //   `/dashboard/orders`
           // )
         });
       }
