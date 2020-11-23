@@ -25,7 +25,7 @@ const SearchBar = ({
     };
     return (
         <div
-            className={`flex items-center max-h-50 bg-betterfit-pale-blue items-center px-6 py-1`}
+            className={`flex items-center max-h-50 bg-white items-center px-6 py-1`}
             style={{ borderRadius: 30 }}
         >
             <ReactSVG className="ml-2 mr-2" src={SearchIcon} />

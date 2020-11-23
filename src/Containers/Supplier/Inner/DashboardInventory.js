@@ -5,6 +5,7 @@ import Search from 'Components/Search/Search';
 import Table from 'Components/Table/Basic/Table';
 import Api from "Helpers/api";
 import Spinner from "Images/spinner.gif";
+import Translator from "Helpers/Translator"
 import {
     Switch,
     Route,
@@ -59,7 +60,7 @@ const DashboardInventory = () =>{
                 content:SupplierCategoryData.map(product => {
                     return(
                         <div key={uuid()}>
-                            <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-3 uppercase font-bold tracking-wider">{product.name}</h3>
+                            <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-4 uppercase font-bold tracking-wider">{product.name}</h3>
                             <div className="grid md:grid-cols-1 gap-2 mb-6 md:mb-8">
                                 {product.products.map(p =>{
                                     return(
@@ -113,8 +114,10 @@ const DashboardInventory = () =>{
         <>
         { TabData.length>0 ? (
             <div className="flex flex-col md:flex-row">
-                <DashboardSideBar>
-                    <h2 className="text-3xl text-dark-blue my-3">{Translator(title)}</h2>
+                <DashboardSideBar padding="">
+                    <div className = 'pt-4 px-4'>
+                        <h2 className="text-3xl text-dark-blue my-3">{Translator(title)}</h2>
+                    </div>
                     <Tabs tabs={TabData}  amount={false}  tabCallBack={(val)=>{setActiveTab(val)}}  headingComp={<Search type="icon" activeTab={activeTab} />} setActive={query.get('search') && !query.get('supplier') ? 'all-products' : 'my-inventory' } />
                 </DashboardSideBar>
                 <div className={`absolute w-full lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll bg-white ${location.pathname === "/dashboard/inventory" ? `z-0`: `z-10`}`}>

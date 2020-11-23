@@ -5,8 +5,8 @@ import Translator from "Helpers/Translator";
 const TabHeadings = ({headings,headingFunction,headingComp,amount, setActive}) => {
     const [activeHeading , setActiveHeading ] = useState(setActive ? setActive : headings[0].key);
     return(
-        <div key={uuid()} className="flex flex-col-reverse md:flex-row mb-8 flex-1 md:items-center relative ">
-            <div className="flex flex-row flex-1 h-full border-b border-gray-400 mr-3">
+        <div key={uuid()} className="flex flex-col-reverse md:flex-row mb-8 flex-1 md:items-center relative border-b border-gray-400 ">
+            <div className="flex flex-row flex-1 h-full mr-3 px-4">
                 {headings.map((heading) =>{
                     return(
                         <div key={uuid()} className="pr-6 " key={heading.key}>
