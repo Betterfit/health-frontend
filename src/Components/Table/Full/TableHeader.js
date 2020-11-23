@@ -12,7 +12,7 @@ import OpenClose from "Images/Icons/open-close.svg";
 const HeaderText = ({ title, value, addOn_styles }) => {
   return (
     <div className="flex flex-col ">
-      <span className="text-left text-xxs md:text-xs leading-4 font-normal uppercase tracking-wider uppercase text-white">
+      <span className="text-left text-10 leading-4 font-semibold uppercase tracking-extra-wde uppercase text-white opacity-75">
         {Translator(title)}
       </span>
       <span
@@ -37,7 +37,7 @@ const TableHeader = ({ HeaderData }) => {
             <HeaderText
               title="Purchase Order"
               value={HeaderData.purchase_ord}
-              addOn_styles=" font-semibold"
+              addOn_styles="font-semibold"
             />
           </div>
           <div
@@ -50,7 +50,7 @@ const TableHeader = ({ HeaderData }) => {
             <HeaderText title="Ordered On" value={HeaderData.ordered_on} />
             <HeaderText title="Order Number" value={HeaderData.order_no} />
           </div>
-          <div className="flex flex-row items-center absolute md:static top-0 right-0">
+          <div className="flex flex-row items-center absolute md:static top-0 right-0 z-10">
             <NavLink className="p-2" to={HeaderData.url}>
               <StatusButton status={HeaderData.status} />
             </NavLink>

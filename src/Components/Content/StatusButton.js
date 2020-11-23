@@ -98,7 +98,7 @@ const StatusButton = ({ status, extraClasses }) => {
   const styles = StatStyles(status);
   return (
     <div
-      className={`uppercase rounded-full py-2 w-28 text-xs text-center font-semibold ${styles.bg} ${styles.text} ${extraClasses}`}
+      className={`uppercase rounded-full py-2 w-28 text-xs text-center font-bold ${styles.bg} ${styles.text} ${extraClasses}`}
     >
       {Translator(styles.title)}
     </div>
