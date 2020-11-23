@@ -28,7 +28,7 @@ export const PopUpMenu = ({ children }) => {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <div className="origin-top-right absolute right-0 mt-4 w-40 rounded-md shadow-lg">
+        <div className="origin-top-right absolute right-0 mt-4 w-40 z-40 rounded-md shadow-lg">
           <div className="rounded-md bg-white shadow-xs" onMouseLeave = {ToggleOptions}>
             <div
               className="p-3"
