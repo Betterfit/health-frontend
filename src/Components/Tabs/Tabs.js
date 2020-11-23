@@ -28,7 +28,7 @@ const Tabs = ({tabs,headingComp,amount,tabCallBack,setActive = null}) => {
             <TabHeadings headings={Headings} headingFunction={headingChangeActive} headingComp={headingComp} amount={amount ? amount : false} setActive={setActive}   />
             {tabs.map((tab, index) => {
                 return(
-                    <div key={uuid()} className={`${tab.key === activeTab ? 'opacity-100 visible' : 'opacity-0 hidden' }`} >
+                    <div key={uuid()} className={`px-4 ${tab.key === activeTab ? 'opacity-100 visible' : 'opacity-0 hidden' }`} >
                         {tab.content}
                     </div>
                 )

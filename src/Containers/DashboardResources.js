@@ -54,7 +54,7 @@ const DashboardResources = () => {
     <div className="flex flex-col md:flex-row overflow-x-hidden">
       <div style={{ flex: "0 0 320px" }}>
         <DashboardSideBar>
-          <h2 className="text-3xl text-dark-blue my-3">Resources</h2>
+          <h2 className="text-3xl text-dark-blue my-3">{Translator("Resources")}</h2>
           <SearchBar
             performSearch={setSearchTerm}
             placeholderText={

@@ -91,11 +91,15 @@ const DashboardSearch = () => {
     }
     
     return(
+<<<<<<< HEAD
         <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-10">
+=======
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
+>>>>>>> ef4b956633a509f70da076fd16383c0255b7a3f9
             {searchData && (
                 <>
                     <BackNavigation link="Back" />
-                    <div className="flex justify-between mt-8">
+                    <div className="flex justify-between">
                         <TitleUnderLine extraclasses="title-no-margin pt-0" nounderline={true} title={`Search results for "${query.get('search')}"`} />
                     </div>
                     {searchData.length > 0 && (

@@ -30,8 +30,8 @@ const Search = ({type,activeTab = null}) => {
   
   if(type === "icon" ){
     return(
-      <div className={`flex items-center h-full bg-gray-300 ${showInput ? 'absolute w-full z-10  border-b-2 border-gray-400 ' : 'relative'}`}> 
-        <button className="button-reset" aria-label="button-reset" onClick={() => setShowInput(!showInput)}>
+      <div className={`flex items-center pt-2 h-full bg-betterfit-pale-blue ${showInput ? 'absolute w-full z-10 ' : 'relative'}`}> 
+        <button className="button-reset px-4" aria-label="button-reset" onClick={() => setShowInput(!showInput)}>
           <ReactSVG src={SearchIcon} />
         </button>
         {showInput && (
@@ -57,7 +57,7 @@ const Search = ({type,activeTab = null}) => {
                 Search
               </button> */}
             </div>
-            <button className="button-reset" onClick={() => {
+            <button className="button-reset px-4" onClick={() => {
               if(searchRef.current.value){
                 searchRef.current.value = "";
                 clearSearchQuery();
@@ -74,7 +74,7 @@ const Search = ({type,activeTab = null}) => {
     )
   } else if(type === "bar"){
     return(
-      <div className={`flex items-center max-h-50 bg-betterfit-pale-blue items-center px-6 py-1`} style={{borderRadius:30}}> 
+      <div className={`flex items-center max-h-50 bg-white items-center px-6 py-1`} style={{borderRadius:30}}> 
         <ReactSVG className="ml-2 mr-2" src={SearchIcon} />
         <div className="relative flex-grow">
           <input
