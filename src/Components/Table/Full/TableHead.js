@@ -8,7 +8,7 @@ const TableHead = ({TableHead}) => {
             <tr>
                 {TableHead.map((head, index) => {
                     return(
-                        <th key={uuid()} className="px-4 pb-2 pt-6 text-left text-xs leading-4 font-normal uppercase tracking-wider uppercase text-betterfit-graphite">
+                        <th key={uuid()} className="px-4 pb-2 pt-6 text-left leading-4 uppercase font-semibold text-10 tracking-extra-wide text-gray-600 opacity-50">
                             {Translator(head)}
                         </th>
                     )                 

@@ -48,6 +48,12 @@ p {
     outline:auto; 
     outline-color:#9EB9FF;
     background-color: rgba(31, 69, 168,0.1)!important;
+    outline-width:thin;
+}
+
+
+.table-row:hover .link-order-no {
+  color: #1D2A93;
 }
 
 .pill {

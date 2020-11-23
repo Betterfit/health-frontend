@@ -39,7 +39,6 @@ const DashboardEditOrder = observer((props) => {
           order_date: dayjs(response.data.order_date).format("MMM DD, YYYY"),
           purchase_order: response.data.purchase_no,
           facility: response.data.facility.name,
-          unit: "Emergency",
         });
         cartStore.getLocalCartStorage();
         cartStore.clearCart();

@@ -29,10 +29,10 @@ function Checkbox({ id_tag, name, value = false, setValue }) {
             }}  
           />
           <svg
-            className={`fill-current w-4 h-4 text-betterfit-highlight-red pointer-events-none ${checked ? `block` : `hidden`} `}
-            viewBox="0 0 20 20"
+            className={`fill-current text-betterfit-highlight-red m-auto pointer-events-none ${checked ? `block` : `hidden`} `}
+            viewBox="-3 -4 20 20"
           >
-            <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
+            <path d="M12.361.334a1.547 1.547 0 00-1.185-.317c-.42.063-.798.297-1.053.652L5.347 7.334l-2.62-2.74c-.299-.314-.705-.49-1.13-.49-.423 0-.83.176-1.129.49-.3.313-.468.738-.468 1.182 0 .443.168.869.468 1.182l3.122 3.269c.264.268.579.475.924.607a2.505 2.505 0 002.13-.158c.324-.182.608-.434.833-.738l5.204-7.263c.254-.355.363-.8.303-1.24a1.689 1.689 0 00-.623-1.1z" />
           </svg>
         </div>
       </label>

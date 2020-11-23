@@ -21,7 +21,7 @@ const TagFilterList = ({
 
     return (
         <ul aria-label="Tag List">
-            <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
+            <h3 className="mb-4 md:mb-2 text-betterfit-graphite text-xs font-body m-2 pt-8 uppercase font-bold tracking-extra-wide opacity-50">
                 Tags
             </h3>
             {selectedTags.map((tag) => {

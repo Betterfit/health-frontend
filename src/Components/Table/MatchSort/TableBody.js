@@ -41,7 +41,7 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                 <td className="whitespace-no-wrap px-4 py-4">
                                     <span className="flex items-center">
                                         <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                                        <NavLink className="text-sm leading-5 text-betterfit-graphite ml-3" to={`${link}${row.id}`}>
+                                        <NavLink className="text-sm leading-5 text-betterfit-graphite ml-3 link-order-no font-bold" to={`${link}${row.id}`}>
                                              {row.order_no}
                                         </NavLink>
                                     </span>
@@ -99,7 +99,7 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                                 <td className="whitespace-no-wrap px-4 py-4">
                                     <span className="flex items-center">
                                         <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                                        <NavLink className="text-sm leading-5 text-betterfit-graphite ml-3" to={`${link}${row.id}`}>
+                                        <NavLink className="text-sm leading-5 text-betterfit-graphite ml-3 link-order-no font-bold" to={`${link}${row.id}`}>
                                             {row.order_no}
                                         </NavLink>
                                     </span>

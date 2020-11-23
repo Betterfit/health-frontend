@@ -3,6 +3,7 @@ import Api from "Helpers/api";
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import Table from 'Components/Table/MatchListing/Table';
 import Spinner from "Images/spinner.gif";
+import dayjs from 'dayjs';
 const api = new Api();
 const DashboardMatchesListing = () => {
 
@@ -11,7 +12,14 @@ const DashboardMatchesListing = () => {
     const getData = async () => await api.getMatchHistory()
     .then((response) => {
         setIsLoading(false);
-        setMatchesData(response.data)
+        let arr = response.data;
+        arr = arr.map(item => {
+            return{
+                ...item,
+                match_date : dayjs(item.match_date).format('MMMM D , YYYY'),
+            }
+        })
+        setMatchesData(arr)
     })
     .catch((err) => console.log(err));
 

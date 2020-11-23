@@ -7,7 +7,7 @@ const TableHead = ({TableHead}) => {
             <tr>
                 {TableHead.map(head => {
                         return(
-                            <th key={uuid()} className="px-4 py-3 bg-white text-left text-xs leading-4 font-medium uppercase tracking-wider uppercase text-betterfit-graphite">
+                            <th key={uuid()} className="px-4 py-3 bg-white text-left leading-4 uppercase text-10 tracking-extra-wide text-gray-600 opacity-50">
                               {Translator(head.replace(/[_-]/g, " "))}
                             </th>
                         )

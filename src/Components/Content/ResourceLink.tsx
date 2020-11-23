@@ -53,7 +53,7 @@ const ResourceLink = ({ resource, color, extraClasses=' ' }: ResourceLinkProps) 
     return (
         <>
             <li
-                className={"flex p-1 w-full m-2 rounded-md cursor-pointer " + extraClasses }
+                className={"flex p-1 w-full m-2 rounded-md cursor-pointer py-3 " + extraClasses }
                 onClick={toggleSlider}
                 tabIndex={0}
                 aria-label={resource.title}
@@ -63,10 +63,10 @@ const ResourceLink = ({ resource, color, extraClasses=' ' }: ResourceLinkProps) 
                     style={{ backgroundColor: color }}
                 />
                 <div className="p-2 text-left flex-grow">
-                    <div className="font-medium text-gray-700 font-body uppercase tracking-widest text-xs">
+                    <div className="font-semibold text-gray-600 font-body uppercase tracking-extra-wide text-10 opacity-75">
                         {Translator(resource.resource_type)}
                     </div>
-                    <div className="font-semibold text-base tracking-wide">
+                    <div className="font-semibold text-base tracking-wide text-betterfit-graphite">
                         {resource.title}
                     </div>
                 </div>

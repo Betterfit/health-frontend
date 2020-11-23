@@ -40,7 +40,7 @@ const DashboardCategoryList = (props) => {
       ) : (
         <>
           <div className="flex flex-wrap justify-between items-center pb-4 mb-8 border-b border-betterfit-grey">
-            <TitleUnderLine title="Products" nounderline={true} extraclasses=" hidden md:block no-margin" />
+            <TitleUnderLine title="Product Categories" nounderline={true} extraclasses=" hidden md:block no-margin" />
     
           </div>
           <div className="mb-6 md:mb-10 grid grid-cols-1 gap-2 lg:gap-4 md:grids-cols-2 lg:grid-cols-3 customcategorygrid">

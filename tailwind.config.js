@@ -60,10 +60,13 @@ module.exports = {
         'tag-light-yellow-txt': '#6B3D1D',
         'tag-light-purple': '#EDEBFC',
         'tag-light-purple-txt': '#234499',
+        'faded-blue' : 'rgba(42, 57, 99 , 0.4)',
+        'title-border' : 'rgba(199, 212, 229,0.4)'
       },
       spacing: {
         '18': '4.5rem',
-        '25': '7.5rem',
+        '28': '7rem',
+        '29': '7.5rem',
         '34': '9rem',
         '35': '9.25rem',
         '36': '9.5rem',
@@ -98,6 +101,9 @@ module.exports = {
         '1/4': '25%',
         '1/2': '50%',
         '3/4': '75%',
+      },      
+      opacity: {
+        '40': '0.4',
       },
     }
   }

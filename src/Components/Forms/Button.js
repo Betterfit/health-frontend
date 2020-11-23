@@ -38,7 +38,7 @@ const Button = ({
           ${css_add_on}
           rounded-md w-full flex justify-center py-3 border border-transparent font-bold
           focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700
-          transition duration-150 ease-in-out capitalize ${text_size} ${textColor} ${borderColor}`}
+          transition duration-150 ease-in-out capitalize font-bold ${text_size} ${textColor} ${borderColor}`}
       >
         {Translator(text)}
       </button>

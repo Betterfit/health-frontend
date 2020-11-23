@@ -53,17 +53,20 @@ const DashboardResources = () => {
   return (
     <div className="flex flex-col md:flex-row overflow-x-hidden">
       <div style={{ flex: "0 0 320px" }}>
-        <DashboardSideBar>
-          <h2 className="text-3xl text-dark-blue my-3">{Translator("Resources")}</h2>
-          <SearchBar
-            performSearch={setSearchTerm}
-            placeholderText={
-              Translator("Search") + " " + Translator("Resources")
-            }
-          />
+        <DashboardSideBar padding={false}>
+          
+          <div className="px-4 pt-4">
+            <h2 className="text-3xl text-dark-blue my-3">{Translator("Resources")}</h2>
+              <SearchBar
+                performSearch={setSearchTerm}
+                placeholderText={
+                  Translator("Search") + " " + Translator("Resources")
+                }
+            />
+          </div>
           <div className="border-b border-gray-400 mt-5" />
-          <div>
-            <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
+          <div className="px-4 pb-4">
+            <h3 className="mb-4 md:mb-2 text-betterfit-graphite opacity text-xs font-body m-2 pt-8 uppercase font-bold tracking-extra-wide opacity-50">
               Resource Type
             </h3>
             <ul className="flex flex-col items-start" aria-label='Resource Types'>
@@ -84,8 +87,9 @@ const DashboardResources = () => {
                 }
               )}
             </ul>
+            <TagFilterList {...{ tagList, toggleTagSelect, selectedTagPKs }} />
+
           </div>
-          <TagFilterList {...{ tagList, toggleTagSelect, selectedTagPKs }} />
         </DashboardSideBar>
       </div>
 
