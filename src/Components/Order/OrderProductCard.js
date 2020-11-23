@@ -36,7 +36,7 @@ const OrderProductCard = ({ product }) => {
   // console.log(product);
   const cartStore = useCartStore();
   // product state
-  const [priority, setPriority] = useState(product.priority);
+  const [priority, setPriority] = useState(product.priority=='normal' ? 0 : 1);
   const [quantity, getQuantity] = useState(product.quantity ? product.quantity: 1);  
   // change product quantity 
   const changeQuantity = (data) => {
