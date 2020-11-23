@@ -78,10 +78,6 @@ const allRegion = {
     "Prince Edward Island"
   ],
   "Nova Scotia": [
-    "Western",
-    "Northern",
-    "Eastern",
-    "Central",
     "Nova Scotia"
   ],
   "Quebec": [
