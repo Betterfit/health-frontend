@@ -37,7 +37,7 @@ const OrderComponentTitle = ({ value, classes }) => {
 const OrderDetailHeader = ({ order, actionComponent, children}) => {
   return (
     <div className="flex flex-col border-b pb-4 border-gray-400 relative">
-      <BackNavigation link={"Back"} />
+      <BackNavigation link={"Back to orders"} />
       <OrderComponentTitle value={`#${order.order_number}`} />
       <div className="flex flex-row mt-4">
         {Object.keys(order)

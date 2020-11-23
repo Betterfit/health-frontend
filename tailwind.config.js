@@ -60,6 +60,8 @@ module.exports = {
         'tag-light-yellow-txt': '#6B3D1D',
         'tag-light-purple': '#EDEBFC',
         'tag-light-purple-txt': '#234499',
+        'faded-blue' : 'rgba(42, 57, 99 , 0.4)',
+        'title-border' : 'rgba(199, 212, 229,0.4)'
       },
       spacing: {
         '18': '4.5rem',

@@ -34,8 +34,8 @@ const DashboardFacilityOrderDetail = (props) => {
       .then((response) => {
         setOrderHeader({
           order_number: response.data.order_no,
-          order_date: dayjs(response.data.order_date).format("MMM DD, YYYY"),
           facility: response.data.facility.name,
+          order_date: dayjs(response.data.order_date).format("MMM DD, YYYY"),
         });
         let arr = response.data.order_products;
         setOrderRaw(response.data);
@@ -102,6 +102,7 @@ const DashboardFacilityOrderDetail = (props) => {
               text="Edit Order"
               solid={false}
               text_size="text-sm"
+              textColor="text-betterfit-graphite"
               onClick={routeChange}
             />
 

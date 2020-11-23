@@ -42,7 +42,7 @@ const Search = ({type,activeTab = null}) => {
                 <label htmlFor="search" aria-label="Search"></label>
                 <input
                   id="search"
-                  className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-base bg-transparent"
+                  className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-base bg-transparent text-faded-blue"
                   placeholder={Translator("Search Orders")}
                   ref={searchRef}
                   onChange={()=>{
@@ -79,7 +79,7 @@ const Search = ({type,activeTab = null}) => {
         <div className="relative flex-grow">
           <input
             id="search"
-            className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-base bg-transparent"
+            className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-base bg-transparent text-faded-blue "
             placeholder={Translator("Search Resources")}
             ref={searchRef}
             onChange={()=>{
@@ -100,7 +100,7 @@ const Search = ({type,activeTab = null}) => {
         <label htmlFor="search" aria-label="Search"></label>
           <input
             id="search"
-            className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-base bg-transparent"
+            className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-base bg-transparent text-faded-blue"
             placeholder={Translator("Search Products")}
             ref={searchRef}
             onChange={()=>{

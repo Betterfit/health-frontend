@@ -14,7 +14,7 @@ const ListLink = ({
             <span
                 className={`${
                     selected ? "font-bold text-xl" : "font-semibold text-base"
-                } p-1 text-base tracking-wide`}
+                } p-1 text-base tracking-wide text-betterfit-graphite`}
                 style={textStyle}
             >
                 <div className="bullet" style={{ background: bulletColor }} />

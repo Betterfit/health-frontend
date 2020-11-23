@@ -35,7 +35,7 @@ const Table = ({TableData,link,extraClasses,buttonType}) => {
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="border-b border-gray-200">
-                        <table className={`min-w-full p-4 ${extraClasses ? extraClasses : ""}`}>
+                        <table className={`min-w-full p-4 table-auto ${extraClasses ? extraClasses : ""}`}>
                             <TableHead TableHead={TableHeadData} />
                             <TableBody buttonType={buttonType} link={link} NoOptions={nooptions} TableBody={TableBodyData} removeAtIndex={removeAtIndex} statusIndex={statusIndex} variantID={TableData.pk} />                            
                         </table>  
