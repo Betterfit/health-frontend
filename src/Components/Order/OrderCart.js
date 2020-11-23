@@ -39,6 +39,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
     // resolve all the api calls in parallel and populate the messageData object as they resolve
     Promise.all(promises).then((responses) => {
       rawCart = CartData;
+      console.log(responses);
       setCartItems(responses);
       
     }).catch((err) => console.log(err));;

@@ -20,7 +20,7 @@ const TableBody = ({TableBody}) => {
                                             case "priority":
                                               // code block
                                                 return(
-                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-betterfit-graphite">
+                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-betterfit-graphite pr-8">
                                                         <StatusButton
                                                             status={r[1] === "stat" ?  "stat" : "regular"} 
                                                         />
@@ -43,7 +43,7 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             default:
                                                 return(
-                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-base leading-5 text-betterfit-graphite">
+                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-base leading-5 text-betterfit-grey-blue">
                                                         <div className="flex items-center">
                                                             {/* <img className="w-24 mr-2" src={`${row[imageIndex]}`} /> */}
                                                             {/* <span className="font-bold text-betterfit-basic-blue">{r}</span> */}
@@ -67,7 +67,7 @@ const TableBody = ({TableBody}) => {
                                             case "priority":
                                               // code block
                                                 return(
-                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-betterfit-graphite">
+                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-betterfit-graphite pr-8">
                                                         <StatusButton
                                                             status={r[1] === "stat" ?  "stat" : "regular"} 
                                                         />
@@ -90,7 +90,7 @@ const TableBody = ({TableBody}) => {
                                             break;
                                             default:
                                                 return(
-                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-base leading-5 text-betterfit-graphite">
+                                                    <td key={uuid()} className="px-4 py-4 whitespace-no-wrap text-base leading-5 text-betterfit-grey-blue">
                                                         <div className="flex items-center">
                                                              {/* <img className="w-24 mr-2" src={`${row[imageIndex]}`} /> */}
                                                             {/* <span className="font-bold text-betterfit-basic-blue">{r}</span> */}

@@ -28,7 +28,7 @@ const DashboardEditOrder = observer((props) => {
             pk: item.product_option.pk,
             product_pk:item.pk,
             quantity: item.quantity,
-            priority: item.priority,
+            priority: item.priority == "stat" ? true : false,
           };
           return obj;
         });

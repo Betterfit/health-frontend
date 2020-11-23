@@ -3,7 +3,7 @@ import Button from "Components/Content/Button";
 
 const Modal = ({cancelCallBack,confirmCallBack,children , buttonText}) => {
     return( 
-        <div className="fixed w-screen h-screen left-0 top-0 flex justify-center items-center" style={{backgroundColor:'rgba(0,0,0,0.6)'}}>
+        <div className="fixed w-screen h-screen left-0 top-0 flex justify-center items-center z-30" style={{backgroundColor:'rgba(0,0,0,0.6)'}}>
             <div className="w-3/4 md:w-1/2 lg:w-2/5 xl:w-1/3 bg-white rounded shadow">
                 <div>
                     {children}
