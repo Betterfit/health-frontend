@@ -20,13 +20,14 @@ import DashboardSearch from 'Containers/DashboardSearch';
 import uuid from 'react-uuid'
 import {useAuthStore} from "Context/authContext";
 
-const api = new Api();
+
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
 const DashboardInventory = () =>{ 
+    const api = new Api();
     const [title , setTitle] = useState('Inventory');
     const [AllCategoryData , setAllCategoryData] = useState(null);
     const [SupplierCategoryData , setSupplierCategoryData] = useState(null);
