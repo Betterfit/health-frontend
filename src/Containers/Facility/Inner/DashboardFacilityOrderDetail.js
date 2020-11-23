@@ -109,7 +109,7 @@ const DashboardFacilityOrderDetail = (props) => {
               onClick={confirmCallBack}
               text="Submit Order"
               color=" bg-betterfit-green"
-              hoverColor="bg-green-800"
+              hoverColor="bg-green-900"
               text_size="text-sm"
             />
           </div>

@@ -2,7 +2,7 @@ import React, {useState,useRef} from "react";
 import { useHistory } from 'react-router-dom'
 import { ReactSVG } from 'react-svg'
 import SearchIcon from 'Images/Icons/search-icon.svg'
-import Close from 'Images/Icons/close.svg';
+import Translator from "Helpers/Translator";
 
 
 const OrderSearch = ({type,extraClasses}) => {
@@ -19,6 +19,7 @@ const OrderSearch = ({type,extraClasses}) => {
       history.push(`/dashboard/orders/search?search=${searchRef.current.value}`);
     }
   }
+  
   const clearSearchQuery = () => {
     history.push(`/dashboard/orders`);
   }
@@ -29,10 +30,11 @@ const OrderSearch = ({type,extraClasses}) => {
       <div className={`flex items-center h-full bg-betterfit-pale-blue items-center px-6 py-1 ${extraClasses}`} style={{borderRadius:30}}> 
         <ReactSVG className="ml-2 mr-2" src={SearchIcon} />
         <div className="relative flex-grow">
+        <label htmlFor="search" aria-label="Search"></label>
           <input
             id="search"
-            className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-lg bg-transparent"
-            placeholder="Search Orders"
+            className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-base bg-transparent"
+            placeholder={Translator("Search Orders")}
             ref={searchRef}
             onChange={()=>{
               clearTimeout();

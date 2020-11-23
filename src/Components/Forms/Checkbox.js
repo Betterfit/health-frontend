@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
+import Translator from "Helpers/Translator";
 
 function Checkbox({ id_tag, name, value = false, setValue }) {
   const [checked , setChecked] = useState(value);
@@ -12,7 +12,7 @@ function Checkbox({ id_tag, name, value = false, setValue }) {
             (value ? "text-betterfit-highlight-red font-semibold" : "text-betterfit-blue font-medium")
           }
         >
-          {name}
+          {Translator(name)}
         </div>
         <div
           className={

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React  from "react";
+import Translator from "Helpers/Translator";
 const tranform = {
   transform: "translateX(" + -50 + "%)",
 };
@@ -8,13 +9,13 @@ function FlatButton({ text, onClick, extras }) {
       onClick={onClick}
       type="button"
       className={
-        "absolute top-1/4 left-1/2 rounded-md flex justify-center py-3 px-7 border border-transparent font-semibold " +
+        "absolute md:whitespace-nowrap top-1/4 left-1/2 w-3/4 rounded-md flex justify-center py-3 px-1 w-1/2 border border-transparent font-semibold " +
         " transition duration-150 ease-in-out capitalize text-status-dark-blue text-sm bg-betterfit-pale-blue border border-betterfit-highlight-blue " +
         (extras ? extras : "")
       }
       style={tranform}
     >
-      {text}
+      {Translator(text)}
     </button>
   );
 }

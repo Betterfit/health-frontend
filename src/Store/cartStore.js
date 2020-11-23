@@ -64,7 +64,7 @@ export function createCartStore (name="cart"){
             localStorage.setItem(name,JSON.stringify(this.cart));
         },
         getLocalCartStorage(){
-            // localStorage.removeItem("cart")
+
             let cartData = localStorage.getItem(name);
             if(cartData){
                 this.cart = JSON.parse(cartData);

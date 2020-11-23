@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Api from "Helpers/api";
 import CategoryCard from "Components/Order/CategoryCard";
-import image from "Images/example_product.png"; //remove this later
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 import Search from 'Components/Search/Search';
 import Spinner from "Images/spinner.gif";
-const api = new Api();
+
 
 const DashboardCategoryList = (props) => {
+  const api = new Api();
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategory] = useState({ hits: [] });
   const [isError, setIsError] = useState(false);
@@ -21,19 +21,17 @@ const DashboardCategoryList = (props) => {
         setIsLoading(false);
       })
       .catch((err) => {
-        // console.log(err);
         setIsError(true);
       });
 
   useEffect(() => {
-    // console.log("getting data");
     getData();
   }, []);
 
 
 
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative">
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative p-2">
       {isError && <div>Something went wrong ...</div>}
 
       {isLoading ? (
@@ -42,11 +40,11 @@ const DashboardCategoryList = (props) => {
         </div>
       ) : (
         <>
-          <div className="flex justify-between items-center pb-4 mb-8 border-b border-gray-400">
+          <div className="flex flex-wrap justify-between items-center pb-4 mb-8 border-b border-betterfit-grey">
             <TitleUnderLine title="Products" nounderline={true} extraclasses=" hidden md:block no-margin" />
             <Search />
           </div>
-          <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-2 mb-6 md:mb-10">
+          <div className="mb-6 md:mb-10 grid grid-cols-1 gap-2 lg:gap-4 md:grids-cols-2 lg:grid-cols-3 customcategorygrid">
             {categories.map((p) => {
               return <CategoryCard key={`${p.name}`} category={p} />;
             })}

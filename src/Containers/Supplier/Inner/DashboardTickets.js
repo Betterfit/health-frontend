@@ -5,6 +5,7 @@ import Table from 'Components/Table/List/Table';
 import Api from "Helpers/api";
 import {useAuthStore} from "Context/authContext";
 import DashboardTicketSearch from "./DashboardTicketSearch";
+import Translator from "Helpers/Translator";
 import uuid from 'react-uuid'
 import {
   Switch,
@@ -12,6 +13,7 @@ import {
   useParams,
   useLocation
 } from "react-router-dom";
+import Spinner from "Images/spinner.gif";
 // import OrderHeader from 'Components/Order/OrderHeader'
 // import BackNavigation from 'Components/Helpers/BackNavigation'
 
@@ -96,15 +98,19 @@ const DashboardTickets = () => {
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-10">
       <Route exact path='/dashboard/tickets'>
-        <h2 className="text-3xl text-dark-blue my-3">Tickets</h2>
+        <h2 className="text-3xl text-dark-blue my-3">{Translator("Tickets")}</h2>
       </Route>
-        {ticketData && (
+        {ticketData ? (
           <>          
             <TicketSearch extraClasses="float-right clear-both"  callBack={(e) => setSearchActive(e)} searchActive={searchActive} />
             <Route exact path='/dashboard/tickets'>
               <Tabs tabs={TabData} amount={true}  />
             </Route>
           </>
+        ):(
+          <div className="relative w-full min-h-screen"> 
+            <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
+          </div> 
         )}
       <Route path="/dashboard/tickets/search:query?">
             <DashboardTicketSearch supplierId={supplierId} />

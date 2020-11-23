@@ -5,6 +5,7 @@ import ControllerCard from 'Components/TrafficControllerSideBar/ControllerCard';
 
 import Api from "Helpers/api";
 import Graph from "./DashboardGraph";
+import Translator from "Helpers/Translator";
 
 const api = new Api();
 const DashboardTrafficDashboard = () => {
@@ -34,8 +35,8 @@ const DashboardTrafficDashboard = () => {
                                         <div className="flex flex-row justify-between m-1 px-4">
                                             <span className="text-xs leading-4 font-medium uppercase tracking-wider uppercase text-betterfit-graphite">{product.name}</span>
                                             <div>
-                                                <span className="text-xs leading-4 uppercase tracking-wider uppercase text-betterfit-graphite mr-2">Orders</span>
-                                                <span className="text-xs leading-4 uppercase tracking-wider uppercase text-betterfit-graphite ml-2">Supply</span>
+                                                <span className="text-xs leading-4 uppercase tracking-wider uppercase text-betterfit-graphite mr-2">{Translator("Orders")}</span>
+                                                <span className="text-xs leading-4 uppercase tracking-wider uppercase text-betterfit-graphite ml-2">{Translator("Supply")}</span>
                                             </div>
                                         </div>
                                         {
@@ -56,23 +57,13 @@ const DashboardTrafficDashboard = () => {
                                             })
                                         }
                                     </div>
-                                    // <div>
-                                    //     <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-6 uppercase font-bold tracking-wider">{product.name}</h3>
-                                    //     <div className="grid md:grid-cols-1 gap-2 mb-6 md:mb-10">
-                                    //         {product.products.map(p =>{
-                                    //             return(
-                                    //             <BoxLink key={`${p.name}`} to="/dashboard/inventory/product/" link={p.name} textColor='dark-blue' id={p.pk}/>
-                                    //             )
-                                    //         })}
-                                    //     </div>
-                                    // </div>
                                 )
                             })
                         } 
                         </>
                 )}
             </DashboardSideBar>
-            <div className={`w-full bg-gray-100 lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll mt-8`}   >
+            <div className={`w-full lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll mt-8`}   >
                 <Graph />
             </div>
         </div>

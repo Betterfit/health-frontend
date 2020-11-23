@@ -9,8 +9,6 @@ import {
   Redirect
 } from "react-router-dom";
 
-import store from 'Store/store.js';
-
 // ================ PAGES ================
 import Login from './Pages/Login/Login';
 import ForgotPassword from './Pages/Login/ForgotPassword';
@@ -19,20 +17,21 @@ import LoginContainer from './Pages/Login/LoginContainer';
 import LogOut from './Pages/Logout';
 import Dashboard from './Pages/Dashboard';
 import {useAuthStore} from "Context/authContext";
-import { observer } from "mobx-react"
+import { observer } from "mobx-react";
+import NotFound from './Pages/404';
+import DashboardResearch from 'Containers/DashboardResearch';
 const App = observer(({userType}) => {
   const authStore = useAuthStore();
   const token = authStore.token;
   return (
       <Router>
         <div className="App">
-          <Switch>
-
+          <Switch>            
             <Route exact path="/" render={() => (
               token ? (
                 <Redirect to="/dashboard"/>
               ) : (
-                <Redirect to="/login/"/>
+                <Redirect to="/login"/>
               )
             )}/>
             <Route path="/login/forgotpassword" initial >
@@ -53,10 +52,19 @@ const App = observer(({userType}) => {
             <Route path="/logout" initial >
               <LogOut />
             </Route>
-
+            {!token &&(
+              <Redirect to="/login"/>
+            )}
             <Route path="/dashboard">
               <Dashboard language={authStore.language}/>
             </Route>
+            <Route path="/research">
+              <DashboardResearch />
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+            <Route path="/404" component={NotFound} />
           </Switch>
         </div>
       </Router>

@@ -10,8 +10,6 @@ import DashboardCategoryList from "Containers/Facility/Inner/DashboardCategoryLi
 import { Switch, Route, useParams } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
-// import DashboardProductList from 'Containers/DashboardProductList'
-// import DashboardProductDetail from 'Containers/DashboardProductDetail'
 import { useCartStore } from "Context/cartContext";
 const api = new Api();
 const DashboardOrder = ({props, type}) => {
@@ -23,7 +21,7 @@ const DashboardOrder = ({props, type}) => {
   }, []);
   return (
     <div className="flex flex-col md:flex-row">
-      <DashboardSideBar addonStyles=" flex flex-col">
+      <DashboardSideBar addonStyles=" flex flex-col" padding="p-0" >
         {type === "edit" && (
             <DashboardEditOrder {...props} />
         )}
@@ -31,7 +29,7 @@ const DashboardOrder = ({props, type}) => {
             <DashboardNewOrder {...props} />
         )}
       </DashboardSideBar>
-      <div className="w-full md:w-3/5 mx-auto h-screen md:overflow-y-scroll">
+      <div className="w-full min-width-0 md:w-3/5 mx-auto h-screen md:overflow-y-scroll mt-2">
         <Route
           exact
           path={`${match.path}`}
@@ -47,18 +45,19 @@ const DashboardOrder = ({props, type}) => {
             return <DashboardCategoryProductList edit={true} {...props} />;
           }}
         />
-        {
+        
           <Route
             path={`${match.path}/:categoryName/:cid/product/:pid/:id?`}
             exact
             render={(props) => {
               return <DashboardProductDetail edit={true} {...props} />;
             }}
-          /> /*
-                <Route path='/dashboard/inventory/search:query?'>
-                    <DashboardSearch />
-                </Route> */
-        }
+          /> 
+          
+          {/* <Route path='/dashboard/inventory/search:query?'>
+            <DashboardSearch />
+          </Route>  */}
+      
       </div>
     </div>
   );

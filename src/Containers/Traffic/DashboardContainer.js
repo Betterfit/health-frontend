@@ -3,22 +3,27 @@ import {
     Switch,
     Route,
     useParams,
-    Redirect
+    Redirect,
+    useHistory
 } from "react-router-dom";
 import ReactCSSTransitionGroup from 'react-transition-group';
 import { AnimatedSwitch } from 'react-router-transition';
 
+import DashboardMatchesListing from "./Inner/DashboardMatchesListing";
 import DashboardMatches from "./Inner/DashboardMatches";
-import DashboardMatchesDetail from "./Inner/DashboardMatchesDetail";
+import DashboardMatchesHistory from "./Inner/DashboardMatchesHistory";
 import DashboardMatchesOrderDetail from "./Inner/DashboardMatchesOrderDetail";
 import DashboardTrafficDashboard from "./Inner/DashboardTrafficDashboard";
-import DashboardInventory from 'Containers/Supplier/Inner/DashboardInventory'
-import DashboardResources from '../DashboardResources'
+import DashboardTrafficInventory from './Inner/DashboardTrafficInventory';
+import DashboardResources from '../DashboardResources';
+import NotFound from 'Pages/404';
 // import DashboardInventory from './Inner/DashboardInventory'
 // import DashboardTickets from './Inner/DashboardTickets'
 // import DashboardTicketDetail from './Inner/DashboardTicketDetail';
+import {MatchProvider} from "Context/matchContext";
 
 const DashboardContainer = () =>{
+    const history = useHistory();
     const [title , setTitle] = useState('');
     const changeTitle = (title) => {
         setTitle(title);
@@ -33,26 +38,34 @@ const DashboardContainer = () =>{
                     className="switch-wrapper"
                 >
                     <Route exact path="/dashboard" render={() => (
-                        <Redirect to="/dashboard/matches"/>
+                        <Redirect to="/dashboard/match-listing"/>
                     )}/>
-                    <Route path="/dashboard/matches" exact>
-                        <DashboardMatches />
+                    <Route path="/dashboard/match-listing" exact>
+                        <DashboardMatchesListing />
                     </Route>
-                    <Route exact path="/dashboard/matches/:id" render={(props) => {
-                        return ( <DashboardMatchesDetail {...props } /> )
+                    <Route exact path="/dashboard/matches">
+                        <MatchProvider>
+                            <DashboardMatches/> 
+                        </MatchProvider>
+                    </Route>
+                    <Route exact path="/dashboard/matches/history:query?" render={(props) => {
+                        return ( <DashboardMatchesHistory {...props } /> )
                     }} /> 
-                     <Route exact path="/dashboard/matches/:id/:oid" render={(props) => {
+                     <Route exact path="/dashboard/matches/:id/" render={(props) => {
                         return ( <DashboardMatchesOrderDetail {...props } /> )
                     }} /> 
                     <Route path="/dashboard/traffic-dashboard">
                         <DashboardTrafficDashboard />
                     </Route>
                     <Route path="/dashboard/inventory" >
-                        <DashboardInventory initial changeTitle={(title) => changeTitle(title)} />
+                        <DashboardTrafficInventory initial changeTitle={(title) => changeTitle(title)} />
                     </Route>
                     <Route path="/dashboard/resources" >
                         <DashboardResources initial changeTitle={(title) => changeTitle(title)} />
                     </Route>
+                    {/* <Route path="/404" component={NotFound} />
+                    <Redirect to="/404" />
+                     */}
                </AnimatedSwitch> 
             </main>
         </div>

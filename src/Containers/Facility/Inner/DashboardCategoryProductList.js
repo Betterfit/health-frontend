@@ -6,15 +6,15 @@ import ProductCard from "Components/Order/ProductCard";
 import Search from 'Components/Search/Search';
 import image from "Images/example_product.png"; //remove this later
 import Spinner from "Images/spinner.gif";
-const api = new Api();
+
 
 const DashboardCategoryProductList = (props) => {
+  const api = new Api();
   const { match } = props;
   const CategoryID = parseInt(match.params.id);
   const [isLoading, setIsLoading] = useState(true);
   const [CategoryData, setCategoryData] = useState(null);
   const [isError, setIsError] = useState(false);
-
   const getData = async () =>
     await api
       .getCategory(CategoryID)
@@ -24,18 +24,17 @@ const DashboardCategoryProductList = (props) => {
         setIsLoading(false);
       })
       .catch((err) => {
-        // console.log(err);
         setIsLoading(false);
         setIsError(true);
       });
 
   useEffect(() => {
-    // console.log("getting data");
+    console.log("WAW")
     getData();
   }, []);
 
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative">
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative p-2 mt-2">
       {isError && <div>Something went wrong ...</div>}
 
       {isLoading ? (
@@ -45,28 +44,31 @@ const DashboardCategoryProductList = (props) => {
       ) : (
         <>
           <BackNavigation link={`Back to Product Categories`} />
-          <div className="flex justify-between items-center pb-4 mb-8 border-b border-gray-400">
+          <div className="flex flex-wrap justify-between items-center pb-4 mb-8 border-b border-betterfit-grey">
             <CategoryTitle
                 title={`${CategoryData.name}`}
                 icon={CategoryData.icon}
                 background_color={CategoryData.background_color}
                 color={CategoryData.color}
             />
-            <Search />
+            {/* <Search /> */}
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2 mb-6 md:mb-10">
+          <div className="grid grid-cols-1 gap-4 mb-6 md:mb-10 customproductgrid">
             {CategoryData.products.map((p) =>
-              p.product_variations.map((p2) =>
-                p2.product_options.map((p3) => (
-                  <ProductCard
-                    key={`${p3.name}`}
-                    product={p2}
-                    product_details={p3}
-                    category={CategoryData.name}
-                    extra={CategoryData}
-                  />
-                ))
-              )
+              p.product_variations.map((p2) =>{
+                return(
+                  p2.product_options.map((p3) => (
+                    <ProductCard
+                      key={`${p3.name}`}
+                      product={p2}
+                      product_details={p3}
+                      category={CategoryData.name}
+                      extra={CategoryData}
+                      parent={p.name ? p.name : null}
+                    />
+                  ))
+                )
+              })
             )}
           </div>
         </>

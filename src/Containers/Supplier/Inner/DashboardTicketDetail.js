@@ -30,7 +30,6 @@ const DashboardTicketDetail = (props) => {
             order_date: dayjs(response.data.ticket_date).format("MMM DD, YYYY"),
             shipping_address: `${facility.street}, ${facility.city}, ${facility.province}, ${facility.postal_code}`,
         }) 
-        // console.log(response.data);
         let arr = response.data.order.order_products;
         setTicketRaw(response.data)
         arr = arr.map(item => {
@@ -43,7 +42,6 @@ const DashboardTicketDetail = (props) => {
             };
             return obj;
         });
-        // console.log(arr);
         setTicketData(arr);
     })
     .catch((err) => console.log(err));

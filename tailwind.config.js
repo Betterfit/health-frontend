@@ -29,7 +29,7 @@ module.exports = {
         'betterfit-navy': '#2A3863',
         'betterfit-grey': '#C7D4E5',
         'betterfit-graphite': '#192552',
-        'betterfit-green': '#479C72',
+        'betterfit-green': '#207d4f',
         'betterfit-highlight-red':'#B74554',
         'betterfit-highlight-darkred':'#7A1A37',
         'status-grey': 'E1EBF6',
@@ -63,6 +63,10 @@ module.exports = {
       },
       spacing: {
         '18': '4.5rem',
+        '25': '7.5rem',
+        '34': '9rem',
+        '35': '9.25rem',
+        '36': '9.5rem',
       },
       padding: {
         '7': '1.75rem',
@@ -73,6 +77,7 @@ module.exports = {
         '10': '10px',
         '14': '14px',
         '16': '16px',
+        '22': '22px',
         '3xl': '1.75rem',
       },
       letterSpacing: {

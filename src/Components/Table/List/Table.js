@@ -2,21 +2,20 @@ import React from 'react'
 import TableHead from './TableHead'
 import TableBody from './TableBody'
 
-const Table = ({TableData,link,extraClasses,buttonType}) => {
 
+const Table = ({TableData,link,extraClasses,buttonType}) => {
+    
     const TableHeadData = [];
     const TableBodyData = [];
     let nooptions = false;
     let removeAtIndex;
     let statusIndex;
-    console.log(TableData);
     TableData.map(variant => {
         let keys = Object.keys(variant);
         let values = Object.values(variant);
         keys.forEach((key,index) => {
             if(!TableHeadData.includes(key)){
                 if(key !== "pk"){
-                    // console.log(`key ${variant[key]}`);
                     TableHeadData.push(key);
                     if(key == "status"){
                         statusIndex = index;

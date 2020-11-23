@@ -5,7 +5,7 @@ export default class Api {
   constructor() {
     this.api_token = localStorage.getItem('token');
     this.client = null;
-    this.api_url = 'http://betterfit.l1f7.com/'  
+    this.api_url = 'https://api.betterfit.health/'  
   }
 
   init = () => {
@@ -20,7 +20,7 @@ export default class Api {
 
 
     this.client = axios.create({
-        baseURL: 'http://betterfit.l1f7.com/' ,
+        baseURL: 'https://api.betterfit.health/' ,
         timeout: 31000,
         headers: headers,
     });
@@ -32,58 +32,74 @@ export default class Api {
   // ============================   AUTH API  =====================================
 
   addNewUser = (data) => {
-    return this.init().post("users/", data);
+    return this.init().post("/users/", data);
   };
 
   //To request a password reset email
   passwordResetRequest = (data) => {
     //stub until relevent api can be included
-    return this.init().post("api/password_reset/", data)
+    return this.init().post("/api/password_reset/", data)
   }
 
   signIn = (data) => {
-    return this.init().post("api-token-auth/", data);
+    return this.init().post("/api-token-auth/", data);
   }
 
   getUserData = (data) => {
-    return this.init().post("api-token-auth/", data);
+    return this.init().post("/api-token-auth/", data);
   }
 
   getUser = (id) => {
-    return this.init().get(`users/${id}/`);
+    return this.init().get(`/users/${id}/`);
   }
 
   getFacilityData = (id) => {
-    return this.init().get(`facilities/${id}`);
+    return this.init().get(`/facilities/${id}`);
   }
 
   changePassword = (data) => {
-    return this.init().put(`change-password/`, data); 
+    return this.init().put(`/change-password/`, data); 
   }
 
   changeProfile = (id, data) => {
-    return this.init().patch(`users/${id}/`, data); 
+    return this.init().patch(`/users/${id}/`, data); 
   }
 
 
 // ============================   PRODUCTS API  =====================================
   getProductCategories = () => {
-    return this.init().get(`product-categories` ); 
+    return this.init().get(`/product-categories` ); 
+  }
+
+  getCategoriesBySupplier = (supplierid) => {
+    return this.init().get(`/product-categories/?supplier=${supplierid}` ); 
+  }
+
+  getProductsBySupplier = (productid) => {
+    return this.init().get(`products/${productid}/`); 
+  }
+
+  getProductBySupplier = (supplierid, productid) => {
+    return this.init().get(`/products/${productid}/?supplier=${supplierid}`); 
   }
 
   //get products under a particular category id
   getCategory = (id) => {
-    return this.init().get(`product-categories/${id}`); 
+    return this.init().get(`/product-categories/${id}`); 
   }
   
   getProduct = (id) => {
-    return this.init().get(`products/${id}`); 
+    return this.init().get(`/products/${id}`); 
   }
   getProductVariant = (id) => {
-    return this.init().get(`product-variations/${id}`); 
+    return this.init().get(`/product-variations/${id}`); 
   }
   getSearchResults = (query) => {
-    return this.init().get(`product-categories/?q=${query}`)
+    return this.init().get(`/product-categories/?q=${query}`)
+  }
+
+  getSupplierSearchResults = (query,id) => {
+    return this.init().get(`/product-categories/?q=${query}&supplier=${id}`)
   }
 
   getProductOption = (id) => {
@@ -91,9 +107,13 @@ export default class Api {
   }
 
   updateSupplierProductQuantity = (userId,id,data) => {
-    return this.init().put(`/suppliers/${userId}/product-options/${id}/`,data)
+    let quantity = {"quantity":data}
+    return this.init().put(`/suppliers/${userId}/product-options/${id}/`, quantity)
   }
 
+  getSupplierProductQuantity = (userId,id) => {
+    return this.init().get(`/suppliers/${userId}/product-options/${id}/`)
+  }
   // ============================   TICKETS API  =====================================
 
   getSupplierTickets = (userId) => {
@@ -122,8 +142,12 @@ export default class Api {
     return this.init().get(`/orders/${orderId}`)
   }
 
+  getAllOrders = (orderId) => {
+    return this.init().get(`/orders/`)
+  }
+
   getSearchOrders = (query) => {
-    return this.init().get(`orders/?search=${query}`);
+    return this.init().get(`/orders/?search=${query}`);
   }
 
   //to cancel an order - change to 'cancelled' status
@@ -149,17 +173,31 @@ export default class Api {
   }
 
   editOrder = (order,id) => {
-    console.log(order,id);
+    console.log(id);
     return this.init().patch(`/orders/${id}/`,order)
   }
 
   // ============================   RESOURCES API  =====================================
-  getResources = () => {
-    return this.init().get(`/resources/`); 
+  getResources = (searchQuery='') => {
+    if (searchQuery !== '')
+      return this.init().get(`/resources?search=${searchQuery}`); 
+    return this.init().get(`/resources/`)
   }
 
   getTags = () => {
     return this.init().get(`/tags/`); 
+  }
+
+  // ============================  MATCHES API  =====================================
+
+  getMatchHistory = () => {
+    return this.init().get(`/matches/history/`); 
+  }
+  getMatches = () => {
+    return this.init().get('/matches/');
+  }
+  postSortedMatches = (orders) => {
+    return this.init().post('/match-orders/',orders);
   }
 }
 

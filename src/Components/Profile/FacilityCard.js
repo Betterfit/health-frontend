@@ -1,6 +1,6 @@
 import { Transition } from "@tailwindui/react";
 import React, { useState, useEffect } from "react";
-import useStores from "Helpers/useStores";
+import Translator from "Helpers/Translator";
 import Api from "Helpers/api";
 import {useAuthStore} from "Context/authContext";
 //components
@@ -20,7 +20,7 @@ const FacilityCard = ({}) => {
   //TODO =fix once api complete
   const setData = (data) => {
     return {
-      contact: ["123-123-1234", "email@testemail.com"],
+      //contact: ["123-123-1234", "email@testemail.com"],
       address: [data.street, data.city + " " + data.province, data.postal_code],
       //shipping_address: [
        // data.shipping_street,
@@ -41,7 +41,6 @@ const FacilityCard = ({}) => {
       })
       .catch((err) => {
         //delete when api is working
-        // console.log(err);
       });
   };
 
@@ -53,19 +52,15 @@ const FacilityCard = ({}) => {
     <>
       {facilityData && (
         <>
-          <CardTitle label="Facility Profile" name={facilityName}></CardTitle>
+          <CardTitle label={Translator("Facility Profile")} name={facilityName}></CardTitle>
 
           <div className="space-y-6">
             <FacilityDescriptions
-              label="Contact Information"
-              items={facilityData.contact}
-            ></FacilityDescriptions>
-            <FacilityDescriptions
-              label="Address"
+              label={Translator("Address")}
               items={facilityData.address}
             ></FacilityDescriptions>
             <FacilityDescriptions
-              label="Shipping Address"
+              label={Translator("Shipping Address")}
               items={facilityData.shipping_address}
             ></FacilityDescriptions>
           </div>

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { ReactSVG } from "react-svg";
 import RightArrow from "Images/Icons/right-arrow.svg";
 import { useHistory } from "react-router-dom";
+import Translator from "Helpers/Translator";
 
 const CategoryCard = (category) => {
   const history = useHistory();
@@ -32,7 +33,7 @@ const CategoryCard = (category) => {
   return (
     <>
       <div
-        className="mb-2 p-6 rounded relative flex flex-row md:flex-col justify-content items-center rounded-lg border border-betterfit-light-blue hover:bg-betterfit-pale-blue hover:border-betterfit-basic-blue"
+        className="col-span-1 mb-2 p-6 rounded relative flex flex-row md:flex-col justify-content items-center rounded-lg border border-betterfit-grey hover:bg-betterfit-pale-blue hover:border-betterfit-basic-blue"
         onClick={() =>
           history.push(
             history.location.pathname + category_name + "/" + category_id
@@ -40,17 +41,17 @@ const CategoryCard = (category) => {
         }
       >
         <div
-          className="rounded-full h-18 w-18 flex items-center mr-2 "
+          className="rounded-full h-18 w-18 flex items-center "
           style={backgroundColor}
         >
-          <img className="m-auto" src = {svg}/>
+          <img className="m-auto" src = {svg} alt={category_name}/>
         </div>
         <div className="flex flex-col">
           <p className="font-semibold text-betterfit-graphite md:text-center text-base leading-tight md:pt-4">
             {category_name}
           </p>
-          <p className="text-xxs uppercase opacity-50 text-betterfit-basic-blue md:text-center leading-tight pt-2">
-            {count + " product" + (count > 1 ? "s" : "")}
+          <p className="text-xxs uppercase text-gray-700 md:text-center leading-tight pt-2 font-semibold">
+            {count + " " + Translator("product" + (count > 1 || count == 0 ? "s" : ""))}
           </p>
         </div>
         <ReactSVG

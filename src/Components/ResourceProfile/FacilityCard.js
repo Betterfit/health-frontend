@@ -12,7 +12,7 @@ const FacilityCard = ({name, tagList, details, color}) => {
     const website = details.website ? [details.website] : 'n/a';
 
     return(
-        <div>
+        <div role='dialog'>
             <div className="h-1 rounded-md mb-5 -mx-4" style={{background:color}}/>
             <CardTitle label="Health Care Provider" name={name} color={color}></CardTitle>
             <div className="space-y-6">
@@ -21,9 +21,9 @@ const FacilityCard = ({name, tagList, details, color}) => {
                     items={[]}
                 />
                 <div className="ml-auto inline-flex" style={{margin:0}}>
-                    {tagList.map(tag =>{
+                    {tagList.map(( tag, i ) =>{
                         return(
-                            <TagLink tag={tag} />
+                            <TagLink tag={tag} key={i} />
                         )
                     })}
                 </div>

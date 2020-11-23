@@ -5,10 +5,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {AuthProvider} from "Context/authContext";
+import { ReactQueryDevtools } from 'react-query-devtools';
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
+      <ReactQueryDevtools initialIsOpen={false}/>
       <App />
     </AuthProvider>
   </React.StrictMode>,
