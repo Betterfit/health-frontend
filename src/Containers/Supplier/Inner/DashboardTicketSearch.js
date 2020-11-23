@@ -43,12 +43,12 @@ const DashboardTicketSearch = ({supplierId}) => {
     }
     
     return(
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
             
             {searchData && (
                 <>
                     <BackNavigation link="Back" />
-                    <div className="flex justify-between mt-8">
+                    <div className="flex justify-between">
                         <TitleUnderLine extraclasses="title-no-margin pt-0" nounderline={true} title={`Ticket search results for "${query.get('search')}"`} />
                     </div>
                     {searchData.length > 0 ? (
