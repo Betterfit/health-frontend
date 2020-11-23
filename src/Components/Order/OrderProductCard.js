@@ -49,7 +49,7 @@ const OrderProductCard = ({ product }) => {
   }
   return (
     <>
-      <div className={ "mb-2 bg-white rounded relative orderCartCard z-20 " + (priority ? "border border-betterfit-highlight-red" : "border-transparent") }>
+      <div className={ "mb-2 bg-white rounded relative orderCartCard " + (priority ? "border border-betterfit-highlight-red" : "border-transparent") }>
         <button onClick = {() => cartStore.removeFromCart(product.pk)} aria-label="remove from cart" className="absolute top-0 right-0 transform translate-x-1/2 z-100 opacity-0 removeCartItem">
             <ReactSVG src={Close} className="flex items-center"/> 
         </button>
