@@ -1,11 +1,13 @@
 import * as axios from "axios";
 import useStores from 'Helpers/useStores';
+
+export const apiURL = 'https://api.betterfit.health/'  
 export default class Api {
 
   constructor() {
     this.api_token = localStorage.getItem('token');
     this.client = null;
-    this.api_url = 'https://api.betterfit.health/'  
+    this.api_url = apiURL  
   }
 
   init = () => {
@@ -20,7 +22,7 @@ export default class Api {
 
 
     this.client = axios.create({
-        baseURL: 'https://api.betterfit.health/' ,
+        baseURL: apiURL ,
         timeout: 31000,
         headers: headers,
     });
@@ -114,6 +116,11 @@ export default class Api {
   getSupplierProductQuantity = (userId,id) => {
     return this.init().get(`/suppliers/${userId}/product-options/${id}/`)
   }
+
+  getProductOptionsSearch = (query) => {
+    return this.init().get(`/product-options/?q=${query}`)
+  }
+
   // ============================   TICKETS API  =====================================
 
   getSupplierTickets = (userId) => {
@@ -173,7 +180,7 @@ export default class Api {
   }
 
   editOrder = (order,id) => {
-    console.log(id);
+    console.log(order);
     return this.init().patch(`/orders/${id}/`,order)
   }
 

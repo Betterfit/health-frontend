@@ -3,7 +3,6 @@ import TableHead from './TableHead'
 import TableBody from './TableBody'
 
 const Table = ({TableData, edit}) => {
-
     let TableHeadData = [];
     let TableBodyData = [];
     let nooptions = false;

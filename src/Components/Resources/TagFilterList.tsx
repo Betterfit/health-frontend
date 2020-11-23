@@ -20,7 +20,7 @@ const TagFilterList = ({
     );
 
     return (
-        <div>
+        <ul aria-label="Tag List">
             <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
                 Tags
             </h3>
@@ -38,12 +38,12 @@ const TagFilterList = ({
                 return (
                     <TagLink
                         tag={tag}
-                        buttonProps={{ onClick: onTagClick(tag.pk) }}
+                        buttonProps={{ onClick: onTagClick(tag.pk)}}
                         key={tag.pk}
                     />
                 );
             })}
-        </div>
+        </ul>
     );
 };
 

@@ -16,20 +16,7 @@ const LabCard = ({name, tagList, details, color}) => {
             <div className="h-1 rounded-md mb-5 -mx-4" style={{background:color}}/>
             <CardTitle label="Lab" name={name} color={color}></CardTitle>
             <div className="space-y-6">
-                <div style={{display:showTags}}>
-                    <ResourceDescription
-                        label="Tags"
-                        items={[]}
-                    />
-                    <div className="ml-auto inline-flex" style={{margin:0}}>
-                        {tagList.map(tag =>{
-                            return(
-                                <TagLink tag={tag} />
-                            )
-                        })}
-                    </div>
-                </div>
-                <ResourceDescription
+               <ResourceDescription
                     label="Biosafety Level"
                     items={biosafety}
                 />
@@ -49,6 +36,20 @@ const LabCard = ({name, tagList, details, color}) => {
                     label="Website"
                     items={website}
                 />
+               <div style={{display:showTags}}>
+                    <ResourceDescription
+                        label="Tags"
+                        items={[]}
+                    />
+                    <div className="ml-auto" style={{margin:0}}>
+                        {tagList.map(tag =>{
+                            return(
+                                <TagLink tag={tag} buttonProps={{disabled: true}}/>
+                            )
+                        })}
+                    </div>
+                </div>
+  
             </div>
         </div>
     )

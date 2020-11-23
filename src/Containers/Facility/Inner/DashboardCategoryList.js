@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Api from "Helpers/api";
 import CategoryCard from "Components/Order/CategoryCard";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
-import Search from 'Components/Search/Search';
 import Spinner from "Images/spinner.gif";
 
 
@@ -31,7 +30,7 @@ const DashboardCategoryList = (props) => {
 
 
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative p-2">
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative p-2 pt-8">
       {isError && <div>Something went wrong ...</div>}
 
       {isLoading ? (
@@ -42,7 +41,7 @@ const DashboardCategoryList = (props) => {
         <>
           <div className="flex flex-wrap justify-between items-center pb-4 mb-8 border-b border-betterfit-grey">
             <TitleUnderLine title="Products" nounderline={true} extraclasses=" hidden md:block no-margin" />
-            <Search />
+    
           </div>
           <div className="mb-6 md:mb-10 grid grid-cols-1 gap-2 lg:gap-4 md:grids-cols-2 lg:grid-cols-3 customcategorygrid">
             {categories.map((p) => {

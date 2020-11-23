@@ -7,6 +7,7 @@ import DashboardNewOrder from "Containers/Facility/Inner/DashboardNewOrder";
 import DashboardCategoryProductList from "Containers/Facility/Inner/DashboardCategoryProductList";
 import DashboardProductDetail from "Containers/Facility/Inner/DashboardProductDetail";
 import DashboardCategoryList from "Containers/Facility/Inner/DashboardCategoryList";
+import DashboardProductSearch from "./DashboardProductSearch";
 import { Switch, Route, useParams } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
@@ -46,17 +47,17 @@ const DashboardOrder = ({props, type}) => {
           }}
         />
         
-          <Route
-            path={`${match.path}/:categoryName/:cid/product/:pid/:id?`}
-            exact
-            render={(props) => {
-              return <DashboardProductDetail edit={true} {...props} />;
-            }}
-          /> 
-          
-          {/* <Route path='/dashboard/inventory/search:query?'>
-            <DashboardSearch />
-          </Route>  */}
+        <Route
+          path={`${match.path}/:categoryName/:cid/product/:pid/:id?`}
+          exact
+          render={(props) => {
+            return <DashboardProductDetail edit={true} {...props} />;
+          }}
+        /> 
+        
+        <Route path={`${match.path}/new-order/category/search:query?`}>
+          <DashboardProductSearch />
+        </Route> 
       
       </div>
     </div>

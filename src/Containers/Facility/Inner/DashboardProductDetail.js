@@ -27,6 +27,7 @@ const DashboardProductDetail = (props) => {
         setProduct({ 
           "product_category": response.data.product_category,
           "product_name": response.data.product_variation,
+          "product_parent": response.data.product,
           "product_label": response.data.option_label,
           "product_label_value": response.data.name,
           "product_description": response.data.product_description,
@@ -54,7 +55,7 @@ const DashboardProductDetail = (props) => {
       {product && (
         <>
           <BackNavigation link={`Back to Products`} />
-          <TitleUnderLine title={product.product_name} />
+          <TitleUnderLine title={`${product.product_parent ? product.product_parent + " - " : '' } ${product.product_name}`} />
           <div className="w-full flex place-self-center justify-self-center m-auto">
             <ProductDetailsCard product={product}>
               <AddProductForm id={product.pk} product_pk={product_id}/>

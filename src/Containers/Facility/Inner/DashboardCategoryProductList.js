@@ -6,12 +6,13 @@ import ProductCard from "Components/Order/ProductCard";
 import Search from 'Components/Search/Search';
 import image from "Images/example_product.png"; //remove this later
 import Spinner from "Images/spinner.gif";
-
+import ProductSearch from 'Components/Search/ProductSearch';
 
 const DashboardCategoryProductList = (props) => {
   const api = new Api();
   const { match } = props;
   const CategoryID = parseInt(match.params.id);
+  const CategoryName = match.params.categoryName;
   const [isLoading, setIsLoading] = useState(true);
   const [CategoryData, setCategoryData] = useState(null);
   const [isError, setIsError] = useState(false);
@@ -29,7 +30,6 @@ const DashboardCategoryProductList = (props) => {
       });
 
   useEffect(() => {
-    console.log("WAW")
     getData();
   }, []);
 
@@ -51,7 +51,7 @@ const DashboardCategoryProductList = (props) => {
                 background_color={CategoryData.background_color}
                 color={CategoryData.color}
             />
-            {/* <Search /> */}
+            <ProductSearch CategoryName = {CategoryName} CategoryID = {CategoryID} />
           </div>
           <div className="grid grid-cols-1 gap-4 mb-6 md:mb-10 customproductgrid">
             {CategoryData.products.map((p) =>

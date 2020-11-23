@@ -54,7 +54,7 @@ describe("Resource Link", () => {
     it("Opens card when clicked", async () => {
         const resource = resources[0];
         render(<ResourceLink resource={resource} color="red" />);
-        const link = screen.getByRole("button", { name: /royal crom/i });
+        const link = screen.getByRole("listitem", { name: /royal crom/i });
         userEvent.click(link);
         const resourceCard = await screen.findByRole("dialog");
         // the facility card shouldn't be empty

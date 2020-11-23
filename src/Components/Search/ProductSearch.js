@@ -1,11 +1,14 @@
 import React, {useState,useRef} from "react";
+import { useLocation } from "react-router-dom";
 import { useHistory } from 'react-router-dom'
 import { ReactSVG } from 'react-svg'
 import SearchIcon from 'Images/Icons/search-icon.svg'
 import Translator from "Helpers/Translator";
-
-
-const ProductSearch = ({type,extraClasses}) => {
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+const ProductSearch = ({type,extraClasses,CategoryName, CategoryID}) => {
+  
   const [searchValue, setSearchValue ] = useState('');
   const searchRef = useRef(null);
   const history = useHistory();
@@ -13,15 +16,15 @@ const ProductSearch = ({type,extraClasses}) => {
   const searchQuery = () => {
     setSearchValue(searchRef.current.value)
     if(searchRef.current.value.length == 0){
-      history.push(`/dashboard/orders`);
+      history.push(`/dashboard/new-order/category/${CategoryName}/${CategoryID}/search`);
 
     }else{
-      history.push(`/dashboard/orders/search?search=${searchRef.current.value}`);
+      history.push(`/dashboard/new-order/category/${CategoryName}/${CategoryID}/search?search=${searchRef.current.value}`);
     }
   }
   
   const clearSearchQuery = () => {
-    history.push(`/dashboard/orders`);
+    history.push(`/dashboard/new-order`);
   }
 
   const [showInput , setShowInput ] = useState(false);
@@ -34,7 +37,7 @@ const ProductSearch = ({type,extraClasses}) => {
           <input
             id="search"
             className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-lg bg-transparent"
-            placeholder={Translator("Search Orders")}
+            placeholder={Translator("Search Products")}
             ref={searchRef}
             onChange={()=>{
               clearTimeout();
