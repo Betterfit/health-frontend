@@ -16,7 +16,7 @@ const PasswordResetConfirmation = ({ success, email }) => {
   );
 };
 
-const PasswordReset = () => {
+const ForgotPassword = () => {
   const [sentEmail, setSendEmail] = useState("");
   const [showResults, setShowResults] = React.useState(undefined);
   const [email, setEmail] = useState("");
@@ -84,4 +84,4 @@ const PasswordReset = () => {
     </>
   );
 };
-export default PasswordReset;
+export default ForgotPassword;
