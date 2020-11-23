@@ -2,7 +2,7 @@ import React from 'react'
 import { ReactSVG } from 'react-svg'
 import Edit from 'Images/Icons/edit.svg'
 import {NavLink} from "react-router-dom";
-import Button from "Components/Content/Button";
+import StatusButton from "Components/Content/StatusButton";
 import EmptyImage from "Images/emptyImage.png";
 const TableBody = ({TableBody}) => {
     return(
@@ -20,12 +20,8 @@ const TableBody = ({TableBody}) => {
                                               // code block
                                                 return(
                                                     <td key={index} className="px-4 py-4  w-8 text-sm leading-5 text-gray-500">
-                                                        <Button
-                                                            text={r[1] === "stat" ?  "Stat" : "Regular"} 
-                                                            color={r[1] === "stat" ? "status-red" :"status-blue" } 
-                                                            text_size="text-sm" 
-                                                            pill={true}
-                                                            extraClasses={r[1] === "stat" ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
+                                                        <StatusButton
+                                                            status={r[1] === "stat" ?  "stat" : "regular"} 
                                                         />
                                                     </td>
                                                 )
@@ -71,12 +67,8 @@ const TableBody = ({TableBody}) => {
                                               // code block
                                                 return(
                                                     <td key={index} className="px-4 py-4  w-8 text-sm leading-5 text-gray-500">
-                                                        <Button
-                                                            text={r[1] === "stat"  ?  "Stat" : "Regular"} 
-                                                            color={r[1] === "stat" ? "status-red" :"status-blue" } 
-                                                            text_size="text-sm" 
-                                                            pill={true}
-                                                            extraClasses={r[1] === "stat" ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
+                                                        <StatusButton
+                                                            status={r[1] === "stat" ?  "stat" : "regular"} 
                                                         />
                                                     </td>
                                                 )

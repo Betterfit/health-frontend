@@ -10,6 +10,19 @@ const StatStyles = (stat = "open") => {
         title: "Draft",
       };
       break;
+    case "stat":
+        return {
+          bg: "bg-status-red",
+          text: "text-status-dark-red",
+          title: "Stat",
+        };
+    case "regular":
+        return {
+          bg: "bg-tag-light-blue",
+          text: "text-tag-light-blue-txt",
+          title: "Regular",
+        };
+        break;
     case "open":
       return {
         bg: "bg-tag-light-yellow",
@@ -85,7 +98,7 @@ const StatusButton = ({ status, extraClasses }) => {
   const styles = StatStyles(status);
   return (
     <div
-      className={`uppercase rounded-full py-2 md:px-10 px-4 text-xxs text-center md:text-xs ${styles.bg} ${styles.text} ${extraClasses}`}
+      className={`uppercase rounded-full py-2 w-28 text-xs text-center font-semibold ${styles.bg} ${styles.text} ${extraClasses}`}
     >
       {Translator(styles.title)}
     </div>

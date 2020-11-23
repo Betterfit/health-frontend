@@ -2,7 +2,7 @@ import React from 'react'
 import { ReactSVG } from 'react-svg'
 import Edit from 'Images/Icons/edit.svg'
 import {NavLink} from "react-router-dom";
-import Button from "Components/Content/Button";
+import StatusButton from "Components/Content/StatusButton";
 import EmptyImage from "Images/emptyImage.png"
 import uuid from 'react-uuid'
 const TableBody = ({TableBody}) => {
@@ -21,12 +21,8 @@ const TableBody = ({TableBody}) => {
                                               // code block
                                                 return(
                                                     <td key={uuid()} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-betterfit-graphite">
-                                                        <Button
-                                                            text={r[1] === "stat" ? "Stat" : "Regular"} 
-                                                            color={r[1] === "stat" ? "status-red" :"status-blue" } 
-                                                            text_size="text-sm" 
-                                                            pill={true}
-                                                            extraClasses={ r[1] === "stat" ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
+                                                        <StatusButton
+                                                            status={r[1] === "stat" ?  "stat" : "regular"} 
                                                         />
                                                     </td>
                                                 )
@@ -72,12 +68,8 @@ const TableBody = ({TableBody}) => {
                                               // code block
                                                 return(
                                                     <td key={uuid()} className="px-4 py-4 whitespace-no-wrap w-8 text-sm leading-5 text-betterfit-graphite">
-                                                        <Button
-                                                            text={r[1] === "stat" ? "Stat" : "Regular"} 
-                                                            color={r[1] === "stat" ? "status-red" :"status-blue" } 
-                                                            text_size="text-sm" 
-                                                            pill={true}
-                                                            extraClasses={ r[1] === "stat" ? "text-status-dark-red border-4 border-white hover:status-red" : "text-status-dark-blue border-4 border-white hover:status-red"  }
+                                                        <StatusButton
+                                                            status={r[1] === "stat" ?  "stat" : "regular"} 
                                                         />
                                                     </td>
                                                 )
