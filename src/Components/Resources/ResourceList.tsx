@@ -22,27 +22,27 @@ const matchResourceColor = (resourceType: string): string => {
     return resourceColors[resourceType];
 };
 
-const ResourceDisplay = ({ resources }: ResourceDisplayProps) => {
+const ResourceList = ({ resources }: ResourceDisplayProps) => {
     return (
         <div className="flex-grow wrap max-h-screen p-0 h-full rounded-lg overflow-visible md:p-4 md:overflow-scroll ">
-            <div className="flex flex-col md:py-8 ">
+            <ul
+                className="flex flex-col md:py-8"
+                aria-label="Resource List"
+            >
                 {resources.map((resource) => (
-                    <div
-                        className="resource-container m-2 rounded-md cursor-pointer"
+                    <ResourceLink
                         key={"resource" + resource.pk}
-                    >
-                        <ResourceLink
-                            resource={resource}
-                            color={matchResourceColor(resource.resource_type)}
-                        />
-                    </div>
+                        resource={resource}
+                        color={matchResourceColor(resource.resource_type)}
+                        extraClasses='resource-container'
+                    />
                 ))}
-            </div>
+            </ul>
         </div>
     );
 };
 
-export default ResourceDisplay;
+export default ResourceList;
 
 interface ResourceProps {
     resource: Resource;

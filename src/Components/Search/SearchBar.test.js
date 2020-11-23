@@ -60,7 +60,6 @@ describe("SearchBar", () => {
         // then they clear out the search bar
         fireEvent.change(searchBar, { target: { value: "" } });
         jest.runAllTimers();
-        console.log(searchBar.value);
         expect(searchMock).toHaveBeenCalledTimes(2);
         expect(searchMock).toHaveBeenNthCalledWith(2, "");
     });

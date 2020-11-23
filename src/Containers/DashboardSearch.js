@@ -41,7 +41,6 @@ const DashboardSearch = () => {
     })
     const getSupplierSearchResults = async () => await api.getSupplierSearchResults(query.get('search'),query.get('supplier'))
     .then((response) => {
-        console.log(response);
         let arr = response.data;
         arr.map(productCat => {
             productCat.products.map(products => {
@@ -92,11 +91,11 @@ const DashboardSearch = () => {
     }
     
     return(
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
             {searchData && (
                 <>
                     <BackNavigation link="Back" />
-                    <div className="flex justify-between mt-8">
+                    <div className="flex justify-between">
                         <TitleUnderLine extraclasses="title-no-margin pt-0" nounderline={true} title={`Search results for "${query.get('search')}"`} />
                     </div>
                     {searchData.length > 0 && (
@@ -113,7 +112,7 @@ const DashboardSearch = () => {
                                                                 return(
                                                                     <div key={uuid()} >
                                                                         <h2 className="text-2xl text-gray-700 font-bold">{product.name}</h2>
-                                                                        <Table key={uuid()} TableData={p} ProductId={product.pk} /> 
+                                                                        <Table key={uuid()} TableData={p} ProductId={product.pk} edit={true} /> 
                                                                     </div>
                                                                 )
                                                             }                                                         

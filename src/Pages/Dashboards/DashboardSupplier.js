@@ -15,7 +15,7 @@ const DashboardSupplier = () => {
     const navItemsList = [
         {
             to:'/dashboard/tickets',
-            name:'tickets',
+            name:'Tickets',
             icon: Ticket,
             key:'tickets',
         },
@@ -26,7 +26,7 @@ const DashboardSupplier = () => {
             key:'inventory',
         },
         {
-          to:'/dashboard/Resources',
+          to:'/dashboard/resources',
           name:'Resources',
           icon: Resources,
           key:'resources',

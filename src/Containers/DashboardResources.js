@@ -1,6 +1,6 @@
 import ListLink from "Components/Content/ListLink";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
-import ResourceDisplay from "Components/Resources/ResourceDisplay";
+import ResourceList from "Components/Resources/ResourceList";
 import TagFilterList from "Components/Resources/TagFilterList";
 import SearchBar from "Components/Search/SearchBar";
 import { useResources } from "Helpers/resourceUtils";
@@ -11,9 +11,9 @@ import Spinner from "Images/spinner.gif";
 const DashboardResources = () => {
   // resources will be filtered by selected resource type
   const [selectedResType, setSelectedResType] = useState(null);
-  const resourceFilters = [];
-  const resourceTypeFilter = (resource) =>
-    resource.resource_type === selectedResType;
+  const resourceTypeFilter = (resource) => selectedResType ?
+    resource.resource_type === selectedResType : true;
+  const resourceFilters = [resourceTypeFilter]
 
   // the useResources hook handles caching, searching, filtering for us
   const {
@@ -54,7 +54,7 @@ const DashboardResources = () => {
     <div className="flex flex-col md:flex-row overflow-x-hidden">
       <div style={{ flex: "0 0 320px" }}>
         <DashboardSideBar>
-          <h2 className="text-3xl text-dark-blue my-3">Resources</h2>
+          <h2 className="text-3xl text-dark-blue my-3">{Translator("Resources")}</h2>
           <SearchBar
             performSearch={setSearchTerm}
             placeholderText={
@@ -66,7 +66,7 @@ const DashboardResources = () => {
             <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body m-2 pt-8 uppercase font-bold tracking-widest">
               Resource Type
             </h3>
-            <div className="flex flex-col items-start">
+            <ul className="flex flex-col items-start" aria-label='Resource Types'>
               {Object.entries(resourceColors).map(
                 ([resourceType, resourceColor]) => {
                   return (
@@ -83,13 +83,13 @@ const DashboardResources = () => {
                   );
                 }
               )}
-            </div>
+            </ul>
           </div>
           <TagFilterList {...{ tagList, toggleTagSelect, selectedTagPKs }} />
         </DashboardSideBar>
       </div>
 
-      <ResourceDisplay resources={resources} />
+      <ResourceList resources={resources} />
     </div>
   );
 };

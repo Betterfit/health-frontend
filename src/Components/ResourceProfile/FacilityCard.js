@@ -16,18 +16,7 @@ const FacilityCard = ({name, tagList, details, color}) => {
             <div className="h-1 rounded-md mb-5 -mx-4" style={{background:color}}/>
             <CardTitle label="Health Care Provider" name={name} color={color}></CardTitle>
             <div className="space-y-6">
-                <ResourceDescription
-                    label="Tags"
-                    items={[]}
-                />
-                <div className="ml-auto inline-flex" style={{margin:0}}>
-                    {tagList.map(( tag, i ) =>{
-                        return(
-                            <TagLink tag={tag} key={i} />
-                        )
-                    })}
-                </div>
-                <ResourceDescription
+              <ResourceDescription
                     label="Contact Information"
                     items={contact}
                 />
@@ -47,6 +36,18 @@ const FacilityCard = ({name, tagList, details, color}) => {
                     label="Website"
                     items={website}
                 />
+                <ResourceDescription
+                    label="Tags"
+                    items={[]}
+                />
+                <div className="ml-auto" style={{margin:0}}>
+                    {tagList.map(( tag, i ) =>{
+                        return(
+                            <TagLink tag={tag} key={i} buttonProps={{disabled: true}}/>
+                        )
+                    })}
+                </div>
+ 
             </div>
         </div>
     )

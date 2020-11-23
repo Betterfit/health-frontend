@@ -207,7 +207,7 @@ const DashboardOrderList = (props) => {
 
   
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-10">
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
       <Route exact path='/dashboard/orders'>
         <h2 className="text-3xl text-dark-blue my-3">{Translator("Orders")}</h2>
       </Route>

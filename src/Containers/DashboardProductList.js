@@ -15,7 +15,6 @@ const DashboardProductList = (props) => {
   const supplierId = userData.user_profile.supplier;
   const [lastProductId, setLastProductId] = useState(ProductId);
   const [ProductData, setProductData] = useState(null);
-
   const getData = async () =>
     await api
       .getProductsBySupplier(ProductId)
@@ -53,13 +52,13 @@ const DashboardProductList = (props) => {
   return (
     <>
       {ProductData && (
-        <div className="lg:max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
+        <div className="lg:max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
           {/* product title */}
           <div className="lg:hidden">
             <BackNavigation link="Back to products" />
           </div>
 
-          <div className="pt-8 md:pt-12">
+          <div className="">
             <TitleUnderLine title={`${ProductData.name}`} />
             {/* product description */}
             <p className="text-paragraph">{ProductData.description}</p>

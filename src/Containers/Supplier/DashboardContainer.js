@@ -10,7 +10,7 @@ import { AnimatedSwitch } from 'react-router-transition';
 import DashboardInventory from './Inner/DashboardInventory'
 import DashboardTickets from './Inner/DashboardTickets'
 import DashboardTicketDetail from './Inner/DashboardTicketDetail';
-
+import DashboardResources from '../DashboardResources';
 const DashboardContainer = () =>{
     const [title , setTitle] = useState('');
     const changeTitle = (title) => {
@@ -36,6 +36,9 @@ const DashboardContainer = () =>{
                     }} />
                     <Route path="/dashboard/inventory" >
                         <DashboardInventory initial changeTitle={(title) => changeTitle(title)} />
+                    </Route>
+                    <Route path="/dashboard/resources" >
+                        <DashboardResources initial changeTitle={(title) => changeTitle(title)} />
                     </Route>
                 </AnimatedSwitch>
         

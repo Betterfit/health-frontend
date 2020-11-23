@@ -27,7 +27,7 @@ const TableBody = ({TableBody,variantID,NoOptions, edit}) => {
                                     })
                                 }
                                 <td  key={uuid()} className="px-4 py-4 w-8 text-sm leading-5 text-betterfit-graphite">
-                                    <NavLink to={`${variantID}/detail/${edit  ? NoOptions ? 'edit' : setIndex+'/edit' : setIndex }`} >
+                                    <NavLink to={`/dashboard/inventory/product/${variantID}/detail/${edit  ? NoOptions ? 'edit' : setIndex+'/edit' : setIndex }`} >
                                         {edit ? (
                                             <ReactSVG src={Edit} className=" text-gray-500"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
 
@@ -58,7 +58,7 @@ const TableBody = ({TableBody,variantID,NoOptions, edit}) => {
                                     })
                                 }
                                 <td  key={uuid()} className="px-4 py-4 text-sm leading-5 text-betterfit-graphite">
-                                    <NavLink to={`${variantID}/detail/${edit  ? NoOptions ? 'edit' : setIndex+'/edit' : setIndex }`} >
+                                    <NavLink to={`/dashboard/inventory/product/${variantID}/detail/${edit  ? NoOptions ? 'edit' : setIndex+'/edit' : setIndex }`} >
                                         {edit ? (
                                             <ReactSVG src={Edit} className=" text-gray-500"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;height:16px')}}  />
 
