@@ -55,7 +55,7 @@ const DashboardOrder = ({props, type}) => {
           }}
         /> 
         
-        <Route path={`${match.path}/new-order/category/search:query?`}>
+        <Route exact path={`${match.path}/:categoryName/:id?/search:query?`}>
           <DashboardProductSearch />
         </Route> 
       

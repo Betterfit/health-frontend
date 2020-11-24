@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { ReactSVG } from 'react-svg'
 import SearchIcon from 'Images/Icons/search-icon.svg'
 import Translator from "Helpers/Translator";
+let myTimeOut;
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -17,9 +18,8 @@ const ProductSearch = ({type,extraClasses,CategoryName, CategoryID}) => {
     setSearchValue(searchRef.current.value)
     if(searchRef.current.value.length == 0){
       history.push(`/dashboard/new-order/category/${CategoryName}/${CategoryID}/search`);
-
     }else{
-      history.push(`/dashboard/new-order/category/${CategoryName}/${CategoryID}/search?search=${searchRef.current.value}`);
+      history.push(`/dashboard/new-order/category/${CategoryName}/${CategoryID}/search?search=${searchRef.current.value}&category=${CategoryID}`);
     }
   }
   
@@ -40,8 +40,8 @@ const ProductSearch = ({type,extraClasses,CategoryName, CategoryID}) => {
             placeholder={Translator("Search Products")}
             ref={searchRef}
             onChange={()=>{
-              clearTimeout();
-              setTimeout(()=>{
+              clearTimeout(myTimeOut);
+              myTimeOut = setTimeout(()=>{
                 searchQuery()
               },1000)
             }}
