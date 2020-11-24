@@ -118,7 +118,7 @@ export default class Api {
   }
 
   getProductOptionsSearch = (catId,query) => {
-    return this.init().get(`/product-options/?q=${query}&category=${catId}`)
+    return this.init().get(`/product-options/?search=${query}&category=${catId}`)
   }
 
   // ============================   TICKETS API  =====================================
