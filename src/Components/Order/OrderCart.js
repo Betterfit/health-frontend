@@ -11,10 +11,12 @@ import OrderProductCard from "Components/Order/OrderProductCard";
 import OrderName from "Components/Forms/OrderName";
 import Checkbox from "Components/Forms/CheckboxConfirm";
 import Translator from "Helpers/Translator";
+import { useHistory } from "react-router-dom";
 const api = new Api();
 let rawCart;
 
 const OrderCart = ({ Cart, OrderID, id }) => {
+  const history = useHistory();
   let CartData = JSON.stringify(Cart);
   CartData = JSON.parse(CartData);
   const authStore = useAuthStore();
@@ -78,29 +80,29 @@ const OrderCart = ({ Cart, OrderID, id }) => {
         delete order.facility;
         delete order.facility_admin;
         api.editOrder(order, id).then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setModalOrder(false);
           setModalDraft(false);
           cartStore.newOrderName = "";
           cartStore.cart = [];
           cartStore.updateLocalCartStorage();
           setCartItems(null);
-          // history.push(
-          //   `/dashboard/orders/${}`
-          // )
+          history.push(
+            `/dashboard/orders/detail/${response.data.pk}`
+          )
         });
       } else {
         api.setNewOrder(order).then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setModalOrder(false);
           setModalDraft(false);
           cartStore.newOrderName = "";
           cartStore.cart = [];
           cartStore.updateLocalCartStorage();
           setCartItems(null);
-          // history.push(
-          //   `/dashboard/orders`
-          // )
+          history.push(
+            `/dashboard/orders/detail/${response.data.pk}`
+          )
         });
       }
     } else {

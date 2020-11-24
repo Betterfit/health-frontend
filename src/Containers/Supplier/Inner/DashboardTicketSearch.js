@@ -11,6 +11,7 @@ function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 const DashboardTicketSearch = ({supplierId}) => {
+    console.log('yo');
     const api = new API;
     let query = useQuery();    
     const [isLoading, setIsLoading] = useState(true);
@@ -18,6 +19,7 @@ const DashboardTicketSearch = ({supplierId}) => {
     const [searchData , setSearchData] = useState();
     const getSearchResults = async () => await api.getSearchTickets(supplierId,query.get('search'))
     .then((response) => {
+        console.log(response.data);
         let data = response.data;
         data = data.map(item => {
             let filterItemStatus = item.status
