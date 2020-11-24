@@ -82,7 +82,7 @@ const ProfileCard = ({}) => {
         errors.newPW = "Password must be more than 8 characters.";
       }
       if (values.newPW != values.confirmPW) {
-        errors.confirmPW = "Set password' and 'Confirm password' must match.";
+        errors.confirmPW = "'Set password' and 'Confirm password' must match.";
       }
     }
     return errors;

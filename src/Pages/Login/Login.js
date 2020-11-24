@@ -88,7 +88,7 @@ const Login = () => {
               className="font-medium text-gray-600 hover:text-gray-700 focus:outline-none focus:underline transition ease-in-out duration-150"
               to="/login/forgotpassword"
             >
-              Forgot password?
+              {Translator("Forgot password?")}
             </Link>
           </div>
         </div>
