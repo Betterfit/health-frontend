@@ -12,7 +12,7 @@ const Button = ({ text, onClick, solid = true, text_size = "text-lg",color, extr
         type="submit"
         className={
           ` ${css_add_on}
-           rounded-md flex no-wrap justify-center py-3 border border-transparent font-semibold px-4
+           rounded-md flex no-wrap justify-center py-3 border border-transparent font-bold px-4
            transition duration-150 ease-in-out capitalize uppercase ${text_size} ${extraClasses} ${pill ? "pill" : ""}`
         }
         style={{minWidth:100}}
