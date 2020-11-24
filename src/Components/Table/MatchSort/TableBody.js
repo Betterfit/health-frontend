@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import {useMatchStore} from "Context/matchContext";
-const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) => {
+const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType, sort=true}) => {
     // console.log(TableBodyData);
     const matchStore = useMatchStore();
     const api = new Api();
@@ -17,15 +17,17 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
         matchStore.matches = JSON.stringify(rowState);
     } 
     useEffect(() => {
-        if(!matchStore.submitting){
-            setRowState(TableBodyData);
-            console.log('prop changed');
+        if(sort){
+            if(!matchStore.submitting){
+                setRowState(TableBodyData);
+                console.log('prop changed');
+            }   
         }
     }, [TableBodyData]);
     return(
         <>
         
-            <ReactSortable tag="tbody" className="w-full" list={rowState} setList={setRowState} onSort={() => {
+            <ReactSortable dragoverBubble={sort} sort={sort} tag="tbody" className="w-full" list={rowState} setList={setRowState} onSort={() => {
                 sortFunction();  
             }} >
 
@@ -40,7 +42,10 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                             <tr key={`table_row_${pindex}`} className="table-row bg-white border border-white table-row ">
                                 <td className="whitespace-no-wrap px-4 py-4">
                                     <span className="flex items-center">
-                                        <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
+                                        {sort && (
+                                            <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
+
+                                        )}
                                         <NavLink className="text-sm leading-5 text-betterfit-graphite ml-3 link-order-no font-bold" to={`${link}${row.id}`}>
                                              {row.order_no}
                                         </NavLink>
@@ -98,7 +103,10 @@ const TableBody = ({TableBodyData,removeAtIndex,statusIndex,link,buttonType}) =>
                             <tr key={`table_row_${pindex}`} className="bg-table-row border m-1 border-table-row relative table-row">    
                                 <td className="whitespace-no-wrap px-4 py-4">
                                     <span className="flex items-center">
-                                        <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
+                                        {sort && (
+                                            <ReactSVG src={Moveable} className="flex items-center"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
+
+                                        )}
                                         <NavLink className="text-sm leading-5 text-betterfit-graphite ml-3 link-order-no font-bold" to={`${link}${row.id}`}>
                                             {row.order_no}
                                         </NavLink>

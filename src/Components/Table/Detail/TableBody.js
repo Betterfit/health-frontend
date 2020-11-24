@@ -35,7 +35,7 @@ const TableBody = ({TableBody}) => {
                                                     <td key={index} className="px-4 py-4 whitespace-no-wrap text-base leading-5 text-betterfit-graphite">
                                                         <div className="flex items-center" style={{width:"max-content"}}>
                                                             <img className="w-24 mr-2" role="none" src={`${row[imageIndex][1] ? row[imageIndex][1] : EmptyImage}`} /> 
-                                                            <span className="font-bold text-betterfit-graphite ml-2">{r[1]}</span>
+                                                            <span className="font-bold text-betterfit-graphite ml-2 width-control-table">{r[1]}</span>
                                                         </div>
                                                     </td>
                                                 )
@@ -82,14 +82,14 @@ const TableBody = ({TableBody}) => {
                                                     <td key={index} className="px-4 py-4 whitespace-no-wrap  text-base leading-5 text-betterfit-graphite">
                                                         <div className="flex items-center" style={{width:"max-content"}}>
                                                             <img className="w-24 mr-2"role="none" src={`${row[imageIndex][1] ? row[imageIndex][1] : EmptyImage}`} /> 
-                                                            <span className="font-bold text-betterfit-graphite ml-2">{r[1]}</span>
+                                                            <span className="font-bold text-betterfit-graphite ml-2 width-control-table">{r[1]}</span>
                                                         </div>
                                                     </td>
                                                 )
                                             break;
                                             default:
                                                 return(
-                                                    <td key={index} className="px-4 py-4  text-base leading-5 text-betterfit-graphite">
+                                                    <td key={index} className="px-4 py-4  text-base leading-5 text-betterfit-grey-blue">
                                                         <div className="flex items-center">
                                                             {/* <img className="w-24 mr-2" src={`${row[imageIndex]}`} /> */}
                                                             {/* <span className="font-bold text-betterfit-graphite">{r}</span> */}

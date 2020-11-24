@@ -15,7 +15,7 @@ const DashboardProductSearch = ({}) => {
     let query = useQuery();    
     const [searchQuery , setSearchQuery] = useState(query.get('search'));
     const [searchData , setSearchData] = useState();
-    const getSearchResults = async () => await api.getProductOptionsSearch(query.get('search'))
+    const getSearchResults = async () => await api.getProductOptionsSearch(query.get('category'),query.get('search'))
     .then((response) => {
         console.log(response.data)
         setSearchData(response.data);
@@ -40,8 +40,26 @@ const DashboardProductSearch = ({}) => {
                     <div className="flex justify-between mt-8">
                         <TitleUnderLine extraclasses="title-no-margin pt-0" nounderline={true} title={`Product search results for "${query.get('search')}"`} />
                     </div>
+                    {/* <ProductSearch CategoryName = {CategoryName} CategoryID = {CategoryID} /> */}
                     {searchData.length > 0 ? (
                         <div className="grid grid-cols-1 gap-4 mb-6 md:mb-10 customproductgrid">
+                            {/* {searchData.map(item => {
+                                // let product = {
+                                //     name: item.name,
+                                // }
+                                // return(
+                                //     <ProductCard
+                                //     key={uuid()}
+                                //     product={p2}
+                                //     product_details={p3}
+                                //     category={CategoryData.name}
+                                //     extra={CategoryData}
+                                //     parent={p.name ? p.name : null}
+                                //     />
+                                // )
+                            })} */}
+
+
                             {/* {CategoryData.products.map((p) =>
                             p.product_variations.map((p2) =>{
                                 return(
@@ -56,8 +74,8 @@ const DashboardProductSearch = ({}) => {
                                     />
                                 ))
                                 )
-                            })
-                            )} */}
+                            }) */}
+                            {/* )} */}
 
                         </div>
                     ):(

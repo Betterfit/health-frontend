@@ -202,6 +202,7 @@ const DashboardMatches = () => {
                     {matchesData && (
                         <Table 
                             TableData={matchesData} 
+                            sort={true}
                             link={`/dashboard/matches/`} 
                         />
                     )}

@@ -3,38 +3,71 @@ import { ReactSVG } from 'react-svg';
 import Table from 'Components/Table/MatchSort/Table';
 import TitleUnderLine from 'Components/Content/TitleUnderLine'
 import BackNavigation from 'Components/Helpers/BackNavigation'
+import { useLocation } from "react-router-dom";
 import Reload from 'Images/Icons/reload.svg';
 import Countdown from 'react-countdown';
 import Api from "Helpers/api";
-import Translator from "Helpers/Translator";
+import dayjs from 'dayjs';
+import Spinner from "Images/spinner.gif";
+import {useMatchStore} from "Context/matchContext";
 
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
 const api = new Api();
-const DashboardMatchesHistory = (props) => {
-    const { match } = props;
-    const matchId = parseInt(match.params.id);
-    const [matchesData , setMatchesData] = useState({
-        order_date:"October 28, 2020",
-        matches:"11/12",
-        time_till_processed: "2:32:04"
+const DashboardMatchesHistory = ({props}) => {
+    let query = useQuery(); 
+    const date = query.get('date');
+    console.log(date);
+    const [matchesData , setMatchesData] = useState(null);
+    const [matchHeaderData , setMatchHeaderData] = useState({
+        order_date:"",
+        matches:"",
+        time_till_processed: "" 
     });
-    const getData = async () => await api.getMatches()
+    const [isLoading, setIsLoading] = useState(true);
+    const [refresh , setRefresh] = useState(false);
+
+    const getData = async () => await api.getMatchHistoryDate(date)
     .then((response) => {
-        setMatchesData(response.data)
+        setMatchHeaderData({
+            order_date:dayjs(date).format('MMM D , YYYY'),
+            matches:response.data.total_matches ? `${response.data.total_matches}/${response.data.total_orders}` : null ,
+            time_till_processed:response.data.cutoff_time_2 ? response.data.cutoff_time_2 : null
+        })
+        let arr = response.data;
+        // console.log(arr);
+        arr = arr.map(item => {
+            let obj = {
+                order_no: item.order_no,
+                province: item.province,
+                facility: item.facility,
+                supplier: item.supplier !== "No match" ? item.supplier : null ,
+                order_date: item.order_date,
+                // rank:item.rank,
+                pk:item.pk
+            }
+            return(obj);
+        }); 
+        console.log(arr);
+        setMatchesData(arr)
+        setIsLoading(false);
     })
     .catch((err) => console.log(err));
 
-    // console.log(JSON.stringify(ProductData))
-    // uncomment when api is set up
-    // useEffect(() => {
-    //     if(!matchesData){
-    //         getData();
-    //     }
-    // }); 
+    useEffect(() => {
+        getData();
+    },[]); 
+
+    const sortFunction = () => {
+
+    } 
 
     
 
     const HeadingComponent = ({ title, value, classes, time }) => {
         if(time){
+            // console.log(value);
             return (
                 <div
                   className={
@@ -42,9 +75,9 @@ const DashboardMatchesHistory = (props) => {
                     (classes ? classes : "")
                   }
                 >
-                    <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-75">{Translator(title)}</span>
+                    <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
                     <span className="text-betterfit-graphite text-base word break-words text-2xl">
-                        <Countdown daysInHours={true} date={Date.parse(value)}></Countdown>
+                        <Countdown date={Date.parse(value)}></Countdown>
                     </span>
                 </div>
             );
@@ -56,7 +89,7 @@ const DashboardMatchesHistory = (props) => {
                     (classes ? classes : "")
                   }
                 >
-                  <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-75">{Translator(title)}</span>
+                  <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
                   <span className="text-betterfit-graphite text-base word break-words text-2xl">{value}</span>
                 </div>
             );
@@ -75,107 +108,51 @@ const DashboardMatchesHistory = (props) => {
           </div>
         );
     };
-
-    const matchData = [
-        {
-            match_number: "1001-2020-001242",
-            province: "AB",
-            facility:"Royal Alexandra Ho...",
-            supplier: "Air Liquide",
-            order_date: "Oct 27, 2020",
-            rank:99,
-            pk:1
-        },
-        {
-            match_number: "1001-2020-021246",
-            province: "AB",
-            facility:"Grey Nuns Hospital",
-            supplier: "Lift Medical",
-            order_date: "Oct 26, 2020",
-            rank:99,
-            pk:2
-        },
-        {
-            match_number: "2001-2020-221249",
-            province: "AB",
-            facility:"Grey Nuns Hospital",
-            supplier: "Lift Medical",
-            order_date: "Oct 25, 2020",
-            rank:53,
-            pk:3
-        },
-        {
-            match_number: "4201-2020-25340",
-            province: "AB",
-            facility:"Grey Nuns Hospital",
-            supplier: "Lift Medical",
-            order_date: "Oct 27, 2020",
-            rank:103,
-            pk:4
-        },
-        {
-            match_number: "4201-2020-25349",
-            province: "AB",
-            facility:"Grey Nuns Hospital",
-            supplier: null,
-            order_date: "Oct 27, 2020",
-            rank:103,
-            pk:4
-        },
-        {
-            match_number: "4001-2020-021246",
-            province: "AB",
-            facility:"University of Alberta Hospital",
-            supplier: "Lift Medical",
-            order_date: "Oct 24, 2020",
-            rank:99,
-            pk:2
-        },
-    ]
-
     return(
         <div className="px-4 sm:px-6 md:px-8 pt-10">
             {/* heading */}
-            <div className="flex justify-between items-end">
-                <div>
-                    <BackNavigation link={"Back to matches"} />
-                    <HeadingComponentTitle  
-                        value={`${matchesData.order_date}`}
-                    />
+            {isLoading ? (
+                <div className="relative w-3/4 min-h-screen" style={{margin:'0 auto',}}> 
+                <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
                 </div>
-                <div className="w-full md:w-1/2 flex justify-end ">
-                    <div className="flex flex-row mt-4 items-center">
-                        <HeadingComponent
-                            title="Matches"
-                            value={matchesData.matches}
+            ) : ( 
+            <>
+                <div className="flex justify-between items-end">
+                    <div>
+                        <BackNavigation link={"Back to matches"} />
+                        <HeadingComponentTitle  
+                            value={`${matchHeaderData.order_date}`}
                         />
-                        <HeadingComponent
-                            title="Time Till Processed"
-                            value={matchesData.order_date}
-                            time={true}
-                        />
-                        <button
-                            // onClick={ onClick }
-                            type="submit"
-                            className={`flex-0 rounded-md flex items-center no-wrap justify-center py-3 border border-transparent px-4
-                            transition duration-150 ease-in-out capitalize uppercase text-lg text-bettfit-navy hover:opacity-75 focus:outline-none bg-betterfit-pale-blue px-4 outline-none `
-                            }
-                            style={{minWidth:100}}
-                        >
-                            <ReactSVG src={Reload} className="flex items-center mr-3"  beforeInjection={(svg) => { svg.setAttribute('style', 'width: 16px;')}}  />
-                            {Translator("Update Suppliers")}
-                        </button>
+                    </div>
+                    <div className="w-full md:w-1/2 flex justify-end ">
+                        <div className="flex flex-row mt-4 items-center">
+                            {matchHeaderData.matches && (
+                                <HeadingComponent
+                                    title="Matches"
+                                    value={matchHeaderData.matches}
+                                />
+                            )}
+                            {matchHeaderData.time_till_processed && (
+                                <HeadingComponent
+                                    title="Time Till Processed"
+                                    value={matchHeaderData.time_till_processed}
+                                    time={true}
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
-            {/* end heading */}
-            <div>
-                <Table 
-                    TableData={matchData} 
-                    link={`/dashboard/matches/${matchId}/`} 
-                />
-            </div>
-
+                <div>
+                    {matchesData && (
+                        <Table 
+                            sort={false}
+                            TableData={matchesData} 
+                            link={`/dashboard/matches/`} 
+                        />
+                    )}
+                </div>
+            </>
+            )}      
         </div>
     )
 }

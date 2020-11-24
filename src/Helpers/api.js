@@ -117,8 +117,8 @@ export default class Api {
     return this.init().get(`/suppliers/${userId}/product-options/${id}/`)
   }
 
-  getProductOptionsSearch = (query) => {
-    return this.init().get(`/product-options/?q=${query}`)
+  getProductOptionsSearch = (catId,query) => {
+    return this.init().get(`/product-options/?q=${query}&category=${catId}`)
   }
 
   // ============================   TICKETS API  =====================================
@@ -180,6 +180,7 @@ export default class Api {
   }
 
   editOrder = (order,id) => {
+    console.log(order);
     return this.init().patch(`/orders/${id}/`,order)
   }
 
@@ -198,6 +199,9 @@ export default class Api {
 
   getMatchHistory = () => {
     return this.init().get(`/matches/history/`); 
+  }
+  getMatchHistoryDate = (date) => {
+    return this.init().get(`/matches/history?date=${date}`); 
   }
   getMatches = () => {
     return this.init().get('/matches/');

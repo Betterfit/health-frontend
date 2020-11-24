@@ -25,16 +25,17 @@ const DashboardMatchesOrderDetail = (props) => {
     const getData = async () => await api.getOrder(orderId)
     .then((response) => {
         const data = response.data;
-        console.log(data);
         let arr = response.data.order_products;
         arr = arr.map(item => {
+            console.log(item);
+            let option = item.product_option.option_label;
             let obj = {
                 product_image: item.product_option.product_image,
-                item: item.product_option.product +' - '+ item.product_option.name,  
+                item: item.product_option.product +' - '+ item.product_option.product_variation,  
+                [option]:item.product_option.name ,
                 quantity: item.quantity,
-                ...item.product_option,
-                priority: 1,
-
+                supplier_availability: item.product_option.quantity,
+                priority: item.priority,
             };
             return obj;
         });
@@ -59,8 +60,8 @@ const DashboardMatchesOrderDetail = (props) => {
     }, []);
 
     const actionComponent = <StatusButton status={`${orderHeader.match_date !== "No match date" ? "matched" : "no-match"}`} /> ;
-    const excludeKeys = ["pk","product_image","name","product_variation","product_category"];
-    const excludeValues = ["pk","product_variation","name","product_category"];
+    const excludeKeys = ["pk","product_image"];
+    const excludeValues = ["pk"];
     return(
         <div className="px-4 sm:px-6 md:px-8 pt-10">
             {isLoading ? (
