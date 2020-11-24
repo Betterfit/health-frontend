@@ -19,7 +19,7 @@ function InputFieldLabel({ id_tag, name, type, value, onChange, error, required=
         />
       </div>
       <span className="error text-sm text-status-dark-red pt-1">
-          {error}
+        {Translator(error)}
         </span>
     </div>
   );

@@ -6,8 +6,8 @@ const OrderName = ({name,callBack}) => {
     return(
         <div className="px-6 mb-4">
             <div className="flex justify-between mb-1">
-                <span className="uppercase font-medium text-betterfit-graphite text-xxs tracking-extra-wide pr-3 ">{Translator("Purchase Order")}</span>
-                <span className="uppercase font-medium text-betterfit-graphite text-xxs tracking-extra-wide pr-3 divide-opacity-50 ">{Translator("Optional")}</span>
+                <span className="uppercase font-semibold text-betterfit-graphite text-xxs tracking-extra-wide pr-3 ">{Translator("Purchase Order")}</span>
+                <span className="uppercase font-semibold text-betterfit-graphite text-xxs tracking-extra-wide divide-opacity-50 ">{Translator("Optional")}</span>
             </div>
             <label aria-label="order number" htmlFor="order-number"></label>
             <input
