@@ -70,7 +70,7 @@ export default class Api {
 
 // ============================   PRODUCTS API  =====================================
   getProductCategories = () => {
-    return this.init().get(`/product-categories` ); 
+    return this.init().get(`/product-categories/` ); 
   }
 
   getCategoriesBySupplier = (supplierid) => {
@@ -87,14 +87,14 @@ export default class Api {
 
   //get products under a particular category id
   getCategory = (id) => {
-    return this.init().get(`/product-categories/${id}`); 
+    return this.init().get(`/product-categories/${id}/`); 
   }
   
   getProduct = (id) => {
-    return this.init().get(`/products/${id}`); 
+    return this.init().get(`/products/${id}/`); 
   }
   getProductVariant = (id) => {
-    return this.init().get(`/product-variations/${id}`); 
+    return this.init().get(`/product-variations/${id}/`); 
   }
   getSearchResults = (query) => {
     return this.init().get(`/product-categories/?q=${query}`)
@@ -105,7 +105,7 @@ export default class Api {
   }
 
   getProductOption = (id) => {
-    return this.init().get(`/product-options/${id}`)
+    return this.init().get(`/product-options/${id}/`)
   }
 
   updateSupplierProductQuantity = (userId,id,data) => {
@@ -128,11 +128,11 @@ export default class Api {
   }
 
   getSupplierTicketOrder = (userId,id) => {
-    return this.init().get(`/suppliers/${userId}/tickets/${id}`)
+    return this.init().get(`/suppliers/${userId}/tickets/${id}/`)
   }
 
   setUpdateTicket = (userId,id,data) => {
-    return this.init().put(`/suppliers/${userId}/tickets/${id}`,data)
+    return this.init().put(`/suppliers/${userId}/tickets/${id}/`,data)
   }
 
   getSearchTickets = (supplierId,query) => {
@@ -146,7 +146,7 @@ export default class Api {
   }
 
   getOrder = (orderId) => {
-    return this.init().get(`/orders/${orderId}`)
+    return this.init().get(`/orders/${orderId}/`)
   }
 
   getAllOrders = (orderId) => {
