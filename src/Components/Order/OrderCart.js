@@ -189,7 +189,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
               name={cartStore.newOrderName}
               callBack={(name) => setOrderName(name)}
             />
-            <div className="mb-6 px-6">
+            <div className="mb-6 px-6 pt-2">
               <Checkbox
                 name="Agree To Terms"
                 value={agreeTerms}
