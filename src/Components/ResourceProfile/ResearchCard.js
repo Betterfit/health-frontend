@@ -1,13 +1,14 @@
-import React from "react";
+import TagLink from 'Components/Content/TagLink';
 import ResourceDescription from "Components/ResourceProfile/ResourceDescription";
 import CardTitle from "Components/ResourceProfile/ResourceTitle";
-import TagLink from 'Components/Content/TagLink';
+import { generateAddress } from "Helpers/resourceUtils";
+import React from "react";
 
 const ResearchCard = ({name, tagList, details, color}) => {
     const researcher = [details.main_contact];
     const email = [details.email];
     const phone = [details.phone_number];
-    const address = [details.street, details.city + " " + details.province, details.postal_code];
+    const address = generateAddress(details);
     const description = [details.description];
 
     return(
@@ -34,10 +35,6 @@ const ResearchCard = ({name, tagList, details, color}) => {
                 <ResourceDescription
                     label="Description"
                     items={description}
-                />
-                <ResourceDescription
-                    label="Tags"
-                    items={[]}
                 />
                 <div className="ml-auto" style={{margin:0}}>
                     {tagList.map(tag =>{

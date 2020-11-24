@@ -32,17 +32,13 @@ const RegulationCard = ({ name, tagList, details, color }) => {
                 color={color}
             ></CardTitle>
             <div className="space-y-6">
-               <ResourceDescription label="Links" items={link} />
+                <ResourceDescription label="Links" items={link} />
                 <ResourceDescription label="Location" items={location} />
                 <ResourceDescription label="Pertinent To" items={parties} />
                 <ResourceDescription label="Description" items={description} />
-                <ResourceDescription label="Tags" items={[]} />
-                <div className="ml-auto" style={{ margin: 0 }}>
-                    {tagList.map((tag) => 
-                        <TagLink tag={tag} buttonProps={{disabled: true}}/>
-                    )}
-                </div>
- 
+                {tagList.map((tag) => (
+                    <TagLink tag={tag} buttonProps={{ disabled: true }} />
+                ))}
             </div>
         </div>
     );

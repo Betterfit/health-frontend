@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { Resource, Tag } from "Types";
+import { Resource, ResourceDetails, Tag } from "Types";
 import Api from "./api";
 
 type ResourceFilter = (resource: Resource) => boolean;
@@ -99,6 +99,7 @@ const findResourcesMatchingTagPKs = (
     }
     return matchingResources;
 };
+
 /**
  * Returns a list (without duplicates) of all tags found in a list of resources
  */
@@ -115,3 +116,41 @@ export const findAllUniqueTags = (resources: Resource[]): Tag[] => {
     }
     return uniqueTags;
 };
+
+/**
+ * Generates a printable address as a list of up to length 3.
+ * 1. street address
+ * 2. city + province
+ * 3. postal code
+ * Null elements will be excluded
+ */
+export const generateAddress = (resourceDetails: ResourceDetails): string[] => {
+    const {street, city, province, postal_code} = resourceDetails
+    const address = []
+    if (street)
+        address.push(resourceDetails.street)
+    if (city && province)
+        address.push(`${city}, ${province}`)
+    if (province && postal_code)
+        address.push(postal_code)
+    return address
+}
+
+/**
+ * Generates a printable shipping address as a list of up to length 3.
+ * 1. street address
+ * 2. city + province
+ * 3. postal code
+ * Null elements will be excluded
+ */
+export const generateShippingAdress = (resourceDetails: any): string[] => {
+    const {shipping_street, shipping_city, shipping_province, shipping_postal_code} = resourceDetails
+    const address = []
+    if (shipping_street)
+        address.push(resourceDetails.street)
+    if (shipping_city && shipping_province)
+        address.push(`${shipping_city}, ${shipping_province}`)
+    if (shipping_province && shipping_postal_code)
+        address.push(shipping_postal_code)
+    return address
+}

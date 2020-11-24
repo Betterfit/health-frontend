@@ -1,13 +1,14 @@
-import React from "react";
+import TagLink from 'Components/Content/TagLink';
 import ResourceDescription from "Components/ResourceProfile/ResourceDescription";
 import CardTitle from "Components/ResourceProfile/ResourceTitle";
-import TagLink from 'Components/Content/TagLink';
+import { generateAddress, generateShippingAdress } from "Helpers/resourceUtils";
+import React from "react";
 
 const FacilityCard = ({name, tagList, details, color}) => {
     const biosafety = [details.biosafety_level];
     const contact = [details.phone_number, details.email];
-    const address = [details.street, details.city + " " + details.province, details.postal_code];
-    const shipping_address = [details.shipping_street, details.shipping_city + " " + details.shipping_province, details.shipping_postal_code];
+    const address = generateAddress(details)
+    const shipping_address = generateShippingAdress(details)
     const fax = details.fax ? [details.fax] : ['n/a'];
     const website = details.website ? [details.website] : 'n/a';
 
@@ -35,10 +36,6 @@ const FacilityCard = ({name, tagList, details, color}) => {
                 <ResourceDescription
                     label="Website"
                     items={website}
-                />
-                <ResourceDescription
-                    label="Tags"
-                    items={[]}
                 />
                 <div className="ml-auto" style={{margin:0}}>
                     {tagList.map(( tag, i ) =>{
