@@ -14,12 +14,12 @@ export const useResources = (customFilters: ResourceFilter[] = []) => {
     // stores tag pks (primary key) rather than whole tag
     const [selectedTagPKs, setSelectedTagPKs] = useState<number[]>([]);
     const api = new Api();
-    const { data, isLoading: resourcesLoading } = useQuery<Resource[]>(
+    const { data } = useQuery<Resource[]>(
         // the key is the combination of 'resources' and the search term, used for caching
         ["resources", searchTerm],
         async () =>
             await api.getResources(searchTerm).then((resp: any) => resp.data),
-        { placeholderData: [], keepPreviousData: true }
+        { placeholderData: [], keepPreviousData: true, staleTime: 1000*60 }
     );
     const resources = data as Resource[];
     // For each resource, check that it passes every custom filter specified.
@@ -40,6 +40,9 @@ export const useResources = (customFilters: ResourceFilter[] = []) => {
             setSelectedTagPKs(selectedTagPKs.filter((tagPK) => tagPK !== pk));
         else setSelectedTagPKs([...selectedTagPKs, pk]);
     };
+
+    // a bit of a hack for the moment to determine when to show the spinner 
+    const resourcesLoading = resources.length === 0 && !(searchTerm)
 
     return {
         resources: tagMatchingResources,
