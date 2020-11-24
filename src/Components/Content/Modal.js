@@ -20,7 +20,7 @@ const Modal = ({cancelCallBack,confirmCallBack,children , buttonText}) => {
                     <Button 
                         text={buttonText} 
                         color='status-dark-green' 
-                        extraClasses="px-10"
+                        extraClasses="px-12"
                         text_size="text-sm" 
                         onClick={confirmCallBack}
                     />

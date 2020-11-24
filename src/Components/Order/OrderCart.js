@@ -174,7 +174,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
             buttonText="Place Order"
           >
             <div className="px-6 py-4 border-b border-gray-300">
-              <h2 className="text-betterfit-navy text-xl">
+              <h2 className="text-dark-blue text-xl">
                 {Translator("Confirm Order")}
               </h2>
             </div>
