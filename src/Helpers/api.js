@@ -69,11 +69,11 @@ export default class Api {
 
 // ============================   PRODUCTS API  =====================================
   getProductCategories = () => {
-    return this.init().get(`/product-categories/` ); 
+    return this.init().get(`/product-categories` ); 
   }
 
   getCategoriesBySupplier = (supplierid) => {
-    return this.init().get(`/product-categories/?supplier=${supplierid}/` ); 
+    return this.init().get(`/product-categories/?supplier=${supplierid}` ); 
   }
 
   getProductsBySupplier = (productid) => {
