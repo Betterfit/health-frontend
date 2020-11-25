@@ -3,7 +3,6 @@
  * Components will be slowly pulled into here to encourage reuse
  */
 import { generateAddress, generateShippingAdress } from "Helpers/resourceUtils";
-import Translator from "Helpers/Translator";
 import React from "react";
 import { ResourceDetails } from "Types";
 import ResourceDescription from "./ResourceDescription";
@@ -16,10 +15,7 @@ export const Address = ({ details }: ProfileItemProps) => {
     const address = generateAddress(details);
     if (address.length === 0) return <></>;
     return (
-        <ResourceDescription
-            label={Translator("Address")}
-            items={generateAddress(details)}
-        />
+        <ResourceDescription label="Address" items={generateAddress(details)} />
     );
 };
 
@@ -28,7 +24,7 @@ export const ShippingAddress = ({ details }: ProfileItemProps) => {
     if (address.length === 0) return <></>;
     return (
         <ResourceDescription
-            label={Translator("Shipping Address")}
+            label="Shipping Address"
             items={generateAddress(details)}
         />
     );
@@ -41,34 +37,26 @@ export const Description = ({ details }: ProfileItemProps) => {
         .split("\n")
         .flatMap((paragraph) => [paragraph, <br />]);
     return (
-        <ResourceDescription
-            label={Translator("Description")}
-            items={textWithLineBreaks}
-        />
+        <ResourceDescription label="Description" items={textWithLineBreaks} />
     );
 };
 
 export const Phone = ({ details }: ProfileItemProps) => {
     const phone = details.phone_number;
     if (!phone) return <></>;
-    return <ResourceDescription label={Translator("Phone")} items={[phone]} />;
+    return <ResourceDescription label="Phone Number" items={[phone]} />;
 };
 
 export const Email = ({ details }: ProfileItemProps) => {
     const email = details.email;
     if (!email) return <></>;
-    return <ResourceDescription label={Translator("Email")} items={[email]} />;
+    return <ResourceDescription label="Email" items={[email]} />;
 };
 
 export const MainContact = ({ details }: ProfileItemProps) => {
     const researcher = details.main_contact;
     if (!researcher) return <></>;
-    return (
-        <ResourceDescription
-            label={`${Translator("Main")} ${Translator("Contact")}`}
-            items={[researcher]}
-        />
-    );
+    return <ResourceDescription label="Main Contact" items={[researcher]} />;
 };
 
 export const Fax = ({ details }: ProfileItemProps) => {
@@ -80,7 +68,5 @@ export const Fax = ({ details }: ProfileItemProps) => {
 export const Website = ({ details }: ProfileItemProps) => {
     const website = details.website;
     if (!website) return <></>;
-    return (
-        <ResourceDescription label={Translator("Website")} items={[website]} />
-    );
+    return <ResourceDescription label="Website" items={[website]} />;
 };

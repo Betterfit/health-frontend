@@ -1,3 +1,4 @@
+import Translator from "Helpers/Translator";
 import React from "react";
 
 const ResourceDescription = ({ label, items }) => {
@@ -6,7 +7,7 @@ const ResourceDescription = ({ label, items }) => {
     return (
         <dl>
             <dt className="uppercase text-betterfit-graphite text-10 tracking-extra-wide leading-7">
-                {label}
+                {Translator(label)}
             </dt>
             {filteredItems?.length
                 ? filteredItems.map((item, i) => (

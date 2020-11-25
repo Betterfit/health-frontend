@@ -71,11 +71,11 @@ const DashboardResources = () => {
                     <div className="border-b border-gray-400 mt-5" />
                     <div className="px-4 pb-4">
                         <h3 className="mb-4 md:mb-2 text-betterfit-graphite opacity text-xs font-body m-2 pt-8 uppercase font-bold tracking-extra-wide opacity-50">
-                            Resource Type
+                            {Translator("Resource Types")}
                         </h3>
                         <ul
                             className="flex flex-col items-start"
-                            aria-label="Resource Types"
+                            aria-label={Translator("Resource Types")}
                         >
                             {Object.entries(resourceColors).map(
                                 ([resourceType, resourceColor]) => {
@@ -83,7 +83,7 @@ const DashboardResources = () => {
                                         <ListLink
                                             bulletColor={resourceColor}
                                             key={resourceType}
-                                            text={resourceType}
+                                            text={Translator(resourceType)}
                                             textStyle={{
                                                 textTransform: "capitalize",
                                             }}
