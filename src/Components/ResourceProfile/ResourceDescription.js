@@ -1,18 +1,26 @@
-import React, { useState, useEffect } from "react";
+import Translator from "Helpers/Translator";
+import React from "react";
 
 const ResourceDescription = ({ label, items }) => {
-  return (
-    <dl>
-        <dt className="uppercase text-betterfit-graphite text-10 tracking-extra-wide leading-7">
-        {label}
-    </dt>
-        {items.map((item, i) =>{
-            return(
-                <div className="betterfit-grey-blue text-15 leading-7" key={i}>{item}</div>
-            )
-        })}
-    </dl>
-  );
+    // We filter out non-truthy values so that "null" isn't displayed in the application
+    const filteredItems = items?.filter((item) => item);
+    return (
+        <dl>
+            <dt className="uppercase text-betterfit-graphite text-10 tracking-extra-wide leading-7">
+                {Translator(label)}
+            </dt>
+            {filteredItems?.length
+                ? filteredItems.map((item, i) => (
+                      <div
+                          className="betterfit-grey-blue text-15 leading-7"
+                          key={i}
+                      >
+                          {item}
+                      </div>
+                  ))
+                : "N/A"}
+        </dl>
+    );
 };
 
 export default ResourceDescription;
