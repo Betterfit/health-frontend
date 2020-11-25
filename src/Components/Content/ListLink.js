@@ -1,4 +1,5 @@
 import React from "react";
+import Translator from "Helpers/Translator"
 const ListLink = ({
     bulletColor,
     text,
@@ -18,7 +19,7 @@ const ListLink = ({
                 style={textStyle}
             >
                 <div className="bullet" style={{ background: bulletColor }} />
-                {text}
+                {Translator(text)}
             </span>
             {selected && <span className="font-bold text-xl p-1">✖</span>}
         </button>

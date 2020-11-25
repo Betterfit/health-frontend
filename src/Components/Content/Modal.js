@@ -12,7 +12,7 @@ const Modal = ({cancelCallBack,confirmCallBack,children , buttonText}) => {
                     <Button 
                         text={"Back"} 
                         color='white' 
-                        extraClasses="border border-black text-black"
+                        extraClasses="border border-black text-betterfit-navy"
                         text_size="text-sm" 
                         solid={false}
                         onClick={cancelCallBack}
@@ -20,6 +20,7 @@ const Modal = ({cancelCallBack,confirmCallBack,children , buttonText}) => {
                     <Button 
                         text={buttonText} 
                         color='status-dark-green' 
+                        extraClasses="px-12"
                         text_size="text-sm" 
                         onClick={confirmCallBack}
                     />

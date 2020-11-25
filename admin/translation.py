@@ -7,8 +7,9 @@ class Handler:
 
     def __init__(self, lang, output='output.json'):
         self.lang = lang
-        self.data = {}
         self.output = output
+        self.data = self.open_json()
+
 
     def read(self, key, value):
         serializer = self._get_reader()
@@ -17,9 +18,15 @@ class Handler:
     def print(self):
         print (self.data)
 
+    def open_json(self):
+        with open(self.output, 'r') as outfile:
+            data = json.load(outfile)
+            outfile.close()
+        return data
+
     def write(self):
         with open(self.output, 'w') as outfile:
-            outfile.write(json.dumps(self.data, indent=4))
+            outfile.write(json.dumps(self.data, indent=4, sort_keys=True))
 
     def _read_french(self, key, value):
         self.data[key.lower()] = value  
@@ -57,11 +64,13 @@ if __name__ == "__main__":
     parser.add_argument('output', help="json file being written to")
     parser.add_argument('lang', choices=['fr','en'])
     args = parser.parse_args()
+    reader = Handler(args.lang, args.output)
+    handle(args.input, reader)
     try: 
         reader = Handler(args.lang, args.output)
         handle(args.input, reader)
     except:
-        print ("ERROR")
+        print ("ERROR", sys.exc_info()[0])
 
 
 

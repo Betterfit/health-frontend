@@ -7,6 +7,7 @@ import TitleUnderLine from 'Components/Content/TitleUnderLine';
 import Table from "Components/Table/Full/Table";
 import uuid from 'react-uuid';
 import ProductSearch from 'Components/Search/ProductSearch';
+import ProductCard from "Components/Order/ProductCard";
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
@@ -33,7 +34,7 @@ const DashboardProductSearch = ({}) => {
     
 
     return(
-        <div>
+        <div className="pt-8 px-2">
             {searchData && (
                 <>
                     <BackNavigation link="Back" />
@@ -43,39 +44,28 @@ const DashboardProductSearch = ({}) => {
                     {/* <ProductSearch CategoryName = {CategoryName} CategoryID = {CategoryID} /> */}
                     {searchData.length > 0 ? (
                         <div className="grid grid-cols-1 gap-4 mb-6 md:mb-10 customproductgrid">
-                            {/* {searchData.map(item => {
-                                // let product = {
-                                //     name: item.name,
-                                // }
-                                // return(
-                                //     <ProductCard
-                                //     key={uuid()}
-                                //     product={p2}
-                                //     product_details={p3}
-                                //     category={CategoryData.name}
-                                //     extra={CategoryData}
-                                //     parent={p.name ? p.name : null}
-                                //     />
-                                // )
-                            })} */}
-
-
-                            {/* {CategoryData.products.map((p) =>
-                            p.product_variations.map((p2) =>{
+                            {searchData.map(item => {
+                                console.log(item);
+                                let product = {
+                                    name: item.name,
+                                    pk: query.get('category'),
+                                }
+                                let productdetails = {
+                                    name: item.product_variation,
+                                    product_image: item.product_image,
+                                    pk: item.pk
+                                }
                                 return(
-                                p2.product_options.map((p3) => (
                                     <ProductCard
-                                    key={`${p3.name}`}
-                                    product={p2}
-                                    product_details={p3}
-                                    category={CategoryData.name}
-                                    extra={CategoryData}
-                                    parent={p.name ? p.name : null}
+                                    key={uuid()}
+                                    product={product}
+                                    product_details={productdetails}
+                                    category={item.product_category}
+                                    extra={null}
+                                    parent={item.product ? item.product : null}
                                     />
-                                ))
                                 )
-                            }) */}
-                            {/* )} */}
+                            })}
 
                         </div>
                     ):(

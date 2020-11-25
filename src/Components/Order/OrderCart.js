@@ -11,10 +11,12 @@ import OrderProductCard from "Components/Order/OrderProductCard";
 import OrderName from "Components/Forms/OrderName";
 import Checkbox from "Components/Forms/CheckboxConfirm";
 import Translator from "Helpers/Translator";
+import { useHistory } from "react-router-dom";
 const api = new Api();
 let rawCart;
 
 const OrderCart = ({ Cart, OrderID, id }) => {
+  const history = useHistory();
   let CartData = JSON.stringify(Cart);
   CartData = JSON.parse(CartData);
   const authStore = useAuthStore();
@@ -39,7 +41,6 @@ const OrderCart = ({ Cart, OrderID, id }) => {
     // resolve all the api calls in parallel and populate the messageData object as they resolve
     Promise.all(promises).then((responses) => {
       rawCart = CartData;
-      console.log(responses);
       setCartItems(responses);
       
     }).catch((err) => console.log(err));;
@@ -59,10 +60,11 @@ const OrderCart = ({ Cart, OrderID, id }) => {
 
   const confirmCallBack = (status) => {
     const userData = JSON.parse(authStore.user);
+    console.log(userData);
     if (agreeTerms || status == "draft") {
       let order = {
         facility: userData.user_profile.facility,
-        facility_admin: userData.pk,
+        user: userData.pk,
         purchase_no: cartStore.newOrderName,
         status: status,
         order_products: CartData.map((item) => {
@@ -78,29 +80,29 @@ const OrderCart = ({ Cart, OrderID, id }) => {
         delete order.facility;
         delete order.facility_admin;
         api.editOrder(order, id).then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setModalOrder(false);
           setModalDraft(false);
           cartStore.newOrderName = "";
           cartStore.cart = [];
           cartStore.updateLocalCartStorage();
           setCartItems(null);
-          // history.push(
-          //   `/dashboard/orders/${}`
-          // )
+          history.push(
+            `/dashboard/orders/detail/${response.data.pk}`
+          )
         });
       } else {
         api.setNewOrder(order).then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setModalOrder(false);
           setModalDraft(false);
           cartStore.newOrderName = "";
           cartStore.cart = [];
           cartStore.updateLocalCartStorage();
           setCartItems(null);
-          // history.push(
-          //   `/dashboard/orders`
-          // )
+          history.push(
+            `/dashboard/orders/detail/${response.data.pk}`
+          )
         });
       }
     } else {
@@ -174,7 +176,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
             buttonText="Place Order"
           >
             <div className="px-6 py-4 border-b border-gray-300">
-              <h2 className="text-betterfit-navy text-xl">
+              <h2 className="text-dark-blue text-xl">
                 {Translator("Confirm Order")}
               </h2>
             </div>
@@ -189,7 +191,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
               name={cartStore.newOrderName}
               callBack={(name) => setOrderName(name)}
             />
-            <div className="mb-6 px-6">
+            <div className="mb-6 px-6 pt-2">
               <Checkbox
                 name="Agree To Terms"
                 value={agreeTerms}

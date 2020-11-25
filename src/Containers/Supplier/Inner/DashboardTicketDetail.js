@@ -19,6 +19,7 @@ const DashboardTicketDetail = (props) => {
     const [ticketHeader , setTicketHeader] = useState(); 
     const userData = JSON.parse(authStore.user);
     const supplierId = userData.user_profile.supplier;
+    console.log(userData);
     const getData = async () => await api.getSupplierTicketOrder(supplierId,TicketId)
     .then((response) => {
         // need ticket facility and info
@@ -28,7 +29,7 @@ const DashboardTicketDetail = (props) => {
             facility: facility.name,
             unit: "Emergency",
             order_date: dayjs(response.data.ticket_date).format("MMM DD, YYYY"),
-            shipping_address: `${facility.street}, ${facility.city}, ${facility.province}, ${facility.postal_code}`,
+            shipping_address: facility.street ? `${facility.street}, ${facility.city}, ${facility.province}, ${facility.postal_code}` : '',
         }) 
         let arr = response.data.order.order_products;
         setTicketRaw(response.data)
