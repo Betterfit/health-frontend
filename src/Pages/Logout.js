@@ -7,6 +7,7 @@ const LogOut = () => {
     const history = useHistory();
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('cart');
     authStore.token = null;
     authStore.user = null;
     history.push("/login");

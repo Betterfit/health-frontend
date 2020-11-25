@@ -8,8 +8,8 @@ let myTimeOut;
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
-const ProductSearch = ({type,extraClasses,CategoryName, CategoryID}) => {
-  
+const ProductSearch = ({type,extraClasses,CategoryName, CategoryID, orderId}) => {
+  console.log(type);
   const [searchValue, setSearchValue ] = useState('');
   const searchRef = useRef(null);
   const history = useHistory();
@@ -17,14 +17,14 @@ const ProductSearch = ({type,extraClasses,CategoryName, CategoryID}) => {
   const searchQuery = () => {
     setSearchValue(searchRef.current.value)
     if(searchRef.current.value.length == 0){
-      history.push(`/dashboard/new-order/category/${CategoryName}/${CategoryID}/search`);
+      history.push(`/dashboard/${type == "new" ? 'new-order':`edit-order/${orderId}`}/category/${CategoryName}/${CategoryID}/search`);
     }else{
-      history.push(`/dashboard/new-order/category/${CategoryName}/${CategoryID}/search?search=${searchRef.current.value}&category=${CategoryID}`);
+      history.push(`/dashboard/${type == "new" ? 'new-order':`edit-order/${orderId}`}/category/${CategoryName}/${CategoryID}/search?search=${searchRef.current.value}&category=${CategoryID}`);
     }
   }
   
   const clearSearchQuery = () => {
-    history.push(`/dashboard/new-order`);
+    history.push(`/dashboard/${type = "new" ? 'new-order':'edit-order'}`);
   }
 
   const [showInput , setShowInput ] = useState(false);

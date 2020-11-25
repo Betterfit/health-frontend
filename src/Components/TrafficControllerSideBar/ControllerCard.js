@@ -37,7 +37,6 @@ const StatStyles = (status = "normal") => {
 // orders - the quantity of orders
 // supply - the quantity of supply
 const ControllerCard = ({ products }) => {
-  console.log(products.status);
   const styles = StatStyles(products.status);
 
   return (

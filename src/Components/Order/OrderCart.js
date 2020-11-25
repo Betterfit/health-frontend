@@ -41,7 +41,6 @@ const OrderCart = ({ Cart, OrderID, id }) => {
     // resolve all the api calls in parallel and populate the messageData object as they resolve
     Promise.all(promises).then((responses) => {
       rawCart = CartData;
-      console.log(responses);
       setCartItems(responses);
       
     }).catch((err) => console.log(err));;
@@ -61,10 +60,11 @@ const OrderCart = ({ Cart, OrderID, id }) => {
 
   const confirmCallBack = (status) => {
     const userData = JSON.parse(authStore.user);
+    console.log(userData);
     if (agreeTerms || status == "draft") {
       let order = {
         facility: userData.user_profile.facility,
-        facility_admin: userData.pk,
+        user: userData.pk,
         purchase_no: cartStore.newOrderName,
         status: status,
         order_products: CartData.map((item) => {

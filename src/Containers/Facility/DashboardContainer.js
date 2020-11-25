@@ -49,7 +49,7 @@ const DashboardContainer = () =>{
                 <Route path="/dashboard/new-order/category" render={(props) => {
                         return ( 
                             <CartProvider value="cart">
-                            <DashboardOrder props={props}   type='new' />
+                            <DashboardOrder props={props} type='new' />
                             </CartProvider>
                 )}} />
                 <Route path="/dashboard/resources" >

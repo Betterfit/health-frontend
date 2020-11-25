@@ -19,6 +19,7 @@ const DashboardMatchesListing = () => {
                 match_date : dayjs(item.match_date).format('MMMM D , YYYY'),
             }
         })
+        console.log(arr);
         setMatchesData(arr)
     })
     .catch((err) => console.log(err));
