@@ -93,7 +93,7 @@ export default class Api {
     return this.init().get(`/products/${id}/`); 
   }
   getProductVariant = (id) => {
-    return this.init().get(`/product-variations/${id}/`); 
+    return this.init().get(`/product-variations/${id}`); 
   }
   getSearchResults = (query) => {
     return this.init().get(`/product-categories/?q=${query}`)
@@ -200,7 +200,7 @@ export default class Api {
     return this.init().get(`/matches/history/`); 
   }
   getMatchHistoryDate = (date) => {
-    return this.init().get(`/matches/history?date=${date}/`); 
+    return this.init().get(`/matches/history?date=${date}`); 
   }
   getMatches = () => {
     return this.init().get('/matches/');
