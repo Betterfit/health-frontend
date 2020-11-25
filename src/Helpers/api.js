@@ -25,7 +25,6 @@ export default class Api {
         timeout: 31000,
         headers: headers,
     });
-    console.log(this.client);
     return this.client;
   };
 
@@ -69,7 +68,7 @@ export default class Api {
 
 // ============================   PRODUCTS API  =====================================
   getProductCategories = () => {
-    return this.init().get(`/product-categories` ); 
+    return this.init().get(`/product-categories/` ); 
   }
 
   getCategoriesBySupplier = (supplierid) => {

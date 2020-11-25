@@ -20,6 +20,7 @@ const DashboardProductList = (props) => {
       .getProductsBySupplier(ProductId)
       .then((response) => {
         let arr = response.data;
+        console.log(arr);
         arr.product_variations = arr.product_variations.map((variations) => {
           let variation = variations;
           variation.product_options = variations.product_options.map(

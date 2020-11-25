@@ -51,7 +51,7 @@ const StatStyles = (stat = "open") => {
         title: "Delivered",
       };
       break;
-    case "review":
+    case "in review":
       return {
         bg: "bg-tag-light-green",
         text: "text-tag-light-green-txt",

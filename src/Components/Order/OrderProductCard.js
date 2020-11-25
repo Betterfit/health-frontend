@@ -22,7 +22,7 @@ const ProductImage = ({ product_image, product_name }) => {
   }
   return (
       <img
-        className="h-20 w-20 md:h-32 md:w-32 pt-3 pr-3"
+        className="h-20 w-20 md:h-32 md:w-32 pt-3 pr-3 object-contain"
         src={Read_Product(product_image, "")}
         alt={Read_Product(product_name + " Product Image", "Product Image")}
         loading="lazy"

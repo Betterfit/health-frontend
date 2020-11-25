@@ -19,6 +19,7 @@ const DashboardSearch = () => {
     const getSearchResults = async () => await api.getSearchResults(query.get('search'))
     .then((response) => {
         let arr = response.data;
+        console.log(response.data);
         arr.map(productCat => {
             productCat.products.map(products => {
                 products.product_variations = products.product_variations.map((variations) => {
@@ -103,7 +104,7 @@ const DashboardSearch = () => {
                             return(
                                 productCat.products.map(product=> {
                                     return(
-                                        <>
+                                        <div key={uuid()} >
                                             {
                                                 product.product_variations.length ? (
                                                  
@@ -111,19 +112,19 @@ const DashboardSearch = () => {
                                                             if(p.product_options.length){
                                                                 return(
                                                                     <div key={uuid()} >
-                                                                        <h2 className="text-2xl text-gray-700 font-bold">{product.name}</h2>
+                                                                            <h2 className="text-2xl text-gray-700 font-bold">{product.name}</h2>
                                                                         <Table key={uuid()} TableData={p} ProductId={product.pk} edit={true} /> 
                                                                     </div>
                                                                 )
                                                             }                                                         
                                                         })
                                                 ) : (
-                                                    <>
-                                                    <div></div>
-                                                    </>
+                                                    
+                                                    <div key={uuid()}  ></div>
+                                                    
                                                 )
                                             }
-                                        </>  
+                                        </div>  
                                     )
                                 })
                             )

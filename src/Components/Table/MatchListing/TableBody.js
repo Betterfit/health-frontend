@@ -15,15 +15,15 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                         return(
                             <React.Fragment key={`table_row_${pindex}`} >
                             {link && (
-                                <tr className="≈ bg-white border border-white bg-table-row  hover:border-betterfit-highlight-blue">
+                                <tr className="table-row bg-table-row  hover:border-betterfit-highlight-blue">
                                     {
                                         row.map((r, index)=>{  
                                              
-                                            if(index !== removeAtIndex)
+                                            if(index !== removeAtIndex && index !== row.length - 1)
                                                 if(index == statusIndex)
                                                     return(
                                                     <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 leading-5 text-gray-500">
-                                                        <NavLink className="px-4 py-4 leading-5 text-gray-500 block" to={`${dayjs().format('MMMM D , YYYY') === row[0] ?  '/dashboard/matches/' : `/dashboard/matches/history?date=${dayjs(row[0]).format('YYYY-M-D')}`}`}>
+                                                        <NavLink className="px-4 py-4 leading-5 text-gray-500 block" to={row[row.length - 1]}>
                                                             {buttonType === "statusbutton" && (
                                                                 <StatusButton status={r} />
                                                             )} 
@@ -41,7 +41,7 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                                     return(
                             
                                                         <td key={`table_td_${pindex}_${index}`} className={`whitespace-no-wrap px-4 py-4 ${index == 1 ? 'lg:w-40 text-betterfit-grey-blue text-right pr-10' : 'text-betterfit-graphite font-bold'}`}>
-                                                            <NavLink className="text-base leading-5" to={`${dayjs().format('MMMM D , YYYY') === row[0] ?  '/dashboard/matches/' : `/dashboard/matches/history?date=${dayjs(row[0]).format('YYYY-M-D')}`}`}>
+                                                            <NavLink className="text-base leading-5" to={row[row.length - 1]}>
                                                                 {r}
                                                             </NavLink>
                                                         </td>
@@ -59,15 +59,15 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                             <React.Fragment key={`table_row_${pindex}`}>
                             {link && (
                                 
-                                <tr className="table-row border m-1 border-table-row relative hover:border-betterfit-highlight-blue ">
+                                <tr className="table-row m-1 relative hover:border-betterfit-highlight-blue ">
                                     {
                                         row.map((r, index)=>{
-                                            console.log(r[0])
-                                            if(index !== removeAtIndex)
+                                            
+                                            if(index !== removeAtIndex && index !== row.length - 1)
                                                 if(index == statusIndex)
                                                     return(
                                                     <td key={`table_td_${pindex}_${index}`} className="px-4 py-4 whitespace-no-wrap w-8 text-base leading-5 text-gray-500">
-                                                        <NavLink className="px-4 py-4 text-base leading-5 text-gray-500 block" to={`${dayjs().format('MMMM D , YYYY') === row[0] ?  '/dashboard/matches/' : `/dashboard/matches/history?date=${dayjs(row[0]).format('YYYY-M-D')}`}` }>
+                                                        <NavLink className="px-4 py-4 text-base leading-5 text-gray-500 block" to={row[row.length - 1]}>
                                                             {buttonType === "statusbutton" && (
                                                                 <StatusButton status={r} />
                                                             )} 
@@ -83,8 +83,8 @@ const TableBody = ({TableBody,removeAtIndex,statusIndex,link,buttonType}) => {
                                                     </td>)
                                                 else
                                                     return(
-                                                        <td key={`table_td_${pindex}_${index}`} className={`whitespace-no-wrap px-4 py-4${index == 1 ? 'lg:w-40 text-betterfit-grey-blue text-right pr-10' : 'text-betterfit-graphite font-bold'}`}>
-                                                            <NavLink className="text-base leading-5" to={`${dayjs().format('MMMM D , YYYY') === row[0] ?  '/dashboard/matches/' : `/dashboard/matches/history?date=${dayjs(row[0]).format('YYYY-M-D')}`}` }>
+                                                        <td key={`table_td_${pindex}_${index}`} className={`whitespace-no-wrap px-4 py-4 ${index == 1 ? 'lg:w-40 text-betterfit-grey-blue text-right pr-10' : 'text-betterfit-graphite font-bold'}`}>
+                                                            <NavLink className="text-base leading-5" to={row[row.length - 1]}>
                                                                     {r}
                                                             </NavLink>
                                                         </td>
