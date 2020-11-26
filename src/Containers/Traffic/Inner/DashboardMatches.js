@@ -105,7 +105,7 @@ const DashboardMatches = () => {
                   }
                 >
                     <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
-                    <span className="text-betterfit-graphite text-base word break-words text-2xl">
+                    <span className="text-betterfit-graphite text-base word break-words text-2xl font-semibold">
                         <Countdown date={Date.parse(value)}></Countdown>
                     </span>
                 </div>
@@ -119,7 +119,7 @@ const DashboardMatches = () => {
                   }
                 >
                   <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
-                  <span className="text-betterfit-graphite text-base word break-words text-2xl">{value}</span>
+                  <span className="text-betterfit-graphite text-base word break-words text-2xl font-semibold">{value}</span>
                 </div>
             );
         }
