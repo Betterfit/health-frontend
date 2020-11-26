@@ -1,3 +1,4 @@
+import Translator from "Helpers/Translator";
 import React from "react";
 import { Tag } from "Types";
 
@@ -29,7 +30,7 @@ const TagLink = ({ tag, buttonProps, bold }: TagLinkProps) => {
                     borderColor: bold ? tag.main_color : "transparent",
                 }}
             >
-                {tag?.title}
+                {Translator(tag?.title)}
             </div>
         </button>
     );

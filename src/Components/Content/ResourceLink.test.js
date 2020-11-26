@@ -1,7 +1,7 @@
-import React from "react";
-import { render, screen, getByText } from "@testing-library/react";
-import ResourceLink from "./ResourceLink";
+import { getByText, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import React from "react";
+import ResourceLink from "./ResourceLink";
 
 const tags = [
     {
@@ -59,5 +59,6 @@ describe("Resource Link", () => {
         const resourceCard = await screen.findByRole("dialog");
         // the facility card shouldn't be empty
         expect(getByText(resourceCard, /royal crom/i)).toBeInTheDocument();
+        expect(getByText(resourceCard, /facility/i)).toBeInTheDocument();
     });
 });
