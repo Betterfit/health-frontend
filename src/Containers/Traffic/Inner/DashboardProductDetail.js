@@ -5,7 +5,7 @@ import Api from "Helpers/api";
 import BackNavigation from "Components/Helpers/BackNavigation";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 import ProductDetailsCard from "Components/Content/ProductDetailsCard"
-
+import EditProductForm from "Components/Forms/EditProductForm";
 //images
 import Spinner from "Images/spinner.gif";
 
@@ -22,6 +22,7 @@ const DashboardProductDetail = (props) => {
   const getData = async () =>
     await api.getProductOption(product_details_id)
       .then((response) => {
+        console.log(response.data);
         setProduct({ 
           "product_category": response.data.product_category,
           "product_name": response.data.product_variation,
@@ -30,6 +31,8 @@ const DashboardProductDetail = (props) => {
           "product_label_value": response.data.name,
           "product_description": response.data.product_description,
           "product_image": response.data.product_image,
+          "product_allotted": response.data.allotted,
+          "product_available": response.data.quantity,
           "pk":response.data.pk,
        })
         setIsError(false);
@@ -55,7 +58,14 @@ const DashboardProductDetail = (props) => {
           <BackNavigation link={`Back to Products`} />
           <TitleUnderLine title={`${product.product_parent ? product.product_parent + " - " : '' } ${product.product_name}`} />
           <div className="w-full flex place-self-center justify-self-center m-auto">
-            <ProductDetailsCard product={product} />
+            <ProductDetailsCard product={product} >
+              <EditProductForm
+                matched={product.product_allotted}
+                avail={product.product_available}
+                id={product.pk}
+                edit={false}
+              />
+            </ProductDetailsCard>
           </div>
         </>
       )}
