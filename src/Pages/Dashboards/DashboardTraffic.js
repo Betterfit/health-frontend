@@ -26,7 +26,7 @@ const DashboardTraffic = () => {
             key:'traffic-dashboard',
         },
         {
-            to:'/dashboard/match-listing',
+            to:'/dashboard/matches',
             name:'Matches',
             icon:Matches,
             key:'matches',
