@@ -30,6 +30,7 @@ const CategoryCard = (category) => {
         ? category.category.background_color
         : "#E4EFFC",
   };
+
   return (
     <>
       <div
@@ -48,7 +49,7 @@ const CategoryCard = (category) => {
         </div>
         <div className="flex flex-col">
           <p className="font-semibold text-betterfit-graphite md:text-center text-base leading-tight md:pt-4">
-            {category_name}
+            {Translator(category_name)}
           </p>
           <p className="text-xxs uppercase text-gray-700 md:text-center leading-tight pt-2 font-semibold">
             {count + " " + Translator("product" + (count > 1 || count == 0 ? "s" : ""))}
