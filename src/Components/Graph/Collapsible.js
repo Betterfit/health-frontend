@@ -26,7 +26,7 @@ const Collapsible = ({heading, children, onClickEvent}) => {
                   svg.setAttribute('style', 'width: 22px')}}  />
           </div>
             {isOpen &&
-            <div className="h-32 overflow-y-scroll">
+            <div className="h-32 overflow-y-scroll overflow-x-hidden">
               <div className="rounded relative z-20border-transparent">
                 <div className="bg-white">
                   {children.map((region) => {
