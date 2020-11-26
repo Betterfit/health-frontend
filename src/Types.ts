@@ -14,6 +14,9 @@ export interface ResourceDetails {
     street: string;
     province: string;
     website: string;
+    description: string;
+    main_contact: string;
+    fax: string;
 }
 
 
