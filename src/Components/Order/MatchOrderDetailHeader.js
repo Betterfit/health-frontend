@@ -53,19 +53,23 @@ const MatchOrderDetailHeader = ({ order , actionComponent }) => {
                 />
               )}
               <MatchHeaderComponent
-                  title="Unit"
-                  value={order.unit}
+                  title="Ordered by"
+                  value={order.facility}
               />
           </div>
           <div className="flex-row flex justify-between">
-            <MatchHeaderComponent
+            {order.address && (
+              <MatchHeaderComponent
                 title="Address"
                 value={order.address}
-            />
-            <MatchHeaderComponent
+              />
+            )}
+            {order.address && ( 
+              <MatchHeaderComponent
                 title="Shipping Address"
                 value={order.shipping_address}
-            />
+              />
+            )}
           </div>  
         </div>
         <div className="absolute top-0 right-0">

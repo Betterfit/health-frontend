@@ -16,7 +16,7 @@ const Table = ({TableData,link,extraClasses,buttonType}) => {
         let values = Object.values(variant);
         keys.forEach((key,index) => {
             if(!TableHeadData.includes(key)){
-                if(key !== "pk"){
+                if(key !== "pk" && key !== "item_url" ){
                     // console.log(`key ${variant[key]}`);
                     TableHeadData.push(key);
                     if(key == "status"){
