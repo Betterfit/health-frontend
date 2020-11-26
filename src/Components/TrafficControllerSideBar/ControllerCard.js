@@ -41,7 +41,7 @@ const ControllerCard = ({ products }) => {
 
   return (
     <div className="bg-white rounded flex flex-row items-center justify-between p-4 m-1 relative ">
-      <span className={`text-base font-bold ${styles.text}`}>
+      <span className={`text-base font-bold pr-6 ${styles.text}`}>
         {products.name}
       </span>
       <div className="space-x-1 flex flex-row">

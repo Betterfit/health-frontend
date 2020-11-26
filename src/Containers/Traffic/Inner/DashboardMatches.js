@@ -104,8 +104,8 @@ const DashboardMatches = () => {
                     (classes ? classes : "")
                   }
                 >
-                    <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
-                    <span className="text-betterfit-graphite text-base word break-words text-2xl font-semibold">
+                    <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50 font-semibold">{title}</span>
+                    <span className="text-betterfit-graphite text-base word break-words text-2xl">
                         <Countdown date={Date.parse(value)}></Countdown>
                     </span>
                 </div>
@@ -118,8 +118,8 @@ const DashboardMatches = () => {
                     (classes ? classes : "")
                   }
                 >
-                  <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50">{title}</span>
-                  <span className="text-betterfit-graphite text-base word break-words text-2xl font-semibold">{value}</span>
+                  <span className="uppercase betterfit-graphite text-xxs tracking-extra-wide opacity-50 font-semibold">{title}</span>
+                  <span className="text-betterfit-graphite text-base word break-words text-2xl">{value}</span>
                 </div>
             );
         }
