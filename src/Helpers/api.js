@@ -25,7 +25,6 @@ export default class Api {
         timeout: 31000,
         headers: headers,
     });
-    console.log(this.client);
     return this.client;
   };
 
