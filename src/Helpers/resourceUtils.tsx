@@ -154,3 +154,12 @@ export const generateShippingAdress = (resourceDetails: any): string[] => {
         address.push(shipping_postal_code)
     return address
 }
+
+/**
+ * Strips out all non-numeric characters from a phone number  
+ * @param phoneNumber the phone number string to strip
+ */
+export const stripPhoneNumber = (phoneNumber: string) : string => {
+    // strips out all non-numeric chara
+    return phoneNumber.replace(/[^0-9]/g, '')
+}
