@@ -9,7 +9,7 @@ const ControllerCardStatus = ({
   const rounded = left ? "rounded-l-full" : "rounded-r-full";
   return (
     <div
-      className={`uppercase py-2 px-3 text-xs ${background} ${textStyle} ${rounded}`}
+      className={`uppercase py-2 px-3 text-10 font-semibold ${background} ${textStyle} ${rounded}`}
     >
       {value}
     </div>

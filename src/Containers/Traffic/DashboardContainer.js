@@ -38,12 +38,12 @@ const DashboardContainer = () =>{
                     className="switch-wrapper"
                 >
                     <Route exact path="/dashboard" render={() => (
-                        <Redirect to="/dashboard/match-listing"/>
+                        <Redirect to="/dashboard/matches"/>
                     )}/>
-                    <Route path="/dashboard/match-listing" exact>
+                    <Route exact path="/dashboard/matches">
                         <DashboardMatchesListing />
                     </Route>
-                    <Route exact path="/dashboard/matches">
+                    <Route exact path="/dashboard/matches/current">
                         <MatchProvider>
                             <DashboardMatches/> 
                         </MatchProvider>

@@ -4,6 +4,7 @@ import FlatButton from "Components/Forms/FlatDetailButton";
 import EmptyImage from "Images/emptyImage.png";
 import { useHistory } from "react-router-dom";
 import {useCartStore} from "Context/cartContext";
+import Translator from "Helpers/Translator";
 
 //This will either return the attribute if it exists, or
 // return the passed in 'default_value' if not
@@ -68,7 +69,7 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
 
           <div className="flex flex-row pl-4 pr-2 py-1 justify-between items-center ml-auto mt-0 md:ml-0 md:mt-auto">
             <p className="text-betterfit-graphite uppercase text-xxs font-semibold hidden md:block">
-              {category}
+              {Translator(category)}
             </p>
             <CircleButton hover={active} onClick={() => addToCart() } />
           </div>

@@ -299,6 +299,7 @@ const Graph = () => {
 
     return (
       <div>
+        <h2 class="text-dark-blue text-2xl pb-6 ml-3 border-b border-title-border mb-3">COVID-19 Data</h2>
     	<div className="flex w-full flex-row pb-2">
           <div className="w-1/12 flex">
             <SideBarTabs tabs={graphTabs} activeTab={CurTab} handleClick={handleTabChange} clearTab={clearTab}/>

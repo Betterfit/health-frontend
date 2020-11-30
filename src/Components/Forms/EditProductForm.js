@@ -4,7 +4,7 @@ import Button from "Components/Forms/Button";
 import UpdateQuantitySupplier from "Components/Helpers/UpdateQuantitySupplier";
 
 
-const EditProductForm = ({ id, matched=0, avail=0 }) => {
+const EditProductForm = ({ id, matched=0, avail=0 , edit=true}) => {
   const [available, readAvailable] = useState(avail);
   let supplier_id = JSON.parse(localStorage.getItem("user")).user_profile?.supplier;
   return (
@@ -22,17 +22,20 @@ const EditProductForm = ({ id, matched=0, avail=0 }) => {
           value={available}
           readValue={readAvailable}
           id_tag="Available"
+          readOnly={!edit ? true : false}
         ></Quantity_Input>
       </div>
-      <div className="py-2 md:py-8 md:mx-2">
-        <Button
-          onClick={() =>
-            UpdateQuantitySupplier(supplier_id, id, available)
-          }
-          text="Save Changes"
-          text_size="text-base"
-        ></Button>
-      </div>
+      {edit && (
+        <div className="py-2 md:py-8 md:mx-2">
+          <Button
+            onClick={() =>
+              UpdateQuantitySupplier(supplier_id, id, available)
+            }
+            text="Save Changes"
+            text_size="text-base"
+          ></Button>
+        </div>
+      )}
     </div>
   );
 };

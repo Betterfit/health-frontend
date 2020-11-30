@@ -30,11 +30,13 @@ const ProductDetailCard = ({ product, children}) => {
               description={Read_Product(product.product_category, "N/A")}
             ></Inventory_Description>
             )}
-          <Inventory_Description
-            title="Description"
-            class_addons="pb-2 pt-4"
-            description={Read_Product(product.product_description, "N/A")}
-          ></Inventory_Description>
+          {product.product_description && (
+            <Inventory_Description
+              title="Description"
+              class_addons="pb-2 pt-4"
+              description={Read_Product(product.product_description, "N/A")}
+            ></Inventory_Description>
+          )}
         </div>
         <div className="xl:w-2/5 lg:w-1/2 py-4 mx-2">
           <ProductImageCard image={product.product_image} name={product.name}>

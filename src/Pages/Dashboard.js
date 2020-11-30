@@ -7,7 +7,6 @@ import {useAuthStore} from "Context/authContext";
 const Dashboard  = () => {
     const authStore = useAuthStore();
     const [userType , setUserType] = useState(JSON.parse(authStore.user));
-    console.log(authStore.token);
     return (
         <>
         {userType.user_profile.user_type === "facility_admin" && (
