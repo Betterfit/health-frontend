@@ -3,117 +3,14 @@ import React, { useState, useEffect } from "react";
 import GraphApi from "Helpers/graphApi";
 import FilterFields from "Components/Graph/FilterFields";
 import SideBarTabs from "Components/Graph/SideBarTab";
+import healthRegions from "Data/healthRegions";
 
 import moment from "moment";
 import "tui-chart/dist/tui-chart.css";
 import { LineChart } from "@toast-ui/react-chart";
+import { addWeeklyUptick, createDateArray } from "Helpers/covidDataUtils";
 
-const allRegion = {
-    "New Brunswick": [
-        "Zone 7: Central East Region (Miramichi)",
-        "Zone 6: North East Region (Bathurst)",
-        "Zone 5: North Central Region (Campbellton)",
-        "Zone 4: North West Region (Edmundston)",
-        "Zone 3: Central West Region (Fredericton)",
-        "Zone 2: South Central Region (Saint John)",
-        "Zone 1: South East Region (Moncton)",
-    ],
-    Ontario: [
-        "York Region Public Health Services",
-        "Windsor-Essex County Health Unit",
-        "Wellington-Dufferin-Guelph Public Health",
-        "Toronto Public Health",
-        "Timiskaming Health Unit",
-        "Thunder Bay District Health Unit",
-        "Sudbury & District Health Unit",
-        "Southwestern Public Health",
-        "Simcoe Muskoka District Health Unit",
-        "Renfrew County and District Health Unit",
-        "Region of Waterloo, Public Health",
-        "Porcupine Health Unit",
-        "Peterborough Public Health",
-        "Peel Public Health",
-        "Ottawa Public Health",
-        "Northwestern Health Unit",
-        "North Bay Parry Sound District Health Unit",
-        "Niagara Region Public Health Department",
-        "Middlesex-London Health Unit",
-        "Leeds, Grenville and Lanark District Health Unit",
-        "Lambton Public Health",
-        "Kingston, Frontenac and Lennox & Addington Public Health",
-        "Huron Perth District Health Unit",
-        "Hastings and Prince Edward Counties Health Unit",
-        "Hamilton Public Health Services",
-        "Halton Region Health Department",
-        "Haliburton, Kawartha, Pine Ridge District Health Unit",
-        "Haldimand-Norfolk Health Unit",
-        "Grey Bruce Health Unit",
-        "Eastern Ontario Health Unit",
-        "Durham Region Health Department",
-        "Chatham-Kent Health Unit",
-        "Brant County Health Unit",
-        "Algoma Public Health Unit",
-    ],
-    Manitoba: [
-        "Winnipeg",
-        "Southern Health-Santé Sud",
-        "Prairie Mountain Health",
-        "Northern",
-        "Interlake-Eastern",
-    ],
-    "Newfoundland and Labrador": [
-        "Western Regional Health Authority",
-        "Labrador-Grenfell Regional Health Authority",
-        "Eastern Regional Health Authority",
-        "Central Regional Health Authority",
-    ],
-    Alberta: [
-        "South Zone",
-        "North Zone",
-        "Edmonton Zone",
-        "Central Zone",
-        "Calgary Zone",
-    ],
-    "Prince Edward Island": ["Prince Edward Island"],
-    "Nova Scotia": ["Nova Scotia"],
-    Quebec: [
-        "Abitibi-Témiscamingue",
-        "Estrie",
-        "Outaouais",
-        "Capitale-Nationale",
-        "Chaudière-Appalaches",
-        "Côte-Nord",
-        "Gaspésie – Îles-de-la-Madeleine",
-        "Mauricie-et-Centre-du-Québec",
-        "Montérégie",
-        "Lanaudière",
-        "Laurentides",
-        "Laval",
-        "Montréal",
-        "Terres-Cries-de-la-Baie-James",
-        "Bas-Saint-Laurent",
-        "Nord-du-Québec",
-        "Nunavik",
-        "Saguenay – Lac-Saint-Jean",
-    ],
-    Saskatchewan: [
-        "Far North Zone",
-        "North Zone",
-        "Regina",
-        "Saskatoon",
-        "South Zone",
-        "Central Zone",
-    ],
-    "British Columbia": [
-        "Vancouver Coastal",
-        "Fraser",
-        "Northern",
-        "Vancouver Island",
-        "Interior",
-    ],
-};
-
-const parseGraphQL = (data, today, endDate) => {
+const parseGraphQL = (data, today, startDate) => {
     let parsedData = {
         "British Columbia": {},
         Alberta: {},
@@ -127,57 +24,49 @@ const parseGraphQL = (data, today, endDate) => {
         "New Brunswick": {},
     };
 
-    let cases = data["data"]["allCases"]["edges"];
-    // generate an array of dates that we are displaying on the graph
-    let reportedDate = [];
-    // console.log(endDate.subtract(1, 'days').format('YYYY-M-D'));
+    // each entry contains statistics on covid cases in a health region on a particular day
+    const regionDays = data["data"]["allCases"]["edges"];
 
-    while (
-        endDate.set({ hour: 0, minute: 0, second: 0, millisecond: 0 }) <=
-        today.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
-    ) {
-        reportedDate.push(endDate.format("YYYY-MM-DD"));
-        endDate = endDate.clone().add(1, "d");
-    }
-    parsedData["reportedDate"] = reportedDate;
-
+    const reportedDates = createDateArray(startDate, today);
     // loop through our case data and append it to each regions array so we can easily display it
-    cases.forEach((element) => {
-        let healthRegion = element.node.healthRegion.healthRegion;
-        let province = element.node.healthRegion.province;
-
-        // since some cases may be missing reporting dates, find the index of
-        // of the date and insert the case data there, so the arrays line up
-        if (healthRegion in parsedData[province]) {
-            let idx = parsedData.reportedDate.indexOf(
-                element.node.reportedDate
-            );
-
-            parsedData[province][healthRegion].activeCases[idx] =
-                element.node.activeCases;
-            parsedData[province][healthRegion].newCases[idx] =
-                element.node.newCases;
-            parsedData[province][healthRegion].deaths[idx] =
-                element.node.deaths;
-        } else {
-            let data = {
-                activeCases: [0, 0, 0, 0, 0, 0, 0],
-                newCases: [0, 0, 0, 0, 0, 0, 0],
-                deaths: [0, 0, 0, 0, 0, 0, 0],
-            };
-
-            let idx = parsedData.reportedDate.indexOf(
-                element.node.reportedDate
-            );
-            data.activeCases[idx] = element.node.activeCases;
-            data.newCases[idx] = element.node.newCases;
-            data.deaths[idx] = element.node.deaths;
-
-            parsedData[province][healthRegion] = data;
-        }
-    });
-
+    regionDays.forEach((regionDay) =>
+        parseRegionDay(regionDay, parsedData, reportedDates)
+    );
+    addWeeklyUptick(parsedData);
+    filterFirst7Days(parsedData);
+    // add the reported date afterwards so it doesn't interfere with computing weekly uptick
+    parsedData["reportedDate"] = reportedDates.slice(7);
     return parsedData;
+};
+
+// the weekly uptick isn't computed for the first 7 days (since we don't have the previous days)
+// so we filter them out of all of the heatlh regions
+const filterFirst7Days = (parsedData) => {
+    for (const province of Object.values(parsedData))
+        for (const healthRegion of Object.values(province))
+            for (const key of Object.keys(healthRegion))
+                healthRegion[key] = healthRegion[key].slice(7);
+    console.log(parsedData)
+};
+
+// parsed region-days will accumalate in arrays in parsedData
+const parseRegionDay = (regionDay, parsedData, reportedDates) => {
+    const healthRegion = regionDay.node.healthRegion.healthRegion;
+    const province = regionDay.node.healthRegion.province;
+    const idx = reportedDates.indexOf(regionDay.node.reportedDate);
+
+    if (!(healthRegion in parsedData[province])) {
+        parsedData[province][healthRegion] = {
+            activeCases: new Array(reportedDates.length).fill(0),
+            newCases: new Array(reportedDates.length).fill(0),
+            deaths: new Array(reportedDates.length).fill(0),
+        };
+    }
+
+    const regionData = parsedData[province][healthRegion];
+    regionData.activeCases[idx] = regionDay.node.activeCases;
+    regionData.newCases[idx] = regionDay.node.newCases;
+    regionData.deaths[idx] = regionDay.node.deaths;
 };
 
 const options = {
@@ -206,6 +95,7 @@ const graphTabs = [
     { heading: "Active Cases", key: "activeCases" },
     { heading: "New Cases", key: "newCases" },
     { heading: "Daily Deaths", key: "deaths" },
+    { heading: "Weekly Uptick", key: "uptick" },
 ];
 
 const clearTab = { heading: "Clear All", key: "clear" };
@@ -214,18 +104,18 @@ const graphApi = new GraphApi();
 // get todays date
 // and end range for date
 const today = moment().subtract(1, "days");
-const endDate = moment().subtract(7, "days");
+const endDate = moment().subtract(14, "days");
 
 const Graph = () => {
-    const [CaseData, setCaseData] = useState(null);
-    const [DisplayData, setDisplayData] = useState({
+    const [caseData, setCaseData] = useState(null);
+    const [displayData, setDisplayData] = useState({
         categories: [],
         series: [],
     });
     // these states might be unecessary, however we have to distinguish between provinces
     // since some health regions have the same name
-    const [SelectedRegions, setSelectedRegions] = useState([]);
-    const [CurTab, setCurTab] = useState(graphTabs[0].key);
+    const [selectionRegions, setSelectedRegions] = useState([]);
+    const [curTab, setCurTab] = useState(graphTabs[0].key);
 
     const getGraphData = async () =>
         await graphApi
@@ -235,7 +125,7 @@ const Graph = () => {
                     .subtract(1, "days")
                     .format(
                         "YYYY-MM-DD"
-                    )}", first: 800, sortBy: "reportedDateAsc"`
+                    )}", first: 1600, sortBy: "reportedDateAsc"`
             )
             .then((response) => {
                 let caseData = parseGraphQL(response.data, today, endDate);
@@ -252,10 +142,10 @@ const Graph = () => {
     }, []);
 
     const FilterData = (() => {
-        return Object.keys(allRegion).map((key, idx) => {
+        return Object.keys(healthRegions).map((key, idx) => {
             return {
                 heading: key,
-                content: allRegion[key],
+                content: healthRegions[key],
             };
         });
     })();
@@ -264,32 +154,32 @@ const Graph = () => {
     const addRegionToGraph = (e, province, region) => {
         e.preventDefault();
 
-        let series = DisplayData.series.concat();
-        let categories = DisplayData.categories.concat();
-        let selectedRegions = SelectedRegions.concat();
+        const newSeries = displayData.series.concat();
+        const newCategories = displayData.categories.concat();
+        const newSelectedRegions = selectionRegions.concat();
 
         // break out of onclick if region has already been added
         // TODO does checking if the element exists in the graph already have any issues
-        for (let i = 0; i < series.length; i++) {
-            if (series[i].name === region) {
+        for (let i = 0; i < newSeries.length; i++) {
+            if (newSeries[i].name === region) {
                 return;
             }
         }
 
-        series.push({ name: region, data: CaseData[province][region][CurTab] });
-        selectedRegions.push({ province: province, healthRegion: region });
+        newSeries.push({ name: region, data: caseData[province][region][curTab] });
+        newSelectedRegions.push({ province: province, healthRegion: region });
 
         setDisplayData({
-            categories: categories,
-            series: series,
+            categories: newCategories,
+            series: newSeries
         });
-        setSelectedRegions(selectedRegions);
+        setSelectedRegions(newSelectedRegions);
     };
 
     // handle click when changing tabs so display data is reflected
     // also handle clicking the clear tab
     const handleTabChange = (key, heading) => {
-        let categories = DisplayData.categories.concat();
+        let categories = displayData.categories.concat();
 
         if (key === clearTab.key) {
             setSelectedRegions([]);
@@ -300,12 +190,10 @@ const Graph = () => {
         } else {
             setCurTab(key);
 
-            let newData = SelectedRegions.map((region) => {
-                return {
-                    name: region.healthRegion,
-                    data: CaseData[region.province][region.healthRegion][key],
-                };
-            });
+            let newData = selectionRegions.map((region) => ({
+                name: region.healthRegion,
+                data: caseData[region.province][region.healthRegion][key],
+            }));
 
             setDisplayData({
                 categories: categories,
@@ -323,13 +211,13 @@ const Graph = () => {
                 <div className="w-1/12 flex">
                     <SideBarTabs
                         tabs={graphTabs}
-                        activeTab={CurTab}
+                        activeTab={curTab}
                         handleClick={handleTabChange}
                         clearTab={clearTab}
                     />
                 </div>
                 <div className="w-11/12 flex">
-                    <LineChart data={DisplayData} options={options} />
+                    <LineChart data={displayData} options={options} />
                 </div>
             </div>
             <FilterFields
