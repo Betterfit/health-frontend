@@ -1,7 +1,7 @@
 
 import * as axios from "axios";
 
-const API_URL  = 'https://betterfit.io/'
+const API_URL  = process.env.REACT_APP_GRAPHQL_API_URL
 export default class GraphApi {
   
   constructor(filterString) {
