@@ -1,3 +1,5 @@
+import { Moment } from "moment";
+
 export interface Tag {
     pk: number;
     title: string;
@@ -29,3 +31,37 @@ export interface Resource {
     color: string;
 }
 
+export interface GraphQLRegionDay {
+
+}
+
+export interface RegionDay {
+    activeCases: number;
+    recoveredCases: number;
+    newCases: number;
+    deaths: number;
+    reportedDate: string;
+    healthRegion: HealthRegion
+}
+
+export interface HealthRegion {
+    healthRegion: string;
+    province: string;
+    population2016: number;
+    populationDensityPerSqkm?: number;
+}
+
+export interface NationalCovidTimeSeries {
+    [province: string]: ProvincialCovidTimeSeries;
+}
+
+export interface ProvincialCovidTimeSeries {
+    [healthRegion: string]: RegionalCovidTimeSeries
+}
+
+export interface RegionalCovidTimeSeries {
+    population: number;
+    activeCases: number[];
+    newCases: number[];
+    deaths: number[];
+}

@@ -8,66 +8,7 @@ import healthRegions from "Data/healthRegions";
 import moment from "moment";
 import "tui-chart/dist/tui-chart.css";
 import { LineChart } from "@toast-ui/react-chart";
-import { addWeeklyUptick, createDateArray } from "Helpers/covidDataUtils";
-
-const parseGraphQL = (data, today, startDate) => {
-    let parsedData = {
-        "British Columbia": {},
-        Alberta: {},
-        Manitoba: {},
-        Saskatchewan: {},
-        Ontario: {},
-        Quebec: {},
-        "Newfoundland and Labrador": {},
-        "Prince Edward Island": {},
-        "Nova Scotia": {},
-        "New Brunswick": {},
-    };
-
-    // each entry contains statistics on covid cases in a health region on a particular day
-    const regionDays = data["data"]["allCases"]["edges"];
-
-    const reportedDates = createDateArray(startDate, today);
-    // loop through our case data and append it to each regions array so we can easily display it
-    regionDays.forEach((regionDay) =>
-        parseRegionDay(regionDay, parsedData, reportedDates)
-    );
-    addWeeklyUptick(parsedData);
-    filterFirst7Days(parsedData);
-    // add the reported date afterwards so it doesn't interfere with computing weekly uptick
-    parsedData["reportedDate"] = reportedDates.slice(7);
-    return parsedData;
-};
-
-// the weekly uptick isn't computed for the first 7 days (since we don't have the previous days)
-// so we filter them out of all of the heatlh regions
-const filterFirst7Days = (parsedData) => {
-    for (const province of Object.values(parsedData))
-        for (const healthRegion of Object.values(province))
-            for (const key of Object.keys(healthRegion))
-                healthRegion[key] = healthRegion[key].slice(7);
-    console.log(parsedData)
-};
-
-// parsed region-days will accumalate in arrays in parsedData
-const parseRegionDay = (regionDay, parsedData, reportedDates) => {
-    const healthRegion = regionDay.node.healthRegion.healthRegion;
-    const province = regionDay.node.healthRegion.province;
-    const idx = reportedDates.indexOf(regionDay.node.reportedDate);
-
-    if (!(healthRegion in parsedData[province])) {
-        parsedData[province][healthRegion] = {
-            activeCases: new Array(reportedDates.length).fill(0),
-            newCases: new Array(reportedDates.length).fill(0),
-            deaths: new Array(reportedDates.length).fill(0),
-        };
-    }
-
-    const regionData = parsedData[province][healthRegion];
-    regionData.activeCases[idx] = regionDay.node.activeCases;
-    regionData.newCases[idx] = regionDay.node.newCases;
-    regionData.deaths[idx] = regionDay.node.deaths;
-};
+import { createTimeSeriesFromRegionDays } from "Helpers/covidDataUtils";
 
 const options = {
     chart: {
@@ -95,16 +36,14 @@ const graphTabs = [
     { heading: "Active Cases", key: "activeCases" },
     { heading: "New Cases", key: "newCases" },
     { heading: "Daily Deaths", key: "deaths" },
-    { heading: "Weekly Uptick", key: "uptick" },
 ];
 
 const clearTab = { heading: "Clear All", key: "clear" };
 
 const graphApi = new GraphApi();
-// get todays date
-// and end range for date
+// get todays date and earliest date for date
 const today = moment().subtract(1, "days");
-const endDate = moment().subtract(14, "days");
+const startDate = moment().subtract(14, "days");
 
 const Graph = () => {
     const [caseData, setCaseData] = useState(null);
@@ -120,18 +59,26 @@ const Graph = () => {
     const getGraphData = async () =>
         await graphApi
             .getCaseData(
-                `reportedDateGt: "${endDate
+                `reportedDateGt: "${startDate
                     .clone()
                     .subtract(1, "days")
                     .format(
                         "YYYY-MM-DD"
-                    )}", first: 1600, sortBy: "reportedDateAsc"`
+                    )}", first: 800, sortBy: "reportedDateAsc"`
             )
-            .then((response) => {
-                let caseData = parseGraphQL(response.data, today, endDate);
-                setCaseData(caseData);
+            .then((regionDays) => {
+                // we need to parse the data so it can be used by the graphing component
+                const {
+                    nationalCovidTimeSeries,
+                    reportedDates,
+                } = createTimeSeriesFromRegionDays(
+                    regionDays,
+                    today,
+                    startDate
+                );
+                setCaseData(nationalCovidTimeSeries);
                 setDisplayData({
-                    categories: caseData.reportedDate,
+                    categories: reportedDates,
                     series: [],
                 });
             })
@@ -166,12 +113,15 @@ const Graph = () => {
             }
         }
 
-        newSeries.push({ name: region, data: caseData[province][region][curTab] });
+        newSeries.push({
+            name: region,
+            data: caseData[province][region][curTab],
+        });
         newSelectedRegions.push({ province: province, healthRegion: region });
 
         setDisplayData({
             categories: newCategories,
-            series: newSeries
+            series: newSeries,
         });
         setSelectedRegions(newSelectedRegions);
     };
