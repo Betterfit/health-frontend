@@ -14,7 +14,7 @@ const SideBarTabs = ({tabs, activeTab, handleClick, clearTab}) => {
 				<div key={tab.key} className={`mb-2 flex justify-center rounded-l-lg border border-betterfit-basic-blue border-opacity-0 hover:border-opacity-100
                                       ${tab.key === activeTab ? 'border-opacity-100 bg-white' : 'bg-gray-300 border-0 '}`}>
                   <button 
-                  	className={`text-xs py-2 ${tab.key === activeTab ? 'text-betterfit-basic-blue font-semibold' :'text-blue'}`}
+                  	className={`text-xs py-2 focus:outline-none ${tab.key === activeTab ? 'text-betterfit-basic-blue font-semibold' :'text-blue'}`}
                   	onClick={() => {tabChangeActive(tab.key, tab.heading)}}
                   >
                   	{tab.heading}
