@@ -15,7 +15,7 @@ export const useCovidData = () => {
     const [daysBack, setDaysBack] = useState(7);
 
     const startDate = moment().subtract(daysBack, "days");
-    const dates = useDateArray(daysBack);
+    const dates = createDateArray(startDate, moment());
     // This is the perfect use case for a beta feature in react-query, see docs here:
     // https://react-query-beta.tanstack.com/reference/useQueries
     const data = useQueries(
@@ -53,8 +53,8 @@ export const useCovidData = () => {
     };
 
     const timeSeries = data
-        .filter((region) => region.data)
-        .map((region) => region.data) as RegionalCovidTimeSeries[];
+        .filter((region: any) => region.data)
+        .map((region: any) => region.data) as RegionalCovidTimeSeries[];
 
     return {
         timeSeries,
@@ -82,7 +82,7 @@ const fetchAndTransformRegionData = async (
     );
     const reportedDates = createDateArray(
         startDate,
-        moment().subtract(1, "days")
+        moment()
     );
     const regionalTimeSeries = timeSeriesFromRegionDays(
         regionDays,
@@ -90,16 +90,6 @@ const fetchAndTransformRegionData = async (
     );
 
     return regionalTimeSeries;
-};
-
-const useDateArray = (daysBack: number) => {
-    const today = moment();
-    const startDate = moment().subtract(daysBack, "days");
-    const reportedDates = useMemo(() => createDateArray(startDate, today), [
-        startDate.format("YYYY-MM-DD"),
-        today.format("YYYY-MM-DD"),
-    ]);
-    return reportedDates;
 };
 
 /**
@@ -131,7 +121,7 @@ const timeSeriesFromRegionDays = (
 
     for (const regionDay of regionDays) {
         // skips all missing region days
-        while (regionDay.reportedDate !== reportedDates[day_idx]) {
+        while (regionDay.reportedDate < reportedDates[day_idx]) {
             activeCases.push(null);
             newCases.push(null);
             deaths.push(null);
@@ -165,8 +155,10 @@ const regionsAreEqual = (region1: HealthRegion, region2: HealthRegion) =>
     region1.province === region2.province &&
     region1.healthRegion === region2.healthRegion;
 
-
-export const normalizeByPopulation = (regionPop: number, data: number[]) : number[] => {
-    const num100k = regionPop / (100 * 1000)
-    return data.map(datum => datum / num100k)
-}
+export const normalizeByPopulation = (
+    regionPop: number,
+    data: (number | null)[]
+): (number | null)[] => {
+    const num100k = regionPop / (100 * 1000);
+    return data.map((datum) => (datum === null ? null : datum / num100k));
+};
