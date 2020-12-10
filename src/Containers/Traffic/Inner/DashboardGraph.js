@@ -5,19 +5,27 @@ import FilterFields from "Components/Graph/FilterFields";
 import SideBarTabs from "Components/Graph/SideBarTab";
 import healthRegions from "Data/healthRegions";
 
-import moment from "moment";
 import "tui-chart/dist/tui-chart.css";
 import { LineChart } from "@toast-ui/react-chart";
 import { useCovidData } from "Helpers/covidDataUtils";
+import Checkbox from "Components/Forms/Checkbox";
+
+const graphTabs = [
+    { heading: "Active Cases", key: "activeCases" },
+    { heading: "New Cases", key: "newCases" },
+    { heading: "Daily Deaths", key: "deaths" },
+];
+
+const clearTab = { heading: "Clear All", key: "clear" };
 
 const options = {
     chart: {
         width: 525,
         height: 400,
-        title: "Data By Health Regions",
+        title: "Data by Health Region",
     },
     yAxis: {
-        title: "Health Regions",
+        title: "Data",
     },
     xAxis: {
         title: "Date",
@@ -32,24 +40,18 @@ const options = {
     },
 };
 
-const graphTabs = [
-    { heading: "Active Cases", key: "activeCases" },
-    { heading: "New Cases", key: "newCases" },
-    { heading: "Daily Deaths", key: "deaths" },
-];
-
-const clearTab = { heading: "Clear All", key: "clear" };
-
 const Graph = () => {
     const {
         timeSeries,
         clearAllRegions,
         daysBack,
+        setDaysBack,
         regions,
         toggleRegionSelection,
         dates,
     } = useCovidData();
     const [curTab, setCurTab] = useState(graphTabs[0].key);
+    const [normalizeByPop, setNormalizeByPop] = useState(false);
 
     // used to show collapsible lists of health regions in different provinces
     const filterData = Object.keys(healthRegions).map((provinceName) => ({
@@ -79,18 +81,28 @@ const Graph = () => {
                 COVID-19 Data
             </h2>
             <div className="flex w-full flex-row pb-2">
-                <div className="w-1/12 flex">
+                <div className="w-1/10 flex flex-col justify-start">
                     <SideBarTabs
                         tabs={graphTabs}
                         activeTab={curTab}
                         handleClick={handleTabClick}
                         clearTab={clearTab}
                     />
+                    <Checkbox
+                        name="Per 100k"
+                        value={normalizeByPop}
+                        setValue={setNormalizeByPop}
+                    />
                 </div>
                 <div className="w-11/12 flex">
                     <LineChart data={toDisplay} options={options} />
                 </div>
             </div>
+            {regions.length === 0 && (
+                <p className="text-center text-sm">
+                    Select Health Regions to add to the graph
+                </p>
+            )}
             <FilterFields
                 filterData={filterData}
                 onClickEvent={onRegionClick}

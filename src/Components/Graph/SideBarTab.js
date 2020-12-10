@@ -7,7 +7,7 @@ const SideBarTabs = ({tabs, activeTab, handleClick, clearTab}) => {
     }
 
 	return (
-		<div className="flex flex-col h-full py-2 justify-start">
+		<div className="flex flex-col py-2 justify-start">
 		{
 			tabs.map(tab => {
 			  return (                    
