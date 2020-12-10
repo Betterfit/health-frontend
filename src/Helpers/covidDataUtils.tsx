@@ -164,3 +164,9 @@ const timeSeriesFromRegionDays = (
 const regionsAreEqual = (region1: HealthRegion, region2: HealthRegion) =>
     region1.province === region2.province &&
     region1.healthRegion === region2.healthRegion;
+
+
+export const normalizeByPopulation = (regionPop: number, data: number[]) : number[] => {
+    const num100k = regionPop / (100 * 1000)
+    return data.map(datum => datum / num100k)
+}

@@ -7,7 +7,7 @@ import healthRegions from "Data/healthRegions";
 
 import "tui-chart/dist/tui-chart.css";
 import { LineChart } from "@toast-ui/react-chart";
-import { useCovidData } from "Helpers/covidDataUtils";
+import { normalizeByPopulation, useCovidData } from "Helpers/covidDataUtils";
 import Checkbox from "Components/Forms/Checkbox";
 
 const graphTabs = [
@@ -51,7 +51,8 @@ const Graph = () => {
         dates,
     } = useCovidData();
     const [curTab, setCurTab] = useState(graphTabs[0].key);
-    const [normalizeByPop, setNormalizeByPop] = useState(false);
+    // data will be normalized per 100k population in health region if this is true
+    const [per100k, setPer100k] = useState(false);
 
     // used to show collapsible lists of health regions in different provinces
     const filterData = Object.keys(healthRegions).map((provinceName) => ({
@@ -63,7 +64,12 @@ const Graph = () => {
         categories: dates,
         series: timeSeries.map((regionalData) => ({
             name: regionalData.healthRegion,
-            data: regionalData[curTab],
+            data: per100k
+                ? normalizeByPopulation(
+                      regionalData.population,
+                      regionalData[curTab]
+                  )
+                : regionalData[curTab],
         })),
     };
 
@@ -88,11 +94,13 @@ const Graph = () => {
                         handleClick={handleTabClick}
                         clearTab={clearTab}
                     />
-                    <Checkbox
-                        name="Per 100k"
-                        value={normalizeByPop}
-                        setValue={setNormalizeByPop}
-                    />
+                    <div title="Normalizes data by population so that regions with different populations can be compared.">
+                        <Checkbox
+                            name="Per 100k"
+                            value={per100k}
+                            setValue={setPer100k}
+                        />
+                    </div>
                 </div>
                 <div className="w-11/12 flex">
                     <LineChart data={toDisplay} options={options} />
