@@ -94,11 +94,16 @@ const Graph = () => {
                         handleClick={handleTabClick}
                         clearTab={clearTab}
                     />
-                    <div title="Normalizes data by population so that regions with different populations can be compared.">
+                    <TimePeriodSelectionBox
+                        daysBack={daysBack}
+                        setDaysBack={setDaysBack}
+                    />
+                    <div className="py-2 mx-1 align-end">
                         <Checkbox
                             name="Per 100k"
                             value={per100k}
                             setValue={setPer100k}
+                            title="Normalizes data by population so that regions with different populations can be compared."
                         />
                     </div>
                 </div>
@@ -116,6 +121,37 @@ const Graph = () => {
                 onClickEvent={onRegionClick}
             />
         </div>
+    );
+};
+
+const TimePeriodSelectionBox = ({ daysBack, setDaysBack }) => {
+    const onChange = (e) => setDaysBack(parseInt(e.target.value));
+
+    const timePeriodOptions = [
+        { value: 7, label: "Past Week" },
+        { value: 14, label: "Past 2 Weeks" },
+        { value: 30, label: "Past Month" },
+        { value: 90, label: "Past 3 Months" },
+    ];
+
+    return (
+        <select
+            id="time period selection"
+            name="time period"
+            onChange={onChange}
+            className="uppercase text-xxs tracking-extra-wide"
+            value={daysBack}
+        >
+            {timePeriodOptions.map((option, i) => (
+                <option
+                    key={i}
+                    value={option.value}
+                    className="text-blue text-xs"
+                >
+                    {option.label}
+                </option>
+            ))}
+        </select>
     );
 };
 

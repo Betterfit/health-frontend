@@ -121,7 +121,7 @@ const timeSeriesFromRegionDays = (
 
     for (const regionDay of regionDays) {
         // skips all missing region days
-        while (regionDay.reportedDate < reportedDates[day_idx]) {
+        while (regionDay.reportedDate > reportedDates[day_idx]) {
             activeCases.push(null);
             newCases.push(null);
             deaths.push(null);

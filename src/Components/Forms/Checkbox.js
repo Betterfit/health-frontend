@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Translator from "Helpers/Translator";
 
-function Checkbox({ id_tag, name, value = false, setValue }) {
+function Checkbox({ id_tag, name, value = false, setValue, title }) {
   const [checked, setChecked] = useState(value);
   return (
     <>
-      <label className="flex items-center">
+      <label className="flex items-center" title={title}>
         <div
           className={
             "select-none uppercase text-xxs tracking-extra-wide pr-3 " +
