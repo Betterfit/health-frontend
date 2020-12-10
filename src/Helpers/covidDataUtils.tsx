@@ -1,7 +1,106 @@
-import { Moment } from "moment";
-import { NationalCovidTimeSeries, RegionDay } from "Types";
+import moment, { Moment } from "moment";
+import { HealthRegion, RegionalCovidTimeSeries, RegionDay } from "Types";
 import healthRegions from "Data/healthRegions.json";
 import { time } from "console";
+import { useMemo, useState } from "react";
+import GraphApi from "./graphApi";
+import { useQueries } from "react-query";
+
+const graphApi = new GraphApi();
+
+export const useCovidData = () => {
+    const [regions, setRegions] = useState<HealthRegion[]>([
+        { province: "Alberta", healthRegion: "Edmonton Zone" },
+    ]);
+    const [daysBack, setDaysBack] = useState(7);
+
+    const startDate = moment().subtract(daysBack, "days");
+    const dates = useDateArray(daysBack);
+    // This is the perfect use case for a beta feature in react-query, see docs here:
+    // https://react-query-beta.tanstack.com/reference/useQueries
+    const data = useQueries(
+        // We perform a variable number of queries (depending on the number of regions selected)
+        // The query key determines if a query should be rerun, so the queries are only rerun if the region or number of days back changes
+        regions.map((region) => ({
+            queryKey: [
+                "covid data",
+                region.province,
+                region.healthRegion,
+                `${daysBack} days back`,
+            ],
+            // 30 minutes until this data is considered stale (param takes ms)
+            staleTime: 1000 * 60 * 30,
+            queryFn: () =>
+                fetchAndTransformRegionData(
+                    region.healthRegion,
+                    region.province,
+                    startDate
+                ),
+        }))
+    );
+
+    const clearAllRegions = () => setRegions([]);
+
+    const toggleRegionSelection = (toToggle: HealthRegion) => {
+        // add region if it's not already selected
+        if (!regions.some((region) => regionsAreEqual(region, toToggle)))
+            setRegions([...regions, toToggle]);
+        // remove region is it is selected
+        else
+            setRegions(
+                regions.filter((region) => !regionsAreEqual(region, toToggle))
+            );
+    };
+
+    const timeSeries = data
+        .filter((region) => region.data)
+        .map((region) => region.data) as RegionalCovidTimeSeries[];
+
+    return {
+        timeSeries,
+        clearAllRegions,
+        toggleRegionSelection,
+        regions,
+        daysBack,
+        setDaysBack,
+        dates,
+    };
+};
+
+const fetchAndTransformRegionData = async (
+    healthRegion: string,
+    province: string,
+    startDate: Moment
+): Promise<RegionalCovidTimeSeries> => {
+    const regionDays = await graphApi.getCaseData(
+        `reportedDateGt: "${startDate
+            .clone()
+            .subtract(1, "days")
+            .format(
+                "YYYY-MM-DD"
+            )}", healthRegion: "${healthRegion}", province: "${province}", first: 800, sortBy: "reportedDateAsc"`
+    );
+    const reportedDates = createDateArray(
+        startDate,
+        moment().subtract(1, "days")
+    );
+    const regionalTimeSeries = timeSeriesFromRegionDays(
+        regionDays,
+        reportedDates
+    );
+
+    return regionalTimeSeries;
+};
+
+const useDateArray = (daysBack: number) => {
+    const today = moment();
+    const startDate = moment().subtract(daysBack, "days");
+    const reportedDates = useMemo(() => createDateArray(startDate, today), [
+        startDate.format("YYYY-MM-DD"),
+        today.format("YYYY-MM-DD"),
+    ]);
+    return reportedDates;
+};
 
 /**
  * Creates an array containing all the days between startDate-1 and endDate-1 formatted as YYYY-MM-DD.
@@ -21,58 +120,47 @@ export const createDateArray = (startDate: Moment, endDate: Moment) => {
     return reportedDates;
 };
 
-// parsed region-days will accumalate in arrays in parsedData
-const parseRegionDay = (
-    regionDay: RegionDay,
-    parsedData: NationalCovidTimeSeries,
+const timeSeriesFromRegionDays = (
+    regionDays: RegionDay[],
     reportedDates: string[]
-) => {
-    const healthRegion = regionDay.healthRegion.healthRegion;
-    const province = regionDay.healthRegion.province;
-    const idx = reportedDates.indexOf(regionDay.reportedDate);
+): RegionalCovidTimeSeries => {
+    let day_idx = 0;
+    const activeCases = [];
+    const newCases = [];
+    const deaths = [];
 
-    if (!(healthRegion in parsedData[province])) {
-        parsedData[province][healthRegion] = {
-            population: regionDay.healthRegion.population2016,
-            activeCases: new Array(reportedDates.length).fill(0),
-            newCases: new Array(reportedDates.length).fill(0),
-            deaths: new Array(reportedDates.length).fill(0),
-        };
+    for (const regionDay of regionDays) {
+        // skips all missing region days
+        while (regionDay.reportedDate !== reportedDates[day_idx]) {
+            activeCases.push(null);
+            newCases.push(null);
+            deaths.push(null);
+            day_idx++;
+        }
+        activeCases.push(regionDay.activeCases);
+        newCases.push(regionDay.newCases);
+        deaths.push(regionDay.deaths);
+        day_idx++;
     }
 
-    const regionData = parsedData[province][healthRegion];
-    regionData.activeCases[idx] = regionDay.activeCases;
-    regionData.newCases[idx] = regionDay.newCases;
-    regionData.deaths[idx] = regionDay.deaths;
+    // fills in all days after the last region day
+    while (activeCases.length < reportedDates.length) {
+        activeCases.push(null);
+        newCases.push(null);
+        deaths.push(null);
+    }
+
+    return {
+        population: regionDays[0].healthRegion.population2016,
+        province: regionDays[0].healthRegion.province,
+        healthRegion: regionDays[0].healthRegion.healthRegion,
+        activeCases,
+        newCases,
+        deaths,
+        reportedDates,
+    };
 };
 
-/**
- * Creates time series lists for each health region with missing days padded with null.
- * For each health region, includes lists of active cases, deaths and new cases.
- * A list of dates is also returned, which is the same length as each list of datapoints in the health regions.
- * Having the data in this format makes it easier to consume in graphs, etc.
- * @param regionDays
- * @param today The last date in the list of region days
- * @param startDate The earliest date in the list of region days
- */
-export const createTimeSeriesFromRegionDays = (
-    regionDays: RegionDay[],
-    today: Moment,
-    startDate: Moment
-): {
-    nationalCovidTimeSeries: NationalCovidTimeSeries;
-    reportedDates: string[];
-} => {
-    const timeSeries: NationalCovidTimeSeries = {};
-    for (const provinceName of Object.keys(healthRegions))
-        timeSeries[provinceName] = {};
-
-
-    const reportedDates = createDateArray(startDate, today);
-    // loop through our case data and append it to each regions array so we can easily display it
-    regionDays.forEach((regionDay: RegionDay) =>
-        parseRegionDay(regionDay, timeSeries, reportedDates)
-    );
-    console.log(timeSeries)
-    return { nationalCovidTimeSeries: timeSeries, reportedDates };
-};
+const regionsAreEqual = (region1: HealthRegion, region2: HealthRegion) =>
+    region1.province === region2.province &&
+    region1.healthRegion === region2.healthRegion;

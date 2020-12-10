@@ -21,7 +21,6 @@ export interface ResourceDetails {
     fax: string;
 }
 
-
 export interface Resource {
     pk: number;
     resource_type: string;
@@ -31,24 +30,26 @@ export interface Resource {
     color: string;
 }
 
-export interface GraphQLRegionDay {
-
-}
-
 export interface RegionDay {
     activeCases: number;
     recoveredCases: number;
     newCases: number;
     deaths: number;
     reportedDate: string;
-    healthRegion: HealthRegion
+    healthRegion: HealthRegionData;
 }
 
-export interface HealthRegion {
+export interface HealthRegionData {
     healthRegion: string;
     province: string;
     population2016: number;
     populationDensityPerSqkm?: number;
+}
+
+// some health regions have the same name, so province needs to be specified
+export interface HealthRegion {
+    healthRegion: string;
+    province: string;
 }
 
 export interface NationalCovidTimeSeries {
@@ -56,12 +57,15 @@ export interface NationalCovidTimeSeries {
 }
 
 export interface ProvincialCovidTimeSeries {
-    [healthRegion: string]: RegionalCovidTimeSeries
+    [healthRegion: string]: RegionalCovidTimeSeries;
 }
 
 export interface RegionalCovidTimeSeries {
+    province: string;
+    healthRegion: string;
     population: number;
-    activeCases: number[];
-    newCases: number[];
-    deaths: number[];
+    activeCases: (number | null)[];
+    newCases: (number | null)[];
+    deaths: (number | null)[];
+    reportedDates: string[];
 }
