@@ -27,6 +27,9 @@ const App = observer(({userType}) => {
       <Router>
         <div className="App">
           <Switch>            
+            <Route path="/research">
+              <DashboardResearch />
+            </Route>
             <Route exact path="/" render={() => (
               token ? (
                 <Redirect to="/dashboard"/>
@@ -57,9 +60,6 @@ const App = observer(({userType}) => {
             )}
             <Route path="/dashboard">
               <Dashboard language={authStore.language}/>
-            </Route>
-            <Route path="/research">
-              <DashboardResearch />
             </Route>
             <Route path="*">
               <NotFound />
