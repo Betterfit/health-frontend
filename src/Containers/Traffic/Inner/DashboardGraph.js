@@ -18,7 +18,7 @@ const graphTabs = [
 
 const clearTab = { heading: "Clear All", key: "clear" };
 
-const options = {
+const defaultChartOptions = {
     chart: {
         width: 525,
         height: 400,
@@ -30,6 +30,7 @@ const options = {
     xAxis: {
         title: "Date",
         type: "date",
+        dateFormat: "YYYY-MM-DD",
     },
     series: {
         showDot: false,
@@ -40,7 +41,16 @@ const options = {
     },
 };
 
-const Graph = () => {
+const generateChartOptions = ({ width, height }) => ({
+    ...defaultChartOptions,
+    chart: {
+        ...defaultChartOptions.chart,
+        width,
+        height,
+    },
+});
+
+const Graph = ({ width = 525, height = 400}) => {
     const {
         timeSeries,
         clearAllRegions,
@@ -73,6 +83,8 @@ const Graph = () => {
         })),
     };
 
+    const chartOptions = generateChartOptions({ width, height });
+
     // when a user selects a region from the collapsible list of health regions
     const onRegionClick = (e, province, region) =>
         toggleRegionSelection({ province: province, healthRegion: region });
@@ -82,10 +94,7 @@ const Graph = () => {
         key === "clear" ? clearAllRegions() : setCurTab(key);
 
     return (
-        <div>
-            <h2 className="text-dark-blue text-2xl pb-6 ml-3 border-b border-title-border mb-3">
-                COVID-19 Data
-            </h2>
+        <>
             <div className="flex w-full flex-row pb-2">
                 <div className="w-1/10 flex flex-col justify-start">
                     <SideBarTabs
@@ -108,7 +117,7 @@ const Graph = () => {
                     </div>
                 </div>
                 <div className="w-11/12 flex">
-                    <LineChart data={toDisplay} options={options} />
+                    <LineChart data={toDisplay} options={chartOptions} />
                 </div>
             </div>
             {regions.length === 0 && (
@@ -120,7 +129,7 @@ const Graph = () => {
                 filterData={filterData}
                 onClickEvent={onRegionClick}
             />
-        </div>
+        </>
     );
 };
 
