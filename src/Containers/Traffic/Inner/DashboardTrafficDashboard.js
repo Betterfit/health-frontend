@@ -67,6 +67,9 @@ const DashboardTrafficDashboard = () => {
                         )}
                     </DashboardSideBar>
                     <div className={`w-full lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll mt-8`}   >
+                        <h2 className="text-dark-blue text-2xl pb-6 ml-3 border-b border-title-border mb-3 self-start">
+                            COVID-19 Data
+                        </h2>
                         <Graph />
                     </div>
                 </>         

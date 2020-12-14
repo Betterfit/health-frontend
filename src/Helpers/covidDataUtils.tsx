@@ -1,12 +1,12 @@
 import moment, { Moment } from "moment";
-import { HealthRegion, RegionalCovidTimeSeries, RegionDay } from "Types";
-import healthRegions from "Data/healthRegions.json";
-import { time } from "console";
-import { useMemo, useState } from "react";
-import GraphApi from "./graphApi";
+import { useState } from "react";
 import { useQueries } from "react-query";
+import { HealthRegion, RegionalCovidTimeSeries, RegionDay } from "Types";
+import GraphApi from "./graphApi";
+import { rollingAverage } from "./mathUtils";
 
 const graphApi = new GraphApi();
+const ROLLING_AVG_INTERVAL = 5;
 
 export const useCovidData = () => {
     const [regions, setRegions] = useState<HealthRegion[]>([
@@ -80,10 +80,7 @@ const fetchAndTransformRegionData = async (
                 "YYYY-MM-DD"
             )}", healthRegion: "${healthRegion}", province: "${province}", first: 800, sortBy: "reportedDateAsc"`
     );
-    const reportedDates = createDateArray(
-        startDate,
-        moment()
-    );
+    const reportedDates = createDateArray(startDate, moment());
     const regionalTimeSeries = timeSeriesFromRegionDays(
         regionDays,
         reportedDates
@@ -118,6 +115,8 @@ const timeSeriesFromRegionDays = (
     const activeCases = [];
     const newCases = [];
     const deaths = [];
+    const resolutionTime = [];
+    const r0 = [];
 
     for (const regionDay of regionDays) {
         // skips all missing region days
@@ -125,11 +124,15 @@ const timeSeriesFromRegionDays = (
             activeCases.push(null);
             newCases.push(null);
             deaths.push(null);
+            resolutionTime.push(null);
+            r0.push(null);
             day_idx++;
         }
         activeCases.push(regionDay.activeCases);
         newCases.push(regionDay.newCases);
         deaths.push(regionDay.deaths);
+        resolutionTime.push(regionDay.resolutionTime);
+        r0.push(regionDay.r0V0);
         day_idx++;
     }
 
@@ -138,6 +141,8 @@ const timeSeriesFromRegionDays = (
         activeCases.push(null);
         newCases.push(null);
         deaths.push(null);
+        resolutionTime.push(null);
+        r0.push(null);
     }
 
     return {
@@ -147,6 +152,8 @@ const timeSeriesFromRegionDays = (
         activeCases,
         newCases,
         deaths,
+        resolutionTime: rollingAverage(resolutionTime, ROLLING_AVG_INTERVAL),
+        r0: rollingAverage(r0, ROLLING_AVG_INTERVAL),
         reportedDates,
     };
 };
