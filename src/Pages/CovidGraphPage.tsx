@@ -6,7 +6,7 @@ import React, { useState } from "react";
 const fake_password = "charlieTop674";
 
 export const CovidGraphPage = () => {
-    const [authorized, setAuthorized] = useState(true);
+    const [authorized, setAuthorized] = useState(false);
 
     const graphWidth = window.innerWidth * 0.9;
     const graphHeight = window.innerHeight * 0.6;
