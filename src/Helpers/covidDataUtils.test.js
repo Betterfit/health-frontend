@@ -1,6 +1,5 @@
-import { addWeeklyUptick, createDateArray } from "./covidDataUtils";
-
 import moment from "moment";
+import { createDateArray } from "./covidDataUtils";
 
 describe("Covid Data Utils", () => {
     it("Can can create a date array", () => {

@@ -14,6 +14,8 @@ const graphTabs = [
     { heading: "Active Cases", key: "activeCases" },
     { heading: "New Cases", key: "newCases" },
     { heading: "Daily Deaths", key: "deaths" },
+    { heading: "Resolution Time", key: "resolutionTime" },
+    { heading: "R0", key: "r0" },
 ];
 
 const clearTab = { heading: "Clear All", key: "clear" };

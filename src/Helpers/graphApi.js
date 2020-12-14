@@ -41,6 +41,8 @@ export default class GraphApi {
           activeCases
           newCases
           deaths
+          r0V0
+          resolutionTime
         }  
       }}}`,
             variables: null,
