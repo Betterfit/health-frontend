@@ -11,14 +11,41 @@ import { normalizeByPopulation, useCovidData } from "Helpers/covidDataUtils";
 import Checkbox from "Components/Forms/Checkbox";
 
 const graphTabs = [
-    { heading: "Active Cases", key: "activeCases" },
-    { heading: "New Cases", key: "newCases" },
-    { heading: "Daily Deaths", key: "deaths" },
-    { heading: "Resolution Time", key: "resolutionTime" },
-    { heading: "R0", key: "r0" },
+    {
+        heading: "Active Cases",
+        key: "activeCases",
+        descr:
+            "The total number of individuals that have COVID-10 on a given day.",
+    },
+    {
+        heading: "New Cases",
+        key: "newCases",
+        descr: "The number of new infections reported on a given day.",
+    },
+    {
+        heading: "Daily Deaths",
+        key: "deaths",
+        descr: "The number of new deaths reported on a given day.",
+    },
+    {
+        heading: "Resolution Time",
+        key: "resolutionTime",
+        descr:
+            "How long it takes for recoveries and deaths to catch up with the number of new cases on a past day. If there were 100 new cases today, how long until we can expect to see 100 recoveries and deaths.",
+    },
+    {
+        heading: "R0",
+        key: "r0",
+        descr:
+            "Our estimate of COVID-19's reproduction number in this health region. Measures how many new infections a contagious person will cause, on average.",
+    },
 ];
 
-const clearTab = { heading: "Clear All", key: "clear" };
+const clearTab = {
+    heading: "Clear All",
+    key: "clear",
+    descr: "Remove all Health Regions from the graph.",
+};
 
 const defaultChartOptions = {
     chart: {
@@ -52,7 +79,7 @@ const generateChartOptions = ({ width, height }) => ({
     },
 });
 
-const Graph = ({ width = 525, height = 400}) => {
+const Graph = ({ width = 525, height = 400 }) => {
     const {
         timeSeries,
         clearAllRegions,

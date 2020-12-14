@@ -25,7 +25,10 @@ export const rollingAverage = (
             intervalSum += value;
             denominator += 1;
         }
-        if (denominator > 0) out.push(intervalSum / denominator);
+        if (denominator > 0) {
+            const avg = intervalSum / denominator;
+            out.push(roundToNDecimals(avg, decimalPlaces))
+        }
         else out.push(null);
     }
     return out;
