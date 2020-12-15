@@ -1,6 +1,6 @@
 import React from "react";
-import TableHead from "./TableHead";
 import TableBody from "./TableBody";
+import TableHead from "./TableHead";
 
 const Table = ({ TableData, link, extraClasses, buttonType, sort }) => {
   const TableHeadData = [];
@@ -8,7 +8,7 @@ const Table = ({ TableData, link, extraClasses, buttonType, sort }) => {
   let nooptions = false;
   let removeAtIndex;
   let statusIndex;
-  TableData.map((variant) => {
+  TableData.forEach((variant) => {
     let keys = Object.keys(variant);
     let values = {
       order_no: variant.order_no,
@@ -23,7 +23,7 @@ const Table = ({ TableData, link, extraClasses, buttonType, sort }) => {
       if (!TableHeadData.includes(key)) {
         if (key !== "pk") {
           TableHeadData.push(key);
-          if (key == "status") {
+          if (key === "status") {
             statusIndex = index;
           }
         } else {

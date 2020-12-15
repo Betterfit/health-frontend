@@ -10,7 +10,7 @@ import { isEqual } from "lodash";
 import React, { useEffect, useState } from "react";
 
 
-const ProfileCard = ({}) => {
+const ProfileCard = () => {
   const api = new Api();
   //NOTE - this is not getting or saving lang to user data yet
   //ONLY saving local.
@@ -78,7 +78,7 @@ const ProfileCard = ({}) => {
       if (values.newPW.length < 8) {
         errors.newPW = "Password must be more than 8 characters.";
       }
-      if (values.newPW != values.confirmPW) {
+      if (values.newPW !== values.confirmPW) {
         errors.confirmPW = "'Set password' and 'Confirm password' must match.";
       }
     }
@@ -100,10 +100,6 @@ const ProfileCard = ({}) => {
       });
   };
 
-  //Only run if userData has been updated
-  useEffect(() => {
-    userName = userData.username;
-  }, [userData]);
 
   //callback for submit order
   const pwCallBack = async () => {

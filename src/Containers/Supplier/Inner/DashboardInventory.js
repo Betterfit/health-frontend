@@ -151,7 +151,6 @@ const DashboardInventory = () => {
             <Route
               exact
               path="/dashboard/inventory/product/:id"
-              exact
               render={(props) => {
                 return <DashboardProductList {...props} edit={true} />;
               }}
@@ -174,6 +173,7 @@ const DashboardInventory = () => {
             className="absolute left-0 right-0 spinner"
             style={{ maxWidth: 150 }}
             src={Spinner}
+            alt=""
           />
         </div>
       )}

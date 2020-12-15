@@ -13,6 +13,7 @@ const RegulationCard = ({ name, tagList, details, color }) => {
     <a
       href={url}
       target="_blank"
+      rel="noopener noreferrer"
       className="text-resource-blue hover:underline"
     >
       View Regulation

@@ -1,6 +1,6 @@
 import React from "react";
-import TableHead from "./TableHead";
 import TableBody from "./TableBody";
+import TableHead from "./TableHead";
 
 const Table = ({ TableData, link, extraClasses, buttonType }) => {
   const TableHeadData = [];
@@ -8,14 +8,14 @@ const Table = ({ TableData, link, extraClasses, buttonType }) => {
   let nooptions = false;
   let removeAtIndex;
   let statusIndex;
-  TableData.map((variant) => {
+  TableData.forEach((variant) => {
     let keys = Object.keys(variant);
     let values = Object.values(variant);
     keys.forEach((key, index) => {
       if (!TableHeadData.includes(key)) {
         if (key !== "pk") {
           TableHeadData.push(key);
-          if (key == "status") {
+          if (key === "status") {
             statusIndex = index;
           }
         } else {
