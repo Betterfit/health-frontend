@@ -9,8 +9,8 @@ const LoginContainer = ({ children }) => {
     <div className="min-h-screen bg-betterfit-basic-blue flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <img
         src={UpperBackgroundBlob}
-        role="presentation"
         className="absolute left-0 top-0 z-0"
+        alt=""
       ></img>
       <img
         src={LowerBackgroundBlob}

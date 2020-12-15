@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useHistory, Route, useRouteMatch } from "react-router-dom";
 import { useAuthStore } from "Context/authContext";
+import React from "react";
+import { useHistory } from "react-router-dom";
 
 const LogOut = () => {
   const authStore = useAuthStore();

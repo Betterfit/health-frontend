@@ -1,28 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { useObserver } from "mobx-react";
+import Modal from "Components/Content/Modal";
 import Button from "Components/Forms/Button";
-import { ReactSVG } from "react-svg";
-import EmptyCart from "Images/Icons/shopping-cart-empty.svg";
-import Api from "Helpers/api";
+import Checkbox from "Components/Forms/CheckboxConfirm";
+import OrderName from "Components/Forms/OrderName";
+import OrderProductCard from "Components/Order/OrderProductCard";
 import { useAuthStore } from "Context/authContext";
 import { useCartStore } from "Context/cartContext";
-import Modal from "Components/Content/Modal";
-import OrderProductCard from "Components/Order/OrderProductCard";
-import OrderName from "Components/Forms/OrderName";
-import Checkbox from "Components/Forms/CheckboxConfirm";
+import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
+import EmptyCart from "Images/Icons/shopping-cart-empty.svg";
+import { useObserver } from "mobx-react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { ReactSVG } from "react-svg";
 const api = new Api();
 let rawCart;
 
-const OrderCart = ({ Cart, OrderID, id }) => {
+const OrderCart = ({ Cart,  id }) => {
   const history = useHistory();
   let CartData = JSON.stringify(Cart);
   CartData = JSON.parse(CartData);
   const authStore = useAuthStore();
   const cartStore = useCartStore();
   const [cartItems, setCartItems] = useState(null);
-  const [cartRaw, setCartRaw] = useState();
   const [modalOrder, setModalOrder] = useState(false);
   const [modalDraft, setModalDraft] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
@@ -62,7 +61,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
   const confirmCallBack = (status) => {
     const userData = JSON.parse(authStore.user);
     console.log(userData);
-    if (agreeTerms || status == "draft") {
+    if (agreeTerms || status === "draft") {
       let order = {
         facility: userData.user_profile.facility,
         user: userData.pk,
@@ -77,7 +76,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
           };
         }),
       };
-      if (cartStore.cartType == "editCart") {
+      if (cartStore.cartType === "editCart") {
         delete order.facility;
         delete order.facility_admin;
         api.editOrder(order, id).then((response) => {
@@ -127,7 +126,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
             })}
         </div>
         {!cartItems ||
-          (cartItems.length == 0 && (
+          (cartItems.length === 0 && (
             <>
               <ReactSVG
                 src={EmptyCart}

@@ -1,5 +1,5 @@
-import React from "react";
 import Translator from "Helpers/Translator";
+import React from "react";
 
 const SideBarProfileNavigation = ({
   userType,
@@ -16,13 +16,13 @@ const SideBarProfileNavigation = ({
         onMouseLeave={close}
       >
         {userType === "facility_admin" && (
-          <a onClick={showFacility}>
-            <span className="my-2">{Translator("Facility Profile")}</span>
-          </a>
+          <button onClick={showFacility} className="text-left">
+            {Translator("Facility Profile")}
+          </button>
         )}
-        <a onClick={showProfile}>
-          <span className="my-2">{Translator("Profile")}</span>
-        </a>
+        <button onClick={showProfile} className="text-left">
+          {Translator("Profile")}
+        </button>
         <a href="/logout">
           <span className="my-2">{Translator("Logout")}</span>
         </a>

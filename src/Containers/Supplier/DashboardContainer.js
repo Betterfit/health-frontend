@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
 import DashboardResources from "../DashboardResources";
@@ -7,10 +7,6 @@ import DashboardTicketDetail from "./Inner/DashboardTicketDetail";
 import DashboardTickets from "./Inner/DashboardTickets";
 
 const DashboardContainer = () => {
-  const [title, setTitle] = useState("");
-  const changeTitle = (title) => {
-    setTitle(title);
-  };
   return (
     <div className="flex flex-col w-full md:w-0 flex-1 overflow-hidden md:flex-row">
       <main
@@ -41,13 +37,11 @@ const DashboardContainer = () => {
           <Route path="/dashboard/inventory">
             <DashboardInventory
               initial
-              changeTitle={(title) => changeTitle(title)}
             />
           </Route>
           <Route path="/dashboard/resources">
             <DashboardResources
               initial
-              changeTitle={(title) => changeTitle(title)}
             />
           </Route>
         </AnimatedSwitch>

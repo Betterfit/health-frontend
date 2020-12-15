@@ -9,14 +9,11 @@ import { ReactSVG } from "react-svg";
 let myTimeOut;
 const Search = ({ type, activeTab = null }) => {
   const authStore = useAuthStore();
-  // search value state not currently used
-  const [_, setSearchValue] = useState("");
   const searchRef = useRef(null);
   const history = useHistory();
   const userData = JSON.parse(authStore.user);
   const supplierId = userData.user_profile.supplier;
   const searchQuery = () => {
-    setSearchValue(searchRef.current.value);
     if (activeTab) {
       if (activeTab == "my-inventory") {
         history.push(

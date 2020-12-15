@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-// ========= Components ========
 import SideBar from "Components/SideBar/SideBar";
 import DashboardContainer from "Containers/Facility/DashboardContainer";
-import { BrowserRouter as Router } from "react-router-dom";
+import NewOrder from "Images/Icons/new-order.svg";
 import Order from "Images/Icons/order.svg";
 import Resources from "Images/Icons/resources.svg";
-import NewOrder from "Images/Icons/new-order.svg";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const DashboardFacility = () => {
   const navItemsList = [

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import EmptyImage from "Images/emptyImage.png";
+import React from "react";
 
 //This will either return the attribute if it exists, or
 // return the passed in 'default_value' if not

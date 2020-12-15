@@ -9,7 +9,7 @@ const OrderSearch = ({ extraClasses }) => {
   const history = useHistory();
 
   const searchQuery = () => {
-    if (searchRef.current.value.length == 0) {
+    if (searchRef.current.value.length === 0) {
       history.push(`/dashboard/orders`);
     } else {
       history.push(

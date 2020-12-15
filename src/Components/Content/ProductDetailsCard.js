@@ -1,6 +1,6 @@
-import React from "react";
-import Inventory_Description from "../Inventory/Inventory_Description";
 import ProductImageCard from "Components/Content/ProductImageCard";
+import React from "react";
+import InventoryDescription from "../Inventory/Inventory_Description";
 
 //This will either return the attribute if it exists, or
 // return the passed in 'default_value' if not
@@ -16,24 +16,24 @@ const ProductDetailCard = ({ product, children }) => {
     <>
       <div className="flex lg:flex-row flex-col-reverse">
         <div className="xl:w-3/5 lg:w-1/2 lg:pr-12 py-4 mx-2">
-          <Inventory_Description
+          <InventoryDescription
             title={product.product_label}
             description={Read_Product(product.product_label_value, "N/A")}
             class_addons="pb-2"
-          ></Inventory_Description>
+          ></InventoryDescription>
           {product.product_category && (
-            <Inventory_Description
+            <InventoryDescription
               title="Category"
               class_addons="pb-2 pt-4"
               description={Read_Product(product.product_category, "N/A")}
-            ></Inventory_Description>
+            ></InventoryDescription>
           )}
           {product.product_description && (
-            <Inventory_Description
+            <InventoryDescription
               title="Description"
               class_addons="pb-2 pt-4"
               description={Read_Product(product.product_description, "N/A")}
-            ></Inventory_Description>
+            ></InventoryDescription>
           )}
         </div>
         <div className="xl:w-2/5 lg:w-1/2 py-4 mx-2">

@@ -1,11 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
-import logo from "./logo.svg";
+import React from "react";
 // components
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from "react-router-dom";
 
@@ -21,7 +19,8 @@ import { observer } from "mobx-react";
 import NotFound from "./Pages/404";
 import DashboardResearch from "Containers/DashboardResearch";
 import { CovidGraphPage } from "Pages/CovidGraphPage";
-const App = observer(({ userType }) => {
+
+const App = observer(() => {
   const authStore = useAuthStore();
   const token = authStore.token;
   return (

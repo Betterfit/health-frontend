@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
-import dayjs from "dayjs";
 import BackNavigation from "Components/Helpers/BackNavigation";
 import Translator from "Helpers/Translator";
+import React from "react";
 
 const MatchHeaderComponent = ({ title, value, classes }) => {
   return (
@@ -36,7 +35,6 @@ const MatchHeaderComponentTitle = ({ value, classes }) => {
 };
 
 const MatchOrderDetailHeader = ({ order, actionComponent }) => {
-  let orderDate = dayjs(order.order_date).format("MMM DD, YYYY");
   return (
     <div className="flex flex-col border-b pb-4 border-gray-400 relative">
       <BackNavigation link={"Back to Match"} />

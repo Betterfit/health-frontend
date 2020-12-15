@@ -1,6 +1,5 @@
 import { useMatchStore } from "Context/matchContext";
 import dayjs from "dayjs";
-import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import Moveable from "Images/Icons/moveable.svg";
 import Attention from "Images/Icons/yellow-attention.svg";
@@ -14,9 +13,7 @@ const TableBody = ({
   link,
   sort = true,
 }) => {
-  // console.log(TableBodyData);
   const matchStore = useMatchStore();
-  const api = new Api();
   const [rowState, setRowState] = useState(TableBodyData);
   const sortFunction = () => {
     matchStore.matches = JSON.stringify(rowState);
@@ -47,7 +44,7 @@ const TableBody = ({
           orderDate = dayjs(orderDate).format("D");
           let today = new Date();
           today = dayjs(today).format("D");
-          if (pindex % 2 == 0) {
+          if (pindex % 2 === 0) {
             return (
               <tr
                 key={`table_row_${pindex}`}

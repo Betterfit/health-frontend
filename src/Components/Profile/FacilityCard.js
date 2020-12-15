@@ -1,16 +1,15 @@
-import { Transition } from "@tailwindui/react";
-import React, { useState, useEffect } from "react";
-import Translator from "Helpers/Translator";
-import Api from "Helpers/api";
-import { useAuthStore } from "Context/authContext";
+import CardTitle from "Components/Profile/CardTitle";
 //components
 import FacilityDescriptions from "Components/Profile/FacilityDescription";
-import CardTitle from "Components/Profile/CardTitle";
+import { useAuthStore } from "Context/authContext";
+import Api from "Helpers/api";
+import Translator from "Helpers/Translator";
+import React, { useEffect, useState } from "react";
 
 const FacilityCard = ({}) => {
   const api = new Api();
   const authStore = useAuthStore();
-  const [userData, setUserType] = useState(JSON.parse(authStore.user));
+  const [userData] = useState(JSON.parse(authStore.user));
   const [facilityData, setFacility] = useState();
   const facilityName = userData.user_profile.facility_name;
   const facilityId = userData.user_profile.facility;

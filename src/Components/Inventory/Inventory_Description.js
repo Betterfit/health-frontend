@@ -1,7 +1,7 @@
-import React from "react";
 import Translator from "Helpers/Translator";
+import React from "react";
 
-function Inventory_Description({ title, description, class_addons }) {
+function InventoryDescription({ title, description, class_addons }) {
   let standard_dt_styles = `uppercase font-medium text-betterfit-graphite text-xxs tracking-extra-wide pr-3 ${class_addons}`;
   return (
     <dl>
@@ -17,4 +17,4 @@ function Inventory_Description({ title, description, class_addons }) {
   );
 }
 
-export default Inventory_Description;
+export default InventoryDescription;

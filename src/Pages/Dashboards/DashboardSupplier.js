@@ -1,15 +1,12 @@
-import React, { useState } from "react";
-// ========= Components ========
 import SideBar from "Components/SideBar/SideBar";
 import DashboardContainer from "Containers/Supplier/DashboardContainer";
-import { BrowserRouter as Router } from "react-router-dom";
-import Ticket from "Images/Icons/ticket.svg";
-import Resources from "Images/Icons/resources.svg";
 import Inventory from "Images/Icons/inventory.svg";
-import Translator from "Helpers/Translator";
-const DashboardSupplier = () => {
-  // usestate to save user and pass
+import Resources from "Images/Icons/resources.svg";
+import Ticket from "Images/Icons/ticket.svg";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 
+const DashboardSupplier = () => {
   const navItemsList = [
     {
       to: "/dashboard/tickets",
