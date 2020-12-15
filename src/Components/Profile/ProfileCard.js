@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useAuthStore } from "Context/authContext";
-import Api from "Helpers/api";
-import { isEqual } from "lodash";
-import Translator from "Helpers/Translator";
-
-//components
-import InputFieldLabel from "Components/Forms/InputFieldLabel";
 import Button from "Components/Forms/Button";
-import CardTitle from "Components/Profile/CardTitle";
+import InputFieldLabel from "Components/Forms/InputFieldLabel";
 import ButtonToggle from "Components/Forms/ToggleButton";
 import Notification from "Components/Helpers/Notifications";
+import CardTitle from "Components/Profile/CardTitle";
+import { useAuthStore } from "Context/authContext";
+import Api from "Helpers/api";
+import Translator from "Helpers/Translator";
+import { isEqual } from "lodash";
+import React, { useEffect, useState } from "react";
+
 
 const ProfileCard = ({}) => {
   const api = new Api();
@@ -28,7 +27,6 @@ const ProfileCard = ({}) => {
   };
 
   const [baseFormValues, setBaseFormValues] = useState(intialBaseValues);
-  const [baseFormErrors, setBaseFormErrors] = useState({});
 
   const intialPWValues = { oldPW: "", newPW: "", confirmPW: "" };
   const [pwFormValues, setPWFormValues] = useState(intialPWValues);
@@ -70,11 +68,11 @@ const ProfileCard = ({}) => {
     let errors = {};
     //only run if any pw field has text
     if (
-      values.oldPW.length != 0 ||
-      values.newPW.length != 0 ||
-      values.oldPW.length != 0
+      values.oldPW.length !== 0 ||
+      values.newPW.length !== 0 ||
+      values.oldPW.length !== 0
     ) {
-      if (values.oldPW.length == 0) {
+      if (values.oldPW.length === 0) {
         errors.oldPW = "Old password must be filled.";
       }
       if (values.newPW.length < 8) {

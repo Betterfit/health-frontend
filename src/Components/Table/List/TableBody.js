@@ -1,9 +1,8 @@
-import React from "react";
-import { ReactSVG } from "react-svg";
-import Edit from "Images/Icons/edit.svg";
-import { NavLink } from "react-router-dom";
 import Button from "Components/Content/Button";
 import StatusButton from "Components/Content/StatusButton";
+import React from "react";
+import { NavLink } from "react-router-dom";
+
 const TableBody = ({
   TableBody,
   removeAtIndex,
@@ -14,14 +13,14 @@ const TableBody = ({
   return (
     <tbody>
       {TableBody.map((row, pindex) => {
-        if (pindex % 2 == 0) {
+        if (pindex % 2 === 0) {
           return (
             <React.Fragment key={`table_row_${pindex}`}>
               {link && (
                 <tr className="table-row bg-white border border-white  hover:border-betterfit-highlight-blue">
                   {row.map((r, index) => {
                     if (index !== removeAtIndex)
-                      if (index == statusIndex)
+                      if (index === statusIndex)
                         return (
                           <td
                             key={`table_td_${pindex}_${index}`}
@@ -69,7 +68,7 @@ const TableBody = ({
                 <tr className="bg-white border border-white table-row">
                   {row.map((r, index) => {
                     if (index !== removeAtIndex)
-                      if (index == statusIndex)
+                      if (index === statusIndex)
                         return (
                           <td
                             key={`table_td_${pindex}_${index}`}
@@ -114,7 +113,7 @@ const TableBody = ({
                 <tr className="table-row bg-table-row border m-1 border-table-row relative hover:border-betterfit-highlight-blue">
                   {row.map((r, index) => {
                     if (index !== removeAtIndex)
-                      if (index == statusIndex)
+                      if (index === statusIndex)
                         return (
                           <td
                             key={`table_td_${pindex}_${index}`}
@@ -162,7 +161,7 @@ const TableBody = ({
                 <tr className="bg-table-row border border-table-row table-row">
                   {row.map((r, index) => {
                     if (index !== removeAtIndex)
-                      if (index == statusIndex)
+                      if (index === statusIndex)
                         return (
                           <td
                             key={`table_td_${pindex}_${index}`}

@@ -1,6 +1,6 @@
+import Translator from "Helpers/Translator";
 import React, { useState } from "react";
 import uuid from "react-uuid";
-import Translator from "Helpers/Translator";
 
 const TabHeadings = ({
   headings,
@@ -20,7 +20,7 @@ const TabHeadings = ({
       <div className="flex flex-row flex-1 h-full mr-3 px-4">
         {headings.map((heading) => {
           return (
-            <div key={uuid()} className="pr-6 " key={heading.key}>
+            <div className="pr-6 " key={heading.key}>
               <button
                 className={` pt-4 pb-2 focus:outline-none relative mr-2 ${
                   heading.key === activeHeading

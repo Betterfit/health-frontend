@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import Api from "Helpers/api";
-import CategoryCard from "Components/Order/CategoryCard";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
+import CategoryCard from "Components/Order/CategoryCard";
+import Api from "Helpers/api";
 import Spinner from "Images/spinner.gif";
+import React, { useEffect, useState } from "react";
 
 const DashboardCategoryList = (props) => {
   const api = new Api();
@@ -39,6 +39,7 @@ const DashboardCategoryList = (props) => {
             className="absolute left-0 right-0 spinner"
             style={{ maxWidth: 150 }}
             src={Spinner}
+            alt="Loading"
           />
         </div>
       ) : (

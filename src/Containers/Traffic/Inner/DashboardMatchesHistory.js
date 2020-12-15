@@ -60,8 +60,6 @@ const DashboardMatchesHistory = ({ props }) => {
     getData();
   }, []);
 
-  const sortFunction = () => {};
-
   const HeadingComponent = ({ title, value, classes, time }) => {
     if (time) {
       // console.log(value);
@@ -122,6 +120,7 @@ const DashboardMatchesHistory = ({ props }) => {
             className="absolute left-0 right-0 spinner"
             style={{ maxWidth: 150 }}
             src={Spinner}
+            alt="Loading"
           />
         </div>
       ) : (

@@ -20,7 +20,6 @@ function useQuery() {
 
 const DashboardInventory = () => {
   const api = new Api();
-  const [title, setTitle] = useState("Inventory");
   const [AllCategoryData, setAllCategoryData] = useState(null);
   const [SupplierCategoryData, setSupplierCategoryData] = useState(null);
   const [activeTab, setActiveTab] = useState("my-inventory");
@@ -127,7 +126,7 @@ const DashboardInventory = () => {
           <DashboardSideBar padding="">
             <div className="pt-4 px-4">
               <h2 className="text-3xl text-dark-blue my-3">
-                {Translator(title)}
+                {Translator("Inventory")}
               </h2>
             </div>
             <Tabs
