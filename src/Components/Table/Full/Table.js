@@ -1,7 +1,7 @@
 import React from "react";
+import TableBody from "./TableBody";
 import TableHead from "./TableHead";
 import TableHeader from "./TableHeader";
-import TableBody from "./TableBody";
 const Table = ({ TableData, excludeKeys, excludeValues }) => {
   const TableDataProducts = TableData.order_products;
 
@@ -11,13 +11,11 @@ const Table = ({ TableData, excludeKeys, excludeValues }) => {
 
   let TableHeadData = [];
   let TableBodyData = [];
-  let TableHeaderDataOnly = {};
 
-  let nooptions = false;
   TableDataProducts.map((variant) => {
     let keys = Object.keys(variant);
     let values = Object.entries(variant);
-    keys.forEach((key, index) => {
+    keys.forEach((key) => {
       if (!TableHeadData.includes(key)) {
         TableHeadData.push(key);
       }
@@ -26,8 +24,8 @@ const Table = ({ TableData, excludeKeys, excludeValues }) => {
   });
   // exclude keys from filter
   TableHeadData = TableHeadData.filter((item) => !excludeKeys.includes(item));
-  TableBodyData = TableBodyData.map((row, index) => {
-    return row.filter((item, index) => {
+  TableBodyData = TableBodyData.map((row) => {
+    return row.filter((item) => {
       if (!excludeValues.includes(item[0])) {
         return item;
       }

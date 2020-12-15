@@ -1,8 +1,8 @@
+import ControllerCardStatus from "Components/TrafficControllerSideBar/ControllerCardStatus";
+import Critical from "Images/Icons/critical.svg";
 import React from "react";
 import { ReactSVG } from "react-svg";
 
-import Critical from "Images/Icons/critical.svg";
-import ControllerCardStatus from "Components/TrafficControllerSideBar/ControllerCardStatus";
 
 //Styles associated with each status (normal, critical, warn)
 const StatStyles = (status = "normal") => {
@@ -12,7 +12,6 @@ const StatStyles = (status = "normal") => {
         bg: "bg-tag-light-blue",
         text: "text-tag-light-blue-txt",
       };
-      break;
     case "warning":
       return {
         bg: "bg-tag-light-yellow",

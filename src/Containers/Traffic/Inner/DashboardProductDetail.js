@@ -13,16 +13,16 @@ const api = new Api();
 
 const DashboardProductDetail = (props) => {
   const { match } = props;
-  const product_id = parseInt(match.params.pid);
   const product_details_id = parseInt(match.params.oid);
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState();
+  // we may use isError in the future
+  // eslint-ignore 
   const [isError, setIsError] = useState(false);
   const getData = async () =>
     await api
       .getProductOption(product_details_id)
       .then((response) => {
-        console.log(response.data);
         setProduct({
           product_category: response.data.product_category,
           product_name: response.data.product_variation,
@@ -57,6 +57,7 @@ const DashboardProductDetail = (props) => {
             className="absolute left-0 right-0 spinner"
             style={{ maxWidth: 150 }}
             src={Spinner}
+            alt="Loading"
           />
         </div>
       )}

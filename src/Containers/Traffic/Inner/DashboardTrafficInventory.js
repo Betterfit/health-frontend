@@ -4,7 +4,6 @@ import Search from "Components/Search/Search";
 import Tabs from "Components/Tabs/Tabs";
 import DashboardProductList from "Containers/DashboardProductList";
 import DashboardSearch from "Containers/DashboardSearch";
-import { useAuthStore } from "Context/authContext";
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import Spinner from "Images/spinner.gif";
@@ -15,16 +14,11 @@ import DashboardProductDetail from "./DashboardProductDetail";
 
 const api = new Api();
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 const DashboardInventory = () => {
-  const [title, setTitle] = useState("Inventory");
+  const title = "Inventory"
   const [AllCategoryData, setAllCategoryData] = useState(null);
   const [activeTab, setActiveTab] = useState("all-products");
   const location = useLocation();
-  const authStore = useAuthStore();
   const [TabData, setTabData] = useState([]);
   const getAllCategories = async () =>
     await api
@@ -104,7 +98,6 @@ const DashboardInventory = () => {
             <Route
               exact
               path="/dashboard/inventory/product/:id"
-              exact
               render={(props) => {
                 return <DashboardProductList {...props} edit={false} />;
               }}
@@ -127,6 +120,7 @@ const DashboardInventory = () => {
             className="absolute left-0 right-0 spinner"
             style={{ maxWidth: 150 }}
             src={Spinner}
+            alt="Loading"
           />
         </div>
       )}

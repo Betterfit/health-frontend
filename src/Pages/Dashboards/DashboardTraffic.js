@@ -1,6 +1,5 @@
 import SideBar from "Components/SideBar/SideBar";
 import DashboardContainer from "Containers/Traffic/DashboardContainer";
-import { useAuthStore } from "Context/authContext";
 import Dashboard from "Images/Icons/dashboard.svg";
 import Inventory from "Images/Icons/inventory.svg";
 import Matches from "Images/Icons/matches.svg";
@@ -10,7 +9,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 
 const DashboardTraffic = () => {
-  const authStore = useAuthStore();
   // usestate to save user and pass
   const navItemsList = [
     {

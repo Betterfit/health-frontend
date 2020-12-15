@@ -1,5 +1,5 @@
 import { MatchProvider } from "Context/matchContext";
-import React, { useState } from "react";
+import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
 import DashboardResources from "../DashboardResources";
@@ -11,10 +11,6 @@ import DashboardTrafficDashboard from "./Inner/DashboardTrafficDashboard";
 import DashboardTrafficInventory from "./Inner/DashboardTrafficInventory";
 
 const DashboardContainer = () => {
-  const [title, setTitle] = useState("");
-  const changeTitle = (title) => {
-    setTitle(title);
-  };
   return (
     <div className="flex flex-col w-full md:w-0 flex-1 overflow-hidden md:flex-row">
       <main
@@ -58,16 +54,10 @@ const DashboardContainer = () => {
             <DashboardTrafficDashboard />
           </Route>
           <Route path="/dashboard/inventory">
-            <DashboardTrafficInventory
-              initial
-              changeTitle={(title) => changeTitle(title)}
-            />
+            <DashboardTrafficInventory initial />
           </Route>
           <Route path="/dashboard/resources">
-            <DashboardResources
-              initial
-              changeTitle={(title) => changeTitle(title)}
-            />
+            <DashboardResources initial />
           </Route>
           {/* <Route path="/404" component={NotFound} />
                     <Redirect to="/404" />

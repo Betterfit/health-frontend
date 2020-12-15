@@ -3,7 +3,6 @@ import AddResearch from "Components/Resources/AddResearch";
 import ResourceList from "Components/Resources/ResourceList";
 import TagFilterList from "Components/Resources/TagFilterList";
 import SearchBar from "Components/Search/SearchBar";
-import Api from "Helpers/api";
 import { useResources } from "Helpers/resourceUtils";
 import Translator from "Helpers/Translator";
 import Spinner from "Images/spinner.gif";
@@ -11,8 +10,7 @@ import React from "react";
 import { Resource } from "Types";
 
 const DashboardResearch = () => {
-  const api = new Api();
-  // filters out
+  // filter function to remove all resources that aren't research
   const researchFilter = (resource: Resource) =>
     resource.resource_type === "research";
   const {
@@ -31,6 +29,7 @@ const DashboardResearch = () => {
         className="absolute left-0 right-0 spinner"
         style={{ maxWidth: 150 }}
         src={Spinner}
+        alt="Loading"
       />
     </div>
   ) : (

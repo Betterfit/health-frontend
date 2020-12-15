@@ -13,7 +13,7 @@ import uuid from "react-uuid";
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
-const DashboardOrderSearch = ({}) => {
+const DashboardOrderSearch = () => {
   const api = new API();
   let query = useQuery();
   const [searchQuery, setSearchQuery] = useState(query.get("search"));

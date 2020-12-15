@@ -15,7 +15,7 @@ const Search = ({ type, activeTab = null }) => {
   const supplierId = userData.user_profile.supplier;
   const searchQuery = () => {
     if (activeTab) {
-      if (activeTab == "my-inventory") {
+      if (activeTab === "my-inventory") {
         history.push(
           `/dashboard/inventory/search?search=${searchRef.current.value}&supplier=${supplierId}`
         );

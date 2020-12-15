@@ -12,8 +12,8 @@ import { useObserver } from "mobx-react";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ReactSVG } from "react-svg";
+
 const api = new Api();
-let rawCart;
 
 const OrderCart = ({ Cart,  id }) => {
   const history = useHistory();
@@ -40,7 +40,6 @@ const OrderCart = ({ Cart,  id }) => {
     // resolve all the api calls in parallel and populate the messageData object as they resolve
     Promise.all(promises)
       .then((responses) => {
-        rawCart = CartData;
         setCartItems(responses);
       })
       .catch((err) => console.log(err));

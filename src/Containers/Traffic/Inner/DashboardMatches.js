@@ -140,19 +140,7 @@ const DashboardMatches = () => {
     );
   };
 
-  const matchData = [
-    {
-      match_number: "1001-2020-001242",
-      province: "AB",
-      facility: "Royal Alexandra Ho...",
-      supplier: "Air Liquide",
-      order_date: "Oct 27, 2020",
-      rank: 99,
-      pk: 1,
-    },
-  ];
-
-  return (
+    return (
     <div className="px-4 sm:px-6 md:px-8 pt-10">
       {/* heading */}
       {isLoading ? (
@@ -164,6 +152,7 @@ const DashboardMatches = () => {
             className="absolute left-0 right-0 spinner"
             style={{ maxWidth: 150 }}
             src={Spinner}
+            alt="Loading"
           />
         </div>
       ) : (

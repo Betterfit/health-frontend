@@ -5,12 +5,10 @@ import DashboardEditOrder from "Containers/Facility/Inner/DashboardEditOrder";
 import DashboardNewOrder from "Containers/Facility/Inner/DashboardNewOrder";
 import DashboardProductDetail from "Containers/Facility/Inner/DashboardProductDetail";
 import { useCartStore } from "Context/cartContext";
-import Api from "Helpers/api";
 import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import DashboardProductSearch from "./DashboardProductSearch";
 
-const api = new Api();
 const DashboardOrder = ({ props, type }) => {
   const cartStore = useCartStore();
   const { match } = props;
@@ -27,7 +25,6 @@ const DashboardOrder = ({ props, type }) => {
         <Route
           exact
           path={`${match.path}`}
-          exact
           render={(props) => {
             return <DashboardCategoryList {...props} />;
           }}

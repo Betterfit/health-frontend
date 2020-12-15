@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from "react";
-import BackNavigation from "Components/Helpers/BackNavigation";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
+import BackNavigation from "Components/Helpers/BackNavigation";
 import Table from "Components/Table/Basic/Table";
 import Api from "Helpers/api";
-import { useAuthStore } from "Context/authContext";
+import React, { useEffect, useState } from "react";
 
 const DashboardProductList = (props) => {
   const api = new Api();
   const { match } = props;
   const ProductId = parseInt(match.params.id);
-  const authStore = useAuthStore();
-  const userData = JSON.parse(authStore.user);
-  const supplierId = userData.user_profile.supplier;
   const [lastProductId, setLastProductId] = useState(ProductId);
   const [ProductData, setProductData] = useState(null);
   const getData = async () =>

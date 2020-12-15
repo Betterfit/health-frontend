@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useCartStore } from "Context/cartContext";
-import Quantity_Input from "Components/Forms/Quantity_Input";
-import Checkbox from "Components/Forms/Checkbox";
 import Button from "Components/Forms/Button";
+import Checkbox from "Components/Forms/Checkbox";
+import QuantityInput from "Components/Forms/Quantity_Input";
+import { useCartStore } from "Context/cartContext";
+import React, { useState } from "react";
 
 const AddProductForm = ({ id, product_pk }) => {
   const [priority, setPriority] = useState();
@@ -14,7 +14,7 @@ const AddProductForm = ({ id, product_pk }) => {
   return (
     <div className="flex flex-col mx-1 pt-2">
       <div className="py-1 lg:py-2 flex lg:justify-end ">
-        <Quantity_Input
+        <QuantityInput
           name="Quantity"
           value={quantity}
           readValue={getQuantity}

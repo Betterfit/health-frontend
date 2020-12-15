@@ -1,7 +1,8 @@
-import React from "react";
 import Translator from "Helpers/Translator";
+import React from "react";
 let timeout;
-function Quantity_Input({
+
+function QuantityInput({
   id_tag,
   name,
   readOnly = false,
@@ -46,4 +47,4 @@ function Quantity_Input({
   );
 }
 
-export default Quantity_Input;
+export default QuantityInput;

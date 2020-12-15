@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import Quantity_Input from "Components/Forms/Quantity_Input";
 import Checkbox from "Components/Forms/Checkbox";
+import QuantityInput from "Components/Forms/Quantity_Input";
 import { useCartStore } from "Context/cartContext";
-import { ReactSVG } from "react-svg";
 import Close from "Images/Icons/red-close.svg";
-import CloseIcon from "Images/Icons/close.svg";
+import React, { useState } from "react";
+import { ReactSVG } from "react-svg";
 //This will either return the attribute if it exists, or
 // return the passed in 'default_value' if not
 const Read_Product = (product_attr, default_value) => {
@@ -90,7 +89,7 @@ const OrderProductCard = ({ product }) => {
         </div>
         <div className="flex flex-row items-center justify-end py-3 pr-3">
           <div className="pr-2">
-            <Quantity_Input
+            <QuantityInput
               id="quantity"
               name="Quantity"
               quantityUpdate={(id, data) => {
