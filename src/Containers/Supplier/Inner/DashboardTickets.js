@@ -15,20 +15,18 @@ const DashboardTickets = () => {
   const authStore = useAuthStore();
   const [searchActive, setSearchActive] = useState(false);
   const [ticketData, setTickData] = useState(null);
-  const [openTickets, setOpenTickets] = useState(null);
-  const [shippedTickets, setShippedTickets] = useState(null);
+  const [openTickets, setOpenTickets] = useState([]);
+  const [shippedTickets, setShippedTickets] = useState([]);
   const userData = JSON.parse(authStore.user);
   const supplierId = userData.user_profile.supplier;
-  let [openCount, setOpen] = useState(0);
-  let [closedCount, setClosed] = useState(0);
   const getData = async () =>
     await api
       .getSupplierTickets(supplierId)
       .then((response) => {
         let data = response.data;
-        let open = data.filter((item) => {
-          if (item.status == "open") {
-            setOpen(openCount + 1);
+        let open = data
+          .filter((item) => item.status === "open")
+          .map((item) => {
             let filterItem = item;
             let filterItemStatus = filterItem.status; //save status to re-sort
 
@@ -41,11 +39,11 @@ const DashboardTickets = () => {
             filterItem.status = filterItemStatus; // set status
 
             return filterItem;
-          }
-        });
-        let ship = data.filter((item) => {
-          if (item.status == "shipped") {
-            setClosed(closedCount + 1);
+          });
+
+        let ship = data
+          .filter((item) => item.status === "shipped")
+          .map((item) => {
             let filterItem = item;
             let filterItemStatus = filterItem.status; //save status to re-sort
 
@@ -58,8 +56,7 @@ const DashboardTickets = () => {
             filterItem.status = filterItemStatus; // set status
 
             return filterItem;
-          }
-        });
+          });
         setTickData(response.data);
         setOpenTickets(open);
         setShippedTickets(ship);
@@ -84,7 +81,7 @@ const DashboardTickets = () => {
         <div>No Tickets</div>
       ),
       key: "opened",
-      amount: openCount,
+      amount: openTickets.length,
     },
     {
       heading: "Shipped",
@@ -99,7 +96,7 @@ const DashboardTickets = () => {
         <div>No Tickets</div>
       ),
       key: "shipped",
-      amount: closedCount,
+      amount: shippedTickets.length,
     },
   ];
 
