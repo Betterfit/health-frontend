@@ -1,10 +1,8 @@
-import React from "react";
-import { ReactSVG } from "react-svg";
-import Edit from "Images/Icons/edit.svg";
-import { NavLink } from "react-router-dom";
 import Button from "Components/Content/Button";
 import StatusButton from "Components/Content/StatusButton";
-import dayjs from "dayjs";
+import React from "react";
+import { NavLink } from "react-router-dom";
+
 const TableBody = ({
   TableBody,
   removeAtIndex,
@@ -12,18 +10,17 @@ const TableBody = ({
   link,
   buttonType,
 }) => {
-  // console.log(`slide ${TableBody}`)
   return (
     <tbody>
       {TableBody.map((row, pindex) => {
-        if (pindex % 2 == 0) {
+        if (pindex % 2 === 0) {
           return (
             <React.Fragment key={`table_row_${pindex}`}>
               {link && (
                 <tr className="table-row bg-table-row  hover:border-betterfit-highlight-blue">
                   {row.map((r, index) => {
                     if (index !== removeAtIndex && index !== row.length - 1)
-                      if (index == statusIndex)
+                      if (index === statusIndex)
                         return (
                           <td
                             key={`table_td_${pindex}_${index}`}
@@ -55,7 +52,7 @@ const TableBody = ({
                           <td
                             key={`table_td_${pindex}_${index}`}
                             className={`whitespace-no-wrap px-4 py-4 ${
-                              index == 1
+                              index === 1
                                 ? "lg:w-40 text-betterfit-grey-blue text-right pr-10"
                                 : "text-betterfit-graphite font-bold"
                             }`}
@@ -80,7 +77,7 @@ const TableBody = ({
                 <tr className="table-row m-1 relative hover:border-betterfit-highlight-blue ">
                   {row.map((r, index) => {
                     if (index !== removeAtIndex && index !== row.length - 1)
-                      if (index == statusIndex)
+                      if (index === statusIndex)
                         return (
                           <td
                             key={`table_td_${pindex}_${index}`}
@@ -112,7 +109,7 @@ const TableBody = ({
                           <td
                             key={`table_td_${pindex}_${index}`}
                             className={`whitespace-no-wrap px-4 py-4 ${
-                              index == 1
+                              index === 1
                                 ? "lg:w-40 text-betterfit-grey-blue text-right pr-10"
                                 : "text-betterfit-graphite font-bold"
                             }`}

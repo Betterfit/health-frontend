@@ -1,27 +1,23 @@
-import React, { useState, useEffect } from "react";
-
-import Api from "Helpers/api";
-import dayjs from "dayjs";
-import { useAuthStore } from "Context/authContext";
-import Translator from "Helpers/Translator";
-// <----------- Components ------------->//
-import Tabs from "Components/Tabs/Tabs";
+import ButtonOption from "Components/Content/Menu/ButtonOption";
+import PopupMenu from "Components/Content/Menu/PopUpMenu";
+import TextOptions from "Components/Content/Menu/TextOption";
 import OrderSearch from "Components/Search/OrderSearch";
 import Table from "Components/Table/Full/Table";
-import DashboardOrderSearch from "./DashboardOrderSearch";
-//  <---- Menu Components ----> //
-import ButtonOption from "Components/Content/Menu/ButtonOption";
-import TextOptions from "Components/Content/Menu/TextOption";
-import PopupMenu from "Components/Content/Menu/PopUpMenu";
-import { keys } from "mobx";
+import Tabs from "Components/Tabs/Tabs";
+import { useAuthStore } from "Context/authContext";
+import dayjs from "dayjs";
+import Api from "Helpers/api";
+import Translator from "Helpers/Translator";
+import React, { useEffect, useState } from "react";
+import { Route } from "react-router-dom";
 import uuid from "react-uuid";
-import { Switch, Route, useParams, useLocation } from "react-router-dom";
+import DashboardOrderSearch from "./DashboardOrderSearch";
+
 const api = new Api();
 
 const DashboardOrderList = (props) => {
   const authStore = useAuthStore();
   const userData = JSON.parse(authStore.user);
-  const url = props.match.path;
   const userId = userData.user_profile.facility;
   const [orderData, setOrderData] = useState(null);
   const [orderCount, setOrderCountData] = useState(null);

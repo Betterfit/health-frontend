@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from "react";
-
-import Api from "Helpers/api";
-import { useHistory } from "react-router-dom";
+import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
+import DashboardCategoryList from "Containers/Facility/Inner/DashboardCategoryList";
+import DashboardCategoryProductList from "Containers/Facility/Inner/DashboardCategoryProductList";
 import DashboardEditOrder from "Containers/Facility/Inner/DashboardEditOrder";
 import DashboardNewOrder from "Containers/Facility/Inner/DashboardNewOrder";
-import DashboardCategoryProductList from "Containers/Facility/Inner/DashboardCategoryProductList";
 import DashboardProductDetail from "Containers/Facility/Inner/DashboardProductDetail";
-import DashboardCategoryList from "Containers/Facility/Inner/DashboardCategoryList";
-import DashboardProductSearch from "./DashboardProductSearch";
-import { Switch, Route, useParams } from "react-router-dom";
-import { AnimatedSwitch } from "react-router-transition";
-import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import { useCartStore } from "Context/cartContext";
+import Api from "Helpers/api";
+import React, { useEffect } from "react";
+import { Route } from "react-router-dom";
+import DashboardProductSearch from "./DashboardProductSearch";
+
 const api = new Api();
 const DashboardOrder = ({ props, type }) => {
   const cartStore = useCartStore();
-  const history = useHistory();
   const { match } = props;
   useEffect(() => {
     cartStore.getLocalCartStorage();
