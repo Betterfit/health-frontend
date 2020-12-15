@@ -1,12 +1,12 @@
-import React from "react";
 import Translator from "Helpers/Translator";
+import React from "react";
 
 const TableHead = ({ TableHead }) => {
   return (
     <thead>
       <tr>
         {TableHead.map((head, index) => {
-          if (head == "number_of_orders") {
+          if (head === "number_of_orders") {
             return (
               <th
                 key={`table_head_${index}`}

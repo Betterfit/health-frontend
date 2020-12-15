@@ -1,13 +1,11 @@
-import React, { useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import Translator from "Helpers/Translator";
+import SearchIcon from "Images/Icons/search-icon.svg";
+import React, { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import SearchIcon from "Images/Icons/search-icon.svg";
-import Translator from "Helpers/Translator";
+
 let myTimeOut;
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+
 const ProductSearch = ({
   type,
   extraClasses,
@@ -15,12 +13,10 @@ const ProductSearch = ({
   CategoryID,
   orderId,
 }) => {
-  const [searchValue, setSearchValue] = useState("");
   const searchRef = useRef(null);
   const history = useHistory();
 
   const searchQuery = () => {
-    setSearchValue(searchRef.current.value);
     if (searchRef.current.value.length == 0) {
       history.push(
         `/dashboard/${
@@ -38,11 +34,6 @@ const ProductSearch = ({
     }
   };
 
-  const clearSearchQuery = () => {
-    history.push(`/dashboard/${(type = "new" ? "new-order" : "edit-order")}`);
-  };
-
-  const [showInput, setShowInput] = useState(false);
 
   return (
     <div
