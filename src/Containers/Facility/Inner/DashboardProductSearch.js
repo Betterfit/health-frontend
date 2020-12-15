@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
-import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
-import API from "Helpers/api";
-import BackNavigation from "Components/Helpers/BackNavigation";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
-import Table from "Components/Table/Full/Table";
-import uuid from "react-uuid";
-import ProductSearch from "Components/Search/ProductSearch";
+import BackNavigation from "Components/Helpers/BackNavigation";
 import ProductCard from "Components/Order/ProductCard";
+import API from "Helpers/api";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import uuid from "react-uuid";
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }

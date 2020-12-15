@@ -41,6 +41,7 @@ const GMapsAddressLink = ({ address, label }: GMapsAddrsLinkProps) => {
       aria-label={label}
       href={addressLink}
       target="_blank"
+      rel="noopener noreferrer"
     >
       {address.map((line, i) => (
         <span key={i}>{line}</span>
@@ -131,7 +132,7 @@ export const Website = ({ details }: ProfileItemProps) => {
   const website = details.website;
   if (!website) return <></>;
   const websiteLink = (
-    <a href={website} target="_blank" arial-label="website link">
+    <a href={website} target="_blank" rel="noopener noreferrer" arial-label="website link">
       {website}
     </a>
   );

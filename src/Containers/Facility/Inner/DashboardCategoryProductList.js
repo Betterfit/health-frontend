@@ -44,6 +44,7 @@ const DashboardCategoryProductList = (props) => {
             className="absolute left-0 right-0 spinner"
             style={{ maxWidth: 150 }}
             src={Spinner}
+            alt="Loading"
           />
         </div>
       ) : (

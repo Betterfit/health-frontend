@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import Modal from "Components/Content/Modal";
 import Button from "Components/Content/Button";
-import DashboadOrderDetail from "Containers/DashboardOrderDetail";
+import Modal from "Components/Content/Modal";
 import Table from "Components/Table/Detail/Table";
-import Api from "Helpers/api";
-import dayjs from "dayjs";
+import DashboadOrderDetail from "Containers/DashboardOrderDetail";
 import { useAuthStore } from "Context/authContext";
+import dayjs from "dayjs";
+import Api from "Helpers/api";
+import React, { useEffect, useState } from "react";
 
 const api = new Api();
 
@@ -50,6 +50,8 @@ const DashboardTicketDetail = (props) => {
         setTicketData(arr);
       })
       .catch((err) => console.log(err));
+  // TODO: proper dependency array, eslint-ignored for now
+  // eslint-disable-next-line
   useEffect(() => {
     getData();
   }, []);

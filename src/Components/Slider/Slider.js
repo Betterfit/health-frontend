@@ -1,10 +1,9 @@
 import { Transition } from "@tailwindui/react";
-import React, { useState, useEffect } from "react";
-import { ReactSVG } from "react-svg";
 import BackNav from "Components/Helpers/BackNavigation";
-
-// images
 import Close from "Images/Icons/close.svg";
+import React from "react";
+import { ReactSVG } from "react-svg";
+
 
 const Slider = ({ children, active, close }) => {
   return (

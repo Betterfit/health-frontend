@@ -1,29 +1,16 @@
+import { MatchProvider } from "Context/matchContext";
 import React, { useState } from "react";
-import {
-  Switch,
-  Route,
-  useParams,
-  Redirect,
-  useHistory,
-} from "react-router-dom";
-import ReactCSSTransitionGroup from "react-transition-group";
+import { Redirect, Route } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
-
-import DashboardMatchesListing from "./Inner/DashboardMatchesListing";
+import DashboardResources from "../DashboardResources";
 import DashboardMatches from "./Inner/DashboardMatches";
 import DashboardMatchesHistory from "./Inner/DashboardMatchesHistory";
+import DashboardMatchesListing from "./Inner/DashboardMatchesListing";
 import DashboardMatchesOrderDetail from "./Inner/DashboardMatchesOrderDetail";
 import DashboardTrafficDashboard from "./Inner/DashboardTrafficDashboard";
 import DashboardTrafficInventory from "./Inner/DashboardTrafficInventory";
-import DashboardResources from "../DashboardResources";
-import NotFound from "Pages/404";
-// import DashboardInventory from './Inner/DashboardInventory'
-// import DashboardTickets from './Inner/DashboardTickets'
-// import DashboardTicketDetail from './Inner/DashboardTicketDetail';
-import { MatchProvider } from "Context/matchContext";
 
 const DashboardContainer = () => {
-  const history = useHistory();
   const [title, setTitle] = useState("");
   const changeTitle = (title) => {
     setTitle(title);

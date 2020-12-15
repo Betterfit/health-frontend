@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
-import Api from "Helpers/api";
-import TitleUnderLine from "Components/Content/TitleUnderLine";
-import MatchOrderDetailHeader from "Components/Order/MatchOrderDetailHeader";
 import StatusButton from "Components/Content/StatusButton";
+import MatchOrderDetailHeader from "Components/Order/MatchOrderDetailHeader";
 import Table from "Components/Table/Detail/Table";
-import Spinner from "Images/spinner.gif";
 import dayjs from "dayjs";
+import Api from "Helpers/api";
+import Spinner from "Images/spinner.gif";
+import React, { useEffect, useState } from "react";
+
 const api = new Api();
+
 const DashboardMatchesOrderDetail = (props) => {
   const { match } = props;
   const orderId = parseInt(match.params.id);
@@ -89,6 +90,7 @@ const DashboardMatchesOrderDetail = (props) => {
             className="absolute left-0 right-0 spinner"
             style={{ maxWidth: 150 }}
             src={Spinner}
+            alt="Loading"
           />
         </div>
       ) : (

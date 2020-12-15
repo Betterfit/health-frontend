@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
-import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
-import API from "Helpers/api";
-import BackNavigation from "Components/Helpers/BackNavigation";
-import TitleUnderLine from "Components/Content/TitleUnderLine";
-import Table from "Components/Table/Full/Table";
-import uuid from "react-uuid";
-import Search from "Components/Search/Search";
-import dayjs from "dayjs";
-//  <---- Menu Components ----> //
 import ButtonOption from "Components/Content/Menu/ButtonOption";
-import TextOptions from "Components/Content/Menu/TextOption";
 import PopupMenu from "Components/Content/Menu/PopUpMenu";
+import TextOptions from "Components/Content/Menu/TextOption";
+import TitleUnderLine from "Components/Content/TitleUnderLine";
+import BackNavigation from "Components/Helpers/BackNavigation";
+import Table from "Components/Table/Full/Table";
+import dayjs from "dayjs";
+import API from "Helpers/api";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import uuid from "react-uuid";
+
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }

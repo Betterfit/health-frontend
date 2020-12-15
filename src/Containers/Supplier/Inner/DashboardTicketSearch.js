@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
-import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
-import API from "Helpers/api";
-import BackNavigation from "Components/Helpers/BackNavigation";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
+import BackNavigation from "Components/Helpers/BackNavigation";
 import Table from "Components/Table/List/Table";
-import Search from "Components/Search/Search";
+import API from "Helpers/api";
 import Spinner from "Images/spinner.gif";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }

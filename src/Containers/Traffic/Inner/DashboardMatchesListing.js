@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Api from "Helpers/api";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 import Table from "Components/Table/MatchListing/Table";
-import Spinner from "Images/spinner.gif";
 import dayjs from "dayjs";
+import Api from "Helpers/api";
+import Spinner from "Images/spinner.gif";
+import React, { useEffect, useState } from "react";
+
 const api = new Api();
+
 const DashboardMatchesListing = () => {
   const [matchesData, setMatchesData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -50,6 +52,7 @@ const DashboardMatchesListing = () => {
             className="absolute left-0 right-0 spinner"
             style={{ maxWidth: 150 }}
             src={Spinner}
+            alt="loading"
           />
         </div>
       ) : (

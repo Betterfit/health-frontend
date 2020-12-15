@@ -27,7 +27,7 @@ export function createCartStore(name = "cart") {
       let arr = JSON.stringify(this.cart);
       arr = JSON.parse(arr);
       for (var i in arr) {
-        if (arr[i].pk == id) {
+        if (arr[i].pk === id) {
           arr[i].quantity = parseInt(quantity);
           break; //Stop this loop, we found it!
         }
@@ -36,7 +36,7 @@ export function createCartStore(name = "cart") {
       this.updateLocalCartStorage();
     },
     importCart(items) {
-      items.map((item) => {
+      items.forEach((item) => {
         this.addToCart(item.pk, item.quantity, item.priority, item.product_pk);
       });
     },
@@ -49,7 +49,7 @@ export function createCartStore(name = "cart") {
       let arr = JSON.stringify(this.cart);
       arr = JSON.parse(arr);
       for (var i in arr) {
-        if (arr[i].pk == id) {
+        if (arr[i].pk === id) {
           arr[i].priority = priority;
           break; //Stop this loop, we found it!
         }
