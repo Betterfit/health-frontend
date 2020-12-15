@@ -8,7 +8,7 @@ const TableBody = ({ TableBody }) => {
     <tbody>
       {TableBody.map((row, index) => {
         let imageIndex;
-        if (index % 2 == 0) {
+        if (index % 2 === 0) {
           return (
             <tr key={uuid()} className="bg-table-row border-table-row">
               {row.map((r, index) => {
@@ -37,7 +37,7 @@ const TableBody = ({ TableBody }) => {
                         <div className="flex items-center">
                           <img
                             className="w-24 mr-2"
-                            role="none"
+                            alt=""
                             src={
                               row[imageIndex][1]
                                 ? `${row[imageIndex][1]}`
@@ -96,7 +96,7 @@ const TableBody = ({ TableBody }) => {
                         <div className="flex items-center">
                           <img
                             className="w-24 mr-2"
-                            role="none"
+                            alt=""
                             src={
                               row[imageIndex][1]
                                 ? `${row[imageIndex][1]}`

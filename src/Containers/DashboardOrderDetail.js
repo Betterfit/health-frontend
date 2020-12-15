@@ -1,7 +1,5 @@
-import React, { useState } from "react";
 import OrderDetailHeader from "Components/Order/OrderDetailHeader";
-import Api from "Helpers/api";
-const api = new Api();
+import React from "react";
 
 const DashboadOrderDetail = ({ children, actionComponent, headerData }) => {
   return (

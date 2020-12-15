@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import SideBarNavigation from "./SideBarNavigation";
-import SideBarDashboardTypeCTA from "./SideBarDashboardTypeCTA";
-import SideBarProfile from "./SideBarProfile";
-import logo from "Images/Icons/logo-full.svg";
-import ProfileCard from "Components/Profile/ProfileCard";
 import FaciltyCard from "Components/Profile/FacilityCard";
+import ProfileCard from "Components/Profile/ProfileCard";
 import Slider from "Components/Slider/Slider";
+import logo from "Images/Icons/logo-full.svg";
+import React, { useState } from "react";
+import SideBarDashboardTypeCTA from "./SideBarDashboardTypeCTA";
+import SideBarNavigation from "./SideBarNavigation";
+import SideBarProfile from "./SideBarProfile";
 
 const UserInfo = (profile) => {
   switch (profile.user_type) {
@@ -15,6 +15,8 @@ const UserInfo = (profile) => {
       return profile.supplier_name;
     case "traffic_controller":
       return "Traffic Controller";
+    default:
+      throw 'Invalid profile user type'
   }
 };
 

@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-// ========= Components ========
 import SideBar from "Components/SideBar/SideBar";
 import DashboardContainer from "Containers/Traffic/DashboardContainer";
+import { useAuthStore } from "Context/authContext";
+import Dashboard from "Images/Icons/dashboard.svg";
+import Inventory from "Images/Icons/inventory.svg";
+import Matches from "Images/Icons/matches.svg";
+import Resources from "Images/Icons/resources.svg";
+import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import Order from "Images/Icons/order.svg";
-import Resources from "Images/Icons/resources.svg";
-import Dashboard from "Images/Icons/dashboard.svg";
-import Matches from "Images/Icons/matches.svg";
-import Inventory from "Images/Icons/inventory.svg";
-import { useAuthStore } from "Context/authContext";
 
 const DashboardTraffic = () => {
   const authStore = useAuthStore();

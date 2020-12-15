@@ -1,17 +1,13 @@
-import React, { useState } from "react";
-import { Route, Redirect } from "react-router-dom";
-import { AnimatedSwitch } from "react-router-transition";
-import DashboardOrderList from "./Inner/DashboardOrderList";
-import DashboardOrder from "./Inner/DashboardOrder";
-import DashboardFacilityOrder from "./Inner/DashboardFacilityOrderDetail";
-import DashboardResources from "../DashboardResources";
 import { CartProvider } from "Context/cartContext";
+import React from "react";
+import { Redirect, Route } from "react-router-dom";
+import { AnimatedSwitch } from "react-router-transition";
+import DashboardResources from "../DashboardResources";
+import DashboardFacilityOrder from "./Inner/DashboardFacilityOrderDetail";
+import DashboardOrder from "./Inner/DashboardOrder";
+import DashboardOrderList from "./Inner/DashboardOrderList";
 
 const DashboardContainer = () => {
-  const [title, setTitle] = useState("");
-  const changeTitle = (title) => {
-    setTitle(title);
-  };
   return (
     <div className="flex flex-col w-full md:w-0 flex-1 overflow-hidden md:flex-row">
       <main
@@ -74,7 +70,6 @@ const DashboardContainer = () => {
           <Route path="/dashboard/resources">
             <DashboardResources
               initial
-              changeTitle={(title) => changeTitle(title)}
             />
           </Route>
         </AnimatedSwitch>

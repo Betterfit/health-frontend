@@ -8,6 +8,9 @@ import uuid from "react-uuid";
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
+
+// TODO: refactor the array.map functions
+/* eslint array-callback-return: "off" */
 const DashboardSearch = () => {
   const api = new API();
   let query = useQuery();

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import Button from "Components/Content/Button";
+import React from "react";
 
 const Modal = ({ cancelCallBack, confirmCallBack, children, buttonText }) => {
   return (

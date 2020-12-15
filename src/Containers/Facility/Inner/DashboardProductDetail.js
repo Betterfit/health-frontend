@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Api from "Helpers/api";
-
+import ProductDetailsCard from "Components/Content/ProductDetailsCard";
+import TitleUnderLine from "Components/Content/TitleUnderLine";
+import AddProductForm from "Components/Forms/AddProductForm";
 //components
 import BackNavigation from "Components/Helpers/BackNavigation";
-import TitleUnderLine from "Components/Content/TitleUnderLine";
-import ProductDetailsCard from "Components/Content/ProductDetailsCard";
-import AddProductForm from "Components/Forms/AddProductForm";
-
+import Api from "Helpers/api";
 //images
 import Spinner from "Images/spinner.gif";
+import React, { useEffect, useState } from "react";
 
 const api = new Api();
 
@@ -18,6 +16,7 @@ const DashboardProductDetail = (props) => {
   const product_details_id = parseInt(match.params.id);
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState();
+  // eslint-ignore
   const [isError, setIsError] = useState(false);
   const getData = async () =>
     await api

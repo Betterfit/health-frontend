@@ -1,14 +1,14 @@
-import React from "react";
-import { ReactSVG } from "react-svg";
 import Edit from "Images/Icons/edit.svg";
+import React from "react";
 import { NavLink } from "react-router-dom";
+import { ReactSVG } from "react-svg";
 import uuid from "react-uuid";
 const TableBody = ({ TableBody, variantID, NoOptions, edit }) => {
   let setIndex;
   return (
     <tbody>
       {TableBody.map((row, index) => {
-        if (index % 2 == 0) {
+        if (index % 2 === 0) {
           return (
             <tr key={uuid()} className="bg-gray-100 border-t border-gray-200">
               {row.map((r, index) => {

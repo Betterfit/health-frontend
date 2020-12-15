@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { ReactSortable } from "react-sortablejs";
-import { ReactSVG } from "react-svg";
-import Moveable from "Images/Icons/moveable.svg";
-import Attention from "Images/Icons/yellow-attention.svg";
-import { NavLink } from "react-router-dom";
+import { useMatchStore } from "Context/matchContext";
 import dayjs from "dayjs";
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
-import { useMatchStore } from "Context/matchContext";
+import Moveable from "Images/Icons/moveable.svg";
+import Attention from "Images/Icons/yellow-attention.svg";
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { ReactSortable } from "react-sortablejs";
+import { ReactSVG } from "react-svg";
+
 const TableBody = ({
   TableBodyData,
-  removeAtIndex,
-  statusIndex,
   link,
-  buttonType,
   sort = true,
 }) => {
   // console.log(TableBodyData);

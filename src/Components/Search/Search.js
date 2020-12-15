@@ -1,14 +1,16 @@
-import React, { useState, useRef, propTypes } from "react";
+import { useAuthStore } from "Context/authContext";
+import Translator from "Helpers/Translator";
+import Close from "Images/Icons/close.svg";
+import SearchIcon from "Images/Icons/search-icon.svg";
+import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import SearchIcon from "Images/Icons/search-icon.svg";
-import Close from "Images/Icons/close.svg";
-import Translator from "Helpers/Translator";
-import { useAuthStore } from "Context/authContext";
+
 let myTimeOut;
 const Search = ({ type, activeTab = null }) => {
   const authStore = useAuthStore();
-  const [searchValue, setSearchValue] = useState("");
+  // search value state not currently used
+  const [_, setSearchValue] = useState("");
   const searchRef = useRef(null);
   const history = useHistory();
   const userData = JSON.parse(authStore.user);

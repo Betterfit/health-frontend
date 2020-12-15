@@ -17,16 +17,16 @@ const ProductSearch = ({
   const history = useHistory();
 
   const searchQuery = () => {
-    if (searchRef.current.value.length == 0) {
+    if (searchRef.current.value.length === 0) {
       history.push(
         `/dashboard/${
-          type == "new" ? "new-order" : `edit-order/${orderId}`
+          type === "new" ? "new-order" : `edit-order/${orderId}`
         }/category/${CategoryName}/${CategoryID}/search`
       );
     } else {
       history.push(
         `/dashboard/${
-          type == "new" ? "new-order" : `edit-order/${orderId}`
+          type === "new" ? "new-order" : `edit-order/${orderId}`
         }/category/${CategoryName}/${CategoryID}/search?search=${
           searchRef.current.value
         }&category=${CategoryID}`

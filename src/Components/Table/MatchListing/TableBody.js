@@ -3,6 +3,8 @@ import StatusButton from "Components/Content/StatusButton";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+// TODO: refactor the array.map functions
+/* eslint array-callback-return: "off" */
 const TableBody = ({
   TableBody,
   removeAtIndex,

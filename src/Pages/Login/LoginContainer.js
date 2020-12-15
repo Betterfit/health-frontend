@@ -1,8 +1,8 @@
-import React from "react";
-import { ReactSVG } from "react-svg";
-import Logo from "Images/logo.svg";
 import LowerBackgroundBlob from "Images/Login/login_lower_right.svg";
 import UpperBackgroundBlob from "Images/Login/login_upper_left.svg";
+import Logo from "Images/logo.svg";
+import React from "react";
+import { ReactSVG } from "react-svg";
 
 const LoginContainer = ({ children }) => {
   return (
@@ -14,8 +14,8 @@ const LoginContainer = ({ children }) => {
       ></img>
       <img
         src={LowerBackgroundBlob}
-        role="presentation"
         className="absolute right-0 bottom-0 z-0"
+        alt=""
       ></img>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-lg z-50">
@@ -27,6 +27,7 @@ const LoginContainer = ({ children }) => {
               beforeInjection={(svg) => {
                 svg.setAttribute("style", "margin:auto;");
               }}
+              alt="Betterfit"
             />
           </div>
           {children}
