@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import BackNavigation from "Components/Helpers/BackNavigation";
 import CategoryTitle from "Components/Content/CategoryTitle";
-import Api from "Helpers/api";
+import BackNavigation from "Components/Helpers/BackNavigation";
 import ProductCard from "Components/Order/ProductCard";
-import Search from "Components/Search/Search";
-import image from "Images/example_product.png"; //remove this later
-import Spinner from "Images/spinner.gif";
 import ProductSearch from "Components/Search/ProductSearch";
+import Api from "Helpers/api";
+import Spinner from "Images/spinner.gif";
+import React, { useEffect, useState } from "react";
 
 const DashboardCategoryProductList = (props) => {
   const api = new Api();

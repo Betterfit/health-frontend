@@ -2,10 +2,9 @@ import Translator from "Helpers/Translator";
 import React from "react";
 
 const CategoryTitle = ({ title, icon, background_color, color }) => {
-  const outlinecolor = color != "" ? color : "#234499";
   const svg = icon;
   const backgroundColor = {
-    background: background_color != "" ? background_color : "#E4EFFC",
+    background: background_color !== "" ? background_color : "#E4EFFC",
   };
   const translatedTitle = Translator(title);
   return (

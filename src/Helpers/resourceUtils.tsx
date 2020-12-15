@@ -58,8 +58,9 @@ export const useResources = (customFilters: ResourceFilter[] = []) => {
 /**
  * Returns a list of resources that match all the given tags.
  * Not currently used, but maybe useful if desired behaviour changes.
+ * Exported for ES Lint's sake.
  */
-const findResourcesMatchingAllTagPKs = (
+export const findResourcesMatchingAllTagPKs = (
   resources: Resource[],
   tagPKs: number[]
 ): Resource[] => {

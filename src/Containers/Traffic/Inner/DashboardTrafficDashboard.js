@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
+import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import ControllerCard from "Components/TrafficControllerSideBar/ControllerCard";
-
 import Api from "Helpers/api";
-import Graph from "./DashboardGraph";
 import Translator from "Helpers/Translator";
 import Spinner from "Images/spinner.gif";
+import React, { useEffect, useState } from "react";
+import Graph from "./DashboardGraph";
+
 
 const api = new Api();
 const DashboardTrafficDashboard = () => {
@@ -88,6 +88,7 @@ const DashboardTrafficDashboard = () => {
             className="absolute left-0 right-0 spinner"
             style={{ maxWidth: 150 }}
             src={Spinner}
+            alt="Loading"
           />
         </div>
       )}
