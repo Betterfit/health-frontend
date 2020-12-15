@@ -34,7 +34,7 @@ const graphTabs = [
             "How long it takes for recoveries and deaths to catch up with the number of new cases on a past day. If there were 100 new cases today, how long until we can expect to see 100 recoveries and deaths.",
     },
     {
-        heading: "R0",
+        heading: "Rt",
         key: "r0",
         descr:
             "Our estimate of COVID-19's reproduction number in this health region. Measures how many new infections a contagious person will cause, on average.",
@@ -119,8 +119,13 @@ const Graph = ({ width = 525, height = 400 }) => {
         toggleRegionSelection({ province: province, healthRegion: region });
 
     // user clicks new cases, active cases, daily deaths, clear all
-    const handleTabClick = (key) =>
+    const handleTabClick = (key) => {
         key === "clear" ? clearAllRegions() : setCurTab(key);
+        // R0 and resolutionTime don't make sense normalized by population
+        if (key === 'r0' || key === 'resolutionTime'){
+            setPer100k(false)
+        }
+    }
 
     return (
         <>
@@ -142,6 +147,8 @@ const Graph = ({ width = 525, height = 400 }) => {
                             value={per100k}
                             setValue={setPer100k}
                             title="Normalizes data by population so that regions with different populations can be compared."
+                            // it doesn't make sense to normalize these metrics by population
+                            disabled={curTab === 'r0' || curTab === 'resolutionTime'}
                         />
                     </div>
                 </div>

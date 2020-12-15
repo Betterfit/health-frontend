@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Translator from "Helpers/Translator";
 
-function Checkbox({ id_tag, name, value = false, setValue, title }) {
+function Checkbox({ name, value = false, setValue, title, disabled }) {
   const [checked, setChecked] = useState(value);
   return (
     <>
@@ -29,6 +29,7 @@ function Checkbox({ id_tag, name, value = false, setValue, title }) {
               setChecked(!checked);
               setValue(!checked);
             }}
+            disabled={disabled}
           />
           <svg
             className={`fill-current text-betterfit-highlight-red m-auto pointer-events-none ${
