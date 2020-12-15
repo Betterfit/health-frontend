@@ -1,10 +1,8 @@
-import React from "react";
-import { ReactSVG } from "react-svg";
-import Edit from "Images/Icons/edit.svg";
-import { NavLink } from "react-router-dom";
 import StatusButton from "Components/Content/StatusButton";
 import EmptyImage from "Images/emptyImage.png";
+import React from "react";
 import uuid from "react-uuid";
+
 const TableBody = ({ TableBody }) => {
   return (
     <tbody>
@@ -27,11 +25,9 @@ const TableBody = ({ TableBody }) => {
                         />
                       </td>
                     );
-                    break;
                   case "product_image":
                     imageIndex = index;
                     return false;
-                    break;
                   case "item":
                     return (
                       <td
@@ -54,7 +50,6 @@ const TableBody = ({ TableBody }) => {
                         </div>
                       </td>
                     );
-                    break;
                   default:
                     return (
                       <td
@@ -89,11 +84,9 @@ const TableBody = ({ TableBody }) => {
                         />
                       </td>
                     );
-                    break;
                   case "product_image":
                     imageIndex = index;
                     return false;
-                    break;
                   case "item":
                     return (
                       <td
@@ -116,7 +109,6 @@ const TableBody = ({ TableBody }) => {
                         </div>
                       </td>
                     );
-                    break;
                   default:
                     return (
                       <td

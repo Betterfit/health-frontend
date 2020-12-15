@@ -1,5 +1,5 @@
+import React from "react";
 import Collapsible from "./Collapsible";
-import React, { useState } from "react";
 
 const FilterFields = ({ filterData, onClickEvent }) => {
   return (

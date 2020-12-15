@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { ReactSVG } from "react-svg";
-import Table from "Components/Table/MatchSort/Table";
-import TitleUnderLine from "Components/Content/TitleUnderLine";
 import BackNavigation from "Components/Helpers/BackNavigation";
-import { useLocation } from "react-router-dom";
-import Reload from "Images/Icons/reload.svg";
-import Countdown from "react-countdown";
-import Api from "Helpers/api";
+import Table from "Components/Table/MatchSort/Table";
 import dayjs from "dayjs";
+import Api from "Helpers/api";
 import Spinner from "Images/spinner.gif";
-import { useMatchStore } from "Context/matchContext";
+import React, { useEffect, useState } from "react";
+import Countdown from "react-countdown";
+import { useLocation } from "react-router-dom";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -26,7 +22,6 @@ const DashboardMatchesHistory = ({ props }) => {
     time_till_processed: "",
   });
   const [isLoading, setIsLoading] = useState(true);
-  const [refresh, setRefresh] = useState(false);
 
   const getData = async () =>
     await api

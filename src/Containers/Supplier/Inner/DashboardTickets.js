@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
-import Tabs from "Components/Tabs/Tabs";
 import TicketSearch from "Components/Search/TicketSearch";
 import Table from "Components/Table/List/Table";
-import Api from "Helpers/api";
+import Tabs from "Components/Tabs/Tabs";
 import { useAuthStore } from "Context/authContext";
-import DashboardTicketSearch from "./DashboardTicketSearch";
+import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
-import uuid from "react-uuid";
-import { Switch, Route, useParams, useLocation } from "react-router-dom";
 import Spinner from "Images/spinner.gif";
-// import OrderHeader from 'Components/Order/OrderHeader'
-// import BackNavigation from 'Components/Helpers/BackNavigation'
+import React, { useEffect, useState } from "react";
+import { Route } from "react-router-dom";
+import uuid from "react-uuid";
+import DashboardTicketSearch from "./DashboardTicketSearch";
 
 const api = new Api();
 const DashboardTickets = () => {

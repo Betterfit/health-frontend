@@ -1,15 +1,13 @@
-import React from "react";
-import { ReactSVG } from "react-svg";
-import Edit from "Images/Icons/edit.svg";
-import { NavLink } from "react-router-dom";
 import StatusButton from "Components/Content/StatusButton";
 import EmptyImage from "Images/emptyImage.png";
+import React from "react";
+
 const TableBody = ({ TableBody }) => {
   return (
     <tbody>
       {TableBody.map((row, index) => {
         let imageIndex;
-        if (index % 2 == 0) {
+        if (index % 2 === 0) {
           return (
             <tr key={index} className="bg-table-row border border-table-row">
               {row.map((r, index) => {
@@ -26,11 +24,9 @@ const TableBody = ({ TableBody }) => {
                         />
                       </td>
                     );
-                    break;
                   case "product_image":
                     imageIndex = index;
                     return false;
-                    break;
                   case "item":
                     return (
                       <td
@@ -43,7 +39,7 @@ const TableBody = ({ TableBody }) => {
                         >
                           <img
                             className="w-24 mr-2"
-                            role="none"
+                            alt=""
                             src={`${
                               row[imageIndex][1]
                                 ? row[imageIndex][1]
@@ -56,7 +52,6 @@ const TableBody = ({ TableBody }) => {
                         </div>
                       </td>
                     );
-                    break;
                   default:
                     return (
                       <td
@@ -91,11 +86,9 @@ const TableBody = ({ TableBody }) => {
                         />
                       </td>
                     );
-                    break;
                   case "product_image":
                     imageIndex = index;
                     return false;
-                    break;
                   case "item":
                     return (
                       <td
@@ -108,7 +101,7 @@ const TableBody = ({ TableBody }) => {
                         >
                           <img
                             className="w-24 mr-2"
-                            role="none"
+                            alt=""
                             src={`${
                               row[imageIndex][1]
                                 ? row[imageIndex][1]
@@ -121,7 +114,6 @@ const TableBody = ({ TableBody }) => {
                         </div>
                       </td>
                     );
-                    break;
                   default:
                     return (
                       <td

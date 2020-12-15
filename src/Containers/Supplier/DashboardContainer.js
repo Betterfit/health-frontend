@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Switch, Route, useParams, Redirect } from "react-router-dom";
-import ReactCSSTransitionGroup from "react-transition-group";
+import { Redirect, Route } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
-import DashboardInventory from "./Inner/DashboardInventory";
-import DashboardTickets from "./Inner/DashboardTickets";
-import DashboardTicketDetail from "./Inner/DashboardTicketDetail";
 import DashboardResources from "../DashboardResources";
+import DashboardInventory from "./Inner/DashboardInventory";
+import DashboardTicketDetail from "./Inner/DashboardTicketDetail";
+import DashboardTickets from "./Inner/DashboardTickets";
+
 const DashboardContainer = () => {
   const [title, setTitle] = useState("");
   const changeTitle = (title) => {
