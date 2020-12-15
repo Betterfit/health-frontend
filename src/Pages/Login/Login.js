@@ -1,5 +1,5 @@
 import Button from "Components/Forms/Button";
-import Input_Field from "Components/Forms/Input_Field";
+import InputField from "Components/Forms/Input_Field";
 import Notfications from "Components/Helpers/Notifications";
 import { useAuthStore } from "Context/authContext";
 import Api from "Helpers/api";
@@ -52,17 +52,17 @@ const Login = () => {
       )}
       <form className="pb-12" onSubmit={signIn}>
         <div>
-          <Input_Field
+          <InputField
             id_tag="email"
             name="Email"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
-          ></Input_Field>
+          ></InputField>
         </div>
         <div className="mt-3">
-          <Input_Field
+          <InputField
             id_tag="password"
             name="Password"
             type="password"
@@ -70,7 +70,7 @@ const Login = () => {
             onChange={(e) => {
               setPW(e.target.value);
             }}
-          ></Input_Field>
+          ></InputField>
         </div>
         <div className="mt-6">
           <div className="mt-6">

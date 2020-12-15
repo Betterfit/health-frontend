@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Input_Field from "Components/Forms/Input_Field";
-import Api from "Helpers/api";
-import InputFieldLabel from "Components/Forms/InputFieldLabel";
 import Button from "Components/Forms/Button";
-import Notification from "Components/Helpers/Notifications";
+import InputFieldLabel from "Components/Forms/InputFieldLabel";
+import Api from "Helpers/api";
+import React, { useEffect, useState } from "react";
 
 // Success/fail message that will show to user once
 // they have submitted an email
-const PasswordResetConfirmation = ({ success, email }) => {
+// This is not used atm
+export const PasswordResetConfirmation = ({ success, email }) => {
   const email1 = email;
   let successMessage = `An email was sent to ${email1} with instructions to reset your password.`;
   let failMessage = `We were unable to find an account associated with ${email1}.`;
@@ -19,6 +18,8 @@ const ResetPassword = () => {
   const intialPWValues = { newPW: "", confirmPW: "" };
   const [pwFormValues, setPWFormValues] = useState(intialPWValues);
   const [pwFormErrors, setPWFormErrors] = useState({});
+  // pwNotification isn't displayed right now but might be worth adding
+  // eslint-disable-next-line
   const [pwNotification, setPWNotification] = useState();
 
   //PW section form changes
@@ -37,11 +38,11 @@ const ResetPassword = () => {
   const validatePW = (values) => {
     let errors = {};
     //only run if any pw field has text
-    if (values.newPW.length != 0 || values.confirmPW.length != 0) {
+    if (values.newPW.length !== 0 || values.confirmPW.length !== 0) {
       if (values.newPW.length < 8) {
         errors.newPW = "Password must be more than 8 characters.";
       }
-      if (values.newPW != values.confirmPW) {
+      if (values.newPW !== values.confirmPW) {
         errors.confirmPW = "Set password' and 'Confirm password' must match.";
       }
     }

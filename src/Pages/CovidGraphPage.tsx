@@ -1,5 +1,5 @@
 import Button from "Components/Forms/Button";
-import Input_Field from "Components/Forms/Input_Field";
+import InputField from "Components/Forms/Input_Field";
 import Graph from "Containers/Traffic/Inner/DashboardGraph";
 import React, { useState } from "react";
 
@@ -36,7 +36,7 @@ const FakeLogin = ({ authorize }: FakeLoginProps) => {
     <div className="flex flex-col items-center justify-center h-screen text-center">
       <p className="py-5 ">Welcome to BetterFit's COVID-19 Data Aggregator</p>
       <form className="pb-12">
-        <Input_Field
+        <InputField
           id_tag="password"
           name="Password"
           type="password"

@@ -1,25 +1,18 @@
-import React, { useState, useEffect } from "react";
-import Api from "Helpers/api";
-import useStores from "Helpers/useStores";
-import dayjs from "dayjs";
-import { _allowStateChangesInsideComputed } from "mobx";
-import { useHistory } from "react-router-dom";
-import { useAuthStore } from "Context/authContext";
-
-//components
-import DashboadOrderDetail from "Containers/DashboardOrderDetail";
-import Table from "Components/Table/Detail/Table";
 import StatusButton from "Components/Content/StatusButton";
 import Button from "Components/Forms/Button";
 import Notification from "Components/Helpers/Notifications";
+import Table from "Components/Table/Detail/Table";
+import DashboadOrderDetail from "Containers/DashboardOrderDetail";
+import dayjs from "dayjs";
+import Api from "Helpers/api";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const api = new Api();
 
 const DashboardFacilityOrderDetail = (props) => {
-  const authStore = useAuthStore();
   const { match } = props;
   const orderId = parseInt(match.params.id);
-  const { store } = useStores();
   const history = useHistory();
 
   // ======================== Order Data ========================

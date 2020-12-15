@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
-import Tabs from "Components/Tabs/Tabs";
 import BoxLink from "Components/Content/BoxLink";
-import Search from "Components/Search/Search";
-import Table from "Components/Table/Basic/Table";
-import Api from "Helpers/api";
-import Spinner from "Images/spinner.gif";
-import Translator from "Helpers/Translator";
-import { Switch, Route, useParams, useLocation } from "react-router-dom";
-import { AnimatedSwitch } from "react-router-transition";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
+import Search from "Components/Search/Search";
+import Tabs from "Components/Tabs/Tabs";
 import DashboardProductList from "Containers/DashboardProductList";
-import DashboardProductDetail from "./DashboardProductDetail";
 import DashboardSearch from "Containers/DashboardSearch";
-import uuid from "react-uuid";
 import { useAuthStore } from "Context/authContext";
+import Api from "Helpers/api";
+import Translator from "Helpers/Translator";
+import Spinner from "Images/spinner.gif";
+import React, { useEffect, useState } from "react";
+import { Route, useLocation } from "react-router-dom";
+import uuid from "react-uuid";
+import DashboardProductDetail from "./DashboardProductDetail";
 
 const api = new Api();
 
@@ -24,14 +22,10 @@ function useQuery() {
 const DashboardInventory = () => {
   const [title, setTitle] = useState("Inventory");
   const [AllCategoryData, setAllCategoryData] = useState(null);
-  const [searchActive, setSearchActive] = useState(false);
   const [activeTab, setActiveTab] = useState("all-products");
   const location = useLocation();
   const authStore = useAuthStore();
-  const userData = JSON.parse(authStore.user);
-  const supplierId = userData.user_profile.supplier;
   const [TabData, setTabData] = useState([]);
-  let query = useQuery();
   const getAllCategories = async () =>
     await api
       .getProductCategories()
