@@ -7,7 +7,9 @@ const FacilityDescription = ({ label, items }) => {
         {label}
       </dt>
       {items.map((item, i) => (
-        <dd key= {i} className="betterfit-grey-blue text-14">{item}</dd>
+        <dd key={i} className="betterfit-grey-blue text-14">
+          {item}
+        </dd>
       ))}
     </dl>
   );

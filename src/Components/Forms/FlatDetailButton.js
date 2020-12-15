@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import Translator from "Helpers/Translator";
 const tranform = {
   transform: "translateX(" + -50 + "%)",

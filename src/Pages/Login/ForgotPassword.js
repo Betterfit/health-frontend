@@ -43,7 +43,9 @@ const ForgotPassword = () => {
           {Translator("Reset Password")}
         </h1>
         <p className="text-base leading-5">
-          {Translator(`Please enter your email. If we find a matching account an email will be sent that allows you to reset your password`)}
+          {Translator(
+            `Please enter your email. If we find a matching account an email will be sent that allows you to reset your password`
+          )}
         </p>
       </div>
       <form className="pb-24" onSubmit={resetPW}>

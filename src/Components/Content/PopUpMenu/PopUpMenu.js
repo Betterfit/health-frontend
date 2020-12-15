@@ -7,8 +7,8 @@ import { Transition } from "@tailwindui/react";
 // 'action': where/what link should do
 // 'type': can be either 'text' or 'button'
 const PopUpMenu = ({ data, showPopup }) => {
-    return (
-      <Transition
+  return (
+    <Transition
       show={showPopup}
       enter="transition-opacity duration-75"
       enterFrom="opacity-0"
@@ -37,8 +37,8 @@ const PopUpMenu = ({ data, showPopup }) => {
           </div>
         </div>
       </div>
-      </Transition>
-    );
-  };
-  
-  export default PopUpMenu;
+    </Transition>
+  );
+};
+
+export default PopUpMenu;

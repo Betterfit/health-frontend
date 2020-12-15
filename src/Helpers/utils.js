@@ -1,1 +1,1 @@
-export const setClipboard = (text) => navigator.clipboard.writeText(text)
+export const setClipboard = (text) => navigator.clipboard.writeText(text);

@@ -13,7 +13,7 @@ import { AnimatedSwitch } from "react-router-transition";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import { useCartStore } from "Context/cartContext";
 const api = new Api();
-const DashboardOrder = ({props, type}) => {
+const DashboardOrder = ({ props, type }) => {
   const cartStore = useCartStore();
   const history = useHistory();
   const { match } = props;
@@ -22,13 +22,9 @@ const DashboardOrder = ({props, type}) => {
   }, []);
   return (
     <div className="flex flex-col md:flex-row">
-      <DashboardSideBar addonStyles=" flex flex-col" padding="p-0" >
-        {type === "edit" && (
-            <DashboardEditOrder {...props} />
-        )}
-        {type === "new" && (
-            <DashboardNewOrder {...props} />
-        )}
+      <DashboardSideBar addonStyles=" flex flex-col" padding="p-0">
+        {type === "edit" && <DashboardEditOrder {...props} />}
+        {type === "new" && <DashboardNewOrder {...props} />}
       </DashboardSideBar>
       <div className="w-full min-width-0 md:w-3/5 mx-auto h-screen md:overflow-y-scroll mt-2">
         <Route
@@ -43,21 +39,35 @@ const DashboardOrder = ({props, type}) => {
           path={`${match.path}/:categoryName/:id?`}
           exact
           render={(props) => {
-            return <DashboardCategoryProductList edit={true} {...props} type={type} orderId={ parseInt(match.params.oid) ? parseInt(match.params.oid) : null } />;
+            return (
+              <DashboardCategoryProductList
+                edit={true}
+                {...props}
+                type={type}
+                orderId={
+                  parseInt(match.params.oid) ? parseInt(match.params.oid) : null
+                }
+              />
+            );
           }}
         />
-        
+
         <Route
           path={`${match.path}/:categoryName/:cid/product/:pid/:id?`}
           exact
           render={(props) => {
             return <DashboardProductDetail edit={true} {...props} />;
           }}
-        /> 
-        <Route exact path={[`${match.path}/:categoryName/:id?/search:query?`,`${match.path}/:id?/category/:categoryName/:oid?search:query?`]}>
+        />
+        <Route
+          exact
+          path={[
+            `${match.path}/:categoryName/:id?/search:query?`,
+            `${match.path}/:id?/category/:categoryName/:oid?search:query?`,
+          ]}
+        >
           <DashboardProductSearch />
-        </Route> 
-      
+        </Route>
       </div>
     </div>
   );

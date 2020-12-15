@@ -11,18 +11,18 @@ const StatStyles = (stat = "open") => {
       };
       break;
     case "stat":
-        return {
-          bg: "bg-status-red",
-          text: "text-status-dark-red",
-          title: "Stat",
-        };
+      return {
+        bg: "bg-status-red",
+        text: "text-status-dark-red",
+        title: "Stat",
+      };
     case "regular":
-        return {
-          bg: "bg-tag-light-blue",
-          text: "text-tag-light-blue-txt",
-          title: "Regular",
-        };
-        break;
+      return {
+        bg: "bg-tag-light-blue",
+        text: "text-tag-light-blue-txt",
+        title: "Regular",
+      };
+      break;
     case "open":
       return {
         bg: "bg-tag-light-yellow",
@@ -85,7 +85,7 @@ const StatStyles = (stat = "open") => {
         text: "text-paragraph",
         title: "Closed",
       };
-      break; 
+      break;
     default:
       return {
         bg: "bg-tag-light-blue",

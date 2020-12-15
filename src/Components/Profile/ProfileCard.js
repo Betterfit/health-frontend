@@ -11,7 +11,6 @@ import CardTitle from "Components/Profile/CardTitle";
 import ButtonToggle from "Components/Forms/ToggleButton";
 import Notification from "Components/Helpers/Notifications";
 
-
 const ProfileCard = ({}) => {
   const api = new Api();
   //NOTE - this is not getting or saving lang to user data yet
@@ -200,13 +199,23 @@ const ProfileCard = ({}) => {
         }}
       >
         <div className="space-y-6">
-          <h2 className="text-xl text-betterfit-graphite">{Translator("Base Profile")}</h2>
+          <h2 className="text-xl text-betterfit-graphite">
+            {Translator("Base Profile")}
+          </h2>
           <ButtonToggle
-            option1={{ label: "English", active: baseFormValues.lang === "en", value: "en" }}
-            option2={{ label: "French", active: baseFormValues.lang === "fr", value: "fr" }}
+            option1={{
+              label: "English",
+              active: baseFormValues.lang === "en",
+              value: "en",
+            }}
+            option2={{
+              label: "French",
+              active: baseFormValues.lang === "fr",
+              value: "fr",
+            }}
             changeValue={handleBaseChange}
             id="lang"
-            name = "Default Language"
+            name="Default Language"
           ></ButtonToggle>
 
           <InputFieldLabel

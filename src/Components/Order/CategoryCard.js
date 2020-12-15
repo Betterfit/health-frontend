@@ -45,14 +45,16 @@ const CategoryCard = (category) => {
           className="rounded-full h-18 w-18 flex items-center "
           style={backgroundColor}
         >
-          <img className="m-auto" src = {svg} alt={category_name}/>
+          <img className="m-auto" src={svg} alt={category_name} />
         </div>
         <div className="flex flex-col">
           <p className="font-semibold text-betterfit-graphite md:text-center text-base leading-tight md:pt-4">
             {Translator(category_name)}
           </p>
           <p className="text-xxs uppercase text-gray-700 md:text-center leading-tight pt-2 font-semibold">
-            {count + " " + Translator("product" + (count > 1 || count == 0 ? "s" : ""))}
+            {count +
+              " " +
+              Translator("product" + (count > 1 || count == 0 ? "s" : ""))}
           </p>
         </div>
         <ReactSVG

@@ -5,7 +5,6 @@ import Table from "Components/Table/Basic/Table";
 import Api from "Helpers/api";
 import { useAuthStore } from "Context/authContext";
 
-
 const DashboardProductList = (props) => {
   const api = new Api();
   const { match } = props;
@@ -42,7 +41,6 @@ const DashboardProductList = (props) => {
       })
       .catch((err) => console.log(err));
 
-
   useEffect(() => {
     if (lastProductId !== ProductId || !ProductData) {
       setLastProductId(ProductId);
@@ -64,7 +62,13 @@ const DashboardProductList = (props) => {
             {/* product description */}
             <p className="text-paragraph">{ProductData.description}</p>
             {ProductData.product_variations.map((product) => {
-              return <Table TableData={product} ProductId={ProductId} edit={props.edit} />;
+              return (
+                <Table
+                  TableData={product}
+                  ProductId={ProductId}
+                  edit={props.edit}
+                />
+              );
             })}
           </div>
         </div>

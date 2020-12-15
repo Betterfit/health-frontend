@@ -26,7 +26,7 @@ const DashboardEditOrder = observer((props) => {
         arr = arr.map((item) => {
           let obj = {
             pk: item.product_option.pk,
-            product_pk:item.pk,
+            product_pk: item.pk,
             quantity: item.quantity,
             priority: item.priority == "stat" ? true : false,
           };
@@ -52,14 +52,17 @@ const DashboardEditOrder = observer((props) => {
 
   return (
     <>
-    {orderHeader && (    
-    <>
-      <OrderHeader data={orderHeader} />
-      <OrderCart Cart={cartStore.cart} OrderID={orderHeader.purchase_order} id={orderId} />
+      {orderHeader && (
+        <>
+          <OrderHeader data={orderHeader} />
+          <OrderCart
+            Cart={cartStore.cart}
+            OrderID={orderHeader.purchase_order}
+            id={orderId}
+          />
+        </>
+      )}
     </>
-    )}
-    </>
-
   );
 });
 

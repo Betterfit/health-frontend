@@ -39,12 +39,13 @@ const OrderCart = ({ Cart, OrderID, id }) => {
     );
 
     // resolve all the api calls in parallel and populate the messageData object as they resolve
-    Promise.all(promises).then((responses) => {
-      rawCart = CartData;
-      setCartItems(responses);
-      
-    }).catch((err) => console.log(err));;
-  }
+    Promise.all(promises)
+      .then((responses) => {
+        rawCart = CartData;
+        setCartItems(responses);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     if (CartData) {
@@ -87,9 +88,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
           cartStore.cart = [];
           cartStore.updateLocalCartStorage();
           setCartItems(null);
-          history.push(
-            `/dashboard/orders/detail/${response.data.pk}`
-          )
+          history.push(`/dashboard/orders/detail/${response.data.pk}`);
         });
       } else {
         api.setNewOrder(order).then((response) => {
@@ -100,9 +99,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
           cartStore.cart = [];
           cartStore.updateLocalCartStorage();
           setCartItems(null);
-          history.push(
-            `/dashboard/orders/detail/${response.data.pk}`
-          )
+          history.push(`/dashboard/orders/detail/${response.data.pk}`);
         });
       }
     } else {

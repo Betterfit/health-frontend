@@ -3,10 +3,10 @@ import BackNavigation from "Components/Helpers/BackNavigation";
 import CategoryTitle from "Components/Content/CategoryTitle";
 import Api from "Helpers/api";
 import ProductCard from "Components/Order/ProductCard";
-import Search from 'Components/Search/Search';
+import Search from "Components/Search/Search";
 import image from "Images/example_product.png"; //remove this later
 import Spinner from "Images/spinner.gif";
-import ProductSearch from 'Components/Search/ProductSearch';
+import ProductSearch from "Components/Search/ProductSearch";
 
 const DashboardCategoryProductList = (props) => {
   const api = new Api();
@@ -38,36 +38,46 @@ const DashboardCategoryProductList = (props) => {
       {isError && <div>Something went wrong ...</div>}
 
       {isLoading ? (
-        <div className="relative w-3/4 min-h-screen" style={{margin:'0 auto',}}> 
-          <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
+        <div
+          className="relative w-3/4 min-h-screen"
+          style={{ margin: "0 auto" }}
+        >
+          <img
+            className="absolute left-0 right-0 spinner"
+            style={{ maxWidth: 150 }}
+            src={Spinner}
+          />
         </div>
       ) : (
         <>
           <BackNavigation link={`Back to Product Categories`} />
           <div className="flex flex-wrap justify-between items-center pb-4 mb-8 border-b border-betterfit-grey">
             <CategoryTitle
-                title={`${CategoryData.name}`}
-                icon={CategoryData.icon}
-                background_color={CategoryData.background_color}
-                color={CategoryData.color}
+              title={`${CategoryData.name}`}
+              icon={CategoryData.icon}
+              background_color={CategoryData.background_color}
+              color={CategoryData.color}
             />
-            <ProductSearch CategoryName = {CategoryName} CategoryID = {CategoryID} type={props.type} orderId={props.orderId} />
+            <ProductSearch
+              CategoryName={CategoryName}
+              CategoryID={CategoryID}
+              type={props.type}
+              orderId={props.orderId}
+            />
           </div>
           <div className="grid grid-cols-1 gap-4 mb-6 md:mb-10 customproductgrid">
             {CategoryData.products.map((p) =>
-              p.product_variations.map((p2) =>{
-                return(
-                  p2.product_options.map((p3) => (
-                    <ProductCard
-                      key={`${p3.name}`}
-                      product={p2}
-                      product_details={p3}
-                      category={CategoryData.name}
-                      extra={CategoryData}
-                      parent={p.name ? p.name : null}
-                    />
-                  ))
-                )
+              p.product_variations.map((p2) => {
+                return p2.product_options.map((p3) => (
+                  <ProductCard
+                    key={`${p3.name}`}
+                    product={p2}
+                    product_details={p3}
+                    category={CategoryData.name}
+                    extra={CategoryData}
+                    parent={p.name ? p.name : null}
+                  />
+                ));
               })
             )}
           </div>

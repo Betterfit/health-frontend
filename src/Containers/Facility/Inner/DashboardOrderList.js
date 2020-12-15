@@ -14,13 +14,8 @@ import ButtonOption from "Components/Content/Menu/ButtonOption";
 import TextOptions from "Components/Content/Menu/TextOption";
 import PopupMenu from "Components/Content/Menu/PopUpMenu";
 import { keys } from "mobx";
-import uuid from 'react-uuid';
-import {
-  Switch,
-  Route,
-  useParams,
-  useLocation
-} from "react-router-dom";
+import uuid from "react-uuid";
+import { Switch, Route, useParams, useLocation } from "react-router-dom";
 const api = new Api();
 
 const DashboardOrderList = (props) => {
@@ -63,7 +58,7 @@ const DashboardOrderList = (props) => {
   const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
     return data
       .filter((order, i) => order.status === filterName)
-      .map((filteredOrder) =>(
+      .map((filteredOrder) => (
         <Table
           TableData={filteredOrder}
           excludeKeys={excludeKeys}
@@ -205,25 +200,27 @@ const DashboardOrderList = (props) => {
     }
   })();
 
-  
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
-      <Route exact path='/dashboard/orders'>
+      <Route exact path="/dashboard/orders">
         <h2 className="text-3xl text-dark-blue my-3">{Translator("Orders")}</h2>
       </Route>
       {TabData && (
-          <>          
-            <OrderSearch extraClasses="float-right clear-both"  callBack={(e) => setSearchActive(e)} searchActive={searchActive} />
-            <Route exact path='/dashboard/orders'>
-              <Tabs tabs={TabData} amount={true}  />
-            </Route>
-          </>
-        )}
+        <>
+          <OrderSearch
+            extraClasses="float-right clear-both"
+            callBack={(e) => setSearchActive(e)}
+            searchActive={searchActive}
+          />
+          <Route exact path="/dashboard/orders">
+            <Tabs tabs={TabData} amount={true} />
+          </Route>
+        </>
+      )}
       <Route path="/dashboard/orders/search:query?">
-            <DashboardOrderSearch />
+        <DashboardOrderSearch />
       </Route>
     </div>
-    
   );
 };
 

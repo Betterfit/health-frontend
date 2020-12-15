@@ -31,7 +31,7 @@ const StatStyles = (status = "normal") => {
   }
 };
 
-//Takes in a products object which must have 
+//Takes in a products object which must have
 // status [critical,normal,warn],
 // name - the name of the product
 // orders - the quantity of orders

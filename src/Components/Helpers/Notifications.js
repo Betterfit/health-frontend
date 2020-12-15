@@ -28,15 +28,14 @@ const FailSVG = () => {
   );
 };
 
-
 const Notification = ({ head, text, success = false }) => {
   let css_bg = success ? "bg-tag-light-green" : "bg-status-red ";
   let css_text = success ? "text-tag-light-green-txt" : "text-status-dark-red";
-  let image = success ? <successSVG/> : <failSVG/>;
+  let image = success ? <successSVG /> : <failSVG />;
   return (
     <div className={`${css_bg} rounded flex flex-row p-2 items-start my-1`}>
-       {success && <SuccessSVG></SuccessSVG>}
-       {!success && <FailSVG></FailSVG>}
+      {success && <SuccessSVG></SuccessSVG>}
+      {!success && <FailSVG></FailSVG>}
       <p className={`text-xs leading-5 ${css_text} `}>
         <span className="font-bold ml-2 mr-2">{Translator(head)} </span>
         {Translator(text)}

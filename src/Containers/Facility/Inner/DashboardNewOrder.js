@@ -4,8 +4,7 @@ import Api from "Helpers/api";
 import OrderHeader from "Components/Order/NewOrderHeader";
 import OrderCart from "Components/Order/OrderCart";
 import { useCartStore } from "Context/cartContext";
-import {useAuthStore} from "Context/authContext";
-
+import { useAuthStore } from "Context/authContext";
 
 const api = new Api();
 const DashboardNewOrder = observer(() => {
@@ -24,8 +23,10 @@ const DashboardNewOrder = observer(() => {
       .catch((err) => console.log(err));
   let headerData = {
     facility: userData.user_profile.facility_name,
-    unit: userData.user_profile.facility_unit ? userData.user_profile.facility_unit : null
-  }
+    unit: userData.user_profile.facility_unit
+      ? userData.user_profile.facility_unit
+      : null,
+  };
 
   return (
     <>

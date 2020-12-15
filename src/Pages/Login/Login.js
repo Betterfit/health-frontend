@@ -4,12 +4,10 @@ import Api from "Helpers/api";
 import Notfications from "Components/Helpers/Notifications";
 import Button from "Components/Forms/Button";
 import { useHistory, Route, useRouteMatch, Link } from "react-router-dom";
-import {useAuthStore} from "Context/authContext";
+import { useAuthStore } from "Context/authContext";
 import Translator from "Helpers/Translator";
 
-
 const api = new Api();
-
 
 const Login = () => {
   const authStore = useAuthStore();
@@ -18,13 +16,11 @@ const Login = () => {
   const [Error, setError] = useState();
   const history = useHistory();
 
-
-  useEffect(() => {   
-    if(authStore.token){
+  useEffect(() => {
+    if (authStore.token) {
       history.push("/dashboard/");
     }
-    }, []);
-
+  }, []);
 
   const signIn = (e) => {
     e.preventDefault();
@@ -36,7 +32,6 @@ const Login = () => {
         authStore.user = JSON.stringify(response.data.user);
         authStore.token = response.data.token;
         history.push("/dashboard/");
-
       })
       .catch((err) => {
         setError({
@@ -96,7 +91,5 @@ const Login = () => {
     </>
   );
 };
-
-
 
 export default Login;
