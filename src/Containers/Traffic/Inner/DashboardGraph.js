@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
-
-import GraphApi from "Helpers/graphApi";
+import { LineChart } from "@toast-ui/react-chart";
+import Checkbox from "Components/Forms/Checkbox";
 import FilterFields from "Components/Graph/FilterFields";
 import SideBarTabs from "Components/Graph/SideBarTab";
 import healthRegions from "Data/healthRegions";
-
-import "tui-chart/dist/tui-chart.css";
-import { LineChart } from "@toast-ui/react-chart";
 import { normalizeByPopulation, useCovidData } from "Helpers/covidDataUtils";
-import Checkbox from "Components/Forms/Checkbox";
+import React, { useState } from "react";
+import "tui-chart/dist/tui-chart.css";
 
 const graphTabs = [
     {
@@ -122,10 +119,10 @@ const Graph = ({ width = 525, height = 400 }) => {
     const handleTabClick = (key) => {
         key === "clear" ? clearAllRegions() : setCurTab(key);
         // R0 and resolutionTime don't make sense normalized by population
-        if (key === 'r0' || key === 'resolutionTime'){
-            setPer100k(false)
+        if (key === "r0" || key === "resolutionTime") {
+            setPer100k(false);
         }
-    }
+    };
 
     return (
         <>
@@ -148,7 +145,9 @@ const Graph = ({ width = 525, height = 400 }) => {
                             setValue={setPer100k}
                             title="Normalizes data by population so that regions with different populations can be compared."
                             // it doesn't make sense to normalize these metrics by population
-                            disabled={curTab === 'r0' || curTab === 'resolutionTime'}
+                            disabled={
+                                curTab === "r0" || curTab === "resolutionTime"
+                            }
                         />
                     </div>
                 </div>

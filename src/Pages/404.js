@@ -1,19 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
 import LowerBackgroundBlob from "Images/Login/login_lower_right.svg";
 import UpperBackgroundBlob from "Images/Login/login_upper_left.svg";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NotFound = () => {
     return(
         <div className="min-h-screen bg-betterfit-basic-blue flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <img
         src={UpperBackgroundBlob}
-        role="presentation"
+        alt=""
         className="absolute left-0 top-0 z-0"
         ></img>
         <img
         src={LowerBackgroundBlob}
-        role="presentation"
+        alt=""
         className="absolute right-0 bottom-0 z-0"
         ></img>
 
