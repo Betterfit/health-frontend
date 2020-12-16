@@ -1,8 +1,11 @@
 # This workflow will run tests using node
 
-name: Node.js Package
+name: development-push
 
-on: [push]
+on: 
+  push:
+    branches: 
+      - 'development'
 
 jobs:
   build:
