@@ -38,7 +38,7 @@ const SideBarTabs = ({ tabs, activeTab, handleClick, clearTab }) => {
             <button
                 key={clearTab.key}
                 title={clearTab.descr}
-                className="mb-2 px-1 py-2 flex justify-between items-center rounded-l-lg bg-status-red translate-x-1 border border-status-dark-red border-opacity-0 hover:border-opacity-100"
+                className="mb-2 pr-2 py-2 flex justify-between items-center rounded-l-lg bg-status-red translate-x-1 border border-status-dark-red border-opacity-0 hover:border-opacity-100"
                 onClick={() => {
                     tabChangeActive(clearTab.key, clearTab.heading);
                 }}

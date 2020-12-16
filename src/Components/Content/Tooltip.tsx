@@ -8,7 +8,7 @@ interface TooltipProps {
 const Tooltip = ({ text, identifier }: TooltipProps) => {
   return (
     <>
-      <p data-tip data-for={identifier} className="text-sm">
+      <p data-tip data-for={identifier} className="text-sm font-bold">
         ?
       </p>
       <ReactTooltip id={identifier}>
