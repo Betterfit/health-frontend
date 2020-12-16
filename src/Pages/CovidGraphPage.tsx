@@ -3,7 +3,7 @@ import Input_Field from "Components/Forms/Input_Field";
 import Graph from "Containers/Traffic/Inner/DashboardGraph";
 import React, { useState } from "react";
 
-const fake_password = "charlieTop674";
+const fake_password = "Canada";
 
 export const CovidGraphPage = () => {
     const [authorized, setAuthorized] = useState(false);
@@ -14,7 +14,7 @@ export const CovidGraphPage = () => {
     if (!authorized) return <FakeLogin authorize={() => setAuthorized(true)} />;
 
     return (
-        <div className="w-full flex flex-col items-center">
+        <div className="w-full flex flex-col items-center ml-2">
             <h1 className="self-center text-2xl text-dark-blue py-3">
                 BetterFit COVID-19 Aggregator
             </h1>
