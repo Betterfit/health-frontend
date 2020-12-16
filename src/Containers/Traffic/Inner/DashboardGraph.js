@@ -97,7 +97,8 @@ const Graph = ({ width = 525, height = 400 }) => {
     }));
 
     const toDisplay = {
-        categories: dates,
+      // 
+        categories: dates.map(date => date.slice(date.indexOf('-') + 1)),
         series: timeSeries.map((regionalData) => ({
             name: regionalData.healthRegion,
             data: per100k
