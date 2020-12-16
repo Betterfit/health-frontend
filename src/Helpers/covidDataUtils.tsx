@@ -12,7 +12,7 @@ export const useCovidData = () => {
     const [regions, setRegions] = useState<HealthRegion[]>([
         { province: "Alberta", healthRegion: "Edmonton Zone" },
     ]);
-    const [daysBack, setDaysBack] = useState(7);
+    const [daysBack, setDaysBack] = useState(30);
 
     const startDate = moment().subtract(daysBack, "days");
     const dates = createDateArray(startDate, moment());
