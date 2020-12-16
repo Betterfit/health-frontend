@@ -4,6 +4,7 @@ import FilterFields from "Components/Graph/FilterFields";
 import SideBarTabs from "Components/Graph/SideBarTab";
 import healthRegions from "Data/healthRegions";
 import { normalizeByPopulation, useCovidData } from "Helpers/covidDataUtils";
+import moment from 'moment';
 import React, { useState } from "react";
 import "tui-chart/dist/tui-chart.css";
 
@@ -96,9 +97,11 @@ const Graph = ({ width = 525, height = 400 }) => {
         content: healthRegions[provinceName],
     }));
 
+    const formattedDates = dates.map(date => moment(new Date(date))).map(date => date.format('MM/DD'))
+
     const toDisplay = {
       // 
-        categories: dates.map(date => date.slice(date.indexOf('-') + 1)),
+        categories: formattedDates,
         series: timeSeries.map((regionalData) => ({
             name: regionalData.healthRegion,
             data: per100k
