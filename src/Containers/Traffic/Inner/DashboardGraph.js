@@ -28,13 +28,13 @@ const graphTabs = [
         heading: "Resolution Time",
         key: "resolutionTime",
         descr:
-            "How long it takes for recoveries and deaths to catch up with the number of new cases on a past day. If there were 100 new cases today, how long until we can expect to see 100 recoveries and deaths.",
+            "How long it takes for recoveries and deaths to catch up with the number of new cases on a past day.\n If there were 100 new cases today, how long until we can expect to see 100 recoveries and deaths.",
     },
     {
         heading: "R",
         key: "r0",
         descr:
-            "Our estimate of COVID-19's reproduction number in this health region. Measures how many new infections a contagious person will cause, on average.",
+            "Our estimate of COVID-19's reproduction number in this health region.\n Measures how many new infections a contagious person will cause, on average.",
     },
 ];
 

@@ -6,7 +6,7 @@ import React, { useState } from "react";
 const fake_password = "Canada";
 
 export const CovidGraphPage = () => {
-    const [authorized, setAuthorized] = useState(false);
+    const [authorized, setAuthorized] = useState(true);
 
     const graphWidth = window.innerWidth * 0.9;
     const graphHeight = window.innerHeight * 0.6;
@@ -14,7 +14,7 @@ export const CovidGraphPage = () => {
     if (!authorized) return <FakeLogin authorize={() => setAuthorized(true)} />;
 
     return (
-        <div className="w-full flex flex-col items-center">
+        <div className="w-full flex flex-col items-center ml-2">
             <h1 className="self-center text-2xl text-dark-blue py-3">
                 BetterFit COVID-19 Aggregator
             </h1>
