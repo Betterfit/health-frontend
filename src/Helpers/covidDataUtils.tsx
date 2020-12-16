@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useQueries } from "react-query";
 import { HealthRegion, RegionalCovidTimeSeries, RegionDay } from "Types";
 import GraphApi from "./graphApi";
-import { rollingAverage } from "./mathUtils";
+import { rollingAverage, roundToNDecimals } from "./mathUtils";
 
 const graphApi = new GraphApi();
 const ROLLING_AVG_INTERVAL = 5;
@@ -167,5 +167,5 @@ export const normalizeByPopulation = (
     data: (number | null)[]
 ): (number | null)[] => {
     const num100k = regionPop / (100 * 1000);
-    return data.map((datum) => (datum === null ? null : datum / num100k));
+    return data.map((datum) => (datum === null ? null : roundToNDecimals(datum / num100k, 2)));
 };

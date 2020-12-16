@@ -12,7 +12,7 @@ const Tooltip = ({ text, identifier }: TooltipProps) => {
         ?
       </p>
       <ReactTooltip id={identifier}>
-        <p className="text-white text-sm whitespace-pre">{text}</p>
+        <p className="text-white text-xs whitespace-pre">{text}</p>
       </ReactTooltip>
     </>
   );
