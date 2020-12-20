@@ -40,6 +40,7 @@
     "react-svg": "^11.0.40",
     "react-tooltip": "^4.2.11",
     "react-uuid": "^1.0.2",
+    "recharts": "^1.8.5",
     "redux": "^4.0.5",
     "sortablejs": "^1.12.0",
     "tailwind-react-ui": "^0.8.1",
@@ -69,6 +70,7 @@
     ]
   },
   "devDependencies": {
+    "@types/recharts": "^1.8.18",
     "@types/sortablejs": "^1.10.6",
     "autoprefixer": "^10.0.0",
     "postcss-cli": "^7.1.2",
