@@ -1,12 +1,12 @@
-import React , {useState} from 'react'
+import React, { useState } from "react";
 
 const Resources = () => {
-    // usestate to save user and pass
-    return(
-        <div className="h-screen flex overflow-hidden bg-white">
-            <h1>RESOURCES </h1>
-        </div>
-    )
-}
+  // usestate to save user and pass
+  return (
+    <div className="h-screen flex overflow-hidden bg-white">
+      <h1>RESOURCES </h1>
+    </div>
+  );
+};
 
-export default Resources
+export default Resources;

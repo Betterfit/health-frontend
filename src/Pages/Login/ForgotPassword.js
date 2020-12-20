@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Input_Field from "Components/Forms/Input_Field";
-import Api from "Helpers/api";
 import Button from "Components/Forms/Button";
+import InputField from "Components/Forms/Input_Field";
+import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
+import React, { useState } from "react";
 
 // Success/fail message that will show to user once
 // they have submitted an email
@@ -43,7 +43,9 @@ const ForgotPassword = () => {
           {Translator("Reset Password")}
         </h1>
         <p className="text-base leading-5">
-          {Translator(`Please enter your email. If we find a matching account an email will be sent that allows you to reset your password`)}
+          {Translator(
+            `Please enter your email. If we find a matching account an email will be sent that allows you to reset your password`
+          )}
         </p>
       </div>
       <form className="pb-24" onSubmit={resetPW}>
@@ -52,7 +54,7 @@ const ForgotPassword = () => {
             {Translator(`Email`)}
           </label>
           <div className="relative">
-            <Input_Field
+            <InputField
               id_tag="email"
               name="Email"
               type="email"
@@ -60,7 +62,7 @@ const ForgotPassword = () => {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-            ></Input_Field>
+            ></InputField>
           </div>
         </div>
         {showResults !== undefined ? (

@@ -1,32 +1,23 @@
-import React, { useState, useEffect } from "react";
-
-import Api from "Helpers/api";
-import dayjs from "dayjs";
-import { useAuthStore } from "Context/authContext";
-import Translator from "Helpers/Translator";
-// <----------- Components ------------->//
-import Tabs from "Components/Tabs/Tabs";
+import ButtonOption from "Components/Content/Menu/ButtonOption";
+import PopupMenu from "Components/Content/Menu/PopUpMenu";
+import TextOptions from "Components/Content/Menu/TextOption";
 import OrderSearch from "Components/Search/OrderSearch";
 import Table from "Components/Table/Full/Table";
+import Tabs from "Components/Tabs/Tabs";
+import { useAuthStore } from "Context/authContext";
+import dayjs from "dayjs";
+import Api from "Helpers/api";
+import Translator from "Helpers/Translator";
+import React, { useEffect, useState } from "react";
+import { Route } from "react-router-dom";
+import uuid from "react-uuid";
 import DashboardOrderSearch from "./DashboardOrderSearch";
-//  <---- Menu Components ----> //
-import ButtonOption from "Components/Content/Menu/ButtonOption";
-import TextOptions from "Components/Content/Menu/TextOption";
-import PopupMenu from "Components/Content/Menu/PopUpMenu";
-import { keys } from "mobx";
-import uuid from 'react-uuid';
-import {
-  Switch,
-  Route,
-  useParams,
-  useLocation
-} from "react-router-dom";
+
 const api = new Api();
 
 const DashboardOrderList = (props) => {
   const authStore = useAuthStore();
   const userData = JSON.parse(authStore.user);
-  const url = props.match.path;
   const userId = userData.user_profile.facility;
   const [orderData, setOrderData] = useState(null);
   const [orderCount, setOrderCountData] = useState(null);
@@ -63,7 +54,7 @@ const DashboardOrderList = (props) => {
   const FilterOrders = (data, excludeKeys, excludeValues, filterName) => {
     return data
       .filter((order, i) => order.status === filterName)
-      .map((filteredOrder) =>(
+      .map((filteredOrder) => (
         <Table
           TableData={filteredOrder}
           excludeKeys={excludeKeys}
@@ -205,25 +196,27 @@ const DashboardOrderList = (props) => {
     }
   })();
 
-  
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
-      <Route exact path='/dashboard/orders'>
+      <Route exact path="/dashboard/orders">
         <h2 className="text-3xl text-dark-blue my-3">{Translator("Orders")}</h2>
       </Route>
       {TabData && (
-          <>          
-            <OrderSearch extraClasses="float-right clear-both"  callBack={(e) => setSearchActive(e)} searchActive={searchActive} />
-            <Route exact path='/dashboard/orders'>
-              <Tabs tabs={TabData} amount={true}  />
-            </Route>
-          </>
-        )}
+        <>
+          <OrderSearch
+            extraClasses="float-right clear-both"
+            callBack={(e) => setSearchActive(e)}
+            searchActive={searchActive}
+          />
+          <Route exact path="/dashboard/orders">
+            <Tabs tabs={TabData} amount={true} />
+          </Route>
+        </>
+      )}
       <Route path="/dashboard/orders/search:query?">
-            <DashboardOrderSearch />
+        <DashboardOrderSearch />
       </Route>
     </div>
-    
   );
 };
 

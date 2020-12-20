@@ -3,7 +3,7 @@ import CircleButton from "Components/Forms/CircleButton";
 import FlatButton from "Components/Forms/FlatDetailButton";
 import EmptyImage from "Images/emptyImage.png";
 import { useHistory } from "react-router-dom";
-import {useCartStore} from "Context/cartContext";
+import { useCartStore } from "Context/cartContext";
 import Translator from "Helpers/Translator";
 
 //This will either return the attribute if it exists, or
@@ -34,11 +34,13 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
   const history = useHistory();
   const [active, setActive] = useState(false);
   const name = product.name;
-  const image = product_details.product_image ? product_details.product_image : null;
+  const image = product_details.product_image
+    ? product_details.product_image
+    : null;
   const size = product_details.name;
   const addToCart = () => {
-    cartStore.addToCart(product_details.pk,1,false,product.pk)
-  }
+    cartStore.addToCart(product_details.pk, 1, false, product.pk);
+  };
 
   return (
     <>
@@ -60,7 +62,7 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
           />
           <div className="flex flex-col md:pt-7 pl-4  w-1/2 md:w-auto">
             <h1 className="text-sm md:text-base font-semibold text-status-dark-blue ">
-              { parent ? `${parent} - ` : "" } {Read_Product(name, "")}
+              {parent ? `${parent} - ` : ""} {Read_Product(name, "")}
             </h1>
             <span className="text-betterfit-grey-blue text-xs">
               {Read_Product(size, "N/A")}
@@ -71,19 +73,20 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
             <p className="text-betterfit-graphite uppercase text-xxs font-semibold hidden md:block">
               {Translator(category)}
             </p>
-            <CircleButton hover={active} onClick={() => addToCart() } />
+            <CircleButton hover={active} onClick={() => addToCart()} />
           </div>
         </div>
         {/*TODO - improve path here*/}
         {active && (
           <FlatButton
             text="View Details"
-            onClick={() =>{
-              let path = history.location.pathname.replace("/search", "")
+            onClick={() => {
+              let path = history.location.pathname.replace("/search", "");
               console.log(path);
-              history.push(  path + "/product/" + product.pk + "/" + product_details.pk)
-            }
-            }
+              history.push(
+                path + "/product/" + product.pk + "/" + product_details.pk
+              );
+            }}
             extras="hidden md:block"
           />
         )}

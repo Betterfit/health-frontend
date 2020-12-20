@@ -1,9 +1,8 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import Translator from "Helpers/Translator";
 
-
 function Checkbox({ id_tag, name, value = false, setValue, resetErrors }) {
-  const [checked , setChecked] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   setValue(checked);
   return (
@@ -25,7 +24,9 @@ function Checkbox({ id_tag, name, value = false, setValue, resetErrors }) {
             }}
           />
           <svg
-            className={`fill-current w-4 h-4 text-betterfit-green pointer-events-none ${checked ? `block` : `hidden`} `}
+            className={`fill-current w-4 h-4 text-betterfit-green pointer-events-none ${
+              checked ? `block` : `hidden`
+            } `}
             viewBox="0 0 20 20"
           >
             <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />

@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { observer } from "mobx-react";
-import Api from "Helpers/api";
-import { useHistory } from "react-router-dom";
 import OrderHeader from "Components/Order/NewOrderHeader";
 import OrderCart from "Components/Order/OrderCart";
 import { useCartStore } from "Context/cartContext";
 import dayjs from "dayjs";
+import Api from "Helpers/api";
+import { observer } from "mobx-react";
+import React, { useEffect, useState } from "react";
 
 const api = new Api();
 const DashboardEditOrder = observer((props) => {
-  const history = useHistory();
   const { match } = props;
   const orderId = parseInt(match.params.oid);
 
@@ -26,9 +24,9 @@ const DashboardEditOrder = observer((props) => {
         arr = arr.map((item) => {
           let obj = {
             pk: item.product_option.pk,
-            product_pk:item.pk,
+            product_pk: item.pk,
             quantity: item.quantity,
-            priority: item.priority == "stat" ? true : false,
+            priority: item.priority === "stat" ? true : false,
           };
           return obj;
         });
@@ -52,14 +50,17 @@ const DashboardEditOrder = observer((props) => {
 
   return (
     <>
-    {orderHeader && (    
-    <>
-      <OrderHeader data={orderHeader} />
-      <OrderCart Cart={cartStore.cart} OrderID={orderHeader.purchase_order} id={orderId} />
+      {orderHeader && (
+        <>
+          <OrderHeader data={orderHeader} />
+          <OrderCart
+            Cart={cartStore.cart}
+            OrderID={orderHeader.purchase_order}
+            id={orderId}
+          />
+        </>
+      )}
     </>
-    )}
-    </>
-
   );
 });
 

@@ -1,8 +1,7 @@
-import React from "react";
 import Translator from "Helpers/Translator";
+import React from "react";
 
-function Input_Field({ id_tag, name, type, value, onChange }) {
-
+function InputField({ id_tag, name, type, value, onChange }) {
   return (
     <>
       <label htmlFor={id_tag} className="sr-only">
@@ -23,4 +22,4 @@ function Input_Field({ id_tag, name, type, value, onChange }) {
   );
 }
 
-export default Input_Field;
+export default InputField;

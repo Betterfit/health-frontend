@@ -8,7 +8,6 @@ import StatusButton from "Components/Content/StatusButton";
 //images
 import OpenClose from "Images/Icons/open-close.svg";
 
-
 const HeaderText = ({ title, value, addOn_styles }) => {
   return (
     <div className="flex flex-col ">

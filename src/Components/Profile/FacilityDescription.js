@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const FacilityDescription = ({ label, items }) => {
   return (
@@ -7,7 +7,9 @@ const FacilityDescription = ({ label, items }) => {
         {label}
       </dt>
       {items.map((item, i) => (
-        <dd key= {i} className="betterfit-grey-blue text-14">{item}</dd>
+        <dd key={i} className="betterfit-grey-blue text-14">
+          {item}
+        </dd>
       ))}
     </dl>
   );
