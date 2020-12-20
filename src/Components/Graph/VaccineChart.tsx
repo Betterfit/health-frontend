@@ -25,6 +25,20 @@ const data = [
     needVaccine: 840,
     sickAfterHerdImmunity: 17.5,
   },
+  {
+    healthRegion: "Winnipeg",
+    population: 721,
+    totalRecovered: 8.4,
+    needVaccine: 400,
+    sickAfterHerdImmunity: 9
+  },
+  {
+    healthRegion: "Toronto Public Health",
+    population:2732,
+    totalRecovered: 105,
+    needVaccine: 1890,
+    sickAfterHerdImmunity: 80
+  }
 ];
 
 const VaccineChart = () => {
@@ -40,7 +54,7 @@ const VaccineChart = () => {
   }));
   return (
     <div>
-      <BarChart width={600} height={600} data={displayData} margin={{left: 30}}>
+      <BarChart width={800} height={600} data={displayData} margin={{left: 30}}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="healthRegion" />
         <Tooltip />
