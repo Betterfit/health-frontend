@@ -4,6 +4,7 @@ import FilterFields from "Components/Graph/FilterFields";
 import SideBarTabs from "Components/Graph/SideBarTab";
 import healthRegions from "Data/healthRegions";
 import { normalizeByPopulation, useCovidData } from "Helpers/covidDataUtils";
+import moment from "moment";
 import React, { useState } from "react";
 import "tui-chart/dist/tui-chart.css";
 
@@ -27,13 +28,13 @@ const graphTabs = [
     heading: "Resolution Time",
     key: "resolutionTime",
     descr:
-      "How long it takes for recoveries and deaths to catch up with the number of new cases on a past day. If there were 100 new cases today, how long until we can expect to see 100 recoveries and deaths.",
+      "How long it takes for recoveries and deaths to catch up with the number of new cases on a past day.\n If there were 100 new cases today, how long until we can expect to see a day with 100 recoveries and deaths.",
   },
   {
-    heading: "Rt",
+    heading: "R",
     key: "r0",
     descr:
-      "Our estimate of COVID-19's reproduction number in this health region. Measures how many new infections a contagious person will cause, on average.",
+      "Our estimate of COVID-19's reproduction number in this health region.\n Measures how many new infections a contagious person will cause, on average.",
   },
 ];
 
@@ -95,8 +96,13 @@ const Graph = ({ width = 525, height = 400 }) => {
     content: healthRegions[provinceName],
   }));
 
+  const formattedDates = dates
+    .map((date) => moment(new Date(date)))
+    .map((date) => date.format("MM/DD"));
+
   const toDisplay = {
-    categories: dates,
+    //
+    categories: formattedDates,
     series: timeSeries.map((regionalData) => ({
       name: regionalData.healthRegion,
       data: per100k
