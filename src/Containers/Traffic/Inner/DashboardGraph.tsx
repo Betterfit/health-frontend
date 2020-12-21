@@ -37,7 +37,7 @@ const DashboardGraph = ({ width = 525, height = 400 }) => {
   const onChangeChart = (chartType: ChartType) => setWhichChart(chartType);
 
   return (
-    <>
+    <div className="flex flex-col items-center">
       <Tabs
         tabs={tabs}
         tabCallBack={onChangeChart}
@@ -51,7 +51,7 @@ const DashboardGraph = ({ width = 525, height = 400 }) => {
         <VaccineChart {...{ width, height }} />
       )}
       <FilterFields filterData={filterData} onClickEvent={onRegionClick} />
-    </>
+    </div>
   );
 };
 

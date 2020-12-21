@@ -58,7 +58,7 @@ const VaccineChart = ({ width, height }: VaccineChartProps) => {
     ),
   }));
   return (
-    <div>
+    <div className="mb-4">
       <BarChart
         width={width}
         height={height}

@@ -74,13 +74,6 @@ const generateChartOptions = ({ width, height }) => ({
   },
 });
 
-// type CovidDataType =
-//   | "activeCases"
-//   | "newCases"
-//   | "deaths"
-//   | "resolutionTime"
-//   | "r0";
-
 const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
   const {
     timeSeries,
@@ -121,7 +114,7 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
 
   return (
     <>
-      <div className="flex w-full flex-row pb-2">
+      <div className="flex w-full flex-row pb-2 justify-center">
         <div className="w-1/10 flex flex-col justify-start">
           <SideBarTabs
             tabs={graphTabs}

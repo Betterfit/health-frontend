@@ -7,7 +7,7 @@ const fake_password = "charlieTop674";
 
 export const CovidGraphPage = () => {
   const [authorized, setAuthorized] = useState(true);
-  const graphWidth = window.innerWidth * 0.9;
+  const graphWidth = window.innerWidth * 0.5;
   const graphHeight = window.innerHeight * 0.6;
 
   if (!authorized) return <FakeLogin authorize={() => setAuthorized(false)} />;
