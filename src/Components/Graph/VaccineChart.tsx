@@ -7,7 +7,7 @@ import {
   Legend,
   Tooltip,
   XAxis,
-  YAxis
+  YAxis,
 } from "recharts";
 
 const data = [
@@ -30,15 +30,15 @@ const data = [
     population: 721,
     totalRecovered: 8.4,
     needVaccine: 400,
-    sickAfterHerdImmunity: 9
+    sickAfterHerdImmunity: 9,
   },
   {
     healthRegion: "Toronto Public Health",
-    population:2732,
+    population: 2732,
     totalRecovered: 105,
     needVaccine: 1890,
-    sickAfterHerdImmunity: 80
-  }
+    sickAfterHerdImmunity: 80,
+  },
 ];
 
 const VaccineChart = () => {
@@ -54,7 +54,12 @@ const VaccineChart = () => {
   }));
   return (
     <div>
-      <BarChart width={800} height={600} data={displayData} margin={{left: 30}}>
+      <BarChart
+        width={800}
+        height={600}
+        data={displayData}
+        margin={{ left: 30 }}
+      >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="healthRegion" />
         <Tooltip />
@@ -66,7 +71,8 @@ const VaccineChart = () => {
             value: "Residents - 1000s",
             position: "left",
             angle: -90,
-            style:{"text-anchor": "middle"}
+            // added so that the y-axis label is centered vertically
+            style: { "text-anchor": "middle" },
           }}
         />
         <Bar
@@ -75,7 +81,12 @@ const VaccineChart = () => {
           name="Require Vaccination"
           fill="#EE6677"
         />
-        <Bar dataKey="freebies" stackId="a" fill="#66CCEE" name="Freebies" />
+        <Bar
+          dataKey="freebies"
+          stackId="a"
+          fill="#66CCEE"
+          name="HI: Will Not Get Sick"
+        />
         <Bar
           dataKey="totalRecovered"
           stackId="a"
@@ -85,7 +96,7 @@ const VaccineChart = () => {
         <Bar
           dataKey="sickAfterHerdImmunity"
           stackId="a"
-          name="Sick After H.I."
+          name="HI: Will Get Sick"
           fill="#CCBB44"
         />
       </BarChart>
