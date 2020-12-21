@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import uuid from "react-uuid";
-
 // components
 import TabHeadings from "./TabHeadings";
 
-const Tabs = ({ tabs, headingComp, amount, tabCallBack, setActive = null }) => {
+const Tabs = ({
+  tabs,
+  headingComp,
+  amount,
+  tabCallBack,
+  setActive = null,
+  longUnderline = true,
+}) => {
   const [activeTab, setActiveTab] = useState(
     setActive ? setActive : tabs[0].key
   );
@@ -32,6 +38,7 @@ const Tabs = ({ tabs, headingComp, amount, tabCallBack, setActive = null }) => {
         headingComp={headingComp}
         amount={amount ? amount : false}
         setActive={setActive}
+        longUnderline={longUnderline}
       />
       {tabs.map((tab, index) => {
         return (

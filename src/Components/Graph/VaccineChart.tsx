@@ -41,7 +41,12 @@ const data = [
   },
 ];
 
-const VaccineChart = () => {
+interface VaccineChartProps {
+  width: number;
+  height: number;
+}
+
+const VaccineChart = ({ width, height }: VaccineChartProps) => {
   const displayData = data.map((region) => ({
     ...region,
     freebies: roundToNDecimals(
@@ -55,8 +60,8 @@ const VaccineChart = () => {
   return (
     <div>
       <BarChart
-        width={800}
-        height={600}
+        width={width}
+        height={height}
         data={displayData}
         margin={{ left: 30 }}
       >

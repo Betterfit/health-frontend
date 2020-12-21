@@ -1,24 +1,23 @@
 import Button from "Components/Forms/Button";
 import InputField from "Components/Forms/Input_Field";
-import Graph from "Containers/Traffic/Inner/DashboardGraph";
+import DashboardGraph from "Containers/Traffic/Inner/DashboardGraph";
 import React, { useState } from "react";
 
-const fake_password = "Canada";
+const fake_password = "charlieTop674";
 
 export const CovidGraphPage = () => {
-  const [authorized, setAuthorized] = useState(false);
-
+  const [authorized, setAuthorized] = useState(true);
   const graphWidth = window.innerWidth * 0.9;
   const graphHeight = window.innerHeight * 0.6;
 
-  if (!authorized) return <FakeLogin authorize={() => setAuthorized(true)} />;
+  if (!authorized) return <FakeLogin authorize={() => setAuthorized(false)} />;
 
   return (
     <div className="w-full flex flex-col items-center">
       <h1 className="self-center text-2xl text-dark-blue py-3">
         BetterFit COVID-19 Aggregator
       </h1>
-      <Graph width={graphWidth} height={graphHeight} />
+      <DashboardGraph width={graphWidth} height={graphHeight} />
     </div>
   );
 };

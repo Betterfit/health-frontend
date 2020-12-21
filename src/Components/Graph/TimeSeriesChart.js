@@ -1,9 +1,7 @@
 import { LineChart } from "@toast-ui/react-chart";
 import Checkbox from "Components/Forms/Checkbox";
-import FilterFields from "Components/Graph/FilterFields";
 import SideBarTabs from "Components/Graph/SideBarTab";
-import healthRegions from "Data/healthRegions";
-import { normalizeByPopulation, useCovidData } from "Helpers/covidDataUtils";
+import { normalizeByPopulation } from "Helpers/covidDataUtils";
 import moment from "moment";
 import React, { useState } from "react";
 import "tui-chart/dist/tui-chart.css";
@@ -76,32 +74,31 @@ const generateChartOptions = ({ width, height }) => ({
   },
 });
 
-const Graph = ({ width = 525, height = 400 }) => {
+// type CovidDataType =
+//   | "activeCases"
+//   | "newCases"
+//   | "deaths"
+//   | "resolutionTime"
+//   | "r0";
+
+const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
   const {
     timeSeries,
-    clearAllRegions,
     daysBack,
     setDaysBack,
-    regions,
-    toggleRegionSelection,
     dates,
-  } = useCovidData();
+    clearAllRegions,
+    regions,
+  } = covidData;
   const [curTab, setCurTab] = useState(graphTabs[0].key);
   // data will be normalized per 100k population in health region if this is true
   const [per100k, setPer100k] = useState(false);
-
-  // used to show collapsible lists of health regions in different provinces
-  const filterData = Object.keys(healthRegions).map((provinceName) => ({
-    heading: provinceName,
-    content: healthRegions[provinceName],
-  }));
 
   const formattedDates = dates
     .map((date) => moment(new Date(date)))
     .map((date) => date.format("MM/DD"));
 
   const toDisplay = {
-    //
     categories: formattedDates,
     series: timeSeries.map((regionalData) => ({
       name: regionalData.healthRegion,
@@ -112,10 +109,6 @@ const Graph = ({ width = 525, height = 400 }) => {
   };
 
   const chartOptions = generateChartOptions({ width, height });
-
-  // when a user selects a region from the collapsible list of health regions
-  const onRegionClick = (e, province, region) =>
-    toggleRegionSelection({ province: province, healthRegion: region });
 
   // user clicks new cases, active cases, daily deaths, clear all
   const handleTabClick = (key) => {
@@ -160,7 +153,6 @@ const Graph = ({ width = 525, height = 400 }) => {
           Select Health Regions to add to the graph
         </p>
       )}
-      <FilterFields filterData={filterData} onClickEvent={onRegionClick} />
     </>
   );
 };
@@ -192,4 +184,4 @@ const TimePeriodSelectionBox = ({ daysBack, setDaysBack }) => {
   );
 };
 
-export default Graph;
+export default TimeSeriesChart;
