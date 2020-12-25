@@ -1,0 +1,84 @@
+
+# This workflow will run tests and then deploy to staging or production, depending on the branch
+
+name: test and deploy
+
+on: [push]
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: yarn
+    # we have some legacy eslint warnings so the linter is disabled for now
+    #- name: Run ESLint
+      #run: CI=false yarn run eslint . --ext .js,.jsx,.ts,.tsx
+    - run: yarn test
+
+  # this builds, pushes to S3 and then performs a cloudfront invalidation
+  deploy-staging:
+    # occurs on pushes/merges to the staging branch
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+        - uses: actions/checkout@v2
+        - name: Install dependencies
+          run: yarn
+        # we have some legacy eslint warnings, so CI=false means errors won't be thrown while building
+        - name: Build
+          run: CI=false yarn build
+        - name: Deploy
+          uses: reggionick/s3-deploy@v3
+          with:
+            # Directory to deploy
+            folder: build
+            # Name of AWS Bucket
+            bucket: betterfit.health-staging
+            # The destination bucket region
+            bucket-region: us-east-2
+            # AWS CloudFront distribution ID
+            dist-id: E1JHTK29O2BO9Z
+            # AWS CloudFront invalidation path(s)
+            invalidation: /*
+            # Removes files in S3 that are not available in the local copy of the directory
+            delete-removed: true
+            # Upload files with private ACL, needed for S3 static website hosting
+            private: true
+
+  # duplicate of previous job, but for production
+  deploy-prod:
+    # occurs on pushes/merges to master
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+        - uses: actions/checkout@v2
+        - name: Install dependencies
+          run: yarn
+        # we have some legacy eslint warnings, so CI=false means errors won't be thrown while building
+        - name: Build
+          run: CI=false yarn build
+        - name: Deploy
+          uses: reggionick/s3-deploy@v3
+          with:
+            # Directory to deploy
+            folder: build
+            # Name of AWS Bucket
+            bucket: betterfit.health-prod
+            # The destination bucket region
+            bucket-region: us-east-2
+            # AWS CloudFront distribution ID
+            dist-id: E3K71OQ3W19T1I
+            # AWS CloudFront invalidation path(s)
+            invalidation: /*
+            # Removes files in S3 that are not available in the local copy of the directory
+            delete-removed: true
+            # Upload files with private ACL, needed for S3 static website hosting
+            private: true
