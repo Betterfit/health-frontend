@@ -1,7 +1,8 @@
 import React from "react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
+import { render } from "Helpers/testUtils";
 import * as rtl from "@testing-library/react";
 import { waitForDomChange } from "@testing-library/dom";
 import DashboardResources from "./DashboardResources";
@@ -66,7 +67,6 @@ const resources = [
 
 const server = setupServer(
     rest.get(apiURL + "resources", (req, res, ctx) => res(ctx.json(resources))),
-    rest.get(apiURL + "resources", (req, res, ctx) => res(ctx.json(resources)))
 );
 
 beforeAll(() => server.listen());
@@ -110,10 +110,10 @@ describe("DashboardResources", () => {
         ).toBeInTheDocument();
     });
 
-    it("Correctly filters resources when a tag is selected", () => {
+    it("Correctly filters resources when a tag is selected", async () => {
         const tagListEl = screen.getByRole("list", { name: /Tag List/i });
         // click on the gown tag
-        const maskTag = rtl.getByRole(tagListEl, "button", { name: /mask/i });
+        const maskTag = await rtl.findByRole(tagListEl, "button", { name: /mask/i });
         userEvent.click(maskTag);
         // Only BCCDC Public Health should be left
         const resList = screen.getByRole("list", {
@@ -128,10 +128,10 @@ describe("DashboardResources", () => {
         ).toBeInTheDocument();
     });
 
-    it("Correctly filters resources when multiple tags are selected", () => {
+    it("Correctly filters resources when multiple tags are selected", async () => {
         const tagListEl = screen.getByRole("list", { name: /Tag List/i });
         // click on both tags, which should make 2 resources appear
-        const maskTag = rtl.getByRole(tagListEl, "button", { name: /mask/i });
+        const maskTag = await rtl.findByRole(tagListEl, "button", { name: /mask/i });
         const gownTag = rtl.getByRole(tagListEl, "button", { name: /gown/i });
         userEvent.click(gownTag);
         userEvent.click(maskTag);
@@ -143,8 +143,8 @@ describe("DashboardResources", () => {
     });
 
     it("Allows users to deselect tags", async () => {
-        const tagListEl = screen.getByRole("list", { name: /Tag List/i });
-        let maskTag = rtl.getByRole(tagListEl, "button", { name: /mask/i });
+        const tagListEl = await screen.findByRole("list", { name: /Tag List/i });
+        let maskTag = await rtl.findByRole(tagListEl, "button", { name: /mask/i });
         // select then deselect the mask tag
         userEvent.click(maskTag);
         maskTag = rtl.getByRole(tagListEl, "button", { name: /mask/i });
@@ -157,8 +157,8 @@ describe("DashboardResources", () => {
         expect(resLinks).toHaveLength(2);
     });
 
-    it("Has a list of resource types", () => {
-        const resTypes = screen.getByRole("list", {
+    it("Has a list of resource types", async () => {
+        const resTypes = await screen.findByRole("list", {
             name: /Resource Types/i,
         });
         expect(rtl.getAllByRole(resTypes, "button").length).toEqual(5);
@@ -176,7 +176,7 @@ describe("DashboardResources", () => {
         });
         userEvent.click(supplierButton);
         // the new list of resources should only have 1 element
-        const resList = screen.getByRole("list", {
+        const resList = await screen.findByRole("list", {
             name: /Resource List/i,
         });
         const resLinks = rtl.getAllByRole(resList, "listitem");

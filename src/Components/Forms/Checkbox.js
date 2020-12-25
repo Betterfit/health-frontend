@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Translator from "Helpers/Translator";
 
-function Checkbox({ id_tag, name, value = false, setValue }) {
+function Checkbox({ name, value = false, setValue, title, disabled }) {
   const [checked, setChecked] = useState(value);
   return (
     <>
-      <label className="flex items-center">
+      <label className="flex items-center" title={title}>
         <div
           className={
             "select-none uppercase text-xxs tracking-extra-wide pr-3 " +
@@ -29,6 +29,7 @@ function Checkbox({ id_tag, name, value = false, setValue }) {
               setChecked(!checked);
               setValue(!checked);
             }}
+            disabled={disabled}
           />
           <svg
             className={`fill-current text-betterfit-highlight-red m-auto pointer-events-none ${

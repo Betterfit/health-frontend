@@ -6,14 +6,16 @@ import ControllerCard from 'Components/TrafficControllerSideBar/ControllerCard';
 import Api from "Helpers/api";
 import Graph from "./DashboardGraph";
 import Translator from "Helpers/Translator";
+import Spinner from "Images/spinner.gif";
 
 const api = new Api();
 const DashboardTrafficDashboard = () => {
     const [ProductData , setProductData] = useState(null);
-
+    const [loading , setLoaded] = useState(true)
     const getData = async () => await api.getTrafficControllerSupply()
     .then((response) => {
         setProductData(response.data)
+        setLoaded(false);
     })
     .catch((err) => console.log(err));
 
@@ -24,19 +26,20 @@ const DashboardTrafficDashboard = () => {
     
     return(
         <div className="flex flex-col md:flex-row">
-            <DashboardSideBar>
-                <TitleUnderLine title={`Supply`} /> 
-                {ProductData && (
-                    <>
-                        {
+                
+            {!loading ? (
+                <>
+                    <DashboardSideBar>
+                        <TitleUnderLine title={`Supply`} /> 
+                        {ProductData && (
                             ProductData.map(product => {
                                 return(
                                     <div key={`controllercard_${product.name}_parent`} className="flex flex-col mb-4">
                                         <div className="flex flex-row justify-between m-1 px-4">
-                                            <span className="text-xs leading-4 font-medium uppercase tracking-wider uppercase text-betterfit-graphite">{product.name}</span>
-                                            <div>
-                                                <span className="text-xs leading-4 uppercase tracking-wider uppercase text-betterfit-graphite mr-2">{Translator("Orders")}</span>
-                                                <span className="text-xs leading-4 uppercase tracking-wider uppercase text-betterfit-graphite ml-2">{Translator("Supply")}</span>
+                                            <span className="text-10 leading-4 tracking-extra-wide uppercase text-betterfit-graphite font-semibold opacity-50">{product.name}</span>
+                                            <div className="flex items-start">
+                                                <span className="text-10 leading-4 uppercase tracking-extra-wide uppercase text-betterfit-graphite mr-2 font-semibold opacity-50">{Translator("Orders")}</span>
+                                                <span className="text-10 leading-4 uppercase tracking-extra-wide uppercase text-betterfit-graphite ml-2 font-semibold opacity-50">{Translator("Supply")}</span>
                                             </div>
                                         </div>
                                         {
@@ -59,13 +62,22 @@ const DashboardTrafficDashboard = () => {
                                     </div>
                                 )
                             })
-                        } 
-                        </>
-                )}
-            </DashboardSideBar>
-            <div className={`w-full lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll mt-8`}   >
-                <Graph />
-            </div>
+                            
+                                    
+                        )}
+                    </DashboardSideBar>
+                    <div className={`w-full lg:relative lg:w-3/5 mx-auto h-screen overflow-y-scroll mt-8`}   >
+                        <h2 className="text-dark-blue text-2xl pb-6 ml-3 border-b border-title-border mb-3 self-start">
+                            COVID-19 Data
+                        </h2>
+                        <Graph />
+                    </div>
+                </>         
+            ):(
+                <div className="relative w-full min-h-screen"> 
+                    <img className="absolute left-0 right-0 spinner" style={{maxWidth:150}} src={Spinner} />
+                </div> 
+            )} 
         </div>
     )
 }

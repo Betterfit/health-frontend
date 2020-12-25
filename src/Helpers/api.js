@@ -1,7 +1,6 @@
 import * as axios from "axios";
-import useStores from 'Helpers/useStores';
 
-export const apiURL = 'https://api.betterfit.health/'  
+export const apiURL = process.env.REACT_APP_DJANGO_API_URL
 export default class Api {
 
   constructor() {

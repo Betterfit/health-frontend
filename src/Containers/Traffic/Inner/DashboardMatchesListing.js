@@ -16,9 +16,9 @@ const DashboardMatchesListing = () => {
         arr = arr.map(item => {
             return{
                 match_date : dayjs(item.match_date).format('MMMM D , YYYY'),
-                orders_matched: item.orders,
+                number_of_orders: item.orders,
                 status: item.status,
-                item_url: "/dashboard" + item.url
+                item_url: item.url === "/matches/" ?  "/dashboard" + item.url + "current/" : "/dashboard" + item.url
             }
         })
         console.log(arr);

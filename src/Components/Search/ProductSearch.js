@@ -9,7 +9,6 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 const ProductSearch = ({type,extraClasses,CategoryName, CategoryID, orderId}) => {
-  console.log(type);
   const [searchValue, setSearchValue ] = useState('');
   const searchRef = useRef(null);
   const history = useHistory();
@@ -37,7 +36,7 @@ const ProductSearch = ({type,extraClasses,CategoryName, CategoryID, orderId}) =>
           <input
             id="search"
             className="input-reset form-input block w-full box-border pl-2 py-2 transition ease-in-out duration-150 text-lg bg-transparent"
-            placeholder={Translator("Search Products")}
+            placeholder={`${Translator("Search")} ${Translator("Products")}`}
             ref={searchRef}
             onChange={()=>{
               clearTimeout(myTimeOut);

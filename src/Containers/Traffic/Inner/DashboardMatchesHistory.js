@@ -143,12 +143,19 @@ const DashboardMatchesHistory = ({props}) => {
                     </div>
                 </div>
                 <div>
-                    {matchesData && (
-                        <Table 
-                            sort={false}
-                            TableData={matchesData} 
-                            link={`/dashboard/matches/`} 
-                        />
+                    {matchesData &&  (
+                        <>
+                            {matchesData.length ?(
+                                <Table 
+                                    sort={false}
+                                    TableData={matchesData} 
+                                    link={`/dashboard/matches/`} 
+                                />
+
+                            ):(
+                                <div className="h-40 w-3/4 flex items-center"> <h3 className="font-semibold text-xl text-betterfit-graphite">No Matches</h3></div>
+                            )}
+                        </>
                     )}
                 </div>
             </>
