@@ -8,6 +8,7 @@ const TabHeadings = ({
   headingComp,
   amount,
   setActive,
+  longUnderline,
 }) => {
   const [activeHeading, setActiveHeading] = useState(
     setActive ? setActive : headings[0].key
@@ -15,7 +16,9 @@ const TabHeadings = ({
   return (
     <div
       key={uuid()}
-      className="flex flex-col-reverse md:flex-row mb-8 flex-1 md:items-center relative border-b border-gray-400 "
+      className={`flex flex-col-reverse md:flex-row mb-8 flex-1 md:items-center relative ${
+        longUnderline && "border-b border-gray-400"
+      }`}
     >
       <div className="flex flex-row flex-1 h-full mr-3 px-4">
         {headings.map((heading) => {

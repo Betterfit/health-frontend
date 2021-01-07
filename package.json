@@ -12,6 +12,7 @@
     "@types/node": "^14.14.6",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
+    "@types/react-router-dom": "^5.1.6",
     "axios": "^0.20.0",
     "craco": "0.0.3",
     "customize-cra": "^1.0.0",
@@ -40,6 +41,7 @@
     "react-svg": "^11.0.40",
     "react-tooltip": "^4.2.11",
     "react-uuid": "^1.0.2",
+    "recharts": "^1.8.5",
     "redux": "^4.0.5",
     "sortablejs": "^1.12.0",
     "tailwind-react-ui": "^0.8.1",
@@ -69,6 +71,7 @@
     ]
   },
   "devDependencies": {
+    "@types/recharts": "^1.8.18",
     "@types/sortablejs": "^1.10.6",
     "autoprefixer": "^10.0.0",
     "postcss-cli": "^7.1.2",
