@@ -3,7 +3,7 @@ import InputField from "Components/Forms/Input_Field";
 import DashboardGraph from "Containers/Traffic/Inner/DashboardGraph";
 import React, { useState } from "react";
 
-const fake_password = "charlieTop674";
+const fake_password = process.env.REACT_APP_GRAPH_PAGE_FAKE_PASSWORD || 'default-password'
 
 export const CovidGraphPage = () => {
   const [authorized, setAuthorized] = useState(true);
