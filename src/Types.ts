@@ -1,5 +1,3 @@
-import { Moment } from "moment";
-
 export interface Tag {
   pk: number;
   title: string;
@@ -72,4 +70,14 @@ export interface RegionalCovidTimeSeries {
   resolutionTime: (number | null)[];
   r0: (number | null)[];
   reportedDates: string[];
+}
+
+export interface VaccineStats {
+  province: string,
+  healthRegion: string,
+  population: number,
+  totalRecovered: number,
+  needVaccine: number,
+  sickAfterHerdImmunity: number,
+  notSickAfterHerdImmunity: number
 }

@@ -3,12 +3,17 @@ import InputField from "Components/Forms/Input_Field";
 import DashboardGraph from "Containers/Traffic/Inner/DashboardGraph";
 import React, { useState } from "react";
 
-const fake_password = process.env.REACT_APP_GRAPH_PAGE_FAKE_PASSWORD || 'default-password'
+const fake_password =
+  process.env.REACT_APP_GRAPH_PAGE_FAKE_PASSWORD || "default-password";
 
 export const CovidGraphPage = () => {
   const [authorized, setAuthorized] = useState(true);
-  const graphWidth = window.innerWidth * 0.5;
-  const graphHeight = window.innerHeight * 0.6;
+
+  let graphWidth = window.innerWidth * 0.5;
+  if (window.innerWidth < 600) {
+    graphWidth = window.innerWidth * 0.95;
+  }
+  const graphHeight = 0.8 * graphWidth;
 
   if (!authorized) return <FakeLogin authorize={() => setAuthorized(false)} />;
 

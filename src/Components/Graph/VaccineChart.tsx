@@ -1,3 +1,4 @@
+import Chip from "Components/Content/Chip";
 import { roundToNDecimals } from "Helpers/mathUtils";
 import React from "react";
 import {
@@ -9,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { HealthRegion, RegionalCovidTimeSeries } from "Types";
 
 const data = [
   {
@@ -44,9 +46,20 @@ const data = [
 interface VaccineChartProps {
   width: number;
   height: number;
+  timeSeries: RegionalCovidTimeSeries[];
+  regions: HealthRegion[];
+  toggleRegionSelection: (toToggle: HealthRegion) => void;
+  clearAllRegions: () => void;
 }
 
-const VaccineChart = ({ width, height }: VaccineChartProps) => {
+const VaccineChart = ({
+  width,
+  height,
+  timeSeries,
+  regions,
+  toggleRegionSelection,
+  clearAllRegions,
+}: VaccineChartProps) => {
   const displayData = data.map((region) => ({
     ...region,
     freebies: roundToNDecimals(
@@ -58,7 +71,7 @@ const VaccineChart = ({ width, height }: VaccineChartProps) => {
     ),
   }));
   return (
-    <div className="mb-4">
+    <div className="mb-4 flex flex-col md:flex-row">
       <BarChart
         width={width}
         height={height}
@@ -105,6 +118,32 @@ const VaccineChart = ({ width, height }: VaccineChartProps) => {
           fill="#CCBB44"
         />
       </BarChart>
+      <SelectedRegions
+        {...{ regions, toggleRegionSelection, clearAllRegions }}
+      />
+    </div>
+  );
+};
+
+interface SelectedRegionsProps {
+  regions: HealthRegion[];
+  toggleRegionSelection: (toToggle: HealthRegion) => void;
+  clearAllRegions: () => void;
+}
+
+const SelectedRegions = ({
+  regions,
+  toggleRegionSelection,
+}: SelectedRegionsProps) => {
+  return (
+    <div className="flex flex-col items-center m-4">
+      {regions.map((region, i) => (
+        <Chip
+          key={i}
+          text={region.healthRegion}
+          onDelete={() => toggleRegionSelection(region)}
+        />
+      ))}
     </div>
   );
 };

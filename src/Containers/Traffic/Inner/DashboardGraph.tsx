@@ -19,8 +19,8 @@ const tabs = [
 
 const DashboardGraph = ({ width = 525, height = 400 }) => {
   const [whichChart, setWhichChart] = useState<ChartType>("timeseries");
-  const timeSeries = useCovidTimeSeries();
-  const { toggleRegionSelection } = timeSeries;
+  const covidData = useCovidTimeSeries();
+  const { toggleRegionSelection, timeSeries, regions, clearAllRegions } = covidData;
 
   // used to show collapsible lists of health regions in different provinces
   const filterData = Object.entries(healthRegions).map(
@@ -46,9 +46,9 @@ const DashboardGraph = ({ width = 525, height = 400 }) => {
         longUnderline={false}
       />
       {whichChart === "timeseries" ? (
-        <TimeSeriesChart {...{ covidData: timeSeries, width, height }} />
+        <TimeSeriesChart {...{ covidData, width, height }} />
       ) : (
-        <VaccineChart {...{ width, height }} />
+        <VaccineChart {...{ width, height, timeSeries, regions, toggleRegionSelection, clearAllRegions }} />
       )}
       <FilterFields filterData={filterData} onClickEvent={onRegionClick} />
     </div>

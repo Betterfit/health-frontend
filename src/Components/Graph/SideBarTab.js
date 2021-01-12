@@ -7,12 +7,12 @@ const SideBarTabs = ({ tabs, activeTab, handleClick, clearTab }) => {
   };
 
   return (
-    <div className="flex flex-col py-2 justify-start">
+    <div className="flex flex-row flex-wrap py-2 justify-around md:flex-no-wrap md:flex-col lg:justify-start">
       {tabs.map((tab) => {
         return (
           <button
             key={tab.key}
-            className={`mb-2 flex justify-between items-center rounded-l-lg border border-betterfit-basic-blue border-opacity-0 hover:border-opacity-100 pr-2
+            className={`mb-2 flex justify-between items-center rounded-lg border border-betterfit-basic-blue border-opacity-0 hover:border-opacity-100 pr-2 lg:rounded-r-none
                                       ${
                                         tab.key === activeTab
                                           ? "border-opacity-100 bg-white"
