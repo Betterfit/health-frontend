@@ -1,4 +1,4 @@
-import { rollingAverage, roundToNDecimals } from "Helpers/mathUtils";
+import { logBase, rollingAverage, roundToNDecimals } from "Helpers/mathUtils";
 
 describe("rollingAverage", () => {
   it("Works on regular values", () => {
@@ -26,6 +26,18 @@ describe("roundToNDecimals", () => {
   ])("Rounds %s to %s decimal place(s)", (num, n, rounded) =>
     expect(roundToNDecimals(num, n)).toEqual(rounded)
   );
+});
+
+describe("logBase", () => {
+  it.each([
+    [9, 3, 2],
+    [6.5, 1.2, 10.2665],
+    [2000, 1 / 0.9, 72.1418],
+    [1.4, 0.4, -0.3672],
+  ])("Computes log of %s in base %s = %s", (x, base, expected) => {
+    const result = logBase(x, base);
+    expect(roundToNDecimals(result, 4)).toEqual(expected);
+  });
 });
 
 // makes typescript happy
