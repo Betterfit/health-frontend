@@ -1,5 +1,3 @@
-import Chip from "Components/Content/Chip";
-import { roundToNDecimals } from "Helpers/mathUtils";
 import React from "react";
 import {
   Bar,
@@ -10,7 +8,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { HealthRegion, RegionalCovidTimeSeries } from "Types";
+import { HealthRegion, RegionalCovidTimeSeries, VaccineStats } from "Types";
 
 const data = [
   {
@@ -60,16 +58,9 @@ const VaccineChart = ({
   toggleRegionSelection,
   clearAllRegions,
 }: VaccineChartProps) => {
-  const displayData = data.map((region) => ({
-    ...region,
-    freebies: roundToNDecimals(
-      region.population -
-        region.totalRecovered -
-        region.needVaccine -
-        region.sickAfterHerdImmunity,
-      1
-    ),
-  }));
+  const displayData = timeSeries.map((regionTimeSeries) =>
+    vaccineStatsFromTimeSeries(regionTimeSeries)
+  );
   return (
     <div className="mb-4 flex flex-col md:flex-row">
       <BarChart
@@ -83,7 +74,7 @@ const VaccineChart = ({
         <Tooltip />
         <Legend />
         <YAxis
-          dataKey="population"
+          dataKey="pop1000s"
           type="number"
           label={{
             value: "Residents - 1000s",
@@ -100,7 +91,7 @@ const VaccineChart = ({
           fill="#EE6677"
         />
         <Bar
-          dataKey="freebies"
+          dataKey="notSickAfterHerdImmunity"
           stackId="a"
           fill="#66CCEE"
           name="HI: Will Not Get Sick"
@@ -118,34 +109,56 @@ const VaccineChart = ({
           fill="#CCBB44"
         />
       </BarChart>
-      <SelectedRegions
-        {...{ regions, toggleRegionSelection, clearAllRegions }}
-      />
     </div>
   );
 };
 
-interface SelectedRegionsProps {
-  regions: HealthRegion[];
-  toggleRegionSelection: (toToggle: HealthRegion) => void;
-  clearAllRegions: () => void;
+const VACCINE_EFFICACY = 0.82;
+const HERD_IMMUNITY_R = 0.9;
+
+const vaccineStatsFromTimeSeries = (
+  timeSeries: RegionalCovidTimeSeries
+): VaccineStats => {
+  const population = timeSeries.population;
+  // we generate random values as placeholders for now
+  const totalRecovered = Math.random() * 0.2 * population;
+  // default value of 1.4 used if r value not found
+  const r0 = findFirstNonNull(timeSeries.r0.reverse(), 1.4);
+  const activeCases = findFirstNonNull(timeSeries.activeCases.reverse());
+  const needVaccine =
+    ((1 - 1 / r0) * population - totalRecovered) / VACCINE_EFFICACY;
+  const sickAfterHerdImmunity = simulateInfections(activeCases, r0);
+  const notSickAfterHerdImmunity =
+    population - needVaccine - sickAfterHerdImmunity - totalRecovered;
+  // const needVaccine =
+  return {
+    province: timeSeries.province,
+    healthRegion: timeSeries.healthRegion,
+    // scale by thousands so the chart looks better
+    pop1000s: timeSeries.population / 1000,
+    needVaccine: needVaccine / 1000,
+    totalRecovered: totalRecovered / 1000,
+    sickAfterHerdImmunity: sickAfterHerdImmunity / 1000,
+    notSickAfterHerdImmunity: notSickAfterHerdImmunity / 1000,
+  };
+};
+
+const simulateInfections = (startingCases: number, r: number): number => {
+  let currentCases = startingCases;
+  let totalInfections = 0;
+  while (currentCases > 1) {
+    currentCases = currentCases * HERD_IMMUNITY_R;
+    totalInfections += currentCases;
+  }
+  return totalInfections;
+};
+
+function findFirstNonNull<T>(array: (T | null)[], fallback?: T): T {
+  const val = array.find((val) => val !== null);
+  if (val === undefined)
+    if (fallback !== undefined) return fallback;
+    else throw "All values were null and no fallback was specified";
+  return val as T;
 }
-
-const SelectedRegions = ({
-  regions,
-  toggleRegionSelection,
-}: SelectedRegionsProps) => {
-  return (
-    <div className="flex flex-col items-center m-4">
-      {regions.map((region, i) => (
-        <Chip
-          key={i}
-          text={region.healthRegion}
-          onDelete={() => toggleRegionSelection(region)}
-        />
-      ))}
-    </div>
-  );
-};
 
 export default VaccineChart;

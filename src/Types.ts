@@ -73,11 +73,11 @@ export interface RegionalCovidTimeSeries {
 }
 
 export interface VaccineStats {
-  province: string,
-  healthRegion: string,
-  population: number,
-  totalRecovered: number,
-  needVaccine: number,
-  sickAfterHerdImmunity: number,
-  notSickAfterHerdImmunity: number
+  province: string;
+  healthRegion: string;
+  pop1000s: number;
+  totalRecovered: number;
+  needVaccine: number;
+  sickAfterHerdImmunity: number;
+  notSickAfterHerdImmunity: number;
 }
