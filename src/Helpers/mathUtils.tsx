@@ -37,3 +37,7 @@ export const roundToNDecimals = (num: number, n: number) => {
   const factor = Math.pow(10, n);
   return Math.round((num + Number.EPSILON) * factor) / factor;
 };
+
+export const logBase = (x: number, base: number): number => {
+  return Math.log(x) / Math.log(base);
+};

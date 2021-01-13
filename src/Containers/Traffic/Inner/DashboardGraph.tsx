@@ -3,7 +3,7 @@ import TimeSeriesChart from "Components/Graph/TimeSeriesChart";
 import VaccineChart from "Components/Graph/VaccineChart";
 import Tabs from "Components/Tabs/Tabs";
 import healthRegions from "Data/healthRegions.json";
-import { useCovidData } from "Helpers/covidDataUtils";
+import { useCovidTimeSeries } from "Helpers/covidDataUtils";
 import React, { useState } from "react";
 import "tui-chart/dist/tui-chart.css";
 
@@ -19,8 +19,8 @@ const tabs = [
 
 const DashboardGraph = ({ width = 525, height = 400 }) => {
   const [whichChart, setWhichChart] = useState<ChartType>("timeseries");
-  const covidData = useCovidData();
-  const { toggleRegionSelection } = covidData;
+  const covidData = useCovidTimeSeries();
+  const { toggleRegionSelection, timeSeries, regions, clearAllRegions } = covidData;
 
   // used to show collapsible lists of health regions in different provinces
   const filterData = Object.entries(healthRegions).map(
@@ -48,7 +48,7 @@ const DashboardGraph = ({ width = 525, height = 400 }) => {
       {whichChart === "timeseries" ? (
         <TimeSeriesChart {...{ covidData, width, height }} />
       ) : (
-        <VaccineChart {...{ width, height }} />
+        <VaccineChart {...{ width, height, timeSeries, regions, toggleRegionSelection, clearAllRegions }} />
       )}
       <FilterFields filterData={filterData} onClickEvent={onRegionClick} />
     </div>

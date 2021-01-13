@@ -8,7 +8,7 @@ import { rollingAverage, roundToNDecimals } from "./mathUtils";
 const graphApi = new GraphApi();
 const ROLLING_AVG_INTERVAL = 5;
 
-export const useCovidData = () => {
+export const useCovidTimeSeries = () => {
   const [regions, setRegions] = useState<HealthRegion[]>([
     { province: "Alberta", healthRegion: "Edmonton Zone" },
   ]);

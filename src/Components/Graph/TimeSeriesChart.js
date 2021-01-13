@@ -114,7 +114,7 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
 
   return (
     <>
-      <div className="flex w-full flex-row pb-2 justify-center">
+      <div className="flex w-full flex-col lg:flex-row pb-2 justify-center">
         <div className="w-1/10 flex flex-col justify-start">
           <SideBarTabs
             tabs={graphTabs}
@@ -167,6 +167,7 @@ const TimePeriodSelectionBox = ({ daysBack, setDaysBack }) => {
       onChange={onChange}
       className="uppercase text-xxs tracking-extra-wide"
       value={daysBack}
+      className="p-1 bg-transparent"
     >
       {timePeriodOptions.map((option, i) => (
         <option key={i} value={option.value} className="text-blue text-xs">
