@@ -1,18 +1,15 @@
-import { Transition } from "@tailwindui/react";
-import React, { useState, useEffect } from "react";
-import Translator from "Helpers/Translator";
-import Api from "Helpers/api";
-import {useAuthStore} from "Context/authContext";
+import CardTitle from "Components/Profile/CardTitle";
 //components
 import FacilityDescriptions from "Components/Profile/FacilityDescription";
-import CardTitle from "Components/Profile/CardTitle";
+import { useAuthStore } from "Context/authContext";
+import Api from "Helpers/api";
+import Translator from "Helpers/Translator";
+import React, { useEffect, useState } from "react";
 
 const FacilityCard = ({}) => {
   const api = new Api();
   const authStore = useAuthStore();
-  const [userData, setUserType] = useState(
-    JSON.parse(authStore.user)
-  );
+  const [userData] = useState(JSON.parse(authStore.user));
   const [facilityData, setFacility] = useState();
   const facilityName = userData.user_profile.facility_name;
   const facilityId = userData.user_profile.facility;
@@ -23,20 +20,23 @@ const FacilityCard = ({}) => {
       //contact: ["123-123-1234", "email@testemail.com"],
       address: [data.street, data.city + " " + data.province, data.postal_code],
       //shipping_address: [
-       // data.shipping_street,
+      // data.shipping_street,
       //  data.shipping_city + " " + data.shipping_province,
       //  data.shipping_postal_code,
-    //  ],
-      shipping_address: [data.street, data.city + " " + data.province, data.postal_code],
+      //  ],
+      shipping_address: [
+        data.street,
+        data.city + " " + data.province,
+        data.postal_code,
+      ],
     };
   };
-
 
   const getData = async () => {
     api
       .getFacilityData(facilityId)
       .then(async (response) => {
-        let data = setData(response.data)
+        let data = setData(response.data);
         setFacility(data);
       })
       .catch((err) => {
@@ -52,7 +52,10 @@ const FacilityCard = ({}) => {
     <>
       {facilityData && (
         <>
-          <CardTitle label={Translator("Facility Profile")} name={facilityName}></CardTitle>
+          <CardTitle
+            label={Translator("Facility Profile")}
+            name={facilityName}
+          ></CardTitle>
 
           <div className="space-y-6">
             <FacilityDescriptions

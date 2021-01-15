@@ -6,7 +6,7 @@ import SideBarProfileNavigation from "./SideBarProfileNavigation";
 import DotMenu from "Images/Icons/dot-menu.svg";
 import OpenClose from "Images/Icons/open-close.svg";
 
-const SideBarProfile = ({ userName, userType, showFacility, showProfile}) => {
+const SideBarProfile = ({ userName, userType, showFacility, showProfile }) => {
   const [ShowNav, SetNav] = useState(false);
   const ToggleProfileNavigation = () => {
     SetNav(!ShowNav);
@@ -17,7 +17,6 @@ const SideBarProfile = ({ userName, userType, showFacility, showProfile}) => {
       <div
         style={{ borderColor: "rgba(255,255,255,0.2)" }}
         className="p-0 block flex-shrink-0 flex md:border-t md:p-4 md:relative z-10 md:m-0 fixed mt-5 right-0 mr-4"
-
       >
         <Transition
           show={ShowNav}
@@ -32,12 +31,14 @@ const SideBarProfile = ({ userName, userType, showFacility, showProfile}) => {
             userType={userType}
             showFacility={showFacility}
             showProfile={showProfile}
-            close= {ToggleProfileNavigation}
+            close={ToggleProfileNavigation}
           ></SideBarProfileNavigation>
         </Transition>
-        <a href="#" className="flex-shrink-0 w-full group profile-container" 
-        onClick={ToggleProfileNavigation}
->
+        <a
+          href="#"
+          className="flex-shrink-0 w-full group profile-container"
+          onClick={ToggleProfileNavigation}
+        >
           <div className="ml-3 flex flex-row items-center justify-between">
             <p className=" text-sm md:text-base leading-5 font-medium text-white opacity-75 group-hover:text-gray-900">
               {userName}

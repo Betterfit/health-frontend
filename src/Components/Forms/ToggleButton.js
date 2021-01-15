@@ -20,11 +20,11 @@ const Button = ({ toggle, active, value, text }) => {
   );
 };
 
-const ToggleButton = ({ option1, option2, changeValue, id, name}) => {
+const ToggleButton = ({ option1, option2, changeValue, id, name }) => {
   const [active, setActive] = useState(option1.active);
   const toggle = (e) => {
     setActive(!active);
-    e.target.id=id;
+    e.target.id = id;
     changeValue(e);
   };
 

@@ -1,28 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { useObserver } from "mobx-react";
+import Modal from "Components/Content/Modal";
 import Button from "Components/Forms/Button";
-import { ReactSVG } from "react-svg";
-import EmptyCart from "Images/Icons/shopping-cart-empty.svg";
-import Api from "Helpers/api";
+import Checkbox from "Components/Forms/CheckboxConfirm";
+import OrderName from "Components/Forms/OrderName";
+import OrderProductCard from "Components/Order/OrderProductCard";
 import { useAuthStore } from "Context/authContext";
 import { useCartStore } from "Context/cartContext";
-import Modal from "Components/Content/Modal";
-import OrderProductCard from "Components/Order/OrderProductCard";
-import OrderName from "Components/Forms/OrderName";
-import Checkbox from "Components/Forms/CheckboxConfirm";
+import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
+import EmptyCart from "Images/Icons/shopping-cart-empty.svg";
+import { useObserver } from "mobx-react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-const api = new Api();
-let rawCart;
+import { ReactSVG } from "react-svg";
 
-const OrderCart = ({ Cart, OrderID, id }) => {
+const api = new Api();
+
+const OrderCart = ({ Cart,  id }) => {
   const history = useHistory();
   let CartData = JSON.stringify(Cart);
   CartData = JSON.parse(CartData);
   const authStore = useAuthStore();
   const cartStore = useCartStore();
   const [cartItems, setCartItems] = useState(null);
-  const [cartRaw, setCartRaw] = useState();
   const [modalOrder, setModalOrder] = useState(false);
   const [modalDraft, setModalDraft] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
@@ -39,12 +38,12 @@ const OrderCart = ({ Cart, OrderID, id }) => {
     );
 
     // resolve all the api calls in parallel and populate the messageData object as they resolve
-    Promise.all(promises).then((responses) => {
-      rawCart = CartData;
-      setCartItems(responses);
-      
-    }).catch((err) => console.log(err));;
-  }
+    Promise.all(promises)
+      .then((responses) => {
+        setCartItems(responses);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     if (CartData) {
@@ -61,7 +60,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
   const confirmCallBack = (status) => {
     const userData = JSON.parse(authStore.user);
     console.log(userData);
-    if (agreeTerms || status == "draft") {
+    if (agreeTerms || status === "draft") {
       let order = {
         facility: userData.user_profile.facility,
         user: userData.pk,
@@ -76,7 +75,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
           };
         }),
       };
-      if (cartStore.cartType == "editCart") {
+      if (cartStore.cartType === "editCart") {
         delete order.facility;
         delete order.facility_admin;
         api.editOrder(order, id).then((response) => {
@@ -87,9 +86,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
           cartStore.cart = [];
           cartStore.updateLocalCartStorage();
           setCartItems(null);
-          history.push(
-            `/dashboard/orders/detail/${response.data.pk}`
-          )
+          history.push(`/dashboard/orders/detail/${response.data.pk}`);
         });
       } else {
         api.setNewOrder(order).then((response) => {
@@ -100,9 +97,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
           cartStore.cart = [];
           cartStore.updateLocalCartStorage();
           setCartItems(null);
-          history.push(
-            `/dashboard/orders/detail/${response.data.pk}`
-          )
+          history.push(`/dashboard/orders/detail/${response.data.pk}`);
         });
       }
     } else {
@@ -130,7 +125,7 @@ const OrderCart = ({ Cart, OrderID, id }) => {
             })}
         </div>
         {!cartItems ||
-          (cartItems.length == 0 && (
+          (cartItems.length === 0 && (
             <>
               <ReactSVG
                 src={EmptyCart}

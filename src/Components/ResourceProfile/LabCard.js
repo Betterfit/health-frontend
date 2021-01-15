@@ -4,17 +4,17 @@ import { ResourceCard } from "./ResourceCard";
 import { Address, Email, Phone, Website } from "./ResourceProfileItems";
 
 const LabCard = ({ name, tagList, details, color }) => {
-    const biosafety = [details.biosafety_level];
+  const biosafety = [details.biosafety_level];
 
-    return (
-        <ResourceCard type="Lab" {...{ name, color, tagList }}>
-            <ResourceDescription label="Biosafety Level" items={biosafety} />
-            <Email details={details} />
-            <Phone details={details} />
-            <Address details={details} />
-            <Website details={details} />
-        </ResourceCard>
-    );
+  return (
+    <ResourceCard type="Lab" {...{ name, color, tagList }}>
+      <ResourceDescription label="Biosafety Level" items={biosafety} />
+      <Email details={details} />
+      <Phone details={details} />
+      <Address details={details} />
+      <Website details={details} />
+    </ResourceCard>
+  );
 };
 
 export default LabCard;

@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { useAuthStore } from "Context/authContext";
-import Api from "Helpers/api";
-import { isEqual } from "lodash";
-import Translator from "Helpers/Translator";
-
-//components
-import InputFieldLabel from "Components/Forms/InputFieldLabel";
 import Button from "Components/Forms/Button";
-import CardTitle from "Components/Profile/CardTitle";
+import InputFieldLabel from "Components/Forms/InputFieldLabel";
 import ButtonToggle from "Components/Forms/ToggleButton";
 import Notification from "Components/Helpers/Notifications";
+import CardTitle from "Components/Profile/CardTitle";
+import { useAuthStore } from "Context/authContext";
+import Api from "Helpers/api";
+import Translator from "Helpers/Translator";
+import { isEqual } from "lodash";
+import React, { useEffect, useState } from "react";
 
 
-const ProfileCard = ({}) => {
+const ProfileCard = () => {
   const api = new Api();
   //NOTE - this is not getting or saving lang to user data yet
   //ONLY saving local.
@@ -29,7 +27,6 @@ const ProfileCard = ({}) => {
   };
 
   const [baseFormValues, setBaseFormValues] = useState(intialBaseValues);
-  const [baseFormErrors, setBaseFormErrors] = useState({});
 
   const intialPWValues = { oldPW: "", newPW: "", confirmPW: "" };
   const [pwFormValues, setPWFormValues] = useState(intialPWValues);
@@ -71,17 +68,17 @@ const ProfileCard = ({}) => {
     let errors = {};
     //only run if any pw field has text
     if (
-      values.oldPW.length != 0 ||
-      values.newPW.length != 0 ||
-      values.oldPW.length != 0
+      values.oldPW.length !== 0 ||
+      values.newPW.length !== 0 ||
+      values.oldPW.length !== 0
     ) {
-      if (values.oldPW.length == 0) {
+      if (values.oldPW.length === 0) {
         errors.oldPW = "Old password must be filled.";
       }
       if (values.newPW.length < 8) {
         errors.newPW = "Password must be more than 8 characters.";
       }
-      if (values.newPW != values.confirmPW) {
+      if (values.newPW !== values.confirmPW) {
         errors.confirmPW = "'Set password' and 'Confirm password' must match.";
       }
     }
@@ -103,10 +100,6 @@ const ProfileCard = ({}) => {
       });
   };
 
-  //Only run if userData has been updated
-  useEffect(() => {
-    userName = userData.username;
-  }, [userData]);
 
   //callback for submit order
   const pwCallBack = async () => {
@@ -200,13 +193,23 @@ const ProfileCard = ({}) => {
         }}
       >
         <div className="space-y-6">
-          <h2 className="text-xl text-betterfit-graphite">{Translator("Base Profile")}</h2>
+          <h2 className="text-xl text-betterfit-graphite">
+            {Translator("Base Profile")}
+          </h2>
           <ButtonToggle
-            option1={{ label: "English", active: baseFormValues.lang === "en", value: "en" }}
-            option2={{ label: "French", active: baseFormValues.lang === "fr", value: "fr" }}
+            option1={{
+              label: "English",
+              active: baseFormValues.lang === "en",
+              value: "en",
+            }}
+            option2={{
+              label: "French",
+              active: baseFormValues.lang === "fr",
+              value: "fr",
+            }}
             changeValue={handleBaseChange}
             id="lang"
-            name = "Default Language"
+            name="Default Language"
           ></ButtonToggle>
 
           <InputFieldLabel

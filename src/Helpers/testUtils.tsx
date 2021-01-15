@@ -8,9 +8,9 @@ import { QueryClient, QueryClientProvider } from "react-query";
 // If this is not done, they will throw errors
 // https://react-query-beta.tanstack.com/reference/QueryClientProvider
 const render = (component: React.ReactNode) => {
-    const queryClient = new QueryClient()
-    rtlRender(
-        <QueryClientProvider client={queryClient}>{component}</QueryClientProvider>
-    );
+  const queryClient = new QueryClient();
+  rtlRender(
+    <QueryClientProvider client={queryClient}>{component}</QueryClientProvider>
+  );
 };
 export { render };

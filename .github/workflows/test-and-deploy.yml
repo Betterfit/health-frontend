@@ -19,8 +19,8 @@ jobs:
 
   # this builds, pushes to S3 and then performs a cloudfront invalidation
   deploy-staging:
-    # occurs on pushes/merges to the staging branch
-    if: github.ref == 'refs/heads/staging'
+    # occurs on pushes/merges to the staging branch (development)
+    if: github.ref == 'refs/heads/development'
     needs: test-and-lint
     runs-on: ubuntu-latest
     env:
@@ -30,6 +30,9 @@ jobs:
         - uses: actions/checkout@v2
         - name: Install dependencies
           run: yarn
+        # we copy .env.staging into .env.local so that it gets used when building
+        # https://create-react-app.dev/docs/adding-custom-environment-variables/#what-other-env-files-can-be-used
+        - run: cp .env.staging .env.local
         # we have some legacy eslint warnings, so CI=false means errors won't be thrown while building
         - name: Build
           run: CI=false yarn build
@@ -64,6 +67,9 @@ jobs:
         - uses: actions/checkout@v2
         - name: Install dependencies
           run: yarn
+        # we copy .env.prod into .env.local so that it gets used when building
+        # https://create-react-app.dev/docs/adding-custom-environment-variables/#what-other-env-files-can-be-used
+        - run: cp .env.prod .env.local
         # we have some legacy eslint warnings, so CI=false means errors won't be thrown while building
         - name: Build
           run: CI=false yarn build

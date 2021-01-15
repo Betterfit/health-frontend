@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+We use Prettier as an opinionated formatter accross the project.
+This helps minimize diffs that might result from using different formatters.
+If you use VSCode, you can just add this extension [here](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
 ## Available Scripts
 
 In the project directory, you can run:

@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react";
-import Input_Field from "Components/Forms/Input_Field";
-import Api from "Helpers/api";
-import Notfications from "Components/Helpers/Notifications";
 import Button from "Components/Forms/Button";
-import { useHistory, Route, useRouteMatch, Link } from "react-router-dom";
-import {useAuthStore} from "Context/authContext";
+import InputField from "Components/Forms/Input_Field";
+import Notfications from "Components/Helpers/Notifications";
+import { useAuthStore } from "Context/authContext";
+import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
-
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 const api = new Api();
-
 
 const Login = () => {
   const authStore = useAuthStore();
@@ -18,13 +16,11 @@ const Login = () => {
   const [Error, setError] = useState();
   const history = useHistory();
 
-
-  useEffect(() => {   
-    if(authStore.token){
+  useEffect(() => {
+    if (authStore.token) {
       history.push("/dashboard/");
     }
-    }, []);
-
+  }, []);
 
   const signIn = (e) => {
     e.preventDefault();
@@ -36,7 +32,6 @@ const Login = () => {
         authStore.user = JSON.stringify(response.data.user);
         authStore.token = response.data.token;
         history.push("/dashboard/");
-
       })
       .catch((err) => {
         setError({
@@ -57,17 +52,17 @@ const Login = () => {
       )}
       <form className="pb-12" onSubmit={signIn}>
         <div>
-          <Input_Field
+          <InputField
             id_tag="email"
             name="Email"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
-          ></Input_Field>
+          ></InputField>
         </div>
         <div className="mt-3">
-          <Input_Field
+          <InputField
             id_tag="password"
             name="Password"
             type="password"
@@ -75,7 +70,7 @@ const Login = () => {
             onChange={(e) => {
               setPW(e.target.value);
             }}
-          ></Input_Field>
+          ></InputField>
         </div>
         <div className="mt-6">
           <div className="mt-6">
@@ -96,7 +91,5 @@ const Login = () => {
     </>
   );
 };
-
-
 
 export default Login;

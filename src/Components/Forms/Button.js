@@ -1,11 +1,11 @@
+import Translator from "Helpers/Translator";
+import Plus from "Images/Icons/plus.svg";
 import React from "react";
 import { ReactSVG } from "react-svg";
-import Plus from "Images/Icons/plus.svg";
-import Translator from "Helpers/Translator";
 //To add an svg icon - add component to svg and add to svgMap
 //So if svgName = 'plus' will call the Plus component
 
-const PlusButton = () => (
+export const PlusButton = () => (
   <ReactSVG
     src={Plus}
     className=" px-2"
