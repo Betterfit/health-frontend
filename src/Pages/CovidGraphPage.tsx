@@ -18,7 +18,7 @@ export const CovidGraphPage = () => {
   }
   const graphHeight = 0.8 * graphWidth;
 
-  if (!authorized) return <FakeLogin authorize={() => setAuthorized(false)} />;
+  if (!authorized) return <FakeLogin authorize={() => setAuthorized(true)} />;
 
   return (
     <div className="w-full flex flex-col items-center">
