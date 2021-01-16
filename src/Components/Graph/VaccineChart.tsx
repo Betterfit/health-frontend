@@ -1,3 +1,4 @@
+import { roundToNDecimals } from "Helpers/mathUtils";
 import React from "react";
 import {
   Bar,
@@ -136,12 +137,15 @@ const vaccineStatsFromTimeSeries = (
     healthRegion: timeSeries.healthRegion,
     // scale by thousands so the chart looks better
     pop1000s: timeSeries.population / 1000,
-    needVaccine: needVaccine / 1000,
-    totalRecovered: totalRecovered / 1000,
-    sickAfterHerdImmunity: sickAfterHerdImmunity / 1000,
-    notSickAfterHerdImmunity: notSickAfterHerdImmunity / 1000,
+    needVaccine: scaleAndRound(needVaccine),
+    totalRecovered: scaleAndRound(totalRecovered),
+    sickAfterHerdImmunity: scaleAndRound(sickAfterHerdImmunity),
+    notSickAfterHerdImmunity: scaleAndRound(notSickAfterHerdImmunity),
   };
 };
+
+const scaleAndRound = (val: number, scale = 1000, nDecimals = 2): number =>
+  roundToNDecimals(val / scale, nDecimals);
 
 const simulateInfections = (startingCases: number, r: number): number => {
   let currentCases = startingCases;
