@@ -147,6 +147,12 @@ const vaccineStatsFromTimeSeries = (
 const scaleAndRound = (val: number, scale = 1000, nDecimals = 2): number =>
   roundToNDecimals(val / scale, nDecimals);
 
+/**
+ * Finds the total number of new infections when R < 1 (meaning the disease is dying out)
+ * @param startingCases Number of active cases
+ * @param r The reproduction rate of the virus
+ * @return How many new people will get infected
+ */
 const simulateInfections = (startingCases: number, r: number): number => {
   let currentCases = startingCases;
   let totalInfections = 0;
