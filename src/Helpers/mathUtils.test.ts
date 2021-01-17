@@ -1,4 +1,9 @@
-import { logBase, rollingAverage, roundToNDecimals } from "Helpers/mathUtils";
+import {
+  interpolateNulls,
+  logBase,
+  rollingAverage,
+  roundToNDecimals,
+} from "Helpers/mathUtils";
 
 describe("rollingAverage", () => {
   it("Works on regular values", () => {
@@ -37,6 +42,43 @@ describe("logBase", () => {
   ])("Computes log of %s in base %s = %s", (x, base, expected) => {
     const result = logBase(x, base);
     expect(roundToNDecimals(result, 4)).toEqual(expected);
+  });
+
+  describe("interpolateNulls", () => {
+    it.each([
+      [
+        [1, 2, null, 4], // input array
+        [1, 2, 3, 4], // output array
+      ],
+      [
+        [1, 2, null, null, 5],
+        [1, 2, 3, 4, 5],
+      ],
+      [
+        [0, 1, 0.5, null, 0.5],
+        [0, 1, 0.5, 0.5, 0.5],
+      ],
+      [
+        [1, null, 1.5, null, 2.5],
+        [1, 1.25, 1.5, 2, 2.5],
+      ],
+      [
+        [1, null, null, 1.6, null, 3, null, 2],
+        [1, 1.2, 1.4, 1.6, 2.3, 3, 2.5, 2],
+      ],
+      [
+        // we don't interpolate null values on the edges
+        [null, null, 1.2, null, 1.6, null, null],
+        [null, null, 1.2, 1.4, 1.6, null, null],
+      ],
+    ])("input: %s, expected: %s", (input, expected) => {
+      const output = interpolateNulls(input);
+      output.forEach((num, i) =>
+        expected[i] === null
+          ? num === null
+          : expect(num).toBeCloseTo(expected[i] as number)
+      );
+    });
   });
 });
 

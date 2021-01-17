@@ -41,3 +41,43 @@ export const roundToNDecimals = (num: number, n: number) => {
 export const logBase = (x: number, base: number): number => {
   return Math.log(x) / Math.log(base);
 };
+
+/**
+ * Linearly interpolates null values in a list of numbers.
+ * Null values that do not have atleast one number before and after them in the list do not get interpolated.
+ * @param nums A list of numbers and null values
+ */
+export const interpolateNulls = (
+  nums: (number | null)[]
+): (number | null)[] => {
+  const out = [];
+
+  let nullCount = 0;
+  let lastNum = null;
+  for (const num of nums) {
+    // if we've encountered a number already, mark that we've seen a null so we know
+    // how many previous values to interpolate the next time we see a number.
+    // if we haven't seen a number, just keep the value null
+    if (num === null) {
+      if (lastNum !== null) nullCount += 1;
+      else out.push(null);
+      continue;
+    }
+
+    if (nullCount === 0) {
+      // we see a number and no previous values need to be interpolated
+      out.push(num);
+    } else {
+      lastNum = lastNum as number; // we know that lastNum has been set at this point
+      const slope = (num - lastNum) / (nullCount + 1);
+      for (let i = 1; i <= nullCount; i++) out.push(lastNum + i * slope);
+      out.push(num);
+      nullCount = 0;
+    }
+
+    lastNum = num;
+  }
+
+  out.push(...Array(nullCount).fill(null));
+  return out;
+};
