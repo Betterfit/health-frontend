@@ -108,7 +108,7 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
       if (interpolate) {
         // interpolation can cause fractional values but having 10.5 cases doesn't make sense
         data = interpolateNulls(data).map((datum) =>
-          datum === null ? null : roundToNDecimals(datum, 0)
+          datum === null ? null : roundToNDecimals(datum, curTab.nDecimals)
         );
       }
       if (per100k) data = normalizeByPopulation(regionalData.population, data);
