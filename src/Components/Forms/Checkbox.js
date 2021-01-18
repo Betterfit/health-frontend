@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import Translator from "Helpers/Translator";
+import React, { useState } from "react";
 
 function Checkbox({ name, value = false, setValue, title, disabled }) {
   const [checked, setChecked] = useState(value);
@@ -8,7 +8,7 @@ function Checkbox({ name, value = false, setValue, title, disabled }) {
       <label className="flex items-center" title={title}>
         <div
           className={
-            "select-none uppercase text-xxs tracking-extra-wide pr-3 " +
+            "cursor-pointer select-none uppercase text-xxs tracking-extra-wide pr-3 " +
             (value
               ? "text-betterfit-highlight-red font-semibold"
               : "text-betterfit-blue font-medium")
@@ -18,13 +18,13 @@ function Checkbox({ name, value = false, setValue, title, disabled }) {
         </div>
         <div
           className={
-            "bg-white border rounded w-6 h-6 flex flex-shrink-0 justify-center items-center focus-within:border-blue-500 " +
+            "cursor-pointer bg-white border rounded w-6 h-6 flex flex-shrink-0 justify-center items-center focus-within:border-blue-500 " +
             (value ? "border-betterfit-highlight-red" : "border-gray-400")
           }
         >
           <input
             type="checkbox"
-            className="opacity-0 absolute"
+            className="opacity-0 absolute cursor-pointer"
             onChange={(e) => {
               setChecked(!checked);
               setValue(!checked);
@@ -32,7 +32,7 @@ function Checkbox({ name, value = false, setValue, title, disabled }) {
             disabled={disabled}
           />
           <svg
-            className={`fill-current text-betterfit-highlight-red m-auto pointer-events-none ${
+            className={`fill-current text-betterfit-highlight-red ${
               checked ? `block` : `hidden`
             } `}
             width="13"
