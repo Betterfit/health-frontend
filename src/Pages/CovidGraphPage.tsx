@@ -4,10 +4,13 @@ import DashboardGraph from "Containers/Traffic/Inner/DashboardGraph";
 import React, { useState } from "react";
 
 const fake_password =
-  process.env.REACT_APP_GRAPH_PAGE_FAKE_PASSWORD || "default-password";
+  process.env.REACT_APP_GRAPH_PAGE_FAKE_PASSWORD || "canada";
+
+const requirePassword =
+  process.env.REACT_APP_GRAPH_PAGE_REQUIRE_PASSWORD === "true";
 
 export const CovidGraphPage = () => {
-  const [authorized, setAuthorized] = useState(true);
+  const [authorized, setAuthorized] = useState(!requirePassword);
 
   let graphWidth = window.innerWidth * 0.5;
   if (window.innerWidth < 600) {
@@ -15,7 +18,7 @@ export const CovidGraphPage = () => {
   }
   const graphHeight = 0.8 * graphWidth;
 
-  if (!authorized) return <FakeLogin authorize={() => setAuthorized(false)} />;
+  if (!authorized) return <FakeLogin authorize={() => setAuthorized(true)} />;
 
   return (
     <div className="w-full flex flex-col items-center">
