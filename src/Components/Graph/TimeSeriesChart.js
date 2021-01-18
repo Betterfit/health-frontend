@@ -36,6 +36,8 @@ const graphTabs = [
     descr:
       "How long it takes for recoveries and deaths to catch up with the number of new cases on a past day.\n If there were 100 new cases today, how long until we can expect to see a day with 100 recoveries and deaths.",
     nDecimals: 0,
+    // it doesn't make sense to normalize this metric by population
+    disableNormalization: true,
   },
   {
     heading: "R",
@@ -43,6 +45,8 @@ const graphTabs = [
     descr:
       "Our estimate of COVID-19's reproduction number in this health region.\n Measures how many new infections a contagious person will cause, on average.",
     nDecimals: 2,
+    // doesn't make sense to show this per capita
+    disableNormalization: true,
   },
 ];
 
@@ -149,20 +153,23 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
             setDaysBack={setDaysBack}
           />
           <div className="flex flex-col items-end my-1 space-y-1">
-            <Checkbox
-              name="Per 100k"
-              value={per100k}
-              setValue={setPer100k}
-              title="Normalizes data by population so that regions with different populations can be compared."
-              // it doesn't make sense to normalize these metrics by population
-              disabled={tabKey === "r0" || tabKey === "resolutionTime"}
-            />
-            <Checkbox
-              name="Interpolate"
-              value={interpolate}
-              setValue={setInterpolate}
-              title="Fills in missing data points with linear interpolation"
-            />
+            {!curTab.disableNormalization && (
+              <Checkbox
+                name="Per 100k"
+                value={per100k}
+                setValue={setPer100k}
+                title="Normalizes data by population so that regions with different populations can be compared."
+                disabled={tabKey === "r0" || tabKey === "resolutionTime"}
+              />
+            )}
+            {!curTab.disableInterpolation && (
+              <Checkbox
+                name="Interpolate"
+                value={interpolate}
+                setValue={setInterpolate}
+                title="Fills in missing data points with linear interpolation"
+              />
+            )}
           </div>
         </div>
         <div className="w-11/12 flex">
