@@ -19,12 +19,16 @@ const graphTabs = [
     key: "newCases",
     descr: "The number of new infections reported on a given day.",
     nDecimals: 0,
+    // disabled because if the last 5 days are missing data, the the 6th day's new cases/deaths
+    // will include the deaths of the last 5 days.
+    disableInterpolation: true,
   },
   {
     heading: "Daily Deaths",
     key: "deaths",
     descr: "The number of new deaths reported on a given day.",
     nDecimals: 0,
+    disableInterpolation: true,
   },
   {
     heading: "Resolution Time",
@@ -105,7 +109,7 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
     categories: formattedDates,
     series: timeSeries.map((regionalData) => {
       let data = regionalData[tabKey];
-      if (interpolate) {
+      if (interpolate && !curTab.disableInterpolation) {
         // interpolation can cause fractional values but having 10.5 cases doesn't make sense
         data = interpolateNulls(data).map((datum) =>
           datum === null ? null : roundToNDecimals(datum, curTab.nDecimals)
@@ -144,7 +148,7 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
             daysBack={daysBack}
             setDaysBack={setDaysBack}
           />
-          <div className="flex flex-col items-end space-y-1">
+          <div className="flex flex-col items-end my-1 space-y-1">
             <Checkbox
               name="Per 100k"
               value={per100k}
