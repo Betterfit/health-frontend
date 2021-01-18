@@ -2,6 +2,7 @@ import { LineChart } from "@toast-ui/react-chart";
 import Checkbox from "Components/Forms/Checkbox";
 import SideBarTabs from "Components/Graph/SideBarTab";
 import { normalizeByPopulation } from "Helpers/covidDataUtils";
+import { interpolateNulls, roundToNDecimals } from "Helpers/mathUtils";
 import moment from "moment";
 import React, { useState } from "react";
 import "tui-chart/dist/tui-chart.css";
@@ -11,28 +12,41 @@ const graphTabs = [
     heading: "Active Cases",
     key: "activeCases",
     descr: "The total number of individuals that have COVID-10 on a given day.",
+    nDecimals: 0,
   },
   {
     heading: "New Cases",
     key: "newCases",
     descr: "The number of new infections reported on a given day.",
+    nDecimals: 0,
+    // disabled because if the last 5 days are missing data, the the 6th day's new cases/deaths
+    // will include the deaths of the last 5 days.
+    disableInterpolation: true,
   },
   {
     heading: "Daily Deaths",
     key: "deaths",
     descr: "The number of new deaths reported on a given day.",
+    nDecimals: 0,
+    disableInterpolation: true,
   },
   {
     heading: "Resolution Time",
     key: "resolutionTime",
     descr:
       "How long it takes for recoveries and deaths to catch up with the number of new cases on a past day.\n If there were 100 new cases today, how long until we can expect to see a day with 100 recoveries and deaths.",
+    nDecimals: 0,
+    // it doesn't make sense to normalize this metric by population
+    disableNormalization: true,
   },
   {
     heading: "R",
     key: "r0",
     descr:
       "Our estimate of COVID-19's reproduction number in this health region.\n Measures how many new infections a contagious person will cause, on average.",
+    nDecimals: 2,
+    // doesn't make sense to show this per capita
+    disableNormalization: true,
   },
 ];
 
@@ -83,29 +97,41 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
     clearAllRegions,
     regions,
   } = covidData;
-  const [curTab, setCurTab] = useState(graphTabs[0].key);
+  const [tabKey, setTabKey] = useState(graphTabs[0].key);
+  const curTab = graphTabs.find((tab) => tab.key === tabKey);
   // data will be normalized per 100k population in health region if this is true
   const [per100k, setPer100k] = useState(false);
+  const [interpolate, setInterpolate] = useState(true);
 
   const formattedDates = dates
     .map((date) => moment(new Date(date)))
     .map((date) => date.format("MM/DD"));
 
+  // formatted data object for charting library
+  // optional data transforms (normalization, interpolation) performed here
   const toDisplay = {
     categories: formattedDates,
-    series: timeSeries.map((regionalData) => ({
-      name: regionalData.healthRegion,
-      data: per100k
-        ? normalizeByPopulation(regionalData.population, regionalData[curTab])
-        : regionalData[curTab],
-    })),
+    series: timeSeries.map((regionalData) => {
+      let data = regionalData[tabKey];
+      if (interpolate && !curTab.disableInterpolation) {
+        // interpolation can cause fractional values but having 10.5 cases doesn't make sense
+        data = interpolateNulls(data).map((datum) =>
+          datum === null ? null : roundToNDecimals(datum, curTab.nDecimals)
+        );
+      }
+      if (per100k) data = normalizeByPopulation(regionalData.population, data);
+      return {
+        name: regionalData.healthRegion,
+        data,
+      };
+    }),
   };
 
   const chartOptions = generateChartOptions({ width, height });
 
   // user clicks new cases, active cases, daily deaths, clear all
   const handleTabClick = (key) => {
-    key === "clear" ? clearAllRegions() : setCurTab(key);
+    key === "clear" ? clearAllRegions() : setTabKey(key);
     // R0 and resolutionTime don't make sense normalized by population
     if (key === "r0" || key === "resolutionTime") {
       setPer100k(false);
@@ -114,11 +140,11 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
 
   return (
     <>
-      <div className="flex w-full flex-col lg:flex-row pb-2 justify-center">
+      <div className="flex w-full flex-col md:flex-row pb-2 justify-center">
         <div className="w-1/10 flex flex-col justify-start">
           <SideBarTabs
             tabs={graphTabs}
-            activeTab={curTab}
+            activeTab={tabKey}
             handleClick={handleTabClick}
             clearTab={clearTab}
           />
@@ -126,15 +152,24 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
             daysBack={daysBack}
             setDaysBack={setDaysBack}
           />
-          <div className="py-2 mx-1 align-end">
-            <Checkbox
-              name="Per 100k"
-              value={per100k}
-              setValue={setPer100k}
-              title="Normalizes data by population so that regions with different populations can be compared."
-              // it doesn't make sense to normalize these metrics by population
-              disabled={curTab === "r0" || curTab === "resolutionTime"}
-            />
+          <div className="flex flex-col items-end my-1 space-y-1">
+            {!curTab.disableNormalization && (
+              <Checkbox
+                name="Per 100k"
+                value={per100k}
+                setValue={setPer100k}
+                title="Normalizes data by population so that regions with different populations can be compared."
+                disabled={tabKey === "r0" || tabKey === "resolutionTime"}
+              />
+            )}
+            {!curTab.disableInterpolation && (
+              <Checkbox
+                name="Interpolate"
+                value={interpolate}
+                setValue={setInterpolate}
+                title="Fills in missing data points with linear interpolation"
+              />
+            )}
           </div>
         </div>
         <div className="w-11/12 flex">
