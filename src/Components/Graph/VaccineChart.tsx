@@ -85,9 +85,9 @@ const vaccineStatsFromTimeSeries = (
 ): VaccineStats => {
   const population = timeSeries.population;
   // we generate random values as placeholders for now
-  const totalRecovered = Math.random() * 0.2 * population;
-  // default value of 1.4 used if r value not found
-  const r0 = findLastNonNull(timeSeries.r0, 1.4);
+  const totalRecovered = findLastNonNull(timeSeries.cumRecoveredCases);
+  // we clamp to minimum value of 1.1 so vaccines required isn't negative
+  const r0 = Math.max(findLastNonNull(timeSeries.r0), 1.1);
   const activeCases = findLastNonNull(timeSeries.activeCases);
   const needVaccine =
     ((1 - 1 / r0) * population - totalRecovered) / VACCINE_EFFICACY;

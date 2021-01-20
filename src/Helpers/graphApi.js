@@ -43,6 +43,7 @@ export default class GraphApi {
           deaths
           r0V0
           resolutionTime
+          cumRecoveredCases
         }  
       }}}`,
       variables: null,

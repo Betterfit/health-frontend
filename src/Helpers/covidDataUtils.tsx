@@ -116,6 +116,7 @@ const timeSeriesFromRegionDays = (
   const deaths = [];
   const resolutionTime = [];
   const r0 = [];
+  const cumRecoveredCases = [];
 
   for (const regionDay of regionDays) {
     // skips all missing region days
@@ -125,6 +126,7 @@ const timeSeriesFromRegionDays = (
       deaths.push(null);
       resolutionTime.push(null);
       r0.push(null);
+      cumRecoveredCases.push(null);
       day_idx++;
     }
     activeCases.push(regionDay.activeCases);
@@ -132,6 +134,7 @@ const timeSeriesFromRegionDays = (
     deaths.push(regionDay.deaths);
     resolutionTime.push(regionDay.resolutionTime);
     r0.push(regionDay.r0V0);
+    cumRecoveredCases.push(regionDay.cumRecoveredCases);
     day_idx++;
   }
 
@@ -141,6 +144,7 @@ const timeSeriesFromRegionDays = (
     newCases.push(null);
     deaths.push(null);
     resolutionTime.push(null);
+    cumRecoveredCases.push(null);
     r0.push(null);
   }
 
@@ -151,6 +155,7 @@ const timeSeriesFromRegionDays = (
     activeCases,
     newCases,
     deaths,
+    cumRecoveredCases,
     resolutionTime: rollingAverage(resolutionTime, ROLLING_AVG_INTERVAL),
     r0: rollingAverage(r0, ROLLING_AVG_INTERVAL),
     reportedDates,
