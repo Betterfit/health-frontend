@@ -103,9 +103,7 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
   const [per100k, setPer100k] = useState(false);
   const [interpolate, setInterpolate] = useState(true);
 
-  const formattedDates = dates
-    .map((date) => moment(new Date(date)))
-    .map((date) => date.format("MM/DD"));
+  const formattedDates = dates.map((date) => moment(date).format("MM/DD"));
 
   // formatted data object for charting library
   // optional data transforms (normalization, interpolation) performed here
