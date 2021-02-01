@@ -1,10 +1,18 @@
-import { LineChart } from "@toast-ui/react-chart";
 import Checkbox from "Components/Forms/Checkbox";
 import SideBarTabs from "Components/Graph/SideBarTab";
 import { normalizeByPopulation } from "Helpers/covidDataUtils";
 import { interpolateNulls, roundToNDecimals } from "Helpers/mathUtils";
 import moment from "moment";
 import React, { useState } from "react";
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  Tooltip as ChartTooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import "tui-chart/dist/tui-chart.css";
 
 const graphTabs = [
@@ -105,27 +113,31 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
 
   const formattedDates = dates.map((date) => moment(date).format("MM/DD"));
 
-  // formatted data object for charting library
   // optional data transforms (normalization, interpolation) performed here
-  const toDisplay = {
-    categories: formattedDates,
-    series: timeSeries.map((regionalData) => {
-      let data = regionalData[tabKey];
-      if (interpolate && !curTab.disableInterpolation) {
-        // interpolation can cause fractional values but having 10.5 cases doesn't make sense
-        data = interpolateNulls(data).map((datum) =>
-          datum === null ? null : roundToNDecimals(datum, curTab.nDecimals)
-        );
-      }
-      if (per100k) data = normalizeByPopulation(regionalData.population, data);
-      return {
-        name: regionalData.healthRegion,
-        data,
-      };
-    }),
-  };
+  const transformed = timeSeries.map((regionalData) => {
+    let data = regionalData[tabKey];
+    if (interpolate && !curTab.disableInterpolation) {
+      // interpolation can cause fractional values but having 10.5 cases doesn't make sense
+      data = interpolateNulls(data).map((datum) =>
+        datum === null ? null : roundToNDecimals(datum, curTab.nDecimals)
+      );
+    }
+    if (per100k) data = normalizeByPopulation(regionalData.population, data);
+    return {
+      regionName: regionalData.healthRegion,
+      data,
+    };
+  });
 
-  const chartOptions = generateChartOptions({ width, height });
+  // Go here to see how data has to be formatted
+  // https://recharts.org/en-US/api/LineChart
+  const displayData = formattedDates.map((date) => ({ name: date }));
+  for (const regionalData of transformed) {
+    const regionName = regionalData.regionName;
+    regionalData.data.forEach(
+      (datum, i) => (displayData[i][regionName] = datum)
+    );
+  }
 
   // user clicks new cases, active cases, daily deaths, clear all
   const handleTabClick = (key) => {
@@ -171,7 +183,17 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
           </div>
         </div>
         <div className="w-11/12 flex">
-          <LineChart data={toDisplay} options={chartOptions} />
+          <LineChart width={width} height={height} data={displayData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <ChartTooltip />
+
+            <Legend />
+            {regions.map(({ healthRegion }) => (
+              <Line type="natural" dataKey={healthRegion} />
+            ))}
+          </LineChart>
         </div>
       </div>
       {regions.length === 0 && (
