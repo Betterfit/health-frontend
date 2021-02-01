@@ -35,6 +35,7 @@ export interface RegionDay {
   deaths: number;
   resolutionTime: number;
   r0V0: number;
+  cumRecoveredCases: number;
   reportedDate: string;
   healthRegion: HealthRegionData;
 }
@@ -69,6 +70,7 @@ export interface RegionalCovidTimeSeries {
   deaths: (number | null)[];
   resolutionTime: (number | null)[];
   r0: (number | null)[];
+  cumRecoveries: (number | null)[];
   reportedDates: string[];
 }
 

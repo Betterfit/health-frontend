@@ -8,7 +8,7 @@ import {
   Legend,
   Tooltip,
   XAxis,
-  YAxis,
+  YAxis
 } from "recharts";
 import { HealthRegion, RegionalCovidTimeSeries, VaccineStats } from "Types";
 
@@ -85,9 +85,11 @@ const vaccineStatsFromTimeSeries = (
 ): VaccineStats => {
   const population = timeSeries.population;
   // we generate random values as placeholders for now
-  const totalRecovered = Math.random() * 0.2 * population;
+  const totalRecovered = findLastNonNull(timeSeries.cumRecoveries);
   // default value of 1.4 used if r value not found
-  const r0 = findLastNonNull(timeSeries.r0, 1.4);
+  // clamp value to 1.1 so vaccines required is never negative
+  
+  const r0 = Math.max(1.1, findLastNonNull(timeSeries.r0, 1.4));
   const activeCases = findLastNonNull(timeSeries.activeCases);
   const needVaccine =
     ((1 - 1 / r0) * population - totalRecovered) / VACCINE_EFFICACY;
