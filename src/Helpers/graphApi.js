@@ -38,6 +38,7 @@ export default class GraphApi {
             province
             population2016
           } 
+          cumRecoveredCases
           activeCases
           newCases
           deaths
