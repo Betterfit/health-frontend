@@ -68,9 +68,9 @@ export interface RegionalCovidTimeSeries {
   activeCases: (number | null)[];
   newCases: (number | null)[];
   deaths: (number | null)[];
-  cumRecoveredCases: (number | null)[];
   resolutionTime: (number | null)[];
   r0: (number | null)[];
+  cumRecoveries: (number | null)[];
   reportedDates: string[];
 }
 
