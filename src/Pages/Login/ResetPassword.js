@@ -111,7 +111,7 @@ const ResetPassword = () => {
           ></InputFieldLabel>
           <InputFieldLabel
             name="Confirm Password"
-            id_tag="confirmPW"
+            idTag="confirmPW"
             onChange={handlePWChange}
             value={pwFormValues.confirmPW}
             error={pwFormErrors.confirmPW}
