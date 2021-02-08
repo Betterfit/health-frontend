@@ -20,7 +20,9 @@ const LoginForm = ({ signIn }: LoginFormProps) => {
     isSet: false
   });
 
-  const onSignIn = () => {
+  const onSignIn = (e: React.SyntheticEvent) => {
+    console.log('hello')
+    e.preventDefault()
     signIn(email, password);
   };
 
@@ -38,7 +40,7 @@ const LoginForm = ({ signIn }: LoginFormProps) => {
           <InputField
             idTag="email"
             name="Email"
-            type="textbox"
+            type="text"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
