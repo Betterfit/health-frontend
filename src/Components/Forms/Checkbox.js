@@ -1,7 +1,7 @@
 import Translator from "Helpers/Translator";
 import React, { useState } from "react";
 
-function Checkbox({ name, value = false, setValue, title, disabled }) {
+function Checkbox({ name, value = false, setValue, title, disabled=false }) {
   const [checked, setChecked] = useState(value);
   return (
     <>
