@@ -157,8 +157,16 @@ const TimeSeriesChart = ({
     return {
       regionName: regionalData.healthRegion,
       data,
+      dates: regionalData.reportedDates,
     };
   });
+
+  // const displayData = transformed.map((regionalSeries) => {
+  //   const region = regionalSeries.regionName;
+  //   return regionalSeries.data.map((datum) => ({
+  //     region: datum
+  //   }));
+  // });
 
   // Go here to see how data has to be formatted
   // https://recharts.org/en-US/api/LineChart
@@ -166,12 +174,17 @@ const TimeSeriesChart = ({
     date: dayFormatter(moment(date)),
   }));
 
+  console.log(displayData)
   for (const regionalData of transformed) {
     const regionName = regionalData.regionName;
     regionalData.data.forEach(
-      (datum, i) => (displayData[i][regionName] = datum)
+      (datum, i) => {
+        if (i < displayData.length)
+          (displayData[i][regionName] = datum)
+      }
     );
   }
+  console.log(transformed);
 
   // user clicks new cases, active cases, daily deaths, clear all
   const handleTabClick = (key: TimeSeriesKey | "clear") => {
@@ -260,7 +273,8 @@ const TimePeriodSelectionBox = ({
   daysBack,
   setDaysBack,
 }: TimePeriodSelectionBoxProps) => {
-  const onChange = (e :React.ChangeEvent<HTMLSelectElement>) => setDaysBack(parseInt(e.target.value));
+  const onChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setDaysBack(parseInt(e.target.value));
 
   const timePeriodOptions = [
     { value: 7, label: "Past Week" },

@@ -91,7 +91,8 @@ const fetchAndTransformRegionData = async (
         "YYYY-MM-DD"
       )}", healthRegion: "${healthRegion}", province: "${province}", first: 800, sortBy: "reportedDateAsc"`
   );
-  const reportedDates = createDateArray(startDate, moment());
+  const latestDate = regionDays[regionDays.length - 1].reportedDate
+  const reportedDates = createDateArray(startDate, moment(latestDate));
   const regionalTimeSeries = timeSeriesFromRegionDays(
     regionDays,
     reportedDates
