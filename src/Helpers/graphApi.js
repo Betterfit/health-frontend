@@ -1,3 +1,4 @@
+import { Auth } from "aws-amplify";
 import * as axios from "axios";
 
 const API_URL = process.env.REACT_APP_GRAPHQL_API_URL;
@@ -8,9 +9,12 @@ export default class GraphApi {
     this.api_url = API_URL;
   }
 
-  init = () => {
+  init = async () => {
+    const session = await Auth.currentSession();
+    const token = session.getIdToken().getJwtToken();
     let headers = {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     };
 
     if (this.api_token) {
@@ -27,7 +31,7 @@ export default class GraphApi {
   };
 
   // get our case data based on init filter string
-  getCaseData = (filterString) => {
+  getCaseData = async (filterString) => {
     let query = {
       query: `{allCases(${filterString}) 
       {  edges {    
@@ -51,12 +55,11 @@ export default class GraphApi {
       operationName: null,
     };
 
-    return (
-      this.init()
-        .post("graphql", query)
-        // parses through graphql cruft, which returns data inside deeply nested objects
-        .then((resp) => resp.data.data.allCases.edges)
-        .then((edges) => edges.map((edge) => edge.node))
-    );
+    // parses through graphql cruft, which returns data inside deeply nested objects
+    const client = await this.init();
+    return client
+      .post("graphql", query)
+      .then((resp) => resp.data.data.allCases.edges)
+      .then((edges) => edges.map((edge) => edge.node));
   };
 }
