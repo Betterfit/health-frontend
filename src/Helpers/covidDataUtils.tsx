@@ -8,7 +8,18 @@ import { rollingAverage, roundToNDecimals } from "./mathUtils";
 const graphApi = new GraphApi();
 const ROLLING_AVG_INTERVAL = 5;
 
-export const useCovidTimeSeries = () => {
+// Return value of the covid time series hook
+export interface CovidTimeSeriesHookRet {
+  timeSeries: RegionalCovidTimeSeries[];
+  clearAllRegions: () => void;
+  toggleRegionSelection: (toToggle: HealthRegion) => void;
+  regions: HealthRegion[];
+  daysBack: number;
+  setDaysBack: (newVal: number) => void;
+  dates: string[];
+}
+
+export const useCovidTimeSeries = (): CovidTimeSeriesHookRet => {
   const [regions, setRegions] = useState<HealthRegion[]>([
     { province: "Alberta", healthRegion: "Edmonton Zone" },
   ]);
@@ -134,7 +145,7 @@ const timeSeriesFromRegionDays = (
     deaths.push(regionDay.deaths);
     resolutionTime.push(regionDay.resolutionTime);
     r0.push(regionDay.r0V0);
-    cumRecoveries.push(regionDay.cumRecoveredCases)
+    cumRecoveries.push(regionDay.cumRecoveredCases);
     day_idx++;
   }
 

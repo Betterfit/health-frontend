@@ -83,3 +83,5 @@ export interface VaccineStats {
   sickAfterHerdImmunity: number;
   notSickAfterHerdImmunity: number;
 }
+
+export type TimeSeriesKey = 'activeCases' | 'newCases' | 'deaths' | 'resolutionTime' | 'r0' | 'cumRecoveries' 

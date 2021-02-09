@@ -1,6 +1,10 @@
 import Checkbox from "Components/Forms/Checkbox";
 import SideBarTabs from "Components/Graph/SideBarTab";
-import { normalizeByPopulation } from "Helpers/covidDataUtils";
+import {
+  CovidTimeSeriesHookRet,
+  normalizeByPopulation
+} from "Helpers/covidDataUtils";
+import { dayFormatter } from "Helpers/dateUtils";
 import { interpolateNulls, roundToNDecimals } from "Helpers/mathUtils";
 import moment from "moment";
 import React, { useState } from "react";
@@ -11,11 +15,21 @@ import {
   LineChart,
   Tooltip as ChartTooltip,
   XAxis,
-  YAxis,
+  YAxis
 } from "recharts";
 import "tui-chart/dist/tui-chart.css";
+import { TimeSeriesKey } from "Types";
 
-const graphTabs = [
+interface TimeSeriesTab {
+  heading: string;
+  key: TimeSeriesKey;
+  descr: string;
+  nDecimals?: number;
+  disableInterpolation?: boolean;
+  disableNormalization?: boolean;
+}
+
+const graphTabs: TimeSeriesTab[] = [
   {
     heading: "Active Cases",
     key: "activeCases",
@@ -87,16 +101,33 @@ const defaultChartOptions = {
   },
 };
 
-const generateChartOptions = ({ width, height }) => ({
-  ...defaultChartOptions,
-  chart: {
-    ...defaultChartOptions.chart,
-    width,
-    height,
-  },
-});
+const chartColors = [
+  "#00A9FF",
+  "#00BD9F",
+  "#FFB840",
+  "#FF5A47",
+  "#785FFF",
+  "#F28B8C",
+  "#989486",
+  "#51707D",
+];
 
-const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
+interface TimeSeriesChartProps {
+  width: number;
+  height: number;
+  covidData: CovidTimeSeriesHookRet;
+}
+
+interface DataPoint {
+  date: string;
+  [healthRegion: string]: number | string | null;
+}
+
+const TimeSeriesChart = ({
+  width = 525,
+  height = 400,
+  covidData,
+}: TimeSeriesChartProps) => {
   const {
     timeSeries,
     daysBack,
@@ -106,12 +137,10 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
     regions,
   } = covidData;
   const [tabKey, setTabKey] = useState(graphTabs[0].key);
-  const curTab = graphTabs.find((tab) => tab.key === tabKey);
+  const curTab = graphTabs.find((tab) => tab.key === tabKey) || graphTabs[0];
   // data will be normalized per 100k population in health region if this is true
   const [per100k, setPer100k] = useState(false);
   const [interpolate, setInterpolate] = useState(true);
-
-  const formattedDates = dates.map((date) => moment(date).format("MM/DD"));
 
   // optional data transforms (normalization, interpolation) performed here
   const transformed = timeSeries.map((regionalData) => {
@@ -119,7 +148,9 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
     if (interpolate && !curTab.disableInterpolation) {
       // interpolation can cause fractional values but having 10.5 cases doesn't make sense
       data = interpolateNulls(data).map((datum) =>
-        datum === null ? null : roundToNDecimals(datum, curTab.nDecimals)
+        datum === null || curTab.nDecimals === undefined
+          ? datum
+          : roundToNDecimals(datum, curTab.nDecimals)
       );
     }
     if (per100k) data = normalizeByPopulation(regionalData.population, data);
@@ -131,7 +162,10 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
 
   // Go here to see how data has to be formatted
   // https://recharts.org/en-US/api/LineChart
-  const displayData = formattedDates.map((date) => ({ name: date }));
+  const displayData: DataPoint[] = dates.map((date) => ({
+    date: dayFormatter(moment(date)),
+  }));
+
   for (const regionalData of transformed) {
     const regionName = regionalData.regionName;
     regionalData.data.forEach(
@@ -140,7 +174,7 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
   }
 
   // user clicks new cases, active cases, daily deaths, clear all
-  const handleTabClick = (key) => {
+  const handleTabClick = (key: TimeSeriesKey | "clear") => {
     key === "clear" ? clearAllRegions() : setTabKey(key);
     // R0 and resolutionTime don't make sense normalized by population
     if (key === "r0" || key === "resolutionTime") {
@@ -185,13 +219,26 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
         <div className="w-11/12 flex">
           <LineChart width={width} height={height} data={displayData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis
+              dataKey="date"
+              name="Date"
+              // domain={[
+              //   displayData[0].epochTime,
+              //   displayData[displayData.length - 1].epochTime,
+              // ]}
+              // tickFormatter={epochTime => new Date(epochTime).toISOString().split('T')[0]}
+            />
             <YAxis />
             <ChartTooltip />
 
             <Legend />
-            {regions.map(({ healthRegion }) => (
-              <Line type="natural" dataKey={healthRegion} />
+            {regions.map(({ healthRegion }, i) => (
+              <Line
+                type="monotone"
+                dataKey={healthRegion}
+                // repeats colors if there are too many lines
+                stroke={chartColors[i % chartColors.length]}
+              />
             ))}
           </LineChart>
         </div>
@@ -205,8 +252,15 @@ const TimeSeriesChart = ({ width = 525, height = 400, covidData }) => {
   );
 };
 
-const TimePeriodSelectionBox = ({ daysBack, setDaysBack }) => {
-  const onChange = (e) => setDaysBack(parseInt(e.target.value));
+interface TimePeriodSelectionBoxProps {
+  daysBack: number;
+  setDaysBack: (newVal: number) => void;
+}
+const TimePeriodSelectionBox = ({
+  daysBack,
+  setDaysBack,
+}: TimePeriodSelectionBoxProps) => {
+  const onChange = (e :React.ChangeEvent<HTMLSelectElement>) => setDaysBack(parseInt(e.target.value));
 
   const timePeriodOptions = [
     { value: 7, label: "Past Week" },
@@ -222,7 +276,6 @@ const TimePeriodSelectionBox = ({ daysBack, setDaysBack }) => {
       onChange={onChange}
       className="uppercase text-xxs tracking-extra-wide"
       value={daysBack}
-      className="p-1 bg-transparent"
     >
       {timePeriodOptions.map((option, i) => (
         <option key={i} value={option.value} className="text-blue text-xs">
