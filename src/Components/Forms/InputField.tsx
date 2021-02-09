@@ -1,15 +1,23 @@
 import Translator from "Helpers/Translator";
 import React from "react";
 
-function InputField({ id_tag, name, type, value, onChange }) {
+interface InputFieldProps {
+  idTag: string;
+  name: string;
+  type: string;
+  value: string | number;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+function InputField({ idTag, name, type, value, onChange }: InputFieldProps) {
   return (
     <>
-      <label htmlFor={id_tag} className="sr-only">
+      <label htmlFor={idTag} className="sr-only">
         {Translator(name)}
       </label>
       <div className="relative">
         <input
-          id={id_tag}
+          id={idTag}
           type={type}
           className="py-3 pl-4 form-input block w-full text-lg border-gray-400 border rounded"
           placeholder={Translator(name)}

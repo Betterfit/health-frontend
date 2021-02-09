@@ -35,9 +35,9 @@ export interface RegionDay {
   deaths: number;
   resolutionTime: number;
   r0V0: number;
-  cumRecoveredCases: number;
   reportedDate: string;
   healthRegion: HealthRegionData;
+  cumRecoveredCases: number;
 }
 
 export interface HealthRegionData {

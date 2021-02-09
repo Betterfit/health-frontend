@@ -1,5 +1,5 @@
 import Button from "Components/Forms/Button";
-import InputField from "Components/Forms/Input_Field";
+import InputField from "Components/Forms/InputField";
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import React, { useState } from "react";
@@ -55,7 +55,7 @@ const ForgotPassword = () => {
           </label>
           <div className="relative">
             <InputField
-              id_tag="email"
+              idTag="email"
               name="Email"
               type="email"
               value={email}

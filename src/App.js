@@ -18,7 +18,7 @@ import { useAuthStore } from "Context/authContext";
 import { observer } from "mobx-react";
 import NotFound from "./Pages/404";
 import DashboardResearch from "Containers/DashboardResearch";
-import { CovidGraphPage } from "Pages/CovidGraphPage";
+import { CovidGraphPage } from "Pages/Covid/CovidGraphPage";
 
 const App = observer(() => {
   const authStore = useAuthStore();

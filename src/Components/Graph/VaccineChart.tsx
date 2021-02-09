@@ -35,18 +35,21 @@ const VaccineChart = ({ width, height, timeSeries }: VaccineChartProps) => {
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="healthRegion" />
-        <Tooltip />
+        <Tooltip formatter={(value) => (value as number).toLocaleString()} />
         <Legend />
         <YAxis
           dataKey="pop1000s"
           type="number"
           label={{
-            value: "Residents - 1000s",
+            value: "Residents",
             position: "left",
             angle: -90,
             // added so that the y-axis label is centered vertically
             style: { "text-anchor": "middle" },
           }}
+          tickFormatter={(tick) =>
+            Math.round(tick / 1000).toLocaleString() + "K"
+          }
         />
         <Bar
           dataKey="needVaccine"
@@ -93,7 +96,7 @@ const vaccineStatsFromTimeSeries = (
   const activeCases = findLastNonNull(timeSeries.activeCases);
   const needVaccine =
     ((1 - 1 / r0) * population - totalRecovered) / VACCINE_EFFICACY;
-  const sickAfterHerdImmunity = simulateInfections(activeCases, r0);
+  const sickAfterHerdImmunity = simulateInfections(activeCases);
   const notSickAfterHerdImmunity =
     population - needVaccine - sickAfterHerdImmunity - totalRecovered;
   // const needVaccine =
@@ -101,7 +104,8 @@ const vaccineStatsFromTimeSeries = (
     province: timeSeries.province,
     healthRegion: timeSeries.healthRegion,
     // scale by thousands so the chart looks better
-    pop1000s: timeSeries.population / 1000,
+    // not scaling currently, but leaving as we may need to change back
+    pop1000s: timeSeries.population,
     needVaccine: scaleAndRound(needVaccine),
     totalRecovered: scaleAndRound(totalRecovered),
     sickAfterHerdImmunity: scaleAndRound(sickAfterHerdImmunity),
@@ -109,7 +113,7 @@ const vaccineStatsFromTimeSeries = (
   };
 };
 
-const scaleAndRound = (val: number, scale = 1000, nDecimals = 2): number =>
+const scaleAndRound = (val: number, scale = 1, nDecimals = 0): number =>
   roundToNDecimals(val / scale, nDecimals);
 
 /**
@@ -118,7 +122,7 @@ const scaleAndRound = (val: number, scale = 1000, nDecimals = 2): number =>
  * @param r The reproduction rate of the virus
  * @return How many new people will get infected
  */
-const simulateInfections = (startingCases: number, r: number): number => {
+const simulateInfections = (startingCases: number): number => {
   let currentCases = startingCases;
   let totalInfections = 0;
   while (currentCases > 1) {

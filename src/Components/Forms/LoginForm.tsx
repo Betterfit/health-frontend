@@ -1,60 +1,46 @@
 import Button from "Components/Forms/Button";
 import InputField from "Components/Forms/InputField";
 import Notfications from "Components/Helpers/Notifications";
-import { useAuthStore } from "Context/authContext";
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const api = new Api();
 
-const Login = () => {
-  const authStore = useAuthStore();
+interface LoginFormProps {
+  signIn: (email: string, password: string) => void;
+}
+const LoginForm = ({ signIn }: LoginFormProps) => {
   const [password, setPW] = useState("");
   const [email, setEmail] = useState("");
-  const [Error, setError] = useState();
-  const history = useHistory();
+  const [error, setError] = useState({
+    head: null,
+    text: null,
+    isSet: false
+  });
 
-  useEffect(() => {
-    if (authStore.token) {
-      history.push("/dashboard/");
-    }
-  }, []);
-
-  const signIn = (e) => {
-    e.preventDefault();
-    api
-      .signIn({ username: email, password: password })
-      .then((response) => {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        authStore.user = JSON.stringify(response.data.user);
-        authStore.token = response.data.token;
-        history.push("/dashboard/");
-      })
-      .catch((err) => {
-        setError({
-          head: "Unable to login",
-          text: "please ensure your email and password are correct.",
-        });
-        console.log(err);
-      });
+  const onSignIn = (e: React.SyntheticEvent) => {
+    console.log('hello')
+    e.preventDefault()
+    signIn(email, password);
   };
+
   return (
     <>
-      {Error && (
+      {error.isSet && (
         <Notfications
-          head={Error.head}
-          text={Error.text}
+          head={error.head}
+          text={error.text}
           success={false}
         ></Notfications>
       )}
-      <form className="pb-12" onSubmit={signIn}>
+      <form className="pb-12" onSubmit={onSignIn}>
         <div>
           <InputField
             idTag="email"
             name="Email"
+            type="text"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -74,7 +60,7 @@ const Login = () => {
         </div>
         <div className="mt-6">
           <div className="mt-6">
-            <Button text="Login" solid={true}></Button>
+            <Button text="Login" solid={true} onClick={onSignIn}></Button>
           </div>
         </div>
         <div className="mt-6 flex justify-center">
@@ -92,4 +78,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;
