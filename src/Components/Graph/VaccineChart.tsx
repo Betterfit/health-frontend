@@ -1,11 +1,12 @@
+import { useCovidTimeSeries } from "Helpers/covidDataUtils";
 import { roundToNDecimals } from "Helpers/mathUtils";
 import { findLastNonNull } from "Helpers/utils";
 import React from "react";
 import {
   Bar,
   BarChart,
-  CartesianGrid,
   Legend,
+  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis
@@ -13,30 +14,28 @@ import {
 import { HealthRegion, RegionalCovidTimeSeries, VaccineStats } from "Types";
 
 interface VaccineChartProps {
-  width: number;
-  height: number;
-  timeSeries: RegionalCovidTimeSeries[];
   regions: HealthRegion[];
-  toggleRegionSelection: (toToggle: HealthRegion) => void;
-  clearAllRegions: () => void;
 }
 
-const VaccineChart = ({ width, height, timeSeries }: VaccineChartProps) => {
+const VaccineChart = ({ regions }: VaccineChartProps) => {
+  const { timeSeries } = useCovidTimeSeries(regions, 30);
   const displayData = timeSeries.map((regionTimeSeries) =>
     vaccineStatsFromTimeSeries(regionTimeSeries)
   );
   return (
-    <div className="mb-4 flex flex-col md:flex-row">
+    <ResponsiveContainer width="100%">
       <BarChart
-        width={width}
-        height={height}
         data={displayData}
-        margin={{ left: 30 }}
+        margin={{ right: 50, top: 20, left: 20, bottom: 20 }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="healthRegion" />
-        <Tooltip formatter={(value) => (value as number).toLocaleString()} />
-        <Legend />
+        <XAxis dataKey="healthRegion" stroke="white" />
+        <Tooltip
+          formatter={(value) => (value as number).toLocaleString()}
+          cursor={{ fill: "#0A3A42" }}
+        />
+        <Legend
+          formatter={(value) => <span className="text-white">{value}</span>}
+        />
         <YAxis
           dataKey="pop1000s"
           type="number"
@@ -44,12 +43,14 @@ const VaccineChart = ({ width, height, timeSeries }: VaccineChartProps) => {
             value: "Residents",
             position: "left",
             angle: -90,
-            // added so that the y-axis label is centered vertically
-            style: { "text-anchor": "middle" },
+            // added text-anchor so that the y-axis label is centered vertically
+            // accepts an svg style object
+            style: { "text-anchor": "middle", fill: "white" },
           }}
           tickFormatter={(tick) =>
             Math.round(tick / 1000).toLocaleString() + "K"
           }
+          stroke="white"
         />
         <Bar
           dataKey="needVaccine"
@@ -76,7 +77,7 @@ const VaccineChart = ({ width, height, timeSeries }: VaccineChartProps) => {
           fill="#CCBB44"
         />
       </BarChart>
-    </div>
+    </ResponsiveContainer>
   );
 };
 
@@ -91,7 +92,7 @@ const vaccineStatsFromTimeSeries = (
   const totalRecovered = findLastNonNull(timeSeries.cumRecoveries);
   // default value of 1.4 used if r value not found
   // clamp value to 1.1 so vaccines required is never negative
-  
+
   const r0 = Math.max(1.1, findLastNonNull(timeSeries.r0, 1.4));
   const activeCases = findLastNonNull(timeSeries.activeCases);
   const needVaccine =

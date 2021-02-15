@@ -1,5 +1,4 @@
 import moment, { Moment } from "moment";
-import { useState } from "react";
 import { useQueries } from "react-query";
 import { HealthRegion, RegionalCovidTimeSeries, RegionDay } from "Types";
 import GraphApi from "./graphApi";
@@ -11,19 +10,13 @@ const ROLLING_AVG_INTERVAL = 5;
 // Return value of the covid time series hook
 export interface CovidTimeSeriesHookRet {
   timeSeries: RegionalCovidTimeSeries[];
-  clearAllRegions: () => void;
-  toggleRegionSelection: (toToggle: HealthRegion) => void;
-  regions: HealthRegion[];
-  daysBack: number;
-  setDaysBack: (newVal: number) => void;
   dates: string[];
 }
 
-export const useCovidTimeSeries = (): CovidTimeSeriesHookRet => {
-  const [regions, setRegions] = useState<HealthRegion[]>([
-    { province: "Alberta", healthRegion: "Edmonton Zone" },
-  ]);
-  const [daysBack, setDaysBack] = useState(30);
+export const useCovidTimeSeries = (
+  regions: HealthRegion[],
+  daysBack: number
+): CovidTimeSeriesHookRet => {
 
   const startDate = moment().subtract(daysBack, "days");
   const dates = createDateArray(startDate, moment());
@@ -50,30 +43,12 @@ export const useCovidTimeSeries = (): CovidTimeSeriesHookRet => {
     }))
   );
 
-  const clearAllRegions = () => setRegions([]);
-
-  const toggleRegionSelection = (toToggle: HealthRegion) => {
-    // add region if it's not already selected
-    if (!regions.some((region) => regionsAreEqual(region, toToggle)))
-      setRegions([...regions, toToggle]);
-    // remove region is it is selected
-    else
-      setRegions(
-        regions.filter((region) => !regionsAreEqual(region, toToggle))
-      );
-  };
-
   const timeSeries = data
     .filter((region: any) => region.data)
     .map((region: any) => region.data) as RegionalCovidTimeSeries[];
 
   return {
     timeSeries,
-    clearAllRegions,
-    toggleRegionSelection,
-    regions,
-    daysBack,
-    setDaysBack,
     dates,
   };
 };
@@ -91,7 +66,7 @@ const fetchAndTransformRegionData = async (
         "YYYY-MM-DD"
       )}", healthRegion: "${healthRegion}", province: "${province}", first: 800, sortBy: "reportedDateAsc"`
   );
-  const latestDate = regionDays[regionDays.length - 1].reportedDate
+  const latestDate = regionDays[regionDays.length - 1].reportedDate;
   const reportedDates = createDateArray(startDate, moment(latestDate));
   const regionalTimeSeries = timeSeriesFromRegionDays(
     regionDays,
@@ -173,11 +148,6 @@ const timeSeriesFromRegionDays = (
     reportedDates,
   };
 };
-
-const regionsAreEqual = (region1: HealthRegion, region2: HealthRegion) =>
-  region1.province === region2.province &&
-  region1.healthRegion === region2.healthRegion;
-
 export const normalizeByPopulation = (
   regionPop: number,
   data: (number | null)[]

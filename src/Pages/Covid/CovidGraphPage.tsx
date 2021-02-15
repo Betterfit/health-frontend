@@ -1,37 +1,47 @@
 import { Auth } from "aws-amplify";
 import DashboardGraph from "Containers/Traffic/Inner/DashboardGraph";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 import CovidLogin from "./CovidLogin";
+import FlowNav from "./FlowNav";
+
 
 export const CovidGraphPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { path } = useRouteMatch();
+
   const checkIfAuthenticated = async () => {
     const session = await Auth.currentSession();
     if (session.isValid()) setIsAuthenticated(true);
   };
-  useEffect(() => {
+
+  // layoutEffect so that the login screen isn't shown if we're already authenticated
+  useLayoutEffect(() => {
     checkIfAuthenticated();
   }, [checkIfAuthenticated]);
 
-
-  let graphWidth = window.innerWidth * 0.5;
-  if (window.innerWidth < 600) {
-    graphWidth = window.innerWidth * 0.95;
-  }
-  const graphHeight = 0.8 * graphWidth;
+  // let graphWidth = window.innerWidth * 0.5;
+  // if (window.innerWidth < 600) {
+  //   graphWidth = window.innerWidth * 0.95;
+  // }
+  // const graphHeight = 0.8 * graphWidth;
   if (!isAuthenticated)
-    return (
-      <CovidLogin
-        onAuthenticate={checkIfAuthenticated}
-      />
-    );
+    return <CovidLogin onAuthenticate={checkIfAuthenticated} />;
 
   return (
-    <div className="w-full flex flex-col items-center">
-      <h1 className="self-center text-2xl text-dark-blue py-3">
-        BetterFit COVID-19 Aggregator
-      </h1>
-      <DashboardGraph width={graphWidth} height={graphHeight} />
+    <div className="w-full flex flex-col flow-root">
+      <FlowNav />
+      <Switch>
+        <Route exact path={`${path}`}>
+          <DashboardGraph whichChart="timeseries" />
+        </Route>
+        <Route path={`${path}/vaccine`}>
+          <DashboardGraph whichChart="vaccine" />
+        </Route>
+        <Route path={`${path}/timeseries`}>
+          <DashboardGraph whichChart="timeseries" />
+        </Route>
+      </Switch>
     </div>
   );
 };
