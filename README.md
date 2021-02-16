@@ -4,6 +4,11 @@ We use Prettier as an opinionated formatter accross the project.
 This helps minimize diffs that might result from using different formatters.
 If you use VSCode, you can just add this extension [here](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
+## Environments
+When building for a particular environment, we copy the corresponding environment file to .env.local, which has precedence over all other env files.
+See [here](https://create-react-app.dev/docs/adding-custom-environment-variables/#what-other-env-files-can-be-used) for more info.
+Make sure not to add any secrets to the environment files, as they are accessible from the browser.
+
 ## Available Scripts
 
 In the project directory, you can run:
