@@ -1,26 +1,74 @@
-import FilterFields from "Components/Graph/FilterFields";
+import RegionSelection from "Components/Graph/RegionSelection";
 import TimeSeriesChart from "Components/Graph/TimeSeriesChart";
+import TimeSeriesOptions, {
+  graphTabs
+} from "Components/Graph/TimeSeriesOptions";
 import VaccineChart from "Components/Graph/VaccineChart";
-import Tabs from "Components/Tabs/Tabs";
+import VaccineOptions from "Components/Graph/VaccineOptions";
 import healthRegions from "Data/healthRegions.json";
-import { useCovidTimeSeries } from "Helpers/covidDataUtils";
+import FlowSquares from "Pages/Covid/FlowSquares";
 import React, { useState } from "react";
-import "tui-chart/dist/tui-chart.css";
+import {
+  ChartType,
+  HealthRegion,
+  Selectable,
+  TimeSeriesKey,
+  VaccineChartOptions
+} from "Types";
 
-type ChartType = "timeseries" | "vaccine";
+interface DashboardGraphProps {
+  whichChart: ChartType;
+}
 
-const tabs = [
-  {
-    heading: "Time Series",
-    key: "timeseries",
-  },
-  { heading: "Vaccine", key: "vaccine" },
-];
+const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
+  // State is kept here so that selected regions/time series tab etc are kept consistent when switching between the vaccine and time series charts.
+  // In the future, it might be worth encoding this information in the url.
+  const [regionTray, setRegionTray] = useState<Selectable<HealthRegion>[]>([
+    {
+      item: { province: "Alberta", healthRegion: "Edmonton Zone" },
+      selected: true,
+    },
+  ]);
+  const regions = regionTray
+    .filter((selectable) => selectable.selected)
+    .map((selectable) => selectable.item);
 
-const DashboardGraph = ({ width = 525, height = 400 }) => {
-  const [whichChart, setWhichChart] = useState<ChartType>("timeseries");
-  const covidData = useCovidTimeSeries();
-  const { toggleRegionSelection, timeSeries, regions, clearAllRegions } = covidData;
+  // time series chart options
+  // which time series tab is currently selected
+  const [tabKey, setTabKey] = useState<TimeSeriesKey>(graphTabs[0].key);
+  const [per100k, setPer100k] = useState<boolean>(false);
+  const [interpolate, setInterpolate] = useState<boolean>(true);
+  // how many days back do we fetch covid data
+  const [daysBack, setDaysBack] = useState(30);
+
+  // vaccine chart options
+  const [vaccineOptions, setVaccineOptions] = useState<VaccineChartOptions>({
+    restaurantCapacity: 100,
+    retailCapacity: 100,
+    gymCapacity: 100,
+    essentialRetailCapacity: 100,
+    worshipCapacity: 100,
+    masksMandatory: false,
+    curfew: false,
+    schoolsOpen: false,
+  });
+
+  const clearAllRegions = () => setRegionTray([]);
+
+  const toggleRegionSelection = (toToggle: HealthRegion) => {
+    const existingIdx = regionTray.findIndex(({ item: region }) =>
+      regionsAreEqual(region, toToggle)
+    );
+    if (existingIdx > -1) {
+      // toggle selection of existing region in tray
+      const existing = regionTray[existingIdx];
+      const newTray = regionTray.filter((item, i) => i != existingIdx);
+      newTray.push({ item: existing.item, selected: !existing.selected });
+      setRegionTray(newTray);
+    }
+    // add region to tray otherwise
+    else setRegionTray([...regionTray, { item: toToggle, selected: true }]);
+  };
 
   // used to show collapsible lists of health regions in different provinces
   const filterData = Object.entries(healthRegions).map(
@@ -30,29 +78,67 @@ const DashboardGraph = ({ width = 525, height = 400 }) => {
     })
   );
 
-  // when a user selects a region from the collapsible list of health regions
-  const onRegionClick = (e: MouseEvent, province: string, region: string) =>
-    toggleRegionSelection({ province: province, healthRegion: region });
+  let width = 0;
+  let height = 0;
 
-  const onChangeChart = (chartType: ChartType) => setWhichChart(chartType);
+  const chart =
+    whichChart === "timeseries" ? (
+      <TimeSeriesChart
+        {...{ regions, tabKey, daysBack, per100k, interpolate }}
+      />
+    ) : (
+      <VaccineChart
+        {...{
+          regions,
+        }}
+      />
+    );
 
-  return (
-    <div className="flex flex-col items-center">
-      <Tabs
+  const options = (
+    <>
+      {whichChart === "timeseries" ? (
+        <TimeSeriesOptions
+          {...{
+            tabKey,
+            setTabKey,
+            daysBack,
+            setDaysBack,
+            interpolate,
+            setInterpolate,
+            per100k,
+            setPer100k,
+          }}
+        />
+      ) : (
+        <VaccineOptions
+          options={vaccineOptions}
+          setter={(propName) => (val) =>
+            setVaccineOptions({ ...vaccineOptions, [propName]: val })}
+        />
+      )}
+
+      <RegionSelection
+        {...{
+          regionTray,
+          toggleSelection: toggleRegionSelection,
+          clearAllRegions,
+        }}
+      />
+    </>
+  );
+
+  /* <Tabs
         tabs={tabs}
         tabCallBack={onChangeChart}
         amount={false}
         headingComp={null}
         longUnderline={false}
-      />
-      {whichChart === "timeseries" ? (
-        <TimeSeriesChart {...{ covidData, width, height }} />
-      ) : (
-        <VaccineChart {...{ width, height, timeSeries, regions, toggleRegionSelection, clearAllRegions }} />
-      )}
-      <FilterFields filterData={filterData} onClickEvent={onRegionClick} />
-    </div>
-  );
+      /> */
+  return <FlowSquares chart={chart} options={options} />;
 };
+
+const regionsAreEqual = (region1: HealthRegion, region2: HealthRegion) =>
+  region1.province === region2.province &&
+  region1.healthRegion === region2.healthRegion;
 
 export default DashboardGraph;

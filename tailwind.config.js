@@ -1,11 +1,18 @@
 const plugins = require('tailwind-react-ui/plugins')
 module.exports = {
-  purge: [
-  ],
+  purge: {
+    content: ["./src/**/*.tsx"]
+  },
   plugins: [
     require('tailwindcss/lib/plugins/container')({}),
     ...Object.keys(plugins).map(name => plugins[name]()),
   ],
+  variants: {
+    extend: {
+      // enables the disabled: variant
+      opacity: ({after}) => after(['disabled']),
+    }
+  },
   theme: {
     fontFamily: {
       'body': ['Open Sans'],
@@ -61,7 +68,18 @@ module.exports = {
         'tag-light-purple': '#EDEBFC',
         'tag-light-purple-txt': '#234499',
         'faded-blue' : 'rgba(42, 57, 99 , 0.4)',
-        'title-border' : 'rgba(199, 212, 229,0.4)'
+        'title-border' : 'rgba(199, 212, 229,0.4)',
+        'flow-white': "#FDFFFE",
+        'flow-darkblue': "#244684",
+        'flow-medblue': "#0A4F92",
+        'flow-lightblue': "#2271D8",
+        'flow-sky': "#3AF6F8",
+        'flow-pale': "#B4EFEF",
+        'flow-darkpale': "#61C1BA",
+        'flow-bluegrey': '#1F5C66',
+        'flow-navy': "#072B35",
+        'flow-bfblue': "#0000EE",
+        'flow-darkbluegrey': "#0A3A42",
       },
       spacing: {
         '18': '4.5rem',

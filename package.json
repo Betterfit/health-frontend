@@ -46,6 +46,7 @@
     "recharts": "^1.8.5",
     "redux": "^4.0.5",
     "sortablejs": "^1.12.0",
+    "source-map-explorer": "^2.5.2",
     "tailwind-react-ui": "^0.8.1",
     "typescript": "^4.0.5"
   },
@@ -55,7 +56,8 @@
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "build:style": "tailwind build src/styles/index.css -o src/styles/tailwind.css --watch",
-    "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx}\""
+    "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx}\"",
+    "analyze": "source-map-explorer 'build/static/js/*.js"
   },
   "eslintConfig": {
     "extends": "react-app"

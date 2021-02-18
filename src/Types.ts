@@ -84,4 +84,29 @@ export interface VaccineStats {
   notSickAfterHerdImmunity: number;
 }
 
-export type TimeSeriesKey = 'activeCases' | 'newCases' | 'deaths' | 'resolutionTime' | 'r0' | 'cumRecoveries' 
+export interface VaccineChartOptions {
+  restaurantCapacity: number;
+  gymCapacity: number;
+  retailCapacity: number;
+  essentialRetailCapacity: number;
+  worshipCapacity: number;
+  masksMandatory: boolean;
+  schoolsOpen: boolean;
+  curfew: boolean;
+}
+
+
+export interface Selectable<T> {
+  item: T;
+  selected: boolean;
+}
+
+export type TimeSeriesKey =
+  | "activeCases"
+  | "newCases"
+  | "deaths"
+  | "resolutionTime"
+  | "r0"
+  | "cumRecoveries";
+
+export type ChartType = "timeseries" | "vaccine";
