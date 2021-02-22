@@ -6,6 +6,7 @@ import TimeSeriesOptions, {
 import VaccineChart from "Components/Graph/VaccineChart";
 import VaccineOptions from "Components/Graph/VaccineOptions";
 import healthRegions from "Data/healthRegions.json";
+import { regionsAreEqual } from "Helpers/covidDataUtils";
 import FlowSquares from "Pages/Covid/FlowSquares";
 import React, { useState } from "react";
 import {
@@ -113,8 +114,7 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
       ) : (
         <VaccineOptions
           options={vaccineOptions}
-          setter={(propName) => (val) =>
-            setVaccineOptions({ ...vaccineOptions, [propName]: val })}
+          setOptions={setVaccineOptions}
         />
       )}
 
@@ -137,9 +137,5 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
       /> */
   return <FlowSquares chart={chart} options={options} />;
 };
-
-const regionsAreEqual = (region1: HealthRegion, region2: HealthRegion) =>
-  region1.province === region2.province &&
-  region1.healthRegion === region2.healthRegion;
 
 export default DashboardGraph;

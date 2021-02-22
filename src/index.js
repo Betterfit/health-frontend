@@ -1,19 +1,18 @@
-import "./styles/tailwind.css";
+import { AuthProvider } from "Context/authContext";
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
-import { AuthProvider } from "Context/authContext";
-import { ReactQueryDevtools } from "react-query-devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
+import App from "./App";
+import "./index.css";
+import * as serviceWorker from "./serviceWorker";
+import "./styles/tailwind.css";
 
 const queryClient = new QueryClient();
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         <App />
       </QueryClientProvider>
     </AuthProvider>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation, useRouteMatch } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./styles.css";
 
 const FlowNav = () => {
@@ -25,9 +25,7 @@ interface ChartLinkProps {
   text: string;
 }
 const ChartLink = ({ relPath, text }: ChartLinkProps) => {
-  const match = useRouteMatch();
   const location = useLocation();
-  console.log(location);
   // emphasize link if we're currently on the corresponding page
   const emphasize = location.pathname === "/covid/" + relPath;
   return (

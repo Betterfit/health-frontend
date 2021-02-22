@@ -98,12 +98,6 @@ const TimeSeriesChart = ({
   );
 };
 
-const clearTab = {
-  heading: "Clear All",
-  key: "clear",
-  descr: "Remove all Health Regions from the graph.",
-};
-
 const chartColors = [
   "#00A9FF",
   "#00BD9F",

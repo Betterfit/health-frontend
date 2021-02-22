@@ -37,6 +37,7 @@
     "react-moment": "^1.0.0",
     "react-popper-tooltip": "^3.1.1",
     "react-query": "^3.9.8",
+    "react-query-devtools": "^2.6.3",
     "react-router-dom": "^5.2.0",
     "react-router-transition": "^2.0.0",
     "react-scripts": "3.4.3",
@@ -81,7 +82,6 @@
     "autoprefixer": "^10.0.0",
     "postcss-cli": "^7.1.2",
     "postcss-import": "^12.0.1",
-    "react-query-devtools": "^2.6.3",
     "tailwindcss": "^1.8.10"
   }
 }

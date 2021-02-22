@@ -205,3 +205,8 @@ const fetchREstimate =  (
   };
   return graphApi.getREstimate(params);
 };
+
+export const regionsAreEqual = (region1: HealthRegion, region2: HealthRegion) =>
+  region1.province === region2.province &&
+  region1.healthRegion === region2.healthRegion;
+

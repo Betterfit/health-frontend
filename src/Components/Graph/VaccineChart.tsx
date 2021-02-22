@@ -1,4 +1,7 @@
-import { useCovidTimeSeries, useREstimate } from "Helpers/covidDataUtils";
+import {
+  useCovidTimeSeries,
+  useREstimate
+} from "Helpers/covidDataUtils";
 import { roundToNDecimals } from "Helpers/mathUtils";
 import { findLastNonNull } from "Helpers/utils";
 import React from "react";
@@ -11,7 +14,13 @@ import {
   XAxis,
   YAxis
 } from "recharts";
-import { HealthRegion, RegionalCovidTimeSeries, REstimate, VaccineChartOptions, VaccineStats } from "Types";
+import {
+  HealthRegion,
+  RegionalCovidTimeSeries,
+  REstimate,
+  VaccineChartOptions,
+  VaccineStats
+} from "Types";
 
 interface VaccineChartProps {
   regions: HealthRegion[];
@@ -20,7 +29,7 @@ interface VaccineChartProps {
 
 const VaccineChart = ({ regions, options }: VaccineChartProps) => {
   const { timeSeries } = useCovidTimeSeries(regions, 30);
-  const rEstimates = useREstimate(options, regions)
+  const rEstimates = useREstimate(options, regions);
   const displayData = timeSeries.map((regionTimeSeries, i) =>
     vaccineStatsFromTimeSeries(regionTimeSeries, rEstimates[i].data)
   );
@@ -29,7 +38,6 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
       <BarChart
         data={displayData}
         margin={{ right: 50, top: 20, left: 20, bottom: 20 }}
-        
       >
         <XAxis dataKey="healthRegion" stroke="white" />
         <Tooltip
@@ -48,7 +56,7 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
             angle: -90,
             // added text-anchor so that the y-axis label is centered vertically
             // accepts an svg style object
-            style: { "text-anchor": "middle", fill: "white" },
+            style: { "textAnchor": "middle", fill: "white" },
           }}
           tickFormatter={(tick) =>
             Math.round(tick / 1000).toLocaleString() + "K"
@@ -85,7 +93,7 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
   );
 };
 
-const VACCINE_EFFICACY = 0.82;
+const VACCINE_EFFICACY = 0.85;
 const HERD_IMMUNITY_R = 0.9;
 
 const vaccineStatsFromTimeSeries = (
@@ -95,13 +103,16 @@ const vaccineStatsFromTimeSeries = (
   const population = timeSeries.population;
   // we generate random values as placeholders for now
   const totalRecovered = findLastNonNull(timeSeries.cumRecoveries);
-  
+
   // clamp value to 1.1 so vaccines required is never negative
-  const r0 = rEstimate ? Math.max(1, rEstimate.rV0) : Math.max(1, findLastNonNull(timeSeries.r0))
+  const r0 = rEstimate
+    ? Math.max(1, rEstimate.rV0)
+    : Math.max(1, findLastNonNull(timeSeries.r0));
   const activeCases = findLastNonNull(timeSeries.activeCases);
   const needVaccine =
-    ((1 - 1 / r0) * population - totalRecovered) / VACCINE_EFFICACY;
-    // console.log(needVaccine)
+    ((1 - 1 / r0) * (population - totalRecovered - activeCases)) /
+    VACCINE_EFFICACY;
+  // console.log(needVaccine)
   const sickAfterHerdImmunity = simulateInfections(activeCases);
   const notSickAfterHerdImmunity =
     population - needVaccine - sickAfterHerdImmunity - totalRecovered;

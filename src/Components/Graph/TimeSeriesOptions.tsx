@@ -48,7 +48,7 @@ const TimeSeriesOptions = ({
           // Normalizes data by population so that regions with different populations can be compared.
           <FatToggle
             checked={per100k}
-            onToggle={() => setPer100k(!per100k)}
+            setChecked={setPer100k}
             label="Per 100k"
           />
         )}
@@ -56,7 +56,7 @@ const TimeSeriesOptions = ({
           //   title="Fills in missing data points with linear interpolation"
           <FatToggle
             checked={interpolate}
-            onToggle={() => setInterpolate(!interpolate)}
+            setChecked={setInterpolate}
             label="Interpolate"
           />
         )}
