@@ -27,6 +27,7 @@
     "moment": "^2.29.1",
     "msw": "^0.22.1",
     "prettier": "^2.2.1",
+    "rc-slider": "^9.7.1",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.6",
     "react-copy-to-clipboard": "^5.0.2",

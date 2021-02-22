@@ -1,11 +1,19 @@
 import moment, { Moment } from "moment";
-import { useQueries } from "react-query";
-import { HealthRegion, RegionalCovidTimeSeries, RegionDay } from "Types";
+import { QueryObserverResult, useQueries } from "react-query";
+import {
+  HealthRegion,
+  RegionalCovidTimeSeries,
+  RegionDay,
+  REstimate,
+  VaccineChartOptions
+} from "Types";
 import GraphApi from "./graphApi";
 import { rollingAverage, roundToNDecimals } from "./mathUtils";
 
 const graphApi = new GraphApi();
 const ROLLING_AVG_INTERVAL = 5;
+// 30 minutes until we consider requests to be stale
+const QUERY_STALE_TIME_MS = 1000 * 60 * 30;
 
 // Return value of the covid time series hook
 export interface CovidTimeSeriesHookRet {
@@ -17,11 +25,9 @@ export const useCovidTimeSeries = (
   regions: HealthRegion[],
   daysBack: number
 ): CovidTimeSeriesHookRet => {
-
   const startDate = moment().subtract(daysBack, "days");
   const dates = createDateArray(startDate, moment());
-  // This is the perfect use case for a beta feature in react-query, see docs here:
-  // https://react-query-beta.tanstack.com/reference/useQueries
+  // https://react-query.tanstack.com/reference/useQueries
   const data = useQueries(
     // We perform a variable number of queries (depending on the number of regions selected)
     // The query key determines if a query should be rerun, so the queries are only rerun if the region or number of days back changes
@@ -32,8 +38,7 @@ export const useCovidTimeSeries = (
         region.healthRegion,
         `${daysBack} days back`,
       ],
-      // 30 minutes until this data is considered stale (param takes ms)
-      staleTime: 1000 * 60 * 30,
+      staleTime: QUERY_STALE_TIME_MS,
       queryFn: () =>
         fetchAndTransformRegionData(
           region.healthRegion,
@@ -148,6 +153,7 @@ const timeSeriesFromRegionDays = (
     reportedDates,
   };
 };
+
 export const normalizeByPopulation = (
   regionPop: number,
   data: (number | null)[]
@@ -156,4 +162,46 @@ export const normalizeByPopulation = (
   return data.map((datum) =>
     datum === null ? null : roundToNDecimals(datum / num100k, 2)
   );
+};
+
+export const useREstimate = (
+  options: VaccineChartOptions,
+  regions: HealthRegion[]
+): QueryObserverResult<REstimate>[] => {
+  const results = useQueries(
+    regions.map((region) => ({
+      queryKey: [
+        "r estimate",
+        region.province,
+        region.healthRegion,
+        ...Object.values(options),
+      ],
+      staleTime: QUERY_STALE_TIME_MS,
+      queryFn: () => fetchREstimate(options, region),
+      // this isn't working atm, but it does with just the singular useQuery hook
+      // very strange, I believe it's a bug with react-query
+      keepPreviousData: true,
+    }))
+  );
+
+  const typed = results as QueryObserverResult<REstimate>[];
+  return typed;
+};
+
+const fetchREstimate = async (
+  options: VaccineChartOptions,
+  region: HealthRegion
+): Promise<REstimate> => {
+  const params = {
+    healthRegion: region.healthRegion,
+    province: region.province,
+    date: moment().format("YYYY-MM-DD"),
+    restCap: options.restaurantCapacity,
+    gymCap: options.gymCapacity,
+    retailCap: options.retailCapacity,
+    worshipCap: options.worshipCapacity,
+    masks: options.masksMandatory,
+    curfew: options.curfew,
+  };
+  return await graphApi.getREstimate(params);
 };

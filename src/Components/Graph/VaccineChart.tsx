@@ -1,4 +1,4 @@
-import { useCovidTimeSeries } from "Helpers/covidDataUtils";
+import { useCovidTimeSeries, useREstimate } from "Helpers/covidDataUtils";
 import { roundToNDecimals } from "Helpers/mathUtils";
 import { findLastNonNull } from "Helpers/utils";
 import React from "react";
@@ -11,22 +11,25 @@ import {
   XAxis,
   YAxis
 } from "recharts";
-import { HealthRegion, RegionalCovidTimeSeries, VaccineStats } from "Types";
+import { HealthRegion, RegionalCovidTimeSeries, REstimate, VaccineChartOptions, VaccineStats } from "Types";
 
 interface VaccineChartProps {
   regions: HealthRegion[];
+  options: VaccineChartOptions;
 }
 
-const VaccineChart = ({ regions }: VaccineChartProps) => {
+const VaccineChart = ({ regions, options }: VaccineChartProps) => {
   const { timeSeries } = useCovidTimeSeries(regions, 30);
-  const displayData = timeSeries.map((regionTimeSeries) =>
-    vaccineStatsFromTimeSeries(regionTimeSeries)
+  const rEstimates = useREstimate(options, regions)
+  const displayData = timeSeries.map((regionTimeSeries, i) =>
+    vaccineStatsFromTimeSeries(regionTimeSeries, rEstimates[i].data)
   );
   return (
     <ResponsiveContainer width="100%">
       <BarChart
         data={displayData}
         margin={{ right: 50, top: 20, left: 20, bottom: 20 }}
+        
       >
         <XAxis dataKey="healthRegion" stroke="white" />
         <Tooltip
@@ -57,6 +60,7 @@ const VaccineChart = ({ regions }: VaccineChartProps) => {
           stackId="a"
           name="Require Vaccination"
           fill="#EE6677"
+          isAnimationActive={false}
         />
         <Bar
           dataKey="notSickAfterHerdImmunity"
@@ -85,18 +89,19 @@ const VACCINE_EFFICACY = 0.82;
 const HERD_IMMUNITY_R = 0.9;
 
 const vaccineStatsFromTimeSeries = (
-  timeSeries: RegionalCovidTimeSeries
+  timeSeries: RegionalCovidTimeSeries,
+  rEstimate: REstimate | undefined
 ): VaccineStats => {
   const population = timeSeries.population;
   // we generate random values as placeholders for now
   const totalRecovered = findLastNonNull(timeSeries.cumRecoveries);
-  // default value of 1.4 used if r value not found
+  
   // clamp value to 1.1 so vaccines required is never negative
-
-  const r0 = Math.max(1.1, findLastNonNull(timeSeries.r0, 1.4));
+  const r0 = rEstimate ? Math.max(1, rEstimate.rV0) : Math.max(1, findLastNonNull(timeSeries.r0))
   const activeCases = findLastNonNull(timeSeries.activeCases);
   const needVaccine =
     ((1 - 1 / r0) * population - totalRecovered) / VACCINE_EFFICACY;
+    // console.log(needVaccine)
   const sickAfterHerdImmunity = simulateInfections(activeCases);
   const notSickAfterHerdImmunity =
     population - needVaccine - sickAfterHerdImmunity - totalRecovered;
