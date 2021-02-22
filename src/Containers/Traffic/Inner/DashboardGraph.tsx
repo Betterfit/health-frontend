@@ -90,6 +90,7 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
       <VaccineChart
         {...{
           regions,
+          options: vaccineOptions
         }}
       />
     );

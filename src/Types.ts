@@ -101,6 +101,10 @@ export interface Selectable<T> {
   selected: boolean;
 }
 
+export interface REstimate {
+  rV0: number;
+}
+
 export type TimeSeriesKey =
   | "activeCases"
   | "newCases"
