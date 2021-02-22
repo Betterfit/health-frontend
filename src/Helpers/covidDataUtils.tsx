@@ -188,7 +188,7 @@ export const useREstimate = (
   return typed;
 };
 
-const fetchREstimate = async (
+const fetchREstimate =  (
   options: VaccineChartOptions,
   region: HealthRegion
 ): Promise<REstimate> => {
@@ -203,5 +203,5 @@ const fetchREstimate = async (
     masks: options.masksMandatory,
     curfew: options.curfew,
   };
-  return await graphApi.getREstimate(params);
+  return graphApi.getREstimate(params);
 };
