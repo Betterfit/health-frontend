@@ -51,7 +51,8 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     worshipCapacity: 100,
     masksMandatory: false,
     curfew: false,
-    schoolsOpen: false,
+    elementarySchoolsOpen: false,
+    secondarySchoolsOpen: false,
   });
 
   const clearAllRegions = () => setRegionTray([]);

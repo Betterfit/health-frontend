@@ -13,16 +13,18 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
   const [localOptions, setLocalOptions] = useState<VaccineChartOptions>(
     options
   );
-  const updateInterval = useRef<any>(null)
-  const localSetter = (optionName: keyof VaccineChartOptions) => (val: number | boolean) => {
-    const newOptions = {...options, [optionName]: val}
+  const updateInterval = useRef<any>(null);
+  const localSetter = (optionName: keyof VaccineChartOptions) => (
+    val: number | boolean
+  ) => {
+    const newOptions = { ...options, [optionName]: val };
     setLocalOptions(newOptions);
-    if (updateInterval.current){
-      clearInterval(updateInterval.current)
+    if (updateInterval.current) {
+      clearInterval(updateInterval.current);
       updateInterval.current = null;
     }
-    updateInterval.current = setInterval(() => setOptions(newOptions), 300) 
-  }
+    updateInterval.current = setInterval(() => setOptions(newOptions), 300);
+  };
 
   return (
     <div style={{ gridRow: "1 / -1" }}>
@@ -61,9 +63,14 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
           label="Masks Mandatory?"
         />
         <FatToggle
-          checked={localOptions.schoolsOpen}
-          setChecked={localSetter("schoolsOpen")}
-          label="Schools Open?"
+          checked={localOptions.elementarySchoolsOpen}
+          setChecked={localSetter("elementarySchoolsOpen")}
+          label="Primary Schools Open?"
+        />
+        <FatToggle
+          checked={localOptions.secondarySchoolsOpen}
+          setChecked={localSetter("secondarySchoolsOpen")}
+          label="Secondary Schools Open?"
         />
         <FatToggle
           checked={localOptions.curfew}

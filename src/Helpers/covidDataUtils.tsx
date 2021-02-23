@@ -199,9 +199,12 @@ const fetchREstimate =  (
     restCap: options.restaurantCapacity,
     gymCap: options.gymCapacity,
     retailCap: options.retailCapacity,
+    essentialRetailCap: options.essentialRetailCapacity,
     worshipCap: options.worshipCapacity,
     masks: options.masksMandatory,
     curfew: options.curfew,
+    elementarySchools: options.elementarySchoolsOpen,
+    secondarySchools: options.secondarySchoolsOpen
   };
   return graphApi.getREstimate(params);
 };

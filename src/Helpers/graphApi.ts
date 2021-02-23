@@ -81,9 +81,12 @@ const rEstimateQuery = `query(
   $restCap: Int!
   $gymCap: Int!
   $retailCap: Int!
+  $essentialRetailCap: Int!
   $worshipCap: Int!
   $masks: Boolean!
   $curfew: Boolean!
+  $elementarySchools: Boolean!
+  $secondarySchools: Boolean! 
 ) {
   rEstimate(
     healthRegion: $healthRegion
@@ -92,9 +95,12 @@ const rEstimateQuery = `query(
     restCap: $restCap
     gymCap: $gymCap
     retailCap: $retailCap
+    essentialRetailCap: $essentialRetailCap
     worshipCap: $worshipCap
     masks: $masks
     curfew: $curfew
+    elementarySchools: $elementarySchools
+    secondarySchools: $secondarySchools
   ) {
     rV0
   }

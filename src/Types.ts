@@ -91,7 +91,8 @@ export interface VaccineChartOptions {
   essentialRetailCapacity: number;
   worshipCapacity: number;
   masksMandatory: boolean;
-  schoolsOpen: boolean;
+  elementarySchoolsOpen: boolean;
+  secondarySchoolsOpen: boolean;
   curfew: boolean;
 }
 
