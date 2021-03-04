@@ -97,14 +97,17 @@ const CapSlider = ({
   <div>
     <div className="flex justify-between">
       <label id="capSlider">{label}</label>
-      <input
-        type="number"
-        value={value}
-        onChange={(e) => onChange(parseInt(e.target.value))}
-        className="w-12 ml-auto bg-transparent"
-        max={100}
-        min={0}
-      />
+      <span>
+        <input
+          type="number"
+          value={value}
+          onChange={(e) => onChange(parseInt(e.target.value))}
+          className="w-12 ml-auto bg-transparent"
+          max={100}
+          min={0}
+        />
+        %
+      </span>
     </div>
     <Slider
       value={value}
