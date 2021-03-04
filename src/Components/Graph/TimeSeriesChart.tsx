@@ -79,7 +79,10 @@ const TimeSeriesChart = ({
         {/* <CartesianGrid strokeDasharray="3 3" /> */}
         <XAxis dataKey="date" name="Date" stroke="white" />
         <YAxis stroke="white"/>
-        <ChartTooltip />
+        <ChartTooltip 
+          contentStyle={{backgroundColor: "var(--navy)", borderColor: "transparent"}}
+          labelStyle={{color: "white"}}
+        />
 
         {/* <Legend /> */}
         {regions.map(({ healthRegion }, i) => (
@@ -99,14 +102,20 @@ const TimeSeriesChart = ({
 };
 
 const chartColors = [
-  "#00A9FF",
-  "#00BD9F",
-  "#FFB840",
-  "#FF5A47",
-  "#785FFF",
-  "#F28B8C",
-  "#989486",
-  "#51707D",
+  "#2271D8",
+  "#FF94B8",
+  "#C6F9C0",
+  "#A3A3CC",
+  "#A33D6B",
+  "#F9DCE9",
+  "#D9FFF4",
+  "#CC7DD3",
+  "#1D938D",
+  "#FFB7A9",
+  // these colors are difficult to see on the hover tooltip
+  // readd them if we ever make the tooltip background dark
+  // "#FFF7D2",
+  // "#FFE888",
 ];
 
 export default TimeSeriesChart;

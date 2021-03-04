@@ -43,6 +43,8 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
         <Tooltip
           formatter={(value) => (value as number).toLocaleString()}
           cursor={{ fill: "#0A3A42" }}
+          contentStyle={{backgroundColor: "var(--navy)", borderColor: "transparent"}}
+          labelStyle={{color: "white"}}
         />
         <Legend
           formatter={(value) => <span className="text-white">{value}</span>}
@@ -67,26 +69,26 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
           dataKey="needVaccine"
           stackId="a"
           name="Require Vaccination"
-          fill="#EE6677"
+          fill="#256A7F"
           isAnimationActive={false}
         />
         <Bar
           dataKey="notSickAfterHerdImmunity"
           stackId="a"
-          fill="#66CCEE"
+          fill="#28C5D1"
           name="HI: Will Not Get Sick"
         />
         <Bar
           dataKey="totalRecovered"
           stackId="a"
           name="Already Immune"
-          fill="#228833"
+          fill="#3AF6F8"
         />
         <Bar
           dataKey="sickAfterHerdImmunity"
           stackId="a"
           name="HI: Will Get Sick"
-          fill="#CCBB44"
+          fill="#D3FFE8"
         />
       </BarChart>
     </ResponsiveContainer>
