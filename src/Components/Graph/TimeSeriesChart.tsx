@@ -77,7 +77,7 @@ const TimeSeriesChart = ({
     <ResponsiveContainer width="100%">
       <LineChart data={displayData} margin={{ right: 50, top: 20, bottom: 10 }}>
         {/* <CartesianGrid strokeDasharray="3 3" /> */}
-        <XAxis dataKey="date" name="Date" stroke="white" />
+        <XAxis dataKey="date" name="Date" stroke="white" dy={10}/>
         <YAxis stroke="white"/>
         <ChartTooltip 
           contentStyle={{backgroundColor: "var(--navy)", borderColor: "transparent"}}
