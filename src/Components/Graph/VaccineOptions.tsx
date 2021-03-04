@@ -20,10 +20,11 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
     const newOptions = { ...options, [optionName]: val };
     setLocalOptions(newOptions);
     if (updateInterval.current) {
-      clearInterval(updateInterval.current);
+      clearTimeout(updateInterval.current);
       updateInterval.current = null;
     }
-    updateInterval.current = setInterval(() => setOptions(newOptions), 300);
+    updateInterval.current = setTimeout(() => setOptions(newOptions), 300);
+    return () => clearTimeout(updateInterval.current);
   };
 
   return (
