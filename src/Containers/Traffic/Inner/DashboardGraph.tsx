@@ -1,7 +1,7 @@
 import RegionSelection from "Components/Graph/RegionSelection";
 import TimeSeriesChart from "Components/Graph/TimeSeriesChart";
 import TimeSeriesOptions, {
-  graphTabs
+  graphTabs,
 } from "Components/Graph/TimeSeriesOptions";
 import VaccineChart from "Components/Graph/VaccineChart";
 import VaccineOptions from "Components/Graph/VaccineOptions";
@@ -14,7 +14,7 @@ import {
   HealthRegion,
   Selectable,
   TimeSeriesKey,
-  VaccineChartOptions
+  VaccineChartOptions,
 } from "Types";
 
 interface DashboardGraphProps {
@@ -27,6 +27,14 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
   const [regionTray, setRegionTray] = useState<Selectable<HealthRegion>[]>([
     {
       item: { province: "Alberta", healthRegion: "Edmonton Zone" },
+      selected: true,
+    },
+    {
+      item: { province: "Ontario", healthRegion: "Toronto Public Health" },
+      selected: true,
+    },
+    {
+      item: { province: "British Columbia", healthRegion: "Fraser" },
       selected: true,
     },
   ]);
@@ -92,7 +100,7 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
       <VaccineChart
         {...{
           regions,
-          options: vaccineOptions
+          options: vaccineOptions,
         }}
       />
     );
