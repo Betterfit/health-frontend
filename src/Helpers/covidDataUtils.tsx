@@ -164,6 +164,8 @@ export const normalizeByPopulation = (
   );
 };
 
+const previousData: {[region: string] : REstimate}= { } 
+
 export const useREstimate = (
   options: VaccineChartOptions,
   regions: HealthRegion[]
@@ -178,9 +180,10 @@ export const useREstimate = (
       ],
       staleTime: QUERY_STALE_TIME_MS,
       queryFn: () => fetchREstimate(options, region),
+      placeholderData: previousData[region.healthRegion]
       // this isn't working atm, but it does with just the singular useQuery hook
       // very strange, I believe it's a bug with react-query
-      keepPreviousData: true,
+      // keepPreviousData: true,
     }))
   );
 
@@ -188,7 +191,7 @@ export const useREstimate = (
   return typed;
 };
 
-const fetchREstimate =  (
+const fetchREstimate =  async (
   options: VaccineChartOptions,
   region: HealthRegion
 ): Promise<REstimate> => {
@@ -206,7 +209,9 @@ const fetchREstimate =  (
     elementarySchools: options.elementarySchoolsOpen,
     secondarySchools: options.secondarySchoolsOpen
   };
-  return graphApi.getREstimate(params);
+  const estimate = await graphApi.getREstimate(params);
+  previousData[region.healthRegion] = estimate;
+  return estimate;
 };
 
 export const regionsAreEqual = (region1: HealthRegion, region2: HealthRegion) =>

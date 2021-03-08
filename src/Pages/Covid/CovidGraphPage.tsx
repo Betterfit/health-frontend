@@ -1,7 +1,7 @@
 import { Auth } from "aws-amplify";
 import DashboardGraph from "Containers/Traffic/Inner/DashboardGraph";
 import React, { useLayoutEffect, useState } from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import CovidLogin from "./CovidLogin";
 import FlowNav from "./FlowNav";
 
@@ -20,11 +20,6 @@ export const CovidGraphPage = () => {
     checkIfAuthenticated();
   }, [checkIfAuthenticated]);
 
-  // let graphWidth = window.innerWidth * 0.5;
-  // if (window.innerWidth < 600) {
-  //   graphWidth = window.innerWidth * 0.95;
-  // }
-  // const graphHeight = 0.8 * graphWidth;
   if (!isAuthenticated)
     return <CovidLogin onAuthenticate={checkIfAuthenticated} />;
 
@@ -33,7 +28,7 @@ export const CovidGraphPage = () => {
       <FlowNav />
       <Switch>
         <Route exact path={`${path}`}>
-          <DashboardGraph whichChart="timeseries" />
+          <Redirect to={`${path}/timeseries`}/>
         </Route>
         <Route path={`${path}/vaccine`}>
           <DashboardGraph whichChart="vaccine" />
