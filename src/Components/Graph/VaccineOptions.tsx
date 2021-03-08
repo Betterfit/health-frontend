@@ -17,7 +17,7 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
   const localSetter = (optionName: keyof VaccineChartOptions) => (
     val: number | boolean
   ) => {
-    const newOptions = { ...options, [optionName]: val };
+    const newOptions = { ...localOptions, [optionName]: val };
     setLocalOptions(newOptions);
     if (updateInterval.current) {
       clearTimeout(updateInterval.current);

@@ -1,7 +1,4 @@
-import {
-  useCovidTimeSeries,
-  useREstimate
-} from "Helpers/covidDataUtils";
+import { useCovidTimeSeries, useREstimate } from "Helpers/covidDataUtils";
 import { roundToNDecimals } from "Helpers/mathUtils";
 import { findLastNonNull } from "Helpers/utils";
 import React from "react";
@@ -12,14 +9,14 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis
+  YAxis,
 } from "recharts";
 import {
   HealthRegion,
   RegionalCovidTimeSeries,
   REstimate,
   VaccineChartOptions,
-  VaccineStats
+  VaccineStats,
 } from "Types";
 
 interface VaccineChartProps {
@@ -43,8 +40,11 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
         <Tooltip
           formatter={(value) => (value as number).toLocaleString()}
           cursor={{ fill: "#0A3A42" }}
-          contentStyle={{backgroundColor: "var(--navy)", borderColor: "transparent"}}
-          labelStyle={{color: "white"}}
+          contentStyle={{
+            backgroundColor: "var(--navy)",
+            borderColor: "transparent",
+          }}
+          labelStyle={{ color: "white" }}
         />
         <Legend
           formatter={(value) => <span className="text-white">{value}</span>}
@@ -58,7 +58,7 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
             angle: -90,
             // added text-anchor so that the y-axis label is centered vertically
             // accepts an svg style object
-            style: { "textAnchor": "middle", fill: "white" },
+            style: { textAnchor: "middle", fill: "white" },
           }}
           tickFormatter={(tick) =>
             Math.round(tick / 1000).toLocaleString() + "K"
