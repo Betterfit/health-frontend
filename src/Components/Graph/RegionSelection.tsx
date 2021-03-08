@@ -36,12 +36,15 @@ const RegionTray = ({
           className="flex justify-between pb-1 mb-3 border-b-2 border-flow-pale"
           key={i}
         >
-          <label htmlFor="region-checkbox" className="text-flow-white text-xl">
+          <label
+            htmlFor={`${region.healthRegion}-checkbox`}
+            className="text-flow-white text-xl"
+          >
             {region.healthRegion}
           </label>
           <input
             type="checkbox"
-            id="region-checkbox"
+            id={`${region.healthRegion}-checkbox`}
             checked={selected}
             onChange={() => toggleSelection(region)}
           />
@@ -66,7 +69,10 @@ interface ProvinceDropdowns {
 const ProvinceDropdowns = ({ toggleSelection }: ProvinceDropdowns) => {
   const regions = healthRegions as { [province: string]: string[] };
   return (
-    <div className="bg-flow-darkbluegrey overflow-y-scroll max-h-full col-start-2 mt-5" style={{ gridRow: "7/13" }}>
+    <div
+      className="bg-flow-darkbluegrey overflow-y-scroll max-h-full col-start-2 mt-5"
+      style={{ gridRow: "7/13" }}
+    >
       {Object.keys(healthRegions)
         .sort()
         .map((province, i) => (
