@@ -95,7 +95,7 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
   );
 };
 
-const VACCINE_EFFICACY = 0.85;
+const VACCINE_EFFICACY = 0.9455;
 const HERD_IMMUNITY_R = 0.9;
 
 const vaccineStatsFromTimeSeries = (
