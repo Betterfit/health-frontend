@@ -79,7 +79,7 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
           name="HI: Will Not Get Sick"
         />
         <Bar
-          dataKey="totalRecovered"
+          dataKey="totalImmune"
           stackId="a"
           name="Already Immune"
           fill="#3AF6F8"
@@ -95,7 +95,7 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
   );
 };
 
-const VACCINE_EFFICACY = 0.9455;
+const VACCINE_EFFICACY = 0.85;
 const HERD_IMMUNITY_R = 0.9;
 
 const vaccineStatsFromTimeSeries = (
@@ -103,8 +103,9 @@ const vaccineStatsFromTimeSeries = (
   rEstimate: REstimate | undefined
 ): VaccineStats => {
   const population = timeSeries.population;
-  // we generate random values as placeholders for now
   const totalRecovered = findLastNonNull(timeSeries.cumRecoveries);
+  const immuneFromVaccine =
+    findLastNonNull(timeSeries.cumVaccFull) * VACCINE_EFFICACY;
 
   // clamp value to 1.1 so vaccines required is never negative
   const r0 = rEstimate
@@ -112,7 +113,8 @@ const vaccineStatsFromTimeSeries = (
     : Math.max(1, findLastNonNull(timeSeries.r0));
   const activeCases = findLastNonNull(timeSeries.activeCases);
   const needVaccine =
-    ((1 - 1 / r0) * (population - totalRecovered - activeCases)) /
+    ((1 - 1 / r0) *
+      (population - totalRecovered - activeCases - immuneFromVaccine)) /
     VACCINE_EFFICACY;
   // console.log(needVaccine)
   const sickAfterHerdImmunity = simulateInfections(activeCases);
@@ -126,7 +128,7 @@ const vaccineStatsFromTimeSeries = (
     // not scaling currently, but leaving as we may need to change back
     pop1000s: timeSeries.population,
     needVaccine: scaleAndRound(needVaccine),
-    totalRecovered: scaleAndRound(totalRecovered),
+    totalImmune: scaleAndRound(totalRecovered + immuneFromVaccine),
     sickAfterHerdImmunity: scaleAndRound(sickAfterHerdImmunity),
     notSickAfterHerdImmunity: scaleAndRound(notSickAfterHerdImmunity),
   };

@@ -4,7 +4,6 @@ import { REstimate } from "Types";
 
 const API_URL = process.env.REACT_APP_GRAPHQL_API_URL;
 export default class GraphApi {
-
   init = async () => {
     const session = await Auth.currentSession();
     const token = session.getIdToken().getJwtToken();
@@ -12,7 +11,6 @@ export default class GraphApi {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-
 
     return axios.create({
       baseURL: API_URL,
@@ -40,6 +38,7 @@ export default class GraphApi {
           r0V0
           resolutionTime
           cumRecoveredCases
+          cumVaccFull
         }  
       }}}`,
       variables: null,
@@ -54,7 +53,7 @@ export default class GraphApi {
       .then((edges: any) => edges.map((edge: any) => edge.node));
   };
 
-  getREstimate = async (params: REstimateParams) : Promise<REstimate> => {
+  getREstimate = async (params: REstimateParams): Promise<REstimate> => {
     const client = await this.init();
     return client
       .post("graphql", { query: rEstimateQuery, variables: params })
