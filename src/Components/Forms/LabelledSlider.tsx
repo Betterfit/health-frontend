@@ -42,6 +42,7 @@ const LabelledSlider = ({
       className="mb-5 text-flow-white"
       ariaLabelledByForHandle="LabelledSlider"
       handleStyle={{ borderColor: color, backgroundColor: color }}
+      tabIndex={-1}
     />
   </div>
 );

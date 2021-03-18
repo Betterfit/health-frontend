@@ -173,7 +173,7 @@ export const useREstimate = (
   // copies all of the options except for efficacy into queryKeyOptions.
   // vaccine efficacy is not used by the model and can be frequently changed by the user
   // so putting it in the query key would ruin our caching
-  const { efficacy, ...queryKeyOptions } = options;
+  const { vaccineUsage, ...queryKeyOptions } = options;
   const results = useQueries(
     regions.map((region) => ({
       queryKey: [

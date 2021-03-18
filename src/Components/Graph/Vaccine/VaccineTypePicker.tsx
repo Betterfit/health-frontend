@@ -1,18 +1,19 @@
 import LabelledSlider from "Components/Forms/LabelledSlider";
 import vaccineJSON from "Data/vaccines.json";
 import React, { useState } from "react";
-import { Vaccine, VaccineType } from "Types";
+import { Vaccine, VaccineType, VaccineUsage } from "Types";
 
 const vaccines = vaccineJSON as Vaccine[];
 
 interface VaccineTypePickerProps {
-  setEfficacy: (efficacy: number) => void;
+  setVaccineUsage: (usage: VaccineUsage) => void;
+  vaccineUsage: VaccineUsage;
 }
 
-const VaccineTypePicker = ({ setEfficacy }: VaccineTypePickerProps) => {
-  const [vaccineUsage, setVaccineUsage] = useState<Record<VaccineType, number>>(
-    equalVaccineUsage()
-  );
+const VaccineTypePicker = ({
+  vaccineUsage,
+  setVaccineUsage,
+}: VaccineTypePickerProps) => {
   // locked vaccines do not change their usage when another vaccine is changed
   const [lockedVaccines, setLockedVaccines] = useState<VaccineType[]>([]);
 
@@ -54,7 +55,7 @@ const VaccineTypePicker = ({ setEfficacy }: VaccineTypePickerProps) => {
     const sum = allTypes.reduce((total, type) => total + vaccineUsage[type], 0);
     allTypes.forEach((type) => (newVaccineUsage[type] /= sum));
     setVaccineUsage(newVaccineUsage);
-    setEfficacy(computeVaccineEfficacy(newVaccineUsage));
+    setVaccineUsage(newVaccineUsage);
   };
   const efficacy = computeVaccineEfficacy(vaccineUsage);
   return (
@@ -79,19 +80,21 @@ const VaccineTypePicker = ({ setEfficacy }: VaccineTypePickerProps) => {
   );
 };
 
-// All vaccines are used equally
-const equalVaccineUsage = () =>
+/**
+ * Returns the default vaccine usage, which maps vaccine types to their usage from 0 to 1.
+ */
+export const defaultVaccineUsage = (): VaccineUsage =>
   vaccines.reduce((vaccineUsage, vaccine) => {
     vaccineUsage[vaccine.type] = 1 / vaccines.length;
     return vaccineUsage;
-  }, {} as Record<VaccineType, number>);
+  }, {} as VaccineUsage);
 
 /**
  * Finds average vaccine efficacy weighted by the usage of each type.
  * @param vaccineUsage Maps vaccine type to efficacy
  * @returns The efficacy from 0 to 1
  */
-const computeVaccineEfficacy = (vaccineUsage: Record<VaccineType, number>) => {
+export const computeVaccineEfficacy = (vaccineUsage: VaccineUsage): number => {
   const allTypes = Object.keys(vaccineUsage) as VaccineType[];
   return (
     allTypes.reduce(
@@ -104,12 +107,5 @@ const computeVaccineEfficacy = (vaccineUsage: Record<VaccineType, number>) => {
     ) / 100
   );
 };
-
-/**
- * Finds efficacy of vaccines if every type of vaccine is used equally
- * @returns efficacy from 0 to 1
- */
-export const equalVaccineUsageEfficacy = (): number =>
-  computeVaccineEfficacy(equalVaccineUsage());
 
 export default VaccineTypePicker;

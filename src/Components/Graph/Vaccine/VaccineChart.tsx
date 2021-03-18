@@ -18,6 +18,7 @@ import {
   VaccineChartOptions,
   VaccineStats,
 } from "Types";
+import { computeVaccineEfficacy } from "./VaccineTypePicker";
 
 interface VaccineChartProps {
   regions: HealthRegion[];
@@ -31,7 +32,7 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
     vaccineStatsFromTimeSeries(
       regionTimeSeries,
       rEstimates[i].data,
-      options.efficacy
+      computeVaccineEfficacy(options.vaccineUsage)
     )
   );
   return (

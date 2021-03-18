@@ -40,12 +40,4 @@ const ChartLink = ({ relPath, text }: ChartLinkProps) => {
   );
 };
 
-const tabs = [
-  {
-    heading: "Time Series",
-    key: "timeseries",
-  },
-  { heading: "Vaccine", key: "vaccine" },
-];
-
 export default FlowNav;

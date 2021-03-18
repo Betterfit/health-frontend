@@ -5,7 +5,7 @@ import TimeSeriesOptions, {
 } from "Components/Graph/TimeSeries/TimeSeriesOptions";
 import VaccineChart from "Components/Graph/Vaccine/VaccineChart";
 import VaccineOptions from "Components/Graph/Vaccine/VaccineOptions";
-import { equalVaccineUsageEfficacy } from "Components/Graph/Vaccine/VaccineTypePicker";
+import { defaultVaccineUsage } from "Components/Graph/Vaccine/VaccineTypePicker";
 import { regionsAreEqual } from "Helpers/covidDataUtils";
 import FlowSquares from "Pages/Covid/FlowSquares";
 import React, { useState } from "react";
@@ -61,8 +61,7 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     curfew: false,
     elementarySchoolsOpen: false,
     secondarySchoolsOpen: false,
-    // vaccine efficacy if all types are used equally
-    efficacy: equalVaccineUsageEfficacy(),
+    vaccineUsage: defaultVaccineUsage(),
   });
 
   const clearAllRegions = () => setRegionTray([]);
