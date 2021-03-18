@@ -109,6 +109,7 @@ const timeSeriesFromRegionDays = (
   const resolutionTime = [];
   const r0 = [];
   const cumRecoveries = [];
+  const cumVaccFull = [];
 
   for (const regionDay of regionDays) {
     // skips all missing region days
@@ -119,6 +120,7 @@ const timeSeriesFromRegionDays = (
       resolutionTime.push(null);
       r0.push(null);
       cumRecoveries.push(null);
+      cumVaccFull.push(null);
       day_idx++;
     }
     activeCases.push(regionDay.activeCases);
@@ -127,6 +129,7 @@ const timeSeriesFromRegionDays = (
     resolutionTime.push(regionDay.resolutionTime);
     r0.push(regionDay.r0V0);
     cumRecoveries.push(regionDay.cumRecoveredCases);
+    cumVaccFull.push(regionDay.cumVaccFull);
     day_idx++;
   }
 
@@ -138,6 +141,7 @@ const timeSeriesFromRegionDays = (
     resolutionTime.push(null);
     r0.push(null);
     cumRecoveries.push(null);
+    cumVaccFull.push(null);
   }
 
   return {
@@ -148,6 +152,7 @@ const timeSeriesFromRegionDays = (
     newCases,
     deaths,
     cumRecoveries,
+    cumVaccFull,
     resolutionTime: rollingAverage(resolutionTime, ROLLING_AVG_INTERVAL),
     r0: rollingAverage(r0, ROLLING_AVG_INTERVAL),
     reportedDates,

@@ -38,6 +38,7 @@ export interface RegionDay {
   reportedDate: string;
   healthRegion: HealthRegionData;
   cumRecoveredCases: number;
+  cumVaccFull: number;
 }
 
 export interface HealthRegionData {
@@ -72,13 +73,14 @@ export interface RegionalCovidTimeSeries {
   r0: (number | null)[];
   cumRecoveries: (number | null)[];
   reportedDates: string[];
+  cumVaccFull: (number | null)[];
 }
 
 export interface VaccineStats {
   province: string;
   healthRegion: string;
   pop1000s: number;
-  totalRecovered: number;
+  totalImmune: number;
   needVaccine: number;
   sickAfterHerdImmunity: number;
   notSickAfterHerdImmunity: number;

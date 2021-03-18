@@ -26,9 +26,9 @@ const RegionTray = ({
   toggleSelection,
   clearAllRegions,
 }: RegionSelectionProps) => {
-  const sortedRegionTray = regionTray.sort((a, b) =>
-    a.item.healthRegion.localeCompare(b.item.healthRegion)
-  );
+  const sortedRegionTray = regionTray
+    .concat()
+    .sort((a, b) => a.item.healthRegion.localeCompare(b.item.healthRegion));
   return (
     <div
       className="bg-flow-darkbluegrey col-start-2 flex-grow flex flex-col p-4 overflow-y-scroll"
