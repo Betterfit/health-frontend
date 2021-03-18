@@ -94,8 +94,15 @@ export interface VaccineChartOptions {
   elementarySchoolsOpen: boolean;
   secondarySchoolsOpen: boolean;
   curfew: boolean;
+  efficacy: number;
 }
 
+export type VaccineType = "jj" | "pfizer" | "moderna" | "astrezeneca";
+
+export interface Vaccine {
+  type: VaccineType;
+  efficacy: number;
+}
 
 export interface Selectable<T> {
   item: T;

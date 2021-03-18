@@ -28,7 +28,11 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
   const { timeSeries } = useCovidTimeSeries(regions, 30);
   const rEstimates = useREstimate(options, regions);
   const displayData = timeSeries.map((regionTimeSeries, i) =>
-    vaccineStatsFromTimeSeries(regionTimeSeries, rEstimates[i].data)
+    vaccineStatsFromTimeSeries(
+      regionTimeSeries,
+      rEstimates[i].data,
+      options.efficacy
+    )
   );
   return (
     <ResponsiveContainer width="100%">
@@ -95,12 +99,12 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
   );
 };
 
-const VACCINE_EFFICACY = 0.9455;
 const HERD_IMMUNITY_R = 0.9;
 
 const vaccineStatsFromTimeSeries = (
   timeSeries: RegionalCovidTimeSeries,
-  rEstimate: REstimate | undefined
+  rEstimate: REstimate | undefined,
+  vaccineEfficacy: number
 ): VaccineStats => {
   const population = timeSeries.population;
   // we generate random values as placeholders for now
@@ -113,7 +117,7 @@ const vaccineStatsFromTimeSeries = (
   const activeCases = findLastNonNull(timeSeries.activeCases);
   const needVaccine =
     ((1 - 1 / r0) * (population - totalRecovered - activeCases)) /
-    VACCINE_EFFICACY;
+    vaccineEfficacy;
   // console.log(needVaccine)
   const sickAfterHerdImmunity = simulateInfections(activeCases);
   const notSickAfterHerdImmunity =

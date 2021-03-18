@@ -1,8 +1,7 @@
 import FatToggle from "Components/Forms/FatToggle";
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
 import React, { useRef, useState } from "react";
 import { VaccineChartOptions } from "Types";
+import VaccineTypePicker from "./VaccineTypePicker";
 
 interface VaccineOptionsProps {
   options: VaccineChartOptions;
@@ -30,7 +29,8 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
   return (
     <div style={{ gridRow: "1 / -1" }}>
       <div className="text-flow-white pr-2">
-        <CapSlider
+        <VaccineTypePicker />
+        {/* <CapSlider
           value={localOptions.restaurantCapacity}
           onChange={localSetter("restaurantCapacity")}
           label="Restaurant Capacity"
@@ -54,9 +54,8 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
           value={localOptions.worshipCapacity}
           onChange={localSetter("worshipCapacity")}
           label="Places of Worship Capacity"
-        />
+        /> */}
       </div>
-
       <div className="mt-6 space-y-5">
         <FatToggle
           checked={localOptions.masksMandatory}
@@ -82,61 +81,5 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
     </div>
   );
 };
-
-interface CapSliderProps {
-  value: number;
-  label: string;
-  onChange: (val: number) => void;
-  showMarks?: boolean;
-}
-const CapSlider = ({
-  value,
-  label,
-  onChange,
-  showMarks = false,
-}: CapSliderProps) => (
-  <div>
-    <div className="flex justify-between">
-      <label id="capSlider">{label}</label>
-      <span>
-        <input
-          type="number"
-          value={value}
-          onChange={(e) => onChange(parseInt(e.target.value))}
-          className="w-12 ml-auto bg-transparent"
-          max={100}
-          min={0}
-        />
-        %
-      </span>
-    </div>
-    <Slider
-      value={value}
-      onChange={onChange}
-      marks={showMarks ? sliderMarks : undefined}
-      className="mb-5 text-flow-white"
-      ariaLabelledByForHandle="capSlider"
-      handleStyle={{ borderColor: "#61C1BA", backgroundColor: " #61C1BA" }}
-    />
-  </div>
-);
-
-// sliderMarks looks like this
-// {
-//   75: {
-//     style: {
-//       color: "#B4EFEF",
-//     },
-//     label: "75%",
-//   },
-// };
-
-const sliderMarks = [0, 50, 100].reduce<Record<number, any>>((acc, val) => {
-  acc[val] = {
-    style: { color: "#1F5C66" },
-    label: `${val}%`,
-  };
-  return acc;
-}, {});
 
 export default VaccineOptions;

@@ -1,0 +1,18 @@
+[
+  {
+    "type": "j&j",
+    "efficacy": 66.5
+  },
+  {
+    "type": "pfizer",
+    "efficacy": 95
+  },
+  {
+    "type": "astrezeneca",
+    "efficacy": 66.7
+  },
+  {
+    "type": "moderna",
+    "efficacy": 94.1
+  }
+]

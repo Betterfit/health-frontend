@@ -1,11 +1,11 @@
 import RegionSelection from "Components/Graph/RegionSelection";
-import TimeSeriesChart from "Components/Graph/TimeSeriesChart";
+import TimeSeriesChart from "Components/Graph/TimeSeries/TimeSeriesChart";
 import TimeSeriesOptions, {
   graphTabs,
-} from "Components/Graph/TimeSeriesOptions";
-import VaccineChart from "Components/Graph/VaccineChart";
-import VaccineOptions from "Components/Graph/VaccineOptions";
-import healthRegions from "Data/healthRegions.json";
+} from "Components/Graph/TimeSeries/TimeSeriesOptions";
+import VaccineChart from "Components/Graph/Vaccine/VaccineChart";
+import VaccineOptions from "Components/Graph/Vaccine/VaccineOptions";
+import { equalVaccineUsageEfficacy } from "Components/Graph/Vaccine/VaccineTypePicker";
 import { regionsAreEqual } from "Helpers/covidDataUtils";
 import FlowSquares from "Pages/Covid/FlowSquares";
 import React, { useState } from "react";
@@ -61,6 +61,8 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     curfew: false,
     elementarySchoolsOpen: false,
     secondarySchoolsOpen: false,
+    // vaccine efficacy if all types are used equally
+    efficacy: equalVaccineUsageEfficacy(),
   });
 
   const clearAllRegions = () => setRegionTray([]);
@@ -79,17 +81,6 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     // add region to tray otherwise
     else setRegionTray([...regionTray, { item: toToggle, selected: true }]);
   };
-
-  // used to show collapsible lists of health regions in different provinces
-  const filterData = Object.entries(healthRegions).map(
-    ([provinceName, regionNames]) => ({
-      heading: provinceName,
-      content: regionNames,
-    })
-  );
-
-  let width = 0;
-  let height = 0;
 
   const chart =
     whichChart === "timeseries" ? (
