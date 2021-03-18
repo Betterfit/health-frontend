@@ -26,12 +26,15 @@ const RegionTray = ({
   toggleSelection,
   clearAllRegions,
 }: RegionSelectionProps) => {
+  const sortedRegionTray = regionTray.sort((a, b) =>
+    a.item.healthRegion.localeCompare(b.item.healthRegion)
+  );
   return (
     <div
       className="bg-flow-darkbluegrey col-start-2 flex-grow flex flex-col p-4 overflow-y-scroll"
       style={{ gridRow: "1 / 7" }}
     >
-      {regionTray.map(({ item: region, selected }, i) => (
+      {sortedRegionTray.map(({ item: region, selected }, i) => (
         <div
           className="flex justify-between pb-1 mb-3 border-b-2 border-flow-pale"
           key={i}
