@@ -1,18 +1,18 @@
 [
   {
-    "type": "j&j",
+    "type": "J&J",
     "efficacy": 66.5
   },
   {
-    "type": "pfizer",
+    "type": "Pfizer",
     "efficacy": 95
   },
   {
-    "type": "astrezeneca",
+    "type": "Astrezeneca",
     "efficacy": 66.7
   },
   {
-    "type": "moderna",
+    "type": "Moderna",
     "efficacy": 94.1
   }
 ]

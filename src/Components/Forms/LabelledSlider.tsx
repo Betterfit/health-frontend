@@ -8,6 +8,8 @@ interface LabelledSliderProps {
   onChange: (val: number) => void;
   showMarks?: boolean;
   numDecimals?: number;
+  onRightClick?: React.MouseEventHandler;
+  color?: string;
 }
 const LabelledSlider = ({
   value,
@@ -15,8 +17,10 @@ const LabelledSlider = ({
   onChange,
   showMarks = false,
   numDecimals = 0,
+  onRightClick = undefined,
+  color = "#61C1BA",
 }: LabelledSliderProps) => (
-  <div>
+  <div onContextMenu={onRightClick}>
     <div className="flex justify-between">
       <label id="LabelledSlider">{label}</label>
       <span>
@@ -37,7 +41,7 @@ const LabelledSlider = ({
       marks={showMarks ? sliderMarks : undefined}
       className="mb-5 text-flow-white"
       ariaLabelledByForHandle="LabelledSlider"
-      handleStyle={{ borderColor: "#61C1BA", backgroundColor: " #61C1BA" }}
+      handleStyle={{ borderColor: color, backgroundColor: color }}
     />
   </div>
 );

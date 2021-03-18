@@ -13,6 +13,14 @@ const VaccineTypePicker = ({ setEfficacy }: VaccineTypePickerProps) => {
   const [vaccineUsage, setVaccineUsage] = useState<Record<VaccineType, number>>(
     equalVaccineUsage()
   );
+  // locked vaccines do not change their usage when another vaccine is changed
+  const [lockedVaccines, setLockedVaccines] = useState<VaccineType[]>([]);
+
+  const toggleVaccineLock = (type: VaccineType) => {
+    if (lockedVaccines.includes(type))
+      setLockedVaccines(lockedVaccines.filter((locked) => locked != type));
+    else setLockedVaccines([...lockedVaccines, type]);
+  };
 
   const allTypes = Object.keys(vaccineUsage) as VaccineType[];
   const changeUsage = (type: VaccineType, newVal: number) => {
@@ -20,10 +28,11 @@ const VaccineTypePicker = ({ setEfficacy }: VaccineTypePickerProps) => {
     const newVaccineUsage = {
       ...vaccineUsage,
     };
-    // the other vaccine types in ascending order of usage
+    // the other (not locked) vaccine types in ascending order of usage
     // it's important to sort in this way so that all other vaccines decrease at the same rate
     const otherTypes = allTypes
       .filter((otherType) => otherType !== type)
+      .filter((otherType) => !lockedVaccines.includes(otherType))
       .sort((a, b) => vaccineUsage[a] - vaccineUsage[b]);
     // To increase one vaccine's usage, we need to decrease the other vaccines so that all the usages sum to 1 (and v.v.)
     // change represents how much the other vaccines need to decrease by
@@ -38,12 +47,8 @@ const VaccineTypePicker = ({ setEfficacy }: VaccineTypePickerProps) => {
       newVaccineUsage[otherType] -= amountToChange;
       change -= amountToChange;
     });
-    const tolerance = 1e-5;
-    console.assert(
-      Math.abs(change) < tolerance,
-      `Error: ${change} change left over`
-    );
-    newVaccineUsage[type] = newVal;
+    //
+    newVaccineUsage[type] = newVal - change;
 
     // normalize to counter rounding errors
     const sum = allTypes.reduce((total, type) => total + vaccineUsage[type], 0);
@@ -60,6 +65,13 @@ const VaccineTypePicker = ({ setEfficacy }: VaccineTypePickerProps) => {
           onChange={(value) => changeUsage(type as VaccineType, value / 100)}
           value={vaccineUsage[type as VaccineType] * 100}
           key={type}
+          onRightClick={(e) => {
+            e.preventDefault();
+            toggleVaccineLock(type as VaccineType);
+          }}
+          color={
+            lockedVaccines.includes(type as VaccineType) ? "#FC7769" : undefined
+          }
         />
       ))}
       <p className="text-white">Efficacy: {(efficacy * 100).toFixed(2)}%</p>
