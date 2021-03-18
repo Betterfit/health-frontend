@@ -5,7 +5,7 @@ import {
   RegionalCovidTimeSeries,
   RegionDay,
   REstimate,
-  VaccineChartOptions
+  VaccineChartOptions,
 } from "Types";
 import GraphApi from "./graphApi";
 import { rollingAverage, roundToNDecimals } from "./mathUtils";
@@ -164,23 +164,27 @@ export const normalizeByPopulation = (
   );
 };
 
-const previousData: {[region: string] : REstimate}= { } 
+const previousData: { [region: string]: REstimate } = {};
 
 export const useREstimate = (
   options: VaccineChartOptions,
   regions: HealthRegion[]
 ): QueryObserverResult<REstimate>[] => {
+  // copies all of the options except for efficacy into queryKeyOptions.
+  // vaccine efficacy is not used by the model and can be frequently changed by the user
+  // so putting it in the query key would ruin our caching
+  const { efficacy, ...queryKeyOptions } = options;
   const results = useQueries(
     regions.map((region) => ({
       queryKey: [
         "r estimate",
         region.province,
         region.healthRegion,
-        ...Object.values(options),
+        ...Object.values(queryKeyOptions),
       ],
       staleTime: QUERY_STALE_TIME_MS,
       queryFn: () => fetchREstimate(options, region),
-      placeholderData: previousData[region.healthRegion]
+      placeholderData: previousData[region.healthRegion],
       // this isn't working atm, but it does with just the singular useQuery hook
       // very strange, I believe it's a bug with react-query
       // keepPreviousData: true,
@@ -191,7 +195,7 @@ export const useREstimate = (
   return typed;
 };
 
-const fetchREstimate =  async (
+const fetchREstimate = async (
   options: VaccineChartOptions,
   region: HealthRegion
 ): Promise<REstimate> => {
@@ -207,7 +211,7 @@ const fetchREstimate =  async (
     masks: options.masksMandatory,
     curfew: options.curfew,
     elementarySchools: options.elementarySchoolsOpen,
-    secondarySchools: options.secondarySchoolsOpen
+    secondarySchools: options.secondarySchoolsOpen,
   };
   const estimate = await graphApi.getREstimate(params);
   previousData[region.healthRegion] = estimate;
@@ -217,4 +221,3 @@ const fetchREstimate =  async (
 export const regionsAreEqual = (region1: HealthRegion, region2: HealthRegion) =>
   region1.province === region2.province &&
   region1.healthRegion === region2.healthRegion;
-

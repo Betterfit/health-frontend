@@ -29,7 +29,7 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
   return (
     <div style={{ gridRow: "1 / -1" }}>
       <div className="text-flow-white pr-2">
-        <VaccineTypePicker />
+        <VaccineTypePicker setEfficacy={localSetter("efficacy")} />
         {/* <CapSlider
           value={localOptions.restaurantCapacity}
           onChange={localSetter("restaurantCapacity")}

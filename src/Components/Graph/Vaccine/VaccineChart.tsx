@@ -106,6 +106,7 @@ const vaccineStatsFromTimeSeries = (
   rEstimate: REstimate | undefined,
   vaccineEfficacy: number
 ): VaccineStats => {
+  console.log(vaccineEfficacy);
   const population = timeSeries.population;
   // we generate random values as placeholders for now
   const totalRecovered = findLastNonNull(timeSeries.cumRecoveries);

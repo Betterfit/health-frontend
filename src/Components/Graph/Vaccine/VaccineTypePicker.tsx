@@ -5,7 +5,11 @@ import { Vaccine, VaccineType } from "Types";
 
 const vaccines = vaccineJSON as Vaccine[];
 
-const VaccineTypePicker = () => {
+interface VaccineTypePickerProps {
+  setEfficacy: (efficacy: number) => void;
+}
+
+const VaccineTypePicker = ({ setEfficacy }: VaccineTypePickerProps) => {
   const [vaccineUsage, setVaccineUsage] = useState<Record<VaccineType, number>>(
     equalVaccineUsage()
   );
@@ -45,6 +49,7 @@ const VaccineTypePicker = () => {
     const sum = allTypes.reduce((total, type) => total + vaccineUsage[type], 0);
     allTypes.forEach((type) => (newVaccineUsage[type] /= sum));
     setVaccineUsage(newVaccineUsage);
+    setEfficacy(computeVaccineEfficacy(newVaccineUsage));
   };
   const efficacy = computeVaccineEfficacy(vaccineUsage);
   return (
@@ -57,7 +62,7 @@ const VaccineTypePicker = () => {
           key={type}
         />
       ))}
-      <p>Efficacy: {(efficacy * 100).toFixed(2)}%</p>
+      <p className="text-white">Efficacy: {(efficacy * 100).toFixed(2)}%</p>
     </>
   );
 };
