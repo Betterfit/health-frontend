@@ -1,7 +1,7 @@
 import FatToggle from "Components/Forms/FatToggle";
 import LabelledSlider from "Components/Forms/LabelledSlider";
 import React, { useRef, useState } from "react";
-import { VaccineChartOptions, VaccineUsage } from "Types";
+import { VaccineChartOptions } from "Types";
 import VaccineTypePicker from "./VaccineTypePicker";
 
 interface VaccineOptionsProps {
@@ -13,7 +13,7 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
   const [localOptions, setLocalOptions] = useState<VaccineChartOptions>(
     options
   );
-  const [tab, setTab] = useState<Tab>("Vaccine Types");
+  const [tab, setTab] = useState<Tab>("Restrictions");
   const updateInterval = useRef<any>(null);
 
   // Since a lot of the options are sliders, we would generate an excessive amount of requests to our
@@ -21,7 +21,7 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
   // Instead what we do is keep a local set of options and only update the real options (which trigger requests when changed )
   // after a small time delay.
   const localSetter = (optionName: keyof VaccineChartOptions) => (
-    val: number | boolean | VaccineUsage
+    val: typeof options[keyof VaccineChartOptions]
   ) => {
     const newOptions = { ...localOptions, [optionName]: val };
     setLocalOptions(newOptions);
@@ -36,7 +36,7 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
   return (
     <div style={{ gridRow: "1 / -1" }}>
       <div className="flex flex-row justify-around text-flow-white w-full mb-4">
-        {(["Restrictions", "Vaccine Types"] as Tab[]).map((tabName) => (
+        {(["Restrictions", "Vaccine Mix"] as Tab[]).map((tabName) => (
           <button
             onClick={(e) => setTab(tabName)}
             // underline if selected
@@ -51,10 +51,12 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
         ))}
       </div>
       <div className="text-flow-white pr-2">
-        {tab === "Vaccine Types" ? (
+        {tab === "Vaccine Mix" ? (
           <VaccineTypePicker
             vaccineUsage={localOptions.vaccineUsage}
+            lockedVaccines={localOptions.lockedVaccines}
             setVaccineUsage={localSetter("vaccineUsage")}
+            setLockedVaccines={localSetter("lockedVaccines")}
           />
         ) : (
           <>
@@ -85,11 +87,6 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
             />
             <div className="space-y-5">
               <FatToggle
-                checked={localOptions.masksMandatory}
-                setChecked={localSetter("masksMandatory")}
-                label="Masks Mandatory?"
-              />
-              <FatToggle
                 checked={localOptions.elementarySchoolsOpen}
                 setChecked={localSetter("elementarySchoolsOpen")}
                 label="Primary Schools Open?"
@@ -112,5 +109,5 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
   );
 };
 
-type Tab = "Restrictions" | "Vaccine Types";
+type Tab = "Restrictions" | "Vaccine Mix";
 export default VaccineOptions;

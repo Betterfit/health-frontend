@@ -175,10 +175,10 @@ export const useREstimate = (
   options: VaccineChartOptions,
   regions: HealthRegion[]
 ): QueryObserverResult<REstimate>[] => {
-  // copies all of the options except for efficacy into queryKeyOptions.
-  // vaccine efficacy is not used by the model and can be frequently changed by the user
+  // Copies all relevant options into queryKeyOptions.
+  // The excluded options are not used by the model and can be frequently changed by the user
   // so putting it in the query key would ruin our caching
-  const { vaccineUsage, ...queryKeyOptions } = options;
+  const { vaccineUsage, lockedVaccines, ...queryKeyOptions } = options;
   const results = useQueries(
     regions.map((region) => ({
       queryKey: [

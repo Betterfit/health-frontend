@@ -62,6 +62,7 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     elementarySchoolsOpen: false,
     secondarySchoolsOpen: false,
     vaccineUsage: defaultVaccineUsage(),
+    lockedVaccines: [],
   });
 
   const clearAllRegions = () => setRegionTray([]);

@@ -1,21 +1,24 @@
 import LabelledSlider from "Components/Forms/LabelledSlider";
 import vaccineJSON from "Data/vaccines.json";
-import React, { useState } from "react";
+import React from "react";
 import { Vaccine, VaccineType, VaccineUsage } from "Types";
 
 const vaccines = vaccineJSON as Vaccine[];
 
 interface VaccineTypePickerProps {
-  setVaccineUsage: (usage: VaccineUsage) => void;
   vaccineUsage: VaccineUsage;
+  lockedVaccines: VaccineType[];
+  setVaccineUsage: (usage: VaccineUsage) => void;
+  setLockedVaccines: (vaccineTypes: VaccineType[]) => void;
 }
 
 const VaccineTypePicker = ({
   vaccineUsage,
+  lockedVaccines,
   setVaccineUsage,
+  setLockedVaccines,
 }: VaccineTypePickerProps) => {
   // locked vaccines do not change their usage when another vaccine is changed
-  const [lockedVaccines, setLockedVaccines] = useState<VaccineType[]>([]);
 
   const toggleVaccineLock = (type: VaccineType) => {
     if (lockedVaccines.includes(type))
@@ -60,6 +63,11 @@ const VaccineTypePicker = ({
   const efficacy = computeVaccineEfficacy(vaccineUsage);
   return (
     <>
+      <p className="text-flow-white text-center my-3">
+        {`Vaccine Efficacy: ${(
+          computeVaccineEfficacy(vaccineUsage) * 100
+        ).toFixed(2)}%`}
+      </p>
       {Object.keys(vaccineUsage).map((type) => (
         <LabelledSlider
           label={type}
@@ -75,7 +83,6 @@ const VaccineTypePicker = ({
           }
         />
       ))}
-      <p className="text-white">Efficacy: {(efficacy * 100).toFixed(2)}%</p>
     </>
   );
 };

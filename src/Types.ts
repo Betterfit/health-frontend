@@ -87,6 +87,7 @@ export interface VaccineStats {
 }
 
 export interface VaccineChartOptions {
+  // get passed to our R estimation model
   restaurantCapacity: number;
   gymCapacity: number;
   retailCapacity: number;
@@ -96,7 +97,9 @@ export interface VaccineChartOptions {
   elementarySchoolsOpen: boolean;
   secondarySchoolsOpen: boolean;
   curfew: boolean;
+  // not used by model, just ui / clientside math
   vaccineUsage: VaccineUsage;
+  lockedVaccines: VaccineType[];
 }
 
 export type VaccineUsage = Record<VaccineType, number>;
