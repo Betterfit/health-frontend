@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import FatToggle from "Components/Forms/FatToggle";
 import LabelledSlider from "Components/Forms/LabelledSlider";
 import React, { useRef, useState } from "react";
@@ -34,8 +35,8 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
   };
 
   return (
-    <div style={{ gridRow: "1 / -1" }}>
-      <div className="flex flex-row justify-around text-flow-white w-full mb-4">
+    <div className="flex flex-col" style={{ gridRow: "1 / -1" }}>
+      <div className="flex justify-around text-flow-white w-full mb-4">
         {(["Restrictions", "Vaccine Mix"] as Tab[]).map((tabName) => (
           <button
             onClick={(e) => setTab(tabName)}
@@ -105,9 +106,25 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
           </>
         )}
       </div>
+      <div className="mt-auto">
+        <Tippy content={tabs[tab].help}>
+          <p className="cursor-default text-flow-pale text-center">Help</p>
+        </Tippy>
+      </div>
     </div>
   );
 };
 
-type Tab = "Restrictions" | "Vaccine Mix";
+const tabs = {
+  Restrictions: {
+    help:
+      "The chart on the left is generated dynamically based on the restrictions above. Try moving some of the sliders or flipping a toggle to see how different restrictions affect vaccine requirements.",
+  },
+  "Vaccine Mix": {
+    help:
+      "Since some vaccines are more effective than others, vaccine requirements depend on the mix of vaccines being administered. When you're happy with one slider, right click to lock it in place.",
+  },
+};
+
+type Tab = keyof typeof tabs;
 export default VaccineOptions;

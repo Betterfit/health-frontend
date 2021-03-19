@@ -42,7 +42,11 @@ const TimeSeriesOptions = ({
       </div>
 
       <div className="mt-5 space-y-2" style={{ gridRow: "7 / 13" }}>
-        <TimePeriodSelection daysBack={daysBack} setDaysBack={setDaysBack} size='md'/>
+        <TimePeriodSelection
+          daysBack={daysBack}
+          setDaysBack={setDaysBack}
+          size="md"
+        />
 
         {!curTab.disableNormalization && (
           // Normalizes data by population so that regions with different populations can be compared.
@@ -79,11 +83,9 @@ const GraphTab = ({ tab, setTabKey, selected }: GraphTabProps) => {
       onClick={() => setTabKey(tab.key)}
     >
       <span className="ml-5">{tab.heading}</span>
-      {/* <EuiToolTip position="left" content={tab.descr}> */}
       <Tippy content={tab.descr}>
         <p className="mr-5 text-flow-white">?</p>
       </Tippy>
-      {/* </EuiToolTip> */}
     </button>
   );
 };
