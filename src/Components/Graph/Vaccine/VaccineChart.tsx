@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import { useCovidTimeSeries, useREstimate } from "Helpers/covidDataUtils";
 import { roundToNDecimals } from "Helpers/mathUtils";
 import { findLastNonNull } from "Helpers/utils";
@@ -52,7 +53,17 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
           labelStyle={{ color: "white" }}
         />
         <Legend
-          formatter={(value) => <span className="text-white">{value}</span>}
+          formatter={(value) => (
+            <Tippy
+              content={
+                // descriptions have first part cut off so that it can be dynamically swapped between "number of" and "proportion of" in the future
+                "The number of " +
+                categories.find((category) => category.name === value)?.descr
+              }
+            >
+              <span className="text-white">{value}</span>
+            </Tippy>
+          )}
         />
         <YAxis
           dataKey="pop1000s"
@@ -70,35 +81,44 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
           }
           stroke="white"
         />
-        <Bar
-          dataKey="needVaccine"
-          stackId="a"
-          name="Require Vaccination"
-          fill="#256A7F"
-          isAnimationActive={false}
-        />
-        <Bar
-          dataKey="notSickAfterHerdImmunity"
-          stackId="a"
-          fill="#28C5D1"
-          name="HI: Will Not Get Sick"
-        />
-        <Bar
-          dataKey="totalImmune"
-          stackId="a"
-          name="Already Immune"
-          fill="#3AF6F8"
-        />
-        <Bar
-          dataKey="sickAfterHerdImmunity"
-          stackId="a"
-          name="HI: Will Get Sick"
-          fill="#D3FFE8"
-        />
+        {categories.map((category) => (
+          <Bar stackId="a" {...category} />
+        ))}
       </BarChart>
     </ResponsiveContainer>
   );
 };
+
+const categories = [
+  {
+    dataKey: "needVaccine",
+    name: "Require Vaccination",
+    descr:
+      "people that will need to get a vaccination in order to reach herd immunity.",
+    fill: "#256A7F",
+  },
+  {
+    dataKey: "notSickAfterHerdImmunity",
+    name: "HI: Will Not Get Sick",
+    descr:
+      "unvaccinated people that would not get sick once herd immunity is reached.",
+    fill: "#28C5D1",
+  },
+  {
+    dataKey: "totalImmune",
+    name: "Already Immune",
+    descr:
+      "people that have either recovered from COVID-19 or have recieved a full vaccination.",
+    fill: "#3AF6F8",
+  },
+  {
+    dataKey: "sickAfterHerdImmunity",
+    name: "HI: Will Get Sick",
+    descr:
+      "unvaccinated people that would get sick after herd immunity (HI) is reached",
+    fill: "#D3FFE8",
+  },
+];
 
 const HERD_IMMUNITY_R = 0.9;
 
