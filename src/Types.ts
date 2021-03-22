@@ -126,6 +126,7 @@ export type TimeSeriesKey =
   | "deaths"
   | "resolutionTime"
   | "r0"
-  | "cumRecoveries";
+  | "cumRecoveries"
+  | "cumVaccFull";
 
 export type ChartType = "timeseries" | "vaccine";

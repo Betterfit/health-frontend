@@ -140,6 +140,11 @@ export const graphTabs: TimeSeriesTab[] = [
     // doesn't make sense to show this per capita
     disableNormalization: true,
   },
+  {
+    heading: "Vaccinated",
+    key: "cumVaccFull",
+    descr: "The number of people that have been fully vaccinated.",
+  },
 ];
 
 export default TimeSeriesOptions;
