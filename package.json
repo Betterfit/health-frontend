@@ -19,7 +19,9 @@
     "axios": "^0.20.0",
     "craco": "0.0.3",
     "customize-cra": "^1.0.0",
+    "cypress": "^6.8.0",
     "dayjs": "^1.9.1",
+    "eslint-stats": "^1.0.1",
     "js-cookie": "^2.2.1",
     "mobx": "^6.0.1",
     "mobx-persist": "^0.4.1",
@@ -58,7 +60,9 @@
     "eject": "react-app-rewired eject",
     "build:style": "tailwind build src/styles/index.css -o src/styles/tailwind.css --watch",
     "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx}\"",
-    "analyze": "source-map-explorer 'build/static/js/*.js"
+    "analyze": "source-map-explorer 'build/static/js/*.js",
+    "lint": "eslint --ext js,ts,tsx --format node_modules/eslint-stats/byErrorAndWarning.js src",
+    "lint-folders": "eslint --ext js,ts,tsx --format node_modules/eslint-stats/byFolder.js src "
   },
   "eslintConfig": {
     "extends": "react-app"
