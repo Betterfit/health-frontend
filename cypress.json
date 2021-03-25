@@ -1,0 +1,6 @@
+{
+  "env": {
+    "username": "yash@betterfit.co"
+  },
+  "baseUrl": "http://localhost:3000"
+}
