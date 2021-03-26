@@ -16,7 +16,8 @@ describe("Covid login", () => {
     enterEmail(email);
     enterPassword(password);
     loginButton().click();
-    cy.url().should("include", loggedInPath);
+    // longer timeout for logging in
+    cy.url({ timeout: 8000 }).should("include", loggedInPath);
   });
 
   it("Does not let users login without username/password", () => {
@@ -40,3 +41,9 @@ const enterEmail = (email) =>
 const enterPassword = (password) =>
   cy.get("#password").type(password, { log: false });
 const loginButton = () => cy.findByRole("button", { name: /login/i });
+
+const login = (email, password) => {
+  enterEmail(email);
+  enterPassword(password);
+  loginButton().click();
+};
