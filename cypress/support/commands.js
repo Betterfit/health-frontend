@@ -24,3 +24,21 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import "@testing-library/cypress/add-commands";
+
+Cypress.Commands.add("healthApiAuth", (username, password) =>
+  cy
+    .request("POST", apiUrl + "main/api-token-auth/", {
+      username: username,
+      password: password,
+    })
+    .its("body")
+);
+
+Cypress.Commands.add("visitHealthLoggedIn", (authSession, path = "/") => {
+  cy.visit("/", {
+    onBeforeLoad: (win) => {
+      win.localStorage.setItem("user", JSON.stringify(authSession.user));
+      win.localStorage.setItem("token", authSession.token);
+    },
+  });
+});

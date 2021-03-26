@@ -1,30 +1,20 @@
 /// <reference types="cypress" />
+/// <reference types="@testing-library/cypress" />
+/// <reference path="../support/index.d.ts" />
 
 const apiUrl = Cypress.env("apiUrl");
 const username = "facilityadmin";
 describe("Health Profile", () => {
-  let user = null;
-  let token = null;
+  let authSession;
 
   before(() => {
-    cy.request("POST", apiUrl + "main/api-token-auth/", {
-      username: username,
-      password: username,
-    })
-      .its("body")
-      .then((body) => {
-        user = body.user;
-        token = body.token;
-      });
+    cy.healthApiAuth(username, username).then((session) => {
+      authSession = session;
+    });
   });
 
   beforeEach(() => {
-    cy.visit("/", {
-      onBeforeLoad: (win) => {
-        win.localStorage.setItem("user", JSON.stringify(user));
-        win.localStorage.setItem("token", token);
-      },
-    });
+    cy.visitHealthLoggedIn(authSession);
   });
 
   it("Shows profile buttons when profile is clicked on", () => {
