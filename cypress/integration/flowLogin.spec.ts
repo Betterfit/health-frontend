@@ -9,6 +9,7 @@ describe("Covid login", () => {
   it("Can load the login page", () => {
     cy.contains("Email");
     cy.contains("Password");
+    loginButton();
   });
 
   it("Allows users to login", () => {
