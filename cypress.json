@@ -1,6 +1,7 @@
 {
   "env": {
-    "username": "yash@betterfit.co"
+    "username": "yash@betterfit.co",
+    "apiUrl": "https://staging.api.betterfit.health/"
   },
   "baseUrl": "http://localhost:3000"
 }
