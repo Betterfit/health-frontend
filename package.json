@@ -81,6 +81,7 @@
     ]
   },
   "devDependencies": {
+    "@applitools/eyes-cypress": "^3.20.4",
     "@types/recharts": "^1.8.18",
     "@types/sortablejs": "^1.10.6",
     "autoprefixer": "^10.0.0",

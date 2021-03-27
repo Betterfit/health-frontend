@@ -1,3 +1,4 @@
+import "@applitools/eyes-cypress";
 interface AuthSession {
   user: any;
   token: string;
@@ -5,6 +6,14 @@ interface AuthSession {
 declare namespace Cypress {
   interface Chainable {
     healthApiAuth(username: string, password: string): Chainable<AuthSession>;
-    visitHealthLoggedIn(authSession: AuthSession): Chainable<AUTWindow>;
+    /**
+     * Use this to programatically log into the health website
+     * @param authSession
+     * @param path
+     */
+    visitHealthLoggedIn(
+      authSession: AuthSession,
+      path: ?string
+    ): Chainable<AUTWindow>;
   }
 }

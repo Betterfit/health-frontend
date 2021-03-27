@@ -25,6 +25,8 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import "@testing-library/cypress/add-commands";
 
+const apiUrl = Cypress.env("apiUrl");
+
 Cypress.Commands.add("healthApiAuth", (username, password) =>
   cy
     .request("POST", apiUrl + "main/api-token-auth/", {
@@ -35,7 +37,7 @@ Cypress.Commands.add("healthApiAuth", (username, password) =>
 );
 
 Cypress.Commands.add("visitHealthLoggedIn", (authSession, path = "/") => {
-  cy.visit("/", {
+  cy.visit(path, {
     onBeforeLoad: (win) => {
       win.localStorage.setItem("user", JSON.stringify(authSession.user));
       win.localStorage.setItem("token", authSession.token);

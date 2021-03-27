@@ -2,7 +2,6 @@
 /// <reference types="@testing-library/cypress" />
 /// <reference path="../support/index.d.ts" />
 
-const apiUrl = Cypress.env("apiUrl");
 const username = "facilityadmin";
 describe("Health Profile", () => {
   let authSession;
