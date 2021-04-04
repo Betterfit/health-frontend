@@ -48,9 +48,16 @@ const OrderProductCard = ({ product }) => {
     setPriority(value);
     cartStore.updateItemPriority(product.pk, value ? 1 : 0);
   };
+
+  const displayName =
+    (product.product ? `${product.product} - ` : "") +
+    product.product_variation;
+
   return (
     <>
       <div
+        role="listitem"
+        aria-label={displayName}
         className={
           "mb-2 bg-white rounded relative orderCartCard " +
           (priority
@@ -79,11 +86,10 @@ const OrderProductCard = ({ product }) => {
                   : "text-betterfit-graphite ")
               }
             >
-              {product.product ? `${product.product} - ` : ""}
-              {Read_Product(product.name, "")}
+              {displayName}
             </h1>
             <span className="text-betterfit-grey-blue text-xs">
-              {Read_Product(product.product_variation, "N/A")}
+              {product.name ? product.name : "N/A"}
             </span>
           </div>
         </div>
