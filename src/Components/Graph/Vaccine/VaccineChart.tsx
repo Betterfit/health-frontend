@@ -128,15 +128,22 @@ const vaccineStatsFromTimeSeries = (
   vaccineEfficacy: number
 ): VaccineStats => {
   const population = timeSeries.population;
-  const totalRecovered = findLastNonNull(timeSeries.cumRecoveries);
+  const totalRecovered = findLastNonNull(
+    timeSeries.cumRecoveries,
+    0.25 * population
+  );
   const immuneFromVaccine =
-    findLastNonNull(timeSeries.cumVaccFull) * vaccineEfficacy;
+    findLastNonNull(timeSeries.cumVaccFull, 0.25 * population) *
+    vaccineEfficacy;
 
   // clamp value to 1.1 so vaccines required is never negative
   const r0 = rEstimate
     ? Math.max(1, rEstimate.rV0)
-    : Math.max(1, findLastNonNull(timeSeries.r0));
-  const activeCases = findLastNonNull(timeSeries.activeCases);
+    : Math.max(1, findLastNonNull(timeSeries.r0, 1.1));
+  const activeCases = findLastNonNull(
+    timeSeries.activeCases,
+    0.02 * population
+  );
   const needVaccine =
     ((1 - 1 / r0) *
       (population - totalRecovered - activeCases - immuneFromVaccine)) /
