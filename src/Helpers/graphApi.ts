@@ -1,6 +1,6 @@
 import { Auth } from "aws-amplify";
 import axios, { AxiosResponse } from "axios";
-import { REstimate } from "Types";
+import { HealthRegion, HealthRegionsByCountry, REstimate } from "Types";
 
 const API_URL = process.env.REACT_APP_GRAPHQL_API_URL;
 export default class GraphApi {
@@ -59,7 +59,53 @@ export default class GraphApi {
       .post("graphql", { query: rEstimateQuery, variables: params })
       .then((resp: AxiosResponse) => resp.data.data.rEstimate);
   };
+
+  getHealthRegions = async (): Promise<HealthRegionsByCountry> => {
+    const client = await this.init();
+    const healthRegions = await client
+      .post("graphql", { query: healthRegionQuery })
+      .then(
+        (resp: PaginatedGraphlQLResult<"allRegions", APIHealthRegion>) =>
+          resp.data.data.allRegions.edges
+      )
+      .then((edges) => edges.map((edge) => edge.node));
+
+    const result: HealthRegionsByCountry = {};
+    healthRegions.forEach((region) => {
+      if (!(region.country in result)) {
+        result[region.country] = {};
+      }
+      const country = result[region.country];
+      if (!(region.province in country)) {
+        country[region.province] = [];
+      }
+      const province = country[region.province];
+      province.push(region);
+    });
+
+    return result;
+  };
 }
+
+// Health region data recieved from server
+interface APIHealthRegion extends HealthRegion {
+  country: string;
+}
+// https://stackoverflow.com/questions/56419558/typescript-how-to-use-a-generic-parameter-as-object-key
+type GraphQLResult<QueryKey extends string, ResultType> = AxiosResponse<{
+  data: {
+    [key in QueryKey]: ResultType;
+  };
+}>;
+
+interface GraphQLEdges<T> {
+  edges: { node: T }[];
+}
+
+type PaginatedGraphlQLResult<QueryKey extends string, T> = GraphQLResult<
+  QueryKey,
+  GraphQLEdges<T>
+>;
 
 interface REstimateParams {
   healthRegion: string;
@@ -104,3 +150,17 @@ const rEstimateQuery = `query(
     rV0
   }
 }`;
+
+const healthRegionQuery = `
+{
+  allRegions{
+    edges{
+      node{
+        healthRegion,
+        province,
+        country
+      }
+    }
+  }
+}
+`;

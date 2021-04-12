@@ -1,6 +1,12 @@
-import healthRegions from "Data/healthRegions.json";
+import GraphApi from "Helpers/graphApi";
 import React from "react";
-import { HealthRegion, Selectable } from "Types";
+import { useQuery } from "react-query";
+import {
+  HealthRegion,
+  HealthRegionsByCountry,
+  HealthRegionsByProvince,
+  Selectable,
+} from "Types";
 
 interface RegionSelectionProps {
   regionTray: Selectable<HealthRegion>[];
@@ -67,36 +73,70 @@ const RegionTray = ({
 
 interface ProvinceDropdowns {
   toggleSelection: (toToggle: HealthRegion) => void;
+  countriesToShow?: ("US" | "Canada")[];
 }
 
-const ProvinceDropdowns = ({ toggleSelection }: ProvinceDropdowns) => {
-  const regions = healthRegions as { [province: string]: string[] };
+const ProvinceDropdowns = ({
+  toggleSelection,
+  countriesToShow = ["Canada", "US"],
+}: ProvinceDropdowns) => {
+  new GraphApi().getHealthRegions();
+  const { data } = useQuery<HealthRegionsByCountry>(
+    [],
+    new GraphApi().getHealthRegions
+  );
+
+  const countries = data ? data : { US: {}, Canada: {} };
+
   return (
     <div
       className="bg-flow-darkbluegrey overflow-y-scroll max-h-full col-start-2 mt-5"
       style={{ gridRow: "7/13" }}
     >
-      {Object.keys(healthRegions)
-        .sort()
-        .map((province, i) => (
-          <details className="flex flex-col text-flow-white mb-1" key={i}>
-            <summary className="bg-flow-bluegrey py-2 pl-1 cursor-pointer text-lg rounded-sm ">
-              {province}
-            </summary>
-            {regions[province].map((region, i) => (
-              <button
-                className="mb-1 ml-3 py-2 pl-2 text-left"
-                onClick={() =>
-                  toggleSelection({ province: province, healthRegion: region })
-                }
-                key={i}
-              >
-                {region}
-              </button>
-            ))}
-          </details>
-        ))}
+      {countriesToShow.flatMap((countryName) =>
+        Object.keys(countries[countryName])
+          .sort()
+          .map((provinceName, i) => (
+            <ProvinceDropdown
+              country={countries[countryName]}
+              provinceName={provinceName}
+              key={i}
+              toggleSelection={toggleSelection}
+            />
+          ))
+      )}
     </div>
+  );
+};
+
+interface ProvinceDropdownProps {
+  toggleSelection: (toToggle: HealthRegion) => void;
+  country: HealthRegionsByProvince | undefined;
+  provinceName: string;
+  key: number;
+}
+const ProvinceDropdown = ({
+  country,
+  provinceName,
+  key,
+  toggleSelection,
+}: ProvinceDropdownProps) => {
+  if (!country) return null;
+  return (
+    <details className="flex flex-col text-flow-white mb-1" key={key}>
+      <summary className="bg-flow-bluegrey py-2 pl-1 cursor-pointer text-lg rounded-sm ">
+        {provinceName}
+      </summary>
+      {country[provinceName].map((region, i) => (
+        <button
+          className="mb-1 ml-3 py-2 pl-2 text-left"
+          onClick={() => toggleSelection(region)}
+          key={i}
+        >
+          {region.healthRegion}
+        </button>
+      ))}
+    </details>
   );
 };
 

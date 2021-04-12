@@ -54,6 +54,14 @@ export interface HealthRegion {
   province: string;
 }
 
+export interface HealthRegionsByProvince {
+  [province: string]: HealthRegion[];
+}
+
+export interface HealthRegionsByCountry {
+  [country: string]: HealthRegionsByProvince;
+}
+
 export interface NationalCovidTimeSeries {
   [province: string]: ProvincialCovidTimeSeries;
 }
