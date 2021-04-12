@@ -111,16 +111,12 @@ export const graphTabs: TimeSeriesTab[] = [
     key: "newCases",
     descr: "The number of new infections reported on a given day.",
     nDecimals: 0,
-    // disabled because if the last 5 days are missing data, the the 6th day's new cases/deaths
-    // will include the deaths of the last 5 days.
-    disableInterpolation: true,
   },
   {
     heading: "Daily Deaths",
     key: "deaths",
     descr: "The number of new deaths reported on a given day.",
     nDecimals: 0,
-    disableInterpolation: true,
   },
   {
     heading: "Resolution Time",
