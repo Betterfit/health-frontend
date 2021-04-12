@@ -127,15 +127,17 @@ const ProvinceDropdown = ({
       <summary className="bg-flow-bluegrey py-2 pl-1 cursor-pointer text-lg rounded-sm ">
         {provinceName}
       </summary>
-      {country[provinceName].map((region, i) => (
-        <button
-          className="mb-1 ml-3 py-2 pl-2 text-left"
-          onClick={() => toggleSelection(region)}
-          key={i}
-        >
-          {region.healthRegion}
-        </button>
-      ))}
+      {country[provinceName]
+        .sort((a, b) => (a.healthRegion > b.healthRegion ? 1 : -1))
+        .map((region, i) => (
+          <button
+            className="mb-1 ml-3 py-2 pl-2 text-left"
+            onClick={() => toggleSelection(region)}
+            key={i}
+          >
+            {region.healthRegion}
+          </button>
+        ))}
     </details>
   );
 };
