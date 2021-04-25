@@ -15,6 +15,7 @@ const FlowNav = () => {
       <div className="col-start-2 col-end-13 row-start-7 p-0 space-x-8">
         <ChartLink relPath="timeseries" text="Time Series" />
         <ChartLink relPath="vaccine" text="Vaccine" />
+        <ChartLink relPath="ranking" text="Ranking" />
       </div>
     </nav>
   );

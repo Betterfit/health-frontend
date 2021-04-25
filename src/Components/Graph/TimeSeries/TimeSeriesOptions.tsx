@@ -140,6 +140,7 @@ export const graphTabs: TimeSeriesTab[] = [
     heading: "Vaccinated",
     key: "cumVaccFull",
     descr: "The number of people that have been fully vaccinated.",
+    nDecimals: 0,
   },
 ];
 

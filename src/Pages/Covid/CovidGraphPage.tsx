@@ -5,7 +5,6 @@ import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import CovidLogin from "./CovidLogin";
 import FlowNav from "./FlowNav";
 
-
 export const CovidGraphPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { path } = useRouteMatch();
@@ -28,13 +27,16 @@ export const CovidGraphPage = () => {
       <FlowNav />
       <Switch>
         <Route exact path={`${path}`}>
-          <Redirect to={`${path}/timeseries`}/>
+          <Redirect to={`${path}/timeseries`} />
         </Route>
         <Route path={`${path}/vaccine`}>
           <DashboardGraph whichChart="vaccine" />
         </Route>
         <Route path={`${path}/timeseries`}>
           <DashboardGraph whichChart="timeseries" />
+        </Route>
+        <Route path={`${path}/ranking`}>
+          <DashboardGraph whichChart="ranking" />
         </Route>
       </Switch>
     </div>

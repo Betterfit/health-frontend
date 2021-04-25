@@ -1,3 +1,4 @@
+import RankingChart from "Components/Graph/Ranking/RankingChart";
 import RegionSelection from "Components/Graph/RegionSelection";
 import TimeSeriesChart from "Components/Graph/TimeSeries/TimeSeriesChart";
 import TimeSeriesOptions, {
@@ -81,13 +82,15 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     // add region to tray otherwise
     else setRegionTray([...regionTray, { item: toToggle, selected: true }]);
   };
-
-  const chart =
-    whichChart === "timeseries" ? (
+  let chart;
+  if (whichChart === "timeseries")
+    chart = (
       <TimeSeriesChart
         {...{ regions, tabKey, daysBack, per100k, interpolate }}
       />
-    ) : (
+    );
+  else if (whichChart === "vaccine")
+    chart = (
       <VaccineChart
         {...{
           regions,
@@ -95,29 +98,31 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
         }}
       />
     );
+  else chart = <RankingChart {...{}} />;
 
+  let chartSpecificOptions;
+  if (whichChart === "timeseries")
+    chartSpecificOptions = (
+      <TimeSeriesOptions
+        {...{
+          tabKey,
+          setTabKey,
+          daysBack,
+          setDaysBack,
+          interpolate,
+          setInterpolate,
+          per100k,
+          setPer100k,
+        }}
+      />
+    );
+  else if (whichChart === "vaccine")
+    chartSpecificOptions = (
+      <VaccineOptions options={vaccineOptions} setOptions={setVaccineOptions} />
+    );
   const options = (
     <>
-      {whichChart === "timeseries" ? (
-        <TimeSeriesOptions
-          {...{
-            tabKey,
-            setTabKey,
-            daysBack,
-            setDaysBack,
-            interpolate,
-            setInterpolate,
-            per100k,
-            setPer100k,
-          }}
-        />
-      ) : (
-        <VaccineOptions
-          options={vaccineOptions}
-          setOptions={setVaccineOptions}
-        />
-      )}
-
+      {chartSpecificOptions}
       <RegionSelection
         {...{
           regionTray,
@@ -128,13 +133,6 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     </>
   );
 
-  /* <Tabs
-        tabs={tabs}
-        tabCallBack={onChangeChart}
-        amount={false}
-        headingComp={null}
-        longUnderline={false}
-      /> */
   return <FlowSquares chart={chart} options={options} />;
 };
 
