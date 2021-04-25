@@ -85,6 +85,22 @@ export default class GraphApi {
 
     return result;
   };
+
+  getRegionRankings = async (orderBy: RankingField): Promise<number[]> => {
+    const client = await this.init();
+    return client
+      .post("graphql", {
+        query: regionRankingQuery,
+        data: { field: orderBy },
+      })
+      .then((response: GraphQLResult<"regionRanking", APIRegionRanking>) =>
+        response.data.data.regionRanking.regions.map((id) => parseInt(id))
+      );
+  };
+}
+
+interface APIRegionRanking {
+  regions: string[];
 }
 
 // Health region data recieved from server
@@ -161,6 +177,15 @@ const healthRegionQuery = `
         country
       }
     }
+  }
+}
+`;
+type RankingField = "active_cases" | "r0_v0" | "new_cases" | "deaths";
+
+const regionRankingQuery = `
+query ($field: String!) {
+  regionRanking(field: $field) {
+    regions
   }
 }
 `;
