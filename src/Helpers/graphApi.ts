@@ -59,6 +59,14 @@ export default class GraphApi {
       .post("graphql", { query: rEstimateQuery, variables: params })
       .then((resp: AxiosResponse) => resp.data.data.rEstimate);
   };
+
+  getRegionRankings = async (orderBy: RankingField) => {
+    const client = await this.init();
+    return client.post("graphql", {
+      query: regionRankingQuery,
+      data: { field: orderBy },
+    });
+  };
 }
 
 interface REstimateParams {
@@ -104,3 +112,13 @@ const rEstimateQuery = `query(
     rV0
   }
 }`;
+
+type RankingField = "active_cases" | "r0_v0" | "new_cases" | "deaths";
+
+const regionRankingQuery = `
+query ($field: String!) {
+  regionRanking(field: $field) {
+    regions
+  }
+}
+`;

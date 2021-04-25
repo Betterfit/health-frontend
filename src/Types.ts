@@ -129,4 +129,4 @@ export type TimeSeriesKey =
   | "cumRecoveries"
   | "cumVaccFull";
 
-export type ChartType = "timeseries" | "vaccine";
+export type ChartType = "timeseries" | "vaccine" | "ranking";
