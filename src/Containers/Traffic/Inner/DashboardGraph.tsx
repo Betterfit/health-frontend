@@ -1,4 +1,5 @@
 import RankingChart from "Components/Graph/Ranking/RankingChart";
+import RankingOptions from "Components/Graph/Ranking/RankingOptions";
 import RegionSelection from "Components/Graph/RegionSelection";
 import TimeSeriesChart from "Components/Graph/TimeSeries/TimeSeriesChart";
 import TimeSeriesOptions, {
@@ -75,7 +76,7 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     if (existingIdx > -1) {
       // toggle selection of existing region in tray
       const existing = regionTray[existingIdx];
-      const newTray = regionTray.filter((item, i) => i != existingIdx);
+      const newTray = regionTray.filter((item, i) => i !== existingIdx);
       newTray.push({ item: existing.item, selected: !existing.selected });
       setRegionTray(newTray);
     }
@@ -98,7 +99,7 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
         }}
       />
     );
-  else chart = <RankingChart {...{}} />;
+  else chart = <RankingChart {...{ tabKey }} />;
 
   let chartSpecificOptions;
   if (whichChart === "timeseries")
@@ -120,6 +121,7 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     chartSpecificOptions = (
       <VaccineOptions options={vaccineOptions} setOptions={setVaccineOptions} />
     );
+  else chartSpecificOptions = <RankingOptions {...{ tabKey, setTabKey }} />;
   const options = (
     <>
       {chartSpecificOptions}

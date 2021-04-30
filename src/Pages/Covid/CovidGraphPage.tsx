@@ -1,6 +1,6 @@
 import { Auth } from "aws-amplify";
 import DashboardGraph from "Containers/Traffic/Inner/DashboardGraph";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useCallback, useLayoutEffect, useState } from "react";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import CovidLogin from "./CovidLogin";
 import FlowNav from "./FlowNav";
@@ -9,10 +9,10 @@ export const CovidGraphPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { path } = useRouteMatch();
 
-  const checkIfAuthenticated = async () => {
+  const checkIfAuthenticated = useCallback(async () => {
     const session = await Auth.currentSession();
     if (session.isValid()) setIsAuthenticated(true);
-  };
+  }, []);
 
   // layoutEffect so that the login screen isn't shown if we're already authenticated
   useLayoutEffect(() => {

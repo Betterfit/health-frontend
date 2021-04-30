@@ -5,7 +5,7 @@ import {
   HealthRegion,
   HealthRegionsByCountry,
   HealthRegionsByProvince,
-  Selectable,
+  Selectable
 } from "Types";
 
 interface RegionSelectionProps {
@@ -80,7 +80,6 @@ const ProvinceDropdowns = ({
   toggleSelection,
   countriesToShow = ["Canada", "US"],
 }: ProvinceDropdowns) => {
-  new GraphApi().getHealthRegions();
   const { data } = useQuery<HealthRegionsByCountry>(
     [],
     new GraphApi().getHealthRegions
@@ -100,9 +99,9 @@ const ProvinceDropdowns = ({
             <ProvinceDropdown
               country={countries[countryName]}
               provinceName={provinceName}
-              key={i}
+              key={countryName+i}
               toggleSelection={toggleSelection}
-            />
+           />
           ))
       )}
     </div>
@@ -113,17 +112,15 @@ interface ProvinceDropdownProps {
   toggleSelection: (toToggle: HealthRegion) => void;
   country: HealthRegionsByProvince | undefined;
   provinceName: string;
-  key: number;
 }
 const ProvinceDropdown = ({
   country,
   provinceName,
-  key,
   toggleSelection,
 }: ProvinceDropdownProps) => {
   if (!country) return null;
   return (
-    <details className="flex flex-col text-flow-white mb-1" key={key}>
+    <details className="flex flex-col text-flow-white mb-1">
       <summary className="bg-flow-bluegrey py-2 pl-1 cursor-pointer text-lg rounded-sm ">
         {provinceName}
       </summary>

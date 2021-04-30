@@ -86,21 +86,30 @@ export default class GraphApi {
     return result;
   };
 
-  getRegionRankings = async (orderBy: RankingField): Promise<number[]> => {
+  getRegionRankings = async (
+    orderBy: RankingField
+  ): Promise<RankedRegion[]> => {
     const client = await this.init();
     return client
       .post("graphql", {
         query: regionRankingQuery,
-        data: { field: orderBy },
+        variables: { field: orderBy },
       })
-      .then((response: GraphQLResult<"regionRanking", APIRegionRanking>) =>
-        response.data.data.regionRanking.regions.map((id) => parseInt(id))
+      .then(
+        (response: GraphQLResult<"regionRanking", APIRegionRanking>) =>
+          response.data.data.regionRanking.regions
       );
   };
 }
 
+interface RankedRegion {
+  field: number;
+  rank: number;
+  province: string;
+  healthRegion: string;
+}
 interface APIRegionRanking {
-  regions: string[];
+  regions: RankedRegion[];
 }
 
 // Health region data recieved from server
@@ -180,12 +189,23 @@ const healthRegionQuery = `
   }
 }
 `;
-type RankingField = "active_cases" | "r0_v0" | "new_cases" | "deaths";
 
-const regionRankingQuery = `
-query ($field: String!) {
+export type RankingField =
+  | "activeCases"
+  | "newCases"
+  | "deaths"
+  | "r0V0"
+  | "resolutionTime"
+  | "cumVaccFull";
+
+const regionRankingQuery = `query ($field: String!) {
   regionRanking(field: $field) {
-    regions
+    regions {
+      field
+      healthRegion
+      rank
+      province
+    }
   }
 }
 `;

@@ -2,6 +2,7 @@
 import Tippy from "@tippyjs/react";
 import FatToggle from "Components/Forms/FatToggle";
 import TimePeriodSelection from "Components/Forms/TimePeriodSelection";
+import { RankingField } from "Helpers/graphApi";
 import React from "react";
 import "tippy.js/dist/tippy.css";
 import { TimeSeriesKey } from "Types";
@@ -74,7 +75,7 @@ interface GraphTabProps {
   selected: boolean;
 }
 
-const GraphTab = ({ tab, setTabKey, selected }: GraphTabProps) => {
+export const GraphTab = ({ tab, setTabKey, selected }: GraphTabProps) => {
   return (
     <button
       className={`w-full flex-grow   text-flow-white flex justify-between items-center ${
@@ -90,9 +91,10 @@ const GraphTab = ({ tab, setTabKey, selected }: GraphTabProps) => {
   );
 };
 
-interface TimeSeriesTab {
+export interface TimeSeriesTab {
   heading: string;
   key: TimeSeriesKey;
+  apiKey: RankingField;
   descr: string;
   nDecimals?: number;
   disableInterpolation?: boolean;
@@ -103,24 +105,28 @@ export const graphTabs: TimeSeriesTab[] = [
   {
     heading: "Active Cases",
     key: "activeCases",
+    apiKey: "activeCases",
     descr: "The total number of individuals that have COVID-10 on a given day.",
     nDecimals: 0,
   },
   {
     heading: "New Cases",
     key: "newCases",
+    apiKey: "newCases",
     descr: "The number of new infections reported on a given day.",
     nDecimals: 0,
   },
   {
     heading: "Daily Deaths",
     key: "deaths",
+    apiKey: "deaths",
     descr: "The number of new deaths reported on a given day.",
     nDecimals: 0,
   },
   {
     heading: "Resolution Time",
     key: "resolutionTime",
+    apiKey: "resolutionTime",
     descr:
       "How long it takes for recoveries and deaths to catch up with the number of new cases on a past day.\n If there were 100 new cases today, how long until we can expect to see a day with 100 recoveries and deaths.",
     nDecimals: 0,
@@ -130,6 +136,7 @@ export const graphTabs: TimeSeriesTab[] = [
   {
     heading: "R",
     key: "r0",
+    apiKey: "r0V0",
     descr:
       "Our estimate of COVID-19's reproduction number in this health region.\n Measures how many new infections a contagious person will cause, on average.",
     nDecimals: 2,
@@ -139,6 +146,7 @@ export const graphTabs: TimeSeriesTab[] = [
   {
     heading: "Vaccinated",
     key: "cumVaccFull",
+    apiKey: "cumVaccFull",
     descr: "The number of people that have been fully vaccinated.",
     nDecimals: 0,
   },
