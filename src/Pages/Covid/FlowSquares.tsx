@@ -4,7 +4,7 @@ type optionsSquareTypes = "quarters";
 interface FlowSquaresProps {
   chart: React.ReactNode;
   options: React.ReactNode;
-  optionsSquareType?: string;
+  optionsSquareType?: optionsSquareTypes;
 }
 const FlowSquares = ({
   chart,
