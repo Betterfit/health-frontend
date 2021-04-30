@@ -17,8 +17,7 @@ const RankingChart = ({ tabKey }: RankingChartProps) => {
   const { data } = useQuery([field], () => graphApi.getRegionRankings(field));
 
   const tableData = data?.map((region) => ({
-    healthRegion: region.healthRegion,
-    province: region.province,
+    ...region,
     field:
       curTab.nDecimals === undefined
         ? region.field
@@ -32,6 +31,7 @@ const RankingChart = ({ tabKey }: RankingChartProps) => {
         { title: "Health Region", field: "healthRegion" },
         { title: "Province/State", field: "province" },
         { title: curTab.heading, field: "field" },
+        { title: "Rank", field: "rank" },
       ]}
       data={tableData ? tableData : []}
       style={{ backgroundColor: "transparent", color: "white" }}
