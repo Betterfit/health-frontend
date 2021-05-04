@@ -1,5 +1,5 @@
-import RankingChart from "Components/Graph/Ranking/RankingChart";
 import RankingOptions from "Components/Graph/Ranking/RankingOptions";
+import RankingTable from "Components/Graph/Ranking/RankingTable";
 import RegionSelection from "Components/Graph/RegionSelection";
 import TimeSeriesChart from "Components/Graph/TimeSeries/TimeSeriesChart";
 import TimeSeriesOptions, {
@@ -99,7 +99,7 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
         }}
       />
     );
-  else chart = <RankingChart {...{ tabKey }} />;
+  else chart = <RankingTable {...{ tabKey }} />;
 
   let chartSpecificOptions;
   if (whichChart === "timeseries")

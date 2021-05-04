@@ -73,6 +73,12 @@
   flex-direction: column;
   justify-content: center;
   overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* no scrollbar on the chart square, but users can still scroll if needed */
+.chart-square::-webkit-scrollbar {
+  display: none;
 }
 
 .options-square {

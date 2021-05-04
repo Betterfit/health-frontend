@@ -67,6 +67,11 @@
     "lint": "eslint --ext js,ts,tsx --format node_modules/eslint-stats/byErrorAndWarning.js src",
     "lint-folders": "eslint --ext js,ts,tsx --format node_modules/eslint-stats/byFolder.js src "
   },
+  "lint-staged": {
+    "*.{tsx,ts,jsx,js}": [
+      "eslint"
+    ]
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -87,6 +92,7 @@
     "@types/recharts": "^1.8.18",
     "@types/sortablejs": "^1.10.6",
     "autoprefixer": "^10.0.0",
+    "lint-staged": "^10.5.4",
     "postcss-cli": "^7.1.2",
     "postcss-import": "^12.0.1",
     "tailwindcss": "^1.8.10"
