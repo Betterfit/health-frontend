@@ -5,7 +5,6 @@ import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import Spinner from "Images/spinner.gif";
 import React, { useEffect, useState } from "react";
-import DashboardGraph from "./DashboardGraph";
 
 const api = new Api();
 const DashboardTrafficDashboard = () => {
@@ -78,7 +77,6 @@ const DashboardTrafficDashboard = () => {
             <h2 className="text-dark-blue text-2xl pb-6 ml-3 border-b border-title-border mb-3 self-start">
               COVID-19 Data
             </h2>
-            <DashboardGraph />
           </div>
         </>
       ) : (
