@@ -17,11 +17,7 @@
   margin: auto;
   padding-left: 5%;
   padding-right: 5%;
-  background-image: linear-gradient(
-    to bottom right,
-    var(--sky),
-    var(--darkblue)
-  );
+  background-image: linear-gradient( to bottom right, var(--sky), var(--darkblue));
   display: flex;
   flex-direction: column;
 }
@@ -30,9 +26,31 @@
   display: grid;
   margin-top: 50px;
   margin-bottom: 20px;
-  grid: repeat(6, 1fr) 30px/ 200px repeat(10, 50px) 1fr;
-  height: 160px;
-  padding: 0;
+  grid: repeat(6, 1fr) 100px/ 60px repeat(2, 50px) 1fr;
+  height: 60px;
+  padding-bottom: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .flow-nav {
+    display: grid;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    grid: repeat(6, 1fr) 100px/ 100px repeat(2, 50px) 1fr;
+    height: 160px;
+    padding: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .flow-nav {
+    display: grid;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    grid: repeat(6, 1fr) 30px/ 200px repeat(6, 50px) 1fr;
+    height: 160px;
+    padding: 0;
+  }
 }
 
 .site-logo {
@@ -40,8 +58,15 @@
 }
 
 .flow-logo {
-  grid-column: 2 / 8;
-  grid-row: 2 / 6;
+  grid-column: 2 / 4;
+  grid-row: 2 / 1;
+}
+
+@media (min-width: 768px) {
+  .flow-logo {
+    grid-column: 2 / 6;
+    grid-row: 2 / 6;
+  }
 }
 
 .chart-tab {
@@ -57,16 +82,46 @@
 }
 
 .flow-squares-root {
-  grid-template: repeat(12, 1fr) / 200px repeat(5, 3fr) 1fr repeat(5, 3fr);
+  grid-template: repeat(16, 1fr) 1fr repeat(16, 1fr) / repeat(5, 3fr);
   width: 100%;
   flex-grow: 1;
   display: grid;
   max-height: calc(100vh - 290px);
 }
 
+@media (min-width: 640px) {
+  .flow-squares-root {
+    grid-template: repeat(12, 1fr) / repeat(5, 3fr) 1fr repeat(5, 3fr);
+    width: 100%;
+    flex-grow: 1;
+    display: grid;
+    max-height: calc(100vh - 290px);
+  }
+}
+
+@media (min-width: 768px) {
+  .flow-squares-root {
+    grid-template: repeat(12, 1fr) / repeat(5, 3fr) 1fr repeat(5, 3fr);
+    width: 100%;
+    flex-grow: 1;
+    display: grid;
+    max-height: calc(100vh - 290px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .flow-squares-root {
+    grid-template: repeat(12, 1fr) / 200px repeat(5, 3fr) 1fr repeat(5, 3fr);
+    width: 100%;
+    flex-grow: 1;
+    display: grid;
+    max-height: calc(100vh - 290px);
+  }
+}
+
 .chart-square {
-  grid-column: 2 / span 5;
-  grid-row: 1 / 12;
+  grid-column: 1 / span 12;
+  grid-row: 1 / 16;
   background-color: var(--navy);
   text-align: center;
   display: flex;
@@ -76,14 +131,29 @@
   overflow-x: hidden;
 }
 
+@media (min-width: 768px) {
+  .chart-square {
+    grid-column: 2 / span 5;
+    grid-row: 1 / 12;
+    background-color: var(--navy);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
 /* no scrollbar on the chart square, but users can still scroll if needed */
+
 .chart-square::-webkit-scrollbar {
   display: none;
 }
 
 .options-square {
-  grid-column: 8 / span 5;
-  grid-row: 1 / 12;
+  grid-column: 1 / span 12;
+  grid-row: 17 / 32;
   background-color: var(--navy);
   display: grid;
   grid-template: repeat(12, 1fr) / 1fr 1fr;
@@ -91,7 +161,20 @@
   padding: 30px;
 }
 
+@media (min-width: 768px) {
+  .options-square {
+    grid-column: 8 / span 5;
+    grid-row: 1 / 12;
+    background-color: var(--navy);
+    display: grid;
+    grid-template: repeat(12, 1fr) / 1fr 1fr;
+    grid-column-gap: 20px;
+    padding: 30px;
+  }
+}
+
 /* sets color of little triangle in details element */
+
 summary::-webkit-details-marker {
   color: var(--navy);
 }
