@@ -32,7 +32,7 @@ const TimeSeriesOptions = ({
     <>
       {/* choose between active cases, deaths, r, etc */}
       <div
-        className="flex flex-col col-start-0 space-y-2 justify-items-stretch"
+        className="flex flex-col col-start-0 space-y-2 justify-items-stretch overflow-y-scroll"
         style={{ gridRow: "1 / 7" }}
       >
         {graphTabs.map((tab, i) => (
@@ -41,7 +41,6 @@ const TimeSeriesOptions = ({
           />
         ))}
       </div>
-
       <div className="mt-5 space-y-2" style={{ gridRow: "7 / 13" }}>
         <TimePeriodSelection
           daysBack={daysBack}
@@ -66,6 +65,7 @@ const TimeSeriesOptions = ({
           />
         )}
       </div>
+
     </>
   );
 };
@@ -78,14 +78,13 @@ interface GraphTabProps {
 export const GraphTab = ({ tab, setTabKey, selected }: GraphTabProps) => {
   return (
     <button
-      className={`w-full flex-grow   text-flow-white flex justify-between items-center ${
-        selected ? "bg-flow-darkpale" : "bg-flow-bluegrey"
-      }`}
+      className={`w-full flex-grow  text-sm lg:text-md text-flow-white flex justify-between items-center ${selected ? "bg-flow-darkpale" : "bg-flow-bluegrey"
+        }`}
       onClick={() => setTabKey(tab.key)}
     >
       <span className="ml-5">{tab.heading}</span>
       <Tippy content={tab.descr}>
-        <p className="mr-5 text-flow-white">?</p>
+        <p className="mr-5 text-sm lg:text-md text-flow-white">?</p>
       </Tippy>
     </button>
   );

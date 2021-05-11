@@ -47,7 +47,7 @@ const RegionTray = ({
         >
           <label
             htmlFor={`${region.healthRegion}-checkbox`}
-            className="text-flow-white text-xl"
+            className="text-flow-white text-sm lg:text-xl"
           >
             {region.healthRegion}
           </label>
@@ -62,7 +62,7 @@ const RegionTray = ({
       <button
         onClick={clearAllRegions}
         // TODO: fix opacity on disabled
-        className="text-red-400 text-xl disabled:opacity-10 mt-auto"
+        className="text-red-400 text-md lg:text-xl disabled:opacity-10 mt-auto"
         disabled={regionTray.length === 0}
       >
         Clear
@@ -121,14 +121,14 @@ const ProvinceDropdown = ({
   if (!country) return null;
   return (
     <details className="flex flex-col text-flow-white mb-1">
-      <summary className="bg-flow-bluegrey py-2 pl-1 cursor-pointer text-lg rounded-sm ">
+      <summary className="bg-flow-bluegrey py-2 pl-1 cursor-pointer text-md md:text-lg rounded-sm ">
         {provinceName}
       </summary>
       {country[provinceName]
         .sort((a, b) => (a.healthRegion > b.healthRegion ? 1 : -1))
         .map((region, i) => (
           <button
-            className="mb-1 ml-3 py-2 pl-2 text-left"
+            className="mb-1 ml-3 py-2 pl-2 text-left text-md md:text-lg"
             onClick={() => toggleSelection(region)}
             key={i}
           >

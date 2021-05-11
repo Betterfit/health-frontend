@@ -1,14 +1,14 @@
 :root {
-    --white: #fdfffe;
-    --darkblue: #244684;
-    --medblue: #0a4f92;
-    --lightblue: #2271d8;
-    --sky: #3af6f8;
-    --pale: #b4efef;
-    --darkpale: #61c1ba;
-    --navy: #072b35;
-    --bfblue: #0000ee;
-    --bluegrey: #1f5c66;
+  --white: #fdfffe;
+  --darkblue: #244684;
+  --medblue: #0a4f92;
+  --lightblue: #2271d8;
+  --sky: #3af6f8;
+  --pale: #b4efef;
+  --darkpale: #61c1ba;
+  --navy: #072b35;
+  --bfblue: #0000ee;
+  --bluegrey: #1f5c66;
 }
 
 .flow-root {
@@ -54,7 +54,7 @@
 }
 
 .site-logo {
-    grid-area: 1 / 1 / -1 / 2;
+  grid-area: 1 / 1 / -1 / 2;
 }
 
 .flow-logo {
@@ -70,44 +70,35 @@
 }
 
 .chart-tab {
-    color: var(--white);
-    font-weight: bold;
-    font-size: x-large;
-    grid-row-start: 12;
+  color: var(--white);
+  font-weight: bold;
+  font-size: x-large;
+  grid-row-start: 12;
 }
 
 .flow-root img {
-    max-width: 100%;
-    max-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .flow-squares-root {
-  grid-template: repeat(16, 1fr) 1fr repeat(16, 1fr) / repeat(5, 3fr);
+  grid-template: repeat(1, 3fr) 30px repeat(1, 4fr) / repeat(5, 3fr);
   width: 100%;
   flex-grow: 1;
   display: grid;
-  max-height: calc(100vh - 290px);
+  padding-top: 0.5rem;
+  max-height: calc(100vh - 180px);
 }
 
-@media (min-width: 640px) {
+/* @media (min-width: 768px) {
   .flow-squares-root {
-    grid-template: repeat(12, 1fr) / repeat(5, 3fr) 1fr repeat(5, 3fr);
+    grid-template: repeat(12, 1fr) / repeat(5, 4fr) 1fr repeat(5, 4fr);
     width: 100%;
     flex-grow: 1;
     display: grid;
     max-height: calc(100vh - 290px);
   }
-}
-
-@media (min-width: 768px) {
-  .flow-squares-root {
-    grid-template: repeat(12, 1fr) / repeat(5, 3fr) 1fr repeat(5, 3fr);
-    width: 100%;
-    flex-grow: 1;
-    display: grid;
-    max-height: calc(100vh - 290px);
-  }
-}
+} */
 
 @media (min-width: 1024px) {
   .flow-squares-root {
@@ -121,7 +112,7 @@
 
 .chart-square {
   grid-column: 1 / span 12;
-  grid-row: 1 / 16;
+  grid-row: 1 / 2;
   background-color: var(--navy);
   text-align: center;
   display: flex;
@@ -131,7 +122,7 @@
   overflow-x: hidden;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .chart-square {
     grid-column: 2 / span 5;
     grid-row: 1 / 12;
@@ -148,12 +139,12 @@
 /* no scrollbar on the chart square, but users can still scroll if needed */
 
 .chart-square::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .options-square {
   grid-column: 1 / span 12;
-  grid-row: 17 / 32;
+  grid-row: 3 / 5;
   background-color: var(--navy);
   display: grid;
   grid-template: repeat(12, 1fr) / 1fr 1fr;
@@ -161,7 +152,7 @@
   padding: 30px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .options-square {
     grid-column: 8 / span 5;
     grid-row: 1 / 12;
@@ -176,7 +167,7 @@
 /* sets color of little triangle in details element */
 
 summary::-webkit-details-marker {
-    color: var(--navy);
+  color: var(--navy);
 }
 
 input[type="checkbox"] {
