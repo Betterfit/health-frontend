@@ -53,7 +53,11 @@ const RankingTable = ({ tabKey }: RankingChartProps) => {
             backgroundColor: "var(--navy)",
             color: "white",
             position: "sticky",
+            height: 5,
             top: 0,
+          },
+          rowStyle: {
+            height: 5,
           },
           filterRowStyle: { color: "white" },
           searchFieldStyle: { color: "white" },

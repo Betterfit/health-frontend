@@ -120,7 +120,7 @@ const ProvinceDropdown = ({
 }: ProvinceDropdownProps) => {
   if (!country) return null;
   return (
-    <details className="flex flex-col text-flow-white mb-1">
+    <details className="flex flex-col flex-shrink-0 text-flow-white mb-1">
       <summary className="bg-flow-bluegrey py-2 pl-1 cursor-pointer text-md md:text-lg rounded-sm ">
         {provinceName}
       </summary>

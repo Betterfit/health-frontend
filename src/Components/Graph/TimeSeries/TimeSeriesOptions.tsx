@@ -84,7 +84,7 @@ export const GraphTab = ({ tab, setTabKey, selected }: GraphTabProps) => {
     >
       <span className="ml-5">{tab.heading}</span>
       <Tippy content={tab.descr}>
-        <p className="mr-5 text-sm lg:text-md text-flow-white">?</p>
+        <p className="mr-5 text-sm lg:text-md text-flow-white justify-left">?</p>
       </Tippy>
     </button>
   );
