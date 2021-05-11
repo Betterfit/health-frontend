@@ -10,11 +10,14 @@ const graphApi = new GraphApi();
 
 interface RankingChartProps {
   tabKey: TimeSeriesKey;
+  per100k: boolean;
 }
-const RankingTable = ({ tabKey }: RankingChartProps) => {
+const RankingTable = ({ tabKey, per100k }: RankingChartProps) => {
   const curTab = graphTabs.find((tab) => tab.key === tabKey) as TimeSeriesTab;
   const field = curTab.apiKey;
-  const { data } = useQuery([field], () => graphApi.getRegionRankings(field));
+  const { data } = useQuery([field, per100k], () =>
+    graphApi.getRegionRankings(field, per100k)
+  );
   const containerRef = useRef<HTMLDivElement>(null);
   const [tableHeight, setTableHeight] = useState(200);
   useLayoutEffect(() => {
@@ -36,6 +39,7 @@ const RankingTable = ({ tabKey }: RankingChartProps) => {
   }));
 
   const colOptions = { sorting: false, draggable: false };
+  const fieldTitle = per100k ? curTab.heading + " Per 100k" : curTab.heading;
   return (
     <div ref={containerRef} className="h-full">
       <MaterialTable
@@ -44,7 +48,7 @@ const RankingTable = ({ tabKey }: RankingChartProps) => {
           { ...colOptions, title: "Rank", field: "rank" },
           { ...colOptions, title: "Health Region", field: "healthRegion" },
           { ...colOptions, title: "Province/State", field: "province" },
-          { ...colOptions, title: curTab.heading, field: "field" },
+          { ...colOptions, title: fieldTitle, field: "field" },
         ]}
         data={tableData ? tableData : []}
         style={{ backgroundColor: "transparent", color: "white" }}

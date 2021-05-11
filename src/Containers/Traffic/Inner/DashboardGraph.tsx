@@ -99,7 +99,7 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
         }}
       />
     );
-  else chart = <RankingTable {...{ tabKey }} />;
+  else chart = <RankingTable {...{ tabKey, per100k }} />;
 
   let chartSpecificOptions;
   if (whichChart === "timeseries")
@@ -121,7 +121,10 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     chartSpecificOptions = (
       <VaccineOptions options={vaccineOptions} setOptions={setVaccineOptions} />
     );
-  else chartSpecificOptions = <RankingOptions {...{ tabKey, setTabKey }} />;
+  else
+    chartSpecificOptions = (
+      <RankingOptions {...{ tabKey, per100k, setTabKey, setPer100k }} />
+    );
   const options = (
     <>
       {chartSpecificOptions}
