@@ -1,14 +1,14 @@
 :root {
-  --white: #fdfffe;
-  --darkblue: #244684;
-  --medblue: #0a4f92;
-  --lightblue: #2271d8;
-  --sky: #3af6f8;
-  --pale: #b4efef;
-  --darkpale: #61c1ba;
-  --navy: #072b35;
-  --bfblue: #0000ee;
-  --bluegrey: #1f5c66;
+    --white: #fdfffe;
+    --darkblue: #244684;
+    --medblue: #0a4f92;
+    --lightblue: #2271d8;
+    --sky: #3af6f8;
+    --pale: #b4efef;
+    --darkpale: #61c1ba;
+    --navy: #072b35;
+    --bfblue: #0000ee;
+    --bluegrey: #1f5c66;
 }
 
 .flow-root {
@@ -54,7 +54,7 @@
 }
 
 .site-logo {
-  grid-area: 1 / 1 / -1 / 2;
+    grid-area: 1 / 1 / -1 / 2;
 }
 
 .flow-logo {
@@ -70,15 +70,15 @@
 }
 
 .chart-tab {
-  color: var(--white);
-  font-weight: bold;
-  font-size: x-large;
-  grid-row-start: 12;
+    color: var(--white);
+    font-weight: bold;
+    font-size: x-large;
+    grid-row-start: 12;
 }
 
 .flow-root img {
-  max-width: 100%;
-  max-height: 100%;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .flow-squares-root {
@@ -148,7 +148,7 @@
 /* no scrollbar on the chart square, but users can still scroll if needed */
 
 .chart-square::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 .options-square {
@@ -176,7 +176,7 @@
 /* sets color of little triangle in details element */
 
 summary::-webkit-details-marker {
-  color: var(--navy);
+    color: var(--navy);
 }
 
 input[type="checkbox"] {
