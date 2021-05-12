@@ -35,15 +35,15 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
   };
 
   return (
-    <div className="flex flex-col" style={{ gridRow: "1 / -1" }}>
-      <div className="flex justify-around text-flow-white w-full mb-4">
+    <div className="flex flex-col overflow-y-scroll" style={{ gridRow: "1 / -1" }}>
+      <div className="flex lg:justify-around text-sm lg:text-lg text-flow-white w-full mb-4 mx-4">
         {(["Restrictions", "Vaccine Mix"] as Tab[]).map((tabName) => (
           <button
             onClick={(e) => setTab(tabName)}
             // underline if selected
-            className={`rounded-sm p-1 mx-2 text-lg border-b-2 ${
+            className={`rounded-sm p-1 mx-2 text-md lg:text-xl border-b-2 ${
               tabName === tab
-                ? "border-flow-pale font-bold text-xl"
+                ? "border-flow-pale font-bold text-md lg:text-xl"
                 : "border-transparent"
             }`}
           >

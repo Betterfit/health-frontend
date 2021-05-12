@@ -3,18 +3,23 @@ import { roundToNDecimals } from "Helpers/mathUtils";
 import MaterialTable from "material-table";
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
-import { TimeSeriesKey } from "Types";
+import { Country, TimeSeriesKey } from "Types";
 import { graphTabs, TimeSeriesTab } from "../TimeSeries/TimeSeriesOptions";
 
 const graphApi = new GraphApi();
 
 interface RankingChartProps {
   tabKey: TimeSeriesKey;
+  per100k: boolean;
+  countries: Country[];
 }
-const RankingTable = ({ tabKey }: RankingChartProps) => {
+const RankingTable = ({ tabKey, per100k, countries }: RankingChartProps) => {
   const curTab = graphTabs.find((tab) => tab.key === tabKey) as TimeSeriesTab;
   const field = curTab.apiKey;
-  const { data } = useQuery([field], () => graphApi.getRegionRankings(field));
+  const normalizeByPop = per100k && !curTab.disableNormalization;
+  const { data } = useQuery([...countries, field, normalizeByPop], () =>
+    graphApi.getRegionRankings(field, normalizeByPop, countries)
+  );
   const containerRef = useRef<HTMLDivElement>(null);
   const [tableHeight, setTableHeight] = useState(200);
   useLayoutEffect(() => {
@@ -36,6 +41,7 @@ const RankingTable = ({ tabKey }: RankingChartProps) => {
   }));
 
   const colOptions = { sorting: false, draggable: false };
+  const fieldTitle = per100k ? curTab.heading + " Per 100k" : curTab.heading;
   return (
     <div ref={containerRef} className="h-full">
       <MaterialTable
@@ -44,7 +50,7 @@ const RankingTable = ({ tabKey }: RankingChartProps) => {
           { ...colOptions, title: "Rank", field: "rank" },
           { ...colOptions, title: "Health Region", field: "healthRegion" },
           { ...colOptions, title: "Province/State", field: "province" },
-          { ...colOptions, title: curTab.heading, field: "field" },
+          { ...colOptions, title: fieldTitle, field: "field" },
         ]}
         data={tableData ? tableData : []}
         style={{ backgroundColor: "transparent", color: "white" }}
@@ -53,7 +59,11 @@ const RankingTable = ({ tabKey }: RankingChartProps) => {
             backgroundColor: "var(--navy)",
             color: "white",
             position: "sticky",
+            height: 5,
             top: 0,
+          },
+          rowStyle: {
+            height: 5,
           },
           filterRowStyle: { color: "white" },
           searchFieldStyle: { color: "white" },

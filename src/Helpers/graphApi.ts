@@ -87,13 +87,15 @@ export default class GraphApi {
   };
 
   getRegionRankings = async (
-    orderBy: RankingField
+    orderBy: RankingField,
+    per100k: boolean,
+    countries: string[]
   ): Promise<RankedRegion[]> => {
     const client = await this.init();
     return client
       .post("graphql", {
         query: regionRankingQuery,
-        variables: { field: orderBy },
+        variables: { field: orderBy, per100k, countries: countries.join(",") },
       })
       .then(
         (response: GraphQLResult<"regionRanking", APIRegionRanking>) =>
@@ -198,8 +200,9 @@ export type RankingField =
   | "resolutionTime"
   | "cumVaccFull";
 
-const regionRankingQuery = `query ($field: String!) {
-  regionRanking(field: $field) {
+const regionRankingQuery = `
+query ($field: String!, $countries: String, $per100k: Boolean) {
+  regionRanking(field: $field, countries: $countries, per100k: $per100k) {
     regions {
       field
       healthRegion
