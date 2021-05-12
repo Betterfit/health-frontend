@@ -3,7 +3,8 @@ import FatToggle from "Components/Forms/FatToggle";
 import LabelledSlider from "Components/Forms/LabelledSlider";
 import React, { useRef, useState } from "react";
 import { VaccineChartOptions } from "Types";
-import VaccineTypePicker from "./VaccineTypePicker";
+import { computeVaccineEfficacy } from "Components/Graph/Vaccine/VaccineTypePicker";
+import RestrainedSliders from "Components/Forms/RestrainedSliders"
 
 interface VaccineOptionsProps {
   options: VaccineChartOptions;
@@ -22,7 +23,7 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
   // Instead what we do is keep a local set of options and only update the real options (which trigger requests when changed )
   // after a small time delay.
   const localSetter = (optionName: keyof VaccineChartOptions) => (
-    val: typeof options[keyof VaccineChartOptions]
+    val: any
   ) => {
     const newOptions = { ...localOptions, [optionName]: val };
     setLocalOptions(newOptions);
@@ -31,7 +32,6 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
       updateInterval.current = null;
     }
     updateInterval.current = setTimeout(() => setOptions(newOptions), 300);
-    return () => clearTimeout(updateInterval.current);
   };
 
   return (
@@ -41,23 +41,26 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
           <button
             onClick={(e) => setTab(tabName)}
             // underline if selected
-            className={`rounded-sm p-1 mx-2 text-md lg:text-xl border-b-2 ${
-              tabName === tab
+            className={`rounded-sm p-1 mx-2 text-md lg:text-xl border-b-2 ${tabName === tab
                 ? "border-flow-pale font-bold text-md lg:text-xl"
                 : "border-transparent"
-            }`}
+              }`}
           >
             {tabName}
           </button>
         ))}
       </div>
       <div className="text-flow-white pr-2">
+        <p className="text-flow-white text-center my-3">
+          {`Vaccine Efficacy: ${(
+            computeVaccineEfficacy(localOptions.vaccineUsage) * 100
+          ).toFixed(2)}%`} </p>
         {tab === "Vaccine Mix" ? (
-          <VaccineTypePicker
-            vaccineUsage={localOptions.vaccineUsage}
-            lockedVaccines={localOptions.lockedVaccines}
-            setVaccineUsage={localSetter("vaccineUsage")}
-            setLockedVaccines={localSetter("lockedVaccines")}
+          <RestrainedSliders
+            values={localOptions.vaccineUsage}
+            lockedValues={localOptions.lockedVaccines}
+            setValues={localSetter("vaccineUsage")}
+            setLockedValues={localSetter("lockedVaccines")}
           />
         ) : (
           <>

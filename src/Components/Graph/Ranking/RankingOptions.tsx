@@ -33,7 +33,7 @@ const RankingOptions = ({
   return (
     <>
       <div
-        className="flex flex-col col-start-0 space-y-2 justify-items-stretch"
+        className="flex flex-col col-start-0 space-y-2 justify-items-stretch overflow-y-scroll"
         style={{ gridRow: "1 / 7" }}
       >
         {graphTabs.map((tab, i) => (
