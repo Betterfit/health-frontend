@@ -2,6 +2,7 @@ import Tippy from "@tippyjs/react";
 import { useCovidTimeSeries, useREstimate } from "Helpers/covidDataUtils";
 import { roundToNDecimals } from "Helpers/mathUtils";
 import { findLastNonNull } from "Helpers/utils";
+import { computeVaccineEfficacy } from "Helpers/vaccineUtils";
 import React from "react";
 import {
   Bar,
@@ -19,7 +20,6 @@ import {
   VaccineChartOptions,
   VaccineStats,
 } from "Types";
-import { computeVaccineEfficacy } from "./VaccineTypePicker";
 
 interface VaccineChartProps {
   regions: HealthRegion[];
@@ -33,7 +33,7 @@ const VaccineChart = ({ regions, options }: VaccineChartProps) => {
     vaccineStatsFromTimeSeries(
       regionTimeSeries,
       rEstimates[i].data,
-      computeVaccineEfficacy(options.vaccineUsage)
+      computeVaccineEfficacy(options.vaccineUsage, options.variantPrevelance)
     )
   );
   return (
@@ -144,15 +144,20 @@ const vaccineStatsFromTimeSeries = (
     timeSeries.activeCases,
     0.02 * population
   );
-  const needVaccine =
-    ((1 - 1 / r0) *
-      (population - totalRecovered - activeCases - immuneFromVaccine)) /
-    vaccineEfficacy;
-  // console.log(needVaccine)
-  const sickAfterHerdImmunity = simulateInfections(activeCases);
+
+  const susceptiblePopulation =
+    population - totalRecovered - activeCases - immuneFromVaccine;
+
+  let needVaccine = ((1 - 1 / r0) * susceptiblePopulation) / vaccineEfficacy;
+  needVaccine = Math.min(needVaccine, susceptiblePopulation);
+
+  const sickAfterHerdImmunity = Math.min(
+    simulateInfections(activeCases),
+    susceptiblePopulation - needVaccine
+  );
+
   const notSickAfterHerdImmunity =
-    population - needVaccine - sickAfterHerdImmunity - totalRecovered;
-  // const needVaccine =
+    susceptiblePopulation - needVaccine - sickAfterHerdImmunity;
   return {
     province: timeSeries.province,
     healthRegion: timeSeries.healthRegion,

@@ -108,11 +108,18 @@ export interface VaccineChartOptions {
   // not used by model, just ui / clientside math
   vaccineUsage: VaccineUsage;
   lockedVaccines: VaccineType[];
+
+  variantPrevelance: VariantPrevelance;
+  lockedVariants : VariantType[];
 }
 
 export type VaccineUsage = Record<VaccineType, number>;
 
 export type VaccineType = "jj" | "pfizer" | "moderna" | "astrezeneca";
+
+export type VariantPrevelance = Record<VariantType, number>;
+
+export type VariantType = "wild" | "uk" | "southafrica" | "brazil" | "india";
 
 export interface Vaccine {
   type: VaccineType;

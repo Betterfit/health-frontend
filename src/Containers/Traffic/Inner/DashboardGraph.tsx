@@ -7,8 +7,11 @@ import TimeSeriesOptions, {
 } from "Components/Graph/TimeSeries/TimeSeriesOptions";
 import VaccineChart from "Components/Graph/Vaccine/VaccineChart";
 import VaccineOptions from "Components/Graph/Vaccine/VaccineOptions";
-import { defaultVaccineUsage } from "Components/Graph/Vaccine/VaccineTypePicker";
 import { regionsAreEqual } from "Helpers/covidDataUtils";
+import {
+  defaultVaccineUsage,
+  defaultVariantPrevalance,
+} from "Helpers/vaccineUtils";
 import FlowSquares from "Pages/Covid/FlowSquares";
 import React, { useState } from "react";
 import {
@@ -68,6 +71,8 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     secondarySchoolsOpen: false,
     vaccineUsage: defaultVaccineUsage(),
     lockedVaccines: [],
+    variantPrevelance: defaultVariantPrevalance(),
+    lockedVariants: [],
   });
 
   const clearAllRegions = () => setRegionTray([]);

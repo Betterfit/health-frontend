@@ -4,6 +4,8 @@ import React from "react";
 interface RestrainedSlidersProps {
   values: Record<string, number>;
   lockedValues: string[];
+  labels: Record<string, string>;
+  title?: string;
   setValues: (usage: Record<string, number>) => void;
   setLockedValues: (types: string[]) => void;
 }
@@ -11,6 +13,8 @@ interface RestrainedSlidersProps {
 const RestrainedSliders = ({
   values,
   lockedValues,
+  labels,
+  title = "",
   setValues,
   setLockedValues,
 }: RestrainedSlidersProps) => {
@@ -58,9 +62,10 @@ const RestrainedSliders = ({
   };
   return (
     <>
+      {title && <p className="py-1 text-flow-white">{title}</p>}
       {Object.keys(values).map((type) => (
         <LabelledSlider
-          label={type}
+          label={labels[type]}
           onChange={(value) => changeUsage(type, value / 100)}
           value={values[type] * 100}
           key={type}
@@ -68,9 +73,7 @@ const RestrainedSliders = ({
             e.preventDefault();
             toggleValueLock(type);
           }}
-          color={
-            lockedValues.includes(type) ? "#FC7769" : undefined
-          }
+          color={lockedValues.includes(type) ? "#FC7769" : undefined}
         />
       ))}
     </>

@@ -1,10 +1,14 @@
 import Tippy from "@tippyjs/react";
 import FatToggle from "Components/Forms/FatToggle";
 import LabelledSlider from "Components/Forms/LabelledSlider";
+import RestrainedSliders from "Components/Forms/RestrainedSliders";
+import {
+  computeVaccineEfficacy,
+  vaccineLabels,
+  variantLabels,
+} from "Helpers/vaccineUtils";
 import React, { useRef, useState } from "react";
 import { VaccineChartOptions } from "Types";
-import { computeVaccineEfficacy } from "Components/Graph/Vaccine/VaccineTypePicker";
-import RestrainedSliders from "Components/Forms/RestrainedSliders"
 
 interface VaccineOptionsProps {
   options: VaccineChartOptions;
@@ -22,9 +26,7 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
   // server if we sent a new request every time the options changed.
   // Instead what we do is keep a local set of options and only update the real options (which trigger requests when changed )
   // after a small time delay.
-  const localSetter = (optionName: keyof VaccineChartOptions) => (
-    val: any
-  ) => {
+  const localSetter = (optionName: keyof VaccineChartOptions) => (val: any) => {
     const newOptions = { ...localOptions, [optionName]: val };
     setLocalOptions(newOptions);
     if (updateInterval.current) {
@@ -35,33 +37,53 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
   };
 
   return (
-    <div className="flex flex-col overflow-y-scroll" style={{ gridRow: "1 / -1" }}>
+    <div
+      className="flex flex-col overflow-y-scroll"
+      style={{ gridRow: "1 / -1" }}
+    >
       <div className="flex lg:justify-around text-sm lg:text-lg text-flow-white w-full mb-4 mx-4">
         {(["Restrictions", "Vaccine Mix"] as Tab[]).map((tabName) => (
           <button
             onClick={(e) => setTab(tabName)}
             // underline if selected
-            className={`rounded-sm p-1 mx-2 text-md lg:text-xl border-b-2 ${tabName === tab
+            className={`rounded-sm p-1 mx-2 text-md lg:text-xl border-b-2 ${
+              tabName === tab
                 ? "border-flow-pale font-bold text-md lg:text-xl"
                 : "border-transparent"
-              }`}
+            }`}
           >
             {tabName}
           </button>
         ))}
       </div>
       <div className="text-flow-white pr-2">
-        <p className="text-flow-white text-center my-3">
-          {`Vaccine Efficacy: ${(
-            computeVaccineEfficacy(localOptions.vaccineUsage) * 100
-          ).toFixed(2)}%`} </p>
         {tab === "Vaccine Mix" ? (
-          <RestrainedSliders
-            values={localOptions.vaccineUsage}
-            lockedValues={localOptions.lockedVaccines}
-            setValues={localSetter("vaccineUsage")}
-            setLockedValues={localSetter("lockedVaccines")}
-          />
+          <>
+            <p className="text-flow-white text-center my-3">
+              {`Vaccine Efficacy: ${(
+                computeVaccineEfficacy(
+                  localOptions.vaccineUsage,
+                  localOptions.variantPrevelance
+                ) * 100
+              ).toFixed(2)}%`}{" "}
+            </p>
+            <RestrainedSliders
+              values={localOptions.vaccineUsage}
+              lockedValues={localOptions.lockedVaccines}
+              setValues={localSetter("vaccineUsage")}
+              setLockedValues={localSetter("lockedVaccines")}
+              labels={vaccineLabels}
+              title="Vaccine Type"
+            />
+            <RestrainedSliders
+              values={localOptions.variantPrevelance}
+              lockedValues={localOptions.lockedVariants}
+              setValues={localSetter("variantPrevelance")}
+              setLockedValues={localSetter("lockedVariants")}
+              labels={variantLabels}
+              title="Variant Prevalence"
+            />
+          </>
         ) : (
           <>
             <LabelledSlider
