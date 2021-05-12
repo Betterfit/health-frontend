@@ -12,14 +12,23 @@
 }
 
 .flow-root {
-  width: 100vw;
-  height: 100vh;
+  height: max(100vh, 100%);
   margin: auto;
   padding-left: 5%;
   padding-right: 5%;
-  background-image: linear-gradient( to bottom right, var(--sky), var(--darkblue));
+  background-image: linear-gradient(
+    to bottom right,
+    var(--sky),
+    var(--darkblue)
+  );
   display: flex;
   flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .flow-root {
+    height: 100vh;
+  }
 }
 
 .flow-nav {
@@ -87,20 +96,20 @@
   flex-grow: 1;
   display: grid;
   padding-top: 0.5rem;
-  max-height: calc(100vh - 180px);
+  max-height: 100vh;
 }
 
-/* @media (min-width: 768px) {
+@media (min-width: 1024px) {
   .flow-squares-root {
-    grid-template: repeat(12, 1fr) / repeat(5, 4fr) 1fr repeat(5, 4fr);
+    grid-template: repeat(12, 1fr) / 0px repeat(5, 3fr) 1fr repeat(5, 3fr);
     width: 100%;
     flex-grow: 1;
     display: grid;
     max-height: calc(100vh - 290px);
   }
-} */
+}
 
-@media (min-width: 1024px) {
+@media (min-width: 1536px) {
   .flow-squares-root {
     grid-template: repeat(12, 1fr) / 200px repeat(5, 3fr) 1fr repeat(5, 3fr);
     width: 100%;
@@ -120,6 +129,7 @@
   justify-content: center;
   overflow-y: auto;
   overflow-x: hidden;
+  min-height: 300px;
 }
 
 @media (min-width: 1024px) {

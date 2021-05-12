@@ -65,7 +65,6 @@ const TimeSeriesOptions = ({
           />
         )}
       </div>
-
     </>
   );
 };
@@ -78,13 +77,16 @@ interface GraphTabProps {
 export const GraphTab = ({ tab, setTabKey, selected }: GraphTabProps) => {
   return (
     <button
-      className={`w-full flex-grow  text-sm lg:text-md text-flow-white flex justify-between items-center ${selected ? "bg-flow-darkpale" : "bg-flow-bluegrey"
-        }`}
+      className={`w-full max-h-7 text-sm lg:text-md text-flow-white flex justify-between items-center ${
+        selected ? "bg-flow-darkpale" : "bg-flow-bluegrey"
+      }`}
       onClick={() => setTabKey(tab.key)}
     >
       <span className="ml-5">{tab.heading}</span>
       <Tippy content={tab.descr}>
-        <p className="mr-5 text-sm lg:text-md text-flow-white justify-left">?</p>
+        <p className="mr-5 text-sm lg:text-md text-flow-white justify-left">
+          ?
+        </p>
       </Tippy>
     </button>
   );
