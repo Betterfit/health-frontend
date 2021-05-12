@@ -89,7 +89,7 @@ export default class GraphApi {
   getRegionRankings = async (
     orderBy: RankingField,
     per100k: boolean,
-    countries: string[] = ["Canada"]
+    countries: string[]
   ): Promise<RankedRegion[]> => {
     const client = await this.init();
     return client

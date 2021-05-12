@@ -3,7 +3,7 @@ import { roundToNDecimals } from "Helpers/mathUtils";
 import MaterialTable from "material-table";
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
-import { TimeSeriesKey } from "Types";
+import { Country, TimeSeriesKey } from "Types";
 import { graphTabs, TimeSeriesTab } from "../TimeSeries/TimeSeriesOptions";
 
 const graphApi = new GraphApi();
@@ -11,12 +11,14 @@ const graphApi = new GraphApi();
 interface RankingChartProps {
   tabKey: TimeSeriesKey;
   per100k: boolean;
+  countries: Country[];
 }
-const RankingTable = ({ tabKey, per100k }: RankingChartProps) => {
+const RankingTable = ({ tabKey, per100k, countries }: RankingChartProps) => {
   const curTab = graphTabs.find((tab) => tab.key === tabKey) as TimeSeriesTab;
   const field = curTab.apiKey;
-  const { data } = useQuery([field, per100k], () =>
-    graphApi.getRegionRankings(field, per100k)
+  const normalizeByPop = per100k && !curTab.disableNormalization;
+  const { data } = useQuery([...countries, field, normalizeByPop], () =>
+    graphApi.getRegionRankings(field, normalizeByPop, countries)
   );
   const containerRef = useRef<HTMLDivElement>(null);
   const [tableHeight, setTableHeight] = useState(200);

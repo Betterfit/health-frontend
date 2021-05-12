@@ -13,6 +13,7 @@ import FlowSquares from "Pages/Covid/FlowSquares";
 import React, { useState } from "react";
 import {
   ChartType,
+  Country,
   HealthRegion,
   Selectable,
   TimeSeriesKey,
@@ -52,6 +53,8 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
   // how many days back do we fetch covid data
   const [daysBack, setDaysBack] = useState(30);
 
+  // countries that are shown in the ranking table
+  const [countries, setCountries] = useState<Country[]>(["Canada", "US"]);
   // vaccine chart options
   const [vaccineOptions, setVaccineOptions] = useState<VaccineChartOptions>({
     restaurantCapacity: 100,
@@ -99,7 +102,7 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
         }}
       />
     );
-  else chart = <RankingTable {...{ tabKey, per100k }} />;
+  else chart = <RankingTable {...{ tabKey, per100k, countries }} />;
 
   let chartSpecificOptions;
   if (whichChart === "timeseries")
@@ -123,7 +126,9 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     );
   else
     chartSpecificOptions = (
-      <RankingOptions {...{ tabKey, per100k, setTabKey, setPer100k }} />
+      <RankingOptions
+        {...{ tabKey, per100k, countries, setTabKey, setPer100k, setCountries }}
+      />
     );
   const options = (
     <>

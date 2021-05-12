@@ -138,3 +138,5 @@ export type TimeSeriesKey =
   | "cumVaccFull";
 
 export type ChartType = "timeseries" | "vaccine" | "ranking";
+
+export type Country = "Canada" | "US";
