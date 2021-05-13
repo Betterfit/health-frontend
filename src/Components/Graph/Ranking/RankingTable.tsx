@@ -3,7 +3,7 @@ import { roundToNDecimals } from "Helpers/mathUtils";
 import MaterialTable from "material-table";
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
-import { Country, TimeSeriesKey } from "Types";
+import { Country, HealthRegion, TimeSeriesKey } from "Types";
 import { graphTabs, TimeSeriesTab } from "../TimeSeries/TimeSeriesOptions";
 
 const graphApi = new GraphApi();
@@ -12,8 +12,14 @@ interface RankingChartProps {
   tabKey: TimeSeriesKey;
   per100k: boolean;
   countries: Country[];
+  toggleRegionSelection: (region: HealthRegion) => void;
 }
-const RankingTable = ({ tabKey, per100k, countries }: RankingChartProps) => {
+const RankingTable = ({
+  tabKey,
+  per100k,
+  countries,
+  toggleRegionSelection,
+}: RankingChartProps) => {
   const curTab = graphTabs.find((tab) => tab.key === tabKey) as TimeSeriesTab;
   const field = curTab.apiKey;
   const normalizeByPop = per100k && !curTab.disableNormalization;
@@ -54,6 +60,14 @@ const RankingTable = ({ tabKey, per100k, countries }: RankingChartProps) => {
         ]}
         data={tableData ? tableData : []}
         style={{ backgroundColor: "transparent", color: "white" }}
+        onRowClick={(e, rowData) => {
+          // adds the clicked row as a selected region
+          if (rowData?.healthRegion && rowData.province)
+            toggleRegionSelection({
+              healthRegion: rowData.healthRegion,
+              province: rowData.province,
+            });
+        }}
         options={{
           headerStyle: {
             backgroundColor: "var(--navy)",

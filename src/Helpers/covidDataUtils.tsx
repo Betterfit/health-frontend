@@ -178,7 +178,13 @@ export const useREstimate = (
   // Copies all relevant options into queryKeyOptions.
   // The excluded options are not used by the model and can be frequently changed by the user
   // so putting it in the query key would ruin our caching
-  const { vaccineUsage, lockedVaccines, ...queryKeyOptions } = options;
+  const {
+    vaccineUsage,
+    lockedVaccines,
+    variantPrevelance,
+    lockedVariants,
+    ...queryKeyOptions
+  } = options;
   const results = useQueries(
     regions.map((region) => ({
       queryKey: [

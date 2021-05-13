@@ -43,6 +43,10 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
       item: { province: "British Columbia", healthRegion: "Fraser" },
       selected: true,
     },
+    {
+      item: { province: "California", healthRegion: "San Diego County" },
+      selected: true,
+    },
   ]);
   const regions = regionTray
     .filter((selectable) => selectable.selected)
@@ -51,7 +55,7 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
   // time series chart options
   // which time series tab is currently selected
   const [tabKey, setTabKey] = useState<TimeSeriesKey>(graphTabs[0].key);
-  const [per100k, setPer100k] = useState<boolean>(false);
+  const [per100k, setPer100k] = useState<boolean>(true);
   const [interpolate, setInterpolate] = useState<boolean>(true);
   // how many days back do we fetch covid data
   const [daysBack, setDaysBack] = useState(30);
@@ -107,7 +111,12 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
         }}
       />
     );
-  else chart = <RankingTable {...{ tabKey, per100k, countries }} />;
+  else
+    chart = (
+      <RankingTable
+        {...{ tabKey, per100k, countries, toggleRegionSelection }}
+      />
+    );
 
   let chartSpecificOptions;
   if (whichChart === "timeseries")
