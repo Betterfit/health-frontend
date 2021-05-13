@@ -11,20 +11,29 @@ const graphApi = new GraphApi();
 interface RankingChartProps {
   tabKey: TimeSeriesKey;
   per100k: boolean;
+  groupByProvince: boolean;
   countries: Country[];
   toggleRegionSelection: (region: HealthRegion) => void;
 }
 const RankingTable = ({
   tabKey,
   per100k,
+  groupByProvince,
   countries,
   toggleRegionSelection,
 }: RankingChartProps) => {
   const curTab = graphTabs.find((tab) => tab.key === tabKey) as TimeSeriesTab;
   const field = curTab.apiKey;
   const normalizeByPop = per100k && !curTab.disableNormalization;
-  const { data } = useQuery([...countries, field, normalizeByPop], () =>
-    graphApi.getRegionRankings(field, normalizeByPop, countries)
+  const { data } = useQuery(
+    [...countries, field, normalizeByPop, groupByProvince],
+    () =>
+      graphApi.getRegionRankings(
+        field,
+        normalizeByPop,
+        groupByProvince,
+        countries
+      )
   );
   const containerRef = useRef<HTMLDivElement>(null);
   const [tableHeight, setTableHeight] = useState(200);
@@ -40,21 +49,26 @@ const RankingTable = ({
   }, []);
   const tableData = data?.map((region) => ({
     ...region,
-    field:
-      curTab.nDecimals === undefined
-        ? region.field
-        : roundToNDecimals(region.field, curTab.nDecimals),
+    // round and format
+    field: (curTab.nDecimals === undefined
+      ? region.field
+      : roundToNDecimals(region.field, curTab.nDecimals)
+    ).toLocaleString(),
   }));
 
   const colOptions = { sorting: false, draggable: false };
-  const fieldTitle = per100k ? curTab.heading + " Per 100k" : curTab.heading;
+  const fieldTitle =
+    per100k && !groupByProvince ? curTab.heading + " Per 100k" : curTab.heading;
   return (
     <div ref={containerRef} className="h-full">
       <MaterialTable
         title={`Top Health Regions by ${curTab.heading}`}
         columns={[
           { ...colOptions, title: "Rank", field: "rank" },
-          { ...colOptions, title: "Health Region", field: "healthRegion" },
+          // only show health region column if we're not grouping by province
+          ...(!groupByProvince
+            ? [{ ...colOptions, title: "Health Region", field: "healthRegion" }]
+            : []),
           { ...colOptions, title: "Province/State", field: "province" },
           { ...colOptions, title: fieldTitle, field: "field" },
         ]}

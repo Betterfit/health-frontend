@@ -10,18 +10,22 @@ import {
 interface RankingOptionsProps {
   tabKey: TimeSeriesKey;
   per100k: boolean;
+  groupByProvince: boolean;
   countries: Country[];
   setTabKey: (key: TimeSeriesKey) => void;
   setPer100k: (val: boolean) => void;
+  setGroupByProvince: (val: boolean) => void;
   setCountries: (val: Country[]) => void;
 }
 
 const RankingOptions = ({
   tabKey,
   per100k,
+  groupByProvince,
   countries,
   setTabKey,
   setPer100k,
+  setGroupByProvince,
   setCountries,
 }: RankingOptionsProps) => {
   const curTab = graphTabs.find((tab) => tab.key === tabKey) as TimeSeriesTab;
@@ -42,14 +46,11 @@ const RankingOptions = ({
           />
         ))}
 
-        {!curTab.disableNormalization && (
-          // Normalizes data by population so that regions with different populations can be compared.
-          <FatToggle
-            checked={per100k}
-            setChecked={setPer100k}
-            label="Per 100k"
-          />
-        )}
+        <FatToggle
+          checked={groupByProvince}
+          setChecked={setGroupByProvince}
+          label="By Province"
+        />
         <FatToggle
           checked={countries.includes("Canada")}
           setChecked={() => toggleCountry("Canada")}
@@ -60,6 +61,16 @@ const RankingOptions = ({
           setChecked={() => toggleCountry("US")}
           label="US"
         />
+
+        {!curTab.disableNormalization && !groupByProvince && (
+          // Normalizes data by population so that regions with different populations can be compared.
+          // api doesn't support normalizing and grouping at the same time
+          <FatToggle
+            checked={per100k}
+            setChecked={setPer100k}
+            label="Per 100k"
+          />
+        )}
       </div>
     </>
   );

@@ -62,6 +62,8 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
 
   // countries that are shown in the ranking table
   const [countries, setCountries] = useState<Country[]>(["Canada", "US"]);
+  // group regions by province in ranking table
+  const [groupByProvince, setGroupByProvince] = useState(false);
   // vaccine chart options
   const [vaccineOptions, setVaccineOptions] = useState<VaccineChartOptions>({
     restaurantCapacity: 100,
@@ -114,7 +116,13 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
   else
     chart = (
       <RankingTable
-        {...{ tabKey, per100k, countries, toggleRegionSelection }}
+        {...{
+          tabKey,
+          per100k,
+          groupByProvince,
+          countries,
+          toggleRegionSelection,
+        }}
       />
     );
 
@@ -141,7 +149,16 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
   else
     chartSpecificOptions = (
       <RankingOptions
-        {...{ tabKey, per100k, countries, setTabKey, setPer100k, setCountries }}
+        {...{
+          tabKey,
+          per100k,
+          groupByProvince,
+          countries,
+          setTabKey,
+          setPer100k,
+          setGroupByProvince,
+          setCountries,
+        }}
       />
     );
   const options = (
