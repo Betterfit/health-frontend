@@ -1,6 +1,6 @@
 import {
   normalizeByPopulation,
-  useCovidTimeSeries
+  useCovidTimeSeries,
 } from "Helpers/covidDataUtils";
 import { dayFormatter } from "Helpers/dateUtils";
 import { interpolateNulls, roundToNDecimals } from "Helpers/mathUtils";
@@ -12,7 +12,7 @@ import {
   ResponsiveContainer,
   Tooltip as ChartTooltip,
   XAxis,
-  YAxis
+  YAxis,
 } from "recharts";
 import { HealthRegion, TimeSeriesKey } from "Types";
 import { graphTabs } from "./TimeSeriesOptions";
@@ -77,11 +77,14 @@ const TimeSeriesChart = ({
     <ResponsiveContainer width="100%">
       <LineChart data={displayData} margin={{ right: 50, top: 20, bottom: 10 }}>
         {/* <CartesianGrid strokeDasharray="3 3" /> */}
-        <XAxis dataKey="date" name="Date" stroke="white" dy={10}/>
-        <YAxis stroke="white"/>
-        <ChartTooltip 
-          contentStyle={{backgroundColor: "var(--navy)", borderColor: "transparent"}}
-          labelStyle={{color: "white"}}
+        <XAxis dataKey="date" name="Date" stroke="white" dy={10} />
+        <YAxis stroke="white" />
+        <ChartTooltip
+          contentStyle={{
+            backgroundColor: "var(--navy)",
+            borderColor: "transparent",
+          }}
+          labelStyle={{ color: "white" }}
         />
 
         {/* <Legend /> */}
@@ -92,7 +95,7 @@ const TimeSeriesChart = ({
             // repeats colors if there are too many lines
             stroke={chartColors[i % chartColors.length]}
             animationDuration={800}
-            dot={{fill: "#072B35"}}
+            dot={{ fill: "#072B35" }}
             key={i}
           />
         ))}

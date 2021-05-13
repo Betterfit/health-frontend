@@ -1,10 +1,9 @@
 import { Auth } from "aws-amplify";
 import axios, { AxiosResponse } from "axios";
-import { REstimate } from "Types";
+import { HealthRegion, HealthRegionsByCountry, REstimate } from "Types";
 
 const API_URL = process.env.REACT_APP_GRAPHQL_API_URL;
 export default class GraphApi {
-
   init = async () => {
     const session = await Auth.currentSession();
     const token = session.getIdToken().getJwtToken();
@@ -12,7 +11,6 @@ export default class GraphApi {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-
 
     return axios.create({
       baseURL: API_URL,
@@ -40,6 +38,7 @@ export default class GraphApi {
           r0V0
           resolutionTime
           cumRecoveredCases
+          cumVaccFull
         }  
       }}}`,
       variables: null,
@@ -54,13 +53,92 @@ export default class GraphApi {
       .then((edges: any) => edges.map((edge: any) => edge.node));
   };
 
-  getREstimate = async (params: REstimateParams) : Promise<REstimate> => {
+  getREstimate = async (params: REstimateParams): Promise<REstimate> => {
     const client = await this.init();
     return client
       .post("graphql", { query: rEstimateQuery, variables: params })
       .then((resp: AxiosResponse) => resp.data.data.rEstimate);
   };
+
+  getHealthRegions = async (): Promise<HealthRegionsByCountry> => {
+    const client = await this.init();
+    const healthRegions = await client
+      .post("graphql", { query: healthRegionQuery })
+      .then(
+        (resp: PaginatedGraphlQLResult<"allRegions", APIHealthRegion>) =>
+          resp.data.data.allRegions.edges
+      )
+      .then((edges) => edges.map((edge) => edge.node));
+
+    const result: HealthRegionsByCountry = {};
+    healthRegions.forEach((region) => {
+      if (!(region.country in result)) {
+        result[region.country] = {};
+      }
+      const country = result[region.country];
+      if (!(region.province in country)) {
+        country[region.province] = [];
+      }
+      const province = country[region.province];
+      province.push(region);
+    });
+
+    return result;
+  };
+
+  getRegionRankings = async (
+    orderBy: RankingField,
+    per100k: boolean,
+    groupByProvince: boolean,
+    countries: string[]
+  ): Promise<RankedRegion[]> => {
+    const client = await this.init();
+    return client
+      .post("graphql", {
+        query: regionRankingQuery,
+        variables: {
+          field: orderBy,
+          per100k,
+          countries: countries.join(","),
+          byProvince: groupByProvince,
+        },
+      })
+      .then(
+        (response: GraphQLResult<"regionRanking", APIRegionRanking>) =>
+          response.data.data.regionRanking.regions
+      );
+  };
 }
+
+interface RankedRegion {
+  field: number;
+  rank: number;
+  province: string;
+  healthRegion: string;
+}
+interface APIRegionRanking {
+  regions: RankedRegion[];
+}
+
+// Health region data recieved from server
+interface APIHealthRegion extends HealthRegion {
+  country: string;
+}
+// https://stackoverflow.com/questions/56419558/typescript-how-to-use-a-generic-parameter-as-object-key
+type GraphQLResult<QueryKey extends string, ResultType> = AxiosResponse<{
+  data: {
+    [key in QueryKey]: ResultType;
+  };
+}>;
+
+interface GraphQLEdges<T> {
+  edges: { node: T }[];
+}
+
+type PaginatedGraphlQLResult<QueryKey extends string, T> = GraphQLResult<
+  QueryKey,
+  GraphQLEdges<T>
+>;
 
 interface REstimateParams {
   healthRegion: string;
@@ -105,3 +183,38 @@ const rEstimateQuery = `query(
     rV0
   }
 }`;
+
+const healthRegionQuery = `
+{
+  allRegions{
+    edges{
+      node{
+        healthRegion,
+        province,
+        country
+      }
+    }
+  }
+}
+`;
+
+export type RankingField =
+  | "activeCases"
+  | "newCases"
+  | "deaths"
+  | "r0V0"
+  | "resolutionTime"
+  | "cumVaccFull";
+
+const regionRankingQuery = `
+query ($field: String!, $countries: String, $per100k: Boolean, $byProvince: Boolean) {
+  regionRanking(field: $field, countries: $countries, per100k: $per100k, byProvince: $byProvince) {
+    regions {
+      field
+      healthRegion
+      rank
+      province
+    }
+  }
+}
+`;

@@ -2,6 +2,7 @@
 import Tippy from "@tippyjs/react";
 import FatToggle from "Components/Forms/FatToggle";
 import TimePeriodSelection from "Components/Forms/TimePeriodSelection";
+import { RankingField } from "Helpers/graphApi";
 import React from "react";
 import "tippy.js/dist/tippy.css";
 import { TimeSeriesKey } from "Types";
@@ -31,7 +32,7 @@ const TimeSeriesOptions = ({
     <>
       {/* choose between active cases, deaths, r, etc */}
       <div
-        className="flex flex-col col-start-0 space-y-2 justify-items-stretch"
+        className="flex flex-col col-start-0 space-y-2 justify-items-stretch overflow-y-scroll"
         style={{ gridRow: "1 / 7" }}
       >
         {graphTabs.map((tab, i) => (
@@ -40,9 +41,12 @@ const TimeSeriesOptions = ({
           />
         ))}
       </div>
-
       <div className="mt-5 space-y-2" style={{ gridRow: "7 / 13" }}>
-        <TimePeriodSelection daysBack={daysBack} setDaysBack={setDaysBack} size='md'/>
+        <TimePeriodSelection
+          daysBack={daysBack}
+          setDaysBack={setDaysBack}
+          size="md"
+        />
 
         {!curTab.disableNormalization && (
           // Normalizes data by population so that regions with different populations can be compared.
@@ -70,27 +74,28 @@ interface GraphTabProps {
   selected: boolean;
 }
 
-const GraphTab = ({ tab, setTabKey, selected }: GraphTabProps) => {
+export const GraphTab = ({ tab, setTabKey, selected }: GraphTabProps) => {
   return (
     <button
-      className={`w-full flex-grow   text-flow-white flex justify-between items-center ${
+      className={`w-full max-h-7 text-sm lg:text-md text-flow-white flex justify-between items-center ${
         selected ? "bg-flow-darkpale" : "bg-flow-bluegrey"
       }`}
       onClick={() => setTabKey(tab.key)}
     >
       <span className="ml-5">{tab.heading}</span>
-      {/* <EuiToolTip position="left" content={tab.descr}> */}
       <Tippy content={tab.descr}>
-        <p className="mr-5 text-flow-white">?</p>
+        <p className="mr-5 text-sm lg:text-md text-flow-white justify-left">
+          ?
+        </p>
       </Tippy>
-      {/* </EuiToolTip> */}
     </button>
   );
 };
 
-interface TimeSeriesTab {
+export interface TimeSeriesTab {
   heading: string;
   key: TimeSeriesKey;
+  apiKey: RankingField;
   descr: string;
   nDecimals?: number;
   disableInterpolation?: boolean;
@@ -101,28 +106,28 @@ export const graphTabs: TimeSeriesTab[] = [
   {
     heading: "Active Cases",
     key: "activeCases",
+    apiKey: "activeCases",
     descr: "The total number of individuals that have COVID-10 on a given day.",
     nDecimals: 0,
   },
   {
     heading: "New Cases",
     key: "newCases",
+    apiKey: "newCases",
     descr: "The number of new infections reported on a given day.",
     nDecimals: 0,
-    // disabled because if the last 5 days are missing data, the the 6th day's new cases/deaths
-    // will include the deaths of the last 5 days.
-    disableInterpolation: true,
   },
   {
     heading: "Daily Deaths",
     key: "deaths",
+    apiKey: "deaths",
     descr: "The number of new deaths reported on a given day.",
     nDecimals: 0,
-    disableInterpolation: true,
   },
   {
     heading: "Resolution Time",
     key: "resolutionTime",
+    apiKey: "resolutionTime",
     descr:
       "How long it takes for recoveries and deaths to catch up with the number of new cases on a past day.\n If there were 100 new cases today, how long until we can expect to see a day with 100 recoveries and deaths.",
     nDecimals: 0,
@@ -132,11 +137,19 @@ export const graphTabs: TimeSeriesTab[] = [
   {
     heading: "R",
     key: "r0",
+    apiKey: "r0V0",
     descr:
       "Our estimate of COVID-19's reproduction number in this health region.\n Measures how many new infections a contagious person will cause, on average.",
     nDecimals: 2,
     // doesn't make sense to show this per capita
     disableNormalization: true,
+  },
+  {
+    heading: "Vaccinated",
+    key: "cumVaccFull",
+    apiKey: "cumVaccFull",
+    descr: "The number of people that have been fully vaccinated.",
+    nDecimals: 0,
   },
 ];
 

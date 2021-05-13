@@ -26,6 +26,18 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+### `yarn run cypress open`
+
+Launches the Cypress test runner, which we use for our E2E tests.
+
+
+You will have to set the CYPRESS_password environment variable to the password used to log into flow.
+If you are not using the email yash@betterfit.co, then set the CYPRESS_username env var as well.
+
+
+Set the CYPRESS_BASE_URL env var to run the tests against a different url.
+
+
 ### `yarn build`
 
 Builds the app for production to the `build` folder.<br />

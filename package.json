@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@bahmutov/add-typescript-to-cypress": "^2.1.2",
+    "@material-ui/core": "^4.11.4",
     "@tailwindui/react": "^0.1.1",
+    "@testing-library/cypress": "^7.0.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -19,8 +22,11 @@
     "axios": "^0.20.0",
     "craco": "0.0.3",
     "customize-cra": "^1.0.0",
+    "cypress": "^6.8.0",
     "dayjs": "^1.9.1",
+    "eslint-stats": "^1.0.1",
     "js-cookie": "^2.2.1",
+    "material-table": "^1.69.3",
     "mobx": "^6.0.1",
     "mobx-persist": "^0.4.1",
     "mobx-react": "^7.0.0",
@@ -35,7 +41,6 @@
     "react-countdown": "^2.3.1",
     "react-dom": "^16.13.1",
     "react-moment": "^1.0.0",
-    "react-popper-tooltip": "^3.1.1",
     "react-query": "^3.9.8",
     "react-router-dom": "^5.2.0",
     "react-router-transition": "^2.0.0",
@@ -58,7 +63,14 @@
     "eject": "react-app-rewired eject",
     "build:style": "tailwind build src/styles/index.css -o src/styles/tailwind.css --watch",
     "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx}\"",
-    "analyze": "source-map-explorer 'build/static/js/*.js"
+    "analyze": "source-map-explorer 'build/static/js/*.js",
+    "lint": "eslint --ext js,ts,tsx --format node_modules/eslint-stats/byErrorAndWarning.js src",
+    "lint-folders": "eslint --ext js,ts,tsx --format node_modules/eslint-stats/byFolder.js src "
+  },
+  "lint-staged": {
+    "*.{tsx,ts,jsx,js}": [
+      "eslint"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -76,9 +88,11 @@
     ]
   },
   "devDependencies": {
+    "@applitools/eyes-cypress": "^3.20.4",
     "@types/recharts": "^1.8.18",
     "@types/sortablejs": "^1.10.6",
     "autoprefixer": "^10.0.0",
+    "lint-staged": "^10.5.4",
     "postcss-cli": "^7.1.2",
     "postcss-import": "^12.0.1",
     "tailwindcss": "^1.8.10"

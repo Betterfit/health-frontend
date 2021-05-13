@@ -1,14 +1,14 @@
-import React, { useState } from "react";
 import CircleButton from "Components/Forms/CircleButton";
 import FlatButton from "Components/Forms/FlatDetailButton";
-import EmptyImage from "Images/emptyImage.png";
-import { useHistory } from "react-router-dom";
 import { useCartStore } from "Context/cartContext";
 import Translator from "Helpers/Translator";
+import EmptyImage from "Images/emptyImage.png";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 //This will either return the attribute if it exists, or
 // return the passed in 'default_value' if not
-const Read_Product = (product_attr, default_value) => {
+const readProduct = (product_attr, default_value) => {
   if (product_attr === undefined || product_attr === null) {
     return default_value;
   }
@@ -21,8 +21,8 @@ const ProductImage = ({ product_image, product_name, hover }) => {
   return (
     <img
       className={"max-h-full  " + (hover ? "opacity-50" : "")}
-      src={Read_Product(product_image, EmptyImage)}
-      alt={Read_Product(product_name + " Product Image", "Product Image")}
+      src={readProduct(product_image, EmptyImage)}
+      alt={readProduct(product_name + " Product Image", "Product Image")}
       loading="lazy"
       data-sizes="auto"
     ></img>
@@ -42,6 +42,7 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
     cartStore.addToCart(product_details.pk, 1, false, product.pk);
   };
 
+  const displayName = (parent ? `${parent} - ` : "") + name;
   return (
     <>
       <div
@@ -54,7 +55,11 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
       >
-        <div className="flex md:flex-col p-2 h-full w-full items-center md:items-stretch">
+        <div
+          role="listitem"
+          aria-label={displayName}
+          className="flex md:flex-col p-2 h-full w-full items-center md:items-stretch"
+        >
           <ProductImage
             product_name={name}
             product_image={image}
@@ -62,10 +67,10 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
           />
           <div className="flex flex-col md:pt-7 pl-4  w-1/2 md:w-auto">
             <h1 className="text-sm md:text-base font-semibold text-status-dark-blue ">
-              {parent ? `${parent} - ` : ""} {Read_Product(name, "")}
+              {displayName}
             </h1>
             <span className="text-betterfit-grey-blue text-xs">
-              {Read_Product(size, "N/A")}
+              {readProduct(size, "N/A")}
             </span>
           </div>
 

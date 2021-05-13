@@ -15,7 +15,7 @@ import { ReactSVG } from "react-svg";
 
 const api = new Api();
 
-const OrderCart = ({ Cart,  id }) => {
+const OrderCart = ({ Cart, id }) => {
   const history = useHistory();
   let CartData = JSON.stringify(Cart);
   CartData = JSON.parse(CartData);
@@ -111,8 +111,12 @@ const OrderCart = ({ Cart,  id }) => {
 
   return useObserver(() => (
     <>
-      <div className="flex-grow flex flex-col overflow-hidden">
-        <div className="p-3 my-4 overflow-y-scroll p-4">
+      <div
+        className="flex-grow flex flex-col overflow-hidden"
+        aria-label="cart"
+        role="complementary"
+      >
+        <div role="list" className="p-3 my-4 overflow-y-scroll p-4">
           {cartItems &&
             cartItems.length >= 1 &&
             cartItems.map((item, index) => {

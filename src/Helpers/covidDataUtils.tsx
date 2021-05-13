@@ -5,7 +5,7 @@ import {
   RegionalCovidTimeSeries,
   RegionDay,
   REstimate,
-  VaccineChartOptions
+  VaccineChartOptions,
 } from "Types";
 import GraphApi from "./graphApi";
 import { rollingAverage, roundToNDecimals } from "./mathUtils";
@@ -109,6 +109,7 @@ const timeSeriesFromRegionDays = (
   const resolutionTime = [];
   const r0 = [];
   const cumRecoveries = [];
+  const cumVaccFull = [];
 
   for (const regionDay of regionDays) {
     // skips all missing region days
@@ -119,6 +120,7 @@ const timeSeriesFromRegionDays = (
       resolutionTime.push(null);
       r0.push(null);
       cumRecoveries.push(null);
+      cumVaccFull.push(null);
       day_idx++;
     }
     activeCases.push(regionDay.activeCases);
@@ -127,6 +129,7 @@ const timeSeriesFromRegionDays = (
     resolutionTime.push(regionDay.resolutionTime);
     r0.push(regionDay.r0V0);
     cumRecoveries.push(regionDay.cumRecoveredCases);
+    cumVaccFull.push(regionDay.cumVaccFull);
     day_idx++;
   }
 
@@ -138,6 +141,7 @@ const timeSeriesFromRegionDays = (
     resolutionTime.push(null);
     r0.push(null);
     cumRecoveries.push(null);
+    cumVaccFull.push(null);
   }
 
   return {
@@ -148,6 +152,7 @@ const timeSeriesFromRegionDays = (
     newCases,
     deaths,
     cumRecoveries,
+    cumVaccFull,
     resolutionTime: rollingAverage(resolutionTime, ROLLING_AVG_INTERVAL),
     r0: rollingAverage(r0, ROLLING_AVG_INTERVAL),
     reportedDates,
@@ -164,23 +169,33 @@ export const normalizeByPopulation = (
   );
 };
 
-const previousData: {[region: string] : REstimate}= { } 
+const previousData: { [region: string]: REstimate } = {};
 
 export const useREstimate = (
   options: VaccineChartOptions,
   regions: HealthRegion[]
 ): QueryObserverResult<REstimate>[] => {
+  // Copies all relevant options into queryKeyOptions.
+  // The excluded options are not used by the model and can be frequently changed by the user
+  // so putting it in the query key would ruin our caching
+  const {
+    vaccineUsage,
+    lockedVaccines,
+    variantPrevelance,
+    lockedVariants,
+    ...queryKeyOptions
+  } = options;
   const results = useQueries(
     regions.map((region) => ({
       queryKey: [
         "r estimate",
         region.province,
         region.healthRegion,
-        ...Object.values(options),
+        ...Object.values(queryKeyOptions),
       ],
       staleTime: QUERY_STALE_TIME_MS,
       queryFn: () => fetchREstimate(options, region),
-      placeholderData: previousData[region.healthRegion]
+      placeholderData: previousData[region.healthRegion],
       // this isn't working atm, but it does with just the singular useQuery hook
       // very strange, I believe it's a bug with react-query
       // keepPreviousData: true,
@@ -191,7 +206,7 @@ export const useREstimate = (
   return typed;
 };
 
-const fetchREstimate =  async (
+const fetchREstimate = async (
   options: VaccineChartOptions,
   region: HealthRegion
 ): Promise<REstimate> => {
@@ -207,7 +222,7 @@ const fetchREstimate =  async (
     masks: options.masksMandatory,
     curfew: options.curfew,
     elementarySchools: options.elementarySchoolsOpen,
-    secondarySchools: options.secondarySchoolsOpen
+    secondarySchools: options.secondarySchoolsOpen,
   };
   const estimate = await graphApi.getREstimate(params);
   previousData[region.healthRegion] = estimate;
@@ -217,4 +232,3 @@ const fetchREstimate =  async (
 export const regionsAreEqual = (region1: HealthRegion, region2: HealthRegion) =>
   region1.province === region2.province &&
   region1.healthRegion === region2.healthRegion;
-

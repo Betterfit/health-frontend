@@ -12,9 +12,10 @@ const FlowNav = () => {
         <img src="/flow-logo.png" alt="flow" />
       </div>
 
-      <div className="col-start-2 col-end-13 row-start-7 p-0 space-x-8">
+      <div className="col-start-2 col-end-13 row-start-7 space-x-8 py-2 md:p-0">
         <ChartLink relPath="timeseries" text="Time Series" />
         <ChartLink relPath="vaccine" text="Vaccine" />
+        <ChartLink relPath="ranking" text="Ranking" />
       </div>
     </nav>
   );
@@ -31,21 +32,12 @@ const ChartLink = ({ relPath, text }: ChartLinkProps) => {
   return (
     <Link
       to={`/covid/${relPath}`}
-      className={`text-xl text-flow-white border-b-2 ${
-        emphasize ? "border-flow-bfblue" : "border-transparent"
-      }`}
+      className={`text-sm md:text-lg lg:text-xl text-flow-white border-b-2 ${emphasize ? "border-flow-bfblue" : "border-transparent"
+        }`}
     >
       {text}
     </Link>
   );
 };
-
-const tabs = [
-  {
-    heading: "Time Series",
-    key: "timeseries",
-  },
-  { heading: "Vaccine", key: "vaccine" },
-];
 
 export default FlowNav;

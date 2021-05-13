@@ -38,6 +38,7 @@ export interface RegionDay {
   reportedDate: string;
   healthRegion: HealthRegionData;
   cumRecoveredCases: number;
+  cumVaccFull: number;
 }
 
 export interface HealthRegionData {
@@ -51,6 +52,14 @@ export interface HealthRegionData {
 export interface HealthRegion {
   healthRegion: string;
   province: string;
+}
+
+export interface HealthRegionsByProvince {
+  [province: string]: HealthRegion[];
+}
+
+export interface HealthRegionsByCountry {
+  [country: string]: HealthRegionsByProvince;
 }
 
 export interface NationalCovidTimeSeries {
@@ -72,19 +81,21 @@ export interface RegionalCovidTimeSeries {
   r0: (number | null)[];
   cumRecoveries: (number | null)[];
   reportedDates: string[];
+  cumVaccFull: (number | null)[];
 }
 
 export interface VaccineStats {
   province: string;
   healthRegion: string;
   pop1000s: number;
-  totalRecovered: number;
+  totalImmune: number;
   needVaccine: number;
   sickAfterHerdImmunity: number;
   notSickAfterHerdImmunity: number;
 }
 
 export interface VaccineChartOptions {
+  // get passed to our R estimation model
   restaurantCapacity: number;
   gymCapacity: number;
   retailCapacity: number;
@@ -94,8 +105,26 @@ export interface VaccineChartOptions {
   elementarySchoolsOpen: boolean;
   secondarySchoolsOpen: boolean;
   curfew: boolean;
+  // not used by model, just ui / clientside math
+  vaccineUsage: VaccineUsage;
+  lockedVaccines: VaccineType[];
+
+  variantPrevelance: VariantPrevelance;
+  lockedVariants : VariantType[];
 }
 
+export type VaccineUsage = Record<VaccineType, number>;
+
+export type VaccineType = "jj" | "pfizer" | "moderna" | "astrezeneca";
+
+export type VariantPrevelance = Record<VariantType, number>;
+
+export type VariantType = "wild" | "uk" | "southafrica" | "brazil" | "india";
+
+export interface Vaccine {
+  type: VaccineType;
+  efficacy: number;
+}
 
 export interface Selectable<T> {
   item: T;
@@ -112,6 +141,9 @@ export type TimeSeriesKey =
   | "deaths"
   | "resolutionTime"
   | "r0"
-  | "cumRecoveries";
+  | "cumRecoveries"
+  | "cumVaccFull";
 
-export type ChartType = "timeseries" | "vaccine";
+export type ChartType = "timeseries" | "vaccine" | "ranking";
+
+export type Country = "Canada" | "US";

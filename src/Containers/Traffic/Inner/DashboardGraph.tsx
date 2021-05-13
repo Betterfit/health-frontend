@@ -1,16 +1,22 @@
+import RankingOptions from "Components/Graph/Ranking/RankingOptions";
+import RankingTable from "Components/Graph/Ranking/RankingTable";
 import RegionSelection from "Components/Graph/RegionSelection";
-import TimeSeriesChart from "Components/Graph/TimeSeriesChart";
+import TimeSeriesChart from "Components/Graph/TimeSeries/TimeSeriesChart";
 import TimeSeriesOptions, {
   graphTabs,
-} from "Components/Graph/TimeSeriesOptions";
-import VaccineChart from "Components/Graph/VaccineChart";
-import VaccineOptions from "Components/Graph/VaccineOptions";
-import healthRegions from "Data/healthRegions.json";
+} from "Components/Graph/TimeSeries/TimeSeriesOptions";
+import VaccineChart from "Components/Graph/Vaccine/VaccineChart";
+import VaccineOptions from "Components/Graph/Vaccine/VaccineOptions";
 import { regionsAreEqual } from "Helpers/covidDataUtils";
+import {
+  defaultVaccineUsage,
+  defaultVariantPrevalance,
+} from "Helpers/vaccineUtils";
 import FlowSquares from "Pages/Covid/FlowSquares";
 import React, { useState } from "react";
 import {
   ChartType,
+  Country,
   HealthRegion,
   Selectable,
   TimeSeriesKey,
@@ -37,6 +43,10 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
       item: { province: "British Columbia", healthRegion: "Fraser" },
       selected: true,
     },
+    {
+      item: { province: "California", healthRegion: "San Diego County" },
+      selected: true,
+    },
   ]);
   const regions = regionTray
     .filter((selectable) => selectable.selected)
@@ -45,11 +55,15 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
   // time series chart options
   // which time series tab is currently selected
   const [tabKey, setTabKey] = useState<TimeSeriesKey>(graphTabs[0].key);
-  const [per100k, setPer100k] = useState<boolean>(false);
+  const [per100k, setPer100k] = useState<boolean>(true);
   const [interpolate, setInterpolate] = useState<boolean>(true);
   // how many days back do we fetch covid data
   const [daysBack, setDaysBack] = useState(30);
 
+  // countries that are shown in the ranking table
+  const [countries, setCountries] = useState<Country[]>(["Canada", "US"]);
+  // group regions by province in ranking table
+  const [groupByProvince, setGroupByProvince] = useState(false);
   // vaccine chart options
   const [vaccineOptions, setVaccineOptions] = useState<VaccineChartOptions>({
     restaurantCapacity: 100,
@@ -61,6 +75,10 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     curfew: false,
     elementarySchoolsOpen: false,
     secondarySchoolsOpen: false,
+    vaccineUsage: defaultVaccineUsage(),
+    lockedVaccines: [],
+    variantPrevelance: defaultVariantPrevalance(),
+    lockedVariants: [],
   });
 
   const clearAllRegions = () => setRegionTray([]);
@@ -72,31 +90,22 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     if (existingIdx > -1) {
       // toggle selection of existing region in tray
       const existing = regionTray[existingIdx];
-      const newTray = regionTray.filter((item, i) => i != existingIdx);
+      const newTray = regionTray.filter((item, i) => i !== existingIdx);
       newTray.push({ item: existing.item, selected: !existing.selected });
       setRegionTray(newTray);
     }
     // add region to tray otherwise
     else setRegionTray([...regionTray, { item: toToggle, selected: true }]);
   };
-
-  // used to show collapsible lists of health regions in different provinces
-  const filterData = Object.entries(healthRegions).map(
-    ([provinceName, regionNames]) => ({
-      heading: provinceName,
-      content: regionNames,
-    })
-  );
-
-  let width = 0;
-  let height = 0;
-
-  const chart =
-    whichChart === "timeseries" ? (
+  let chart;
+  if (whichChart === "timeseries")
+    chart = (
       <TimeSeriesChart
         {...{ regions, tabKey, daysBack, per100k, interpolate }}
       />
-    ) : (
+    );
+  else if (whichChart === "vaccine")
+    chart = (
       <VaccineChart
         {...{
           regions,
@@ -104,29 +113,57 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
         }}
       />
     );
+  else
+    chart = (
+      <RankingTable
+        {...{
+          tabKey,
+          per100k,
+          groupByProvince,
+          countries,
+          toggleRegionSelection,
+        }}
+      />
+    );
 
+  let chartSpecificOptions;
+  if (whichChart === "timeseries")
+    chartSpecificOptions = (
+      <TimeSeriesOptions
+        {...{
+          tabKey,
+          setTabKey,
+          daysBack,
+          setDaysBack,
+          interpolate,
+          setInterpolate,
+          per100k,
+          setPer100k,
+        }}
+      />
+    );
+  else if (whichChart === "vaccine")
+    chartSpecificOptions = (
+      <VaccineOptions options={vaccineOptions} setOptions={setVaccineOptions} />
+    );
+  else
+    chartSpecificOptions = (
+      <RankingOptions
+        {...{
+          tabKey,
+          per100k,
+          groupByProvince,
+          countries,
+          setTabKey,
+          setPer100k,
+          setGroupByProvince,
+          setCountries,
+        }}
+      />
+    );
   const options = (
     <>
-      {whichChart === "timeseries" ? (
-        <TimeSeriesOptions
-          {...{
-            tabKey,
-            setTabKey,
-            daysBack,
-            setDaysBack,
-            interpolate,
-            setInterpolate,
-            per100k,
-            setPer100k,
-          }}
-        />
-      ) : (
-        <VaccineOptions
-          options={vaccineOptions}
-          setOptions={setVaccineOptions}
-        />
-      )}
-
+      {chartSpecificOptions}
       <RegionSelection
         {...{
           regionTray,
@@ -137,13 +174,6 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     </>
   );
 
-  /* <Tabs
-        tabs={tabs}
-        tabCallBack={onChangeChart}
-        amount={false}
-        headingComp={null}
-        longUnderline={false}
-      /> */
   return <FlowSquares chart={chart} options={options} />;
 };
 
