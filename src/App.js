@@ -1,24 +1,38 @@
+import Amplify from "aws-amplify";
+import DashboardResearch from "Containers/DashboardResearch";
+import { useAuthStore } from "Context/authContext";
+import { observer } from "mobx-react";
+import { CovidGraphPage } from "Pages/Covid/CovidGraphPage";
 import React from "react";
 // components
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
   Redirect,
+  Route,
+  Switch,
 } from "react-router-dom";
-
-// ================ PAGES ================
-import Login from "./Pages/Login/Login";
-import ForgotPassword from "./Pages/Login/ForgotPassword";
-import ResetPassword from "./Pages/Login/ResetPassword";
-import LoginContainer from "./Pages/Login/LoginContainer";
-import LogOut from "./Pages/Logout";
-import Dashboard from "./Pages/Dashboard";
-import { useAuthStore } from "Context/authContext";
-import { observer } from "mobx-react";
 import NotFound from "./Pages/404";
-import DashboardResearch from "Containers/DashboardResearch";
-import { CovidGraphPage } from "Pages/Covid/CovidGraphPage";
+import Dashboard from "./Pages/Dashboard";
+import ForgotPassword from "./Pages/Login/ForgotPassword";
+// ================ PAGES ================
+import Login from "./Pages/Login/HealthLogin";
+import LoginContainer from "./Pages/Login/LoginContainer";
+import ResetPassword from "./Pages/Login/ResetPassword";
+import LogOut from "./Pages/Logout";
+
+const cognitoConfig = {
+  region: process.env.REACT_APP_COGNITO_REGION,
+  userPoolId: process.env.REACT_APP_COGNITO_USER_POOL_ID,
+  clientId: process.env.REACT_APP_COGNITO_CLIENT_ID,
+};
+
+Amplify.configure({
+  Auth: {
+    region: cognitoConfig.region,
+    userPoolId: cognitoConfig.userPoolId,
+    userPoolWebClientId: cognitoConfig.clientId,
+  },
+});
 
 const App = observer(() => {
   const authStore = useAuthStore();
@@ -42,21 +56,17 @@ const App = observer(() => {
               token ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
             }
           />
-          <Route path="/login/forgotpassword" initial>
-            <LoginContainer>
-              <ForgotPassword></ForgotPassword>
-            </LoginContainer>
-          </Route>
-          <Route path="/resetpassword" initial>
-            <LoginContainer>
-              <ResetPassword></ResetPassword>
-            </LoginContainer>
-          </Route>
-          <Route path="/login" initial>
-            <LoginContainer>
-              <Login></Login>
-            </LoginContainer>
-          </Route>
+          <LoginContainer>
+            <Route path="/login/forgotpassword" initial>
+              <ForgotPassword />
+            </Route>
+            <Route path="/resetpassword" initial>
+              <ResetPassword />
+            </Route>
+            <Route path="/login" initial exact>
+              <Login />
+            </Route>
+          </LoginContainer>
           <Route path="/logout" initial>
             <LogOut />
           </Route>

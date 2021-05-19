@@ -1,39 +1,47 @@
 import Button from "Components/Forms/Button";
 import InputField from "Components/Forms/InputField";
-import Notfications from "Components/Helpers/Notifications";
-import Api from "Helpers/api";
+import Notifications from "Components/Helpers/Notifications";
 import Translator from "Helpers/Translator";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
-const api = new Api();
-
+export type SignInErrorCallback = (title: string, text: string) => void;
+export type SignInCallback = (
+  email: string,
+  password: string,
+  /** Call this if the signing attempt fails to show an error message*/
+  notifyError: SignInErrorCallback
+) => void;
 interface LoginFormProps {
-  signIn: (email: string, password: string) => void;
+  /** Callback that will be executed when the user submits the login form*/
+  signIn: SignInCallback;
 }
+/**
+ * Reusable login form that can display error messages to the user
+ */
 const LoginForm = ({ signIn }: LoginFormProps) => {
   const [password, setPW] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState({
-    head: null,
-    text: null,
-    isSet: false
+    title: "",
+    text: "",
+    isSet: false,
   });
 
   const onSignIn = (e: React.SyntheticEvent) => {
-    console.log('hello')
-    e.preventDefault()
-    signIn(email, password);
+    e.preventDefault();
+    signIn(email, password, (title, text) => {
+      setError({ title, text, isSet: true });
+    });
   };
 
   return (
     <>
       {error.isSet && (
-        <Notfications
-          head={error.head}
+        <Notifications
+          head={error.title}
           text={error.text}
           success={false}
-        ></Notfications>
+        ></Notifications>
       )}
       <form className="pb-12" onSubmit={onSignIn}>
         <div>
@@ -65,12 +73,12 @@ const LoginForm = ({ signIn }: LoginFormProps) => {
         </div>
         <div className="mt-6 flex justify-center">
           <div className="text-base leading-5">
-            <Link
+            <a
               className="font-medium text-gray-600 hover:text-gray-700 focus:outline-none focus:underline transition ease-in-out duration-150"
-              to="/login/forgotpassword"
+              href="/forgotpassword"
             >
               {Translator("Forgot password?")}
-            </Link>
+            </a>
           </div>
         </div>
       </form>
