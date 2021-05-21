@@ -1,6 +1,6 @@
-import Amplify from "aws-amplify";
 import DashboardResearch from "Containers/DashboardResearch";
 import { useAuthStore } from "Context/authContext";
+import { setUpCognito } from "Helpers/cognito";
 import { observer } from "mobx-react";
 import { CovidGraphPage } from "Pages/Covid/CovidGraphPage";
 import React from "react";
@@ -19,24 +19,9 @@ import Login from "./Pages/Login/HealthLogin";
 import LoginContainer from "./Pages/Login/LoginContainer";
 import ResetPassword from "./Pages/Login/ResetPassword";
 import LogOut from "./Pages/Logout";
-
-const cognitoConfig = {
-  region: process.env.REACT_APP_COGNITO_REGION,
-  userPoolId: process.env.REACT_APP_COGNITO_USER_POOL_ID,
-  clientId: process.env.REACT_APP_COGNITO_CLIENT_ID,
-};
-
-Amplify.configure({
-  Auth: {
-    region: cognitoConfig.region,
-    userPoolId: cognitoConfig.userPoolId,
-    userPoolWebClientId: cognitoConfig.clientId,
-  },
-});
-
+setUpCognito();
 const App = observer(() => {
   const authStore = useAuthStore();
-  const token = authStore.token;
   return (
     <Router>
       <div className="App">
@@ -48,32 +33,41 @@ const App = observer(() => {
           <Route path="/covid">
             <CovidGraphPage />
           </Route>
-          {/* everything below here requires login*/}
+          <Route path="/dashboard">
+            <Dashboard language={authStore.language} />
+          </Route>
           <Route
             exact
             path="/"
             render={() =>
-              token ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
+              authStore.user ? (
+                <Redirect to="/dashboard" />
+              ) : (
+                <Redirect to="/login" />
+              )
             }
           />
-          <LoginContainer>
-            <Route path="/login/forgotpassword" initial>
+          <Route path="/login/forgotpassword" initial>
+            <LoginContainer>
               <ForgotPassword />
-            </Route>
-            <Route path="/resetpassword" initial>
+            </LoginContainer>
+          </Route>
+          <Route path="/resetpassword" initial>
+            <LoginContainer>
               <ResetPassword />
-            </Route>
-            <Route path="/login" initial exact>
+            </LoginContainer>
+          </Route>
+          <Route path="/login" initial exact>
+            <LoginContainer>
               <Login />
-            </Route>
-          </LoginContainer>
+            </LoginContainer>
+          </Route>
           <Route path="/logout" initial>
-            <LogOut />
+            <LoginContainer>
+              <LogOut />
+            </LoginContainer>
           </Route>
-          {!token && <Redirect to="/login" />}
-          <Route path="/dashboard">
-            <Dashboard language={authStore.language} />
-          </Route>
+          {!authStore.user && <Redirect to="/login" />}
           <Route path="*">
             <NotFound />
           </Route>

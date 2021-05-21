@@ -1,4 +1,5 @@
 import { useAuthStore } from "Context/authContext";
+import { signOut } from "Helpers/cognito";
 import React from "react";
 import { useHistory } from "react-router-dom";
 
@@ -10,6 +11,7 @@ const LogOut = () => {
   localStorage.removeItem("cart");
   authStore.token = null;
   authStore.user = null;
+  signOut();
   history.push("/login");
   return <div></div>;
 };
