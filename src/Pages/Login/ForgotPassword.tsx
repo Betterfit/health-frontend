@@ -77,13 +77,9 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center">
-        <h1 className="text-gray-700 text-xl font-semibold pb-2">
-          {Translator("Reset Password")}
-        </h1>
-      </div>
       {stage === "email" ? (
         <ErrorDisplayForm
+          title="Forgot Password"
           subtitle="Enter your email address to recieve a verification code."
           handleSubmit={resetPW}
           submitLabel="Reset Password"
@@ -97,6 +93,7 @@ const ForgotPassword = () => {
         </ErrorDisplayForm>
       ) : (
         <ErrorDisplayForm
+          title="Reset Password"
           subtitle="Enter the verification code that was emailed to you and choose a new password"
           handleSubmit={confirmResetPW}
           submitLabel="Confirm"

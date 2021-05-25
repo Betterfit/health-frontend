@@ -7,8 +7,12 @@ import React, { useState } from "react";
 
 interface CognitoLoginProps {
   onAuthenticate: () => void;
+  signUpEnabled?: boolean;
 }
-const CognitoLogin = ({ onAuthenticate }: CognitoLoginProps) => {
+const CognitoLogin = ({
+  onAuthenticate,
+  signUpEnabled = true,
+}: CognitoLoginProps) => {
   // TODO: add typing to mobx
   const [user, setUser] = useState<any>();
 
@@ -39,7 +43,7 @@ const CognitoLogin = ({ onAuthenticate }: CognitoLoginProps) => {
     onAuthenticate();
   };
 
-  if (!user?.challengeName) return <LoginForm signIn={signIn} />;
+  if (!user?.challengeName) return <LoginForm {...{ signIn, signUpEnabled }} />;
   return <VerificationCodeForm verifyCode={confirmMFA} />;
 };
 

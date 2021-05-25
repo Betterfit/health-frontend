@@ -8,9 +8,17 @@ interface InputFieldProps {
   type: string;
   value: string | number;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  autoFocus?: boolean;
 }
 
-function InputField({ idTag, name, type, value, onChange }: InputFieldProps) {
+function InputField({
+  idTag,
+  name,
+  type,
+  value,
+  onChange,
+  autoFocus = false,
+}: InputFieldProps) {
   const id = idTag ? idTag : name;
   return (
     <>
@@ -25,6 +33,7 @@ function InputField({ idTag, name, type, value, onChange }: InputFieldProps) {
           placeholder={Translator(name)}
           value={value}
           onChange={onChange}
+          autoFocus={autoFocus}
           required
         />
       </div>

@@ -24,7 +24,10 @@ export const CovidGraphPage = () => {
     return (
       <LoginContainer>
         <p className="text-center pb-8 text-2xl">COVID-19 Data Aggregator</p>
-        <CognitoLogin onAuthenticate={checkIfAuthenticated} />
+        <CognitoLogin
+          onAuthenticate={checkIfAuthenticated}
+          signUpEnabled={false}
+        />
       </LoginContainer>
     );
 

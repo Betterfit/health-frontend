@@ -1,8 +1,8 @@
 import Button from "Components/Forms/Button";
 import InputField from "Components/Forms/InputField";
 import Notifications from "Components/Helpers/Notifications";
-import Translator from "Helpers/Translator";
 import React, { useState } from "react";
+import SubtleLink from "./SubtleLink";
 
 export type SignInErrorCallback = (title: string, text: string) => void;
 export type SignInCallback = (
@@ -14,12 +14,13 @@ export type SignInCallback = (
 interface LoginFormProps {
   /** Callback that will be executed when the user submits the login form*/
   signIn: SignInCallback;
+  signUpEnabled?: boolean;
 }
 /**
  * Reusable login form that can display error messages to the user
  * TODO: Replace with ErrorDisplayForm
  */
-const LoginForm = ({ signIn }: LoginFormProps) => {
+const LoginForm = ({ signIn, signUpEnabled = true }: LoginFormProps) => {
   const [password, setPW] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState({
@@ -72,15 +73,9 @@ const LoginForm = ({ signIn }: LoginFormProps) => {
             <Button text="Login" solid={true} onClick={onSignIn}></Button>
           </div>
         </div>
-        <div className="mt-6 flex justify-center">
-          <div className="text-base leading-5">
-            <a
-              className="font-medium text-gray-600 hover:text-gray-700 focus:outline-none focus:underline transition ease-in-out duration-150"
-              href="/forgotpassword"
-            >
-              {Translator("Forgot password?")}
-            </a>
-          </div>
+        <div className="mt-6 flex flex-col item-center">
+          {signUpEnabled && <SubtleLink text="Sign up" path="/signup" />}
+          <SubtleLink text="Forgot password?" path="/forgotpassword" />
         </div>
       </form>
     </>

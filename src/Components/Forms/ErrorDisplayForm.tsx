@@ -10,6 +10,8 @@ export type SubmitCallback = (
 interface ErrorDisplayFormProps {
   /** Callback that will be executed when the user submits the form*/
   handleSubmit: SubmitCallback;
+  /** No title is shown if this prop is not given */
+  title?: string;
   /** No subtitle is shown if this prop is not given */
   subtitle?: string;
   /** Text shown on the submit button */
@@ -22,6 +24,7 @@ const ErrorDisplayForm = ({
   handleSubmit,
   subtitle,
   submitLabel = "Submit",
+  title,
   children,
 }: ErrorDisplayFormProps) => {
   const [error, setError] = useState({
@@ -36,6 +39,11 @@ const ErrorDisplayForm = ({
 
   return (
     <>
+      {title && (
+        <div className="flex flex-col items-center">
+          <h1 className="text-gray-700 text-xl font-semibold pb-2">{title}</h1>
+        </div>
+      )}
       {error.isSet && (
         <Notifications head={error.title} text={error.text} success={false} />
       )}
