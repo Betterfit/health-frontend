@@ -34,6 +34,8 @@ const ErrorDisplayForm = ({
   });
   const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
+    // clear out error after submit
+    setError({ title: "", text: "", isSet: false });
     handleSubmit((title, text) => setError({ title, text, isSet: true }));
   };
 
