@@ -1,4 +1,5 @@
 import * as axios from "axios";
+import { getIdToken } from "Helpers/cognito";
 
 export const apiURL = process.env.REACT_APP_DJANGO_API_URL;
 export default class Api {
@@ -7,14 +8,15 @@ export default class Api {
     this.api_url = apiURL;
   }
 
-  init = () => {
-    let token = localStorage.getItem("token");
+  init = async (requireAuth = true) => {
     let headers = {
       "Content-Type": "application/json",
     };
 
-    if (token) {
-      headers.Authorization = `Token ${token}`;
+    if (requireAuth) {
+      const token = await getIdToken();
+
+      headers.Authorization = `Bearer ${token}`;
     }
 
     this.client = axios.create({
@@ -27,184 +29,219 @@ export default class Api {
 
   // ============================   AUTH API  =====================================
 
-  addNewUser = (data) => {
-    return this.init().post("/users/", data);
+  addNewUser = async (data) => {
+    const client = await this.init();
+    return client.post("/users/", data);
   };
 
   //To request a password reset email
-  passwordResetRequest = (data) => {
+  passwordResetRequest = async (data) => {
     //stub until relevent api can be included
-    return this.init().post("/api/password_reset/", data);
+    const client = await this.init();
+    return client.post("/api/password_reset/", data);
   };
 
-  signIn = (data) => {
-    return this.init().post("/api-token-auth/", data);
+  getProfile = async () => {
+    const client = await this.init();
+    return client.get("/me/");
   };
 
-  getUserData = (data) => {
-    return this.init().post("/api-token-auth/", data);
+  getUserData = async (data) => {
+    const client = await this.init();
+    return client.post("/api-token-auth/", data);
   };
 
-  getUser = (id) => {
-    return this.init().get(`/users/${id}/`);
+  getUser = async (id) => {
+    const client = await this.init();
+    return client.get(`/users/${id}/`);
   };
 
-  getFacilityData = (id) => {
-    return this.init().get(`/facilities/${id}`);
+  getFacilityData = async (id) => {
+    const client = await this.init();
+    return client.get(`/facilities/${id}`);
   };
 
-  changePassword = (data) => {
-    return this.init().put(`/change-password/`, data);
+  changePassword = async (data) => {
+    const client = await this.init();
+    return client.put(`/change-password/`, data);
   };
 
-  changeProfile = (id, data) => {
-    return this.init().patch(`/users/${id}/`, data);
+  changeProfile = async (id, data) => {
+    const client = await this.init();
+    return client.patch(`/users/${id}/`, data);
   };
 
   // ============================   PRODUCTS API  =====================================
-  getProductCategories = () => {
-    return this.init().get(`/product-categories/`);
+  getProductCategories = async () => {
+    const client = await this.init();
+    return client.get(`/product-categories/`);
   };
 
-  getCategoriesBySupplier = (supplierid) => {
-    return this.init().get(`/product-categories/?supplier=${supplierid}`);
+  getCategoriesBySupplier = async (supplierid) => {
+    const client = await this.init();
+    return client.get(`/product-categories/?supplier=${supplierid}`);
   };
 
-  getProductsBySupplier = (productid) => {
-    return this.init().get(`products/${productid}/`);
+  getProductsBySupplier = async (productid) => {
+    const client = await this.init();
+    return client.get(`products/${productid}/`);
   };
 
-  getProductBySupplier = (supplierid, productid) => {
-    return this.init().get(`/products/${productid}/?supplier=${supplierid}`);
+  getProductBySupplier = async (supplierid, productid) => {
+    const client = await this.init();
+    return client.get(`/products/${productid}/?supplier=${supplierid}`);
   };
 
   //get products under a particular category id
-  getCategory = (id) => {
-    return this.init().get(`/product-categories/${id}/`);
+  getCategory = async (id) => {
+    const client = await this.init();
+    return client.get(`/product-categories/${id}/`);
   };
 
-  getProduct = (id) => {
-    return this.init().get(`/products/${id}/`);
+  getProduct = async (id) => {
+    const client = await this.init();
+    return client.get(`/products/${id}/`);
   };
-  getProductVariant = (id) => {
-    return this.init().get(`/product-variations/${id}`);
+  getProductVariant = async (id) => {
+    const client = await this.init();
+    return client.get(`/product-variations/${id}`);
   };
-  getSearchResults = (query) => {
-    return this.init().get(`/product-categories/?q=${query}`);
-  };
-
-  getSupplierSearchResults = (query, id) => {
-    return this.init().get(`/product-categories/?q=${query}&supplier=${id}`);
-  };
-
-  getProductOption = (id) => {
-    return this.init().get(`/product-options/${id}/`);
+  getSearchResults = async (query) => {
+    const client = await this.init();
+    return client.get(`/product-categories/?q=${query}`);
   };
 
-  updateSupplierProductQuantity = (userId, id, data) => {
+  getSupplierSearchResults = async (query, id) => {
+    const client = await this.init();
+    return client.get(`/product-categories/?q=${query}&supplier=${id}`);
+  };
+
+  getProductOption = async (id) => {
+    const client = await this.init();
+    return client.get(`/product-options/${id}/`);
+  };
+
+  updateSupplierProductQuantity = async (userId, id, data) => {
     let quantity = { quantity: data };
-    return this.init().put(
-      `/suppliers/${userId}/product-options/${id}/`,
-      quantity
-    );
+    const client = await this.init();
+    return client.put(`/suppliers/${userId}/product-options/${id}/`, quantity);
   };
 
-  getSupplierProductQuantity = (userId, id) => {
-    return this.init().get(`/suppliers/${userId}/product-options/${id}/`);
+  getSupplierProductQuantity = async (userId, id) => {
+    const client = await this.init();
+    return client.get(`/suppliers/${userId}/product-options/${id}/`);
   };
 
-  getProductOptionsSearch = (catId, query) => {
-    return this.init().get(
-      `/product-options/?search=${query}&category=${catId}`
-    );
+  getProductOptionsSearch = async (catId, query) => {
+    const client = await this.init();
+    return client.get(`/product-options/?search=${query}&category=${catId}`);
   };
 
   // ============================   TICKETS API  =====================================
 
-  getSupplierTickets = (userId) => {
-    return this.init().get(`/suppliers/${userId}/tickets/`);
+  getSupplierTickets = async (userId) => {
+    const client = await this.init();
+    return client.get(`/suppliers/${userId}/tickets/`);
   };
 
-  getSupplierTicketOrder = (userId, id) => {
-    return this.init().get(`/suppliers/${userId}/tickets/${id}/`);
+  getSupplierTicketOrder = async (userId, id) => {
+    const client = await this.init();
+    return client.get(`/suppliers/${userId}/tickets/${id}/`);
   };
 
-  setUpdateTicket = (userId, id, data) => {
-    return this.init().put(`/suppliers/${userId}/tickets/${id}/`, data);
+  setUpdateTicket = async (userId, id, data) => {
+    const client = await this.init();
+    return client.put(`/suppliers/${userId}/tickets/${id}/`, data);
   };
 
-  getSearchTickets = (supplierId, query) => {
-    return this.init().get(`/suppliers/${supplierId}/tickets/?search=${query}`);
+  getSearchTickets = async (supplierId, query) => {
+    const client = await this.init();
+    return client.get(`/suppliers/${supplierId}/tickets/?search=${query}`);
   };
 
   // ============================   ORDERS API  =====================================
 
-  getOrderList = (facilityId) => {
-    return this.init().get(`/facilities/${facilityId}/orders/`);
+  getOrderList = async (facilityId) => {
+    const client = await this.init();
+    return client.get(`/facilities/${facilityId}/orders/`);
   };
 
-  getOrder = (orderId) => {
-    return this.init().get(`/orders/${orderId}/`);
+  getOrder = async (orderId) => {
+    const client = await this.init();
+    return client.get(`/orders/${orderId}/`);
   };
 
-  getAllOrders = (orderId) => {
-    return this.init().get(`/orders/`);
+  getAllOrders = async (orderId) => {
+    const client = await this.init();
+    return client.get(`/orders/`);
   };
 
-  getSearchOrders = (query) => {
-    return this.init().get(`/orders/?search=${query}/`);
+  getSearchOrders = async (query) => {
+    const client = await this.init();
+    return client.get(`/orders/?search=${query}/`);
   };
 
   //to cancel an order - change to 'cancelled' status
   // data - should be json of {order_no:[######], status:"open"}
-  deleteOrder = (orderId, orderNo) => {
+  deleteOrder = async (orderId, orderNo) => {
     let data = { status: "cancelled", order_no: orderNo };
-    return this.init().put(`/orders/${orderId}/`, data);
+    const client = await this.init();
+    return client.put(`/orders/${orderId}/`, data);
   };
 
   //to submit a draft - change to 'open' status
   // data - should be json of {order_no:[######], status:"open"}
-  submitDraft = (orderId, orderNo) => {
+  submitDraft = async (orderId, orderNo) => {
     let data = { status: "open", order_no: orderNo };
-    return this.init().put(`/orders/${orderId}/`, data);
+    const client = await this.init();
+    return client.put(`/orders/${orderId}/`, data);
   };
 
-  getTrafficControllerSupply = () => {
-    return this.init().get(`/traffic-controllers/product-categories/`);
+  getTrafficControllerSupply = async () => {
+    const client = await this.init();
+    return client.get(`/traffic-controllers/product-categories/`);
   };
 
-  setNewOrder = (order) => {
-    return this.init().post(`/orders/`, order);
+  setNewOrder = async (order) => {
+    const client = await this.init();
+    return client.post(`/orders/`, order);
   };
 
-  editOrder = (order, id) => {
+  editOrder = async (order, id) => {
     console.log(order);
-    return this.init().patch(`/orders/${id}/`, order);
+    const client = await this.init();
+    return client.patch(`/orders/${id}/`, order);
   };
 
   // ============================   RESOURCES API  =====================================
-  getResources = (searchQuery = "") => {
+  getResources = async (searchQuery = "") => {
+    const client = await this.init();
     if (searchQuery !== "")
-      return this.init().get(`/resources?search=${searchQuery}`);
-    return this.init().get(`/resources/`);
+      return client.get(`/resources?search=${searchQuery}`);
+    return client.get(`/resources/`);
   };
 
-  getTags = () => {
-    return this.init().get(`/tags/`);
+  getTags = async () => {
+    const client = await this.init();
+    return client.get(`/tags/`);
   };
 
   // ============================  MATCHES API  =====================================
 
-  getMatchHistory = () => {
-    return this.init().get(`/matches/history/`);
+  getMatchHistory = async () => {
+    const client = await this.init();
+    return client.get(`/matches/history/`);
   };
-  getMatchHistoryDate = (date) => {
-    return this.init().get(`/matches/history?date=${date}`);
+  getMatchHistoryDate = async (date) => {
+    const client = await this.init();
+    return client.get(`/matches/history?date=${date}`);
   };
-  getMatches = () => {
-    return this.init().get("/matches/");
+  getMatches = async () => {
+    const client = await this.init();
+    return client.get("/matches/");
   };
-  postSortedMatches = (orders) => {
-    return this.init().post("/match-orders/", orders);
+  postSortedMatches = async (orders) => {
+    const client = await this.init();
+    return client.post("/match-orders/", orders);
   };
 }

@@ -1,28 +1,27 @@
+import DashboardResearch from "Containers/DashboardResearch";
+import { useAuthStore } from "Context/authContext";
+import { setUpCognito } from "Helpers/cognito";
+import { observer } from "mobx-react";
+import { CovidGraphPage } from "Pages/Covid/CovidGraphPage";
+import SignUp from "Pages/Login/SignUp";
 import React from "react";
 // components
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
   Redirect,
+  Route,
+  Switch,
 } from "react-router-dom";
-
-// ================ PAGES ================
-import Login from "./Pages/Login/Login";
+import NotFound from "./Pages/404";
+import Dashboard from "./Pages/Dashboard";
 import ForgotPassword from "./Pages/Login/ForgotPassword";
-import ResetPassword from "./Pages/Login/ResetPassword";
+// ================ PAGES ================
+import Login from "./Pages/Login/HealthLogin";
 import LoginContainer from "./Pages/Login/LoginContainer";
 import LogOut from "./Pages/Logout";
-import Dashboard from "./Pages/Dashboard";
-import { useAuthStore } from "Context/authContext";
-import { observer } from "mobx-react";
-import NotFound from "./Pages/404";
-import DashboardResearch from "Containers/DashboardResearch";
-import { CovidGraphPage } from "Pages/Covid/CovidGraphPage";
-
+setUpCognito();
 const App = observer(() => {
   const authStore = useAuthStore();
-  const token = authStore.token;
   return (
     <Router>
       <div className="App">
@@ -34,36 +33,41 @@ const App = observer(() => {
           <Route path="/covid">
             <CovidGraphPage />
           </Route>
-          {/* everything below here requires login*/}
+          <Route path="/dashboard">
+            <Dashboard language={authStore.language} />
+          </Route>
           <Route
             exact
             path="/"
             render={() =>
-              token ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
+              authStore.user ? (
+                <Redirect to="/dashboard" />
+              ) : (
+                <Redirect to="/login" />
+              )
             }
           />
-          <Route path="/login/forgotpassword" initial>
+          <Route path="/forgotpassword" initial>
             <LoginContainer>
-              <ForgotPassword></ForgotPassword>
+              <ForgotPassword />
             </LoginContainer>
           </Route>
-          <Route path="/resetpassword" initial>
+          <Route path="/login" initial exact>
             <LoginContainer>
-              <ResetPassword></ResetPassword>
+              <Login />
             </LoginContainer>
           </Route>
-          <Route path="/login" initial>
+          <Route path="/signup" initial exact>
             <LoginContainer>
-              <Login></Login>
+              <SignUp />
             </LoginContainer>
           </Route>
           <Route path="/logout" initial>
-            <LogOut />
+            <LoginContainer>
+              <LogOut />
+            </LoginContainer>
           </Route>
-          {!token && <Redirect to="/login" />}
-          <Route path="/dashboard">
-            <Dashboard language={authStore.language} />
-          </Route>
+          {!authStore.user && <Redirect to="/login" />}
           <Route path="*">
             <NotFound />
           </Route>

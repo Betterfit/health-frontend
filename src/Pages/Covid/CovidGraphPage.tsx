@@ -1,8 +1,9 @@
 import { Auth } from "aws-amplify";
 import DashboardGraph from "Containers/Traffic/Inner/DashboardGraph";
+import CognitoLogin from "Pages/Login/CognitoLogin";
+import LoginContainer from "Pages/Login/LoginContainer";
 import React, { useCallback, useLayoutEffect, useState } from "react";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
-import CovidLogin from "./CovidLogin";
 import FlowNav from "./FlowNav";
 
 export const CovidGraphPage = () => {
@@ -20,7 +21,15 @@ export const CovidGraphPage = () => {
   }, [checkIfAuthenticated]);
 
   if (!isAuthenticated)
-    return <CovidLogin onAuthenticate={checkIfAuthenticated} />;
+    return (
+      <LoginContainer>
+        <p className="text-center pb-8 text-2xl">COVID-19 Data Aggregator</p>
+        <CognitoLogin
+          onAuthenticate={checkIfAuthenticated}
+          signUpEnabled={false}
+        />
+      </LoginContainer>
+    );
 
   return (
     <div className="w-full flex flex-col flow-root">

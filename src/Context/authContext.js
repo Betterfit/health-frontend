@@ -1,8 +1,8 @@
+import { useLocalStore } from "mobx-react";
 import React from "react";
 import { createAuthStore } from "Store/authStore";
-import { useLocalStore } from "mobx-react";
 
-const AuthContext = React.createContext(null);
+export const AuthContext = React.createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const authStore = useLocalStore(createAuthStore);
