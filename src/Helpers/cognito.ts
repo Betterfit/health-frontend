@@ -25,6 +25,13 @@ export const signOut = async () => {
   }
 };
 
+// mocked during jest tests
+export const getIdToken = async () => {
+  const session = await Auth.currentSession();
+  const token = session.getIdToken().getJwtToken();
+  return token;
+};
+
 // errors thrown by Auth
 export type CognitoResult = {
   code: string;

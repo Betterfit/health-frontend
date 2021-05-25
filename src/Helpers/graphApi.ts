@@ -1,12 +1,11 @@
-import { Auth } from "aws-amplify";
 import axios, { AxiosResponse } from "axios";
 import { HealthRegion, HealthRegionsByCountry, REstimate } from "Types";
+import { getIdToken } from "./cognito";
 
 const API_URL = process.env.REACT_APP_GRAPHQL_API_URL;
 export default class GraphApi {
   init = async () => {
-    const session = await Auth.currentSession();
-    const token = session.getIdToken().getJwtToken();
+    const token = await getIdToken();
     let headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,

@@ -1,5 +1,5 @@
-import { Auth } from "aws-amplify";
 import * as axios from "axios";
+import { getIdToken } from "Helpers/cognito";
 
 export const apiURL = process.env.REACT_APP_DJANGO_API_URL;
 export default class Api {
@@ -14,9 +14,8 @@ export default class Api {
     };
 
     if (requireAuth) {
-      const token = await Auth.currentSession().then((session) =>
-        session.getIdToken().getJwtToken()
-      );
+      const token = await getIdToken();
+
       headers.Authorization = `Bearer ${token}`;
     }
 
