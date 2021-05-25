@@ -8,7 +8,7 @@ export type SignInErrorCallback = (title: string, text: string) => void;
 export type SignInCallback = (
   email: string,
   password: string,
-  /** Call this if the signing attempt fails to show an error message*/
+  /** Call this if the signin attempt fails to show an error message*/
   notifyError: SignInErrorCallback
 ) => void;
 interface LoginFormProps {
@@ -17,6 +17,7 @@ interface LoginFormProps {
 }
 /**
  * Reusable login form that can display error messages to the user
+ * TODO: Replace with ErrorDisplayForm
  */
 const LoginForm = ({ signIn }: LoginFormProps) => {
   const [password, setPW] = useState("");

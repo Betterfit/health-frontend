@@ -47,7 +47,7 @@ const App = observer(() => {
               )
             }
           />
-          <Route path="/login/forgotpassword" initial>
+          <Route path="/forgotpassword" initial>
             <LoginContainer>
               <ForgotPassword />
             </LoginContainer>

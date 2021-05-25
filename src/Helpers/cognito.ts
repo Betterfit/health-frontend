@@ -25,8 +25,8 @@ export const signOut = async () => {
   }
 };
 
-// errors thrown by Auth.signIn
-export type CognitoSignInError = {
+// errors thrown by Auth
+export type CognitoResult = {
   code: string;
   message: string;
   name: string;

@@ -9,8 +9,12 @@ export type VerifyCodeCallback = (
 ) => void;
 interface MFACodeFormProps {
   verifyCode: VerifyCodeCallback;
+  text?: string;
 }
-const VerificationCodeForm = ({ verifyCode }: MFACodeFormProps) => {
+const VerificationCodeForm = ({
+  verifyCode,
+  text = "Enter your verification code",
+}: MFACodeFormProps) => {
   const [code, setCode] = useState("");
   const [error, setError] = useState({
     title: "",
@@ -28,9 +32,9 @@ const VerificationCodeForm = ({ verifyCode }: MFACodeFormProps) => {
   return (
     <>
       {error.isSet && (
-        <Notifications head={error.title} text={error.text} success={false} />
+        <Notifications head={error.title} text={error} success={false} />
       )}
-      <p className="text-center">Enter your verification code</p>
+      <p className="text-center leading-5 pb-2">{text}</p>
       <form className="pb-12" onSubmit={onSubmit}>
         <div>
           <InputField
@@ -41,7 +45,7 @@ const VerificationCodeForm = ({ verifyCode }: MFACodeFormProps) => {
             onChange={(e) => {
               setCode(e.target.value);
             }}
-          ></InputField>
+          />
         </div>
         <div className="mt-6">
           <div className="mt-6">
