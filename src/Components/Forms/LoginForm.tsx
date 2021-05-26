@@ -1,15 +1,16 @@
-import Button from "Components/Forms/Button";
 import InputField from "Components/Forms/InputField";
-import Notifications from "Components/Helpers/Notifications";
 import React, { useState } from "react";
+import ErrorDisplayForm, {
+  NotifyErrorCallback,
+  SubmitCallback,
+} from "./ErrorDisplayForm";
 import SubtleLink from "./SubtleLink";
 
-export type SignInErrorCallback = (title: string, text: string) => void;
 export type SignInCallback = (
   email: string,
   password: string,
   /** Call this if the signin attempt fails to show an error message*/
-  notifyError: SignInErrorCallback
+  notifyError: NotifyErrorCallback
 ) => void;
 interface LoginFormProps {
   /** Callback that will be executed when the user submits the login form*/
@@ -18,66 +19,41 @@ interface LoginFormProps {
 }
 /**
  * Reusable login form that can display error messages to the user
- * TODO: Replace with ErrorDisplayForm
  */
 const LoginForm = ({ signIn, signUpEnabled = true }: LoginFormProps) => {
   const [password, setPW] = useState("");
   const [email, setEmail] = useState("");
-  const [error, setError] = useState({
-    title: "",
-    text: "",
-    isSet: false,
-  });
-
-  const onSignIn = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    signIn(email, password, (title, text) => {
-      setError({ title, text, isSet: true });
-    });
+  const onSignIn: SubmitCallback = (notifyError) => {
+    signIn(email, password, notifyError);
   };
 
   return (
     <>
-      {error.isSet && (
-        <Notifications
-          head={error.title}
-          text={error.text}
-          success={false}
-        ></Notifications>
-      )}
-      <form className="pb-12" onSubmit={onSignIn}>
-        <div>
-          <InputField
-            idTag="email"
-            name="Email"
-            type="text"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          ></InputField>
-        </div>
-        <div className="mt-3">
-          <InputField
-            idTag="password"
-            name="Password"
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPW(e.target.value);
-            }}
-          ></InputField>
-        </div>
-        <div className="mt-6">
-          <div className="mt-6">
-            <Button text="Login" solid={true} onClick={onSignIn}></Button>
-          </div>
-        </div>
-        <div className="mt-6 flex flex-col item-center">
-          {signUpEnabled && <SubtleLink text="Sign up" path="/signup" />}
-          <SubtleLink text="Forgot password?" path="/forgotpassword" />
-        </div>
-      </form>
+      <ErrorDisplayForm handleSubmit={onSignIn}>
+        <InputField
+          idTag="email"
+          name="Email"
+          type="text"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
+        <InputField
+          idTag="password"
+          name="Password"
+          type="password"
+          value={password}
+          onChange={(e) => {
+            setPW(e.target.value);
+          }}
+        />
+      </ErrorDisplayForm>
+
+      <div className="mt-6 flex flex-col item-center">
+        {signUpEnabled && <SubtleLink text="Sign up" path="/signup" />}
+        <SubtleLink text="Forgot password?" path="/forgotpassword" />
+      </div>
     </>
   );
 };
