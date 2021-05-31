@@ -110,7 +110,7 @@ export interface VaccineChartOptions {
   lockedVaccines: VaccineType[];
 
   variantPrevelance: VariantPrevelance;
-  lockedVariants : VariantType[];
+  lockedVariants: VariantType[];
 }
 
 export type VaccineUsage = Record<VaccineType, number>;
@@ -147,3 +147,21 @@ export type TimeSeriesKey =
 export type ChartType = "timeseries" | "vaccine" | "ranking";
 
 export type Country = "Canada" | "US";
+
+export interface UserProfile {
+  username: string;
+  email: string;
+  userProfile: {
+    userType: string;
+    supplier: string;
+    supplierName: string;
+  };
+}
+
+export interface Organization {
+  name: string;
+  isPurchaser: boolean;
+  isSupplier: boolean;
+  // my_organization endpoint also specifies if the user is an administrator for the organization
+  isAdmin: boolean;
+}
