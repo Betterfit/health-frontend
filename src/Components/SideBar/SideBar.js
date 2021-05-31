@@ -16,12 +16,12 @@ const UserInfo = (profile) => {
     case "traffic_controller":
       return "Traffic Controller";
     default:
-      throw Error('Invalid profile user type')
+      return profile.email;
   }
 };
 
 const SideBar = ({ navItemsList }) => {
-  const userData = JSON.parse(localStorage.getItem("user"))
+  const userData = JSON.parse(localStorage.getItem("user"));
   const userName = userData.username;
   const orgName = UserInfo(userData.user_profile);
   const userType = userData.user_profile.user_type;

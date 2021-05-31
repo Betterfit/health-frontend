@@ -1,12 +1,14 @@
-import React from "react";
-import { ReactSVG } from "react-svg";
-import { NavLink } from "react-router-dom";
 import Translator from "Helpers/Translator";
+import orderBy from "lodash/orderBy";
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { ReactSVG } from "react-svg";
 
 const SideBarNavigation = ({ navList }) => {
+  const orderdNavList = orderBy(navList, ["precedence"], ["desc"]);
   return (
     <nav className="flex-1 flex-row md:flex-col flex-wrap flex md:block justify-around items-baseline sm:space-y-4 md:my-8 px-4 text-light-text">
-      {navList.map((navItem) => {
+      {orderdNavList.map((navItem) => {
         return (
           <div key={`menu_item_${navItem.key}`}>
             <NavLink
