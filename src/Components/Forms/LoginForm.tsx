@@ -29,7 +29,7 @@ const LoginForm = ({ signIn, signUpEnabled = true }: LoginFormProps) => {
 
   return (
     <>
-      <ErrorDisplayForm handleSubmit={onSignIn}>
+      <ErrorDisplayForm handleSubmit={onSignIn} submitLabel="Login">
         <InputField
           idTag="email"
           name="Email"
