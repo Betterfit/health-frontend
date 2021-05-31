@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import LoginForm, { SignInErrorCallback } from "./LoginForm";
+import { NotifyErrorCallback } from "./ErrorDisplayForm";
+import LoginForm from "./LoginForm";
 
 describe("LoginForm", () => {
   it("Triggers the sign in callback with user input", () => {
@@ -21,7 +22,7 @@ describe("LoginForm", () => {
     const signInCallback = (
       email: string,
       password: string,
-      notifyError: SignInErrorCallback
+      notifyError: NotifyErrorCallback
     ) => {
       notifyError(errorTitle, errorText);
     };

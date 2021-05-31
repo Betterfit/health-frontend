@@ -244,4 +244,10 @@ export default class Api {
     const client = await this.init();
     return client.post("/match-orders/", orders);
   };
+
+  // organization
+  getMyOrganization = async () => {
+    const client = await this.init();
+    return client.get("/organizations/my_organization/");
+  };
 }

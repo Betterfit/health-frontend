@@ -1,3 +1,5 @@
+import camelcaseKeys from "camelcase-keys";
+
 export const setClipboard = (text: string) =>
   navigator.clipboard.writeText(text);
 
@@ -12,4 +14,9 @@ export const findFirstNonNull = <T>(array: (T | null)[], fallback?: T): T => {
 // exists solely to save client code from verbosity of .slice().reverse()
 export const findLastNonNull = <T>(array: (T | null)[], fallback?: T): T => {
   return findFirstNonNull(array.slice().reverse(), fallback);
+};
+
+// converts all of the keys in a potentially nested object from snake case to camel case
+export const convertFromSnake = (object: any): any => {
+  camelcaseKeys(object, { deep: true });
 };

@@ -20,6 +20,7 @@
     "amazon-cognito-identity-js": "^4.5.10",
     "aws-amplify": "^3.3.17",
     "axios": "^0.20.0",
+    "camelcase-keys": "^6.2.2",
     "craco": "0.0.3",
     "customize-cra": "^1.0.0",
     "cypress": "^6.8.0",
@@ -63,7 +64,7 @@
     "eject": "react-app-rewired eject",
     "build:style": "tailwind build src/styles/index.css -o src/styles/tailwind.css --watch",
     "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx}\"",
-    "analyze": "source-map-explorer 'build/static/js/*.js",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "lint": "eslint --ext js,ts,tsx --format node_modules/eslint-stats/byErrorAndWarning.js src",
     "lint-folders": "eslint --ext js,ts,tsx --format node_modules/eslint-stats/byFolder.js src "
   },
