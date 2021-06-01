@@ -9,6 +9,16 @@
   --navy: #072b35;
   --bfblue: #0000ee;
   --bluegrey: #1f5c66;
+  /* new color scheme */
+  --light-gray: #f5f7fa;
+  --pale-aqua: #e7f5f7;
+  --sky-blue: #c2caff;
+  --primary-blue: #18398d;
+  --midnight-blue: #192552;
+  --cobalt-blue: #4848ff;
+  --ocean-blue: #1e18b4;
+  --lucky-green: #1bbc5f;
+  --plastic-red: #de5164;
 }
 
 .flow-root {
