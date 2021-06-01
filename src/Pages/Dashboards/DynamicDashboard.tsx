@@ -10,11 +10,12 @@ import NewOrder from "Images/Icons/new-order.svg";
 import Order from "Images/Icons/order.svg";
 import Resources from "Images/Icons/resources.svg";
 import Ticket from "Images/Icons/ticket.svg";
+import orderBy from "lodash/orderBy";
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Organization, UserProfile } from "Types";
 
-interface NavItem {
+export interface NavItem {
   to: string;
   name: string;
   icon: string;
@@ -33,7 +34,7 @@ const DynamicDashboard = () => {
   if (!userOrganization || !userProfile)
     return <div>Your account does not belong to an organization</div>;
   // these are what get displayed on the side bar
-  const navItems = prepareNavItemList(userOrganization, userProfile);
+  const navItems = sortedNavItems(userOrganization, userProfile);
   return (
     <div className="md:h-screen flex-col md:flex-row flex overflow-hidden bg-white min-h-screen">
       <Router>
@@ -44,7 +45,7 @@ const DynamicDashboard = () => {
   );
 };
 
-const prepareNavItemList = (
+const sortedNavItems = (
   myOrganization: Organization,
   userProfile: UserProfile
 ) => {
@@ -125,7 +126,7 @@ const prepareNavItemList = (
       ]
     );
   }
-  return navItems;
+  return orderBy(navItems, ["precedence"], ["desc"]);
 };
 
 export default DynamicDashboard;
