@@ -4,10 +4,9 @@ import styles from "./AccountManagement.module.css";
 const AccountManagement = () => {
   return (
     <div className={styles.root}>
-      Account Management
-      <h2>hello</h2>
-      <div className={styles.facilities}></div>
-      <div className={styles.addAccounts}></div>
+      <div className={styles.facilities}>My Facilities</div>
+      <div className={styles.addAccounts}>Accounts</div>
+      <div className={styles.users}>Users</div>
     </div>
   );
 };
