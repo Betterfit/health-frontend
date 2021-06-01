@@ -12,6 +12,7 @@ import DashboardMatchesOrderDetail from "Containers/Traffic/Inner/DashboardMatch
 import DashboardTrafficDashboard from "Containers/Traffic/Inner/DashboardTrafficDashboard";
 import { CartProvider } from "Context/cartContext";
 import { MatchProvider } from "Context/matchContext";
+import AccountManagement from "Pages/AccountManagement/AccountManagement";
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { NavItem } from "./DynamicDashboard";
@@ -34,6 +35,9 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
           render={() => <Redirect to={navItems[0].to} />}
         />
         {/* Purchaser Routes */}
+        <Route path="/dashboard/accounts">
+          <AccountManagement />
+        </Route>
         <Route
           exact
           path={["/dashboard/orders", "/dashboard/orders/search:query?"]}
