@@ -1,0 +1,13 @@
+.button {
+  display: flex;
+  width: fit-content;
+  padding: 0.25rem 1.5rem;
+  border-radius: 1rem;
+  background-color: var(--cobalt-blue);
+  color: white;
+}
+
+.button:hover,
+.button:focus {
+  background-color: var(--ocean-blue);
+}
