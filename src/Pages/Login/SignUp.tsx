@@ -3,6 +3,7 @@ import ErrorDisplayForm, {
   SubmitCallback,
 } from "Components/Forms/ErrorDisplayForm";
 import InputField from "Components/Forms/InputField";
+import SubtleLink from "Components/Forms/SubtleLink";
 import React, { ChangeEvent, useState } from "react";
 import { useHistory } from "react-router";
 
@@ -51,7 +52,11 @@ const SignUp = () => {
   const confirmSignUp: SubmitCallback = (notifyError) => {
     Auth.confirmSignUp(formData.email, formData.code).then(
       (result) => {
-        history.push("/login");
+        console.log(result);
+
+        Auth.signIn(formData.email, formData.password).then(() =>
+          history.push("/login")
+        );
       },
       (error) => {
         console.log(error);
@@ -66,6 +71,7 @@ const SignUp = () => {
         <ErrorDisplayForm
           title="Sign Up"
           handleSubmit={signUp}
+          subtitle="If your organization has created an account for you, you can set up your login credentials here"
           submitLabel="Sign up"
         >
           <InputField
@@ -91,7 +97,7 @@ const SignUp = () => {
       ) : (
         <ErrorDisplayForm
           title="Verify Email"
-          subtitle="Enter the code sent to your email to verify that this email belongs to you"
+          subtitle={`We've sent an email to ${formData.email} containing a confirmation code.`}
           handleSubmit={confirmSignUp}
           submitLabel="Verify Code"
         >
@@ -103,6 +109,10 @@ const SignUp = () => {
           />
         </ErrorDisplayForm>
       )}
+
+      <div className="py-5 flex flex-col item-center">
+        <SubtleLink text="Back to Login" path="/login" />
+      </div>
     </div>
   );
 };

@@ -50,7 +50,7 @@ const LoginForm = ({ signIn, signUpEnabled = true }: LoginFormProps) => {
         />
       </ErrorDisplayForm>
 
-      <div className="mt-6 flex flex-col item-center">
+      <div className="py-5 flex flex-col item-center">
         {signUpEnabled && <SubtleLink text="Sign up" path="/signup" />}
         <SubtleLink text="Forgot password?" path="/forgotpassword" />
       </div>

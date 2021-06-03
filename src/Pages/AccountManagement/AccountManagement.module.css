@@ -1,11 +1,40 @@
 .root {
+  display: flex;
+  flex-direction: column;
   background-color: red;
 }
 
 .facilities {
   background-color: blue;
+  height: 300px;
 }
 
 .addAccounts {
   background-color: #b2caff;
+  height: 400px;
+}
+
+.users {
+  background-color: green;
+  height: 600px;
+}
+
+@media (min-width: 1024px) {
+  .root {
+    display: grid;
+    grid-template-columns: 1fr / 1fr;
+    grid-template-rows: 1fr / 1fr;
+  }
+
+  .Facilities {
+    grid-column-start: 1;
+  }
+
+  .addAccounts {
+    grid-column: 2 /3;
+  }
+  .users {
+    grid-row-start: 2;
+    grid-column: 1/3;
+  }
 }
