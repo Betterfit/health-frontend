@@ -32,7 +32,7 @@ const VerificationCodeForm = ({
   return (
     <>
       {error.isSet && (
-        <Notifications head={error.title} text={error} success={false} />
+        <Notifications head={error.title} text={error.text} success={false} />
       )}
       <p className="text-center leading-5 pb-2">{text}</p>
       <form className="pb-12" onSubmit={onSubmit}>
