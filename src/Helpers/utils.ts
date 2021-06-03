@@ -17,6 +17,5 @@ export const findLastNonNull = <T>(array: (T | null)[], fallback?: T): T => {
 };
 
 // converts all of the keys in a potentially nested object from snake case to camel case
-export const convertFromSnake = (object: any): any => {
+export const convertFromSnake = (object: any): any =>
   camelcaseKeys(object, { deep: true });
-};

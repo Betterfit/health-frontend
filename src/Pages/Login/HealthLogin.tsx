@@ -1,11 +1,11 @@
 import Auth from "@aws-amplify/auth";
 import { useAuthStore } from "Context/authContext";
-import Api from "Helpers/api";
+import typedAPI from "Helpers/typedAPI";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import CognitoLogin from "./CognitoLogin";
 
-const api = new Api();
+const api = new typedAPI();
 
 const HealthLogin = () => {
   // TODO: add typing to mobx

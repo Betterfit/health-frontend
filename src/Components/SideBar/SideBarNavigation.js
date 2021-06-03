@@ -1,7 +1,7 @@
-import React from "react";
-import { ReactSVG } from "react-svg";
-import { NavLink } from "react-router-dom";
 import Translator from "Helpers/Translator";
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { ReactSVG } from "react-svg";
 
 const SideBarNavigation = ({ navList }) => {
   return (

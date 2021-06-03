@@ -40,12 +40,6 @@ export default class Api {
     const client = await this.init();
     return client.post("/api/password_reset/", data);
   };
-
-  getProfile = async () => {
-    const client = await this.init();
-    return client.get("/me/");
-  };
-
   getUserData = async (data) => {
     const client = await this.init();
     return client.post("/api-token-auth/", data);
@@ -243,11 +237,5 @@ export default class Api {
   postSortedMatches = async (orders) => {
     const client = await this.init();
     return client.post("/match-orders/", orders);
-  };
-
-  // organization
-  getMyOrganization = async () => {
-    const client = await this.init();
-    return client.get("/organizations/my_organization/");
   };
 }
