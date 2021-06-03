@@ -12,8 +12,7 @@ const SideBarNavigation = ({ navList }) => {
             <NavLink
               className="mt-0 block nav opacity-75 flex flex-col sm:flex-row items-center rounded py-1"
               activeStyle={{
-                backgroundColor: "rgba(0,0,0,0.2)",
-                // backgroundColor: "#2d17ac",
+                backgroundColor: "rgba(0,0,0,0.3)",
                 color: "white",
               }}
               to={navItem.to}
