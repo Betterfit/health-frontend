@@ -95,7 +95,7 @@ module.exports = {
         "flow-navy": "#072B35",
         "flow-bfblue": "#0000EE",
         "flow-darkbluegrey": "#0A3A42",
-        "light-gray": "#f5f7fa",
+        "gray-ice": "#f5f7fa",
         "pale-aqua": "#e7f5f7",
         "sky-blue": "#c2caff",
         "primary-blue": "#18398d",

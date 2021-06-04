@@ -1,0 +1,28 @@
+.form input {
+  color: var(--midnight-blue);
+  border-color: var(--primary-blue);
+  background-color: white;
+}
+
+.form input:focus {
+  outline: none !important;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form > div {
+  margin: 0.5rem;
+}
+
+.sectionHeader {
+  margin-left: 0.5rem;
+}
+
+.form > hr {
+  background-color: #b2bbc5;
+  height: 1px;
+  margin: 1.5rem 0.5rem;
+}
