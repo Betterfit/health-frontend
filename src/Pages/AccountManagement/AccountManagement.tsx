@@ -1,3 +1,6 @@
+import { useUserFacilities } from "APIHooks/facilities";
+import { ErrorMessage } from "Components/Content/ErrorMessage";
+import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
 import React, { Dispatch, useState } from "react";
 import styles from "./AccountManagement.module.css";
@@ -14,8 +17,13 @@ const AccountManagement = () => {
 };
 
 const MyFacilities = () => {
+  const facilitiesQuery = useUserFacilities();
   const [open, setOpen] = useState(false);
-  const facilities = ["Royal Chrom Hospital", "Edmonton Hospital"];
+  if (facilitiesQuery.isLoading || facilitiesQuery.isIdle)
+    return <LoadingSpinner />;
+
+  if (facilitiesQuery.isError) return <ErrorMessage />;
+
   return (
     <div className={styles.facilities}>
       <div className="mb-0 flex">
@@ -28,8 +36,8 @@ const MyFacilities = () => {
         {open ? (
           <AddFacilityForm />
         ) : (
-          facilities.map((facility) => (
-            <div className={styles.facility}>{facility}</div>
+          facilitiesQuery.data.map((facility,i) => (
+            <div className={styles.facility} key={i}>{facility.name}</div>
           ))
         )}
       </div>

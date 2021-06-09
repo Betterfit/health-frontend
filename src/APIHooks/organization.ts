@@ -1,5 +1,4 @@
-import typedAPI from "Helpers/typedAPI";
-import { convertFromSnake } from "Helpers/utils";
+import TypedAPI from "Helpers/typedAPI";
 import { useQuery } from "react-query";
 import { Organization } from "Types";
 
@@ -12,6 +11,6 @@ export const useOrganization = () => {
   });
 };
 
-const getMyOrganization = (): Promise<Organization> =>
-  api.getMyOrganization().then((response) => convertFromSnake(response.data));
-const api = new typedAPI();
+const getMyOrganization = () =>
+  api.getMyOrganization().then((response) => response.data);
+const api = new TypedAPI();

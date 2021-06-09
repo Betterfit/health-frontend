@@ -21,6 +21,7 @@
     "amazon-cognito-identity-js": "^4.5.10",
     "aws-amplify": "^3.3.17",
     "axios": "^0.20.0",
+    "axios-case-converter": "^0.7.0",
     "camelcase-keys": "^6.2.2",
     "craco": "0.0.3",
     "customize-cra": "^1.0.0",

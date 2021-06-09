@@ -29,6 +29,11 @@ export default class Api {
 
   // ============================   AUTH API  =====================================
 
+  getProfile = async () => {
+    const client = await this.init();
+    return client.get("/me/");
+  };
+
   addNewUser = async (data) => {
     const client = await this.init();
     return client.post("/users/", data);

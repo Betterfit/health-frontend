@@ -1,5 +1,5 @@
 import { useAuthStore } from "Context/authContext";
-import typedAPI from "Helpers/typedAPI";
+import TypedAPI from "Helpers/typedAPI";
 import { convertFromSnake } from "Helpers/utils";
 import { useQuery, UseQueryOptions } from "react-query";
 import { UserProfile } from "Types";
@@ -11,16 +11,16 @@ export const useUserProfile = (
 ) => {
   const authStore = useAuthStore() as any;
   return useQuery<UserProfile>("userProfile", getUserProfile, {
-    placeholderData: authStore.user,
+    placeholderData: convertFromSnake(authStore.user),
     staleTime: 1000 * 60 * 10,
     ...queryOptions,
   });
 };
 
-const getUserProfile = (): Promise<UserProfile> =>
+const getUserProfile = () =>
   api.getProfile().then((response) => {
     console.log(response);
-    return convertFromSnake(response.data.user);
+    return response.data.user;
   });
 
-const api = new typedAPI();
+const api = new TypedAPI();

@@ -108,13 +108,6 @@ const sortedNavItems = (
             key: "matches",
             precedence: 2,
           },
-          {
-            to: "/dashboard/inventory",
-            name: "Inventory",
-            icon: InventoryIcon,
-            key: "inventory",
-            precedence: 1,
-          },
         ]
       );
   }

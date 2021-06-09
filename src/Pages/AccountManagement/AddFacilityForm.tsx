@@ -1,10 +1,16 @@
 import { MenuItem, TextField } from "@material-ui/core";
+import { facilitiesQK } from "APIHooks/facilities";
+import { useOrganization } from "APIHooks/organization";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
+import { provinces } from "Data/geography";
+import TypedAPI, { FacilityData } from "Helpers/typedAPI";
+import { subset } from "Helpers/utils";
 import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
 import styles from "./AddFacilityForm.module.css";
-
-type FacilityData = {
+const api = new TypedAPI();
+type FacilityFormData = {
   name: string;
   number?: number;
   address: string;
@@ -21,12 +27,44 @@ const AddFacilityForm = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<FacilityData>();
-  const onSubmit: SubmitHandler<FacilityData> = (data) => console.log(data);
-  console.log(watch("city"));
-  console.log(errors.postalCode);
+    control,
+    reset,
+  } = useForm<FacilityFormData>();
+  const orgQuery = useOrganization();
+  const queryClient = useQueryClient();
+  const addFacilityMutation = useMutation(
+    (data: FacilityData) => api.createFacility(data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(facilitiesQK);
+        reset();
+      },
+    }
+  );
+  const onSubmit: SubmitHandler<FacilityFormData> = (formData) => {
+    console.log(formData);
+    if (!orgQuery.isSuccess) return;
+    const data = {
+      ...subset(
+        formData,
+        "name",
+        "email",
+        "postalCode",
+        "website",
+        "email",
+        "city",
+        "phoneNumber"
+      ),
+      street: formData.address,
+      shippingStreet: formData.address,
+      shippingCity: formData.city,
+      shippingProvince: formData.province,
+      shippingPostalCode: formData.postalCode,
+      parentOrganization: orgQuery.data.url,
+    };
+    addFacilityMutation.mutate(data);
+  };
   const defaultTextFieldProps = {
     size: "small",
     variant: "outlined",
@@ -39,6 +77,7 @@ const AddFacilityForm = () => {
         label="Facility Name"
         required
         placeholder="ex: University of Alberta Hospital"
+        autoFocus
       />
       <hr />
       <p className={styles.sectionHeader}>Shipping Address</p>
@@ -48,12 +87,43 @@ const AddFacilityForm = () => {
         label="Address"
         required
       />
-      <TextField
-        {...register("city")}
-        {...defaultTextFieldProps}
-        label="City"
-        required
-      />
+      <div className={styles.cityProvince}>
+        <TextField
+          {...register("city")}
+          {...defaultTextFieldProps}
+          label="City"
+          required
+          className={styles.city}
+        />
+
+        <Controller
+          name="province"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <TextField
+              {...defaultTextFieldProps}
+              label="Province"
+              required
+              select
+              style={{ backgroundColor: "white" }}
+              value={field.value}
+              onChange={field.onChange}
+              className={styles.province}
+            >
+              {provinces.map((province, i) => (
+                <MenuItem
+                  key={i}
+                  style={{ backgroundColor: "white" }}
+                  value={province.abbreviation}
+                >
+                  {province.abbreviation}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+        />
+      </div>
       <TextField
         {...register("postalCode")}
         {...defaultTextFieldProps}
@@ -61,19 +131,6 @@ const AddFacilityForm = () => {
         error={Boolean(errors.postalCode)}
         required
       />
-      <TextField
-        {...register("province")}
-        {...defaultTextFieldProps}
-        label="Province"
-        required
-        select
-        style={{ backgroundColor: "white" }}
-      >
-        {["Alberta"].map((province) => (
-          <MenuItem style={{ backgroundColor: "white" }}>{province}</MenuItem>
-        ))}
-      </TextField>
-
       <TextField
         {...register("shippingLabelNote")}
         {...defaultTextFieldProps}
@@ -104,6 +161,7 @@ const AddFacilityForm = () => {
         text="Add Facility"
         icon="add"
         style={{ alignSelf: "flex-end", marginTop: "1rem" }}
+        disabled={addFacilityMutation.isLoading}
       />
     </form>
   );

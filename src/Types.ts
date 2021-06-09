@@ -160,8 +160,30 @@ export interface UserProfile {
 
 export interface Organization {
   name: string;
+  url: string;
   isPurchaser: boolean;
   isSupplier: boolean;
   // my_organization endpoint also specifies if the user is an administrator for the organization
   isAdmin: boolean;
+}
+
+export interface Facility {
+  name: string;
+  pk: number;
+  email: string;
+  phoneNumber: string;
+  region?: string;
+  street: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  shippingStreet: string;
+  shippingCity: string;
+  shippingProvince: string;
+  shippingPostalCode: string;
+  fax?: string;
+  website?: string;
+  parentFacility?: string;
+  parentOrganization: string;
+  url: string;
 }
