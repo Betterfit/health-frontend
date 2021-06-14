@@ -5,10 +5,14 @@
 }
 
 .facilities {
+  margin: 1rem;
+  flex-grow: 1;
 }
 
 .addAccounts {
+  margin: 1rem;
   height: 400px;
+  flex-grow: 1;
 }
 
 .users {
@@ -18,8 +22,8 @@
 @media (min-width: 1024px) {
   .root {
     display: grid;
-    grid-template-columns: 1fr / 1fr;
-    grid-template-rows: 1fr / 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
   }
 
   .facilities {
