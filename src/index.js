@@ -1,3 +1,4 @@
+import { StylesProvider } from "@material-ui/core/styles";
 import { AuthProvider } from "Context/authContext";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -12,10 +13,13 @@ const queryClient = new QueryClient();
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <App />
-      </QueryClientProvider>
+      {/* https://material-ui.com/guides/interoperability/#controlling-priority-4 */}
+      <StylesProvider injectFirst>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <App />
+        </QueryClientProvider>
+      </StylesProvider>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById("root")

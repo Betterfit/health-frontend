@@ -19,3 +19,16 @@ export const findLastNonNull = <T>(array: (T | null)[], fallback?: T): T => {
 // converts all of the keys in a potentially nested object from snake case to camel case
 export const convertFromSnake = (object: any): any =>
   camelcaseKeys(object, { deep: true });
+
+// typesafe pick function
+// https://stackoverflow.com/questions/47232518/write-a-typesafe-pick-function-in-typescript
+export const subset = <T, K extends keyof T>(
+  obj: T,
+  ...keys: (keyof T)[]
+): Pick<T, K> => {
+  const ret: any = {};
+  keys.forEach((key) => {
+    ret[key] = obj[key];
+  });
+  return ret;
+};

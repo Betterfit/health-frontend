@@ -26,3 +26,18 @@
   height: 1px;
   margin: 1.5rem 0.5rem;
 }
+
+.cityProvince {
+  display: flex;
+  justify-content: space-between;
+}
+
+.city {
+  flex-grow: 4;
+}
+
+.province {
+  flex-grow: 1;
+  min-width: 10rem;
+  margin-left: 2rem;
+}
