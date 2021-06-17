@@ -25,9 +25,13 @@ import {
 
 interface DashboardGraphProps {
   whichChart: ChartType;
+  isAuthenticated: boolean;
 }
 
-const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
+const DashboardGraph = ({
+  whichChart,
+  isAuthenticated,
+}: DashboardGraphProps) => {
   // State is kept here so that selected regions/time series tab etc are kept consistent when switching between the vaccine and time series charts.
   // In the future, it might be worth encoding this information in the url.
   const [regionTray, setRegionTray] = useState<Selectable<HealthRegion>[]>([
@@ -110,6 +114,7 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
         {...{
           regions,
           options: vaccineOptions,
+          isAuthenticated,
         }}
       />
     );
@@ -144,7 +149,11 @@ const DashboardGraph = ({ whichChart }: DashboardGraphProps) => {
     );
   else if (whichChart === "vaccine")
     chartSpecificOptions = (
-      <VaccineOptions options={vaccineOptions} setOptions={setVaccineOptions} />
+      <VaccineOptions
+        options={vaccineOptions}
+        setOptions={setVaccineOptions}
+        {...{ isAuthenticated }}
+      />
     );
   else
     chartSpecificOptions = (

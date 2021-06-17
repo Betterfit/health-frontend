@@ -57,8 +57,11 @@ const RankingTable = ({
   }));
 
   const colOptions = { sorting: false, draggable: false };
+  // When do we add per 100k to the title of the field
   const fieldTitle =
-    per100k && !groupByProvince ? curTab.heading + " Per 100k" : curTab.heading;
+    per100k && !groupByProvince && !curTab.disableNormalization
+      ? curTab.heading + " Per 100k"
+      : curTab.heading;
   return (
     <div ref={containerRef} className="h-full">
       <MaterialTable

@@ -5,11 +5,13 @@ import { getIdToken } from "./cognito";
 const API_URL = process.env.REACT_APP_GRAPHQL_API_URL;
 export default class GraphApi {
   init = async () => {
-    const token = await getIdToken();
-    let headers = {
+    let headers: any = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     };
+    try {
+      const token = await getIdToken();
+      headers.Authorization = `Bearer ${token}`;
+    } catch (err) {}
 
     return axios.create({
       baseURL: API_URL,
