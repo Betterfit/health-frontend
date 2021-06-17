@@ -1,0 +1,20 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.root > span {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 1rem;
+}
+
+.root > span > p {
+  width: 3rem;
+  text-align: right;
+  padding-right: 1.5rem;
+}
+
+.root button {
+  align-self: flex-end;
+}

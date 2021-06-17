@@ -5,12 +5,13 @@ import Title from "Components/Content/Title";
 import React, { Dispatch, useState } from "react";
 import styles from "./AccountManagement.module.css";
 import AddFacilityForm from "./AddFacilityForm";
+import AddUserForm from "./AddUserForm";
 
 const AccountManagement = () => {
   return (
     <div className={styles.root}>
       <MyFacilities />
-      <AddAccount />
+      <AddUsers />
       {/* <div className={styles.users}>Users</div> */}
     </div>
   );
@@ -30,14 +31,16 @@ const MyFacilities = () => {
         <div className="flex-grow pl-4">
           <Title text="My Facilities" />
         </div>
-        <Tab open={open} setOpen={setOpen} />
+        <Tab open={open} setOpen={setOpen} text="Add Facility" />
       </div>
       <div className={open ? styles.openBox : styles.box}>
         {open ? (
           <AddFacilityForm />
         ) : (
-          facilitiesQuery.data.map((facility,i) => (
-            <div className={styles.facility} key={i}>{facility.name}</div>
+          facilitiesQuery.data.map((facility, i) => (
+            <div className={styles.facility} key={i}>
+              {facility.name}
+            </div>
           ))
         )}
       </div>
@@ -45,7 +48,7 @@ const MyFacilities = () => {
   );
 };
 
-const AddAccount = () => {
+const AddUsers = () => {
   const [open, setOpen] = useState(false);
   return (
     <div className={styles.addAccounts}>
@@ -53,9 +56,14 @@ const AddAccount = () => {
         <div className="flex-grow pl-4">
           <Title text="" />
         </div>
-        <Tab open={open} setOpen={setOpen} />
-
-        <div className={open ? styles.openBox : styles.box}></div>
+        <Tab open={open} setOpen={setOpen} text="Add Users" />
+      </div>
+      <div className={open ? styles.box : styles.box}>
+        {open ? (
+          <AddUserForm />
+        ) : (
+          <p className="text-center">0 pending invitations</p>
+        )}
       </div>
     </div>
   );
@@ -64,8 +72,9 @@ const AddAccount = () => {
 interface TabProps {
   open: boolean;
   setOpen: Dispatch<boolean>;
+  text: string;
 }
-const Tab = ({ open, setOpen }: TabProps) => {
+const Tab = ({ open, setOpen, text }: TabProps) => {
   return (
     <button
       onClick={() => setOpen(!open)}
@@ -78,7 +87,7 @@ const Tab = ({ open, setOpen }: TabProps) => {
       ) : (
         <span className="material-icons">add</span>
       )}
-      Add Facility
+      {text}
     </button>
   );
 };
