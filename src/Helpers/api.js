@@ -14,9 +14,10 @@ export default class Api {
     };
 
     if (requireAuth) {
-      const token = await getIdToken();
-
-      headers.Authorization = `Bearer ${token}`;
+      try {
+        const token = await getIdToken();
+        headers.Authorization = `Bearer ${token}`;
+      } catch (e) {}
     }
 
     this.client = axios.create({

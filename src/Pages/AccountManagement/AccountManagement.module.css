@@ -11,19 +11,17 @@
 
 .addAccounts {
   margin: 1rem;
-  height: 400px;
   flex-grow: 1;
 }
 
 .users {
-  height: 600px;
 }
 
 @media (min-width: 1024px) {
   .root {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: auto 1fr;
   }
 
   .facilities {

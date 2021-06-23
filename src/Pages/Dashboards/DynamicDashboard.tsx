@@ -1,5 +1,5 @@
 import { useOrganization } from "APIHooks/organization";
-import { useUserProfile } from "APIHooks/user";
+import { useMyProfile } from "APIHooks/user";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import SideBarIcon from "Components/SideBar/SideBar";
 import AccountsIcon from "Images/Icons/accounts.svg";
@@ -34,7 +34,7 @@ const DynamicDashboard = () => {
     data: userOrganization,
     isLoading: organizationLoading,
   } = useOrganization();
-  const { data: userProfile, isLoading: userProfileLoading } = useUserProfile();
+  const { data: userProfile, isLoading: userProfileLoading } = useMyProfile();
   if (organizationLoading || userProfileLoading) return <LoadingSpinner />;
   if (!userOrganization || !userProfile)
     return <div>Your account does not belong to an organization</div>;

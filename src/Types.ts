@@ -151,11 +151,18 @@ export type Country = "Canada" | "US";
 export interface UserProfile {
   username: string;
   email: string;
+  firstName: string;
+  lastName: string;
   userProfile: {
     userType: string;
     supplier: string;
     supplierName: string;
   };
+  isOrganizationAdmin: boolean;
+  facilityMembership: {
+    facility: string;
+    isAdmin: boolean;
+  }[];
 }
 
 export interface Organization {
@@ -186,4 +193,5 @@ export interface Facility {
   parentFacility?: string;
   parentOrganization: string;
   url: string;
+  isAdmin?: boolean;
 }

@@ -1,4 +1,5 @@
 import { useUserFacilities } from "APIHooks/facilities";
+import { useUsers } from "APIHooks/user";
 import { ErrorMessage } from "Components/Content/ErrorMessage";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
@@ -12,7 +13,7 @@ const AccountManagement = () => {
     <div className={styles.root}>
       <MyFacilities />
       <AddUsers />
-      {/* <div className={styles.users}>Users</div> */}
+      <UserTable />
     </div>
   );
 };
@@ -65,6 +66,39 @@ const AddUsers = () => {
           <p className="text-center">0 pending invitations</p>
         )}
       </div>
+    </div>
+  );
+};
+
+const UserTable = () => {
+  const usersQuery = useUsers();
+  const users = usersQuery.isSuccess ? usersQuery.data : [];
+  const organizationAdmins = users.filter((user) => user.isOrganizationAdmin);
+  const facilityAdmins = users.filter(
+    (user) =>
+      !user.isOrganizationAdmin &&
+      user.facilityMembership.some((membership) => membership.isAdmin)
+  );
+  const members = users.filter(
+    (user) =>
+      !user.isOrganizationAdmin &&
+      user.facilityMembership.every((membership) => !membership.isAdmin)
+  );
+  return (
+    <div className={styles.users}>
+      <Title text="Users" />
+      <div>
+        <h3>Organization Admins</h3>
+        {organizationAdmins.map((user) => (
+          <div>
+            <span>{user.email}</span>
+            <span>{`${user.firstName} ${user.lastName}`}</span>
+          </div>
+        ))}
+      </div>
+      {users.map((user) => (
+        <div>{user.email}</div>
+      ))}
     </div>
   );
 };
