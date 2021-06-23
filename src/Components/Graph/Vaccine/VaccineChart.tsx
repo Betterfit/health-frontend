@@ -24,15 +24,20 @@ import {
 interface VaccineChartProps {
   regions: HealthRegion[];
   options: VaccineChartOptions;
+  isAuthenticated: boolean;
 }
 
-const VaccineChart = ({ regions, options }: VaccineChartProps) => {
+const VaccineChart = ({
+  regions,
+  options,
+  isAuthenticated,
+}: VaccineChartProps) => {
   const { timeSeries } = useCovidTimeSeries(regions, 30);
   const rEstimates = useREstimate(options, regions);
   const displayData = timeSeries.map((regionTimeSeries, i) =>
     vaccineStatsFromTimeSeries(
       regionTimeSeries,
-      rEstimates[i].data,
+      isAuthenticated ? rEstimates[i].data : undefined,
       computeVaccineEfficacy(options.vaccineUsage, options.variantPrevelance)
     )
   );
@@ -139,7 +144,7 @@ const vaccineStatsFromTimeSeries = (
   // clamp value to 1.1 so vaccines required is never negative
   const r0 = rEstimate
     ? Math.max(1, rEstimate.rV0)
-    : Math.max(1, findLastNonNull(timeSeries.r0, 1.1));
+    : Math.max(1.1, findLastNonNull(timeSeries.r0, 1.1));
   const activeCases = findLastNonNull(
     timeSeries.activeCases,
     0.02 * population
