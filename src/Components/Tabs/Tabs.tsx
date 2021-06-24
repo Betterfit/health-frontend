@@ -1,16 +1,31 @@
-import React, { useState } from "react";
-import uuid from "react-uuid";
+import React, { ReactNode, useState } from "react";
 // components
 import TabHeadings from "./TabHeadings";
+
+export interface Tab {
+  heading: string;
+  content: ReactNode;
+  key: string;
+  amount?: number;
+}
+
+export interface TabsProps {
+  tabs: Tab[];
+  headingComp?: ReactNode;
+  amount?: boolean;
+  tabCallBack?: (tabKey: string) => void;
+  setActive?: string;
+  longUnderline?: boolean;
+}
 
 const Tabs = ({
   tabs,
   headingComp,
   amount,
   tabCallBack,
-  setActive = null,
+  setActive,
   longUnderline = true,
-}) => {
+}: TabsProps) => {
   const [activeTab, setActiveTab] = useState(
     setActive ? setActive : tabs[0].key
   );
@@ -23,7 +38,7 @@ const Tabs = ({
     };
   });
 
-  const headingChangeActive = (key) => {
+  const headingChangeActive = (key: string) => {
     setActiveTab(key);
     if (tabCallBack) {
       tabCallBack(key);
@@ -40,10 +55,10 @@ const Tabs = ({
         setActive={setActive}
         longUnderline={longUnderline}
       />
-      {tabs.map((tab, index) => {
+      {tabs.map((tab) => {
         return (
           <div
-            key={uuid()}
+            key={tab.key}
             className={`px-4 ${
               tab.key === activeTab ? "opacity-100 visible" : "opacity-0 hidden"
             }`}
