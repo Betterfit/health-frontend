@@ -1,9 +1,11 @@
 import { useUserFacilities } from "APIHooks/facilities";
-import { useUsers } from "APIHooks/user";
+import { fullName, useUsers } from "APIHooks/user";
 import { ErrorMessage } from "Components/Content/ErrorMessage";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
+import Tabs from "Components/Tabs/Tabs";
 import React, { Dispatch, useState } from "react";
+import { UserProfile } from "Types";
 import styles from "./AccountManagement.module.css";
 import AddFacilityForm from "./AddFacilityForm";
 import AddUserForm from "./AddUserForm";
@@ -32,7 +34,7 @@ const MyFacilities = () => {
         <div className="flex-grow pl-4">
           <Title text="My Facilities" />
         </div>
-        <Tab open={open} setOpen={setOpen} text="Add Facility" />
+        <AdminTab open={open} setOpen={setOpen} text="Add Facility" />
       </div>
       <div className={open ? styles.openBox : styles.box}>
         {open ? (
@@ -57,7 +59,7 @@ const AddUsers = () => {
         <div className="flex-grow pl-4">
           <Title text="" />
         </div>
-        <Tab open={open} setOpen={setOpen} text="Add Users" />
+        <AdminTab open={open} setOpen={setOpen} text="Add Users" />
       </div>
       <div className={open ? styles.box : styles.box}>
         {open ? (
@@ -70,7 +72,25 @@ const AddUsers = () => {
   );
 };
 
+const userCategories = [
+  {
+    heading: "All Users",
+    key: "allUsers",
+  },
+  {
+    heading: "Organization Admins",
+    key: "organizationAdmins",
+  },
+  {
+    heading: "Facility Admins",
+    key: "facilityAdmins",
+  },
+  { heading: "Members", key: "members" },
+] as const;
+
+type UserType = typeof userCategories[number]["key"];
 const UserTable = () => {
+  const [userType, setUserType] = useState<UserType>("allUsers");
   const usersQuery = useUsers();
   const users = usersQuery.isSuccess ? usersQuery.data : [];
   const organizationAdmins = users.filter((user) => user.isOrganizationAdmin);
@@ -84,18 +104,35 @@ const UserTable = () => {
       !user.isOrganizationAdmin &&
       user.facilityMembership.every((membership) => !membership.isAdmin)
   );
+  const usersByType = {
+    allUsers: users,
+    organizationAdmins,
+    facilityAdmins,
+    members,
+  };
   return (
     <div className={styles.users}>
       <Title text="Users" />
-      <div>
-        <h3>Organization Admins</h3>
-        {organizationAdmins.map((user) => (
-          <div>
-            <span>{user.email}</span>
-            <span>{`${user.firstName} ${user.lastName}`}</span>
-          </div>
+      <Tabs
+        tabs={userCategories.map((category) => ({
+          ...category,
+          amount: usersByType[category.key].length,
+        }))}
+        amount
+        tabCallBack={(key) => setUserType(key as UserType)}
+      />
+      {userCategories
+        .filter(
+          ({ key }) =>
+            // if allUsers is selected, we show a user list of every type
+            key !== "allUsers" && (userType === "allUsers" || key === userType)
+        )
+        .map((category) => (
+          <UserTypeList
+            title={category.heading}
+            users={usersByType[category.key]}
+          />
         ))}
-      </div>
       {users.map((user) => (
         <div>{user.email}</div>
       ))}
@@ -103,12 +140,38 @@ const UserTable = () => {
   );
 };
 
-interface TabProps {
+const UserTypeList = ({
+  users,
+  title,
+}: {
+  users: UserProfile[];
+  title: string;
+}) => {
+  return (
+    <div className={styles.box}>
+      <h3>{title}</h3>
+      <table>
+        <tr>
+          <th>Email</th>
+          <th>Name</th>
+        </tr>
+        {users.map((user) => (
+          <tr>
+            <td>{user.email}</td>
+            <td>{fullName(user)}</td>
+          </tr>
+        ))}
+      </table>
+    </div>
+  );
+};
+
+interface AdminTabProps {
   open: boolean;
   setOpen: Dispatch<boolean>;
   text: string;
 }
-const Tab = ({ open, setOpen, text }: TabProps) => {
+const AdminTab = ({ open, setOpen, text }: AdminTabProps) => {
   return (
     <button
       onClick={() => setOpen(!open)}

@@ -48,4 +48,8 @@ export const groupUsersByFacility = (users: UserProfile[]): UsersByFacility => {
   return result;
 };
 
+export const fullName = (user: UserProfile): string => {
+  return `${user.firstName} ${user.lastName}`;
+};
+
 const api = new TypedAPI();

@@ -4,7 +4,7 @@ import TabHeadings from "./TabHeadings";
 
 export interface Tab {
   heading: string;
-  content: ReactNode;
+  content?: ReactNode;
   key: string;
   amount?: number;
 }
