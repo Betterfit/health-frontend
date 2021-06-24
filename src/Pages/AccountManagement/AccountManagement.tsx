@@ -121,21 +121,21 @@ const UserTable = () => {
         amount
         tabCallBack={(key) => setUserType(key as UserType)}
       />
-      {userCategories
-        .filter(
-          ({ key }) =>
-            // if allUsers is selected, we show a user list of every type
-            key !== "allUsers" && (userType === "allUsers" || key === userType)
-        )
-        .map((category) => (
-          <UserTypeList
-            title={category.heading}
-            users={usersByType[category.key]}
-          />
-        ))}
-      {users.map((user) => (
-        <div>{user.email}</div>
-      ))}
+      <div className={styles.userLists}>
+        {userCategories
+          .filter(
+            ({ key }) =>
+              // if allUsers is selected, we show a user list of every type
+              key !== "allUsers" &&
+              (userType === "allUsers" || key === userType)
+          )
+          .map((category) => (
+            <UserTypeList
+              title={category.heading}
+              users={usersByType[category.key]}
+            />
+          ))}
+      </div>
     </div>
   );
 };
@@ -149,18 +149,41 @@ const UserTypeList = ({
 }) => {
   return (
     <div className={styles.box}>
-      <h3>{title}</h3>
-      <table>
+      <table className={styles.userList}>
+        <caption>{title}</caption>
         <tr>
           <th>Email</th>
           <th>Name</th>
+          <th>Facilities</th>
+          <th>Actions</th>
         </tr>
-        {users.map((user) => (
-          <tr>
-            <td>{user.email}</td>
-            <td>{fullName(user)}</td>
-          </tr>
-        ))}
+        <tbody>
+          {users.map((user) => (
+            <tr>
+              <td>{user.email}</td>
+              <td>{fullName(user)}</td>
+              <td>
+                {user.facilityMembership.map(
+                  (membership) => membership.facility
+                )}
+              </td>
+              <td>
+                <span
+                  className="material-icons-outlined"
+                  style={{ color: "var(--primary-blue)" }}
+                >
+                  edit
+                </span>
+                <span
+                  className="material-icons-outlined"
+                  style={{ color: "var(--plastic-red)" }}
+                >
+                  delete
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
@@ -180,9 +203,9 @@ const AdminTab = ({ open, setOpen, text }: AdminTabProps) => {
       }
     >
       {open ? (
-        <span className="material-icons">remove</span>
+        <span className="material-icons-outlined">remove</span>
       ) : (
-        <span className="material-icons">add</span>
+        <span className="material-icons-outlined">add</span>
       )}
       {text}
     </button>
