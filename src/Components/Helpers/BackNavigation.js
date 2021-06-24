@@ -1,14 +1,14 @@
-import React from "react";
-import { ReactSVG } from "react-svg";
-import LeftArrow from "Images/Icons/left-arrow.svg";
-import { useHistory } from "react-router-dom";
 import Translator from "Helpers/Translator";
+import LeftArrow from "Images/Icons/left-arrow.svg";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { ReactSVG } from "react-svg";
 
 const BackNavigation = ({ link, onClickOverride }) => {
   const history = useHistory();
   const action = onClickOverride ? onClickOverride : () => history.goBack();
   return (
-    <a
+    <button
       onClick={action}
       className="flex flex-row items-center cursor-pointer mb-2"
     >
@@ -22,7 +22,7 @@ const BackNavigation = ({ link, onClickOverride }) => {
       <span className="ml-2 text-betterfit-basic-blue uppercase text-xs font-semibold">
         {Translator(link)}
       </span>
-    </a>
+    </button>
   );
 };
 export default BackNavigation;
