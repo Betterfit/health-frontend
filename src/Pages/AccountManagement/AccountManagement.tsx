@@ -1,6 +1,11 @@
-import { useUserFacilities } from "APIHooks/facilities";
+import {
+  mapFacilitiesById,
+  useFacilities,
+  useUserFacilities,
+} from "APIHooks/facilities";
 import { fullName, useUsers } from "APIHooks/user";
 import { ErrorMessage } from "Components/Content/ErrorMessage";
+import IconButton from "Components/Content/IconButton";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
 import Tabs from "Components/Tabs/Tabs";
@@ -147,6 +152,10 @@ const UserTypeList = ({
   users: UserProfile[];
   title: string;
 }) => {
+  const facilitiesQuery = useFacilities();
+  const facilitiesById = facilitiesQuery.isSuccess
+    ? mapFacilitiesById(facilitiesQuery.data)
+    : null;
   return (
     <div className={styles.box}>
       <table className={styles.userList}>
@@ -163,23 +172,16 @@ const UserTypeList = ({
               <td>{user.email}</td>
               <td>{fullName(user)}</td>
               <td>
-                {user.facilityMembership.map(
-                  (membership) => membership.facility
-                )}
+                {user.facilityMembership.map((membership) => (
+                  <tr>
+                    {facilitiesById &&
+                      facilitiesById[membership.facilityId].name}
+                  </tr>
+                ))}
               </td>
-              <td>
-                <span
-                  className="material-icons-outlined"
-                  style={{ color: "var(--primary-blue)" }}
-                >
-                  edit
-                </span>
-                <span
-                  className="material-icons-outlined"
-                  style={{ color: "var(--plastic-red)" }}
-                >
-                  delete
-                </span>
+              <td className={styles.actions}>
+                <IconButton color="blue" iconName="edit" />
+                <IconButton color="red" iconName="delete" />
               </td>
             </tr>
           ))}

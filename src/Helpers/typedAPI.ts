@@ -36,6 +36,10 @@ export default class TypedAPI {
     return client.get<Organization>("/organizations/my_organization/");
   };
 
+  getFacilitiesInMyOrganization = async () => {
+    const client = await this.init();
+    return client.get<Facility[]>("/facilities/");
+  };
   getMyFacilities = async () => {
     const client = await this.init();
     return client.get<Facility[]>("/facilities/my_facilities/");
@@ -71,4 +75,4 @@ export default class TypedAPI {
   };
 }
 
-export type FacilityData = Omit<Facility, "pk" | "url">;
+export type FacilityData = Omit<Facility, "pk" | "url" | "id">;

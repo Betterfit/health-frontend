@@ -2,7 +2,7 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { useUserFacilities } from "APIHooks/facilities";
@@ -147,7 +147,16 @@ const AddUserForm = () => {
       </span>
       <span>
         <p>as</p>
-        <RadioGroup aria-label="role" row value="Member">
+        <RadioGroup
+          aria-label="role"
+          row
+          value={formData.isAdmin ? "Admin" : "Member"}
+          onChange={(e) => {
+            e.target.value === "Admin"
+              ? setFormData({ ...formData, isAdmin: true })
+              : setFormData({ ...formData, isAdmin: false });
+          }}
+        >
           <FormControlLabel
             control={<Radio />}
             value="Admin"
