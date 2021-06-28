@@ -15,6 +15,7 @@
 }
 
 .users {
+  margin: 1rem;
 }
 
 @media (min-width: 1024px) {
@@ -46,9 +47,6 @@
 .openBox {
   composes: box;
   background-color: #f4f7fc;
-}
-
-.boxLabel {
 }
 
 .facility {

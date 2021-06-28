@@ -11,7 +11,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const PrettyButton = ({ text, icon, ...props }: Props) => {
   return (
     <button className={styles.button} {...props}>
-      {icon && <span className="material-icons">{icon}</span>}
+      {icon && <span className="material-icons-outlined">{icon}</span>}
       {text}
     </button>
   );

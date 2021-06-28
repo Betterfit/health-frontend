@@ -19,9 +19,17 @@ export const FatToggle = ({ label, checked, setChecked }: FatToggleProps) => {
           checked={checked}
           onChange={() => setChecked(!checked)}
         />
-        <span role="checkbox" className={styles.slider} tabIndex={0} />
+        <span
+          role="checkbox"
+          aria-checked={checked}
+          className={styles.slider}
+          tabIndex={0}
+        />
       </label>
-      <label htmlFor="fatToggle" className="ml-3 text-sm md:text-md lg:text-lg text-flow-white">
+      <label
+        htmlFor="fatToggle"
+        className="ml-3 text-sm md:text-md lg:text-lg text-flow-white"
+      >
         {label}
       </label>
     </div>

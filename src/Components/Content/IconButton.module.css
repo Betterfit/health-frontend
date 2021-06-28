@@ -1,0 +1,17 @@
+.blue {
+  color: var(--primary-blue);
+}
+
+.blue:hover {
+  /* background-color: transparent; */
+  /* box-shadow: 0 0 10px var(--ocean-blue); */
+  color: var(--primary-blue);
+}
+
+.red {
+  color: var(--plastic-red);
+}
+
+.red:hover {
+  color: #af404f;
+}

@@ -9,6 +9,11 @@
   margin: 0.5rem 1rem;
 }
 
+.root p {
+  color: black;
+  font-family: "Open Sans";
+}
+
 .root > span > p {
   width: 3rem;
   text-align: right;
@@ -17,4 +22,8 @@
 
 .root button {
   align-self: flex-end;
+}
+
+.root MuiFormControlLabel-label {
+  font-family: "Open Sans";
 }

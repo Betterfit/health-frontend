@@ -1,0 +1,57 @@
+.users {
+  composes: users from "./AccountManagement.module.css";
+}
+.box {
+  composes: box from "./AccountManagement.module.css";
+}
+.userList {
+  width: 100%;
+}
+.userLists > .box {
+  margin: 1rem 0;
+}
+.userList th,
+td {
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.userList th:nth-last-child(1),
+td:nth-last-child(1) {
+  text-align: right;
+}
+
+.userList th {
+  color: var(--primary-blue);
+  font-size: small;
+  text-transform: uppercase;
+}
+.userList tbody {
+  border-top: 2px solid var(--medium-grey);
+}
+.userList tbody > tr {
+  background-color: var(--gray-ice);
+}
+.userList tbody > tr:nth-child(even) {
+  background-color: white;
+}
+
+.userList tbody .emptyTable {
+  background-color: var(--gray-ice);
+  text-align: center;
+}
+.userList caption {
+  font-size: large;
+  font-weight: 600;
+  text-align: left;
+  background-color: var(--light-blue);
+  padding: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  .userLists {
+    /* Having columns line up on all of the tables is aesthetically pleasing, but
+     * there is not enough room for it on mobile */
+    table-layout: fixed;
+  }
+}

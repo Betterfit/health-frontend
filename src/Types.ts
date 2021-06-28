@@ -160,6 +160,7 @@ export interface UserProfile {
   };
   isOrganizationAdmin: boolean;
   facilityMembership: {
+    facilityId: number;
     facility: string;
     isAdmin: boolean;
   }[];
@@ -177,6 +178,7 @@ export interface Organization {
 export interface Facility {
   name: string;
   pk: number;
+  id: number;
   email: string;
   phoneNumber: string;
   region?: string;
