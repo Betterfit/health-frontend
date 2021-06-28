@@ -1,6 +1,5 @@
 import Translator from "Helpers/Translator";
 import React, { useState } from "react";
-import uuid from "react-uuid";
 
 const TabHeadings = ({
   headings,
@@ -15,7 +14,6 @@ const TabHeadings = ({
   );
   return (
     <div
-      key={uuid()}
       className={`flex flex-col-reverse md:flex-row mb-8 flex-1 md:items-center relative ${
         longUnderline && "border-b border-gray-400"
       }`}

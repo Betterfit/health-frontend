@@ -13,7 +13,6 @@ import React, { useEffect, useState } from "react";
 import { Route, useLocation } from "react-router-dom";
 import uuid from "react-uuid";
 
-
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }

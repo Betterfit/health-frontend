@@ -2,7 +2,8 @@ import { useAuthStore } from "Context/authContext";
 import TypedAPI from "Helpers/typedAPI";
 import { convertFromSnake } from "Helpers/utils";
 import { useQuery, UseQueryOptions } from "react-query";
-import { UserProfile } from "Types";
+import { Facility, UserProfile } from "Types";
+import { mapFacilitiesById } from "./facilities";
 
 export const userProfileQueryKey = "userProfile";
 
@@ -17,6 +18,7 @@ export const useMyProfile = (
   });
 };
 
+const api = new TypedAPI();
 const getMyProfile = () =>
   api.getProfile().then((response) => {
     console.log(response);
@@ -48,8 +50,38 @@ export const groupUsersByFacility = (users: UserProfile[]): UsersByFacility => {
   return result;
 };
 
-export const fullName = (user: UserProfile): string => {
-  return `${user.firstName} ${user.lastName}`;
+export const fullName = (user: UserProfile): string =>
+  [user.firstName, user.lastName].join(" ");
+
+/**
+ *
+ * @param users A list of users to filter
+ * @param searchQuery A string to match users against
+ * @param facilities If supplied, will also match against facilities that the user belongs to
+ * @returns A filtered list of users whbse email, full name match the search query
+ */
+export const searchUsers = (
+  users: UserProfile[],
+  searchQuery: string,
+  facilities?: Facility[]
+): UserProfile[] => {
+  if (searchQuery === "") return users;
+  let facilitiesById = facilities ? mapFacilitiesById(facilities) : {};
+  return users.filter(
+    (user) =>
+      user.email.includes(searchQuery) ||
+      fullName(user).includes(searchQuery) ||
+      (facilities &&
+        user.facilityMembership.some((membership) =>
+          facilitiesById[membership.facilityId].name.includes(searchQuery)
+        ))
+  );
 };
 
-const api = new TypedAPI();
+export const userIsFacilityAdmin = (user: UserProfile) =>
+  !user.isOrganizationAdmin &&
+  user.facilityMembership.some((membership) => membership.isAdmin);
+
+export const userIsNormalMember = (user: UserProfile) =>
+  !user.isOrganizationAdmin &&
+  user.facilityMembership.every((membership) => !membership.isAdmin);

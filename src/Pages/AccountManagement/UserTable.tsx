@@ -1,7 +1,14 @@
 import { mapFacilitiesById, useFacilities } from "APIHooks/facilities";
-import { fullName, useUsers } from "APIHooks/user";
+import {
+  fullName,
+  searchUsers,
+  userIsFacilityAdmin,
+  userIsNormalMember,
+  useUsers,
+} from "APIHooks/user";
 import IconButton from "Components/Content/IconButton";
 import Title from "Components/Content/Title";
+import SearchBar from "Components/Search/SearchBar";
 import Tabs from "Components/Tabs/Tabs";
 import React, { useState } from "react";
 import { UserProfile } from "Types";
@@ -26,35 +33,42 @@ const userCategories = [
 type UserType = typeof userCategories[number]["key"];
 const UserTable = () => {
   const [userType, setUserType] = useState<UserType>("allUsers");
+  const [searchText, setSearchText] = useState("");
   const usersQuery = useUsers();
-  const users = usersQuery.isSuccess ? usersQuery.data : [];
+  const facilitiesQuery = useFacilities();
+  let users = usersQuery.isSuccess ? usersQuery.data : [];
+  users = searchUsers(users, searchText, facilitiesQuery.data);
   const organizationAdmins = users.filter((user) => user.isOrganizationAdmin);
-  const facilityAdmins = users.filter(
-    (user) =>
-      !user.isOrganizationAdmin &&
-      user.facilityMembership.some((membership) => membership.isAdmin)
-  );
-  const members = users.filter(
-    (user) =>
-      !user.isOrganizationAdmin &&
-      user.facilityMembership.every((membership) => !membership.isAdmin)
-  );
+  const facilityAdmins = users.filter(userIsFacilityAdmin);
+  const members = users.filter(userIsNormalMember);
   const usersByType = {
     allUsers: users,
     organizationAdmins,
     facilityAdmins,
     members,
   };
+  const searchBar = (
+    <SearchBar
+      key="userSearch"
+      performSearch={setSearchText}
+      placeholderText="Search users"
+      startingText={searchText}
+      // only perform search after the user has stopped typing for 100ms
+      msDelay={100}
+    />
+  );
   return (
     <div className={styles.users}>
       <Title text="Users" />
       <Tabs
+        key="userTabs"
         tabs={userCategories.map((category) => ({
           ...category,
           amount: usersByType[category.key].length,
         }))}
         amount
         tabCallBack={(key) => setUserType(key as UserType)}
+        headingComp={searchBar}
       />
       <div className={styles.userLists}>
         {userCategories
@@ -97,24 +111,32 @@ const UserTypeList = ({
           <th>Actions</th>
         </tr>
         <tbody>
-          {users.map((user) => (
+          {users.length > 0 ? (
+            users.map((user) => (
+              <tr>
+                <td>{user.email}</td>
+                <td>{fullName(user)}</td>
+                <td>
+                  {user.facilityMembership.map((membership) => (
+                    <tr>
+                      {facilitiesById &&
+                        facilitiesById[membership.facilityId].name}
+                    </tr>
+                  ))}
+                </td>
+                <td className={styles.actions}>
+                  <IconButton color="blue" iconName="edit" />
+                  <IconButton color="red" iconName="delete" />
+                </td>
+              </tr>
+            ))
+          ) : (
             <tr>
-              <td>{user.email}</td>
-              <td>{fullName(user)}</td>
-              <td>
-                {user.facilityMembership.map((membership) => (
-                  <tr>
-                    {facilitiesById &&
-                      facilitiesById[membership.facilityId].name}
-                  </tr>
-                ))}
-              </td>
-              <td className={styles.actions}>
-                <IconButton color="blue" iconName="edit" />
-                <IconButton color="red" iconName="delete" />
+              <td colSpan={4} className={styles.emptyTable}>
+                No users
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

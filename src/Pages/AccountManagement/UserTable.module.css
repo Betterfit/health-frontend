@@ -35,10 +35,11 @@ td:nth-last-child(1) {
 .userList tbody > tr:nth-child(even) {
   background-color: white;
 }
-.userList tbody > tr:nth-child(4) {
-  text-align: right;
-}
 
+.userList tbody .emptyTable {
+  background-color: var(--gray-ice);
+  text-align: center;
+}
 .userList caption {
   font-size: large;
   font-weight: 600;
