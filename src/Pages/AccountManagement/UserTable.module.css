@@ -38,6 +38,7 @@ td:nth-last-child(1) {
 
 .userList tbody .emptyTable {
   background-color: var(--gray-ice);
+  color: gray;
   text-align: center;
 }
 .userList caption {
@@ -49,7 +50,7 @@ td:nth-last-child(1) {
 }
 
 @media (min-width: 1024px) {
-  .userLists {
+  .userLists table {
     /* Having columns line up on all of the tables is aesthetically pleasing, but
      * there is not enough room for it on mobile */
     table-layout: fixed;
