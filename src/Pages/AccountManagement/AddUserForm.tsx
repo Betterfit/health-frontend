@@ -83,7 +83,7 @@ const AddUserForm = () => {
     });
   };
   return (
-    <form className={styles.root} onSubmit={onSubmit}>
+    <form className={styles.root} onSubmit={onSubmit} aria-label="Add User">
       <span>
         <p>Add</p>
         <Autocomplete

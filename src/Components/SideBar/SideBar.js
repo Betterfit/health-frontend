@@ -1,3 +1,5 @@
+import { useOrganization } from "APIHooks/organization";
+import { fullName, useMyProfile } from "APIHooks/user";
 import FaciltyCard from "Components/Profile/FacilityCard";
 import ProfileCard from "Components/Profile/ProfileCard";
 import Slider from "Components/Slider/Slider";
@@ -21,11 +23,21 @@ const UserInfo = (profile) => {
 };
 
 const SideBar = ({ navItemsList }) => {
-  const userData = JSON.parse(localStorage.getItem("user"));
-  const userName = userData.username;
-  const orgName = UserInfo(userData.user_profile);
-  const userType = userData.user_profile.user_type;
+  const myProfileQuery = useMyProfile();
+  const organizationQuery = useOrganization();
 
+  let userData = JSON.parse(localStorage.getItem("user"));
+  let userName = userData.username;
+  let orgName = UserInfo(userData.user_profile);
+  let userType = userData.user_profile.user_type;
+
+  if (myProfileQuery.isSuccess) {
+    const user = myProfileQuery.data;
+    userName = user.firstName ? fullName(user) : user.email;
+  }
+  if (organizationQuery.isSuccess) {
+    orgName = organizationQuery.data.name;
+  }
   const [ShowProfile, SetProfile] = useState({
     profile: false,
     facility: false,

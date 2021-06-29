@@ -49,7 +49,11 @@ const ErrorDisplayForm = ({
       {error.isSet && (
         <Notifications head={error.title} text={error.text} success={false} />
       )}
-      <form className="pb-3 space-y-3" onSubmit={onSubmit}>
+      <form
+        className="pb-3 space-y-3"
+        onSubmit={onSubmit}
+        aria-label={title || submitLabel}
+      >
         {subtitle && (
           <p className="text-center leading-5 text-base">{subtitle}</p>
         )}
