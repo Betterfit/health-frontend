@@ -11,6 +11,7 @@ import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { validate } from "email-validator";
 import TypedAPI from "Helpers/typedAPI";
 import React, { FormEventHandler, useState } from "react";
+import { useQueryClient } from "react-query";
 import { Facility } from "Types";
 import styles from "./AddUserForm.module.css";
 
@@ -20,7 +21,8 @@ interface AddUserFormData {
   facility: Facility | null;
   isAdmin: boolean;
 }
-const AddUserForm = () => {
+const AddUserForm = ({ closeForm }: { closeForm: () => void }) => {
+  const queryClient = useQueryClient();
   const facilitiesQuery = useUserFacilities({
     onSuccess: (data) => {
       // populate facility field automatically
@@ -69,26 +71,31 @@ const AddUserForm = () => {
       setErrors({ ...errors, facility: "Pick a facility." });
       return;
     }
-    formData.emails.forEach((email) => {
+    const requests = formData.emails.map((email) => {
       const user = userOptions.find((user) => user.email === email);
       if (user) {
-        api.addExistingUserToFacility(
+        return api.addExistingUserToFacility(
           user.email,
           facility.url,
           formData.isAdmin
         );
       } else {
-        api.addNewUserToFacility(email, facility.pk, formData.isAdmin);
+        return api.addNewUserToFacility(email, facility.pk, formData.isAdmin);
       }
+    });
+    Promise.all(requests).then(() => {
+      queryClient.invalidateQueries("users");
+      closeForm();
     });
   };
   return (
-    <form className={styles.root} onSubmit={onSubmit}>
+    <form className={styles.root} onSubmit={onSubmit} aria-label="Add User">
       <span>
         <p>Add</p>
         <Autocomplete
           multiple
           freeSolo
+          autoSelect
           value={formData.emails}
           onChange={(e, emails) => {
             console.log(emails);

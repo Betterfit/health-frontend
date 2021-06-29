@@ -1,7 +1,7 @@
 import { useAuthStore } from "Context/authContext";
 import TypedAPI from "Helpers/typedAPI";
 import { convertFromSnake } from "Helpers/utils";
-import { useQuery, UseQueryOptions } from "react-query";
+import { useQuery, useQueryClient, UseQueryOptions } from "react-query";
 import { Facility, UserProfile } from "Types";
 import { mapFacilitiesById } from "./facilities";
 
@@ -11,11 +11,14 @@ export const useMyProfile = (
   queryOptions: UseQueryOptions<UserProfile> = {}
 ) => {
   const authStore = useAuthStore() as any;
-  return useQuery<UserProfile>(userProfileQueryKey, getMyProfile, {
+  const queryClient = useQueryClient();
+  const data = useQuery<UserProfile>(userProfileQueryKey, getMyProfile, {
     placeholderData: convertFromSnake(authStore.user),
     staleTime: 1000 * 60 * 10,
     ...queryOptions,
   });
+  const invalidate = () => queryClient.invalidateQueries(userProfileQueryKey);
+  return { ...data, invalidate };
 };
 
 // export const useProfileCreationMutation = (props: UseMutationOptions) => {

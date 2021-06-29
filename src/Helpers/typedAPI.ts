@@ -34,7 +34,7 @@ export default class TypedAPI {
     data: { firstName: string; lastName: string }
   ) => {
     const client = await this.init();
-    client.patch("/users/" + userId, data);
+    client.patch("/users/" + userId + "/", data);
   };
 
   // organization

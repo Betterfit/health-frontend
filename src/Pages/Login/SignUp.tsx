@@ -26,8 +26,9 @@ type Stage = "enterInfo" | "confirm" | "completeProfile" | "success";
 const SignUp = () => {
   const history = useHistory();
   const [stage, setStage] = useState<Stage>("enterInfo");
+  //   we can only make an authenticate request after these stages
   const myProfileQuery = useMyProfile({
-    enabled: stage === "enterInfo" || stage === "confirm",
+    enabled: stage !== "enterInfo" && stage !== "confirm",
   });
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -67,9 +68,9 @@ const SignUp = () => {
       (result) => {
         console.log(result);
 
-        Auth.signIn(formData.email, formData.password).then(() =>
-          setStage("completeProfile")
-        );
+        Auth.signIn(formData.email, formData.password).then(() => {
+          setStage("completeProfile");
+        });
       },
       (error) => {
         console.log(error);
@@ -83,6 +84,7 @@ const SignUp = () => {
     {
       onSuccess: () => {
         setStage("success");
+        myProfileQuery.invalidate();
         history.push("/login");
       },
     }
