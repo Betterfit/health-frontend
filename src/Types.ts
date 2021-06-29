@@ -148,11 +148,14 @@ export type ChartType = "timeseries" | "vaccine" | "ranking";
 
 export type Country = "Canada" | "US";
 
-export interface UserProfile {
+export interface User {
+  id: number;
   username: string;
   email: string;
   firstName: string;
   lastName: string;
+}
+export interface UserProfile extends User {
   userProfile: {
     userType: string;
     supplier: string;

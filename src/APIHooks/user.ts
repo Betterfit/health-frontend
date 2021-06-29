@@ -18,6 +18,10 @@ export const useMyProfile = (
   });
 };
 
+// export const useProfileCreationMutation = (props: UseMutationOptions) => {
+//     return useMutation((data: {}))
+// }
+
 const api = new TypedAPI();
 const getMyProfile = () =>
   api.getProfile().then((response) => {
