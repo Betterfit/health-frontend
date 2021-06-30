@@ -57,6 +57,7 @@ td:nth-last-child(1) {
   }
 }
 
+/* styles for the delete dialog */
 .deleteDialog {
   padding: 1.5rem;
   display: flex;

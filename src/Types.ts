@@ -156,6 +156,7 @@ export interface User {
   firstName: string;
   lastName: string;
 }
+
 export interface UserProfile extends User {
   userProfile: {
     userType: string;
@@ -163,11 +164,13 @@ export interface UserProfile extends User {
     supplierName: string;
   };
   isOrganizationAdmin: boolean;
-  facilityMembership: {
-    facilityId: number;
-    facility: string;
-    isAdmin: boolean;
-  }[];
+  facilityMembership: FacilityMembership[];
+}
+export interface FacilityMembership {
+  url: string;
+  facilityId: number;
+  facility: string;
+  isAdmin: boolean;
 }
 
 export interface Organization {

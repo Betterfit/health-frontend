@@ -16,7 +16,7 @@ import Tabs from "Components/Tabs/Tabs";
 import TypedAPI from "Helpers/typedAPI";
 import React, { useState } from "react";
 import { useQueryClient } from "react-query";
-import { UserProfile } from "Types";
+import { FacilityMembership, UserProfile } from "Types";
 import styles from "./UserTable.module.css";
 
 const userCategories = [
@@ -88,6 +88,7 @@ const UserTable = () => {
               key={category.key}
               title={category.heading}
               users={usersByType[category.key]}
+              userType={category.key}
             />
           ))}
       </div>
@@ -96,11 +97,13 @@ const UserTable = () => {
 };
 const api = new TypedAPI();
 const UserTypeList = ({
+  userType,
   users,
   title,
 }: {
   users: UserProfile[];
   title: string;
+  userType: UserType;
 }) => {
   const queryClient = useQueryClient();
   const facilitiesQuery = useFacilities();
@@ -108,6 +111,7 @@ const UserTypeList = ({
     ? mapFacilitiesById(facilitiesQuery.data)
     : null;
   const myProfileQuery = useMyProfile();
+
   const [userToDelete, setUserToDelete] = useState<UserProfile | null>(null);
   const deleteUser = (user: UserProfile) => setUserToDelete(user);
   const confirmDeleteUser = async (user: UserProfile) => {
@@ -115,6 +119,25 @@ const UserTypeList = ({
     client.delete(user.url).then(() => queryClient.invalidateQueries("users"));
     setUserToDelete(null);
   };
+
+  const [userToEdit, setUserToEdit] = useState<UserProfile | null>(null);
+  const deleteMembership = async (membership: FacilityMembership) => {
+    const client = await api.init();
+    client
+      .delete(membership.url)
+      .then(() => queryClient.invalidateQueries("users"));
+  };
+  let canMutateUsers = false;
+  if (myProfileQuery.isSuccess) {
+    const user = myProfileQuery.data;
+    // organization admin can update other users
+    if (user.isOrganizationAdmin && userType !== "organizationAdmins")
+      canMutateUsers = true;
+    // facility admin can only update members
+    else if (userIsFacilityAdmin(user) && userType === "members")
+      canMutateUsers = true;
+  }
+
   return (
     <div className={styles.box}>
       <table className={styles.userList}>
@@ -133,19 +156,39 @@ const UserTypeList = ({
                 <td>{fullName(user)}</td>
                 <td>
                   {user.facilityMembership.map((membership) => (
-                    <tr>
+                    //   flex is required so that the delete icons line up
+                    <tr className="flex">
                       {facilitiesById &&
                         facilitiesById[membership.facilityId].name}
+                      {user.id === userToEdit?.id && (
+                        <IconButton
+                          color="red"
+                          iconName="close"
+                          onClick={() => deleteMembership(membership)}
+                        />
+                      )}
                     </tr>
                   ))}
                 </td>
                 <td className={styles.actions}>
-                  <IconButton color="blue" iconName="edit" />
-                  <IconButton
-                    color="red"
-                    iconName="delete"
-                    onClick={() => deleteUser(user)}
-                  />
+                  {canMutateUsers && (
+                    <>
+                      <IconButton
+                        color="blue"
+                        iconName="edit"
+                        onClick={() =>
+                          user.id === userToEdit?.id
+                            ? setUserToEdit(null)
+                            : setUserToEdit(user)
+                        }
+                      />
+                      <IconButton
+                        color="red"
+                        iconName="delete"
+                        onClick={() => deleteUser(user)}
+                      />
+                    </>
+                  )}
                 </td>
               </tr>
             ))
