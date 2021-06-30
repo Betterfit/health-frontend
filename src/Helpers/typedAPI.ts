@@ -29,6 +29,13 @@ export default class TypedAPI {
     const client = await this.init();
     return client.get<{ user: UserProfile }>("/me/");
   };
+  completeProfile = async (
+    userId: number,
+    data: { firstName: string; lastName: string }
+  ) => {
+    const client = await this.init();
+    client.patch("/users/" + userId + "/", data);
+  };
 
   // organization
   getMyOrganization = async () => {
@@ -59,6 +66,7 @@ export default class TypedAPI {
     return client.post("/facility-members/", {
       user: userURL,
       facility: facilityURL,
+      isAdmin,
     });
   };
 
@@ -71,6 +79,7 @@ export default class TypedAPI {
     return client.post("/facility-members/new_user/", {
       email,
       facilityId,
+      isAdmin,
     });
   };
 }

@@ -99,6 +99,8 @@
     "@types/recharts": "^1.8.18",
     "@types/sortablejs": "^1.10.6",
     "autoprefixer": "^10.0.0",
+    "cypress-mailosaur": "^2.3.3",
+    "eslint-plugin-cypress": "^2.11.3",
     "lint-staged": "^10.5.4",
     "postcss-cli": "^7.1.2",
     "postcss-import": "^12.0.1",

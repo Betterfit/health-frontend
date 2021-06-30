@@ -6,6 +6,7 @@ import React, { Dispatch, useState } from "react";
 import styles from "./AccountManagement.module.css";
 import AddFacilityForm from "./AddFacilityForm";
 import AddUserForm from "./AddUserForm";
+import PendingInvitations from "./PendingInvitations";
 import UserTable from "./UserTable";
 
 const AccountManagement = () => {
@@ -61,9 +62,9 @@ const AddUsers = () => {
       </div>
       <div className={open ? styles.box : styles.box}>
         {open ? (
-          <AddUserForm />
+          <AddUserForm closeForm={() => setOpen(false)} />
         ) : (
-          <p className="text-center">0 pending invitations</p>
+          <PendingInvitations />
         )}
       </div>
     </div>

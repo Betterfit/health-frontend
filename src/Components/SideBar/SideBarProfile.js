@@ -1,10 +1,10 @@
-import React, { useState } from "react";
 import { Transition } from "@tailwindui/react";
+import DotMenu from "Images/Icons/dot-menu.svg";
+import OpenClose from "Images/Icons/open-close.svg";
+import React, { useState } from "react";
 import { ReactSVG } from "react-svg";
 // components
 import SideBarProfileNavigation from "./SideBarProfileNavigation";
-import DotMenu from "Images/Icons/dot-menu.svg";
-import OpenClose from "Images/Icons/open-close.svg";
 
 const SideBarProfile = ({ userName, userType, showFacility, showProfile }) => {
   const [ShowNav, SetNav] = useState(false);
@@ -34,10 +34,11 @@ const SideBarProfile = ({ userName, userType, showFacility, showProfile }) => {
             close={ToggleProfileNavigation}
           ></SideBarProfileNavigation>
         </Transition>
-        <a
+        <button
           href="#"
           className="flex-shrink-0 w-full group profile-container"
           onClick={ToggleProfileNavigation}
+          aria-label="My Account"
         >
           <div className="ml-3 flex flex-row items-center justify-between">
             <p className=" text-sm md:text-base leading-5 font-medium text-white opacity-75 group-hover:text-gray-900">
@@ -58,7 +59,7 @@ const SideBarProfile = ({ userName, userType, showFacility, showProfile }) => {
               }}
             />
           </div>
-        </a>
+        </button>
       </div>
     </>
   );

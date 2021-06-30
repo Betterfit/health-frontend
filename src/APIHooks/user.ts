@@ -1,7 +1,5 @@
-import { useAuthStore } from "Context/authContext";
 import TypedAPI from "Helpers/typedAPI";
-import { convertFromSnake } from "Helpers/utils";
-import { useQuery, UseQueryOptions } from "react-query";
+import { useQuery, useQueryClient, UseQueryOptions } from "react-query";
 import { Facility, UserProfile } from "Types";
 import { mapFacilitiesById } from "./facilities";
 
@@ -10,13 +8,18 @@ export const userProfileQueryKey = "userProfile";
 export const useMyProfile = (
   queryOptions: UseQueryOptions<UserProfile> = {}
 ) => {
-  const authStore = useAuthStore() as any;
-  return useQuery<UserProfile>(userProfileQueryKey, getMyProfile, {
-    placeholderData: convertFromSnake(authStore.user),
+  const queryClient = useQueryClient();
+  const data = useQuery<UserProfile>(userProfileQueryKey, getMyProfile, {
     staleTime: 1000 * 60 * 10,
     ...queryOptions,
   });
+  const invalidate = () => queryClient.invalidateQueries(userProfileQueryKey);
+  return { ...data, invalidate };
 };
+
+// export const useProfileCreationMutation = (props: UseMutationOptions) => {
+//     return useMutation((data: {}))
+// }
 
 const api = new TypedAPI();
 const getMyProfile = () =>
@@ -67,13 +70,16 @@ export const searchUsers = (
 ): UserProfile[] => {
   if (searchQuery === "") return users;
   let facilitiesById = facilities ? mapFacilitiesById(facilities) : {};
+  searchQuery = searchQuery.toLowerCase();
   return users.filter(
     (user) =>
-      user.email.includes(searchQuery) ||
-      fullName(user).includes(searchQuery) ||
+      user.email.toLowerCase().includes(searchQuery) ||
+      fullName(user).toLowerCase().includes(searchQuery) ||
       (facilities &&
         user.facilityMembership.some((membership) =>
-          facilitiesById[membership.facilityId].name.includes(searchQuery)
+          facilitiesById[membership.facilityId].name
+            .toLowerCase()
+            .includes(searchQuery)
         ))
   );
 };
@@ -85,3 +91,9 @@ export const userIsFacilityAdmin = (user: UserProfile) =>
 export const userIsNormalMember = (user: UserProfile) =>
   !user.isOrganizationAdmin &&
   user.facilityMembership.every((membership) => !membership.isAdmin);
+
+//   export const userIsAdminOf = (admin: UserProfile, member: UserProfile) => {
+//      if (member.isOrganizationAdmin)
+//         return false
+//     if(admin.facilityMembership.some())
+//   }

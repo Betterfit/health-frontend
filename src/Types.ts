@@ -148,22 +148,29 @@ export type ChartType = "timeseries" | "vaccine" | "ranking";
 
 export type Country = "Canada" | "US";
 
-export interface UserProfile {
+export interface User {
+  id: number;
+  url: string;
   username: string;
   email: string;
   firstName: string;
   lastName: string;
+}
+
+export interface UserProfile extends User {
   userProfile: {
     userType: string;
     supplier: string;
     supplierName: string;
   };
   isOrganizationAdmin: boolean;
-  facilityMembership: {
-    facilityId: number;
-    facility: string;
-    isAdmin: boolean;
-  }[];
+  facilityMembership: FacilityMembership[];
+}
+export interface FacilityMembership {
+  url: string;
+  facilityId: number;
+  facility: string;
+  isAdmin: boolean;
 }
 
 export interface Organization {

@@ -5,7 +5,6 @@
 describe("New Order Dashboard", () => {
   const username = "facilityadmin";
   const password = "facilityadmin";
-  let authSession;
 
   before(() => {
     cy.healthApiAuth(username, password).then(
