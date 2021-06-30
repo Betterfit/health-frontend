@@ -56,3 +56,21 @@ td:nth-last-child(1) {
     table-layout: fixed;
   }
 }
+
+.deleteDialog {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.dialogContent {
+  margin-bottom: 1rem;
+}
+.dialogContent * {
+  padding: 0.5;
+}
+.actionButtons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

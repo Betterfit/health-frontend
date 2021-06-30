@@ -66,6 +66,7 @@ export default class TypedAPI {
     return client.post("/facility-members/", {
       user: userURL,
       facility: facilityURL,
+      isAdmin,
     });
   };
 
@@ -78,6 +79,7 @@ export default class TypedAPI {
     return client.post("/facility-members/new_user/", {
       email,
       facilityId,
+      isAdmin,
     });
   };
 }

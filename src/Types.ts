@@ -150,6 +150,7 @@ export type Country = "Canada" | "US";
 
 export interface User {
   id: number;
+  url: string;
   username: string;
   email: string;
   firstName: string;

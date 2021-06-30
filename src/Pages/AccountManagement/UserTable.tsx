@@ -1,16 +1,21 @@
+import { Dialog } from "@material-ui/core";
 import { mapFacilitiesById, useFacilities } from "APIHooks/facilities";
 import {
   fullName,
   searchUsers,
+  useMyProfile,
   userIsFacilityAdmin,
   userIsNormalMember,
   useUsers,
 } from "APIHooks/user";
 import IconButton from "Components/Content/IconButton";
 import Title from "Components/Content/Title";
+import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import SearchBar from "Components/Search/SearchBar";
 import Tabs from "Components/Tabs/Tabs";
+import TypedAPI from "Helpers/typedAPI";
 import React, { useState } from "react";
+import { useQueryClient } from "react-query";
 import { UserProfile } from "Types";
 import styles from "./UserTable.module.css";
 
@@ -80,6 +85,7 @@ const UserTable = () => {
           )
           .map((category) => (
             <UserTypeList
+              key={category.key}
               title={category.heading}
               users={usersByType[category.key]}
             />
@@ -88,7 +94,7 @@ const UserTable = () => {
     </div>
   );
 };
-
+const api = new TypedAPI();
 const UserTypeList = ({
   users,
   title,
@@ -96,10 +102,19 @@ const UserTypeList = ({
   users: UserProfile[];
   title: string;
 }) => {
+  const queryClient = useQueryClient();
   const facilitiesQuery = useFacilities();
   const facilitiesById = facilitiesQuery.isSuccess
     ? mapFacilitiesById(facilitiesQuery.data)
     : null;
+  const myProfileQuery = useMyProfile();
+  const [userToDelete, setUserToDelete] = useState<UserProfile | null>(null);
+  const deleteUser = (user: UserProfile) => setUserToDelete(user);
+  const confirmDeleteUser = async (user: UserProfile) => {
+    const client = await api.init();
+    client.delete(user.url).then(() => queryClient.invalidateQueries("users"));
+    setUserToDelete(null);
+  };
   return (
     <div className={styles.box}>
       <table className={styles.userList}>
@@ -126,7 +141,11 @@ const UserTypeList = ({
                 </td>
                 <td className={styles.actions}>
                   <IconButton color="blue" iconName="edit" />
-                  <IconButton color="red" iconName="delete" />
+                  <IconButton
+                    color="red"
+                    iconName="delete"
+                    onClick={() => deleteUser(user)}
+                  />
                 </td>
               </tr>
             ))
@@ -139,6 +158,36 @@ const UserTypeList = ({
           )}
         </tbody>
       </table>
+      {userToDelete && (
+        <Dialog onClose={() => setUserToDelete(null)} open={true}>
+          <div className={styles.deleteDialog}>
+            <div className={styles.dialogContent}>
+              <p>Are you sure you want to delete this user?</p>
+              <p>{"Email: " + userToDelete.email}</p>
+              {userToDelete.firstName && (
+                <p>{"Name: " + fullName(userToDelete)}</p>
+              )}
+            </div>
+            <div className={styles.actionButtons}>
+              <PrettyButton
+                text="Cancel"
+                onClick={() => {
+                  setUserToDelete(null);
+                }}
+              />
+
+              <PrettyButton
+                text="Delete"
+                color="red"
+                onClick={() => {
+                  confirmDeleteUser(userToDelete);
+                  setUserToDelete(null);
+                }}
+              />
+            </div>
+          </div>
+        </Dialog>
+      )}
     </div>
   );
 };

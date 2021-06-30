@@ -3,11 +3,21 @@
   width: fit-content;
   padding: 0.25rem 1.5rem;
   border-radius: 1rem;
-  background-color: var(--cobalt-blue);
   color: white;
 }
 
-.button:hover,
-.button:focus {
+.blue {
+  background-color: var(--cobalt-blue);
+}
+.blue:hover,
+.blue:focus {
   background-color: var(--ocean-blue);
+}
+
+.red {
+  background-color: var(--plastic-red);
+}
+.red:hover,
+.red:focus {
+  background-color: #af404f;
 }
