@@ -98,8 +98,7 @@ const AddUserForm = ({ closeForm }: { closeForm: () => void }) => {
           autoSelect
           value={formData.emails}
           onChange={(e, emails) => {
-            console.log(emails);
-            if (!validate(emails[emails.length - 1])) {
+            if (emails.length > 0 && !validate(emails[emails.length - 1])) {
               setErrors({ ...errors, emails: "Invalid email" });
               return;
             }
