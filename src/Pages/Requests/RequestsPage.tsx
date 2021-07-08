@@ -85,7 +85,8 @@ const orders = [
         supply: "In Stock",
         imageUrl: maskImage,
         suppliers: [
-          { name: "Air Liquide", pricePerUnit: 1.05 },
+          { name: "Air Liquide", pricePerUnit: 1225.05 },
+          { name: "The Canadian Shield", pricePerUnit: 1.05 },
           { name: "The Canadian Shield", pricePerUnit: 1.05 },
         ],
       },
@@ -145,4 +146,5 @@ const orders = [
 
 export type Order = typeof orders[number];
 export type OrderProduct = Order["products"][number];
+export type Supplier = OrderProduct["suppliers"][number];
 export const formatCurrency = (price: number) => `$${price.toFixed(2)} CAD`;

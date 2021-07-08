@@ -9,23 +9,27 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
    */
   icon?: string;
   onClick?: () => void;
-  //   variant?: "solid" | "outlined";
+  variant?: keyof typeof variantClasses;
+  className?: string;
 }
 const PrettyButton = ({
   text,
   icon,
   color = "blue",
   onClick,
+  variant = "solid",
+  className,
   ...props
 }: Props) => {
-  const colorClass = props.disabled ? "" : colorClasses[color];
+  const colorClass =
+    props.disabled || variant === "link" ? "" : colorClasses[color];
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (onClick) onClick();
-    createRipple(e);
+    if (variant !== "link") createRipple(e);
   };
   return (
     <button
-      className={`${styles.button} ${colorClass}`}
+      className={`${styles.button} ${colorClass} ${variantClasses[variant]} ${className}`}
       onClick={handleClick}
       {...props}
     >
@@ -36,9 +40,14 @@ const PrettyButton = ({
 };
 
 const colorClasses = {
+  gray: "",
   blue: styles.blue,
   red: styles.red,
   green: styles.green,
+};
+const variantClasses = {
+  link: styles.link,
+  solid: styles.solid,
 };
 
 export default PrettyButton;
