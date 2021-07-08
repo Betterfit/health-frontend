@@ -108,6 +108,13 @@ const sortedNavItems = (
             key: "matches",
             precedence: 2,
           },
+          {
+            to: "/dashboard/requests",
+            name: "Requests",
+            icon: OrderIcon,
+            key: "requests",
+            precedence: 2,
+          },
         ]
       );
   }

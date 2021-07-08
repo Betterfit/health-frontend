@@ -1,0 +1,140 @@
+.orderProduct {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  background-color: var(--gray-ice);
+  margin: 0.75rem;
+  transition: box-shadow 0.3s;
+}
+
+.orderProduct:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+
+.orderProduct p,
+b {
+  font-size: 1rem;
+}
+
+.productInfo {
+  flex-grow: 1;
+}
+
+.deleteProduct {
+  position: absolute;
+  left: -1rem;
+  top: -1rem;
+}
+
+.productImage,
+.supplierImage {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  width: 200px;
+}
+.orderProduct img {
+  margin: auto;
+  width: 128px;
+  height: 128px;
+}
+
+.product {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0rem 0.5rem 0.5rem 0.5rem;
+  /* needed to have the floating buttons/badges */
+  position: relative;
+}
+
+.supplier {
+  composes: product;
+  background-color: #edecff;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .supplier,
+  .product {
+    align-items: center;
+    margin-left: auto;
+    max-width: 50%;
+    max-height: 240px;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+}
+
+.bestMatch {
+  display: flex;
+  flex-basis: 100%;
+  position: absolute;
+  left: -0.5rem;
+  top: -0.75rem;
+}
+
+.supplierInfo,
+.productDetails {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  flex-wrap: wrap;
+  text-align: right;
+  height: 100%;
+}
+.supplierPricing p {
+  white-space: nowrap;
+}
+.money {
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.labeledContent {
+  display: flex;
+  min-width: 250px;
+  max-width: 100%;
+  text-align: left;
+}
+
+.labeledContent p:first-child {
+  margin-right: auto;
+  color: var(--primary-blue);
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+@media (min-width: 1024px) {
+  .supplierInfo,
+  .productDetails {
+    align-items: center;
+    justify-content: center;
+  }
+  .labeledContent {
+    flex-direction: column;
+    min-width: none;
+    margin-left: auto;
+    min-width: 150px;
+  }
+}
+
+@media (min-width: 1700px) {
+  .orderProduct {
+    max-width: 48%;
+  }
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-blue);
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}

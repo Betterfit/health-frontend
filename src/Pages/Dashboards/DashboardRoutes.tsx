@@ -13,6 +13,7 @@ import DashboardTrafficDashboard from "Containers/Traffic/Inner/DashboardTraffic
 import { CartProvider } from "Context/cartContext";
 import { MatchProvider } from "Context/matchContext";
 import AccountManagement from "Pages/AccountManagement/AccountManagement";
+import RequestsPage from "Pages/Requests/RequestsPage";
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { NavItem } from "./DynamicDashboard";
@@ -63,6 +64,9 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
             );
           }}
         />
+        <Route exact path="/dashboard/requests">
+          <RequestsPage />
+        </Route>
         <Route
           exact
           path="/dashboard/orders/detail/:id"
