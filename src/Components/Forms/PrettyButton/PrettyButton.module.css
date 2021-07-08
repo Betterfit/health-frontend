@@ -1,9 +1,6 @@
 .button {
   display: flex;
   width: fit-content;
-  padding: 0.5rem 1.5rem;
-  border-radius: 1rem;
-  color: white;
   margin: 0.25rem;
   position: relative;
   overflow: hidden;
@@ -43,6 +40,17 @@
 .green:focus-visible {
   background-color: #009556;
   /* outline: solid 2px black; */
+}
+
+.link {
+  padding: 0;
+  color: var(--primary-blue);
+}
+.solid {
+  composes: button;
+  padding: 0.5rem 1.5rem;
+  border-radius: 1rem;
+  color: white;
 }
 
 .ripple {

@@ -17,3 +17,10 @@ To extend a global style, compose it in a selector in a css module file like so:
 :global .cardBorder:hover {
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
+
+:global .hoverShadow:hover {
+  transition: box-shadow 0.3s;
+}
+:global .hoverShadow:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}

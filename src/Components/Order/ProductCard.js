@@ -41,6 +41,11 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
   const addToCart = () => {
     cartStore.addToCart(product_details.pk, 1, false, product.pk);
   };
+  const suppliers = product_details.suppliers.sort((a, b) => a.price - b.price);
+  let priceRange = "";
+  if (suppliers.length === 1) priceRange = "$" + suppliers[0].price;
+  if (product_details.suppliers.length >= 2)
+    priceRange = `$${suppliers[0].price} - $${suppliers[1].price}`;
 
   const displayName = (parent ? `${parent} - ` : "") + name;
   return (
@@ -71,6 +76,9 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
             </h1>
             <span className="text-betterfit-grey-blue text-xs">
               {readProduct(size, "N/A")}
+            </span>
+            <span className="text-betterfit-grey-blue text-xs">
+              {priceRange}
             </span>
           </div>
 
