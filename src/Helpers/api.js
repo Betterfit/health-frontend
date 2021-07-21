@@ -161,11 +161,6 @@ export default class Api {
 
   // ============================   ORDERS API  =====================================
 
-  getOrderList = async (facilityId) => {
-    const client = await this.init();
-    return client.get(`/facilities/${facilityId}/orders/`);
-  };
-
   getOrder = async (orderId) => {
     const client = await this.init();
     return client.get(`/orders/${orderId}/`);

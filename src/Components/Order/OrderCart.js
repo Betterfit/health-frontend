@@ -1,3 +1,4 @@
+import { useMyProfile } from "APIHooks/user";
 import Modal from "Components/Content/Modal";
 import Button from "Components/Forms/Button";
 import Checkbox from "Components/Forms/CheckboxConfirm";
@@ -15,8 +16,9 @@ import { ReactSVG } from "react-svg";
 
 const api = new Api();
 
-const OrderCart = ({ Cart, id }) => {
+const OrderCart = ({ Cart, id = null, facility }) => {
   const history = useHistory();
+  const myProfileQuery = useMyProfile();
   let CartData = JSON.stringify(Cart);
   CartData = JSON.parse(CartData);
   const authStore = useAuthStore();
@@ -58,12 +60,10 @@ const OrderCart = ({ Cart, id }) => {
   });
 
   const confirmCallBack = (status) => {
-    const userData = JSON.parse(authStore.user);
-    console.log(userData);
     if (agreeTerms || status === "draft") {
       let order = {
-        facility: userData.user_profile.facility,
-        user: userData.pk,
+        facility: facility.id,
+        user: myProfileQuery.data.id,
         purchase_no: cartStore.newOrderName,
         status: status,
         order_products: CartData.map((item) => {
@@ -79,7 +79,6 @@ const OrderCart = ({ Cart, id }) => {
         delete order.facility;
         delete order.facility_admin;
         api.editOrder(order, id).then((response) => {
-          // console.log(response.data);
           setModalOrder(false);
           setModalDraft(false);
           cartStore.newOrderName = "";
@@ -90,7 +89,6 @@ const OrderCart = ({ Cart, id }) => {
         });
       } else {
         api.setNewOrder(order).then((response) => {
-          // console.log(response.data);
           setModalOrder(false);
           setModalDraft(false);
           cartStore.newOrderName = "";

@@ -1,8 +1,6 @@
 {
-  "extends": "../tsconfig.json",
-  "include": [
-    "../node_modules/cypress",
-    "*/*.ts",
-    "support/commands.js"
-  ]
+    "extends": "../tsconfig.json",
+    "include": [
+        "**/*.ts"
+    ]
 }

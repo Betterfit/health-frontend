@@ -204,3 +204,29 @@ export interface Facility {
   url: string;
   isAdmin?: boolean;
 }
+
+export interface ProductOption {
+  name: string;
+  optionLabel: string;
+  productCategory: string;
+  product: string;
+  productVariation: string;
+  productDescription: string;
+  productImage: string;
+}
+export interface OrderProduct {
+  order: number;
+  pk: number;
+  priority: "normal" | "stat";
+  quantity: number;
+  supplierOrg?: Organization;
+  productOption: ProductOption;
+}
+export interface Order {
+  pk: number;
+  orderNo: string;
+  orderDate: string;
+  purchaseNo: string;
+  authorUser: User;
+  orderProducts: OrderProduct[];
+}

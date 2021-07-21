@@ -1,16 +1,25 @@
 .button {
   display: flex;
   width: fit-content;
-  padding: 0.25rem 1.5rem;
-  border-radius: 1rem;
-  color: white;
+  margin: 0.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.button:focus {
+  outline: none;
+}
+.button:disabled {
+  background-color: gray;
+}
+.button:focus-visible {
+  box-shadow: 0 0 0 3px black;
 }
 
 .blue {
   background-color: var(--cobalt-blue);
 }
 .blue:hover,
-.blue:focus {
+.red:focus-visible {
   background-color: var(--ocean-blue);
 }
 
@@ -18,6 +27,44 @@
   background-color: var(--plastic-red);
 }
 .red:hover,
-.red:focus {
+.red:focus-visible {
   background-color: #af404f;
+}
+
+.green {
+  background-color: var(--lucky-green);
+}
+.green:hover {
+  background-color: #009556;
+}
+.green:focus-visible {
+  background-color: #009556;
+  /* outline: solid 2px black; */
+}
+
+.link {
+  padding: 0;
+  color: var(--primary-blue);
+}
+.solid {
+  composes: button;
+  padding: 0.5rem 1.5rem;
+  border-radius: 1rem;
+  color: white;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation-name: ripple;
+  animation-duration: 500ms;
+  animation-timing-function: linear;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0.5;
+  }
 }
