@@ -24,44 +24,43 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import "@testing-library/cypress/add-commands";
+// some very tricky to work out errors get thrown when importing amplify
+import Amplify, { Auth } from "aws-amplify";
 import "cypress-mailosaur";
 
-// some very tricky to work out errors get thrown when importing amplify
-// import Amplify, { Auth } from "aws-amplify";
+const cognitoConfig = {
+  region: Cypress.env("REACT_APP_COGNITO_REGION"),
+  userPoolId: Cypress.env("REACT_APP_COGNITO_USER_POOL_ID"),
+  clientId: Cypress.env("REACT_APP_COGNITO_CLIENT_ID"),
+};
 
-// const cognitoConfig = {
-//   region: Cypress.env("REACT_APP_COGNITO_REGION"),
-//   userPoolId: Cypress.env("REACT_APP_COGNITO_USER_POOL_ID"),
-//   clientId: Cypress.env("REACT_APP_COGNITO_CLIENT_ID"),
-// };
+Amplify.configure({
+  Auth: {
+    region: cognitoConfig.region,
+    userPoolId: cognitoConfig.userPoolId,
+    userPoolWebClientId: cognitoConfig.clientId,
+  },
+});
 
-// Amplify.configure({
-//   Auth: {
-//     region: cognitoConfig.region,
-//     userPoolId: cognitoConfig.userPoolId,
-//     userPoolWebClientId: cognitoConfig.clientId,
-//   },
-// });
+Cypress.Commands.add("healthApiAuth", (username, password) =>
+  Auth.signIn(username, password)
+);
 
-// Cypress.Commands.add("healthApiAuth", (username, password) =>
-//   Auth.signIn(username, password)
-// );
+Cypress.Commands.add("visitHealthLoggedIn", (cognitoUser, path = "/") => {
+  cy.visit(path, {
+    onBeforeLoad: (win) => {
+      const idToken = cognitoUser.signInUserSession.idToken.jwtToken;
+      const accessToken = cognitoUser.signInUserSession.accessToken.jwtToken;
 
-// Cypress.Commands.add("visitHealthLoggedIn", (cognitoUser, path = "/") => {
-//   cy.visit(path, {
-//     onBeforeLoad: (win) => {
-//       const idToken = cognitoUser.signInUserSession.idToken.jwtToken;
-//       const accessToken = cognitoUser.signInUserSession.accessToken.jwtToken;
+      const makeKey = (name) =>
+        `CognitoIdentityServiceProvider.${cognitoUser.pool.clientId}.${cognitoUser.username}.${name}`;
 
-//       const makeKey = (name) =>
-//         `CognitoIdentityServiceProvider.${cognitoUser.pool.clientId}.${cognitoUser.username}.${name}`;
-
-//       win.setLocalStorage(makeKey("accessToken"), accessToken);
-//       win.setLocalStorage(makeKey("idToken"), idToken);
-//       win.setLocalStorage(
-//         `CognitoIdentityServiceProvider.${cognitoUser.pool.clientId}.LastAuthUser`,
-//         cognitoUser.username
-//       );
-//     },
-//   });
-// });
+      win.setLocalStorage(makeKey("accessToken"), accessToken);
+      win.setLocalStorage(makeKey("idToken"), idToken);
+      win.setLocalStorage(
+        `CognitoIdentityServiceProvider.${cognitoUser.pool.clientId}.LastAuthUser`,
+        cognitoUser.username
+      );
+    },
+  });
+});

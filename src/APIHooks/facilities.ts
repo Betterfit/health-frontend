@@ -6,7 +6,7 @@ import { defaultQueryOptions } from "./utils";
 export const facilitiesQK = "facilities";
 
 /**
- * Facilities that the member of or has admin access to
+ * Facilities that the user is a member of or has admin access to
  */
 export const useUserFacilities = (
   queryOptions?: UseQueryOptions<Facility[]>

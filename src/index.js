@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import App from "./App";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
+import "./styles/globalStyles.module.css";
 import "./styles/tailwind.css";
 
 const queryClient = new QueryClient();

@@ -1,3 +1,6 @@
+.button {
+  font-size: 32px;
+}
 .blue {
   color: var(--primary-blue);
 }

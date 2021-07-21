@@ -29,13 +29,13 @@ const MyFacilities = () => {
 
   return (
     <div className={styles.facilities}>
-      <div className="mb-0 flex">
-        <div className="flex-grow pl-4">
+      <div className="mb-0 flex ">
+        <div className="flex-grow ">
           <Title text="My Facilities" />
         </div>
         <AdminTab open={open} setOpen={setOpen} text="Add Facility" />
       </div>
-      <div className={open ? styles.openBox : styles.box}>
+      <div className="cardBorder">
         {open ? (
           <AddFacilityForm />
         ) : (
@@ -60,7 +60,7 @@ const AddUsers = () => {
         </div>
         <AdminTab open={open} setOpen={setOpen} text="Add Users" />
       </div>
-      <div className={open ? styles.box : styles.box}>
+      <div className="cardBorder">
         {open ? (
           <AddUserForm closeForm={() => setOpen(false)} />
         ) : (

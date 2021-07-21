@@ -4,7 +4,6 @@ import TextOptions from "Components/Content/Menu/TextOption";
 import OrderSearch from "Components/Search/OrderSearch";
 import Table from "Components/Table/Full/Table";
 import Tabs from "Components/Tabs/Tabs";
-import { useAuthStore } from "Context/authContext";
 import dayjs from "dayjs";
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
@@ -16,18 +15,17 @@ import DashboardOrderSearch from "./DashboardOrderSearch";
 const api = new Api();
 
 const DashboardOrderList = (props) => {
-  const authStore = useAuthStore();
-  const userData = JSON.parse(authStore.user);
-  const userId = userData.user_profile.facility;
   const [orderData, setOrderData] = useState(null);
   const [orderCount, setOrderCountData] = useState(null);
   const [searchActive, setSearchActive] = useState(false);
 
   const getData = async () =>
     await api
-      .getOrderList(userId)
+      .getAllOrders()
       .then((response) => {
-        let arr = response.data.orders.map((item) => {
+        console.log(response);
+        const orders = response.data;
+        let arr = response.data.map((item) => {
           let header = setHeader(item);
           header.order_products = item.order_products.map((products) => {
             let obj = {
@@ -42,8 +40,13 @@ const DashboardOrderList = (props) => {
           });
           return header;
         });
+        const summary = orders.reduce((acc, { status }) => {
+          if (status in acc) acc[status] += 1;
+          else acc[status] = 1;
+          return acc;
+        }, {});
         setOrderData(arr);
-        setOrderCountData(response.data.summary);
+        setOrderCountData(summary);
       })
       .catch((err) => console.log(err));
 
@@ -109,13 +112,12 @@ const DashboardOrderList = (props) => {
         </PopupMenu>
       );
     };
-
+    console.log(data);
     return {
       purchase_ord: data.purchase_no,
-      ordered_by:
-        data.facility_admin.user.first_name +
-        " " +
-        data.facility_admin.user.last_name,
+      ordered_by: data.author_user
+        ? data.author_user?.first_name + " " + data.author_user?.last_name
+        : "",
       ordered_on: dayjs(data.order_date).format("MMM D, YYYY hh:mmA"),
       order_no: data.order_no,
       status: data.status,

@@ -1,0 +1,77 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem;
+}
+
+.root p,
+b {
+  color: var(--midnight-blue);
+  /* font-size: 1rem; */
+}
+
+.titleSection {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.actionBar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.search {
+  /* flex-grow: 1; */
+  /* justify-self: end; */
+  margin-left: auto;
+}
+
+.orders .order {
+  margin-top: 2rem;
+}
+
+.order {
+  /* background-color: var(--gray-ice); */
+  composes: cardBorder from global;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.order > div:nth-last-child(2) {
+  margin-right: auto;
+}
+
+.orderTitle {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  /* margin-left: 1rem; */
+  margin-bottom: 1rem;
+}
+
+.orderTitle p,
+b {
+  font-size: 1.2rem !important;
+}
+.orderTitle p {
+  margin-right: 1rem;
+}
+
+.orderBottom {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orderActions {
+  display: flex;
+}
+.money {
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
