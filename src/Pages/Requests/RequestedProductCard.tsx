@@ -1,22 +1,31 @@
+import { productDisplayName } from "APIHooks/products";
 import IconButton from "Components/Content/IconButton";
 import Badge from "Components/Forms/Badge/Badge";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import React, { useState } from "react";
+import { Order, OrderProduct } from "Types";
 import styles from "./RequestedProductCard.module.css";
-import { formatCurrency, Order, OrderProduct, Supplier } from "./RequestsPage";
+import { formatCurrency } from "./RequestsPage";
 
 const RequestedProductCard = ({
-  product,
   order,
+  orderProduct,
 }: {
   order: Order;
-  product: OrderProduct;
+  orderProduct: OrderProduct;
 }) => {
   const [moreSuppliers, setMoreSuppliers] = useState(false);
   const [supplierIndex, setSupplierIndex] = useState(0);
   const bestMatch = supplierIndex === 0;
   const resetSupplier = () => setSupplierIndex(0);
-  const supplier = product.suppliers[supplierIndex];
+  const suppliers = [
+    { name: "Air Liquide", pricePerUnit: 1.05 },
+    { name: "The Canadian Shield", pricePerUnit: 1.05 },
+  ];
+  const supplier = suppliers[supplierIndex];
+  const product = orderProduct.productOption;
+  const displayName = productDisplayName(product);
+
   return (
     <div className={styles.orderProduct}>
       <div className={styles.product}>
@@ -27,19 +36,22 @@ const RequestedProductCard = ({
         />
         <div className={styles.productImage}>
           <p className={styles.label}>
-            {product.name}
-            {<IconButton iconName="swap_horiz" />}
+            {displayName}
+            {/* {<IconButton iconName="swap_horiz" aria-label='swap product'/>} */}
           </p>
-          <img src={product.imageUrl} alt={product.name + " Product Image"} />
+          <img
+            src={product.productImage}
+            alt={product.name + " Product Image"}
+          />
         </div>
         <div className={styles.productDetails}>
           <div className={styles.labeledContent}>
             <p>quantity</p>
-            {product.quantity}
+            {orderProduct.quantity}
           </div>
           <div className={styles.labeledContent}>
-            <p>size</p>
-            {product.size}
+            <p>{product.optionLabel}</p>
+            {product.name}
           </div>
         </div>
       </div>
@@ -75,13 +87,13 @@ const RequestedProductCard = ({
               <span className={styles.money}>
                 {formatCurrency(supplier.pricePerUnit)}
               </span>{" "}
-              x {product.quantity}
+              x {orderProduct.quantity}
             </span>
           </div>
           <div className={styles.labeledContent}>
             <p>total</p>
             <span className={styles.money}>
-              {formatCurrency(supplier.pricePerUnit * product.quantity)}
+              {formatCurrency(supplier.pricePerUnit * orderProduct.quantity)}
             </span>
           </div>
         </div>
@@ -95,15 +107,16 @@ const RequestedProductCard = ({
           onClick={() => setMoreSuppliers(!moreSuppliers)}
         />
         {moreSuppliers &&
-          product.suppliers
+          suppliers
             .filter((_, i) => i !== supplierIndex)
             .map((supplier, i) => (
               <SupplierCard
+                key={i}
                 selectSupplier={() => {
                   setSupplierIndex(i + 1);
                   setMoreSuppliers(false);
                 }}
-                {...{ supplier, product, bestMatch: false }}
+                {...{ supplier, orderProduct, bestMatch: false }}
               />
             ))}
       </div>
@@ -119,12 +132,12 @@ const supplierLogo =
 const SupplierCard = ({
   supplier,
   bestMatch,
-  product,
+  orderProduct,
   selectSupplier,
 }: {
-  supplier: Supplier;
+  supplier: any;
   bestMatch: boolean;
-  product: OrderProduct;
+  orderProduct: OrderProduct;
   selectSupplier: () => void;
 }) => {
   return (
@@ -145,13 +158,13 @@ const SupplierCard = ({
             <span className={styles.money}>
               {formatCurrency(supplier.pricePerUnit)}
             </span>{" "}
-            x {product.quantity}
+            x {orderProduct.quantity}
           </span>
         </div>
         <div className={styles.labeledContent}>
           <p>total</p>
           <span className={styles.money}>
-            {formatCurrency(supplier.pricePerUnit * product.quantity)}
+            {formatCurrency(supplier.pricePerUnit * orderProduct.quantity)}
           </span>
         </div>
       </div>

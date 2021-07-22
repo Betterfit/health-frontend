@@ -229,4 +229,5 @@ export interface Order {
   purchaseNo: string;
   authorUser: User;
   orderProducts: OrderProduct[];
+  facility: Facility;
 }

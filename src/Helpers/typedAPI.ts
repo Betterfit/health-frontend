@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import applyCaseMiddleware from "axios-case-converter";
 import { getIdToken } from "Helpers/cognito";
-import { Facility, Organization, UserProfile } from "Types";
+import { Facility, Order, Organization, UserProfile } from "Types";
 
 export const apiURL = process.env.REACT_APP_DJANGO_API_URL;
 export default class TypedAPI {
@@ -82,6 +82,15 @@ export default class TypedAPI {
       isAdmin,
     });
   };
+
+  getOrders = async (status = "") => {
+    const client = await this.init();
+    let path = "/orders";
+    if (status) path += "?status" + status;
+    return client.get<Order[]>(path);
+  };
 }
+
+export const api = new TypedAPI();
 
 export type FacilityData = Omit<Facility, "pk" | "url" | "id">;

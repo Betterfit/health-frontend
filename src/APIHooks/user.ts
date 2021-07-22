@@ -1,6 +1,6 @@
 import TypedAPI from "Helpers/typedAPI";
 import { useQuery, useQueryClient, UseQueryOptions } from "react-query";
-import { Facility, UserProfile } from "Types";
+import { Facility, User, UserProfile } from "Types";
 import { mapFacilitiesById } from "./facilities";
 
 export const userProfileQueryKey = "userProfile";
@@ -53,8 +53,8 @@ export const groupUsersByFacility = (users: UserProfile[]): UsersByFacility => {
   return result;
 };
 
-export const fullName = (user: UserProfile): string =>
-  [user.firstName, user.lastName].join(" ");
+export const fullName = (user: User | undefined | null): string =>
+  [user?.firstName, user?.lastName].join(" ");
 
 /**
  *
