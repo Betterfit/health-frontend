@@ -5,6 +5,7 @@ This helps minimize diffs that might result from using different formatters.
 If you use VSCode, you can just add this extension [here](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
 ## Environments
+
 When building for a particular environment, we copy the corresponding environment file to .env.local, which has precedence over all other env files.
 See [here](https://create-react-app.dev/docs/adding-custom-environment-variables/#what-other-env-files-can-be-used) for more info.
 Make sure not to add any secrets to the environment files, as they are accessible from the browser.
@@ -30,13 +31,10 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 Launches the Cypress test runner, which we use for our E2E tests.
 
-
 You will have to set the CYPRESS_password environment variable to the password used to log into flow.
 If you are not using the email yash@betterfit.co, then set the CYPRESS_username env var as well.
 
-
 Set the CYPRESS_BASE_URL env var to run the tests against a different url.
-
 
 ### `yarn build`
 
@@ -87,3 +85,12 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+## Styling
+
+We use css modules and tailwind css throughout the project.
+For complex styling, please prefer the former.
+
+Global classes that can be composed should go in `styles/globalClasses.module.css`.
+Other styling rules that are globally applicable should go in the root level
+`index.css`, or a css file that is imported into it.

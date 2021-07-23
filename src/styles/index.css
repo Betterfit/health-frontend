@@ -1,7 +1,3 @@
-@import 'type.css';
-@import 'dashboard.css';
-@import 'form.css';
-@import 'resources.css';
 @tailwind base;
 @tailwind utilities;
 @tailwind components;

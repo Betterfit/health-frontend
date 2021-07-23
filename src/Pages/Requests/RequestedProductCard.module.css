@@ -5,6 +5,7 @@
   background-color: var(--gray-ice);
   margin: 0.5rem;
   transition: box-shadow 0.3s;
+  position: relative;
 }
 
 .orderProduct p,
@@ -100,13 +101,19 @@ b {
   text-transform: uppercase;
 }
 
+.showMoreSButton {
+}
+
 .showMoreSuppliers {
   display: flex;
   flex-grow: 1;
   margin: 0.5rem auto;
   justify-content: center;
   flex-basis: 100%;
+  /* max-width: fit-content; */
+  /* composes: hoverShadow from global; */
 }
+
 .moreSuppliers {
   flex-basis: 100%;
   flex-grow: 1;

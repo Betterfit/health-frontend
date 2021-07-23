@@ -81,7 +81,7 @@ const AdminTab = ({ open, setOpen, text }: AdminTabProps) => {
     <button
       onClick={() => setOpen(!open)}
       className={
-        "flex bg-sky-blue hover:bg-sky-blue  p-2 rounded-t-lg border-primary-blue border-t-2 border-l-2 border-r-2 "
+        "flex bg-sky-blue hover:bg-sky-blue  p-2 rounded-t-lg border-primary-blue border-t-2 border-l-2 border-r-2 focus:outline-none"
       }
     >
       {open ? (

@@ -1,7 +1,7 @@
 .badge {
   display: flex;
   align-items: center;
-  border-radius: 1rem;
+  /* border-radius: 1rem; */
   color: white;
   padding: 0.25rem 0.5rem;
 }

@@ -33,11 +33,11 @@ b {
 }
 
 .order {
-  /* background-color: var(--gray-ice); */
   composes: cardBorder from global;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  position: relative;
 }
 
 .order > div:nth-last-child(2) {

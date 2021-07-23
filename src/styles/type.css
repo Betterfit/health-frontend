@@ -1,15 +1,3 @@
-* {
-  font-family: "Open Sans";
-}
-
-p {
-  color: #4a5568;
-  line-height: 27px;
-  font-size: 1.2em;
-  margin: 6px 0px;
-}
-
-
 @media screen and (min-width: 768px) {
   a.nav.active {
     opacity: 1 !important;
@@ -19,7 +7,7 @@ p {
     opacity: 1;
     background-color: #18398d;
   }
-  a.nav.active span{
+  a.nav.active span {
     font-weight: 600;
   }
 }
@@ -43,17 +31,15 @@ p {
   outline: none !important;
 }
 
-
-.table-row:hover{
-    outline:auto; 
-    outline-color:#9EB9FF;
-    background-color: rgba(31, 69, 168,0.1)!important;
-    outline-width:thin;
+.table-row:hover {
+  outline: auto;
+  outline-color: #9eb9ff;
+  background-color: rgba(31, 69, 168, 0.1) !important;
+  outline-width: thin;
 }
 
-
 .table-row:hover .link-order-no {
-  color: #1D2A93;
+  color: #1d2a93;
 }
 
 .pill {
@@ -62,7 +48,6 @@ p {
   min-width: auto !important;
 }
 
-.no-margin{
-    margin-bottom: 0 !important;
+.no-margin {
+  margin-bottom: 0 !important;
 }
-

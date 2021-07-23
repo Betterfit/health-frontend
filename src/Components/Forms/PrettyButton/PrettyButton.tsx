@@ -33,8 +33,10 @@ const PrettyButton = ({
       onClick={handleClick}
       {...props}
     >
-      {icon && <span className="material-icons-outlined">{icon}</span>}
       {text}
+      {icon && (
+        <span className={`material-icons-outlined ${styles.icon}`}>{icon}</span>
+      )}
     </button>
   );
 };

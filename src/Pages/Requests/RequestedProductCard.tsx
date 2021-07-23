@@ -16,10 +16,12 @@ const RequestedProductCard = ({
 }) => {
   const [moreSuppliers, setMoreSuppliers] = useState(false);
   const [supplierIndex, setSupplierIndex] = useState(0);
+  const [denied, setDenied] = useState(false);
   const bestMatch = supplierIndex === 0;
   const resetSupplier = () => setSupplierIndex(0);
   const suppliers = [
     { name: "Air Liquide", pricePerUnit: 1.05 },
+    { name: "The Canadian Shield", pricePerUnit: 1.05 },
     { name: "The Canadian Shield", pricePerUnit: 1.05 },
   ];
   const supplier = suppliers[supplierIndex];
@@ -28,12 +30,25 @@ const RequestedProductCard = ({
 
   return (
     <div className={styles.orderProduct}>
-      <div className={styles.product}>
-        <IconButton
-          iconName="close"
-          color="red"
-          className={styles.deleteProduct}
+      <div className={"overlay " + (denied && "overlayVisible")}>
+        <PrettyButton
+          text="Restore Product"
+          icon="restore"
+          color="green"
+          title="Restore product"
+          onClick={() => setDenied(!denied)}
         />
+      </div>
+      <div className={styles.product}>
+        {!denied && (
+          <IconButton
+            iconName="close"
+            color="red"
+            title="Deny product"
+            className={styles.deleteProduct}
+            onClick={() => setDenied(true)}
+          />
+        )}
         <div className={styles.productImage}>
           <p className={styles.label}>
             {displayName}
@@ -55,23 +70,28 @@ const RequestedProductCard = ({
           </div>
         </div>
       </div>
-      <div className={styles.supplier}>
-        <div className={styles.bestMatch}>
-          <Badge
-            text={bestMatch ? "Best Match Supplier!" : "Custom Supplier"}
-            backgroundColor="var(--ocean-blue)"
-            icon={bestMatch ? "inventory" : undefined}
-            disabled={!bestMatch}
-          />
-          {!bestMatch && (
-            <IconButton
-              onClick={resetSupplier}
-              iconName="replay"
-              title="Restore Best Match Supplier"
-              color="red"
+      <div
+        className={styles.supplier}
+        onClick={() => setMoreSuppliers(!moreSuppliers)}
+      >
+        {!denied && (
+          <div className={styles.bestMatch}>
+            <Badge
+              text={bestMatch ? "Best Match Supplier!" : "Custom Supplier"}
+              backgroundColor="var(--ocean-blue)"
+              icon={bestMatch ? "inventory" : undefined}
+              disabled={!bestMatch}
             />
-          )}
-        </div>
+            {!bestMatch && (
+              <IconButton
+                onClick={resetSupplier}
+                iconName="replay"
+                title="Restore Best Match Supplier"
+                color="red"
+              />
+            )}
+          </div>
+        )}
         <div className={styles.supplierImage}>
           <p className={styles.label}>{supplier.name}</p>
           <img src={supplierLogo} alt={supplier.name + " logo"} />

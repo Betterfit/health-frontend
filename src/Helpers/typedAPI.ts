@@ -20,6 +20,10 @@ export default class TypedAPI {
       })
     );
   };
+  // cleaner name
+  getClient = async (): Promise<AxiosInstance> => {
+    return this.init();
+  };
   getUsers = async () => {
     const client = await this.init();
     return client.get<UserProfile[]>("/users/");
@@ -82,12 +86,17 @@ export default class TypedAPI {
       isAdmin,
     });
   };
-
+  //  ********** ORDER API **********
   getOrders = async (status = "") => {
     const client = await this.init();
     let path = "/orders";
-    if (status) path += "?status" + status;
+    if (status) path += "?status=" + status;
     return client.get<Order[]>(path);
+  };
+
+  denyOrder = async (orderId: number) => {
+    const client = await this.init();
+    return client.post("/orders/" + orderId + "/deny");
   };
 }
 

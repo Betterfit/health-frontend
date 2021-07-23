@@ -7,7 +7,7 @@ import SearchBar from "Components/Search/SearchBar";
 import { api } from "Helpers/typedAPI";
 import moment from "moment";
 import React, { useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Order } from "Types";
 import RequestedProductCard from "./RequestedProductCard";
 import styles from "./RequestsPage.module.css";
@@ -48,10 +48,37 @@ const RequestPage = () => {
 export default RequestPage;
 
 const RequestedOrderCard = ({ order }: { order: Order }) => {
+  const queryClient = useQueryClient();
+  const orderStatusMutation = useMutation(
+    (action: "cancel" | "approve") =>
+      api.getClient().then((client) => client.post(order.url + "/" + action)),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["orders"]);
+        // future performance optimization so that we don't have to query the
+        // server every time we approve or deny an order
+        // queryClient.setQueryData(["orders", "requested"], (oldOrders: any) =>
+        //   oldOrders?.filter((oldOrder: Order) => oldOrder.pk !== order.pk)
+        // );
+      },
+      onError: () => {
+        alert("Could not update order status");
+      },
+    }
+  );
+
   const totalPrice = "$625.00 CAD";
   const date = new Date(order.orderDate).toLocaleDateString();
+
+  const denyOrder = () => orderStatusMutation.mutate("cancel");
+  const approveOrder = () => orderStatusMutation.mutate("approve");
+  const showLoadingOverlay = orderStatusMutation.isLoading;
+
   return (
     <div className={styles.order}>
+      <div className={"overlay " + (showLoadingOverlay && "overlayVisible")}>
+        {showLoadingOverlay && <LoadingSpinner />}
+      </div>
       <div className={styles.orderTitle}>
         <p>
           <b>{order.facility.name}</b> - <b>{date}</b>
@@ -60,7 +87,7 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
           By: <b>{fullName(order.authorUser)}</b>
         </p>
         <p>
-          Order #: <b>{order.orderNo}</b>
+          Order ID: <b>{order.orderNo}</b>
         </p>
       </div>
       {order.orderProducts.map((orderProduct) => (
@@ -74,8 +101,18 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
           Order Total: <span className={styles.money}>{totalPrice}</span>
         </p>
         <div className={styles.orderActions}>
-          <PrettyButton text="Approve" color="green" />
-          <PrettyButton text="Deny" color="red" />
+          <PrettyButton
+            text="Approve"
+            color="green"
+            onClick={approveOrder}
+            icon="done"
+          />
+          <PrettyButton
+            text="Deny"
+            color="red"
+            onClick={denyOrder}
+            icon="close"
+          />
         </div>
       </div>
     </div>

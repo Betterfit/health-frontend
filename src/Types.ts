@@ -223,6 +223,7 @@ export interface OrderProduct {
   productOption: ProductOption;
 }
 export interface Order {
+  url: string;
   pk: number;
   orderNo: string;
   orderDate: string;
