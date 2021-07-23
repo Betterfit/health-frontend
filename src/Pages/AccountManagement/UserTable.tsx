@@ -157,7 +157,7 @@ const UserTypeList = ({
                 <td>
                   {user.facilityMembership.map((membership) => (
                     //   flex is required so that the delete icons line up
-                    <tr className="flex">
+                    <tr className="flex items-center">
                       {facilitiesById &&
                         facilitiesById[membership.facilityId].name}
                       {user.id === userToEdit?.id && (

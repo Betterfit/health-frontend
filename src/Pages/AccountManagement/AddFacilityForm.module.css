@@ -1,12 +1,12 @@
-.form input {
+/* .form input {
   color: var(--midnight-blue);
-  border-color: var(--primary-blue);
-  background-color: white;
-}
+  border-color: var(--primary-blue); */
+/* background-color: white;
+} */
 
-.form input:focus {
-  outline: none !important;
-}
+/* .form input:focus {
+  outline: none !important; */
+/* } */
 
 .form {
   display: flex;

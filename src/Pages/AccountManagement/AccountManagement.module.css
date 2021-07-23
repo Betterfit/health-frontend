@@ -52,3 +52,8 @@
 .facility:last-child {
   margin-bottom: 0;
 }
+
+.cardWithTab {
+  composes: cardBorder from global;
+  border-top-right-radius: 0 !important;
+}

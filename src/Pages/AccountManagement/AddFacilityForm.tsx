@@ -7,6 +7,7 @@ import TypedAPI, { FacilityData } from "Helpers/typedAPI";
 import { subset } from "Helpers/utils";
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import InputMask from "react-input-mask";
 import { useMutation, useQueryClient } from "react-query";
 import styles from "./AddFacilityForm.module.css";
 const api = new TypedAPI();
@@ -53,8 +54,7 @@ const AddFacilityForm = () => {
         "postalCode",
         "website",
         "email",
-        "city",
-        "phoneNumber"
+        "city"
       ),
       street: formData.address,
       shippingStreet: formData.address,
@@ -62,6 +62,7 @@ const AddFacilityForm = () => {
       shippingProvince: formData.province,
       shippingPostalCode: formData.postalCode,
       parentOrganization: orgQuery.data.url,
+      phoneNumber: formData.postalCode.toUpperCase(),
     };
     addFacilityMutation.mutate(data);
   };
@@ -106,17 +107,12 @@ const AddFacilityForm = () => {
               label="Province"
               required
               select
-              style={{ backgroundColor: "white" }}
               value={field.value}
               onChange={field.onChange}
               className={styles.province}
             >
               {provinces.map((province, i) => (
-                <MenuItem
-                  key={i}
-                  style={{ backgroundColor: "white" }}
-                  value={province.abbreviation}
-                >
+                <MenuItem key={i} value={province.abbreviation}>
                   {province.abbreviation}
                 </MenuItem>
               ))}
@@ -124,12 +120,30 @@ const AddFacilityForm = () => {
           )}
         />
       </div>
-      <TextField
-        {...register("postalCode")}
-        {...defaultTextFieldProps}
-        label="Postal Code"
-        error={Boolean(errors.postalCode)}
-        required
+      <Controller
+        name="postalCode"
+        control={control}
+        rules={{ required: true }}
+        render={({ field }) => (
+          <InputMask
+            value={field.value}
+            onChange={field.onChange}
+            mask="a9a-9a9"
+            alwaysShowMask={false}
+          >
+            {() => (
+              <TextField
+                {...defaultTextFieldProps}
+                inputProps={{
+                  style: { textTransform: "uppercase", maxWidth: "150px" },
+                }}
+                label="Postal Code"
+                error={Boolean(errors.postalCode)}
+                required
+              />
+            )}
+          </InputMask>
+        )}
       />
       <TextField
         {...register("shippingLabelNote")}
@@ -139,11 +153,22 @@ const AddFacilityForm = () => {
 
       <hr />
       <p className={styles.sectionHeader}>Contact Information</p>
-      <TextField
-        {...register("phoneNumber")}
-        {...defaultTextFieldProps}
-        label="Phone Number"
-        type=""
+      <Controller
+        name="phoneNumber"
+        control={control}
+        rules={{ required: true }}
+        render={({ field }) => (
+          <InputMask
+            value={field.value}
+            onChange={field.onChange}
+            mask="(999)-999-9999"
+            alwaysShowMask={false}
+          >
+            {() => (
+              <TextField {...defaultTextFieldProps} label="Phone Number" />
+            )}
+          </InputMask>
+        )}
       />
       <TextField
         {...register("website")}

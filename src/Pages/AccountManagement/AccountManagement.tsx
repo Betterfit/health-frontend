@@ -35,7 +35,7 @@ const MyFacilities = () => {
         </div>
         <AdminTab open={open} setOpen={setOpen} text="Add Facility" />
       </div>
-      <div className="cardBorder">
+      <div className={styles.cardWithTab}>
         {open ? (
           <AddFacilityForm />
         ) : (
@@ -60,7 +60,7 @@ const AddUsers = () => {
         </div>
         <AdminTab open={open} setOpen={setOpen} text="Add Users" />
       </div>
-      <div className="cardBorder">
+      <div className={styles.cardWithTab}>
         {open ? (
           <AddUserForm closeForm={() => setOpen(false)} />
         ) : (
