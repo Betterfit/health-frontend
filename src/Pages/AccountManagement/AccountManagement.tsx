@@ -37,7 +37,7 @@ const MyFacilities = () => {
       </div>
       <div className={styles.cardWithTab}>
         {open ? (
-          <AddFacilityForm />
+          <AddFacilityForm handleClose={() => setOpen(false)} />
         ) : (
           facilitiesQuery.data.map((facility, i) => (
             <div className={styles.facility} key={i}>

@@ -25,7 +25,7 @@ type FacilityFormData = {
   website: string;
   email: string;
 };
-const AddFacilityForm = () => {
+const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
   const {
     register,
     handleSubmit,
@@ -40,6 +40,7 @@ const AddFacilityForm = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(facilitiesQK);
+        handleClose();
         reset();
       },
     }
