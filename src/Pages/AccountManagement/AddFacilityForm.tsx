@@ -1,6 +1,7 @@
 import { MenuItem, TextField } from "@material-ui/core";
 import { facilitiesQK } from "APIHooks/facilities";
 import { useOrganization } from "APIHooks/organization";
+import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { provinces } from "Data/geography";
 import TypedAPI, { FacilityData } from "Helpers/typedAPI";
@@ -72,6 +73,7 @@ const AddFacilityForm = () => {
   } as const;
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <LoadingSpinner withOverlay show={addFacilityMutation.isLoading} />
       <TextField
         {...register("name")}
         {...defaultTextFieldProps}
@@ -187,6 +189,7 @@ const AddFacilityForm = () => {
         icon="add"
         style={{ alignSelf: "flex-end", marginTop: "1rem" }}
         disabled={addFacilityMutation.isLoading}
+        onClick={handleSubmit(onSubmit)}
       />
     </form>
   );
