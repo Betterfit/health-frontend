@@ -94,9 +94,9 @@ export default class TypedAPI {
     return client.get<Order[]>(path);
   };
 
-  denyOrder = async (orderId: number) => {
+  updateOrderStatus = async (order: Order, action: "deny" | "approve") => {
     const client = await this.init();
-    return client.post("/orders/" + orderId + "/deny");
+    return client.post(order.url + "/" + action);
   };
 }
 

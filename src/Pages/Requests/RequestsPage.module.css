@@ -1,5 +1,6 @@
 .root {
   display: flex;
+  min-height: 100%;
   flex-direction: column;
   padding: 2rem 1rem;
 }
@@ -23,9 +24,14 @@ b {
 }
 
 .search {
-  /* flex-grow: 1; */
-  /* justify-self: end; */
   margin-left: auto;
+}
+.orders {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .orders .order {

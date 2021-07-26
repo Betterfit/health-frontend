@@ -4,6 +4,7 @@ import styles from "./LoadingSpinner.module.css";
 /**
  * @param show Should the spinner be displayed
  * @param withOverlay Put a partially opaque overlay behind the spinner
+ * Overlay is over nearest parent element with position:relative
  */
 export const LoadingSpinner = ({
   show = true,
@@ -25,11 +26,10 @@ export const LoadingSpinner = ({
   );
   if (!withOverlay && !show) return null;
 
-  return (
-    <div
-      className={withOverlay && show ? styles.overlayVisible : styles.overlay}
-    >
-      {show && spinner}
-    </div>
-  );
+  let className = "";
+  if (withOverlay) {
+    className = "overlay";
+    if (show) className += " overlayVisible";
+  }
+  return <div className={className}>{show && spinner}</div>;
 };

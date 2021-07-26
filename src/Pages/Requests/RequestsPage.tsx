@@ -8,15 +8,27 @@ import { api } from "Helpers/typedAPI";
 import moment from "moment";
 import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useHistory } from "react-router-dom";
 import { Order } from "Types";
 import RequestedProductCard from "./RequestedProductCard";
 import styles from "./RequestsPage.module.css";
 
 const RequestPage = () => {
-  const { data: orders } = useQuery<Order[]>(["orders", "requested"], () => {
-    return api.getOrders("open").then((response) => response.data);
-  });
+  const queryClient = useQueryClient();
+  const { data: orders, isLoading: loadingOrders } = useQuery<Order[]>(
+    ["orders", "requested"],
+    () => {
+      return api.getOrders("open").then((response) => response.data);
+    }
+  );
   const [searchText, setSearchText] = useState("");
+  const history = useHistory();
+  const approveAllOrders = () => {
+    if (!orders) return;
+    Promise.all(
+      orders.map((order) => api.updateOrderStatus(order, "approve"))
+    ).finally(() => queryClient.invalidateQueries(["orders"]));
+  };
   return (
     <div className={styles.root}>
       <div className={styles.titleSection}>
@@ -24,7 +36,12 @@ const RequestPage = () => {
         <span className="mt-2">{moment().format("MMMM D, YYYY")}</span>
       </div>
       <div className={styles.actionBar}>
-        <PrettyButton text="Approve All" color="green" />
+        <PrettyButton
+          text="Approve All"
+          color="green"
+          disabled={!orders}
+          onClick={approveAllOrders}
+        />
         <SearchBar
           performSearch={setSearchText}
           placeholderText="Search Requests"
@@ -37,9 +54,21 @@ const RequestPage = () => {
       </div>
       <div className={styles.orders}>
         {orders ? (
-          orders.map((order) => <RequestedOrderCard order={order} />)
+          orders.map((order) => (
+            <RequestedOrderCard order={order} key={order.pk} />
+          ))
         ) : (
           <LoadingSpinner />
+        )}
+        {!loadingOrders && orders?.length === 0 && (
+          <>
+            <p className="mt-2">No requested orders</p>
+            <PrettyButton
+              text="See all orders"
+              color="blue"
+              onClick={() => history.push("orders")}
+            />
+          </>
         )}
       </div>
     </div>
@@ -55,6 +84,7 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["orders"]);
+        console.log("performed query");
         // future performance optimization so that we don't have to query the
         // server every time we approve or deny an order
         // queryClient.setQueryData(["orders", "requested"], (oldOrders: any) =>
@@ -72,13 +102,10 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
 
   const denyOrder = () => orderStatusMutation.mutate("cancel");
   const approveOrder = () => orderStatusMutation.mutate("approve");
-  const showLoadingOverlay = orderStatusMutation.isLoading;
 
   return (
     <div className={styles.order}>
-      <div className={"overlay " + (showLoadingOverlay && "overlayVisible")}>
-        {showLoadingOverlay && <LoadingSpinner />}
-      </div>
+      <LoadingSpinner withOverlay show={orderStatusMutation.isLoading} />
       <div className={styles.orderTitle}>
         <p>
           <b>{order.facility.name}</b> - <b>{date}</b>
@@ -106,12 +133,14 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
             color="green"
             onClick={approveOrder}
             icon="done"
+            disabled={orderStatusMutation.isLoading}
           />
           <PrettyButton
             text="Deny"
             color="red"
             onClick={denyOrder}
             icon="close"
+            disabled={orderStatusMutation.isLoading}
           />
         </div>
       </div>
@@ -119,73 +148,4 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
   );
 };
 
-const maskImage =
-  "https://staging.api.betterfit.health/main/media/41EBUpNezEL.jpg";
-// const orders = [
-//   {
-//     facility: "Royal Crom Hospital",
-//     author: { firstName: "Alex", lastName: "Lee" },
-//     createdDate: "July 4, 2021",
-//     id: 1557,
-//     products: [
-//       {
-//         name: "3M N95 - 8210",
-//         quantity: 12,
-//         size: "10/Box",
-//         supply: "In Stock",
-//         imageUrl: maskImage,
-//         suppliers: [
-//           { name: "Air Liquide", pricePerUnit: 1225.05 },
-//           { name: "The Canadian Shield", pricePerUnit: 1.05 },
-//           { name: "The Canadian Shield", pricePerUnit: 1.05 },
-//         ],
-//       },
-//       {
-//         name: "3M N95 - 9221+",
-//         quantity: 10,
-//         size: "10/Box",
-//         supply: "Low",
-//         imageUrl: maskImage,
-//         suppliers: [
-//           { name: "The Canadian Shield", pricePerUnit: 1.55 },
-//           { name: "Air Liquide", pricePerUnit: 1.05 },
-//         ],
-//       },
-//       {
-//         name: "3M N95 - 9221+",
-//         quantity: 10,
-//         size: "10/Box",
-//         supply: "Low",
-//         imageUrl: maskImage,
-//         suppliers: [
-//           { name: "The Canadian Shield", pricePerUnit: 1.55 },
-//           { name: "Air Liquide", pricePerUnit: 1.05 },
-//         ],
-//       },
-//     ],
-//   },
-//   {
-//     facility: "Royal Crom Hospital",
-//     author: { firstName: "Alex", lastName: "Lee" },
-//     createdDate: "July 4, 2021",
-//     id: 1557,
-//     products: [
-//       {
-//         name: "3M N95 - 8210",
-//         quantity: 12,
-//         size: "10/Box",
-//         supply: "In Stock",
-//         imageUrl: maskImage,
-// suppliers: [
-//   { name: "Air Liquide", pricePerUnit: 1.05 },
-//   { name: "The Canadian Shield", pricePerUnit: 1.05 },
-//         ],
-//       },
-//     ],
-//   },
-// ];
-
-// export type Order = typeof orders[number];
-// export type OrderProduct = Order["products"][number];
-// export type Supplier = OrderProduct["suppliers"][number];
 export const formatCurrency = (price: number) => `$${price.toFixed(2)} CAD`;
