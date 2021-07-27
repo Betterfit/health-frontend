@@ -82,4 +82,7 @@ Cypress.Commands.add("login", (email, password) => login(email, password));
 Cypress.Commands.add("loginAsPurchaserAdmin", () =>
   login(Cypress.env("ADMIN_EMAIL"), Cypress.env("ADMIN_PASSWORD"))
 );
+Cypress.Commands.add("loginAsPurchaser", () =>
+  login(Cypress.env("MEMBER_EMAIL"), Cypress.env("MEMBER_PASSWORD"))
+);
 Cypress.Commands.add("logout", logout);

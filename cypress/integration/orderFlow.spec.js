@@ -26,9 +26,12 @@ describe("Order Flow", () => {
       quantity: 35,
     },
   ];
-  it("Allows members to create orders that can be approved by admins", () => {
+  beforeEach(() => {
     cy.visit("");
+  });
+  it("Allows members to create orders that can be approved by admins", () => {
     cy.login(member.email, member.password);
+    cy.findByRole("link", { name: /new order/i }).click();
     addProductToCart(products[0]);
     addProductToCart(products[1]);
     cy.findByRole("button", { name: /submit order/i }).click();
@@ -56,6 +59,22 @@ describe("Order Flow", () => {
     cy.findByRole("tab", { name: /approved/i }).click();
     cy.contains(orderNumber);
   });
+
+  // it("Allows admin to deny orders", () => {
+  //   cy.loginAsPurchaserAdmin();
+  //   addProductToCart(products[0]);
+  //   cy.findByRole("button", { name: /submit order/i }).click();
+  //   // confirm in modal
+  //   cy.findByRole("checkbox", { name: /agree to terms/i }).click({
+  //     force: true,
+  //   });
+  //   // generates a random 10 character string
+  //   const orderNumber = Math.random().toString(36).substr(2, 10);
+  //   cy.findByRole("textbox", { name: /order number/i }).type(orderNumber);
+  //   cy.findByRole("textbox", { name: /order number/i }).type(orderNumber);
+  // });
+  // cy.contains(/requests/i).click();
+  // cy.findByRole("button", { name: /approve all/i }).click();
 });
 
 const getCart = () => cy.findByRole("complementary", { name: "cart" });

@@ -1,4 +1,6 @@
 import { StylesProvider } from "@material-ui/core/styles";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { AuthProvider } from "Context/authContext";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -10,6 +12,7 @@ import * as serviceWorker from "./serviceWorker";
 import "./styles/globalClasses.module.css";
 import "./styles/tailwind.css";
 
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: { staleTime: 1000 * 60 * 5, cacheTime: 1000 * 60 * 15 },
@@ -18,13 +21,15 @@ const queryClient = new QueryClient({
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      {/* https://material-ui.com/guides/interoperability/#controlling-priority-4 */}
-      <StylesProvider injectFirst>
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <App />
-        </QueryClientProvider>
-      </StylesProvider>
+      <Elements stripe={stripePromise}>
+        {/* https://material-ui.com/guides/interoperability/#controlling-priority-4 */}
+        <StylesProvider injectFirst>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <App />
+          </QueryClientProvider>
+        </StylesProvider>
+      </Elements>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById("root")
