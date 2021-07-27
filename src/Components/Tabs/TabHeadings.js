@@ -23,6 +23,7 @@ const TabHeadings = ({
           return (
             <div className="pr-6 " key={heading.key}>
               <button
+                role="tab"
                 className={` pt-4 pb-2 focus:outline-none relative mr-2 ${
                   heading.key === activeHeading
                     ? "border-b-2 border-blue text-blue font-semibold"

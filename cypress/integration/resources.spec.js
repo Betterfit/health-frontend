@@ -5,15 +5,10 @@
 describe("Resources", () => {
   const username = "facilityadmin";
   const password = "facilityadmin";
-  let authSession;
 
-  before(() => {
-    cy.healthApiAuth(username, password).then(
-      (session) => (authSession = session)
-    );
-  });
   it("Shows resources and lets users search and filter", () => {
-    cy.visitHealthLoggedIn(authSession);
+    cy.vist("/");
+    login(Cypress.env("MEMBER_EMAIL"), Cypress.env("MEMBER_PASSWORD"));
     cy.findByRole("link", { name: /resources/i }).click();
     const resourceExerpts = [
       // not visible after searching
@@ -29,7 +24,7 @@ describe("Resources", () => {
     getSearchbar().type("mask");
     [1, 2, 3, 4].forEach((i) =>
       // timeout only really used for the first one
-      cy.contains(resourceExerpts[i], { timeout: 10000 })
+      cy.contains(resourceExerpts[i], { timeout: 20000 })
     );
     cy.contains(resourceExerpts[0]).should("not.exist");
 
@@ -52,3 +47,16 @@ const clickOnResourceTypeFilter = (resourceType) =>
 
 const clickOnResourceTagFilter = (tagName) =>
   cy.findByRole("list", { name: "Tag List" }).contains(tagName).click();
+
+const enterEmail = (email) =>
+  cy.findByRole("textbox", { name: /email/i }).type(email);
+// we don't log the password
+const enterPassword = (password) =>
+  cy.get("#password").type(password, { log: false });
+const loginButton = () => cy.findByRole("button", { name: /^login$/i });
+
+const login = (email, password) => {
+  enterEmail(email);
+  enterPassword(password);
+  loginButton().click();
+};

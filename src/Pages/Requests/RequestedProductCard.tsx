@@ -28,6 +28,7 @@ const RequestedProductCard = ({
   const selectedQuote = supplierQuotes && supplierQuotes[selectedQuoteIndex];
   const product = orderProduct.productOption;
   const displayName = productDisplayName(product);
+  const orderProductMutation = {};
 
   return (
     <div className={styles.orderProduct}>

@@ -114,9 +114,9 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
       },
     }
   );
-  let orderPrice = null;
+  let orderPrice: number | null = null;
   if (pricingQuery.isSuccess) {
-    let totalPrice = 0;
+    orderPrice = 0;
     const { data: pricing } = pricingQuery;
     // pricing quotes returned in the same order as as they are requested
     pricing.forEach((pricing, i) => {
@@ -128,20 +128,10 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
       );
       orderProduct.supplierQuotes = pricing.purchaseOptions as SupplierQuote[];
       const selectedQuote = orderProduct.supplierQuotes[selectedQuotes[i]];
-      totalPrice += selectedQuote.priceInfo.totalPrice;
+      if (!selectedQuote) orderPrice = null;
+      if (orderPrice != null) orderPrice += selectedQuote.priceInfo.totalPrice;
     });
-    orderPrice = totalPrice;
   }
-  // if (order.orderProducts.length === selectedQuotes.length) {
-  //   order?.orderProducts.map(
-  //     (product, i) => product.supplierQuotes?[selectedQuotes[i]]
-  //   );
-  // }
-  // selectedQuotes.forEach((productIndex, quoteIndex) => {
-  //   const orderProduct = order?.orderProducts[productIndex];
-  //   const quote = orderProduct?.supplierQuotes[quoteIndex];
-  //   totalPrice += quote.pricePer * orderProduct.quantity;
-  // });
   const date = new Date(order.orderDate).toLocaleDateString();
 
   const denyOrder = () => orderStatusMutation.mutate("cancel");

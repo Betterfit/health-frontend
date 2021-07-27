@@ -2,7 +2,7 @@ describe("Account Management", () => {
   const emailServerId = "re0raxdu";
   const username = "yash@betterfit.co";
   const password = "scubaTree2!";
-  const facility = "Burger King";
+  const facility = "Test Hospital";
   //   const emailAddress = mailosaur.servers.generateEmailAddress(emailServerId);
   const newUser = {
     email: "",
@@ -17,7 +17,7 @@ describe("Account Management", () => {
   });
   beforeEach(() => cy.visit(""));
   it("Allows admins to create accounts.", () => {
-    login(username, password);
+    cy.login(username, password);
     cy.url().should("include", "/dashboard");
     cy.findByRole("link", { name: /accounts/i }).click();
     // Add users to facility
@@ -39,9 +39,7 @@ describe("Account Management", () => {
         expect(email.subject).to.include("invited to " + facility);
       }
     );
-    // log out
-    cy.findByRole("button", { name: "My Account" }).click();
-    cy.findByRole("link", { name: /logout/i }).click();
+    cy.logout();
     // newly created user signs in and completes profile
     cy.contains(/sign up/i).click();
     cy.findByRole("textbox", { name: /email/i }).type(newUser.email);
@@ -71,16 +69,3 @@ describe("Account Management", () => {
     cy.contains(newUser.firstName);
   });
 });
-const enterEmail = (email) =>
-  cy.findByRole("textbox", { name: /email/i }).type(email);
-
-// we don't log the password
-const enterPassword = (password) =>
-  cy.get("#password").type(password, { log: false });
-const loginButton = () => cy.findByRole("button", { name: /login/i });
-
-export const login = (email, password) => {
-  enterEmail(email);
-  enterPassword(password);
-  loginButton().click();
-};

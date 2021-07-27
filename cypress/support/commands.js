@@ -64,3 +64,19 @@ Cypress.Commands.add("visitHealthLoggedIn", (cognitoUser, path = "/") => {
     },
   });
 });
+
+const login = (email, password) => {
+  cy.findByRole("textbox", { name: /email/i }).type(email);
+  // we don't log the password
+  cy.get("#password").type(password, { log: false });
+  cy.findByRole("button", { name: /login/i }).click();
+  // wait for redirect
+  cy.url({ timeout: 8000 }).should("contain", "dashboard");
+};
+
+const logout = () => {
+  cy.findByRole("button", { name: "My Account" }).click();
+  cy.findByRole("link", { name: /logout/i }).click();
+};
+Cypress.Commands.add("login", (email, password) => login(email, password));
+Cypress.Commands.add("logout", logout);

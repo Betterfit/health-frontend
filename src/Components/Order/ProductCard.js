@@ -44,12 +44,12 @@ const ProductCard = ({ product, product_details, category, extra, parent }) => {
   console.log(product_details);
   let priceRange = "";
   // pricing api is unstable
-  // const { prices } = product_details;
-  // if (prices.min_price) {
-  //   if (product_details.suppliers.length >= 2)
-  //     priceRange = `$${prices[0].price} - $${prices[1].price}`;
-  //   priceRange = "$" + prices.min_price;
-  // }
+  const { prices } = product_details;
+  if (prices?.min_price) {
+    if (prices.min_price !== prices.max_price)
+      priceRange = `$${prices.min_price} - $${prices.max_price}`;
+    else priceRange = "$" + prices.min_price;
+  }
   const displayName = (parent ? `${parent} - ` : "") + name;
   return (
     <>
