@@ -74,7 +74,7 @@ const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
   } as const;
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <LoadingSpinner withOverlay show={addFacilityMutation.isLoading} />
+      <LoadingSpinner darkened show={addFacilityMutation.isLoading} />
       <TextField
         {...register("name")}
         {...defaultTextFieldProps}

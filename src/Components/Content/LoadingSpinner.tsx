@@ -3,15 +3,15 @@ import styles from "./LoadingSpinner.module.css";
 
 /**
  * @param show Should the spinner be displayed
- * @param withOverlay Put a partially opaque overlay behind the spinner
- * Overlay is over nearest parent element with position:relative
+ * @param darkened Should the background be darkened while the spinner is showing
+ * Overlaid on the center of the nearest parent element with position:relative
  */
 export const LoadingSpinner = ({
   show = true,
-  withOverlay = false,
+  darkened = false,
 }: {
   show?: boolean;
-  withOverlay?: boolean;
+  darkened?: boolean;
 }) => {
   const spinner = (
     <>
@@ -24,12 +24,14 @@ export const LoadingSpinner = ({
       <span className="sr-only">Loading...</span>
     </>
   );
-  if (!withOverlay && !show) return null;
 
-  let className = "";
-  if (withOverlay) {
-    className = "overlay";
-    if (show) className += " overlayVisible";
-  }
-  return <div className={className}>{show && spinner}</div>;
+  let className = "overlay";
+  if (show) className += " overlayVisible";
+  if (show && darkened) className += " darkenedBackground";
+  return (
+    <div className={className}>
+      {/* conditionally rendered for better performance */}
+      {show && spinner}
+    </div>
+  );
 };

@@ -180,6 +180,7 @@ export interface Organization {
   isSupplier: boolean;
   // my_organization endpoint also specifies if the user is an administrator for the organization
   isAdmin: boolean;
+  organizationImage: string;
 }
 
 export interface Facility {
@@ -206,6 +207,7 @@ export interface Facility {
 }
 
 export interface ProductOption {
+  id: number;
   name: string;
   optionLabel: string;
   productCategory: string;
@@ -221,6 +223,8 @@ export interface OrderProduct {
   quantity: number;
   supplierOrg?: Organization;
   productOption: ProductOption;
+  supplierQuotes?: SupplierQuote[];
+  supplierPriceRange?: SupplierPriceRange[];
 }
 export interface Order {
   url: string;
@@ -231,4 +235,20 @@ export interface Order {
   authorUser: User;
   orderProducts: OrderProduct[];
   facility: Facility;
+}
+
+export interface SupplierQuote {
+  supplier: Organization;
+  priceInfo: { pricePer: number; totalPrice: number };
+}
+
+export interface SupplierPriceRange {
+  supplier: Organization;
+  priceInfo: { minPricePer: number; maxPricePer: number };
+}
+
+export interface Pricing {
+  productOptionId: number;
+  quantity: number;
+  purchaseOptions: (SupplierQuote | SupplierPriceRange)[];
 }

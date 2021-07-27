@@ -1,36 +1,39 @@
 import { productDisplayName } from "APIHooks/products";
 import IconButton from "Components/Content/IconButton";
+import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Badge from "Components/Forms/Badge/Badge";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import React, { useState } from "react";
-import { Order, OrderProduct } from "Types";
+import { Order, OrderProduct, SupplierQuote } from "Types";
 import styles from "./RequestedProductCard.module.css";
 import { formatCurrency } from "./RequestsPage";
 
 const RequestedProductCard = ({
   order,
   orderProduct,
+  selectedQuoteIndex,
+  setSelectedQuote,
 }: {
   order: Order;
   orderProduct: OrderProduct;
+  selectedQuoteIndex: number;
+  quotes?: SupplierQuote[];
+  setSelectedQuote: (quoteIndex: number) => void;
 }) => {
   const [moreSuppliers, setMoreSuppliers] = useState(false);
-  const [supplierIndex, setSupplierIndex] = useState(0);
   const [denied, setDenied] = useState(false);
-  const bestMatch = supplierIndex === 0;
-  const resetSupplier = () => setSupplierIndex(0);
-  const suppliers = [
-    { name: "Air Liquide", pricePerUnit: 1.05 },
-    { name: "The Canadian Shield", pricePerUnit: 1.05 },
-    { name: "The Canadian Shield", pricePerUnit: 1.05 },
-  ];
-  const supplier = suppliers[supplierIndex];
+  const bestMatch = selectedQuoteIndex === 0;
+  const resetSupplier = () => setSelectedQuote(0);
+  const { supplierQuotes } = orderProduct;
+  const selectedQuote = supplierQuotes && supplierQuotes[selectedQuoteIndex];
   const product = orderProduct.productOption;
   const displayName = productDisplayName(product);
 
   return (
     <div className={styles.orderProduct}>
-      <div className={"overlay " + (denied && "overlayVisible")}>
+      <div
+        className={"overlay " + (denied && "overlayVisible darkenedBackground")}
+      >
         <PrettyButton
           text="Restore Product"
           icon="restore"
@@ -70,9 +73,10 @@ const RequestedProductCard = ({
           </div>
         </div>
       </div>
-      <div
-        className={styles.supplier}
+      <SupplierCard
         onClick={() => setMoreSuppliers(!moreSuppliers)}
+        {...{ selectedQuote, orderProduct }}
+        supplierQuote={selectedQuote}
       >
         {!denied && (
           <div className={styles.bestMatch}>
@@ -92,32 +96,7 @@ const RequestedProductCard = ({
             )}
           </div>
         )}
-        <div className={styles.supplierImage}>
-          <p className={styles.label}>{supplier.name}</p>
-          <img src={supplierLogo} alt={supplier.name + " logo"} />
-        </div>
-        <div className={styles.supplierInfo}>
-          <div id={styles.paymentType} className={styles.labeledContent}>
-            <p>Payment type</p>
-            <p>Immediate</p>
-          </div>
-          <div className={styles.labeledContent}>
-            <p>unit price</p>
-            <span>
-              <span className={styles.money}>
-                {formatCurrency(supplier.pricePerUnit)}
-              </span>{" "}
-              x {orderProduct.quantity}
-            </span>
-          </div>
-          <div className={styles.labeledContent}>
-            <p>total</p>
-            <span className={styles.money}>
-              {formatCurrency(supplier.pricePerUnit * orderProduct.quantity)}
-            </span>
-          </div>
-        </div>
-      </div>
+      </SupplierCard>
       <div className={styles.moreSuppliers}>
         <PrettyButton
           className={styles.showMoreSuppliers}
@@ -127,18 +106,23 @@ const RequestedProductCard = ({
           onClick={() => setMoreSuppliers(!moreSuppliers)}
         />
         {moreSuppliers &&
-          suppliers
-            .filter((_, i) => i !== supplierIndex)
-            .map((supplier, i) => (
+          supplierQuotes?.map((quote, i) =>
+            i === selectedQuoteIndex ? null : (
               <SupplierCard
                 key={i}
-                selectSupplier={() => {
-                  setSupplierIndex(i + 1);
+                onClick={() => {
+                  setSelectedQuote(i);
                   setMoreSuppliers(false);
                 }}
-                {...{ supplier, orderProduct, bestMatch: false }}
-              />
-            ))}
+                {...{ supplierQuote: quote, orderProduct }}
+              >
+                <PrettyButton
+                  className={styles.chooseThisSupplier}
+                  text="Choose This Supplier"
+                />
+              </SupplierCard>
+            )
+          )}
       </div>
     </div>
   );
@@ -146,26 +130,33 @@ const RequestedProductCard = ({
 
 export default RequestedProductCard;
 
-const supplierLogo =
-  "https://www.airliquide.com/sites/airliquide.com/files/styles/938w/public/2018/06/22/air-liquide-publication-cover.jpg?itok=04avR80P";
-
 const SupplierCard = ({
-  supplier,
-  bestMatch,
+  supplierQuote,
   orderProduct,
-  selectSupplier,
+  children,
+  onClick,
 }: {
-  supplier: any;
-  bestMatch: boolean;
+  supplierQuote?: SupplierQuote;
   orderProduct: OrderProduct;
-  selectSupplier: () => void;
+  children: React.ReactNode;
+  onClick: () => void;
 }) => {
+  if (!supplierQuote)
+    return (
+      <div className={styles.supplier}>
+        <LoadingSpinner show />
+      </div>
+    );
+  const supplier = supplierQuote.supplier;
   return (
-    <div onClick={selectSupplier} className={styles.supplier}>
+    <div onClick={onClick} className={styles.supplier}>
       <div className={styles.bestMatch}></div>
       <div className={styles.supplierImage}>
         <p className={styles.label}>{supplier.name}</p>
-        <img src={supplierLogo} alt={supplier.name + " logo"} />
+        <img
+          src={supplier.organizationImage}
+          alt={supplier.organizationImage ? supplier.name + " logo" : ""}
+        />
       </div>
       <div className={styles.supplierInfo}>
         <div id={styles.paymentType} className={styles.labeledContent}>
@@ -176,7 +167,7 @@ const SupplierCard = ({
           <p>unit price</p>
           <span>
             <span className={styles.money}>
-              {formatCurrency(supplier.pricePerUnit)}
+              {formatCurrency(supplierQuote.priceInfo.pricePer)}
             </span>{" "}
             x {orderProduct.quantity}
           </span>
@@ -184,14 +175,13 @@ const SupplierCard = ({
         <div className={styles.labeledContent}>
           <p>total</p>
           <span className={styles.money}>
-            {formatCurrency(supplier.pricePerUnit * orderProduct.quantity)}
+            {formatCurrency(
+              supplierQuote.priceInfo.pricePer * orderProduct.quantity
+            )}
           </span>
         </div>
       </div>
-      <PrettyButton
-        className={styles.chooseThisSupplier}
-        text="Choose This Supplier"
-      />
+      {children}
     </div>
   );
 };

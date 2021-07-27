@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import applyCaseMiddleware from "axios-case-converter";
 import { getIdToken } from "Helpers/cognito";
-import { Facility, Order, Organization, UserProfile } from "Types";
+import { Facility, Order, Organization, Pricing, UserProfile } from "Types";
 
 export const apiURL = process.env.REACT_APP_DJANGO_API_URL;
 export default class TypedAPI {
@@ -97,6 +97,18 @@ export default class TypedAPI {
   updateOrderStatus = async (order: Order, action: "deny" | "approve") => {
     const client = await this.init();
     return client.post(order.url + "/" + action);
+  };
+
+  //  ********** PRICING API **********
+  getPricing = async (
+    orderProducts: {
+      productOptionId: number;
+      facilityId?: number;
+      quantity?: number;
+    }[]
+  ) => {
+    const client = await this.init();
+    return client.post<Pricing[]>("/pricing/", orderProducts);
   };
 }
 

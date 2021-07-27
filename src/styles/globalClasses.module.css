@@ -37,7 +37,6 @@ parent element with 'position:relative'.
   z-index: 10;
   display: grid;
   place-items: center;
-  background-color: rgba(33, 33, 33, 0.3);
   visibility: hidden;
   opacity: 0;
   transition: visibility 0.5s, opacity 0.5s linear;
@@ -46,6 +45,9 @@ parent element with 'position:relative'.
   visibility: visible;
   opacity: 1;
   transition: opacity 0.5s linear;
+}
+:global .darkenedBackground {
+  background-color: rgba(33, 33, 33, 0.3);
 }
 
 /* elements that are used for screen readers only */

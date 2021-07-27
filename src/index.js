@@ -10,7 +10,11 @@ import * as serviceWorker from "./serviceWorker";
 import "./styles/globalClasses.module.css";
 import "./styles/tailwind.css";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { staleTime: 1000 * 60 * 5, cacheTime: 1000 * 60 * 15 },
+  },
+});
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>

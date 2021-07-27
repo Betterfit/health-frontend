@@ -9,7 +9,7 @@ import moment from "moment";
 import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
-import { Order } from "Types";
+import { Order, Pricing, SupplierQuote } from "Types";
 import RequestedProductCard from "./RequestedProductCard";
 import styles from "./RequestsPage.module.css";
 
@@ -77,6 +77,8 @@ const RequestPage = () => {
 export default RequestPage;
 
 const RequestedOrderCard = ({ order }: { order: Order }) => {
+  // list of selected quotes for each order product in this order
+  const [selectedQuotes, setSelectedQuotes] = useState<number[]>([]);
   const queryClient = useQueryClient();
   const orderStatusMutation = useMutation(
     (action: "cancel" | "approve") =>
@@ -96,8 +98,50 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
       },
     }
   );
+  const priceRequest = order.orderProducts.map((orderProduct) => ({
+    productOptionId: orderProduct.productOption.id,
+    quantity: orderProduct.quantity,
+    facilityId: order.facility.id,
+  }));
 
-  const totalPrice = "$625.00 CAD";
+  const pricingQuery = useQuery<Pricing[]>(
+    ["pricing", priceRequest],
+    () => api.getPricing(priceRequest).then((response) => response.data),
+    {
+      onSuccess: (data) => {
+        // select the first quote
+        setSelectedQuotes(data.map((productPricing) => 0));
+      },
+    }
+  );
+  let orderPrice = null;
+  if (pricingQuery.isSuccess) {
+    let totalPrice = 0;
+    const { data: pricing } = pricingQuery;
+    // pricing quotes returned in the same order as as they are requested
+    pricing.forEach((pricing, i) => {
+      const orderProduct = order.orderProducts[i];
+      console.log(pricing);
+      console.assert(
+        pricing.productOptionId === orderProduct.productOption.id,
+        "Pricing mismatch!"
+      );
+      orderProduct.supplierQuotes = pricing.purchaseOptions as SupplierQuote[];
+      const selectedQuote = orderProduct.supplierQuotes[selectedQuotes[i]];
+      totalPrice += selectedQuote.priceInfo.totalPrice;
+    });
+    orderPrice = totalPrice;
+  }
+  // if (order.orderProducts.length === selectedQuotes.length) {
+  //   order?.orderProducts.map(
+  //     (product, i) => product.supplierQuotes?[selectedQuotes[i]]
+  //   );
+  // }
+  // selectedQuotes.forEach((productIndex, quoteIndex) => {
+  //   const orderProduct = order?.orderProducts[productIndex];
+  //   const quote = orderProduct?.supplierQuotes[quoteIndex];
+  //   totalPrice += quote.pricePer * orderProduct.quantity;
+  // });
   const date = new Date(order.orderDate).toLocaleDateString();
 
   const denyOrder = () => orderStatusMutation.mutate("cancel");
@@ -105,7 +149,7 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
 
   return (
     <div className={styles.order}>
-      <LoadingSpinner withOverlay show={orderStatusMutation.isLoading} />
+      <LoadingSpinner darkened show={orderStatusMutation.isLoading} />
       <div className={styles.orderTitle}>
         <p>
           <b>{order.facility.name}</b> - <b>{date}</b>
@@ -117,15 +161,22 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
           Order ID: <b>{order.orderNo}</b>
         </p>
       </div>
-      {order.orderProducts.map((orderProduct) => (
+      {order.orderProducts.map((orderProduct, i) => (
         <RequestedProductCard
+          selectedQuoteIndex={selectedQuotes[i]}
+          setSelectedQuote={(index) => {
+            const newSelectedQuotes = selectedQuotes.slice();
+            newSelectedQuotes[i] = index;
+            setSelectedQuotes(newSelectedQuotes);
+          }}
           key={orderProduct.pk}
           {...{ order, orderProduct }}
         />
       ))}
       <div className={styles.orderBottom}>
         <p className="py-2">
-          Order Total: <span className={styles.money}>{totalPrice}</span>
+          Order Total:{" "}
+          <span className={styles.money}>{formatCurrency(orderPrice)}</span>
         </p>
         <div className={styles.orderActions}>
           <PrettyButton
@@ -148,4 +199,7 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
   );
 };
 
-export const formatCurrency = (price: number) => `$${price.toFixed(2)} CAD`;
+export const formatCurrency = (price: number | undefined | null) => {
+  if (price == null) return "";
+  return `$${price.toFixed(2)} CAD`;
+};
