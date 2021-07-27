@@ -28,7 +28,9 @@ describe("Account Management", () => {
     cy.findByLabelText("province").type("{downarrow}{enter}");
     cy.findByRole("button", { name: /add facility/i }).click();
     cy.findByRole("form").should("not.exist");
-    cy.contains(facilityName);
+    cy.findByTestId("My Facilities")
+      .contains(facilityName)
+      .should("have.length", 1);
 
     // Add users to facility
     cy.findByRole("button", { name: /add users/i }).click();

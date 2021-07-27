@@ -3,12 +3,9 @@
 /// <reference path="../support/index.d.ts" />
 
 describe("Resources", () => {
-  const username = "facilityadmin";
-  const password = "facilityadmin";
-
   it("Shows resources and lets users search and filter", () => {
-    cy.vist("/");
-    login(Cypress.env("MEMBER_EMAIL"), Cypress.env("MEMBER_PASSWORD"));
+    cy.visit("/");
+    cy.loginAsPurchaser();
     cy.findByRole("link", { name: /resources/i }).click();
     const resourceExerpts = [
       // not visible after searching

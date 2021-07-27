@@ -28,7 +28,7 @@ const MyFacilities = () => {
   if (facilitiesQuery.isError) return <ErrorMessage />;
 
   return (
-    <div className={styles.facilities}>
+    <div className={styles.facilities} data-testid="My Facilities">
       <div className="mb-0 flex ">
         <div className="flex-grow ">
           <Title text="My Facilities" />
