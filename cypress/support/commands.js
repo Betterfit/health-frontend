@@ -79,4 +79,7 @@ const logout = () => {
   cy.findByRole("link", { name: /logout/i }).click();
 };
 Cypress.Commands.add("login", (email, password) => login(email, password));
+Cypress.Commands.add("loginAsPurchaserAdmin", () =>
+  login(Cypress.env("ADMIN_EMAIL"), Cypress.env("ADMIN_PASSWORD"))
+);
 Cypress.Commands.add("logout", logout);

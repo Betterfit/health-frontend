@@ -79,6 +79,7 @@ const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
         {...register("name")}
         {...defaultTextFieldProps}
         label="Facility Name"
+        id="name"
         required
         placeholder="ex: University of Alberta Hospital"
         autoFocus
@@ -89,6 +90,7 @@ const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
         {...register("address")}
         {...defaultTextFieldProps}
         label="Address"
+        id="address"
         required
       />
       <div className={styles.cityProvince}>
@@ -96,6 +98,7 @@ const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
           {...register("city")}
           {...defaultTextFieldProps}
           label="City"
+          id="city"
           required
           className={styles.city}
         />
@@ -108,11 +111,13 @@ const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
             <TextField
               {...defaultTextFieldProps}
               label="Province"
+              id="province"
               required
               select
               value={field.value}
               onChange={field.onChange}
               className={styles.province}
+              aria-label="province"
             >
               {provinces.map((province, i) => (
                 <MenuItem key={i} value={province.abbreviation}>
@@ -123,35 +128,20 @@ const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
           )}
         />
       </div>
-      <Controller
-        name="postalCode"
-        control={control}
-        rules={{ required: true }}
-        render={({ field }) => (
-          <InputMask
-            value={field.value}
-            onChange={field.onChange}
-            mask="a9a-9a9"
-            alwaysShowMask={false}
-          >
-            {() => (
-              <TextField
-                {...defaultTextFieldProps}
-                inputProps={{
-                  style: { textTransform: "uppercase", maxWidth: "150px" },
-                }}
-                label="Postal Code"
-                error={Boolean(errors.postalCode)}
-                required
-              />
-            )}
-          </InputMask>
-        )}
+      <TextField
+        {...register("postalCode")}
+        {...defaultTextFieldProps}
+        label="Postal Code"
+        error={Boolean(errors.postalCode)}
+        id="postalCode"
+        required
+        placeholder="A9A 9A9"
       />
       <TextField
         {...register("shippingLabelNote")}
         {...defaultTextFieldProps}
         label="Shipping Label Note"
+        id="shippingLabelNote"
       />
 
       <hr />
@@ -168,7 +158,11 @@ const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
             alwaysShowMask={false}
           >
             {() => (
-              <TextField {...defaultTextFieldProps} label="Phone Number" />
+              <TextField
+                {...defaultTextFieldProps}
+                label="Phone Number"
+                id="phoneNumber"
+              />
             )}
           </InputMask>
         )}
@@ -177,12 +171,14 @@ const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
         {...register("website")}
         {...defaultTextFieldProps}
         label="Website"
+        id="website"
         placeholder="www.yourwebsite.com"
       />
       <TextField
         {...register("email")}
         {...defaultTextFieldProps}
         label="Email"
+        id="email"
         placeholder="example@domain.com"
       />
       <PrettyButton

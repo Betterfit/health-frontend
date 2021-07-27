@@ -31,6 +31,8 @@ const PrettyButton = ({
     <button
       className={`${styles.button} ${colorClass} ${variantClasses[variant]} ${className}`}
       onClick={handleClick}
+      // required because the icon can mess up the accessible name
+      aria-label={text}
       {...props}
     >
       {text}

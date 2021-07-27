@@ -33,7 +33,11 @@ const MyFacilities = () => {
         <div className="flex-grow ">
           <Title text="My Facilities" />
         </div>
-        <AdminTab open={open} setOpen={setOpen} text="Add Facility" />
+        <AdminTab
+          open={open}
+          setOpen={setOpen}
+          text={open ? "View Facilities" : "Add Facility"}
+        />
       </div>
       <div className={styles.cardWithTab}>
         {open ? (
@@ -79,6 +83,7 @@ interface AdminTabProps {
 const AdminTab = ({ open, setOpen, text }: AdminTabProps) => {
   return (
     <button
+      aria-label={text}
       onClick={() => setOpen(!open)}
       className={
         "flex bg-sky-blue hover:bg-sky-blue  p-2 rounded-t-lg border-primary-blue border-t-2 border-l-2 border-r-2 focus:outline-none"
