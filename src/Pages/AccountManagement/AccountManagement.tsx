@@ -6,6 +6,7 @@ import React, { Dispatch, useState } from "react";
 import styles from "./AccountManagement.module.css";
 import AddFacilityForm from "./AddFacilityForm";
 import AddUserForm from "./AddUserForm";
+import PaymentMethods from "./PaymentMethods";
 import PendingInvitations from "./PendingInvitations";
 import UserTable from "./UserTable";
 
@@ -14,6 +15,7 @@ const AccountManagement = () => {
     <div className={styles.root}>
       <MyFacilities />
       <AddUsers />
+      <PaymentMethods />
       <UserTable />
     </div>
   );
@@ -75,12 +77,17 @@ const AddUsers = () => {
   );
 };
 
+interface Tab {
+  key: string;
+  header: string;
+  icon?: string;
+}
 interface AdminTabProps {
   open: boolean;
   setOpen: Dispatch<boolean>;
   text: string;
 }
-const AdminTab = ({ open, setOpen, text }: AdminTabProps) => {
+export const AdminTab = ({ open, setOpen, text }: AdminTabProps) => {
   return (
     <button
       aria-label={text}
@@ -98,4 +105,15 @@ const AdminTab = ({ open, setOpen, text }: AdminTabProps) => {
     </button>
   );
 };
+
+const AdminTabs = ({
+  tabs,
+  selectedTab,
+}: {
+  tabs: Tab[];
+  selectedTab: string;
+}) => {
+  return <div></div>;
+};
+
 export default AccountManagement;
