@@ -1,5 +1,6 @@
 import { useUserFacilities } from "APIHooks/facilities";
 import { ErrorMessage } from "Components/Content/ErrorMessage";
+import Icon from "Components/Content/Icon";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
 import React, { Dispatch, useState } from "react";
@@ -96,11 +97,7 @@ export const AdminTab = ({ open, setOpen, text }: AdminTabProps) => {
         "flex bg-sky-blue hover:bg-sky-blue  p-2 rounded-t-lg border-primary-blue border-t-2 border-l-2 border-r-2 focus:outline-none"
       }
     >
-      {open ? (
-        <span className="material-icons-outlined">remove</span>
-      ) : (
-        <span className="material-icons-outlined">add</span>
-      )}
+      <Icon name={open ? "remove" : "add"} />
       {text}
     </button>
   );

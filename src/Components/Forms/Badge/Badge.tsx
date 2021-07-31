@@ -1,3 +1,4 @@
+import Icon from "Components/Content/Icon";
 import React from "react";
 import styles from "./Badge.module.css";
 
@@ -15,7 +16,7 @@ const Badge = ({
   backgroundColor = disabled ? "gray" : backgroundColor;
   return (
     <div className={styles.badge} style={{ backgroundColor }}>
-      {icon && <span className="material-icons-outlined">{icon}</span>}
+      {icon && <Icon name={icon} />}
       {text}
     </div>
   );
