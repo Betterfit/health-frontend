@@ -1,23 +1,28 @@
 import { TextField } from "@material-ui/core";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import AdminTabs, { TabObject } from "Components/Content/AdminTabs";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import React, { useState } from "react";
-import { AdminTab } from "./AccountManagement";
 import styles from "./PaymentMethods.module.css";
 
+const paymentMethodTabs: TabObject[] = [
+  {
+    header: "My Payment Methods",
+  },
+  { header: "Add Payment Method", icon: "add" },
+];
 const PaymentMethods = () => {
-  const [addMethodOpen, setAddMethodOpen] = useState(true);
+  const [tabIndex, setTabIndex] = useState(0);
+  const tabComponents = [<PaymentMethodList />, <AddPaymentMethod />];
   return (
-    <div className={styles.root}>
-      <AdminTab
-        text="Add Payment"
-        open={addMethodOpen}
-        setOpen={setAddMethodOpen}
-      />
-      <div className={styles.content}>
-        {addMethodOpen ? <AddPaymentMethod /> : <PaymentMethodList />}
-      </div>
-    </div>
+    <AdminTabs
+      tabs={paymentMethodTabs}
+      selectedIndex={tabIndex}
+      setSelectedIndex={setTabIndex}
+      ariaLabel="Payment Methods"
+    >
+      {tabComponents[tabIndex]}
+    </AdminTabs>
   );
 };
 
@@ -57,7 +62,6 @@ const AddPaymentMethod = () => {
 
   return (
     <form className={styles.addPayment} onSubmit={handleSubmit}>
-      {/* <LoadingSpinner /> */}
       <TextField
         value={formData.paymentMethodName}
         onChange={(e) =>
@@ -79,15 +83,13 @@ const AddPaymentMethod = () => {
         variant="outlined"
         label="Card Holder Name"
         size="small"
-        helperText="The name that appears on bills"
         required
         fullWidth
       />
-
       <CardElement
         options={{
           classes: { base: styles.stripeCard },
-          style: { base: { fontSize: "18px" } },
+          style: { base: { fontSize: "18px", backgroundColor: "transparent" } },
         }}
       />
       <PrettyButton

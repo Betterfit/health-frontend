@@ -1,5 +1,5 @@
-import React from "react";
 import Translator from "Helpers/Translator";
+import React from "react";
 
 const Button = ({
   text,
@@ -19,7 +19,7 @@ const Button = ({
       type="submit"
       className={` ${css_add_on}
            rounded-md flex no-wrap justify-center py-3 border border-transparent font-bold px-4
-           transition duration-150 ease-in-out capitalize uppercase ${text_size} ${extraClasses} ${
+           transition duration-150 ease-in-out capitalize ${text_size} ${extraClasses} ${
         pill ? "pill" : ""
       }`}
       style={{ minWidth: 100 }}

@@ -1,0 +1,49 @@
+.root {
+  /* align-items: flex-start; */
+}
+
+.root .border {
+  border-top-left-radius: 0;
+  padding: 0;
+}
+
+.tabPanel {
+  padding: 1rem;
+}
+
+.tabPanel:focus-visible {
+  box-shadow: inset 0 0 4px var(--primary-blue);
+}
+
+.tabList {
+  display: flex;
+  flex-direction: row;
+}
+
+.tabList .tab {
+  margin-left: -0.5rem;
+}
+.tabList .tab:first-child {
+  margin-left: 0;
+}
+
+.tab {
+  display: flex;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--light-blue);
+  border: 2px solid var(--primary-blue);
+  border-bottom: 0;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+.tab:focus {
+  outline: none;
+}
+.tab:focus-visible {
+  box-shadow: inset 0 0 4px var(--primary-blue);
+}
+.selectedTab {
+  composes: tab;
+  background-color: var(--sky-blue);
+  font-weight: bold;
+}

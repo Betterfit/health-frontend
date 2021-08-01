@@ -150,14 +150,14 @@ const UserTypeList = ({
         </tr>
         <tbody>
           {users.length > 0 ? (
-            users.map((user) => (
-              <tr>
+            users.map((user, i) => (
+              <tr key={i}>
                 <td>{user.email}</td>
                 <td>{fullName(user)}</td>
                 <td>
-                  {user.facilityMembership.map((membership) => (
+                  {user.facilityMembership.map((membership, i) => (
                     //   flex is required so that the delete icons line up
-                    <tr className="flex items-center">
+                    <div key={i} className="flex items-center">
                       {facilitiesById &&
                         facilitiesById[membership.facilityId].name}
                       {user.id === userToEdit?.id && (
@@ -167,7 +167,7 @@ const UserTypeList = ({
                           onClick={() => deleteMembership(membership)}
                         />
                       )}
-                    </tr>
+                    </div>
                   ))}
                 </td>
                 <td className={styles.actions}>
