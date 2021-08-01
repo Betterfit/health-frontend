@@ -32,7 +32,7 @@ const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
     formState: { errors },
     control,
     reset,
-  } = useForm<FacilityFormData>();
+  } = useForm<FacilityFormData>({ defaultValues: { province: "" } });
   const orgQuery = useOrganization();
   const queryClient = useQueryClient();
   const addFacilityMutation = useMutation(
@@ -47,7 +47,7 @@ const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
   );
   const onSubmit: SubmitHandler<FacilityFormData> = (formData) => {
     console.log(formData);
-    if (!orgQuery.isSuccess) return;
+    if (!orgQuery.isSuccess || addFacilityMutation.isLoading) return;
     const data = {
       ...subset(
         formData,
@@ -149,7 +149,6 @@ const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
       <Controller
         name="phoneNumber"
         control={control}
-        rules={{ required: true }}
         render={({ field }) => (
           <InputMask
             value={field.value}
@@ -182,11 +181,11 @@ const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
         placeholder="example@domain.com"
       />
       <PrettyButton
+        type="submit"
         text="Add Facility"
         icon="add"
         style={{ alignSelf: "flex-end", marginTop: "1rem" }}
         disabled={addFacilityMutation.isLoading}
-        onClick={handleSubmit(onSubmit)}
       />
     </form>
   );
