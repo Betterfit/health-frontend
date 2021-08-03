@@ -1,8 +1,7 @@
 {
     "env": {
-        "username": "yash@betterfit.co",
-        "password": "scubaTree2!",
         "apiUrl": "http://localhost:8002/"
     },
-    "baseUrl": "http://localhost:3000"
+    "baseUrl": "http://localhost:3000",
+    "scrollBehavior": "center"
 }

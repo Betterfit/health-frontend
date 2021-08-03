@@ -44,7 +44,7 @@ const MyFacilities = () => {
           {
             header: "Add Facility",
             icon: "add",
-            content: <AddFacilityForm handleClose={() => setTabIndex(1)} />,
+            content: <AddFacilityForm handleClose={() => setTabIndex(0)} />,
           },
         ]}
         selectedIndex={tabIndex}

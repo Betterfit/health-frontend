@@ -71,7 +71,7 @@ const login = (email, password) => {
   cy.get("#password").type(password, { log: false });
   cy.findByRole("button", { name: /login/i }).click();
   // wait for redirect
-  cy.url({ timeout: 8000 }).should("contain", "dashboard");
+  cy.url({ timeout: 16000 }).should("contain", "dashboard");
 };
 
 const logout = () => {

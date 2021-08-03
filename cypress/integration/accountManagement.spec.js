@@ -19,7 +19,7 @@ describe("Account Management", () => {
     cy.findByRole("link", { name: /accounts/i }).click();
     // creates a name like "Test Facility 9754"
     const facilityName = "Test Facility " + Math.floor(Math.random() * 10000);
-    cy.findByRole("button", { name: /add facility/i }).click();
+    cy.findByRole("tab", { name: /add facility/i }).click();
     cy.findByLabelText(/facility name/i).type(facilityName);
     cy.findByLabelText(/address/i).type("123 Sesame Street");
     cy.findByLabelText(/city/i).type("Edmonton");
@@ -28,12 +28,12 @@ describe("Account Management", () => {
     cy.findByLabelText("province").type("{downarrow}{enter}");
     cy.findByRole("button", { name: /add facility/i }).click();
     cy.findByRole("form").should("not.exist");
-    cy.findByTestId("My Facilities")
+    cy.findByRole("tabpanel", { name: /my facilities/i })
       .contains(facilityName)
       .should("have.length", 1);
 
     // Add users to facility
-    cy.findByRole("button", { name: /add users/i }).click();
+    cy.findByRole("tab", { name: /add users/i }).click();
     cy.findByRole("form", {
       name: /add user/i,
     }).within(() => {

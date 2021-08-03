@@ -53,6 +53,7 @@ const AdminTabs = ({
             style={{
               zIndex: selectedIndex === i ? tabs.length : tabs.length - i,
             }}
+            id={ariaLabel + "-" + i}
             role="tab"
             aria-label={tabs[i].header}
             aria-selected={selectedIndex === i}
@@ -70,7 +71,7 @@ const AdminTabs = ({
       </div>
       <AnimatedHeightChange className={clsx(styles.border, "cardBorder ")}>
         <div
-          aria-label={tabs[selectedIndex].header}
+          aria-labelledby={ariaLabel + "-" + selectedIndex}
           role="tabpanel"
           className={clsx(styles.tabPanel)}
         >

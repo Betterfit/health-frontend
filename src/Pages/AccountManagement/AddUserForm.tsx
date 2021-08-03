@@ -75,7 +75,7 @@ const AddUserForm = ({ closeForm }: { closeForm: () => void }) => {
       const user = userOptions.find((user) => user.email === email);
       if (user) {
         return api.addExistingUserToFacility(
-          user.email,
+          user.url,
           facility.url,
           formData.isAdmin
         );
@@ -83,7 +83,7 @@ const AddUserForm = ({ closeForm }: { closeForm: () => void }) => {
         return api.addNewUserToFacility(email, facility.pk, formData.isAdmin);
       }
     });
-    Promise.all(requests).then(() => {
+    Promise.all(requests).finally(() => {
       queryClient.invalidateQueries("users");
       closeForm();
     });

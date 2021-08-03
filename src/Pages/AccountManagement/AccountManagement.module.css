@@ -4,6 +4,9 @@
   padding: 2rem 2rem;
 }
 
+.root > * {
+  margin-bottom: 2rem;
+}
 .facilities {
   flex-grow: 1;
 }
