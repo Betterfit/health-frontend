@@ -15,10 +15,41 @@ import styles from "./RequestsPage.module.css";
 
 const RequestPage = () => {
   const queryClient = useQueryClient();
-  const { data: orders, isLoading: loadingOrders } = useQuery<Order[]>(
+  const [chosenSuppliers, setChosenSuppliers] = useState<SupplierQuote[]>([]);
+  const requestsQuery = useQuery<Order[]>(
     ["orders", "requested"],
     () => {
       return api.getOrders("open").then((response) => response.data);
+    },
+    {
+      onSuccess: (orders) => {
+        setChosenSuppliers(new Array(orders.length).fill(null));
+      },
+    }
+  );
+  const { data: orders, isLoading: loadingOrders } = requestsQuery;
+
+  const priceRequests = orders
+    ? orders.flatMap((order) =>
+        order.orderProducts.map((orderProduct) => ({
+          productOptionId: orderProduct.productOption.id,
+          quantity: orderProduct.quantity,
+          facilityId: order.facility.id,
+        }))
+      )
+    : [];
+
+  const pricingQuery = useQuery<Pricing[]>(
+    ["pricing", priceRequests],
+    () => {
+      return api.getPricing(priceRequests).then((response) => response.data);
+    },
+    {
+      onSuccess: (data) => {
+        // select the first quote
+        setChosenSuppliers(data.map((pricing) => pricing.purchaseOptions[0]));
+      },
+      enabled: requestsQuery.isSuccess,
     }
   );
   const [searchText, setSearchText] = useState("");
@@ -54,8 +85,8 @@ const RequestPage = () => {
       </div>
       <div className={styles.orders}>
         {orders ? (
-          orders.map((order) => (
-            <RequestedOrderCard order={order} key={order.pk} />
+          orders.map((order, i) => (
+            <RequestedOrderCard order={order} key={order.pk} suppliers={} />
           ))
         ) : (
           <LoadingSpinner />
@@ -76,13 +107,28 @@ const RequestPage = () => {
 };
 export default RequestPage;
 
-const RequestedOrderCard = ({ order }: { order: Order }) => {
+const RequestedOrderCard = ({
+  order,
+  chosenSupplier,
+  suppliers,
+}: {
+  order: Order;
+  chosenSupplier?: SupplierQuote;
+  suppliers: SupplierQuote[];
+}) => {
   // list of selected quotes for each order product in this order
   const [selectedQuotes, setSelectedQuotes] = useState<number[]>([]);
   const queryClient = useQueryClient();
   const orderStatusMutation = useMutation(
-    (action: "cancel" | "approve") =>
-      api.getClient().then((client) => client.post(order.url + "/" + action)),
+    ({
+      action,
+      data,
+    }:
+      | { action: "cancel"; data?: undefined }
+      | { action: "approve"; data: { id: number; supplierId: number }[] }) =>
+      api
+        .getClient()
+        .then((client) => client.post(order.url + "/" + action, data)),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["orders"]);
@@ -98,6 +144,18 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
       },
     }
   );
+
+  const { orderProducts } = order;
+  const denyOrder = () => orderStatusMutation.mutate({ action: "cancel" });
+  const approveOrder = () => {
+    orderStatusMutation.mutate({
+      action: "approve",
+      data: orderProducts.map((orderProduct, i) => ({
+        id: orderProduct.pk,
+        supplierId: orderProduct?.supplierQuotes[selectedQuotes[i]],
+      })),
+    });
+  };
   const priceRequest = order.orderProducts.map((orderProduct) => ({
     productOptionId: orderProduct.productOption.id,
     quantity: orderProduct.quantity,
@@ -120,7 +178,7 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
     const { data: pricing } = pricingQuery;
     // pricing quotes returned in the same order as as they are requested
     pricing.forEach((pricing, i) => {
-      const orderProduct = order.orderProducts[i];
+      const orderProduct = orderProducts[i];
       console.log(pricing);
       console.assert(
         pricing.productOptionId === orderProduct.productOption.id,
@@ -133,9 +191,6 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
     });
   }
   const date = new Date(order.orderDate).toLocaleDateString();
-
-  const denyOrder = () => orderStatusMutation.mutate("cancel");
-  const approveOrder = () => orderStatusMutation.mutate("approve");
 
   return (
     <div className={styles.order}>

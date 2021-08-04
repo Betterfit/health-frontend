@@ -57,7 +57,7 @@ describe("Order Flow", () => {
     // we should be able to see an approved order with the number we specified
     cy.visit("/dashboard/orders");
     cy.findByRole("tab", { name: /approved/i }).click();
-    cy.contains(orderNumber);
+    cy.contains(orderNumber).should('be.visible');
   });
 
   // it("Allows admin to deny orders", () => {
