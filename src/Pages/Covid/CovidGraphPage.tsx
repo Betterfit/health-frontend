@@ -34,7 +34,7 @@ export const CovidGraphPage = () => {
     );
 
   return (
-    <div className="w-full flex flex-col flow-root">
+    <div className="w-full flex-col flow-root">
       <FlowNav />
       <Switch>
         <Route exact path={`${path}`}>

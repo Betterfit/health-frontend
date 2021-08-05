@@ -1,28 +1,27 @@
 .root {
   display: flex;
   flex-direction: column;
-  padding: 2rem 1rem;
+  padding: 2rem 2rem;
 }
 
+.root > * {
+  margin-bottom: 2rem;
+}
 .facilities {
-  margin: 1rem;
   flex-grow: 1;
 }
 
 .addAccounts {
-  margin: 1rem;
   flex-grow: 1;
-}
-
-.users {
-  margin: 1rem;
 }
 
 @media (min-width: 1024px) {
   .root {
     display: grid;
+    column-gap: 2rem;
+    row-gap: 2rem;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto 1fr;
   }
 
   .facilities {
@@ -33,7 +32,7 @@
     grid-column: 2 /3;
   }
   .users {
-    grid-row-start: 2;
+    grid-row-start: 3;
     grid-column: 1/3;
   }
 }

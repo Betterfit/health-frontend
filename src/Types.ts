@@ -174,6 +174,7 @@ export interface FacilityMembership {
 }
 
 export interface Organization {
+  id: number;
   name: string;
   url: string;
   isPurchaser: boolean;
@@ -223,8 +224,6 @@ export interface OrderProduct {
   quantity: number;
   supplierOrg?: Organization;
   productOption: ProductOption;
-  supplierQuotes?: SupplierQuote[];
-  supplierPriceRange?: SupplierPriceRange[];
 }
 export interface Order {
   url: string;
@@ -247,8 +246,8 @@ export interface SupplierPriceRange {
   priceInfo: { minPricePer: number; maxPricePer: number };
 }
 
-export interface Pricing {
+export interface ProductPricing {
   productOptionId: number;
   quantity: number;
-  purchaseOptions: (SupplierQuote | SupplierPriceRange)[];
+  purchaseOptions: SupplierQuote[];
 }

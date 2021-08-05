@@ -63,7 +63,7 @@ const Tabs = ({
               tab.key === activeTab ? "opacity-100 visible" : "opacity-0 hidden"
             }`}
           >
-            {tab.content}
+            {tab.key === activeTab && tab.content}
           </div>
         );
       })}

@@ -9,25 +9,95 @@ import moment from "moment";
 import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
-import { Order, Pricing, SupplierQuote } from "Types";
+import { Order, OrderProduct, ProductPricing, SupplierQuote } from "Types";
 import RequestedProductCard from "./RequestedProductCard";
 import styles from "./RequestsPage.module.css";
 
 const RequestPage = () => {
   const queryClient = useQueryClient();
-  const { data: orders, isLoading: loadingOrders } = useQuery<Order[]>(
-    ["orders", "requested"],
-    () => {
-      return api.getOrders("open").then((response) => response.data);
+  // Maps order product id to supplier qoute chosen for it.
+  // Undefined means quote is loading for order product, null means order
+  // product has no quotes.
+  const [selectedQuotes, setSelectedQuotes] = useState<
+    Record<number, SupplierQuote | undefined | null>
+  >({});
+  const requestsQuery = useQuery<Order[]>(["orders", "requested"], () => {
+    return api.getOrders("open").then((response) => response.data);
+  });
+  const [updatingOrders, setUpdatingOrders] = useState(false);
+  const { data: orders, isLoading: loadingOrders } = requestsQuery;
+
+  const priceRequests = orders
+    ? orders.flatMap((order) =>
+        order.orderProducts.map((orderProduct) => ({
+          productOptionId: orderProduct.productOption.id,
+          quantity: orderProduct.quantity,
+          facilityId: order.facility.id,
+        }))
+      )
+    : [];
+
+  const pricingQuery = useQuery<Record<number, ProductPricing>>(
+    ["pricing", priceRequests],
+    async () => {
+      const suppliers = await api
+        .getPricing(priceRequests)
+        .then((response) => response.data);
+      const orderProducts = orders!.flatMap((order) => order.orderProducts);
+      return orderProducts.reduce((orderProductPrices, pricing, i) => {
+        orderProductPrices[pricing.pk] = suppliers[i];
+        return orderProductPrices;
+      }, {} as Record<number, ProductPricing>);
+    },
+    {
+      onSuccess: (data) => {
+        const orderProducts = orders!.flatMap((order) => order.orderProducts);
+        // use the first quote for each orderProduct as the default chosen one
+        const firstQuotes = orderProducts.reduce(
+          (chosenSuppliers, orderProduct, i) => {
+            chosenSuppliers[orderProduct.pk] =
+              data[orderProduct.pk].purchaseOptions[0] ?? null;
+            return chosenSuppliers;
+          },
+          {} as Record<number, SupplierQuote>
+        );
+        setSelectedQuotes(firstQuotes);
+      },
+      enabled: requestsQuery.isSuccess,
     }
   );
   const [searchText, setSearchText] = useState("");
   const history = useHistory();
+  const approveOrder = (order: Order) => {
+    const supplierSelections = order.orderProducts.map((orderProduct) => ({
+      // supplierId might be undefined, but we catch that in the following if statement
+      supplierId: selectedQuotes[orderProduct.pk]?.supplier.id as number,
+      id: orderProduct.pk,
+    }));
+    if (supplierSelections.some(({ supplierId }) => supplierId == null))
+      return Promise.reject(
+        new Error(
+          `${order.pk} does not have a supplier for every order product`
+        )
+      );
+    return api.updateOrderStatus({
+      order,
+      action: "approve",
+      data: supplierSelections,
+    });
+  };
+  const updateOrderStatus = (order: Order, action: "approve" | "cancel") =>
+    action === "approve"
+      ? approveOrder(order)
+      : api.updateOrderStatus({ order, action });
+
   const approveAllOrders = () => {
-    if (!orders) return;
-    Promise.all(
-      orders.map((order) => api.updateOrderStatus(order, "approve"))
-    ).finally(() => queryClient.invalidateQueries(["orders"]));
+    if (!orders || !pricingQuery.isSuccess) return;
+    setUpdatingOrders(true);
+    Promise.all(orders.map((order, i) => approveOrder(order))).finally(() => {
+      setUpdatingOrders(false);
+      queryClient.invalidateQueries(["orders"]);
+    });
   };
   return (
     <div className={styles.root}>
@@ -39,7 +109,7 @@ const RequestPage = () => {
         <PrettyButton
           text="Approve All"
           color="green"
-          disabled={!orders}
+          disabled={!orders || updatingOrders || !pricingQuery.isSuccess}
           onClick={approveAllOrders}
         />
         <SearchBar
@@ -55,7 +125,26 @@ const RequestPage = () => {
       <div className={styles.orders}>
         {orders ? (
           orders.map((order) => (
-            <RequestedOrderCard order={order} key={order.pk} />
+            <RequestedOrderCard
+              order={order}
+              key={order.pk}
+              updateOrderStatus={updateOrderStatus}
+              selectedQuotes={order.orderProducts.map(
+                ({ pk }) => selectedQuotes[pk]
+              )}
+              selectQuote={(orderProduct, supplier) => {
+                setSelectedQuotes({
+                  ...selectedQuotes,
+                  [orderProduct.pk]: supplier,
+                });
+              }}
+              prices={
+                pricingQuery.isSuccess
+                  ? // purchase options for each order product
+                    order.orderProducts.map(({ pk }) => pricingQuery.data[pk])
+                  : undefined
+              }
+            />
           ))
         ) : (
           <LoadingSpinner />
@@ -76,13 +165,26 @@ const RequestPage = () => {
 };
 export default RequestPage;
 
-const RequestedOrderCard = ({ order }: { order: Order }) => {
+const RequestedOrderCard = ({
+  order,
+  selectedQuotes,
+  prices,
+  selectQuote,
+  updateOrderStatus,
+}: {
+  order: Order;
+  selectedQuotes: Record<number, SupplierQuote | undefined | null>;
+  prices?: ProductPricing[];
+  selectQuote: (orderProduct: OrderProduct, supplier: SupplierQuote) => void;
+  updateOrderStatus: (
+    order: Order,
+    action: "approve" | "cancel"
+  ) => Promise<any>;
+}) => {
   // list of selected quotes for each order product in this order
-  const [selectedQuotes, setSelectedQuotes] = useState<number[]>([]);
   const queryClient = useQueryClient();
   const orderStatusMutation = useMutation(
-    (action: "cancel" | "approve") =>
-      api.getClient().then((client) => client.post(order.url + "/" + action)),
+    (action: "cancel" | "approve") => updateOrderStatus(order, action),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["orders"]);
@@ -98,47 +200,22 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
       },
     }
   );
-  const priceRequest = order.orderProducts.map((orderProduct) => ({
-    productOptionId: orderProduct.productOption.id,
-    quantity: orderProduct.quantity,
-    facilityId: order.facility.id,
-  }));
 
-  const pricingQuery = useQuery<Pricing[]>(
-    ["pricing", priceRequest],
-    () => api.getPricing(priceRequest).then((response) => response.data),
-    {
-      onSuccess: (data) => {
-        // select the first quote
-        setSelectedQuotes(data.map((productPricing) => 0));
-      },
-    }
-  );
-  let orderPrice: number | null = null;
-  if (pricingQuery.isSuccess) {
-    orderPrice = 0;
-    const { data: pricing } = pricingQuery;
-    // pricing quotes returned in the same order as as they are requested
-    pricing.forEach((pricing, i) => {
-      const orderProduct = order.orderProducts[i];
-      console.log(pricing);
-      console.assert(
-        pricing.productOptionId === orderProduct.productOption.id,
-        "Pricing mismatch!"
-      );
-      orderProduct.supplierQuotes = pricing.purchaseOptions as SupplierQuote[];
-      const selectedQuote = orderProduct.supplierQuotes[selectedQuotes[i]];
-      if (!selectedQuote) orderPrice = null;
-      if (orderPrice != null) orderPrice += selectedQuote.priceInfo.totalPrice;
-    });
-  }
-  const date = new Date(order.orderDate).toLocaleDateString();
-
+  const { orderProducts } = order;
   const denyOrder = () => orderStatusMutation.mutate("cancel");
   const approveOrder = () => orderStatusMutation.mutate("approve");
 
+  let orderPrice: number | null = 0;
+  orderProducts.forEach((orderProduct, i) => {
+    const quote = selectedQuotes[orderProduct.pk];
+    // don't display an order total if we don't have a quote for every product in the order
+    if (quote == null) orderPrice = null;
+    else if (orderPrice != null) orderPrice += quote.priceInfo.totalPrice;
+  });
+  const date = new Date(order.orderDate).toLocaleDateString();
+
   return (
-    <div className={styles.order}>
+    <div className={styles.order} data-testid={"request-" + order.orderNo}>
       <LoadingSpinner darkened show={orderStatusMutation.isLoading} />
       <div className={styles.orderTitle}>
         <p>
@@ -153,13 +230,10 @@ const RequestedOrderCard = ({ order }: { order: Order }) => {
       </div>
       {order.orderProducts.map((orderProduct, i) => (
         <RequestedProductCard
-          selectedQuoteIndex={selectedQuotes[i]}
-          setSelectedQuote={(index) => {
-            const newSelectedQuotes = selectedQuotes.slice();
-            newSelectedQuotes[i] = index;
-            setSelectedQuotes(newSelectedQuotes);
-          }}
+          selectedQuote={selectedQuotes[i]}
+          selectQuote={(quote) => selectQuote(orderProduct, quote)}
           key={orderProduct.pk}
+          pricing={prices && prices[i]}
           {...{ order, orderProduct }}
         />
       ))}

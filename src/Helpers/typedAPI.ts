@@ -1,7 +1,13 @@
 import axios, { AxiosInstance } from "axios";
 import applyCaseMiddleware from "axios-case-converter";
 import { getIdToken } from "Helpers/cognito";
-import { Facility, Order, Organization, Pricing, UserProfile } from "Types";
+import {
+  Facility,
+  Order,
+  Organization,
+  ProductPricing,
+  UserProfile,
+} from "Types";
 
 export const apiURL = process.env.REACT_APP_DJANGO_API_URL;
 export default class TypedAPI {
@@ -94,9 +100,13 @@ export default class TypedAPI {
     return client.get<Order[]>(path);
   };
 
-  updateOrderStatus = async (order: Order, action: "deny" | "approve") => {
+  updateOrderStatus = async ({
+    order,
+    action,
+    data,
+  }: UpdateOrderStatusProps) => {
     const client = await this.init();
-    return client.post(order.url + "/" + action);
+    return client.post(order.url + "/" + action, { orderProducts: data });
   };
 
   //  ********** PRICING API **********
@@ -108,10 +118,16 @@ export default class TypedAPI {
     }[]
   ) => {
     const client = await this.init();
-    return client.post<Pricing[]>("/pricing/", orderProducts);
+    return client.post<ProductPricing[]>("/pricing/", orderProducts);
   };
 }
 
 export const api = new TypedAPI();
 
 export type FacilityData = Omit<Facility, "pk" | "url" | "id">;
+
+type UpdateOrderStatusProps = { order: Order } & (
+  | { action: "cancel"; data?: undefined }
+  // need to include which suppliers were chosen for each OrderProduct
+  | { action: "approve"; data: { id: number; supplierId: number }[] }
+);
