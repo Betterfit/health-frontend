@@ -22,30 +22,28 @@ const AdminTabs = ({
   ariaLabel: string;
 }) => {
   const tabListRef = useRef<HTMLDivElement>(null);
+  const handleKeyEvent = (e: React.KeyboardEvent<any>) => {
+    // switch between tabs with arrow keys
+    if (["ArrowLeft", "ArrowRight"].includes(e.key)) {
+      const newIndex =
+        e.key === "ArrowRight"
+          ? Math.max(selectedIndex + 1, tabs.length - 1)
+          : Math.min(selectedIndex - 1, 0);
+      setSelectedIndex(newIndex);
+      const newSelectedTab = tabListRef.current?.children[
+        newIndex
+      ] as HTMLButtonElement;
+      newSelectedTab.focus();
+    }
+  };
   return (
-    <div
-      className={styles.root}
-      onKeyDown={(e) => {
-        // switch between tabs with arrow keys
-        if (["ArrowLeft", "ArrowRight"].includes(e.key)) {
-          const newIndex =
-            e.key === "ArrowRight"
-              ? Math.max(selectedIndex + 1, tabs.length - 1)
-              : Math.min(selectedIndex - 1, 0);
-          setSelectedIndex(newIndex);
-          const newSelectedTab = tabListRef.current?.children[
-            newIndex
-          ] as HTMLButtonElement;
-          newSelectedTab.focus();
-          console.log(e.currentTarget.children);
-        }
-      }}
-    >
+    <div className={styles.root}>
       <div
         role="tablist"
         aria-label={ariaLabel}
         className={styles.tabList}
         ref={tabListRef}
+        onKeyDown={handleKeyEvent}
       >
         {tabs.map((tab, i) => (
           <button

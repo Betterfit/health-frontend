@@ -251,3 +251,11 @@ export interface ProductPricing {
   quantity: number;
   purchaseOptions: SupplierQuote[];
 }
+
+export interface CreditCardPaymentMethod {
+  id: number;
+  name: string;
+  owner: User;
+  stripeId: string;
+  stripeCustomerId: string;
+}

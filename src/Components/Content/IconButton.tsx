@@ -6,16 +6,19 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   iconName: string;
   className?: string;
   label?: string;
+  size?: "sm" | "md";
 }
 const IconButton = ({
   color,
   iconName,
   className,
   label,
+  size = "md",
   ...props
 }: IconButtonProps) => {
   return (
     <button
+      style={{ fontSize: size === "md" ? "32px" : "24px" }}
       aria-label={label ? label : iconName}
       title={label}
       className={`material-icons-outlined md-18 ${styles.button} ${

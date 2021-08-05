@@ -1,11 +1,14 @@
 import { TextField } from "@material-ui/core";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { useMyProfile } from "APIHooks/user";
 import AdminTabs from "Components/Content/AdminTabs";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { api } from "Helpers/typedAPI";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
+import { CreditCardPaymentMethod } from "Types";
+import PaymentMethodDetail from "./PaymentMethodDetail";
 import styles from "./PaymentMethods.module.css";
 
 const PaymentMethods = () => {
@@ -31,11 +34,53 @@ const PaymentMethods = () => {
 };
 
 const PaymentMethodList = () => {
+  const paymentMethods = [
+    {
+      id: 2,
+      name: "Emergency Expenses",
+      owner: { firstName: "Amy", lastName: "Wu", id: 5 },
+    },
+    {
+      id: 3,
+      name: "Psych Ward",
+      owner: { firstName: "Kevin", lastName: "Waters", id: 16 },
+    },
+  ];
   return (
-    <ul>
-      <li>Visa xxxxxxxxxx 1234</li>
-      <li>Visa xxxxxxxxxx 1234</li>
-    </ul>
+    <div className={styles.paymentMethods}>
+      <p className={styles.paymentMethodTypeTitle}>Credit Cards</p>
+      <ul className={styles.paymentMethods}>
+        {paymentMethods.map((paymentMethod) => (
+          <PaymentMethodListItem
+            paymentMethod={paymentMethod as CreditCardPaymentMethod}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const PaymentMethodListItem = ({
+  paymentMethod,
+}: {
+  paymentMethod: CreditCardPaymentMethod;
+}) => {
+  const [open, setOpen] = useState(false);
+  const { data: myProfile } = useMyProfile();
+  const ownedByMe = myProfile?.id === paymentMethod.owner.id;
+  return (
+    <>
+      {open && (
+        <PaymentMethodDetail
+          onClose={() => setOpen(false)}
+          {...{ ownedByMe, paymentMethod }}
+        />
+      )}
+      <li className={styles.paymentMethod} onClick={() => setOpen(true)}>
+        <button>{paymentMethod.name}</button>
+        {ownedByMe && <span>Owner</span>}
+      </li>
+    </>
   );
 };
 
@@ -115,11 +160,6 @@ const AddPaymentMethod = ({ onSuccess }: { onSuccess: () => void }) => {
       />
     </form>
   );
-};
-
-const stripeCardOptions = {
-  classes: { base: styles.stripeCard },
-  style: { base: { fontSize: "18px" } },
 };
 
 export default PaymentMethods;

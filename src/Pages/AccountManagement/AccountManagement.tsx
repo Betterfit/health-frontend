@@ -35,11 +35,15 @@ const MyFacilities = () => {
         tabs={[
           {
             header: "My Facilities",
-            content: facilitiesQuery.data.map((facility, i) => (
-              <div className={styles.facility} key={i}>
-                {facility.name}
-              </div>
-            )),
+            content: (
+              <ul>
+                {facilitiesQuery.data.map((facility, i) => (
+                  <li className={styles.facility}>
+                    <button key={i}>{facility.name}</button>
+                  </li>
+                ))}
+              </ul>
+            ),
           },
           {
             header: "Add Facility",

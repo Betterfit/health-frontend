@@ -38,18 +38,7 @@
 }
 
 .facility {
-  background-color: var(--pale-aqua);
-  padding: 0.5rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.facility:first-child {
-  margin-top: 0;
-}
-
-.facility:last-child {
-  margin-bottom: 0;
+  composes: clickableListItem from "./pageStyles.module.css";
 }
 
 .cardWithTab {

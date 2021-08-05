@@ -26,3 +26,13 @@
 .addPayment .buttons {
   margin-top: 2rem;
 }
+
+.paymentMethodTypeTitle {
+  color: var(--primary-blue);
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+}
+
+.paymentMethod {
+  composes: clickableListItem from "./pageStyles.module.css";
+}

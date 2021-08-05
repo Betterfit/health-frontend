@@ -26,6 +26,7 @@ const AnimatedHeightChange = ({
       // cannot have any padding
       style={{ padding: "0" }}
       height={height}
+      easing="ease-out"
       // classes applied here so that borders aren't cut off
       className={className}
       animateOpacity
