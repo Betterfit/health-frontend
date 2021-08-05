@@ -120,6 +120,17 @@ export default class TypedAPI {
     const client = await this.init();
     return client.post<ProductPricing[]>("/pricing/", orderProducts);
   };
+
+  //  ********** PAYMENTS API **********
+
+  /**
+   * Used to get a client secrete needed to set up a payment method.
+   * https://stripe.com/docs/payments/save-and-reuse?platform=web#web-create-setup-intent
+   */
+  getSetupPaymentIntent = async () => {
+    const client = await this.init();
+    return client.get<{ clientSecret: string }>("/users/payment-intent");
+  };
 }
 
 export const api = new TypedAPI();

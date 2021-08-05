@@ -1,8 +1,11 @@
 import { TextField } from "@material-ui/core";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import AdminTabs from "Components/Content/AdminTabs";
+import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
+import { api } from "Helpers/typedAPI";
 import React, { useState } from "react";
+import { useMutation } from "react-query";
 import styles from "./PaymentMethods.module.css";
 
 const PaymentMethods = () => {
@@ -17,7 +20,7 @@ const PaymentMethods = () => {
         {
           header: "Add Payment Method",
           icon: "add",
-          content: <AddPaymentMethod />,
+          content: <AddPaymentMethod onSuccess={() => setTabIndex(0)} />,
         },
       ]}
       selectedIndex={tabIndex}
@@ -36,7 +39,7 @@ const PaymentMethodList = () => {
   );
 };
 
-const AddPaymentMethod = () => {
+const AddPaymentMethod = ({ onSuccess }: { onSuccess: () => void }) => {
   // https://stripe.com/docs/stripe-js/react#usestripe-hook
   const [formData, setFormData] = useState({
     paymentMethodName: "",
@@ -46,23 +49,35 @@ const AddPaymentMethod = () => {
   const elements = useElements();
   const stripeHasLoaded = stripe && elements;
   // stripe?.createPaymentMethod()
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const setupStripeMutation = useMutation(async () => {
     if (!stripe || !elements) return;
     const cardElement = elements.getElement(CardElement);
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement!,
+    const setupIntent = await api
+      .getSetupPaymentIntent()
+      .then((response) => response.data);
+    console.log(setupIntent);
+    const { clientSecret } = setupIntent;
+    const result = await stripe.confirmCardSetup(clientSecret, {
+      payment_method: {
+        card: cardElement!,
+        billing_details: { name: formData.cardHolderName },
+      },
     });
-    if (error) {
-      console.log("[error]", error);
+    if (result.error) {
+      console.log("[error]", result.error);
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
+      console.log("[PaymentMethod]", result.setupIntent);
+      onSuccess();
     }
+  });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (setupStripeMutation.isIdle) setupStripeMutation.mutate();
   };
 
   return (
     <form className={styles.addPayment} onSubmit={handleSubmit}>
+      <LoadingSpinner darkened show={setupStripeMutation.isLoading} />
       <TextField
         value={formData.paymentMethodName}
         onChange={(e) =>
@@ -95,7 +110,7 @@ const AddPaymentMethod = () => {
       />
       <PrettyButton
         text="Save Card"
-        disabled={!stripeHasLoaded}
+        disabled={!stripeHasLoaded || setupStripeMutation.isLoading}
         type="submit"
       />
     </form>
