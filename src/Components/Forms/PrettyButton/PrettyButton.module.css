@@ -44,6 +44,10 @@
 .link:hover {
   filter: brightness(140%);
 }
+.link:disabled {
+  color: gray;
+  background-color: transparent;
+}
 .solid {
   composes: button;
   composes: hoverShadow from global;

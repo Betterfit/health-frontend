@@ -40,24 +40,27 @@ describe("Order Flow", () => {
       force: true,
     });
     // generates a random 10 character string
-    const orderNumber = Math.random().toString(36).substr(2, 10);
-    cy.findByRole("textbox", { name: /order number/i }).type(orderNumber);
+    const purchaseNumber = Math.random().toString(36).substr(2, 10);
+    cy.findByRole("textbox", { name: /order number/i }).type(purchaseNumber);
     cy.contains(/place order/i).click();
     cy.url().should("include", "/orders");
     products.forEach((product) => assertProductIsInOrderDetail(product));
+    // cy.contains(purchaseNumber).should("be.visible");
     cy.logout();
     cy.login(admin.email, admin.password);
     // make sure we can see and open order with the number we specified
     cy.visit("/dashboard/orders");
     cy.findByRole("tab", { name: /open/i }).click();
-    cy.contains(orderNumber);
+    cy.contains(purchaseNumber);
     // approve all requested orders
     cy.contains(/requests/i).click();
-    cy.findByRole("button", { name: /approve all/i }).click();
+    cy.findByRole("button", { name: /approve all/i })
+      .should("not.be.disabled")
+      .click();
     // we should be able to see an approved order with the number we specified
     cy.visit("/dashboard/orders");
     cy.findByRole("tab", { name: /approved/i }).click();
-    cy.contains(orderNumber).should('be.visible');
+    cy.contains(purchaseNumber);
   });
 
   // it("Allows admin to deny orders", () => {

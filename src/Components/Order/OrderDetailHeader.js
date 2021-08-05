@@ -1,7 +1,6 @@
-import React from "react";
-import Translator from "Helpers/Translator";
-
 import BackNavigation from "Components/Helpers/BackNavigation";
+import Translator from "Helpers/Translator";
+import React from "react";
 
 const OrderComponent = ({ title, value, classes }) => {
   return (
@@ -39,7 +38,7 @@ const OrderDetailHeader = ({ order, actionComponent, children }) => {
   return (
     <div className="flex flex-col border-b pb-4 border-gray-400 relative">
       <BackNavigation link={"Back to orders"} />
-      <OrderComponentTitle value={`#${order.order_number}`} />
+      <OrderComponentTitle value={`Order #${order.order_number}`} />
       <div className="flex flex-row mt-4">
         {Object.keys(order)
           .filter((key, i) => i > 0)
