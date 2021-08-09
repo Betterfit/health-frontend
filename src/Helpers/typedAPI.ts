@@ -131,6 +131,11 @@ export default class TypedAPI {
     const client = await this.init();
     return client.get<{ clientSecret: string }>("/users/payment-intent");
   };
+
+  addPaymentMethod = async (data: NewPaymentMethodProps) => {
+    const client = await this.init();
+    return client.post("/payment-methods", data);
+  };
 }
 
 export const api = new TypedAPI();
@@ -142,3 +147,11 @@ type UpdateOrderStatusProps = { order: Order } & (
   // need to include which suppliers were chosen for each OrderProduct
   | { action: "approve"; data: { id: number; supplierId: number }[] }
 );
+
+type NewPaymentMethodProps = {
+  owner: number;
+  name: string;
+  stripeId: string;
+  // list of ids
+  authorizedUsers: number[];
+};

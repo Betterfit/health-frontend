@@ -28,7 +28,9 @@ const UserPicker = ({
       options={users}
       className={className}
       filterSelectedOptions
-      getOptionLabel={(user) => `${fullName(user)} - ${user.email}`}
+      getOptionLabel={(user) =>
+        fullName(user) ? `${fullName(user)} - ${user.email}` : user.email
+      }
       renderOption={(user) => (
         <div className={styles.option}>
           <span>{fullName(user) ? `${fullName(user)} ` : ""}</span>

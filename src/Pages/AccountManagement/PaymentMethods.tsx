@@ -43,7 +43,7 @@ const PaymentMethodList = () => {
     {
       id: 3,
       name: "Psych Ward",
-      owner: { firstName: "Kevin", lastName: "Waters", id: 16 },
+      owner: { firstName: "Kevin", lastName: "Waters", id: 2 },
     },
   ];
   return (
@@ -85,15 +85,17 @@ const PaymentMethodListItem = ({
 };
 
 const AddPaymentMethod = ({ onSuccess }: { onSuccess: () => void }) => {
-  // https://stripe.com/docs/stripe-js/react#usestripe-hook
   const [formData, setFormData] = useState({
     paymentMethodName: "",
     cardHolderName: "",
   });
+  // const [error, setError] = useState({})
+  // https://stripe.com/docs/stripe-js/react#usestripe-hook
   const stripe = useStripe();
   const elements = useElements();
   const stripeHasLoaded = stripe && elements;
-  // stripe?.createPaymentMethod()
+  const { data: myProfile } = useMyProfile();
+
   const setupStripeMutation = useMutation(async () => {
     if (!stripe || !elements) return;
     const cardElement = elements.getElement(CardElement);
@@ -110,14 +112,23 @@ const AddPaymentMethod = ({ onSuccess }: { onSuccess: () => void }) => {
     });
     if (result.error) {
       console.log("[error]", result.error);
+      return;
     } else {
       console.log("[PaymentMethod]", result.setupIntent);
-      onSuccess();
     }
+
+    api
+      .addPaymentMethod({
+        authorizedUsers: [],
+        name: formData.paymentMethodName,
+        owner: myProfile!.id,
+        stripeId: result.setupIntent.id,
+      })
+      .then(onSuccess);
   });
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (setupStripeMutation.isIdle) setupStripeMutation.mutate();
+    if (!setupStripeMutation.isLoading) setupStripeMutation.mutate();
   };
 
   return (
