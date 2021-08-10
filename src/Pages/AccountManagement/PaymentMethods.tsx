@@ -1,12 +1,13 @@
 import { TextField } from "@material-ui/core";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { usePaymentMethods } from "APIHooks/paymentMethods";
 import { useMyProfile } from "APIHooks/user";
 import AdminTabs from "Components/Content/AdminTabs";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { api } from "Helpers/typedAPI";
 import React, { useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { CreditCardPaymentMethod } from "Types";
 import PaymentMethodDetail from "./PaymentMethodDetail";
 import styles from "./PaymentMethods.module.css";
@@ -34,22 +35,16 @@ const PaymentMethods = () => {
 };
 
 const PaymentMethodList = () => {
-  const paymentMethods = [
-    {
-      id: 2,
-      name: "Emergency Expenses",
-      owner: { firstName: "Amy", lastName: "Wu", id: 5 },
-    },
-    {
-      id: 3,
-      name: "Psych Ward",
-      owner: { firstName: "Kevin", lastName: "Waters", id: 2 },
-    },
-  ];
+  const { data, isLoading } = usePaymentMethods();
+  const paymentMethods = data ?? [];
+
   return (
     <div className={styles.paymentMethods}>
-      <p className={styles.paymentMethodTypeTitle}>Credit Cards</p>
-      <ul className={styles.paymentMethods}>
+      <LoadingSpinner darkened show={isLoading} />
+      <p id="creditCardList" className={styles.paymentMethodTypeTitle}>
+        Credit Cards
+      </p>
+      <ul aria-labelledby="creditCardList" className={styles.paymentMethods}>
         {paymentMethods.map((paymentMethod) => (
           <PaymentMethodListItem
             paymentMethod={paymentMethod as CreditCardPaymentMethod}
@@ -76,7 +71,11 @@ const PaymentMethodListItem = ({
           {...{ ownedByMe, paymentMethod }}
         />
       )}
-      <li className={styles.paymentMethod} onClick={() => setOpen(true)}>
+      <li
+        className={styles.paymentMethod}
+        aria-label={paymentMethod.name}
+        onClick={() => setOpen(true)}
+      >
         <button>{paymentMethod.name}</button>
         {ownedByMe && <span>Owner</span>}
       </li>
@@ -96,7 +95,8 @@ const AddPaymentMethod = ({ onSuccess }: { onSuccess: () => void }) => {
   const stripeHasLoaded = stripe && elements;
   const { data: myProfile } = useMyProfile();
 
-  const setupStripeMutation = useMutation(async () => {
+  const queryClient = useQueryClient();
+  const addPaymentMethodMutation = useMutation(async () => {
     if (!stripe || !elements) return;
     const cardElement = elements.getElement(CardElement);
     const setupIntent = await api
@@ -124,16 +124,19 @@ const AddPaymentMethod = ({ onSuccess }: { onSuccess: () => void }) => {
         owner: myProfile!.id,
         stripeId: result.setupIntent.id,
       })
-      .then(onSuccess);
+      .then(() => {
+        queryClient.invalidateQueries("paymentMethods");
+        onSuccess();
+      });
   });
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!setupStripeMutation.isLoading) setupStripeMutation.mutate();
+    if (!addPaymentMethodMutation.isLoading) addPaymentMethodMutation.mutate();
   };
 
   return (
     <form className={styles.addPayment} onSubmit={handleSubmit}>
-      <LoadingSpinner darkened show={setupStripeMutation.isLoading} />
+      <LoadingSpinner darkened show={addPaymentMethodMutation.isLoading} />
       <TextField
         value={formData.paymentMethodName}
         onChange={(e) =>
@@ -141,6 +144,7 @@ const AddPaymentMethod = ({ onSuccess }: { onSuccess: () => void }) => {
         }
         variant="outlined"
         label="Payment Method Name"
+        id="Payment Method Name"
         placeholder="eg Emergency Credit Card"
         size="small"
         helperText="A nickname to help identify this card"
@@ -154,6 +158,7 @@ const AddPaymentMethod = ({ onSuccess }: { onSuccess: () => void }) => {
         }
         variant="outlined"
         label="Card Holder Name"
+        id="Card Holder Name"
         size="small"
         required
         fullWidth
@@ -166,7 +171,7 @@ const AddPaymentMethod = ({ onSuccess }: { onSuccess: () => void }) => {
       />
       <PrettyButton
         text="Save Card"
-        disabled={!stripeHasLoaded || setupStripeMutation.isLoading}
+        disabled={!stripeHasLoaded || addPaymentMethodMutation.isLoading}
         type="submit"
       />
     </form>

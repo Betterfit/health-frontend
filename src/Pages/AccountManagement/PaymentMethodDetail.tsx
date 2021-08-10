@@ -2,7 +2,9 @@ import { Dialog } from "@material-ui/core";
 import { fullName, useUsers } from "APIHooks/user";
 import IconButton from "Components/Content/IconButton";
 import UserPicker from "Components/Forms/UserPicker";
+import { api, PaymentMethodUpdate } from "Helpers/typedAPI";
 import React, { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { CreditCardPaymentMethod, User } from "Types";
 import styles from "./PaymentMethodDetail.module.css";
 
@@ -17,40 +19,62 @@ const PaymentMethodDetail = ({
 }) => {
   const usersQuery = useUsers();
   const [newUser, setNewUser] = useState<User | null>(null);
+  const queryClient = useQueryClient();
+  const paymentMethodMutation = useMutation(
+    (data: PaymentMethodUpdate) => api.updatePaymentMethod(paymentMethod, data),
+    { onSuccess: () => queryClient.invalidateQueries("paymentMethods") }
+  );
+  const authorizedUserIds = paymentMethod.authorizedUsers.map(
+    (user) => user.id
+  );
+  const addUser = (userId: number) =>
+    paymentMethodMutation.mutate({
+      authorizedUsers: [...authorizedUserIds, userId],
+    });
+
+  const removeUser = (userId: number) => {
+    paymentMethodMutation.mutate({
+      authorizedUsers: authorizedUserIds.filter((id) => id !== userId),
+    });
+    setNewUser(null);
+  };
   return (
     <Dialog open onClose={onClose}>
       <div className={styles.paymentMethodDialog}>
         <p>{paymentMethod.name} - Credit Card</p>
-        <p>Owned By: {fullName(paymentMethod.owner)}</p>
-        <p>Added On: {new Date().toLocaleString()}</p>
-        <p>Charges This Month: $363.33</p>
-        <p>Charges Last Month: $880.96</p>
+        <p>Owner: {fullName(paymentMethod.owner)}</p>
+        <p>Added On: {new Date(paymentMethod.timeCreated).toLocaleString()}</p>
+        {/* <p>Charges This Month: $363.33</p>
+        <p>Charges Last Month: $880.96</p> */}
         <hr />
         <div className={styles.authorizedUsers}>
-          <p>Authorized Users</p>
-          <ul>
-            <li>
-              Matthew Branaugh{" "}
-              {ownedByMe ? (
-                <IconButton iconName="delete" color="red" size="sm" />
-              ) : (
-                <span />
-              )}
-            </li>
-            <li>
-              Alicia Yu
-              {ownedByMe ? (
-                <IconButton iconName="delete" color="red" size="sm" />
-              ) : (
-                <span />
-              )}
-            </li>
+          <p id="authorizedUsersTitle">Authorized Users</p>
+          <ul aria-labelledby="authorizedUsersTitle">
+            {paymentMethod.authorizedUsers.map((user) => (
+              <li data-testid={"authorizedUser-" + user.email}>
+                {fullName(user)}{" "}
+                {ownedByMe ? (
+                  <IconButton
+                    aria-label={"deauthorize " + fullName(user)}
+                    iconName="delete"
+                    color="red"
+                    size="sm"
+                    disabled={paymentMethodMutation.isLoading}
+                    onClick={() => removeUser(user.id)}
+                  />
+                ) : (
+                  <span />
+                )}
+              </li>
+            ))}
           </ul>
           {ownedByMe && (
             <form
               className={styles.authorizeForm}
               onSubmit={(e) => {
                 e.preventDefault();
+                if (newUser && !paymentMethodMutation.isLoading)
+                  addUser(newUser.id);
               }}
             >
               <UserPicker
@@ -61,9 +85,11 @@ const PaymentMethodDetail = ({
               />
               <IconButton
                 iconName="add"
-                label="Authorize Users"
+                label="Authorize User"
                 color="blue"
                 size="md"
+                disabled={!newUser || paymentMethodMutation.isLoading}
+                onClick={() => newUser && addUser(newUser.id)}
               />
             </form>
           )}

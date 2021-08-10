@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import applyCaseMiddleware from "axios-case-converter";
 import { getIdToken } from "Helpers/cognito";
 import {
+  CreditCardPaymentMethod,
   Facility,
   Order,
   Organization,
@@ -123,6 +124,19 @@ export default class TypedAPI {
 
   //  ********** PAYMENTS API **********
 
+  getPaymentMethods = async () => {
+    const client = await this.init();
+    return client.get<CreditCardPaymentMethod[]>("/payment-methods");
+  };
+
+  updatePaymentMethod = async (
+    paymentMethod: CreditCardPaymentMethod,
+    data: PaymentMethodUpdate
+  ) => {
+    const client = await this.init();
+    return client.patch(paymentMethod.url, data);
+  };
+
   /**
    * Used to get a client secrete needed to set up a payment method.
    * https://stripe.com/docs/payments/save-and-reuse?platform=web#web-create-setup-intent
@@ -154,4 +168,10 @@ type NewPaymentMethodProps = {
   stripeId: string;
   // list of ids
   authorizedUsers: number[];
+};
+
+export type PaymentMethodUpdate = {
+  authorizedUsers?: number[];
+  owner?: number;
+  disabled?: boolean;
 };

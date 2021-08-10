@@ -254,8 +254,15 @@ export interface ProductPricing {
 
 export interface CreditCardPaymentMethod {
   id: number;
+  url: string;
   name: string;
   owner: User;
+  authorizedUsers: User[];
   stripeId: string;
   stripeCustomerId: string;
+  timeCreated: string;
+}
+
+export interface Error {
+  message: string;
 }

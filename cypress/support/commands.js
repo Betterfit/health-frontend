@@ -86,3 +86,26 @@ Cypress.Commands.add("loginAsPurchaser", () =>
   login(Cypress.env("MEMBER_EMAIL"), Cypress.env("MEMBER_PASSWORD"))
 );
 Cypress.Commands.add("logout", logout);
+
+// https://medium.com/@michabahr/testing-stripe-elements-with-cypress-5a2fc17ab27b
+Cypress.Commands.add("iframeLoaded", { prevSubject: "element" }, ($iframe) => {
+  const contentWindow = $iframe.prop("contentWindow");
+  return new Promise((resolve) => {
+    if (contentWindow && contentWindow.document.readyState === "complete") {
+      resolve(contentWindow);
+    } else {
+      $iframe.on("load", () => {
+        resolve(contentWindow);
+      });
+    }
+  });
+});
+Cypress.Commands.add(
+  "getInDocument",
+  { prevSubject: "document" },
+  (document, selector) => Cypress.$(selector, document)
+);
+
+Cypress.Commands.add("getWithinIframe", (targetElement) =>
+  cy.get("iframe").iframeLoaded().its("document").getInDocument(targetElement)
+);
