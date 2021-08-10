@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
-import Api from "Helpers/api";
-
+import { useOrganization } from "APIHooks/organization";
+import { LoadingSpinner } from "Components/Content/LoadingSpinner";
+import ProductDetailsCard from "Components/Content/ProductDetailsCard";
+import TitleUnderLine from "Components/Content/TitleUnderLine";
+import EditProductForm from "Components/Forms/EditProductForm";
 //Components
 import BackNavigation from "Components/Helpers/BackNavigation";
-import TitleUnderLine from "Components/Content/TitleUnderLine";
-import ProductDetailsCard from "Components/Content/ProductDetailsCard";
-import EditProductForm from "Components/Forms/EditProductForm";
+import Api from "Helpers/api";
+import React from "react";
+import { useQuery } from "react-query";
 
 const DashboardProductDetail = (props) => {
   const api = new Api();
   const { match } = props;
   const optionId = parseInt(match.params.oid);
-  let supplier_id = JSON.parse(localStorage.getItem("user")).user_profile
-    ?.supplier;
-  const [ProductData, setProductData] = useState(null);
-  const getData = async () =>
-    await api
-      .getSupplierProductQuantity(supplier_id, optionId)
+  let { data: organization } = useOrganization();
+  const { data: productData, isLoading } = useQuery("inventory", () =>
+    api
+      .getSupplierProductQuantity(organization.id, optionId)
       .then((response) => {
         let data = response.data;
         console.log(response.data);
-        setProductData({
+        return {
           product_category: data.product_option.product_category,
           product_name: data.product_option.product_variation,
           product_label: data.product_option.option_label,
@@ -31,38 +31,35 @@ const DashboardProductDetail = (props) => {
           product_available: data.quantity,
           product_image: data.product_option.product_image,
           pk: data.product_option.pk,
-        });
+        };
       })
-      .catch((err) => console.log(err));
-
-  useEffect(() => {
-    getData();
-  }, []);
-
+      .catch((err) => console.log(err))
+  );
   return (
-    <>
-      {ProductData && (
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
+      <LoadingSpinner darkened show={isLoading} />
+      {productData && (
+        <>
           <BackNavigation link={`Back`} />
           <TitleUnderLine
             title={`${
-              ProductData.product_parent
-                ? ProductData.product_parent + " - "
+              productData.product_parent
+                ? productData.product_parent + " - "
                 : ""
-            } ${ProductData.product_name}`}
+            } ${productData.product_name}`}
           />
           <div className="w-full flex place-self-center justify-self-center m-auto">
-            <ProductDetailsCard product={ProductData}>
+            <ProductDetailsCard product={productData}>
               <EditProductForm
-                matched={ProductData.product_alloted}
-                avail={ProductData.product_available}
-                id={ProductData.pk}
+                matched={productData.product_alloted}
+                avail={productData.product_available}
+                id={productData.pk}
               />
             </ProductDetailsCard>
           </div>
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 };
 

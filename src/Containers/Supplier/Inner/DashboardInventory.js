@@ -1,3 +1,4 @@
+import { useOrganization } from "APIHooks/organization";
 import BoxLink from "Components/Content/BoxLink";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import Search from "Components/Search/Search";
@@ -5,7 +6,6 @@ import Tabs from "Components/Tabs/Tabs";
 import DashboardProductList from "Containers/DashboardProductList";
 import DashboardSearch from "Containers/DashboardSearch";
 import DashboardProductDetail from "Containers/Supplier/Inner/DashboardProductDetail";
-import { useAuthStore } from "Context/authContext";
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import Spinner from "Images/spinner.gif";
@@ -13,21 +13,17 @@ import React, { useEffect, useState } from "react";
 import { Route, useLocation } from "react-router-dom";
 import uuid from "react-uuid";
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 const DashboardInventory = () => {
   const api = new Api();
   const [AllCategoryData, setAllCategoryData] = useState(null);
   const [SupplierCategoryData, setSupplierCategoryData] = useState(null);
   const [activeTab, setActiveTab] = useState("my-inventory");
   const location = useLocation();
-  const authStore = useAuthStore();
-  const userData = JSON.parse(authStore.user);
-  const supplierId = userData.user_profile.supplier;
+  const { data: myOrganization } = useOrganization();
   const [TabData, setTabData] = useState([]);
-  let query = useQuery();
+  const supplierId = myOrganization.id;
+
+  let query = new URLSearchParams(location.search);
   const getAllCategories = async () =>
     await api
       .getProductCategories()
