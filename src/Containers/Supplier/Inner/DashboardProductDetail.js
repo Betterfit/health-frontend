@@ -1,4 +1,4 @@
-import { useOrganization } from "APIHooks/organization";
+import { useUserFacilities } from "APIHooks/facilities";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import ProductDetailsCard from "Components/Content/ProductDetailsCard";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
@@ -13,27 +13,32 @@ const DashboardProductDetail = (props) => {
   const api = new Api();
   const { match } = props;
   const optionId = parseInt(match.params.oid);
-  let { data: organization } = useOrganization();
-  const { data: productData, isLoading } = useQuery("inventory", () =>
-    api
-      .getSupplierProductQuantity(organization.id, optionId)
-      .then((response) => {
-        let data = response.data;
-        console.log(response.data);
-        return {
-          product_category: data.product_option.product_category,
-          product_name: data.product_option.product_variation,
-          product_label: data.product_option.option_label,
-          product_parent: data.product_option.product,
-          product_label_value: data.product_option.name,
-          product_description: data.product_option.product_description,
-          product_alloted: data.allotted_quantity,
-          product_available: data.quantity,
-          product_image: data.product_option.product_image,
-          pk: data.product_option.pk,
-        };
-      })
-      .catch((err) => console.log(err))
+  const { data: myFacilities } = useUserFacilities();
+  const facility = myFacilities?.length ? myFacilities[0] : null;
+  const { data: productData, isLoading } = useQuery(
+    // https://react-query.tanstack.com/guides/query-invalidation#query-matching-with-invalidatequeries
+    ["inventory", { facilityId: facility?.id, productOptionId: optionId }],
+    () =>
+      api
+        .getSupplierProductQuantity(myFacilities[0].id, optionId)
+        .then((response) => {
+          let data = response.data;
+          console.log(response.data);
+          return {
+            product_category: data.product_option.product_category,
+            product_name: data.product_option.product_variation,
+            product_label: data.product_option.option_label,
+            product_parent: data.product_option.product,
+            product_label_value: data.product_option.name,
+            product_description: data.product_option.product_description,
+            product_alloted: data.allotted_quantity,
+            product_available: data.quantity,
+            product_image: data.product_option.product_image,
+            pk: data.product_option.pk,
+          };
+        })
+        .catch((err) => console.log(err)),
+    { disabled: !facility, staleTime: 0 }
   );
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">

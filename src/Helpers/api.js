@@ -124,7 +124,10 @@ export default class Api {
   updateSupplierProductQuantity = async (userId, id, data) => {
     let quantity = { quantity: data };
     const client = await this.init();
-    return client.put(`/suppliers/${userId}/product-options/${id}/`, quantity);
+    return client.patch(
+      `/suppliers/${userId}/product-options/${id}/`,
+      quantity
+    );
   };
 
   getSupplierProductQuantity = async (userId, id) => {
