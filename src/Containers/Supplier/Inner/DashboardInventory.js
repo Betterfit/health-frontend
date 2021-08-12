@@ -1,4 +1,4 @@
-import { useUserFacilities } from "APIHooks/facilities";
+import { useSelectedFacility } from "APIHooks/facilities";
 import BoxLink from "Components/Content/BoxLink";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import Search from "Components/Search/Search";
@@ -18,8 +18,7 @@ const DashboardInventory = () => {
   const [SupplierCategoryData, setSupplierCategoryData] = useState(null);
   const [activeTab, setActiveTab] = useState("my-inventory");
   const location = useLocation();
-  const { data: myFacilities } = useUserFacilities();
-  const facility = myFacilities?.length ? myFacilities[0] : null;
+  const { facilityId } = useSelectedFacility();
   const [TabData, setTabData] = useState([]);
 
   let query = new URLSearchParams(location.search);
@@ -33,7 +32,7 @@ const DashboardInventory = () => {
 
   const getSupplierCategories = async () =>
     await api
-      .getCategoriesBySupplier(facility.id)
+      .getCategoriesBySupplier(facilityId)
       .then((response) => {
         setSupplierCategoryData(response.data);
       })

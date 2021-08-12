@@ -1,4 +1,4 @@
-import { useUserFacilities } from "APIHooks/facilities";
+import { useSelectedFacility } from "APIHooks/facilities";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import ProductDetailsCard from "Components/Content/ProductDetailsCard";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
@@ -13,14 +13,13 @@ const DashboardProductDetail = (props) => {
   const api = new Api();
   const { match } = props;
   const optionId = parseInt(match.params.oid);
-  const { data: myFacilities } = useUserFacilities();
-  const facility = myFacilities?.length ? myFacilities[0] : null;
+  const { facilityId } = useSelectedFacility();
   const { data: productData, isLoading } = useQuery(
     // https://react-query.tanstack.com/guides/query-invalidation#query-matching-with-invalidatequeries
-    ["inventory", { facilityId: facility?.id, productOptionId: optionId }],
+    ["inventory", { facilityId, productOptionId: optionId }],
     () =>
       api
-        .getSupplierProductQuantity(facility.id, optionId)
+        .getSupplierProductQuantity(facilityId, optionId)
         .then((response) => {
           let data = response.data;
           console.log(response.data);
@@ -38,7 +37,7 @@ const DashboardProductDetail = (props) => {
           };
         })
         .catch((err) => console.log(err)),
-    { disabled: !facility, staleTime: 0 }
+    { disabled: !facilityId, staleTime: 0 }
   );
   return (
     <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">

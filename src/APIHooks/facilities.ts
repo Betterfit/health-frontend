@@ -1,7 +1,6 @@
 import TypedAPI from "Helpers/typedAPI";
 import { useQuery, UseQueryOptions } from "react-query";
 import { Facility } from "Types";
-import { defaultQueryOptions } from "./utils";
 
 export const facilitiesQK = "facilities";
 
@@ -15,7 +14,6 @@ export const useUserFacilities = (
     facilitiesQK,
     () => api.getMyFacilities().then((response) => response.data),
     {
-      ...defaultQueryOptions,
       ...queryOptions,
     }
   );
@@ -29,7 +27,6 @@ export const useFacilities = (queryOptions?: UseQueryOptions<Facility[]>) => {
     facilitiesQK,
     () => api.getFacilitiesInMyOrganization().then((response) => response.data),
     {
-      ...defaultQueryOptions,
       ...queryOptions,
     }
   );
@@ -43,4 +40,22 @@ export const mapFacilitiesById = (
   return facilitiesById;
 };
 
+/**
+ * Returns the currently selected facility, along with a function to update it.
+ * TODO: Persist globally, perhaps between sessions as well
+ * @returns
+ */
+export const useSelectedFacility = () => {
+  const { data: facilities } = useUserFacilities();
+  const facility = facilities && facilities.length > 0 ? facilities[0] : null;
+  // eventually we'll make this global with context
+  const setSelectedFacility = (facility: Facility) => {
+    throw Error("Not implemented!");
+  };
+  return {
+    facility,
+    facilityId: facility ? facility.id : null,
+    setSelectedFacility,
+  };
+};
 const api = new TypedAPI();

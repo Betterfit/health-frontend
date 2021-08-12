@@ -1,4 +1,4 @@
-import { useUserFacilities } from "APIHooks/facilities";
+import { useSelectedFacility } from "APIHooks/facilities";
 import Button from "Components/Forms/Button";
 import QuantityInput from "Components/Forms/Quantity_Input";
 import Api from "Helpers/api";
@@ -17,9 +17,7 @@ const EditProductForm = ({
   edit: boolean;
 }) => {
   const [available, readAvailable] = useState(avail);
-  const { data: facilities } = useUserFacilities();
-  const facilityId =
-    facilities && facilities.length > 0 ? facilities[0].id : null;
+  const { facilityId } = useSelectedFacility();
   const queryClient = useQueryClient();
   const inventoryMutation = useMutation(
     () => api.updateSupplierProductQuantity(facilityId, id, available),
