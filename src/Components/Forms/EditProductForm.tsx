@@ -1,15 +1,34 @@
 import { useUserFacilities } from "APIHooks/facilities";
 import Button from "Components/Forms/Button";
 import QuantityInput from "Components/Forms/Quantity_Input";
-import UpdateQuantitySupplier from "Components/Helpers/UpdateQuantitySupplier";
+import Api from "Helpers/api";
 import React, { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 
-const EditProductForm = ({ id, matched = 0, avail = 0, edit = true }) => {
+const EditProductForm = ({
+  id,
+  matched = 0,
+  avail = 0,
+  edit = true,
+}: {
+  id: number;
+  matched: number;
+  avail: number;
+  edit: boolean;
+}) => {
   const [available, readAvailable] = useState(avail);
-  const { data: facilities, isSuccess } = useUserFacilities();
-  const selectedFacility =
-    isSuccess || facilities?.length > 0 ? facilities[0] : null;
-
+  const { data: facilities } = useUserFacilities();
+  const facilityId =
+    facilities && facilities.length > 0 ? facilities[0].id : null;
+  const queryClient = useQueryClient();
+  const inventoryMutation = useMutation(
+    () => api.updateSupplierProductQuantity(facilityId, id, available),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["products"]);
+      },
+    }
+  );
   return (
     <div className="flex flex-col mx-1 pt-2">
       <div className="py-2 flex justify-end">
@@ -27,10 +46,7 @@ const EditProductForm = ({ id, matched = 0, avail = 0, edit = true }) => {
       {edit && (
         <div className="py-2 md:py-8 md:mx-2">
           <Button
-            onClick={() =>
-              selectedFacility &&
-              UpdateQuantitySupplier(selectedFacility.id, id, available)
-            }
+            onClick={() => inventoryMutation.mutate()}
             text="Save Changes"
             text_size="text-base"
           />
@@ -40,4 +56,5 @@ const EditProductForm = ({ id, matched = 0, avail = 0, edit = true }) => {
   );
 };
 
+const api = new Api();
 export default EditProductForm;
