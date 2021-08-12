@@ -20,7 +20,7 @@ const DashboardProductDetail = (props) => {
     ["inventory", { facilityId: facility?.id, productOptionId: optionId }],
     () =>
       api
-        .getSupplierProductQuantity(myFacilities[0].id, optionId)
+        .getSupplierProductQuantity(facility.id, optionId)
         .then((response) => {
           let data = response.data;
           console.log(response.data);

@@ -38,8 +38,8 @@ const MyFacilities = () => {
             content: (
               <ul>
                 {facilitiesQuery.data.map((facility, i) => (
-                  <li className={styles.facility}>
-                    <button key={i}>{facility.name}</button>
+                  <li key={i} className={styles.facility}>
+                    <button>{facility.name}</button>
                   </li>
                 ))}
               </ul>

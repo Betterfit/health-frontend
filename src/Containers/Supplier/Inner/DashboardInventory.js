@@ -1,4 +1,4 @@
-import { useOrganization } from "APIHooks/organization";
+import { useUserFacilities } from "APIHooks/facilities";
 import BoxLink from "Components/Content/BoxLink";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import Search from "Components/Search/Search";
@@ -11,7 +11,6 @@ import Translator from "Helpers/Translator";
 import Spinner from "Images/spinner.gif";
 import React, { useEffect, useState } from "react";
 import { Route, useLocation } from "react-router-dom";
-import uuid from "react-uuid";
 
 const DashboardInventory = () => {
   const api = new Api();
@@ -19,9 +18,9 @@ const DashboardInventory = () => {
   const [SupplierCategoryData, setSupplierCategoryData] = useState(null);
   const [activeTab, setActiveTab] = useState("my-inventory");
   const location = useLocation();
-  const { data: myOrganization } = useOrganization();
+  const { data: myFacilities } = useUserFacilities();
+  const facility = myFacilities?.length ? myFacilities[0] : null;
   const [TabData, setTabData] = useState([]);
-  const supplierId = myOrganization.id;
 
   let query = new URLSearchParams(location.search);
   const getAllCategories = async () =>
@@ -34,66 +33,47 @@ const DashboardInventory = () => {
 
   const getSupplierCategories = async () =>
     await api
-      .getCategoriesBySupplier(supplierId)
+      .getCategoriesBySupplier(facility.id)
       .then((response) => {
         setSupplierCategoryData(response.data);
       })
       .catch((err) => console.log(err));
 
+  const createProductCategoryList = (products) =>
+    products.map((product, i) => {
+      return (
+        <div key={i}>
+          <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body ml-4 uppercase font-bold tracking-wider">
+            {product.name}
+          </h3>
+          <div className="grid md:grid-cols-1 gap-2 mb-6 md:mb-8">
+            {product.products.map((p, j) => {
+              return (
+                <BoxLink
+                  key={j}
+                  to="/dashboard/inventory/product/"
+                  link={p.name}
+                  textColor="dark-blue"
+                  id={p.pk}
+                />
+              );
+            })}
+          </div>
+        </div>
+      );
+    });
   const setTabs = () => {
     setTabData([
       {
         heading: "My Inventory",
-        content: SupplierCategoryData.map((product) => {
-          return (
-            <div key={uuid()}>
-              <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-4 uppercase font-bold tracking-wider">
-                {product.name}
-              </h3>
-              <div className="grid md:grid-cols-1 gap-2 mb-6 md:mb-8">
-                {product.products.map((p) => {
-                  return (
-                    <BoxLink
-                      key={uuid()}
-                      to="/dashboard/inventory/product/"
-                      link={p.name}
-                      textColor="dark-blue"
-                      id={p.pk}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          );
-        }),
+        content: createProductCategoryList(SupplierCategoryData),
         key: "my-inventory",
       },
       {
         heading: "All Products",
-        content: AllCategoryData.filter(
-          (category) => category.products.length > 0
-        ).map((product) => {
-          return (
-            <div key={uuid()}>
-              <h3 className="mb-4 md:mb-2 font-extrabold text-gray-700 text-xs font-body ml-4 uppercase font-bold tracking-wider">
-                {product.name}
-              </h3>
-              <div className="grid md:grid-cols-1 gap-2 mb-6 md:mb-8">
-                {product.products.map((p) => {
-                  return (
-                    <BoxLink
-                      key={uuid()}
-                      to="/dashboard/inventory/product/"
-                      link={p.name}
-                      textColor="dark-blue"
-                      id={p.pk}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          );
-        }),
+        content: createProductCategoryList(
+          AllCategoryData.filter((category) => category.products.length > 0)
+        ),
         key: "all-products",
       },
     ]);

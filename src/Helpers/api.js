@@ -82,12 +82,7 @@ export default class Api {
     return client.get(`/product-categories/?supplier=${supplierid}`);
   };
 
-  getProductsBySupplier = async (productid) => {
-    const client = await this.init();
-    return client.get(`products/${productid}/`);
-  };
-
-  getProductBySupplier = async (supplierid, productid) => {
+  getProductsBySupplier = async (supplierid, productid) => {
     const client = await this.init();
     return client.get(`/products/${productid}/?supplier=${supplierid}`);
   };
