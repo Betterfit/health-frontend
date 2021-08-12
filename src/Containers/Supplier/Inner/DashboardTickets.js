@@ -5,7 +5,8 @@ import Tabs from "Components/Tabs/Tabs";
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import Spinner from "Images/spinner.gif";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useQuery } from "react-query";
 import { Route } from "react-router-dom";
 import uuid from "react-uuid";
 import DashboardTicketSearch from "./DashboardTicketSearch";
@@ -13,57 +14,30 @@ import DashboardTicketSearch from "./DashboardTicketSearch";
 const api = new Api();
 const DashboardTickets = () => {
   const [searchActive, setSearchActive] = useState(false);
-  const [ticketData, setTickData] = useState(null);
-  const [openTickets, setOpenTickets] = useState([]);
-  const [shippedTickets, setShippedTickets] = useState([]);
   const { facilityId } = useSelectedFacility();
 
-  useEffect(() => {
-    const getData = async () =>
-      await api
-        .getSupplierTickets(facilityId)
-        .then((response) => {
-          let data = response.data;
-          let open = data
-            .filter((item) => item.status === "open")
-            .map((item) => {
-              let filterItem = item;
-              let filterItemStatus = filterItem.status; //save status to re-sort
+  const ticketsQuery = useQuery(["tickets", { facilityId }], () =>
+    api.getSupplierTickets(facilityId).then((response) =>
+      response.data.map((item) => {
+        let filterItem = item;
+        let filterItemStatus = filterItem.status; //save status to re-sort
 
-              filterItem.facility = item.supplier.name;
+        filterItem.facility = item.supplier.name;
 
-              delete filterItem.supplier;
-              delete filterItem.order;
-              delete filterItem.status;
+        delete filterItem.supplier;
+        delete filterItem.order;
+        delete filterItem.status;
 
-              filterItem.status = filterItemStatus; // set status
+        filterItem.status = filterItemStatus; // set status
 
-              return filterItem;
-            });
+        return filterItem;
+      })
+    )
+  );
 
-          let ship = data
-            .filter((item) => item.status === "shipped")
-            .map((item) => {
-              let filterItem = item;
-              let filterItemStatus = filterItem.status; //save status to re-sort
-
-              filterItem.facility = item.supplier.name;
-
-              delete filterItem.supplier;
-              delete filterItem.order;
-              delete filterItem.status;
-
-              filterItem.status = filterItemStatus; // set status
-
-              return filterItem;
-            });
-          setTickData(response.data);
-          setOpenTickets(open);
-          setShippedTickets(ship);
-        })
-        .catch((err) => console.log(err));
-    if (facilityId) getData();
-  }, [facilityId]);
+  const tickets = ticketsQuery?.data ?? [];
+  const openTickets = tickets?.filter((item) => item.status === "open");
+  const shippedTickets = tickets?.filter((item) => item.status === "shipped");
 
   const TabData = [
     {
@@ -105,7 +79,7 @@ const DashboardTickets = () => {
           {Translator("Tickets")}
         </h2>
       </Route>
-      {ticketData ? (
+      {ticketsQuery.isSuccess ? (
         <>
           <TicketSearch
             extraClasses="float-right clear-both"
