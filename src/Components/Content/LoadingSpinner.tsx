@@ -18,7 +18,7 @@ export const LoadingSpinner = ({
 }) => {
   const spinner = (
     <>
-      <div className={styles["lds-ellipsis"]}>
+      <div className={styles["lds-ellipsis"]} style={{ color: "gray" }}>
         <div></div>
         <div></div>
         <div></div>

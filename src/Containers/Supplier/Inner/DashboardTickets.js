@@ -1,7 +1,7 @@
+import { useSelectedFacility } from "APIHooks/facilities";
 import TicketSearch from "Components/Search/TicketSearch";
 import Table from "Components/Table/List/Table";
 import Tabs from "Components/Tabs/Tabs";
-import { useAuthStore } from "Context/authContext";
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import Spinner from "Images/spinner.gif";
@@ -12,60 +12,58 @@ import DashboardTicketSearch from "./DashboardTicketSearch";
 
 const api = new Api();
 const DashboardTickets = () => {
-  const authStore = useAuthStore();
   const [searchActive, setSearchActive] = useState(false);
   const [ticketData, setTickData] = useState(null);
   const [openTickets, setOpenTickets] = useState([]);
   const [shippedTickets, setShippedTickets] = useState([]);
-  const userData = JSON.parse(authStore.user);
-  const supplierId = userData.user_profile.supplier;
-  const getData = async () =>
-    await api
-      .getSupplierTickets(supplierId)
-      .then((response) => {
-        let data = response.data;
-        let open = data
-          .filter((item) => item.status === "open")
-          .map((item) => {
-            let filterItem = item;
-            let filterItemStatus = filterItem.status; //save status to re-sort
-
-            filterItem.facility = item.supplier.name;
-
-            delete filterItem.supplier;
-            delete filterItem.order;
-            delete filterItem.status;
-
-            filterItem.status = filterItemStatus; // set status
-
-            return filterItem;
-          });
-
-        let ship = data
-          .filter((item) => item.status === "shipped")
-          .map((item) => {
-            let filterItem = item;
-            let filterItemStatus = filterItem.status; //save status to re-sort
-
-            filterItem.facility = item.supplier.name;
-
-            delete filterItem.supplier;
-            delete filterItem.order;
-            delete filterItem.status;
-
-            filterItem.status = filterItemStatus; // set status
-
-            return filterItem;
-          });
-        setTickData(response.data);
-        setOpenTickets(open);
-        setShippedTickets(ship);
-      })
-      .catch((err) => console.log(err));
+  const { facilityId } = useSelectedFacility();
 
   useEffect(() => {
-    getData();
-  }, []);
+    const getData = async () =>
+      await api
+        .getSupplierTickets(facilityId)
+        .then((response) => {
+          let data = response.data;
+          let open = data
+            .filter((item) => item.status === "open")
+            .map((item) => {
+              let filterItem = item;
+              let filterItemStatus = filterItem.status; //save status to re-sort
+
+              filterItem.facility = item.supplier.name;
+
+              delete filterItem.supplier;
+              delete filterItem.order;
+              delete filterItem.status;
+
+              filterItem.status = filterItemStatus; // set status
+
+              return filterItem;
+            });
+
+          let ship = data
+            .filter((item) => item.status === "shipped")
+            .map((item) => {
+              let filterItem = item;
+              let filterItemStatus = filterItem.status; //save status to re-sort
+
+              filterItem.facility = item.supplier.name;
+
+              delete filterItem.supplier;
+              delete filterItem.order;
+              delete filterItem.status;
+
+              filterItem.status = filterItemStatus; // set status
+
+              return filterItem;
+            });
+          setTickData(response.data);
+          setOpenTickets(open);
+          setShippedTickets(ship);
+        })
+        .catch((err) => console.log(err));
+    if (facilityId) getData();
+  }, [facilityId]);
 
   const TabData = [
     {
@@ -129,7 +127,7 @@ const DashboardTickets = () => {
         </div>
       )}
       <Route path="/dashboard/tickets/search:query?">
-        <DashboardTicketSearch supplierId={supplierId} />
+        <DashboardTicketSearch supplierId={facilityId} />
       </Route>
     </div>
   );

@@ -42,6 +42,7 @@ export const mapFacilitiesById = (
 
 /**
  * Returns the currently selected facility, along with a function to update it.
+ * Currently just selects the first facility facility that the user has access to.
  * TODO: Persist globally, perhaps between sessions as well
  * @returns
  */

@@ -1,32 +1,25 @@
+import { useSelectedFacility } from "APIHooks/facilities";
 import Button from "Components/Content/Button";
 import Modal from "Components/Content/Modal";
 import Table from "Components/Table/Detail/Table";
 import DashboadOrderDetail from "Containers/DashboardOrderDetail";
-import { useAuthStore } from "Context/authContext";
 import dayjs from "dayjs";
 import Api from "Helpers/api";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 const api = new Api();
 
-const DashboardTicketDetail = (props) => {
-  const authStore = useAuthStore();
-  const { match } = props;
-  const TicketId = parseInt(match.params.id);
-  // ======================== Ticket Data ========================
-  const [ticketData, setTicketData] = useState(null);
-  const [ticketDataRaw, setTicketRaw] = useState(null);
-  const [ticketHeader, setTicketHeader] = useState();
-  const userData = JSON.parse(authStore.user);
-  const supplierId = userData.user_profile.supplier;
-  console.log(userData);
-  const getData = async () =>
-    await api
-      .getSupplierTicketOrder(supplierId, TicketId)
-      .then((response) => {
+const DashboardTicketDetail = ({ match }) => {
+  const ticketId = parseInt(match.params.id);
+  const { facilityId } = useSelectedFacility();
+  const ticketQuery = useQuery(
+    ["tickets", { ticketId: ticketId, facilityId }],
+    () =>
+      api.getSupplierTicketOrder(facilityId, ticketId).then((response) => {
         // need ticket facility and info
         let facility = response.data.order.facility;
-        setTicketHeader({
+        const ticketHeader = {
           order_number: response.data.ticket_no,
           facility: facility.name,
           unit: "Emergency",
@@ -34,10 +27,10 @@ const DashboardTicketDetail = (props) => {
           shipping_address: facility.street
             ? `${facility.street}, ${facility.city}, ${facility.province}, ${facility.postal_code}`
             : "",
-        });
+        };
         let arr = response.data.order.order_products;
-        setTicketRaw(response.data);
-        arr = arr.map((item) => {
+        const ticketDataRaw = response.data;
+        const ticketData = arr.map((item) => {
           let obj = {
             product_image: item.product_option.product_image,
             item: item.product_option.product_variation,
@@ -47,16 +40,18 @@ const DashboardTicketDetail = (props) => {
           };
           return obj;
         });
-        setTicketData(arr);
-      })
-      .catch((err) => console.log(err));
-  // TODO: proper dependency array, eslint-ignored for now
-  // eslint-disable-next-line
-  useEffect(() => {
-    getData();
-  }, []);
-  // ======================== End Ticket Data ========================
+        return { ticketHeader, ticketDataRaw, ticketData };
+      }),
+    { disabled: !facilityId }
+  );
+  const queryClient = useQueryClient();
+  const ticketMutation = useMutation(
+    () =>
+      api.setUpdateTicket(facilityId, ticketDataRaw.pk, { status: "shipped" }),
+    { onSuccess: () => queryClient.invalidateQueries(["tickets"]) }
+  );
 
+  const { ticketHeader, ticketDataRaw, ticketData } = ticketQuery.data || {};
   const [modal, setModal] = useState(false);
 
   const actionComponent = (
@@ -80,20 +75,7 @@ const DashboardTicketDetail = (props) => {
     </div>
   );
   const confirmCallBack = () => {
-    let arr = ticketDataRaw;
-    arr.status = "shipped";
-    let obj = {
-      status: "shipped",
-    };
-    api
-      .setUpdateTicket(supplierId, ticketDataRaw.pk, obj)
-      .then((response) => {
-        getData();
-        setModal(!modal);
-      })
-      .catch((error) => {
-        console.error("Error", error);
-      });
+    ticketMutation.mutate(null, { onSuccess: () => setModal(!modal) });
   };
 
   const excludeKeys = ["pk", "product_image", "name", "product_variation"];
