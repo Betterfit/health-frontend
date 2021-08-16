@@ -6,7 +6,7 @@ import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import SearchBar from "Components/Search/SearchBar";
 import { api } from "Helpers/typedAPI";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import { Order, OrderProduct, ProductPricing, SupplierQuote } from "Types";
@@ -50,22 +50,26 @@ const RequestPage = () => {
       }, {} as Record<number, ProductPricing>);
     },
     {
-      onSuccess: (data) => {
-        const orderProducts = orders!.flatMap((order) => order.orderProducts);
-        // use the first quote for each orderProduct as the default chosen one
-        const firstQuotes = orderProducts.reduce(
-          (chosenSuppliers, orderProduct, i) => {
-            chosenSuppliers[orderProduct.pk] =
-              data[orderProduct.pk].purchaseOptions[0] ?? null;
-            return chosenSuppliers;
-          },
-          {} as Record<number, SupplierQuote>
-        );
-        setSelectedQuotes(firstQuotes);
-      },
       enabled: requestsQuery.isSuccess,
     }
   );
+  // choose default suppliers for each product on first render with pricing data available
+  useEffect(() => {
+    if (!pricingQuery.data) return;
+    const data = pricingQuery.data;
+    const orderProducts = orders!.flatMap((order) => order.orderProducts);
+    // use the first quote for each orderProduct as the default chosen one
+    const firstQuotes = orderProducts.reduce(
+      (chosenSuppliers, orderProduct, i) => {
+        chosenSuppliers[orderProduct.pk] =
+          data[orderProduct.pk].purchaseOptions[0] ?? null;
+        return chosenSuppliers;
+      },
+      {} as Record<number, SupplierQuote>
+    );
+    setSelectedQuotes((old) => ({ ...firstQuotes, ...old }));
+  }, [orders, pricingQuery.data]);
+
   const [searchText, setSearchText] = useState("");
   const history = useHistory();
   const approveOrder = (order: Order) => {
