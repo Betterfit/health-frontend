@@ -266,3 +266,11 @@ export interface CreditCardPaymentMethod {
 export interface Error {
   message: string;
 }
+
+export interface SupplierPricing {
+  organizationId: number;
+  productOptionId: number;
+  price: number;
+  currency: string;
+  url: string;
+}

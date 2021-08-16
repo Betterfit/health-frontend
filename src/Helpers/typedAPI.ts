@@ -7,6 +7,7 @@ import {
   Order,
   Organization,
   ProductPricing,
+  SupplierPricing,
   UserProfile,
 } from "Types";
 
@@ -111,6 +112,9 @@ export default class TypedAPI {
   };
 
   //  ********** PRICING API **********
+  /**
+   * Used by purchasers to get price quotes/ranges
+   */
   getPricing = async (
     orderProducts: {
       productOptionId: number;
@@ -120,6 +124,36 @@ export default class TypedAPI {
   ) => {
     const client = await this.init();
     return client.post<ProductPricing[]>("/pricing/", orderProducts);
+  };
+
+  getSupplierPricing = async () => {
+    const client = await this.init();
+    return client.get<SupplierPricing[]>("/product-option-pricing");
+  };
+
+  addSupplierPricing = async (data: {
+    productOption: number;
+    price: number;
+    currency: string;
+  }) => {
+    const client = await this.init();
+    return client.post("/product-option-pricing", data);
+  };
+
+  updateSupplierPricing = async ({
+    pricing,
+    data,
+  }: {
+    pricing: SupplierPricing;
+    data: { price: number; currency: string };
+  }) => {
+    const client = await this.init();
+    return client.patch(pricing.url, data);
+  };
+
+  deleteSupplierPricing = async (pricing: SupplierPricing) => {
+    const client = await this.init();
+    return client.delete(pricing.url);
   };
 
   //  ********** PAYMENTS API **********
