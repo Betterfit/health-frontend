@@ -82,7 +82,6 @@ const AddFacilityForm = ({ handleClose }: { handleClose: () => void }) => {
         id="name"
         required
         placeholder="ex: University of Alberta Hospital"
-        autoFocus
       />
       <hr />
       <p className={styles.sectionHeader}>Shipping Address</p>

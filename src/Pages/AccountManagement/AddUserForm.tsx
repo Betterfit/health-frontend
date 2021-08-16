@@ -119,7 +119,6 @@ const AddUserForm = ({ closeForm }: { closeForm: () => void }) => {
               label="Email"
               variant="outlined"
               size="small"
-              autoFocus
               error={Boolean(errors.emails)}
               helperText={errors.emails}
             />
