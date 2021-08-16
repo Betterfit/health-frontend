@@ -17,7 +17,7 @@ const RequestedProductCard = ({
 }: {
   order: Order;
   orderProduct: OrderProduct;
-  selectedQuote?: SupplierQuote | null;
+  selectedQuote?: SupplierQuote | null | undefined;
   pricing?: ProductPricing;
   selectQuote: (quote: SupplierQuote) => void;
 }) => {

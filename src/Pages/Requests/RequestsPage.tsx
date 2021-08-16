@@ -173,7 +173,7 @@ const RequestedOrderCard = ({
   updateOrderStatus,
 }: {
   order: Order;
-  selectedQuotes: Record<number, SupplierQuote | undefined | null>;
+  selectedQuotes?: (SupplierQuote | null | undefined)[];
   prices?: ProductPricing[];
   selectQuote: (orderProduct: OrderProduct, supplier: SupplierQuote) => void;
   updateOrderStatus: (
@@ -206,12 +206,14 @@ const RequestedOrderCard = ({
   const approveOrder = () => orderStatusMutation.mutate("approve");
 
   let orderPrice: number | null = 0;
-  orderProducts.forEach((orderProduct, i) => {
-    const quote = selectedQuotes[orderProduct.pk];
-    // don't display an order total if we don't have a quote for every product in the order
-    if (quote == null) orderPrice = null;
-    else if (orderPrice != null) orderPrice += quote.priceInfo.totalPrice;
-  });
+  if (selectedQuotes) {
+    orderProducts.forEach((orderProduct, i) => {
+      const quote = selectedQuotes[i];
+      // don't display an order total if we don't have a quote for every product in the order
+      if (quote == null) orderPrice = null;
+      else if (orderPrice != null) orderPrice += quote.priceInfo.totalPrice;
+    });
+  }
   const date = new Date(order.orderDate).toLocaleDateString();
 
   return (
@@ -230,7 +232,7 @@ const RequestedOrderCard = ({
       </div>
       {order.orderProducts.map((orderProduct, i) => (
         <RequestedProductCard
-          selectedQuote={selectedQuotes[i]}
+          selectedQuote={selectedQuotes ? selectedQuotes[i] : undefined}
           selectQuote={(quote) => selectQuote(orderProduct, quote)}
           key={orderProduct.pk}
           pricing={prices && prices[i]}
