@@ -50,23 +50,6 @@ b {
   margin-right: auto;
 }
 
-.orderTitle {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  /* margin-left: 1rem; */
-  margin-bottom: 1rem;
-}
-
-.orderTitle p,
-b {
-  font-size: 1.2rem !important;
-}
-.orderTitle p {
-  margin-right: 1rem;
-}
-
 .orderBottom {
   flex-basis: 100%;
   display: flex;

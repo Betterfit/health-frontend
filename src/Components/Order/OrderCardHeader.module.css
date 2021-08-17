@@ -1,0 +1,32 @@
+.orderHeader {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  /* margin-left: 1rem; */
+  margin-bottom: 1rem;
+}
+
+.orderHeader p,
+b {
+  font-size: 1.2rem !important;
+}
+.orderHeader p {
+  margin-right: 1rem;
+}
+
+.orderDetail {
+  display: flex;
+  flex-direction: column;
+}
+.orderDetailLabel {
+  text-transform: uppercase;
+  font-size: small;
+  font-weight: bold;
+}
+
+.orderDetailValue {
+  font-size: large;
+  font-weight: bold;
+  color: var(--primary-blue);
+}

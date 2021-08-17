@@ -1,8 +1,8 @@
-import { fullName } from "APIHooks/user";
 import IconButton from "Components/Content/IconButton";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
+import OrderCardHeader from "Components/Order/OrderCardHeader";
 import SearchBar from "Components/Search/SearchBar";
 import { api } from "Helpers/typedAPI";
 import moment from "moment";
@@ -218,22 +218,11 @@ const RequestedOrderCard = ({
       else if (orderPrice != null) orderPrice += quote.priceInfo.totalPrice;
     });
   }
-  const date = new Date(order.orderDate).toLocaleDateString();
 
   return (
     <div className={styles.order} data-testid={"request-" + order.orderNo}>
       <LoadingSpinner darkened show={orderStatusMutation.isLoading} />
-      <div className={styles.orderTitle}>
-        <p>
-          <b>{order.facility.name}</b> - <b>{date}</b>
-        </p>
-        <p>
-          By: <b>{fullName(order.authorUser)}</b>
-        </p>
-        <p>
-          Order ID: <b>{order.orderNo}</b>
-        </p>
-      </div>
+      <OrderCardHeader order={order} />
       {order.orderProducts.map((orderProduct, i) => (
         <RequestedProductCard
           selectedQuote={selectedQuotes ? selectedQuotes[i] : undefined}
