@@ -10,7 +10,7 @@ const Badge = ({
 }: {
   text: string;
   backgroundColor: string;
-  disabled: boolean;
+  disabled?: boolean;
   icon?: string;
 }) => {
   backgroundColor = disabled ? "gray" : backgroundColor;

@@ -16,15 +16,21 @@ const OrderCardHeader = ({
   const date = moment(order.orderDate).format("MMM D, YYYY - h:mm A");
   return (
     <div className={styles.orderHeader}>
-      <OrderDetail label="Ordered by" value={fullName(order.authorUser)} />
-      <OrderDetail label="Ordered on" value={date} />
-      <OrderDetail label="Destination" value={order.facility.name} />
+      <VerticalDetail label="Ordered by" value={fullName(order.authorUser)} />
+      <VerticalDetail label="Ordered on" value={date} />
+      <VerticalDetail label="Destination" value={order.facility.name} />
       {children}
     </div>
   );
 };
 
-const OrderDetail = ({ label, value }: { label: string; value: string }) => {
+export const VerticalDetail = ({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) => {
   return (
     <div className={styles.orderDetail}>
       <span className={styles.orderDetailLabel}>{label}</span>

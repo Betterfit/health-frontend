@@ -234,6 +234,7 @@ export interface Order {
   authorUser: User;
   orderProducts: OrderProduct[];
   facility: Facility;
+  status: string;
 }
 
 export interface SupplierQuote {

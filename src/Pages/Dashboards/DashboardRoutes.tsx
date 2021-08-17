@@ -1,7 +1,6 @@
 import DashboardResources from "Containers/DashboardResources";
 import DashboardFacilityOrder from "Containers/Facility/Inner/DashboardFacilityOrderDetail";
 import DashboardOrder from "Containers/Facility/Inner/DashboardOrder";
-import DashboardOrderList from "Containers/Facility/Inner/DashboardOrderList";
 import DashboardInventory from "Containers/Supplier/Inner/DashboardInventory";
 import DashboardTicketDetail from "Containers/Supplier/Inner/DashboardTicketDetail";
 import DashboardTickets from "Containers/Supplier/Inner/DashboardTickets";
@@ -13,6 +12,7 @@ import DashboardTrafficDashboard from "Containers/Traffic/Inner/DashboardTraffic
 import { CartProvider } from "Context/cartContext";
 import { MatchProvider } from "Context/matchContext";
 import AccountManagement from "Pages/AccountManagement/AccountManagement";
+import OrdersPage from "Pages/Orders/OrdersPage";
 import RequestsPage from "Pages/Requests/RequestsPage";
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
@@ -42,10 +42,9 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
         <Route
           exact
           path={["/dashboard/orders", "/dashboard/orders/search:query?"]}
-          render={(props) => {
-            return <DashboardOrderList {...props} />;
-          }}
-        />
+        >
+          <OrdersPage />
+        </Route>
         <Route
           path="/dashboard/edit-order/:oid"
           exact

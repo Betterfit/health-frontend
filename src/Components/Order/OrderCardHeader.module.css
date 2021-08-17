@@ -1,6 +1,7 @@
 .orderHeader {
   width: 100%;
   display: flex;
+  flex-basis: 100%;
   flex-wrap: wrap;
   justify-content: space-around;
   /* margin-left: 1rem; */
