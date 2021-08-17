@@ -5,14 +5,17 @@
   margin: 0.25rem;
   position: relative;
   overflow: hidden;
+  font-weight: bold;
 }
 
 .button:disabled {
   background-color: gray;
+  cursor: default;
 }
 
 .blue {
   background-color: var(--cobalt-blue);
+  border: 2px solid #15327b;
 }
 .blue:hover,
 .red:focus-visible {
@@ -21,6 +24,7 @@
 
 .red {
   background-color: var(--plastic-red);
+  border: 2px solid #9f1e2f;
 }
 .red:hover,
 .red:focus-visible {
@@ -29,6 +33,7 @@
 
 .green {
   background-color: var(--lucky-green);
+  border: 2px solid #11793d;
 }
 .green:hover {
   background-color: #009556;
@@ -52,8 +57,27 @@
   composes: button;
   composes: hoverShadow from global;
   padding: 0.5rem 1rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   color: white;
+}
+.outline {
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: var(--midnight-blue);
+}
+
+.outline.blue {
+  background-color: var(--purple-wash);
+  border: 2px solid var(--primary-blue);
+}
+
+.outline:disabled {
+  color: grey;
+  background-color: var(--purple-wash);
+  border: 2px solid grey;
+}
+.outline:hover:enabled {
+  filter: brightness(90%);
 }
 
 .icon {

@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import OrderCardHeader, {
   VerticalDetail,
 } from "Components/Order/OrderCardHeader";
@@ -39,12 +40,23 @@ const OrderProductInfo = ({
         />
         <HorizontalDetail label="Quantity" value={orderProduct.quantity} />
         <HorizontalDetail label={product.optionLabel} value={product.name} />
+      </div>
+      <div className={styles.detailList}>
         <HorizontalDetail label="Supplier" value="Air Liquide" />
         <HorizontalDetail label={"Total"} value={32} />
       </div>
+      <div className={styles.detailList}>
+        <HorizontalDetail label={"Shipping Provider"} value="UPS" />
+        <HorizontalDetail label={"Tracking Number"} value="1234234431423423" />
+        <HorizontalDetail label={"Status"} value="Shipped" />
+      </div>
       <div className={styles.orderProductActions}>
-        {/* {order.status === "approved" && <PrettyButton text="Mark Delivered" />}
-        <PrettyButton text="View Details" /> */}
+        {order.status === "approved" && (
+          <>
+            <PrettyButton text="Mark as Delivered" color="green" />
+            <PrettyButton text="Contact Supplier" variant="outline" />
+          </>
+        )}
       </div>
     </div>
   );

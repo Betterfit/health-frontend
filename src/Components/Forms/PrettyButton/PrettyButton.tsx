@@ -52,6 +52,7 @@ const colorClasses = {
 const variantClasses = {
   link: styles.link,
   solid: styles.solid,
+  outline: styles.outline,
 };
 
 export default PrettyButton;

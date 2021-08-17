@@ -18,18 +18,21 @@
 .orderProduct img {
   width: 128px;
   height: 128px;
-  /* margin-right: auto; */
-}
-.detailList {
-  display: flex;
-  justify-content: space-between;
-  flex: 1;
-  flex-wrap: wrap;
 }
 
 .orderProductActions {
+  flex-basis: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+.detailList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  flex: 1;
 }
 
 .horizontalDetail {
@@ -53,8 +56,9 @@
   font-weight: bold;
 }
 
-/* @media (min-width: 1700px) {
-  .orderProduct {
-    max-width: 48%;
+@media (max-width: 500px) {
+  .horizontalDetail {
+    justify-content: space-between;
+    margin: 0.5rem;
   }
-} */
+}
