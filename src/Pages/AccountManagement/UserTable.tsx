@@ -138,6 +138,10 @@ const UserTypeList = ({
       canMutateUsers = true;
   }
 
+  if (users.length === 0) {
+    return <></>;
+  }
+
   return (
     <div className={styles.box}>
       <table className={styles.userList}>
@@ -149,56 +153,48 @@ const UserTypeList = ({
           <th>Actions</th>
         </tr>
         <tbody>
-          {users.length > 0 ? (
-            users.map((user, i) => (
-              <tr key={i}>
-                <td>{user.email}</td>
-                <td>{fullName(user)}</td>
-                <td>
-                  {user.facilityMembership.map((membership, i) => (
-                    //   flex is required so that the delete icons line up
-                    <div key={i} className="flex items-center">
-                      {facilitiesById &&
-                        facilitiesById[membership.facilityId].name}
-                      {user.id === userToEdit?.id && (
-                        <IconButton
-                          color="red"
-                          iconName="close"
-                          onClick={() => deleteMembership(membership)}
-                        />
-                      )}
-                    </div>
-                  ))}
-                </td>
-                <td className={styles.actions}>
-                  {canMutateUsers && (
-                    <>
-                      <IconButton
-                        color="blue"
-                        iconName="edit"
-                        onClick={() =>
-                          user.id === userToEdit?.id
-                            ? setUserToEdit(null)
-                            : setUserToEdit(user)
-                        }
-                      />
+          {users.map((user, i) => (
+            <tr key={i}>
+              <td>{user.email}</td>
+              <td>{fullName(user)}</td>
+              <td>
+                {user.facilityMembership.map((membership, i) => (
+                  //   flex is required so that the delete icons line up
+                  <div key={i} className="flex items-center">
+                    {facilitiesById &&
+                      facilitiesById[membership.facilityId].name}
+                    {user.id === userToEdit?.id && (
                       <IconButton
                         color="red"
-                        iconName="delete"
-                        onClick={() => deleteUser(user)}
+                        iconName="close"
+                        onClick={() => deleteMembership(membership)}
                       />
-                    </>
-                  )}
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={4} className={styles.emptyTable}>
-                No users
+                    )}
+                  </div>
+                ))}
+              </td>
+              <td className={styles.actions}>
+                {canMutateUsers && (
+                  <>
+                    <IconButton
+                      color="blue"
+                      iconName="edit"
+                      onClick={() =>
+                        user.id === userToEdit?.id
+                          ? setUserToEdit(null)
+                          : setUserToEdit(user)
+                      }
+                    />
+                    <IconButton
+                      color="red"
+                      iconName="delete"
+                      onClick={() => deleteUser(user)}
+                    />
+                  </>
+                )}
               </td>
             </tr>
-          )}
+          ))}
         </tbody>
       </table>
       {userToDelete && (
