@@ -11,18 +11,19 @@ export const LoadingSpinner = ({
   show = true,
   darkened = false,
   errorMessage,
+  bubbleColor = "white",
 }: {
   show?: boolean;
   darkened?: boolean;
   errorMessage?: string;
+  bubbleColor?: string;
 }) => {
   const spinner = (
     <>
-      <div className={styles["lds-ellipsis"]} style={{ color: "gray" }}>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+      <div className={styles["lds-ellipsis"]}>
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} style={{ backgroundColor: bubbleColor }} />
+        ))}
       </div>
       <span className="sr-only">Loading...</span>
     </>
