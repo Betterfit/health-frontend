@@ -3,7 +3,7 @@
   composes: noOutline from global;
 }
 .button:hover {
-  filter: brightness(60%);
+  filter: drop-shadow(0 0 4px grey);
 }
 .blue {
   color: var(--primary-blue);
