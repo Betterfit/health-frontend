@@ -10,6 +10,11 @@ To extend a global style, compose it in a selector in a css module file like so:
 } 
 */
 
+/* Starting point for pages */
+:global .page {
+  padding: 2rem 1rem;
+}
+
 :global .cardBorder {
   border: 2px solid var(--primary-blue);
   border-radius: 0.25rem;

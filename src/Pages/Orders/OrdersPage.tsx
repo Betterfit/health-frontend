@@ -46,11 +46,6 @@ const Orders = () => {
           };
         })}
       />
-      {/* <div className={styles.orderList}>
-        {orders.map((order) => (
-          <OrderCard key={order.pk} order={order} />
-        ))}
-      </div> */}
     </>
   );
 };
