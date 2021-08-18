@@ -1,10 +1,12 @@
 import clsx from "clsx";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
-import OrderCardHeader, {
+import {
+  HorizontalDetail,
   VerticalDetail,
-} from "Components/Order/OrderCardHeader";
+} from "Components/InfoDisplay/LabeledDetails";
+import OrderCardHeader from "Components/Order/OrderCardHeader";
 import { capitalize } from "lodash";
-import React, { ReactNode } from "react";
+import React from "react";
 import { Order, OrderProduct } from "Types";
 import styles from "./OrderCard.module.css";
 
@@ -66,21 +68,6 @@ const OrderProductInfo = ({
           </>
         )}
       </div>
-    </div>
-  );
-};
-
-const HorizontalDetail = ({
-  label,
-  value,
-}: {
-  label: string;
-  value: ReactNode;
-}) => {
-  return (
-    <div className={styles.horizontalDetail}>
-      <span className={styles.horizontalDetailLabel}>{label}</span>
-      <span className={styles.horizontalDetailValue}>{value}</span>
     </div>
   );
 };

@@ -15,19 +15,3 @@ b {
 .orderHeader p {
   margin-right: 1rem;
 }
-
-.orderDetail {
-  display: flex;
-  flex-direction: column;
-}
-.orderDetailLabel {
-  text-transform: uppercase;
-  font-size: small;
-  font-weight: bold;
-}
-
-.orderDetailValue {
-  font-size: large;
-  font-weight: bold;
-  color: var(--primary-blue);
-}

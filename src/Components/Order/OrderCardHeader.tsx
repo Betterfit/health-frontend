@@ -1,4 +1,5 @@
 import { fullName } from "APIHooks/user";
+import { VerticalDetail } from "Components/InfoDisplay/LabeledDetails";
 import moment from "moment";
 import React from "react";
 import { Order } from "Types";
@@ -20,21 +21,6 @@ const OrderCardHeader = ({
       <VerticalDetail label="Ordered on" value={date} />
       <VerticalDetail label="Destination" value={order.facility.name} />
       {children}
-    </div>
-  );
-};
-
-export const VerticalDetail = ({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) => {
-  return (
-    <div className={styles.orderDetail}>
-      <span className={styles.orderDetailLabel}>{label}</span>
-      <span className={styles.orderDetailValue}>{value}</span>
     </div>
   );
 };

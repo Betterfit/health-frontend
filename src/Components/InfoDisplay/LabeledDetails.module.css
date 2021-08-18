@@ -1,0 +1,43 @@
+.verticalDetail {
+  display: flex;
+  flex-direction: column;
+}
+.verticalDetailLabel {
+  text-transform: uppercase;
+  font-size: small;
+  font-weight: bold;
+}
+
+.verticalDetailValue {
+  font-size: large;
+  font-weight: bold;
+  color: var(--primary-blue);
+}
+
+.horizontalDetail {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 2rem;
+  flex: 1;
+  max-width: 400px;
+}
+
+.horizontalDetailLabel {
+  color: var(--slate);
+  font-size: small;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-right: 2rem;
+}
+
+.horizontalDetailValue {
+  color: var(--midnight-blue);
+  font-weight: bold;
+}
+
+@media (max-width: 500px) {
+  .horizontalDetail {
+    justify-content: space-between;
+    margin: 0.5rem;
+  }
+}
