@@ -206,7 +206,23 @@ export interface Facility {
   url: string;
   isAdmin?: boolean;
 }
-
+export interface Ticket {
+  id: number;
+  timeCreated: string;
+  timeShipped: string;
+  status: "open" | "shipped";
+  shippingProvider: string;
+  trackingNumber: string;
+}
+export interface PurchaserTicket extends Ticket {
+  warehouse: Facility;
+  supplier: Organization;
+  orderProductId: number;
+}
+export interface SupplierTicket extends Ticket {
+  orderProduct: OrderProduct;
+  destination: Facility;
+}
 export interface ProductOption {
   id: number;
   name: string;
@@ -224,6 +240,7 @@ export interface OrderProduct {
   quantity: number;
   supplierOrg?: Organization;
   productOption: ProductOption;
+  ticket?: PurchaserTicket;
 }
 export interface Order {
   url: string;
