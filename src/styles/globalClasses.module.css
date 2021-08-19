@@ -15,9 +15,16 @@ To extend a global style, compose it in a selector in a css module file like so:
   padding: 2rem 1rem;
 }
 
+@media (max-width: 640px) {
+  :global .page {
+    padding: 0.5rem 0;
+    margin: 0;
+  }
+}
+
 :global .cardBorder {
   border: 2px solid var(--primary-blue);
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   padding: 1rem;
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
   /* Things are often absolutely positioned relative to cards */

@@ -222,6 +222,7 @@ export interface PurchaserTicket extends Ticket {
 export interface SupplierTicket extends Ticket {
   orderProduct: OrderProduct;
   destination: Facility;
+  purchaser: Organization;
 }
 export interface ProductOption {
   id: number;

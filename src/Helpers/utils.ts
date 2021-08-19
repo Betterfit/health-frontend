@@ -1,4 +1,5 @@
 import camelcaseKeys from "camelcase-keys";
+import moment from "moment";
 
 export const setClipboard = (text: string) =>
   navigator.clipboard.writeText(text);
@@ -32,3 +33,13 @@ export const subset = <T, K extends keyof T>(
   });
   return ret;
 };
+
+/**
+ * Formats like this: Aug 16, 2021 - 6:07 PM
+ */
+export const formatTimeStamp = (
+  timeStamp: string,
+  dateOnly: boolean = false
+): string =>
+  //  https://momentjs.com/docs/#/displaying/
+  moment(timeStamp).format("MMM D, YYYY" + (dateOnly ? "" : " - h:mm A"));

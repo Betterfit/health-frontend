@@ -3,7 +3,6 @@ import DashboardFacilityOrder from "Containers/Facility/Inner/DashboardFacilityO
 import DashboardOrder from "Containers/Facility/Inner/DashboardOrder";
 import DashboardInventory from "Containers/Supplier/Inner/DashboardInventory";
 import DashboardTicketDetail from "Containers/Supplier/Inner/DashboardTicketDetail";
-import DashboardTickets from "Containers/Supplier/Inner/DashboardTickets";
 import DashboardMatches from "Containers/Traffic/Inner/DashboardMatches";
 import DashboardMatchesHistory from "Containers/Traffic/Inner/DashboardMatchesHistory";
 import DashboardMatchesListing from "Containers/Traffic/Inner/DashboardMatchesListing";
@@ -14,6 +13,7 @@ import { MatchProvider } from "Context/matchContext";
 import AccountManagement from "Pages/AccountManagement/AccountManagement";
 import OrdersPage from "Pages/Orders/OrdersPage";
 import RequestsPage from "Pages/Requests/RequestsPage";
+import TicketsPage from "Pages/Tickets/TicketsPage";
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { NavItem } from "./DynamicDashboard";
@@ -85,7 +85,7 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
         />
         {/* Supplier Routes */}
         <Route path="/dashboard/tickets/">
-          <DashboardTickets />
+          <TicketsPage />
         </Route>
         <Route
           exact

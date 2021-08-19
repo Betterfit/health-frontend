@@ -8,6 +8,7 @@ import {
   Organization,
   ProductPricing,
   SupplierPricing,
+  SupplierTicket,
   UserProfile,
 } from "Types";
 
@@ -183,6 +184,12 @@ export default class TypedAPI {
   addPaymentMethod = async (data: NewPaymentMethodProps) => {
     const client = await this.init();
     return client.post("/payment-methods", data);
+  };
+
+  //  ********** TICKETS API **********
+  getTickets = async () => {
+    const client = await this.init();
+    return client.get<SupplierTicket[]>("/tickets");
   };
 }
 

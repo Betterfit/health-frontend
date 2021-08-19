@@ -1,6 +1,6 @@
 import { fullName } from "APIHooks/user";
 import { VerticalDetail } from "Components/InfoDisplay/LabeledDetails";
-import moment from "moment";
+import { formatTimeStamp } from "Helpers/utils";
 import React from "react";
 import { Order } from "Types";
 import styles from "./OrderCardHeader.module.css";
@@ -14,11 +14,13 @@ const OrderCardHeader = ({
 }) => {
   // Formats like this: Aug 16, 2021 - 6:07 PM
   // https://momentjs.com/docs/#/displaying/
-  const date = moment(order.orderDate).format("MMM D, YYYY - h:mm A");
   return (
     <div className={styles.orderHeader}>
       <VerticalDetail label="Ordered by" value={fullName(order.authorUser)} />
-      <VerticalDetail label="Ordered on" value={date} />
+      <VerticalDetail
+        label="Ordered on"
+        value={formatTimeStamp(order.orderDate)}
+      />
       <VerticalDetail label="Destination" value={order.facility.name} />
       {children}
     </div>

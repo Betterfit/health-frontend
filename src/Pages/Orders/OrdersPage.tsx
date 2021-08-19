@@ -11,7 +11,7 @@ import styles from "./OrdersPage.module.css";
 
 const OrdersPage = () => {
   return (
-    <div className={styles.root}>
+    <div className="page">
       <Title text="Orders" />
       <Orders />
     </div>
@@ -24,8 +24,8 @@ const Orders = () => {
     const response = await api.getOrders();
     return response.data;
   });
-  const loadingComponent = <LoadingSpinner bubbleColor="gray" />;
-  if (ordersQuery.isLoading || ordersQuery.isIdle) return loadingComponent;
+  if (ordersQuery.isLoading || ordersQuery.isIdle)
+    return <LoadingSpinner bubbleColor="gray" />;
   if (ordersQuery.isError) return <div>Error: {ordersQuery.error.message}</div>;
   const { data: orders } = ordersQuery;
   const ordersWithStatus = (status: string) =>
