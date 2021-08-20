@@ -210,7 +210,7 @@ export interface Ticket {
   id: number;
   timeCreated: string;
   timeShipped: string;
-  status: "open" | "shipped";
+  status: "open" | "shipped" | "delivered";
   shippingProvider: string;
   trackingNumber: string;
 }
@@ -236,6 +236,7 @@ export interface ProductOption {
   productImage: string;
 }
 export interface OrderProduct {
+  url: string;
   order: number;
   pk: number;
   priority: "normal" | "stat";

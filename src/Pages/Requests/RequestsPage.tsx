@@ -192,7 +192,6 @@ const RequestedOrderCard = ({
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["orders"]);
-        console.log("performed query");
         // future performance optimization so that we don't have to query the
         // server every time we approve or deny an order
         // queryClient.setQueryData(["orders", "requested"], (oldOrders: any) =>

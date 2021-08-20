@@ -5,8 +5,10 @@ import {
   VerticalDetail,
 } from "Components/InfoDisplay/LabeledDetails";
 import OrderCardHeader from "Components/Order/OrderCardHeader";
+import { api } from "Helpers/typedAPI";
 import { capitalize } from "lodash";
 import React from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { Order, OrderProduct } from "Types";
 import styles from "./OrderCard.module.css";
 
@@ -31,6 +33,14 @@ const OrderProductInfo = ({
   orderProduct: OrderProduct;
   order: Order;
 }) => {
+  const queryClient = useQueryClient();
+  const deliveredMutation = useMutation(
+    async () => {
+      const client = await api.getClient();
+      return client.post(orderProduct.url + "/mark-delivered");
+    },
+    { onSuccess: () => queryClient.invalidateQueries("orders") }
+  );
   const product = orderProduct.productOption;
   const ticket = orderProduct.ticket;
   return (
@@ -61,10 +71,15 @@ const OrderProductInfo = ({
         <HorizontalDetail label={"Status"} value={capitalize(ticket?.status)} />
       </div>
       <div className={styles.orderProductActions}>
-        {ticket && (
+        {ticket && ticket.status !== "delivered" && (
           <>
-            <PrettyButton text="Mark as Delivered" color="green" />
-            <PrettyButton text="Contact Supplier" variant="outline" />
+            <PrettyButton
+              text="Mark as Delivered"
+              color="green"
+              onClick={() => deliveredMutation.mutate()}
+              disabled={deliveredMutation.isLoading}
+            />
+            {/* <PrettyButton text="Contact Supplier" variant="outline" /> */}
           </>
         )}
       </div>
