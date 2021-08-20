@@ -191,6 +191,11 @@ export default class TypedAPI {
     const client = await this.init();
     return client.get<SupplierTicket[]>("/tickets");
   };
+
+  updateTicket = async (ticket: SupplierTicket, data: SupplierTicketUpdate) => {
+    const client = await this.init();
+    return client.patch(ticket.url, data);
+  };
 }
 
 export const api = new TypedAPI();
@@ -215,4 +220,10 @@ export type PaymentMethodUpdate = {
   authorizedUsers?: number[];
   owner?: number;
   disabled?: boolean;
+};
+
+export type SupplierTicketUpdate = {
+  shippingProvider?: string;
+  trackingNumber?: string;
+  status: "shipped";
 };

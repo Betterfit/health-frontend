@@ -1,0 +1,28 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+.form > p {
+  color: var(--midnight-blue);
+  text-align: center;
+}
+
+.form > * {
+  margin: 0.25rem 0;
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.form hr {
+  color: black;
+  height: 2px;
+  width: 100%;
+  margin: 1rem 0;
+}

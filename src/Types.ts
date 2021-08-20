@@ -220,6 +220,7 @@ export interface PurchaserTicket extends Ticket {
   orderProductId: number;
 }
 export interface SupplierTicket extends Ticket {
+  url: string;
   orderProduct: OrderProduct;
   destination: Facility;
   purchaser: Organization;

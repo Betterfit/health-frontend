@@ -1,3 +1,4 @@
+import { Dialog } from "@material-ui/core";
 import { productDisplayName } from "APIHooks/products";
 import clsx from "clsx";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
@@ -9,9 +10,10 @@ import { api } from "Helpers/typedAPI";
 import { formatTimeStamp } from "Helpers/utils";
 import { capitalize } from "lodash";
 import QRCode from "qrcode.react";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { useQuery } from "react-query";
 import { SupplierTicket } from "Types";
+import MarkShippedForm from "./MarkShippedForm";
 import styles from "./TicketsPage.module.css";
 
 const TicketsPage = () => {
@@ -24,7 +26,7 @@ const TicketsPage = () => {
 };
 
 const Tickets = () => {
-  const statuses = ["all", "open", "shipped"];
+  const statuses = ["open", "shipped"];
   const ticketsQuery = useQuery<SupplierTicket[], Error>(["tickets"], () =>
     api.getTickets().then((response) => response.data)
   );
@@ -53,17 +55,23 @@ const Tickets = () => {
   );
 };
 
-const TicketList = ({ tickets }: { tickets: SupplierTicket[] }) => (
-  <div className={styles.ticketList}>
-    {tickets.map((ticket) => (
-      <TicketCard ticket={ticket} />
-    ))}
-  </div>
-);
+const TicketList = ({ tickets }: { tickets: SupplierTicket[] }) => {
+  return (
+    <div className={styles.ticketList}>
+      {tickets.map((ticket) => (
+        <TicketCard ticket={ticket} />
+      ))}
+    </div>
+  );
+};
 
 const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
   const product = ticket.orderProduct.productOption;
   const { destination, purchaser, orderProduct } = ticket;
+  // const history = useHistory();
+  // const basePath = "/dashboard/tickets";
+  // const markShippedPath = `${basePath}/${ticket.id}/mark-shipped`;
+  const [markingShipped, setMarkingShipped] = useState(false);
   return (
     <div className={styles.ticket}>
       <TicketDetail label="Purchaser" value={purchaser.name} />
@@ -96,12 +104,41 @@ const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
       <div className={styles.qrCode}>
         <QRCode
           value={"http://localhost:3000/dashboard/tickets/" + ticket.id}
+          size={128}
+          // imageSettings={{
+          //   src: "https://betterfit.com/betterfit-favicon.png",
+          //   width: 32,
+          //   height: 32,
+          // }}
+          width={128}
+          height={128}
+          level="Q"
         />
       </div>
       <div className={styles.actions}>
-        <PrettyButton text="Mark Shipped" color="green" />
+        {ticket.status === "open" && (
+          <PrettyButton
+            text="Mark Shipped"
+            color="green"
+            // onClick={() => history.push(markShippedPath)}
+            onClick={() => setMarkingShipped(true)}
+          />
+        )}
         <PrettyButton text="Print QR Code" />
       </div>
+      <Dialog
+        open={
+          markingShipped
+          // ticket.status !== "shipped" &&
+          // history.location.pathname === markShippedPath
+        }
+        onClose={() => setMarkingShipped(false)}
+      >
+        <MarkShippedForm
+          ticket={ticket}
+          onClose={() => setMarkingShipped(false)}
+        />
+      </Dialog>
     </div>
   );
 };

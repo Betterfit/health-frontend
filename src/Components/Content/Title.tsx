@@ -5,7 +5,7 @@ export interface TitleProps {
 }
 const Title = ({ text }: TitleProps) => {
   return (
-    <span className="text-betterfit-graphite text-xl md:text-2xl lg:text-3xl">
+    <span className="text-betterfit-graphite text-xl md:text-2xl lg:text-3xl ">
       {text}
     </span>
   );
