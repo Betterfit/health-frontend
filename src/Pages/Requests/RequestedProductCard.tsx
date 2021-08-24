@@ -83,7 +83,8 @@ const RequestedProductCard = ({
         />
       </div>
       <div className={styles.product}>
-        {!denied && (
+        {/* denying individual products is disabled for now */}
+        {/* {!denied && (
           <IconButton
             iconName="close"
             color="red"
@@ -91,7 +92,7 @@ const RequestedProductCard = ({
             className={styles.deleteProduct}
             onClick={() => setDenied(true)}
           />
-        )}
+        )} */}
         <div className={styles.productImage}>
           <p className={styles.label}>
             {displayName}

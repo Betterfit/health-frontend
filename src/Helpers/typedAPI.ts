@@ -205,7 +205,10 @@ export type FacilityData = Omit<Facility, "pk" | "url" | "id">;
 type UpdateOrderStatusProps = { order: Order } & (
   | { action: "cancel"; data?: undefined }
   // need to include which suppliers were chosen for each OrderProduct
-  | { action: "approve"; data: { id: number; supplierId: number }[] }
+  | {
+      action: "approve";
+      data: { id: number; supplierId: number; price: number }[];
+    }
 );
 
 type NewPaymentMethodProps = {

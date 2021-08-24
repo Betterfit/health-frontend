@@ -1,3 +1,4 @@
+import { productDisplayName } from "APIHooks/products";
 import IconButton from "Components/Content/IconButton";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
@@ -5,15 +6,17 @@ import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import OrderCardHeader from "Components/Order/OrderCardHeader";
 import SearchBar from "Components/Search/SearchBar";
 import { api } from "Helpers/typedAPI";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import { Order, OrderProduct, ProductPricing, SupplierQuote } from "Types";
+import ApproveOrderDialog, { InvoiceItem } from "./ApproveOrderDialog";
 import RequestedProductCard from "./RequestedProductCard";
 import styles from "./RequestsPage.module.css";
 
 const RequestPage = () => {
+  const [searchText, setSearchText] = useState("");
+  const history = useHistory();
   const queryClient = useQueryClient();
   // Maps order product id to supplier qoute chosen for it.
   // Undefined means quote is loading for order product, null means order
@@ -70,20 +73,22 @@ const RequestPage = () => {
     setSelectedQuotes((old) => ({ ...firstQuotes, ...old }));
   }, [orders, pricingQuery.data]);
 
-  const [searchText, setSearchText] = useState("");
-  const history = useHistory();
   const approveOrder = (order: Order) => {
-    const supplierSelections = order.orderProducts.map((orderProduct) => ({
-      // supplierId might be undefined, but we catch that in the following if statement
-      supplierId: selectedQuotes[orderProduct.pk]?.supplier.id as number,
-      id: orderProduct.pk,
-    }));
-    if (supplierSelections.some(({ supplierId }) => supplierId == null))
-      return Promise.reject(
-        new Error(
-          `${order.pk} does not have a supplier for every order product`
-        )
-      );
+    const supplierSelections = [];
+    for (const orderProduct of order.orderProducts) {
+      const quote = selectedQuotes[orderProduct.pk];
+      if (quote == null)
+        return Promise.reject(
+          new Error(
+            `${order.pk} does not have a supplier for every order product`
+          )
+        );
+      supplierSelections.push({
+        supplierId: quote.supplier.id,
+        id: orderProduct.pk,
+        price: quote.priceInfo.totalPrice,
+      });
+    }
     return api.updateOrderStatus({
       order,
       action: "approve",
@@ -107,15 +112,14 @@ const RequestPage = () => {
     <div className={styles.root}>
       <div className={styles.titleSection}>
         <Title text="Requests" />
-        <span className="mt-2">{moment().format("MMMM D, YYYY")}</span>
       </div>
       <div className={styles.actionBar}>
-        <PrettyButton
+        {/* <PrettyButton
           text="Approve All"
           color="green"
           disabled={!orders || updatingOrders || !pricingQuery.isSuccess}
           onClick={approveAllOrders}
-        />
+        /> */}
         <SearchBar
           performSearch={setSearchText}
           placeholderText="Search Requests"
@@ -192,11 +196,6 @@ const RequestedOrderCard = ({
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["orders"]);
-        // future performance optimization so that we don't have to query the
-        // server every time we approve or deny an order
-        // queryClient.setQueryData(["orders", "requested"], (oldOrders: any) =>
-        //   oldOrders?.filter((oldOrder: Order) => oldOrder.pk !== order.pk)
-        // );
       },
       onError: () => {
         alert("Could not update order status");
@@ -208,18 +207,34 @@ const RequestedOrderCard = ({
   const denyOrder = () => orderStatusMutation.mutate("cancel");
   const approveOrder = () => orderStatusMutation.mutate("approve");
 
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   let orderPrice: number | null = 0;
+  const invoice: InvoiceItem[] = [];
   if (selectedQuotes) {
     orderProducts.forEach((orderProduct, i) => {
       const quote = selectedQuotes[i];
       // don't display an order total if we don't have a quote for every product in the order
       if (quote == null) orderPrice = null;
-      else if (orderPrice != null) orderPrice += quote.priceInfo.totalPrice;
+      else if (orderPrice != null) {
+        orderPrice += quote.priceInfo.totalPrice;
+        invoice.push({
+          name: `${productDisplayName(orderProduct.productOption)}`,
+          quantity: orderProduct.quantity,
+          cost: quote.priceInfo.totalPrice,
+        });
+      }
     });
   }
 
   return (
     <div className={styles.order} data-testid={"request-" + order.orderNo}>
+      <ApproveOrderDialog
+        open={dialogOpen}
+        handleClose={() => setDialogOpen(false)}
+        itemizedInvoice={invoice}
+        total={orderPrice}
+      />
       <LoadingSpinner darkened show={orderStatusMutation.isLoading} />
       <OrderCardHeader order={order} />
       {order.orderProducts.map((orderProduct, i) => (
@@ -238,17 +253,17 @@ const RequestedOrderCard = ({
         </p>
         <div className={styles.orderActions}>
           <PrettyButton
-            text="Approve"
-            color="green"
-            onClick={approveOrder}
-            icon="done"
-            disabled={orderStatusMutation.isLoading}
-          />
-          <PrettyButton
             text="Deny"
             color="red"
             onClick={denyOrder}
             icon="close"
+            disabled={orderStatusMutation.isLoading}
+          />
+          <PrettyButton
+            text="Approve"
+            color="green"
+            onClick={() => setDialogOpen(true)}
+            icon="done"
             disabled={orderStatusMutation.isLoading}
           />
         </div>

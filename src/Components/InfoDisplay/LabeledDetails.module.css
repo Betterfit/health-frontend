@@ -35,6 +35,11 @@
   font-weight: bold;
 }
 
+.fullWidth {
+  justify-content: space-between;
+  width: 100%;
+}
+
 @media (max-width: 500px) {
   .horizontalDetail {
     justify-content: space-between;
