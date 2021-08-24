@@ -1,4 +1,5 @@
 import { useUserFacilities } from "APIHooks/facilities";
+import { useOrganization } from "APIHooks/organization";
 import AdminTabs from "Components/Content/AdminTabs";
 import { ErrorMessage } from "Components/Content/ErrorMessage";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
@@ -6,16 +7,18 @@ import React, { useState } from "react";
 import styles from "./AccountManagement.module.css";
 import AddFacilityForm from "./AddFacilityForm";
 import AddUserForm from "./AddUserForm";
+import ConnectedAccount from "./ConnectedAccount";
 import PaymentMethods from "./PaymentMethods";
 import PendingInvitations from "./PendingInvitations";
 import UserTable from "./UserTable";
 
 const AccountManagement = () => {
+  const { data: organization } = useOrganization();
   return (
     <div className={styles.root}>
       <MyFacilities />
       <AddUsers />
-      <PaymentMethods />
+      {organization?.isSupplier ? <ConnectedAccount /> : <PaymentMethods />}
       <UserTable />
     </div>
   );

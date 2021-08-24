@@ -47,8 +47,5 @@ code {
 }
 
 p {
-  color: #4a5568;
-  line-height: 27px;
-  font-size: 1.2em;
-  margin: 6px 0px;
+  color: var(--midnight-blue);
 }
