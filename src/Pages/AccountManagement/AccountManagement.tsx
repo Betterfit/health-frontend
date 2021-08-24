@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import styles from "./AccountManagement.module.css";
 import AddFacilityForm from "./AddFacilityForm";
 import AddUserForm from "./AddUserForm";
-import ConnectedAccount from "./ConnectedAccount";
+import ConnectedAccountCard from "./ConnectedAccountCard";
 import PaymentMethods from "./PaymentMethods";
 import PendingInvitations from "./PendingInvitations";
 import UserTable from "./UserTable";
@@ -18,7 +18,7 @@ const AccountManagement = () => {
     <div className={styles.root}>
       <MyFacilities />
       <AddUsers />
-      {organization?.isSupplier ? <ConnectedAccount /> : <PaymentMethods />}
+      {organization?.isSupplier ? <ConnectedAccountCard /> : <PaymentMethods />}
       <UserTable />
     </div>
   );

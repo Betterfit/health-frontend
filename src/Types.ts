@@ -295,3 +295,19 @@ export interface SupplierPricing {
   currency: string;
   url: string;
 }
+
+export interface ConnectedAccount {
+  organizationId: number;
+  setUpComplete: boolean;
+  stripeInfo: {
+    bankAccounts: BankAccount[];
+  };
+}
+
+export interface BankAccount {
+  bankName: string;
+  country: string;
+  currency: string;
+  routingNumber: string;
+  last4: string;
+}

@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import applyCaseMiddleware from "axios-case-converter";
 import { getIdToken } from "Helpers/cognito";
 import {
+  ConnectedAccount,
   CreditCardPaymentMethod,
   Facility,
   Order,
@@ -170,6 +171,21 @@ export default class TypedAPI {
   ) => {
     const client = await this.init();
     return client.patch(paymentMethod.url, data);
+  };
+
+  getConnectedAccounts = async () => {
+    const client = await this.init();
+    return client.get<ConnectedAccount[]>("/connected-accounts");
+  };
+
+  setupConnectedAccount = async () => {
+    const client = await this.init();
+    return client.post<{ url: string }>("/connected-accounts/setup");
+  };
+
+  completeConnectedAccountSetup = async () => {
+    const client = await this.init();
+    return client.post("/connected-accounts/setup-complete");
   };
 
   /**
