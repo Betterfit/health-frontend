@@ -3,7 +3,7 @@ import { usePaymentMethods } from "APIHooks/paymentMethods";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 import React, { useState } from "react";
-import { CreditCardPaymentMethod } from "Types";
+import { PaymentMethod } from "Types";
 import styles from "./ApproveOrderDialog.module.css";
 import { formatCurrency } from "./RequestsPage";
 
@@ -17,15 +17,17 @@ const ApproveOrderDialog = ({
   handleClose,
   itemizedInvoice,
   total,
+  approveOrder,
 }: {
   open: boolean;
   handleClose: () => void;
   itemizedInvoice: InvoiceItem[];
   total: number;
+  approveOrder: (pm: PaymentMethod) => void;
 }) => {
-  const { data, isLoading } = usePaymentMethods();
+  const { data } = usePaymentMethods();
   const paymentMethods = data ?? [];
-  const [paymentMethod, setPaymentMethod] = useState<CreditCardPaymentMethod>();
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>();
   return (
     <Dialog open={open} onClose={handleClose}>
       <div className={styles.dialog}>
@@ -64,7 +66,12 @@ const ApproveOrderDialog = ({
         </TextField>
         <div className={styles.actions}>
           <PrettyButton text="Cancel" color="red" onClick={handleClose} />
-          <PrettyButton text="Confirm" color="green" />
+          <PrettyButton
+            text="Confirm"
+            color="green"
+            disabled={!paymentMethod}
+            onClick={() => paymentMethod && approveOrder(paymentMethod)}
+          />
         </div>
       </div>
     </Dialog>

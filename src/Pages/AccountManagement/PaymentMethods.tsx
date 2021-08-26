@@ -8,7 +8,7 @@ import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { api } from "Helpers/typedAPI";
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { CreditCardPaymentMethod } from "Types";
+import { PaymentMethod } from "Types";
 import PaymentMethodDetail from "./PaymentMethodDetail";
 import styles from "./PaymentMethods.module.css";
 
@@ -47,7 +47,7 @@ const PaymentMethodList = () => {
       <ul aria-labelledby="creditCardList" className={styles.paymentMethods}>
         {paymentMethods.map((paymentMethod) => (
           <PaymentMethodListItem
-            paymentMethod={paymentMethod as CreditCardPaymentMethod}
+            paymentMethod={paymentMethod as PaymentMethod}
           />
         ))}
       </ul>
@@ -58,7 +58,7 @@ const PaymentMethodList = () => {
 const PaymentMethodListItem = ({
   paymentMethod,
 }: {
-  paymentMethod: CreditCardPaymentMethod;
+  paymentMethod: PaymentMethod;
 }) => {
   const [open, setOpen] = useState(false);
   const { data: myProfile } = useMyProfile();
@@ -113,16 +113,18 @@ const AddPaymentMethod = ({ onSuccess }: { onSuccess: () => void }) => {
     if (result.error) {
       console.log("[error]", result.error);
       return;
-    } else {
-      console.log("[PaymentMethod]", result.setupIntent);
     }
-
+    const paymentMethodId = result.setupIntent.payment_method;
+    if (!paymentMethodId) {
+      console.log(result);
+      return;
+    }
     api
       .addPaymentMethod({
         authorizedUsers: [],
         name: formData.paymentMethodName,
         owner: myProfile!.id,
-        stripeId: result.setupIntent.id,
+        stripeId: paymentMethodId,
       })
       .then(() => {
         queryClient.invalidateQueries("paymentMethods");

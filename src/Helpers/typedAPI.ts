@@ -3,10 +3,10 @@ import applyCaseMiddleware from "axios-case-converter";
 import { getIdToken } from "Helpers/cognito";
 import {
   ConnectedAccount,
-  CreditCardPaymentMethod,
   Facility,
   Order,
   Organization,
+  PaymentMethod,
   ProductPricing,
   SupplierPricing,
   SupplierTicket,
@@ -110,7 +110,26 @@ export default class TypedAPI {
     data,
   }: UpdateOrderStatusProps) => {
     const client = await this.init();
-    return client.post(order.url + "/" + action, { orderProducts: data });
+    return client.post(order.url + "/" + action, data);
+  };
+
+  approveOrder = async ({
+    order,
+    data,
+  }: {
+    order: Order;
+    data: {
+      paymentMethodId: number;
+      orderProducts: { id: number; supplierId: number; totalPrice: number }[];
+    };
+  }) => {
+    const client = await this.init();
+    return client.post(order.url + "/approve", { data });
+  };
+
+  cancelOrder = async (order: Order) => {
+    const client = await this.init();
+    return client.post(order.url + "/cancel");
   };
 
   //  ********** PRICING API **********
@@ -162,11 +181,11 @@ export default class TypedAPI {
 
   getPaymentMethods = async () => {
     const client = await this.init();
-    return client.get<CreditCardPaymentMethod[]>("/payment-methods");
+    return client.get<PaymentMethod[]>("/payment-methods");
   };
 
   updatePaymentMethod = async (
-    paymentMethod: CreditCardPaymentMethod,
+    paymentMethod: PaymentMethod,
     data: PaymentMethodUpdate
   ) => {
     const client = await this.init();
@@ -223,7 +242,10 @@ type UpdateOrderStatusProps = { order: Order } & (
   // need to include which suppliers were chosen for each OrderProduct
   | {
       action: "approve";
-      data: { id: number; supplierId: number; price: number }[];
+      data: {
+        paymentMethodId: number;
+        orderProducts: { id: number; supplierId: number; totalPrice: number }[];
+      };
     }
 );
 

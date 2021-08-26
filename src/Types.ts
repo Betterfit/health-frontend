@@ -273,7 +273,7 @@ export interface ProductPricing {
   purchaseOptions: SupplierQuote[];
 }
 
-export interface CreditCardPaymentMethod {
+export interface PaymentMethod {
   id: number;
   url: string;
   name: string;

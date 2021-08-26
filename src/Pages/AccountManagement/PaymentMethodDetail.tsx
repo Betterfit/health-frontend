@@ -5,7 +5,7 @@ import UserPicker from "Components/Forms/UserPicker";
 import { api, PaymentMethodUpdate } from "Helpers/typedAPI";
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { CreditCardPaymentMethod, User } from "Types";
+import { PaymentMethod, User } from "Types";
 import styles from "./PaymentMethodDetail.module.css";
 
 const PaymentMethodDetail = ({
@@ -13,7 +13,7 @@ const PaymentMethodDetail = ({
   ownedByMe,
   onClose,
 }: {
-  paymentMethod: CreditCardPaymentMethod;
+  paymentMethod: PaymentMethod;
   ownedByMe: boolean;
   onClose: () => void;
 }) => {

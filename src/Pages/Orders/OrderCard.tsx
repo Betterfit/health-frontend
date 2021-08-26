@@ -71,6 +71,8 @@ const OrderProductInfo = ({
         <HorizontalDetail label={"Status"} value={capitalize(ticket?.status)} />
       </div>
       <div className={styles.orderProductActions}>
+        {/* Even if a ticket hasn't been marked as shipped, we still let
+        orderers mark it as delivered, in case the supplier forgot to mark it*/}
         {ticket && ticket.status !== "delivered" && (
           <>
             <PrettyButton

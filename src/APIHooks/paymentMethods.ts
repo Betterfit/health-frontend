@@ -1,11 +1,11 @@
 import { api } from "Helpers/typedAPI";
 import { useQuery, UseQueryOptions } from "react-query";
-import { CreditCardPaymentMethod } from "Types";
+import { PaymentMethod } from "Types";
 
 export const usePaymentMethods = (
-  options: UseQueryOptions<CreditCardPaymentMethod[], Error> = {}
+  options: UseQueryOptions<PaymentMethod[], Error> = {}
 ) => {
-  return useQuery<CreditCardPaymentMethod[], Error>(
+  return useQuery<PaymentMethod[], Error>(
     "paymentMethods",
     () => api.getPaymentMethods().then((resp) => resp.data),
     { ...options }

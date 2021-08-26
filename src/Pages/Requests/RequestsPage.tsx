@@ -9,7 +9,13 @@ import { api } from "Helpers/typedAPI";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
-import { Order, OrderProduct, ProductPricing, SupplierQuote } from "Types";
+import {
+  Order,
+  OrderProduct,
+  PaymentMethod,
+  ProductPricing,
+  SupplierQuote,
+} from "Types";
 import ApproveOrderDialog, { InvoiceItem } from "./ApproveOrderDialog";
 import RequestedProductCard from "./RequestedProductCard";
 import styles from "./RequestsPage.module.css";
@@ -73,41 +79,14 @@ const RequestPage = () => {
     setSelectedQuotes((old) => ({ ...firstQuotes, ...old }));
   }, [orders, pricingQuery.data]);
 
-  const approveOrder = (order: Order) => {
-    const supplierSelections = [];
-    for (const orderProduct of order.orderProducts) {
-      const quote = selectedQuotes[orderProduct.pk];
-      if (quote == null)
-        return Promise.reject(
-          new Error(
-            `${order.pk} does not have a supplier for every order product`
-          )
-        );
-      supplierSelections.push({
-        supplierId: quote.supplier.id,
-        id: orderProduct.pk,
-        price: quote.priceInfo.totalPrice,
-      });
-    }
-    return api.updateOrderStatus({
-      order,
-      action: "approve",
-      data: supplierSelections,
-    });
-  };
-  const updateOrderStatus = (order: Order, action: "approve" | "cancel") =>
-    action === "approve"
-      ? approveOrder(order)
-      : api.updateOrderStatus({ order, action });
-
-  const approveAllOrders = () => {
-    if (!orders || !pricingQuery.isSuccess) return;
-    setUpdatingOrders(true);
-    Promise.all(orders.map((order, i) => approveOrder(order))).finally(() => {
-      setUpdatingOrders(false);
-      queryClient.invalidateQueries(["orders"]);
-    });
-  };
+  // const approveAllOrders = () => {
+  //   if (!orders || !pricingQuery.isSuccess) return;
+  //   setUpdatingOrders(true);
+  //   Promise.all(orders.map((order, i) => approveOrder(order))).finally(() => {
+  //     setUpdatingOrders(false);
+  //     queryClient.invalidateQueries(["orders"]);
+  //   });
+  // };
   return (
     <div className={styles.root}>
       <div className={styles.titleSection}>
@@ -136,7 +115,6 @@ const RequestPage = () => {
             <RequestedOrderCard
               order={order}
               key={order.pk}
-              updateOrderStatus={updateOrderStatus}
               selectedQuotes={order.orderProducts.map(
                 ({ pk }) => selectedQuotes[pk]
               )}
@@ -178,34 +156,50 @@ const RequestedOrderCard = ({
   selectedQuotes,
   prices,
   selectQuote,
-  updateOrderStatus,
 }: {
   order: Order;
   selectedQuotes?: (SupplierQuote | null | undefined)[];
   prices?: ProductPricing[];
   selectQuote: (orderProduct: OrderProduct, supplier: SupplierQuote) => void;
-  updateOrderStatus: (
-    order: Order,
-    action: "approve" | "cancel"
-  ) => Promise<any>;
 }) => {
-  // list of selected quotes for each order product in this order
-  const queryClient = useQueryClient();
-  const orderStatusMutation = useMutation(
-    (action: "cancel" | "approve") => updateOrderStatus(order, action),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["orders"]);
-      },
-      onError: () => {
-        alert("Could not update order status");
-      },
-    }
-  );
-
   const { orderProducts } = order;
-  const denyOrder = () => orderStatusMutation.mutate("cancel");
-  const approveOrder = () => orderStatusMutation.mutate("approve");
+  const queryClient = useQueryClient();
+  const orderStatusMutation = useMutation(api.updateOrderStatus, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["orders"]);
+    },
+    onError: () => {
+      alert("Could not update order status");
+    },
+  });
+
+  const denyOrder = () =>
+    orderStatusMutation.mutate({ action: "cancel", order });
+  const approveOrder = (paymentMethod: PaymentMethod) => {
+    if (!selectedQuotes) return;
+    const supplierSelections = [];
+    for (let i = 0; i < selectedQuotes.length; i++) {
+      const quote = selectedQuotes[i];
+      const orderProduct = orderProducts[i];
+      if (quote == null)
+        throw Error(
+          `${order.pk} does not have a supplier for every order product`
+        );
+      supplierSelections.push({
+        supplierId: quote.supplier.id,
+        id: orderProduct.pk,
+        totalPrice: quote.priceInfo.totalPrice,
+      });
+    }
+    orderStatusMutation.mutate({
+      order,
+      action: "approve",
+      data: {
+        orderProducts: supplierSelections,
+        paymentMethodId: paymentMethod.id,
+      },
+    });
+  };
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -234,6 +228,7 @@ const RequestedOrderCard = ({
         handleClose={() => setDialogOpen(false)}
         itemizedInvoice={invoice}
         total={orderPrice}
+        approveOrder={approveOrder}
       />
       <LoadingSpinner darkened show={orderStatusMutation.isLoading} />
       <OrderCardHeader order={order} />
