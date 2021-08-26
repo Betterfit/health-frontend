@@ -125,7 +125,7 @@ const RequestedProductCard = ({
           text={moreSuppliers ? "Hide other suppliers" : "Show other suppliers"}
           variant="link"
           icon={moreSuppliers ? "expand_less" : "expand_more"}
-          disabled={selectedQuote == null}
+          disabled={!pricing || pricing.purchaseOptions.length < 2}
           onClick={() => setMoreSuppliers(!moreSuppliers)}
         />
         {moreSuppliers &&
