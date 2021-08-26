@@ -26,7 +26,7 @@ const TicketsPage = () => {
 };
 
 const Tickets = () => {
-  const statuses = ["open", "shipped"];
+  const statuses = ["open", "shipped", "delivered"];
   const ticketsQuery = useQuery<SupplierTicket[], Error>(["tickets"], () =>
     api.getTickets().then((response) => response.data)
   );
