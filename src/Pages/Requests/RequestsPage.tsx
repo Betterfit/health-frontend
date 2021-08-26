@@ -6,6 +6,7 @@ import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import OrderCardHeader from "Components/Order/OrderCardHeader";
 import SearchBar from "Components/Search/SearchBar";
 import { api } from "Helpers/typedAPI";
+import { notNull } from "Helpers/utils";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
@@ -173,24 +174,24 @@ const RequestedOrderCard = ({
     },
   });
 
+  const supplierSelections = selectedQuotes
+    ? selectedQuotes
+        .map(
+          (quote, i) =>
+            quote && {
+              supplierId: quote!.supplier.id,
+              id: orderProducts[i].pk,
+              totalPrice: quote!.priceInfo.totalPrice,
+            }
+        )
+        .filter(notNull)
+    : [];
+  const someProductsMissingSuppliers =
+    supplierSelections.length < orderProducts.length;
+
   const denyOrder = () =>
     orderStatusMutation.mutate({ action: "cancel", order });
   const approveOrder = (paymentMethod: PaymentMethod) => {
-    if (!selectedQuotes) return;
-    const supplierSelections = [];
-    for (let i = 0; i < selectedQuotes.length; i++) {
-      const quote = selectedQuotes[i];
-      const orderProduct = orderProducts[i];
-      if (quote == null)
-        throw Error(
-          `${order.pk} does not have a supplier for every order product`
-        );
-      supplierSelections.push({
-        supplierId: quote.supplier.id,
-        id: orderProduct.pk,
-        totalPrice: quote.priceInfo.totalPrice,
-      });
-    }
     orderStatusMutation.mutate({
       order,
       action: "approve",
@@ -259,7 +260,9 @@ const RequestedOrderCard = ({
             color="green"
             onClick={() => setDialogOpen(true)}
             icon="done"
-            disabled={orderStatusMutation.isLoading}
+            disabled={
+              orderStatusMutation.isLoading || someProductsMissingSuppliers
+            }
           />
         </div>
       </div>

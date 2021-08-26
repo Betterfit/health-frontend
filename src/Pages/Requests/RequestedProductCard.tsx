@@ -1,4 +1,5 @@
 import { productDisplayName } from "APIHooks/products";
+import Icon from "Components/Content/Icon";
 import IconButton from "Components/Content/IconButton";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Badge from "Components/Forms/Badge/Badge";
@@ -41,7 +42,10 @@ const RequestedProductCard = ({
 
   const selectedSupplierComponent =
     selectedQuote === null ? (
-      <div className={styles.supplier}>No suppliers for this product</div>
+      <div className={styles.noSupplier}>
+        <p className={styles.noSupplierText}>No suppliers with stock</p>
+        <Icon name="report_problem" extraClasses={styles.noSupplierIcon} />
+      </div>
     ) : (
       <SupplierCard
         onClick={() => setMoreSuppliers(!moreSuppliers)}

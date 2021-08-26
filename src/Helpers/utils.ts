@@ -35,6 +35,12 @@ export const subset = <T, K extends keyof T>(
 };
 
 /**
+ * Null filtering that typescript will recognize.
+ * Use with array.filter
+ */
+export const notNull = <T>(value: T | null | undefined): value is T =>
+  value != null;
+/**
  * Formats like this: Aug 16, 2021 - 6:07 PM
  */
 export const formatTimeStamp = (
