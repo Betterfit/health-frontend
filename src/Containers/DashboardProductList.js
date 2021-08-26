@@ -17,7 +17,7 @@ const DashboardProductList = (props) => {
   const productsQuery = useQuery(
     ["products", { facilityId, productId }],
     () =>
-      api.getProductsBySupplier(facilityId, productId).then((response) => {
+      api.getProduct(productId).then((response) => {
         let arr = response.data;
         console.log(arr);
         arr.product_variations = arr.product_variations.map((variations) => {
