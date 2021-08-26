@@ -92,6 +92,10 @@ export default class Api {
     const client = await this.init();
     return client.get(`/products/${id}/`);
   };
+  getProductByWarehouse = async (productId, warehouseId) => {
+    const client = await this.init();
+    return client.get(`/products/${productId}?supplier=${warehouseId}`);
+  };
   getProductVariant = async (id) => {
     const client = await this.init();
     return client.get(`/product-variations/${id}`);
