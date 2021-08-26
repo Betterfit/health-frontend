@@ -17,6 +17,7 @@ import { ReactSVG } from "react-svg";
 const api = new Api();
 
 const OrderCart = ({ Cart, id = null, facility }) => {
+  console.log(facility);
   const history = useHistory();
   const myProfileQuery = useMyProfile();
   let CartData = JSON.stringify(Cart);

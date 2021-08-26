@@ -182,6 +182,8 @@ export interface Organization {
   // my_organization endpoint also specifies if the user is an administrator for the organization
   isAdmin: boolean;
   organizationImage: string;
+  offerReturns: boolean;
+  returnPolicyLink: string;
 }
 
 export interface Facility {

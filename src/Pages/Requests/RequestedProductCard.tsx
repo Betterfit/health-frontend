@@ -55,9 +55,9 @@ const RequestedProductCard = ({
         {!denied && (
           <div className={styles.bestMatch}>
             <Badge
-              text={bestMatch ? "Best Match Supplier!" : "Custom Supplier"}
+              text={bestMatch ? "Matched Supplier" : "Custom Supplier"}
               backgroundColor="var(--ocean-blue)"
-              icon={bestMatch ? "inventory" : undefined}
+              // icon={bestMatch ? "inventory" : undefined}
               disabled={!bestMatch}
             />
             {!bestMatch && (
@@ -179,6 +179,20 @@ const SupplierCard = ({
           src={supplier.organizationImage}
           alt={supplier.organizationImage ? supplier.name + " logo" : ""}
         />
+
+        <div className={styles.returnPolicy}>
+          {supplier.offerReturns ? (
+            <a
+              href={supplier.returnPolicyLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Return Policy
+            </a>
+          ) : (
+            <p>No Returns</p>
+          )}
+        </div>
       </div>
       <div className={styles.supplierInfo}>
         <div id={styles.paymentType} className={styles.labeledContent}>

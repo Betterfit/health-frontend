@@ -198,3 +198,17 @@ b {
     max-width: 48%;
   }
 }
+
+.returnPolicy {
+  padding-top: 0.5rem;
+}
+.returnPolicy > a {
+  color: var(--primary-blue);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.returnPolicy > p {
+  color: var(--midnight-blue);
+  font-weight: bold;
+}
