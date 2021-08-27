@@ -3,6 +3,7 @@
 }
 .box {
   composes: cardBorder from global;
+  overflow-x: scroll;
 }
 .userList {
   width: 100%;

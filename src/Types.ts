@@ -256,7 +256,7 @@ export interface Order {
   authorUser: User;
   orderProducts: OrderProduct[];
   facility: Facility;
-  status: string;
+  status: "open" | "approved" | "delivered" | "canceled" | "draft";
 }
 
 export interface SupplierQuote {

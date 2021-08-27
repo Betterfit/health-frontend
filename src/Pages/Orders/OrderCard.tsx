@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Badge from "Components/Forms/Badge/Badge";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import {
   HorizontalDetail,
@@ -16,8 +17,12 @@ const OrderCard = ({ order }: { order: Order }) => {
   return (
     <div className={clsx("cardBorder", styles.order)}>
       <OrderCardHeader order={order}>
-        <VerticalDetail label="status" value={capitalize(order.status)} />
+        {/* <VerticalDetail label="status" value={capitalize(order.status)} /> */}
         {/* <Badge text={order.status} backgroundColor="green" /> */}
+        <VerticalDetail
+          label="status"
+          value={<StatusBadge status={order.status} />}
+        />
       </OrderCardHeader>
       {order.orderProducts.map((orderProduct, i) => (
         <OrderProductInfo key={i} {...{ order, orderProduct }} />
@@ -88,5 +93,16 @@ const OrderProductInfo = ({
     </div>
   );
 };
+
+const statusColors = {
+  draft: "draft-blue",
+  open: "lavender",
+  approved: "tropical-blue",
+  delivered: "cool-green",
+  canceled: "rubber-red",
+};
+const StatusBadge = ({ status }: { status: keyof typeof statusColors }) => (
+  <Badge backgroundColor={`var(--${statusColors[status]})`} text={status} />
+);
 
 export default OrderCard;

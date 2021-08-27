@@ -72,14 +72,14 @@ tr.sortable-drag , tr.sortable-ghost{
 
 
 ::-webkit-scrollbar-thumb{
-    background-color:#F7FAFD;
+    background-color:gray;
     border-radius: 10px;
     margin-left: 3px;
     height: 60px;
     width: 4px;
 }
 ::-webkit-scrollbar {
-    background: transparent;
+    /* background: transparent; */
     width: 6px;
 }
 

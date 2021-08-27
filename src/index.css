@@ -40,6 +40,12 @@ code {
   --lucky-green: #1bbc5f;
   --plastic-red: #de5164;
   --purple-wash: #ededff;
+  /* badge color */
+  --draft-blue: #81acf4;
+  --lavender: #a595f2;
+  --tropical-blue: #56bac8;
+  --cool-green: #48cc89;
+  --rubber-red: #e65d6c;
 }
 
 * {

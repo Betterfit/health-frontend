@@ -57,13 +57,17 @@ const AdminTabs = ({
             aria-selected={selectedIndex === i}
             // tab is only focusable if it is selected
             tabIndex={selectedIndex === i ? 0 : -1}
-            className={selectedIndex === i ? styles.selectedTab : styles.tab}
+            className={clsx(
+              selectedIndex === i ? styles.selectedTab : styles.tab
+            )}
             onClick={() => setSelectedIndex(i)}
             // used in css
             title={tab.header}
           >
             {tab.icon && <Icon name={tab.icon} />}
-            {tab.header}
+            <span className="noResizeOnBold" data-text={tab.header}>
+              {tab.header}
+            </span>
           </button>
         ))}
       </div>

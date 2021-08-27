@@ -18,7 +18,7 @@ const OrdersPage = () => {
   );
 };
 
-const statuses = ["all", "approved", "delivered", "cancelled"];
+const statuses = ["all", "draft", "approved", "cancelled", "delivered"];
 const Orders = () => {
   const ordersQuery = useQuery<Order[], Error>(["orders"], async () => {
     const response = await api.getOrders();
