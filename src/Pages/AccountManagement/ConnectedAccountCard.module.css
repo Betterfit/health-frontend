@@ -13,12 +13,6 @@
   padding-bottom: 0.5rem;
 }
 
-.bank {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
 .bankIcon {
   color: gray;
   font-size: 50px;
@@ -27,4 +21,8 @@
 .root a {
   font-weight: bold;
   color: var(--primary-blue);
+}
+
+.balances {
+  display: flex;
 }

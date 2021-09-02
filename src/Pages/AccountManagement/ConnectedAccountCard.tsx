@@ -1,8 +1,11 @@
 import { useMyProfile } from "APIHooks/user";
-import Icon from "Components/Content/Icon";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
-import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
+import {
+  HorizontalDetail,
+  VerticalDetail,
+} from "Components/InfoDisplay/LabeledDetails";
 import { api } from "Helpers/typedAPI";
+import { formatCurrency } from "Pages/Requests/RequestsPage";
 import React, { useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
@@ -93,23 +96,30 @@ const CompleteConnectedAccount = ({
 }: {
   connectedAccount: ConnectedAccount;
 }) => {
-  const { stripeInfo } = connectedAccount;
+  const { stripeInfo, balance } = connectedAccount;
   const bankAccount = stripeInfo.bankAccounts[0];
   return (
     <>
-      <div className={styles.bank}>
-        <Icon name="account_balance" extraClasses={styles.bankIcon} />
-        <div>
-          <HorizontalDetail label="Bank Name" value={bankAccount.bankName} />
-          <HorizontalDetail
-            label="Routing Number"
-            value={bankAccount.routingNumber}
-          />
-          <HorizontalDetail
-            label="Account Number"
-            value={`*******${bankAccount.last4}`}
-          />
-        </div>
+      <div className={styles.balances}>
+        <VerticalDetail
+          label="Pending Balance"
+          value={formatCurrency(balance.pending.amount)}
+        />
+        <VerticalDetail
+          label="Available Balance"
+          value={formatCurrency(balance.available.amount)}
+        />
+      </div>
+      <div>
+        <HorizontalDetail label="Bank Name" value={bankAccount.bankName} />
+        <HorizontalDetail
+          label="Routing Number"
+          value={bankAccount.routingNumber}
+        />
+        <HorizontalDetail
+          label="Account Number"
+          value={`*******${bankAccount.last4}`}
+        />
       </div>
       <a
         href="https://dashboard.stripe.com"

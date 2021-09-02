@@ -289,6 +289,10 @@ export interface PaymentMethod {
 export interface Error {
   message: string;
 }
+export interface Money {
+  amount: number;
+  currency: string;
+}
 
 export interface SupplierPricing {
   organizationId: number;
@@ -303,6 +307,10 @@ export interface ConnectedAccount {
   setUpComplete: boolean;
   stripeInfo: {
     bankAccounts: BankAccount[];
+  };
+  balance: {
+    pending: Money;
+    available: Money;
   };
 }
 
