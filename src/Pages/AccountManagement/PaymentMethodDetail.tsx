@@ -22,7 +22,12 @@ const PaymentMethodDetail = ({
   const queryClient = useQueryClient();
   const paymentMethodMutation = useMutation(
     (data: PaymentMethodUpdate) => api.updatePaymentMethod(paymentMethod, data),
-    { onSuccess: () => queryClient.invalidateQueries("paymentMethods") }
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("paymentMethods");
+        setNewUser(null);
+      },
+    }
   );
   const authorizedUserIds = paymentMethod.authorizedUsers.map(
     (user) => user.id
@@ -38,6 +43,11 @@ const PaymentMethodDetail = ({
     });
     setNewUser(null);
   };
+  const allUsers = usersQuery.isSuccess ? usersQuery.data : [];
+  // filter out users that are already authorized
+  const eligibleNewUsers = allUsers.filter((user) =>
+    paymentMethod.authorizedUsers.every((authUser) => user.id !== authUser.id)
+  );
   return (
     <Dialog open onClose={onClose}>
       <div className={styles.paymentMethodDialog}>
@@ -52,7 +62,7 @@ const PaymentMethodDetail = ({
           <ul aria-labelledby="authorizedUsersTitle">
             {paymentMethod.authorizedUsers.map((user) => (
               <li data-testid={"authorizedUser-" + user.email}>
-                {fullName(user)}{" "}
+                {fullName(user) || user.email}{" "}
                 {ownedByMe ? (
                   <IconButton
                     aria-label={"deauthorize " + fullName(user)}
@@ -79,7 +89,7 @@ const PaymentMethodDetail = ({
             >
               <UserPicker
                 label="New User"
-                users={usersQuery.isSuccess ? usersQuery.data : []}
+                users={eligibleNewUsers}
                 selectedUser={newUser}
                 setSelectedUser={setNewUser}
               />

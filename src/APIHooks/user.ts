@@ -53,8 +53,10 @@ export const groupUsersByFacility = (users: UserProfile[]): UsersByFacility => {
   return result;
 };
 
-export const fullName = (user: User | undefined | null): string =>
-  [user?.firstName, user?.lastName].join(" ");
+export const fullName = (user: User | undefined | null): string => {
+  if (!user?.firstName && !user?.lastName) return "";
+  return [user?.firstName, user?.lastName].join(" ");
+};
 
 /**
  *
