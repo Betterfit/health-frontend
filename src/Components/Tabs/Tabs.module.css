@@ -1,5 +1,8 @@
 .headings {
   overflow-x: scroll;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
 .headings::-webkit-scrollbar {
@@ -15,7 +18,7 @@
 
 .selectedTab {
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 3px;
   text-decoration-thickness: 3px;
   color: var(--primary-blue);
   font-weight: bold;

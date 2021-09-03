@@ -17,10 +17,8 @@ const TabHeadings = ({
   return (
     <div
       className={clsx(
-        // "flex flex-col-reverse md:flex-row mb-8 flex-1 md:items-center relative",
         longUnderline && "border-b border-gray-400",
-        styles.headings,
-        "specialThing"
+        styles.headings
       )}
     >
       <div
