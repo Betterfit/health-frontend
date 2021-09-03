@@ -239,12 +239,16 @@ export type FacilityData = Omit<Facility, "pk" | "url" | "id">;
 
 type UpdateOrderStatusProps = { order: Order } & (
   | { action: "cancel"; data?: undefined }
+  | {
+      action: "save-selections";
+      data: { orderProductId: number; supplierId: number }[];
+    }
   // need to include which suppliers were chosen for each OrderProduct
   | {
       action: "approve";
       data: {
         paymentMethodId: number;
-        orderProducts: { id: number; supplierId: number; totalPrice: number }[];
+        total: number;
       };
     }
 );

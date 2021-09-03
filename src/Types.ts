@@ -240,7 +240,7 @@ export interface ProductOption {
 export interface OrderProduct {
   url: string;
   order: number;
-  pk: number;
+  id: number;
   priority: "normal" | "stat";
   quantity: number;
   supplierOrg?: Organization;
@@ -320,4 +320,22 @@ export interface BankAccount {
   currency: string;
   routingNumber: string;
   last4: string;
+}
+
+export interface ProductInvoice {
+  supplierId: number;
+  destFacilityId: number;
+  orderProductId: number;
+  productId: number;
+  quantity: number;
+  baseTotal: Money;
+}
+
+export interface OrderInvoice {
+  total: Money;
+  items: ProductInvoice[];
+  taxes: Money;
+  taxRate: number;
+  taxName: string;
+  applicationFee: Money;
 }

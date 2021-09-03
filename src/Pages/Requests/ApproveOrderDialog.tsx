@@ -1,9 +1,17 @@
 import { Dialog, MenuItem, TextField } from "@material-ui/core";
 import { usePaymentMethods } from "APIHooks/paymentMethods";
+import { productDisplayName } from "APIHooks/products";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
+import { keyBy } from "lodash";
 import React, { useState } from "react";
-import { PaymentMethod } from "Types";
+import {
+  Money,
+  OrderInvoice,
+  OrderProduct,
+  PaymentMethod,
+  ProductInvoice,
+} from "Types";
 import styles from "./ApproveOrderDialog.module.css";
 import { formatCurrency } from "./RequestsPage";
 
@@ -12,37 +20,53 @@ export interface InvoiceItem {
   quantity?: number;
   cost: number;
 }
+
+type ApproveOrderDialogProps = {};
 const ApproveOrderDialog = ({
-  open,
+  orderProducts,
   handleClose,
-  itemizedInvoice,
-  total,
+  invoice,
   approveOrder,
 }: {
-  open: boolean;
+  orderProducts: OrderProduct[];
   handleClose: () => void;
-  itemizedInvoice: InvoiceItem[];
-  total: number;
-  approveOrder: (pm: PaymentMethod) => void;
+  invoice: OrderInvoice;
+  approveOrder: (pm: PaymentMethod, total: number) => void;
 }) => {
   const { data } = usePaymentMethods();
   const paymentMethods = data ?? [];
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>();
+  const orderProductsById = keyBy(orderProducts, "id");
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open onClose={handleClose}>
       <div className={styles.dialog}>
         <p>Approve and Pay for Order</p>
-        {itemizedInvoice.map((item) => (
-          <HorizontalDetail
-            label={item.name + (item.quantity && ` (${item.quantity})`)}
-            value={formatCurrency(item.cost)}
-            fullWidth
-          />
-        ))}
+        {invoice?.items.map((item) => {
+          const orderProduct = orderProductsById[item.orderProductId];
+          return (
+            <HorizontalDetail
+              label={
+                productDisplayName(orderProduct.productOption) +
+                ` (x${orderProduct.quantity})`
+              }
+              labelClass="normal-case"
+              // label={item.productId + (item.quantity && ` (${item.quantity})`)}
+              value={formatCurrency(item.baseTotal.amount)}
+              fullWidth
+            />
+          );
+        })}
+        <FeeLineItem name="SupplyNet Fee" cost={invoice.applicationFee} />
+        <FeeLineItem
+          name={invoice.taxName}
+          percentage={invoice.taxRate * 100}
+          cost={invoice.applicationFee}
+        />
+
         <hr />
         <HorizontalDetail
           label="Total"
-          value={formatCurrency(total)}
+          value={formatCurrency(invoice.total.amount)}
           fullWidth
         />
         <TextField
@@ -70,11 +94,42 @@ const ApproveOrderDialog = ({
             text="Confirm"
             color="green"
             disabled={!paymentMethod}
-            onClick={() => paymentMethod && approveOrder(paymentMethod)}
+            onClick={() =>
+              paymentMethod && approveOrder(paymentMethod, invoice.total.amount)
+            }
           />
         </div>
       </div>
     </Dialog>
+  );
+};
+
+const ProductLineItem = ({
+  item,
+  orderProducts,
+}: {
+  item: ProductInvoice;
+  orderProducts: OrderProduct[];
+}) => {};
+
+const FeeLineItem = ({
+  name,
+  percentage,
+  cost,
+}: {
+  name: string;
+  percentage?: number;
+  cost: Money;
+}) => {
+  let label = name;
+  if (percentage) label += ` (${percentage}%)`;
+  return (
+    <HorizontalDetail
+      labelClass="normal-case"
+      fullWidth
+      label={label}
+      value={formatCurrency(cost.amount)}
+    />
   );
 };
 

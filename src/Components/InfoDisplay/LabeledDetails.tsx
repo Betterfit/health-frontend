@@ -19,10 +19,12 @@ export const VerticalDetail = ({
 
 export const HorizontalDetail = ({
   label,
+  labelClass,
   value,
   fullWidth = false,
 }: {
-  label: string;
+  label: ReactNode;
+  labelClass?: string;
   value: ReactNode;
   fullWidth?: boolean;
 }) => {
@@ -30,7 +32,9 @@ export const HorizontalDetail = ({
     <div
       className={clsx(styles.horizontalDetail, fullWidth && styles.fullWidth)}
     >
-      <span className={styles.horizontalDetailLabel}>{label}</span>
+      <span className={clsx(styles.horizontalDetailLabel, labelClass)}>
+        {label}
+      </span>
       <span className={styles.horizontalDetailValue}>{value}</span>
     </div>
   );
