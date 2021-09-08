@@ -56,12 +56,12 @@ const ApproveOrderDialog = ({
             />
           );
         })}
-        <FeeLineItem name="SupplyNet Fee" cost={invoice.applicationFee} />
         <FeeLineItem
           name={invoice.taxName}
           percentage={invoice.taxRate * 100}
-          cost={invoice.applicationFee}
+          cost={invoice.taxes}
         />
+        <FeeLineItem name="SupplyNet Fee" cost={invoice.applicationFee} />
 
         <hr />
         <HorizontalDetail
