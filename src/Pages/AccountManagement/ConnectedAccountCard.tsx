@@ -66,7 +66,7 @@ const useStripeRedirectWatcher = () => {
 const setUpConnectedAccount = async () => {
   const resp = await api.setupConnectedAccount();
   const url = resp.data.url;
-  window.location.href = url;
+  window.open(url);
 };
 
 const IncompleteConnectedAccount = () => {
