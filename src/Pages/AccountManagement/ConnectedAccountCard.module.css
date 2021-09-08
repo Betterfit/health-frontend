@@ -1,0 +1,28 @@
+.root {
+  composes: cardBorder from global;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cardTitle {
+  color: var(--primary-blue);
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+}
+
+.bankIcon {
+  color: gray;
+  font-size: 50px;
+}
+
+.root a {
+  font-weight: bold;
+  color: var(--primary-blue);
+}
+
+.balances {
+  display: flex;
+}

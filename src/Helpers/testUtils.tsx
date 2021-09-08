@@ -1,5 +1,7 @@
-import React from "react";
 import { render as rtlRender } from "@testing-library/react";
+import { rest } from "msw";
+import { setupServer } from "msw/node";
+import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 // query clients are required in v3 of react-query.
@@ -13,4 +15,7 @@ const render = (component: React.ReactNode) => {
     <QueryClientProvider client={queryClient}>{component}</QueryClientProvider>
   );
 };
-export { render };
+
+const server = setupServer();
+
+export { render, server, rest };

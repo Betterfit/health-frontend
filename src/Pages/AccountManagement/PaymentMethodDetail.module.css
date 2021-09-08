@@ -1,0 +1,78 @@
+.paymentMethodDialog {
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .paymentMethodDialog {
+    min-width: 500px;
+  }
+}
+
+.paymentMethodDialog hr {
+  margin: 0.5rem 0;
+  width: 100%;
+}
+.paymentMethodDialog p {
+  font-size: 1rem;
+}
+
+.paymentMethodDialog > p:first-child {
+  font-weight: bold;
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
+}
+
+.paymentMethodDialog > * {
+  margin-bottom: 0.5rem;
+}
+
+.authorizedUsers {
+  width: 100%;
+}
+.authorizedUsers > p:first-child {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+}
+.authorizedUsers ul {
+  padding-bottom: 0.5rem;
+}
+
+.authorizedUsers li {
+  display: flex;
+  align-content: center;
+  min-width: 100%;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+.authorizedUsers li:nth-child(2n) {
+  background-color: var(--gray-ice);
+}
+
+.authorizedUsers li span {
+  color: var(--plastic-red);
+}
+
+.authorizeForm {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-right: 0.25rem;
+}
+
+.authorizeForm > p:first-child {
+  flex-basis: 100%;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+  padding-bottom: 0.5rem;
+}
+
+.authorizeForm > div {
+  flex-grow: 1;
+}

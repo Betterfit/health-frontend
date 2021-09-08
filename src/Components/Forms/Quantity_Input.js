@@ -3,12 +3,12 @@ import React from "react";
 let timeout;
 
 function QuantityInput({
-  id_tag,
+  id_tag = undefined,
   name,
   readOnly = false,
   value,
-  readValue,
-  quantityUpdate,
+  readValue = undefined,
+  quantityUpdate = undefined,
 }) {
   let readOnlyStyle = "focus:outline-none bg-betterfit-soft-blue shadow-none";
   return (

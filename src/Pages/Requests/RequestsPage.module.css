@@ -1,0 +1,65 @@
+.root {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  padding: 2rem 1rem;
+}
+
+.root p,
+b {
+  color: var(--midnight-blue);
+  /* font-size: 1rem; */
+}
+
+.titleSection {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.actionBar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.search {
+  margin-left: auto;
+}
+.orders {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orders .order {
+  margin-top: 2rem;
+}
+
+.order {
+  composes: cardBorder from global;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: relative;
+}
+
+.order > div:nth-last-child(2) {
+  margin-right: auto;
+}
+
+.orderBottom {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orderActions {
+  display: flex;
+}
+.money {
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}

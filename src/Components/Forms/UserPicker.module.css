@@ -1,0 +1,8 @@
+.option {
+  width: 100%;
+  overflow: ellipsis;
+  white-space: nowrap;
+}
+.option span:first-child {
+  font-weight: bold;
+}

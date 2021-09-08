@@ -1,0 +1,25 @@
+.headings {
+  overflow-x: scroll;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.headings::-webkit-scrollbar {
+  margin-top: 1rem;
+  width: 2px;
+  height: 2px;
+}
+
+.headings::-webkit-scrollbar-thumb {
+  background-color: var(--primary-blue);
+  height: 10px;
+}
+
+.selectedTab {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 3px;
+  color: var(--primary-blue);
+  font-weight: bold;
+}

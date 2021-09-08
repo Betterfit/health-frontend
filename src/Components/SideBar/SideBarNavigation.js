@@ -1,7 +1,7 @@
-import React from "react";
-import { ReactSVG } from "react-svg";
-import { NavLink } from "react-router-dom";
 import Translator from "Helpers/Translator";
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { ReactSVG } from "react-svg";
 
 const SideBarNavigation = ({ navList }) => {
   return (
@@ -11,7 +11,10 @@ const SideBarNavigation = ({ navList }) => {
           <div key={`menu_item_${navItem.key}`}>
             <NavLink
               className="mt-0 block nav opacity-75 flex flex-col sm:flex-row items-center rounded py-1"
-              activeclassname="md:active-nav"
+              activeStyle={{
+                backgroundColor: "rgba(0,0,0,0.3)",
+                color: "white",
+              }}
               to={navItem.to}
             >
               <ReactSVG

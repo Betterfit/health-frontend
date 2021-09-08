@@ -1,71 +1,43 @@
+import { useSelectedFacility } from "APIHooks/facilities";
 import TicketSearch from "Components/Search/TicketSearch";
 import Table from "Components/Table/List/Table";
 import Tabs from "Components/Tabs/Tabs";
-import { useAuthStore } from "Context/authContext";
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import Spinner from "Images/spinner.gif";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useQuery } from "react-query";
 import { Route } from "react-router-dom";
 import uuid from "react-uuid";
 import DashboardTicketSearch from "./DashboardTicketSearch";
 
 const api = new Api();
 const DashboardTickets = () => {
-  const authStore = useAuthStore();
   const [searchActive, setSearchActive] = useState(false);
-  const [ticketData, setTickData] = useState(null);
-  const [openTickets, setOpenTickets] = useState([]);
-  const [shippedTickets, setShippedTickets] = useState([]);
-  const userData = JSON.parse(authStore.user);
-  const supplierId = userData.user_profile.supplier;
-  const getData = async () =>
-    await api
-      .getSupplierTickets(supplierId)
-      .then((response) => {
-        let data = response.data;
-        let open = data
-          .filter((item) => item.status === "open")
-          .map((item) => {
-            let filterItem = item;
-            let filterItemStatus = filterItem.status; //save status to re-sort
+  const { facilityId } = useSelectedFacility();
 
-            filterItem.facility = item.supplier.name;
+  const ticketsQuery = useQuery(["tickets", { facilityId }], () =>
+    api.getSupplierTickets(facilityId).then((response) =>
+      response.data.map((item) => {
+        let filterItem = item;
+        let filterItemStatus = filterItem.status; //save status to re-sort
 
-            delete filterItem.supplier;
-            delete filterItem.order;
-            delete filterItem.status;
+        filterItem.facility = item.supplier.name;
 
-            filterItem.status = filterItemStatus; // set status
+        delete filterItem.supplier;
+        delete filterItem.order;
+        delete filterItem.status;
 
-            return filterItem;
-          });
+        filterItem.status = filterItemStatus; // set status
 
-        let ship = data
-          .filter((item) => item.status === "shipped")
-          .map((item) => {
-            let filterItem = item;
-            let filterItemStatus = filterItem.status; //save status to re-sort
-
-            filterItem.facility = item.supplier.name;
-
-            delete filterItem.supplier;
-            delete filterItem.order;
-            delete filterItem.status;
-
-            filterItem.status = filterItemStatus; // set status
-
-            return filterItem;
-          });
-        setTickData(response.data);
-        setOpenTickets(open);
-        setShippedTickets(ship);
+        return filterItem;
       })
-      .catch((err) => console.log(err));
+    )
+  );
 
-  useEffect(() => {
-    getData();
-  }, []);
+  const tickets = ticketsQuery?.data ?? [];
+  const openTickets = tickets?.filter((item) => item.status === "open");
+  const shippedTickets = tickets?.filter((item) => item.status === "shipped");
 
   const TabData = [
     {
@@ -107,7 +79,7 @@ const DashboardTickets = () => {
           {Translator("Tickets")}
         </h2>
       </Route>
-      {ticketData ? (
+      {ticketsQuery.isSuccess ? (
         <>
           <TicketSearch
             extraClasses="float-right clear-both"
@@ -129,7 +101,7 @@ const DashboardTickets = () => {
         </div>
       )}
       <Route path="/dashboard/tickets/search:query?">
-        <DashboardTicketSearch supplierId={supplierId} />
+        <DashboardTicketSearch supplierId={facilityId} />
       </Route>
     </div>
   );

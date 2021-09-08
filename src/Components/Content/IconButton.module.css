@@ -1,0 +1,18 @@
+.button {
+  font-size: 32px;
+  composes: noOutline from global;
+}
+.button:hover {
+  filter: drop-shadow(0 0 4px grey);
+}
+.blue {
+  color: var(--primary-blue);
+}
+
+.red {
+  color: var(--plastic-red);
+}
+
+.green {
+  color: var(--lucky-green);
+}

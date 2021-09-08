@@ -110,7 +110,7 @@ export interface VaccineChartOptions {
   lockedVaccines: VaccineType[];
 
   variantPrevelance: VariantPrevelance;
-  lockedVariants : VariantType[];
+  lockedVariants: VariantType[];
 }
 
 export type VaccineUsage = Record<VaccineType, number>;
@@ -147,3 +147,195 @@ export type TimeSeriesKey =
 export type ChartType = "timeseries" | "vaccine" | "ranking";
 
 export type Country = "Canada" | "US";
+
+export interface User {
+  id: number;
+  url: string;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface UserProfile extends User {
+  userProfile: {
+    userType: string;
+    supplier: string;
+    supplierName: string;
+  };
+  isOrganizationAdmin: boolean;
+  facilityMembership: FacilityMembership[];
+}
+export interface FacilityMembership {
+  url: string;
+  facilityId: number;
+  facility: string;
+  isAdmin: boolean;
+}
+
+export interface Organization {
+  id: number;
+  name: string;
+  url: string;
+  isPurchaser: boolean;
+  isSupplier: boolean;
+  // my_organization endpoint also specifies if the user is an administrator for the organization
+  isAdmin: boolean;
+  organizationImage: string;
+  offerReturns: boolean;
+  returnPolicyLink: string;
+}
+
+export interface Facility {
+  name: string;
+  pk: number;
+  id: number;
+  email: string;
+  phoneNumber: string;
+  region?: string;
+  street: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  shippingStreet: string;
+  shippingCity: string;
+  shippingProvince: string;
+  shippingPostalCode: string;
+  fax?: string;
+  website?: string;
+  parentFacility?: string;
+  parentOrganization: string;
+  url: string;
+  isAdmin?: boolean;
+}
+export interface Ticket {
+  id: number;
+  timeCreated: string;
+  timeShipped: string;
+  status: "open" | "shipped" | "delivered";
+  shippingProvider: string;
+  trackingNumber: string;
+}
+export interface PurchaserTicket extends Ticket {
+  warehouse: Facility;
+  supplier: Organization;
+  orderProductId: number;
+}
+export interface SupplierTicket extends Ticket {
+  url: string;
+  orderProduct: OrderProduct;
+  destination: Facility;
+  purchaser: Organization;
+}
+export interface ProductOption {
+  id: number;
+  name: string;
+  optionLabel: string;
+  productCategory: string;
+  product: string;
+  productVariation: string;
+  productDescription: string;
+  productImage: string;
+}
+export interface OrderProduct {
+  url: string;
+  order: number;
+  id: number;
+  priority: "normal" | "stat";
+  quantity: number;
+  supplierOrg?: Organization;
+  productOption: ProductOption;
+  ticket?: PurchaserTicket;
+}
+export interface Order {
+  url: string;
+  pk: number;
+  orderNo: string;
+  orderDate: string;
+  purchaseNo: string;
+  authorUser: User;
+  orderProducts: OrderProduct[];
+  facility: Facility;
+  status: "open" | "approved" | "delivered" | "canceled" | "draft";
+}
+
+export interface SupplierQuote {
+  supplier: Organization;
+  priceInfo: { pricePer: number; totalPrice: number };
+}
+
+export interface SupplierPriceRange {
+  supplier: Organization;
+  priceInfo: { minPricePer: number; maxPricePer: number };
+}
+
+export interface ProductPricing {
+  productOptionId: number;
+  quantity: number;
+  purchaseOptions: SupplierQuote[];
+}
+
+export interface PaymentMethod {
+  id: number;
+  url: string;
+  name: string;
+  owner: User;
+  authorizedUsers: User[];
+  stripeId: string;
+  stripeCustomerId: string;
+  timeCreated: string;
+}
+
+export interface Error {
+  message: string;
+}
+export interface Money {
+  amount: number;
+  currency: string;
+}
+
+export interface SupplierPricing {
+  organizationId: number;
+  productOptionId: number;
+  price: number;
+  currency: string;
+  url: string;
+}
+
+export interface ConnectedAccount {
+  organizationId: number;
+  setUpComplete: boolean;
+  stripeInfo: {
+    bankAccounts: BankAccount[];
+  };
+  balance: {
+    pending: Money;
+    available: Money;
+  };
+}
+
+export interface BankAccount {
+  bankName: string;
+  country: string;
+  currency: string;
+  routingNumber: string;
+  last4: string;
+}
+
+export interface ProductInvoice {
+  supplierId: number;
+  destFacilityId: number;
+  orderProductId: number;
+  productId: number;
+  quantity: number;
+  baseTotal: Money;
+}
+
+export interface OrderInvoice {
+  total: Money;
+  items: ProductInvoice[];
+  taxes: Money;
+  taxRate: number;
+  taxName: string;
+  applicationFee: Money;
+}

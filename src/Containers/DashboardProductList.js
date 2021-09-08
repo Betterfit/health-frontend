@@ -1,19 +1,23 @@
+import { useUserFacilities } from "APIHooks/facilities";
+import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 import BackNavigation from "Components/Helpers/BackNavigation";
 import Table from "Components/Table/Basic/Table";
 import Api from "Helpers/api";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useQuery } from "react-query";
 
 const DashboardProductList = (props) => {
   const api = new Api();
   const { match } = props;
-  const ProductId = parseInt(match.params.id);
-  const [lastProductId, setLastProductId] = useState(ProductId);
-  const [ProductData, setProductData] = useState(null);
-  const getData = async () =>
-    await api
-      .getProductsBySupplier(ProductId)
-      .then((response) => {
+  const productId = parseInt(match.params.id);
+  const { data: myFacilities } = useUserFacilities();
+  const facilityId = myFacilities?.length ? myFacilities[0].id : null;
+
+  const productsQuery = useQuery(
+    ["products", { facilityId, productId }],
+    () =>
+      api.getProductByWarehouse(productId, facilityId).then((response) => {
         let arr = response.data;
         console.log(arr);
         arr.product_variations = arr.product_variations.map((variations) => {
@@ -32,21 +36,17 @@ const DashboardProductList = (props) => {
           );
           return variation;
         });
-
-        setProductData(arr);
-      })
-      .catch((err) => console.log(err));
-
-  useEffect(() => {
-    if (lastProductId !== ProductId || !ProductData) {
-      setLastProductId(ProductId);
-      getData();
-    }
-  });
-
+        return arr;
+      }),
+    { enabled: facilityId != null }
+  );
+  if (productsQuery.isLoading || productsQuery.isIdle)
+    return <LoadingSpinner darkened />;
+  const { data: productData } = productsQuery;
+  console.log(productData);
   return (
     <>
-      {ProductData && (
+      {productData && (
         <div className="lg:max-w-8xl mx-auto px-4 sm:px-6 md:px-8 pt-8">
           {/* product title */}
           <div className="lg:hidden">
@@ -54,14 +54,15 @@ const DashboardProductList = (props) => {
           </div>
 
           <div className="">
-            <TitleUnderLine title={`${ProductData.name}`} />
+            <TitleUnderLine title={`${productData.name}`} />
             {/* product description */}
-            <p className="text-paragraph">{ProductData.description}</p>
-            {ProductData.product_variations.map((product) => {
+            <p className="text-paragraph">{productData.description}</p>
+            {productData.product_variations.map((product, i) => {
               return (
                 <Table
+                  key={i}
                   TableData={product}
-                  ProductId={ProductId}
+                  ProductId={productId}
                   edit={props.edit}
                 />
               );

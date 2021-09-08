@@ -1,0 +1,104 @@
+/* 
+This file contains styles that are used across the project.
+These styles can be referred to directly, as if they were normal css classes
+(their names do not get mangled at all because this file is imported in index.js).
+
+:global allows us to easily compose these in other module.css files
+To extend a global style, compose it in a selector in a css module file like so: 
+.localClass {
+  composes: globalClass from global;
+} 
+*/
+
+/* Starting point for pages */
+:global .page {
+  padding: 2rem 1rem;
+}
+
+@media (max-width: 640px) {
+  :global .page {
+    padding: 0.5rem 0.5rem;
+    margin: 0;
+    max-width: 100vw;
+  }
+}
+
+:global .cardBorder {
+  border: 2px solid var(--primary-blue);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  /* Things are often absolutely positioned relative to cards */
+  position: relative;
+}
+
+:global .hoverShadow:hover {
+  transition: box-shadow 0.3s;
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+
+/*
+Use together with overlayVisible to make an element completely cover its nearest
+parent element with 'position:relative'.
+*/
+:global .overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0 !important;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.5s, opacity 0.5s linear;
+}
+:global .overlayVisible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s linear;
+}
+:global .darkenedBackground {
+  background-color: rgba(33, 33, 33, 0.3);
+}
+
+/* elements that are used for screen readers only */
+:global .sr-only {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* only shows outline when focused with keyboard */
+:global .noOutline:focus {
+  outline: none;
+}
+:global .noOutline:focus-visible {
+  box-shadow: 0 0 0 3px black;
+}
+
+/* 
+Makes an element take up as much space as it would if it were bold.
+This prevents resizing when you switch between bold/regular fonts.
+Make sure that you set the data-text attribute to the text in the element.
+https://stackoverflow.com/a/32570813/4229133 
+*/
+:global .noResizeOnBold::after {
+  content: attr(data-text);
+  display: block;
+  height: 0;
+  visibility: hidden;
+  overflow: hidden;
+  user-select: none;
+  pointer-events: none;
+  font-weight: bold;
+
+  @media speech {
+    display: none;
+  }
+}

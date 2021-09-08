@@ -1,0 +1,107 @@
+.button {
+  composes: noOutline from global;
+  display: flex;
+  width: fit-content;
+  margin: 0.25rem;
+  position: relative;
+  overflow: hidden;
+  font-weight: bold;
+}
+
+.button:disabled {
+  background-color: gray;
+  cursor: default;
+  box-shadow: none !important;
+}
+
+.blue {
+  background-color: var(--cobalt-blue);
+  border: 2px solid #15327b;
+}
+.blue:hover,
+.blue:focus-visible {
+  background-color: var(--ocean-blue);
+}
+
+.red {
+  background-color: var(--plastic-red);
+  border: 2px solid #9f1e2f;
+}
+.red:hover,
+.red:focus-visible {
+  background-color: #af404f;
+}
+
+.green {
+  background-color: var(--lucky-green);
+  border: 2px solid #11793d;
+}
+.green:hover {
+  background-color: #009556;
+}
+.green:focus-visible {
+  background-color: #009556;
+}
+
+.link {
+  padding: 0;
+  color: var(--primary-blue);
+}
+.link:hover {
+  filter: brightness(140%);
+}
+.link:disabled {
+  color: gray;
+  background-color: transparent;
+  filter: brightness(100%) !important;
+}
+.solid {
+  composes: button;
+  composes: hoverShadow from global;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: white;
+}
+.outline {
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: var(--midnight-blue);
+}
+
+.outline.blue {
+  background-color: var(--purple-wash);
+  border: 2px solid var(--primary-blue);
+}
+
+.outline:disabled {
+  color: grey;
+  background-color: var(--purple-wash);
+  border: 2px solid grey;
+}
+.outline:hover:enabled {
+  filter: brightness(90%);
+}
+
+.icon {
+  margin-right: -0.5rem;
+  margin-left: 0.5rem;
+  /* margin-right: 0; */
+  padding: 0;
+}
+
+/* ripple on click */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation-name: ripple;
+  animation-duration: 500ms;
+  animation-timing-function: linear;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0.5;
+  }
+}

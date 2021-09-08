@@ -1,8 +1,7 @@
 {
-  "env": {
-    "username": "yash@betterfit.co",
-    "password": "tempPass2!",
-    "apiUrl": "https://staging.api.betterfit.health/"
-  },
-  "baseUrl": "http://localhost:3000"
+    "env": {
+        "apiUrl": "http://localhost:8002/"
+    },
+    "baseUrl": "http://localhost:3000",
+    "scrollBehavior": "center"
 }

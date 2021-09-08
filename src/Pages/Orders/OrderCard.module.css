@@ -1,0 +1,36 @@
+.order {
+}
+.orderProduct {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: var(--gray-ice);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.orderProduct:last-child {
+  margin-bottom: 0;
+}
+
+.orderProduct img {
+  width: 128px;
+  height: 128px;
+}
+
+.orderProductActions {
+  flex-basis: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detailList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  flex: 1;
+}

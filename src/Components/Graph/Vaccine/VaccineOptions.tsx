@@ -13,13 +13,18 @@ import { VaccineChartOptions } from "Types";
 interface VaccineOptionsProps {
   options: VaccineChartOptions;
   setOptions: (options: VaccineChartOptions) => void;
+  isAuthenticated: boolean;
 }
 
-const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
+const VaccineOptions = ({
+  options,
+  setOptions,
+  isAuthenticated,
+}: VaccineOptionsProps) => {
   const [localOptions, setLocalOptions] = useState<VaccineChartOptions>(
     options
   );
-  const [tab, setTab] = useState<Tab>("Restrictions");
+  const [tab, setTab] = useState<Tab>("Vaccine Mix");
   const updateInterval = useRef<any>(null);
 
   // Since a lot of the options are sliders, we would generate an excessive amount of requests to our
@@ -35,14 +40,15 @@ const VaccineOptions = ({ options, setOptions }: VaccineOptionsProps) => {
     }
     updateInterval.current = setTimeout(() => setOptions(newOptions), 300);
   };
-
+  const vaccineOptionTabs = ["Vaccine Mix"] as Tab[];
+  if (isAuthenticated) vaccineOptionTabs.push("Restrictions");
   return (
     <div
       className="flex flex-col overflow-y-scroll"
       style={{ gridRow: "1 / -1" }}
     >
       <div className="flex lg:self-end justify-around text-sm lg:text-md text-flow-white w-full mb-4">
-        {(["Restrictions", "Vaccine Mix"] as Tab[]).map((tabName) => (
+        {vaccineOptionTabs.map((tabName) => (
           <button
             onClick={(e) => setTab(tabName)}
             // underline if selected

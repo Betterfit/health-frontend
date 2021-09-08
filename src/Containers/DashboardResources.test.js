@@ -1,13 +1,10 @@
-import React from "react";
-import { rest } from "msw";
-import { setupServer } from "msw/node";
-import { screen } from "@testing-library/react";
-import { render } from "Helpers/testUtils";
 import * as rtl from "@testing-library/react";
-import { waitForDomChange } from "@testing-library/dom";
-import DashboardResources from "./DashboardResources";
-import { apiURL } from "Helpers/api";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { apiURL } from "Helpers/api";
+import { render, rest, server } from "Helpers/testUtils";
+import React from "react";
+import DashboardResources from "./DashboardResources";
 
 const resources = [
   {
@@ -65,16 +62,13 @@ const resources = [
   },
 ];
 
-const server = setupServer(
-  rest.get(apiURL + "resources", (req, res, ctx) => res(ctx.json(resources)))
-);
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
 describe("DashboardResources", () => {
   beforeEach(() => {
+    server.use(
+      rest.get(apiURL + "resources", (req, res, ctx) =>
+        res(ctx.json(resources))
+      )
+    );
     render(<DashboardResources />);
   });
 

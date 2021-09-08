@@ -32,7 +32,7 @@ const CategoryCard = (category) => {
   return (
     <>
       <button
-        className="col-span-1 mb-2 p-6 rounded relative flex flex-row md:flex-col justify-content items-center rounded-lg border border-betterfit-grey hover:bg-betterfit-pale-blue hover:border-betterfit-basic-blue"
+        className="col-span-1 mb-2 p-6 rounded relative flex flex-row md:flex-col justify-content items-center rounded-lg border border-betterfit-grey hover:bg-betterfit-pale-blue hover:border-betterfit-basic-blue focus-visible:shadow-none"
         onClick={() =>
           history.push(
             history.location.pathname + category_name + "/" + category_id

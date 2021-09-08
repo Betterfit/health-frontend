@@ -1,0 +1,17 @@
+.orderHeader {
+  width: 100%;
+  display: flex;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  /* margin-left: 1rem; */
+  margin-bottom: 1rem;
+}
+
+.orderHeader p,
+b {
+  font-size: 1.2rem !important;
+}
+.orderHeader p {
+  margin-right: 1rem;
+}

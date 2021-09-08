@@ -40,7 +40,7 @@ const enterEmail = (email) =>
 // we don't log the password
 const enterPassword = (password) =>
   cy.get("#password").type(password, { log: false });
-const loginButton = () => cy.findByRole("button", { name: /login/i });
+const loginButton = () => cy.findByRole("button", { name: /^login$/i });
 
 const login = (email, password) => {
   enterEmail(email);
