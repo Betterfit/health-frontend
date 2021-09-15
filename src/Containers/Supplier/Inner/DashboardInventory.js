@@ -38,8 +38,8 @@ const DashboardInventory = () => {
       })
       .catch((err) => console.log(err));
 
-  const createProductCategoryList = (products) =>
-    products.map((product, i) => {
+  const createProductCategoryList = (productCategory) =>
+    productCategory.map((product, i) => {
       return (
         <div key={i}>
           <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body ml-4 uppercase font-bold tracking-wider">

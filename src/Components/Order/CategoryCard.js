@@ -4,7 +4,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 
-const CategoryCard = (category) => {
+const CategoryCard = (props) => {
   const history = useHistory();
   const getProductCount = (products) => {
     let sum = 0;
@@ -16,16 +16,16 @@ const CategoryCard = (category) => {
     return sum;
   };
 
-  const category_id = category.category.pk;
-  const category_name = category.category.name;
-  const count = getProductCount(category.category.products);
+  const category_id = props.category.pk;
+  const category_name = props.category.name;
+  const count = getProductCount(props.category.products);
   // not used currently
   // const color = category?.category?.main_color != "" ? category.category.main_color : "#234499";
-  const svg = category.category.icon;
+  const svg = props.category.icon;
   const backgroundColor = {
     background:
-      category?.category?.background_color !== ""
-        ? category.category.background_color
+      props?.category?.background_color !== ""
+        ? props.category.background_color
         : "#E4EFFC",
   };
 
