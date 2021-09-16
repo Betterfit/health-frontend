@@ -89,9 +89,7 @@ const RequestPage = () => {
   // };
   return (
     <div className={styles.root}>
-      <div className={styles.titleSection}>
-        <Title text="Requests" />
-      </div>
+      <Title text="Requests" />
       <div className={styles.actionBar}>
         {/* <PrettyButton
           text="Approve All"
@@ -164,7 +162,6 @@ const RequestedOrderCard = ({
   prices?: ProductPricing[];
   selectQuote: (orderProduct: OrderProduct, supplier: SupplierQuote) => void;
 }) => {
-  const [dialogOpen, setDialogOpen] = useState(false);
   const [invoice, setInvoice] = useState<OrderInvoice | null>(null);
   const { orderProducts } = order;
   const queryClient = useQueryClient();
@@ -173,7 +170,7 @@ const RequestedOrderCard = ({
       queryClient.invalidateQueries(["orders"]);
     },
     onError: () => {
-      alert("Order is no longer available at this price");
+      alert("Payment could not be processed.");
       queryClient.invalidateQueries(["pricing"]);
     },
   });

@@ -3,15 +3,10 @@ import DashboardFacilityOrder from "Containers/Facility/Inner/DashboardFacilityO
 import DashboardOrder from "Containers/Facility/Inner/DashboardOrder";
 import DashboardInventory from "Containers/Supplier/Inner/DashboardInventory";
 import DashboardTicketDetail from "Containers/Supplier/Inner/DashboardTicketDetail";
-import DashboardMatches from "Containers/Traffic/Inner/DashboardMatches";
-import DashboardMatchesHistory from "Containers/Traffic/Inner/DashboardMatchesHistory";
-import DashboardMatchesListing from "Containers/Traffic/Inner/DashboardMatchesListing";
-import DashboardMatchesOrderDetail from "Containers/Traffic/Inner/DashboardMatchesOrderDetail";
-import DashboardTrafficDashboard from "Containers/Traffic/Inner/DashboardTrafficDashboard";
 import { CartProvider } from "Context/cartContext";
-import { MatchProvider } from "Context/matchContext";
 import AccountManagement from "Pages/AccountManagement/AccountManagement";
 import OrdersPage from "Pages/Orders/OrdersPage";
+import PaymentsPage from "Pages/Payments/PaymentsPage";
 import RequestsPage from "Pages/Requests/RequestsPage";
 import TicketsPage from "Pages/Tickets/TicketsPage";
 import React from "react";
@@ -36,8 +31,11 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
           render={() => <Redirect to={navItems[0].to} />}
         />
         {/* Purchaser Routes */}
-        <Route path="/dashboard/accounts">
+        <Route path="/dashboard/admin">
           <AccountManagement />
+        </Route>
+        <Route path="/dashboard/payments">
+          <PaymentsPage />
         </Route>
         <Route
           exact
@@ -96,28 +94,6 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
         />
         <Route path="/dashboard/inventory">
           <DashboardInventory />
-        </Route>
-        <Route exact path="/dashboard/matches">
-          <DashboardMatchesListing />
-        </Route>
-        <Route exact path="/dashboard/matches/current">
-          <MatchProvider>
-            <DashboardMatches />
-          </MatchProvider>
-        </Route>
-        <Route exact path="/dashboard/matches/history:query?">
-          {/* this component takes a weird prop, will have to fix later */}
-          <DashboardMatchesHistory props={{}} />
-        </Route>
-        <Route
-          exact
-          path="/dashboard/matches/:id/"
-          render={(props) => {
-            return <DashboardMatchesOrderDetail {...props} />;
-          }}
-        />
-        <Route path="/dashboard/traffic-dashboard">
-          <DashboardTrafficDashboard />
         </Route>
         {/* Publicly Accessible */}
         <Route path="/dashboard/resources">

@@ -52,6 +52,10 @@ const sortedNavItems = (
   myOrganization: Organization,
   userProfile: UserProfile
 ) => {
+  // either an organization or facility admin
+  const isAdmin =
+    myOrganization.isAdmin ||
+    userProfile.facilityMembership.some((membership) => membership.isAdmin);
   const navItems: NavItem[] = [
     {
       to: "/dashboard/resources",
@@ -61,14 +65,25 @@ const sortedNavItems = (
       precedence: 0,
     },
   ];
-  if (myOrganization.isAdmin) {
-    navItems.push({
-      to: "/dashboard/accounts",
-      name: "Accounts",
-      icon: AccountsIcon,
-      key: "accounts",
-      precedence: 4,
-    });
+  if (isAdmin) {
+    navItems.push(
+      ...[
+        {
+          to: "/dashboard/admin",
+          name: "Admin",
+          icon: AccountsIcon,
+          key: "admin",
+          precedence: 4,
+        },
+        {
+          to: "/dashboard/payments",
+          name: "Payments",
+          icon: AccountsIcon,
+          key: "payments",
+          precedence: 5,
+        },
+      ]
+    );
   }
   if (myOrganization?.isPurchaser) {
     navItems.push(
@@ -89,7 +104,7 @@ const sortedNavItems = (
         },
       ]
     );
-    if (myOrganization.isAdmin)
+    if (isAdmin)
       navItems.push(
         ...[
           {

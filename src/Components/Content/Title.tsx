@@ -1,13 +1,20 @@
+import clsx from "clsx";
 import React from "react";
 
 export interface TitleProps {
   text: string;
+  extraClasses?: string;
 }
-const Title = ({ text }: TitleProps) => {
+const Title = ({ text, extraClasses }: TitleProps) => {
   return (
-    <span className="text-betterfit-graphite text-xl md:text-2xl lg:text-3xl ">
+    <h1
+      className={clsx(
+        "text-betterfit-graphite text-xl md:text-2xl lg:text-3xl text-center w-full",
+        extraClasses
+      )}
+    >
       {text}
-    </span>
+    </h1>
   );
 };
 

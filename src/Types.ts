@@ -339,3 +339,16 @@ export interface OrderInvoice {
   taxName: string;
   applicationFee: Money;
 }
+
+export interface Payment {
+  productOptionId: number;
+  total: number;
+  orderId: number;
+  paymentMethodName: string;
+  paymentMethodId: number;
+  payer: User;
+  appFee: number;
+  taxes: number;
+  timeCreated: string;
+  order: Order;
+}

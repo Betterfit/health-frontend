@@ -9,7 +9,6 @@ import {
   useUsers,
 } from "APIHooks/user";
 import IconButton from "Components/Content/IconButton";
-import Title from "Components/Content/Title";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import SearchBar from "Components/Search/SearchBar";
 import Tabs from "Components/Tabs/Tabs";
@@ -64,7 +63,6 @@ const UserTable = () => {
   );
   return (
     <div className={styles.users}>
-      <Title text="Users" />
       <Tabs
         key="userTabs"
         tabs={userCategories.map((category) => ({
