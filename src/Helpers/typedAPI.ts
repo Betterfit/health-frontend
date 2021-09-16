@@ -6,6 +6,7 @@ import {
   Facility,
   Order,
   Organization,
+  Payment,
   PaymentMethod,
   ProductPricing,
   SupplierPricing,
@@ -205,6 +206,12 @@ export default class TypedAPI {
   completeConnectedAccountSetup = async () => {
     const client = await this.init();
     return client.post("/connected-accounts/setup-complete");
+  };
+
+  getPayments = async () => {
+    const client = await this.init();
+    const response = await client.get<Payment[]>("/payments");
+    return response.data;
   };
 
   /**
