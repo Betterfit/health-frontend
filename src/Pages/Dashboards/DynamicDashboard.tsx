@@ -3,9 +3,7 @@ import { useMyProfile } from "APIHooks/user";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import SideBarIcon from "Components/SideBar/SideBar";
 import AccountsIcon from "Images/Icons/accounts.svg";
-import DashboardIcon from "Images/Icons/dashboard.svg";
 import InventoryIcon from "Images/Icons/inventory.svg";
-import MatchesIcon from "Images/Icons/matches.svg";
 import NewOrderIcon from "Images/Icons/new-order.svg";
 import OrderIcon from "Images/Icons/order.svg";
 import ResourcesIcon from "Images/Icons/resources.svg";
@@ -69,7 +67,7 @@ const sortedNavItems = (
       name: "Accounts",
       icon: AccountsIcon,
       key: "accounts",
-      precedence: 5,
+      precedence: 4,
     });
   }
   if (myOrganization?.isPurchaser) {
@@ -94,20 +92,6 @@ const sortedNavItems = (
     if (myOrganization.isAdmin)
       navItems.push(
         ...[
-          {
-            to: "/dashboard/traffic-dashboard",
-            name: "Dashboard",
-            icon: DashboardIcon,
-            key: "traffic-dashboard",
-            precedence: 3,
-          },
-          {
-            to: "/dashboard/matches",
-            name: "Matches",
-            icon: MatchesIcon,
-            key: "matches",
-            precedence: 2,
-          },
           {
             to: "/dashboard/requests",
             name: "Requests",
