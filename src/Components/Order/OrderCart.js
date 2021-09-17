@@ -61,6 +61,7 @@ const OrderCart = ({ Cart, id = null, facility }) => {
   });
 
   const confirmCallBack = (status) => {
+    if (!facility) return;
     if (agreeTerms || status === "draft") {
       let order = {
         facility: facility.id,
