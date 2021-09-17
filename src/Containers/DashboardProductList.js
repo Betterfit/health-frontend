@@ -1,9 +1,9 @@
-import { useUserFacilities } from "APIHooks/facilities";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 import BackNavigation from "Components/Helpers/BackNavigation";
 import Table from "Components/Table/Basic/Table";
 import Api from "Helpers/api";
+import { useUserFacilities } from "Models/facilities";
 import React from "react";
 import { useQuery } from "react-query";
 

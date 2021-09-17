@@ -1,8 +1,8 @@
-import { useUserFacilities } from "APIHooks/facilities";
 import AdminTabs from "Components/Content/AdminTabs";
 import { ErrorMessage } from "Components/Content/ErrorMessage";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
+import { useUserFacilities } from "Models/facilities";
 import React, { useState } from "react";
 import styles from "./AccountManagement.module.css";
 import AddFacilityForm from "./AddFacilityForm";

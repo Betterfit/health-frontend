@@ -1,10 +1,10 @@
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
-import { useSelectedFacility } from "APIHooks/facilities";
-import { useOrganization } from "APIHooks/organization";
 import Api from "Helpers/api";
 import TypedAPI, { api } from "Helpers/typedAPI";
+import { useSelectedFacility } from "Models/facilities";
+import { useOrganization } from "Models/organization";
 import React, { useCallback, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { SupplierPricing } from "Types";

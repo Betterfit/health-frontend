@@ -1,9 +1,9 @@
 import { Dialog, MenuItem, TextField } from "@material-ui/core";
-import { usePaymentMethods } from "APIHooks/paymentMethods";
-import { productDisplayName } from "APIHooks/products";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { keyBy } from "lodash";
+import { usePaymentMethods } from "Models/paymentMethods";
+import { productDisplayName } from "Models/products";
 import React, { useState } from "react";
 import {
   Money,

@@ -1,5 +1,3 @@
-import { productDisplayName } from "APIHooks/products";
-import { fullName } from "APIHooks/user";
 import clsx from "clsx";
 import AnimatedHeightChange from "Components/Content/AnimatedHeightChange";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
@@ -10,6 +8,8 @@ import {
 } from "Components/InfoDisplay/LabeledDetails";
 import { api } from "Helpers/typedAPI";
 import { formatTimeStamp } from "Helpers/utils";
+import { productDisplayName } from "Models/products";
+import { fullName } from "Models/user";
 import { formatCurrency } from "Pages/Requests/RequestsPage";
 import React, { useState } from "react";
 import { useQuery } from "react-query";

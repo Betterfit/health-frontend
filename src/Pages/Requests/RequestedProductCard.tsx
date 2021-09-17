@@ -1,9 +1,9 @@
-import { productDisplayName } from "APIHooks/products";
 import Icon from "Components/Content/Icon";
 import IconButton from "Components/Content/IconButton";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Badge from "Components/Forms/Badge/Badge";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
+import { productDisplayName } from "Models/products";
 import React, { useState } from "react";
 import { Order, OrderProduct, ProductPricing, SupplierQuote } from "Types";
 import styles from "./RequestedProductCard.module.css";

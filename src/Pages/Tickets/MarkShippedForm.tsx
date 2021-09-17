@@ -1,8 +1,8 @@
 import { MenuItem, TextField } from "@material-ui/core";
-import { productDisplayName } from "APIHooks/products";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { VerticalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { api } from "Helpers/typedAPI";
+import { productDisplayName } from "Models/products";
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { SupplierTicket } from "Types";

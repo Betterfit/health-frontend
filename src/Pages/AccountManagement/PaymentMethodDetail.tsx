@@ -1,8 +1,8 @@
 import { Dialog } from "@material-ui/core";
-import { fullName, useUsers } from "APIHooks/user";
 import IconButton from "Components/Content/IconButton";
 import UserPicker from "Components/Forms/UserPicker";
 import { api, PaymentMethodUpdate } from "Helpers/typedAPI";
+import { fullName, useUsers } from "Models/user";
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { PaymentMethod, User } from "Types";

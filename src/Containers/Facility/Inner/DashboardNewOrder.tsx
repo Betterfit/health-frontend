@@ -1,8 +1,8 @@
-import { useUserFacilities } from "APIHooks/facilities";
 import OrderHeader from "Components/Order/NewOrderHeader";
 import OrderCart from "Components/Order/OrderCart";
 import { useCartStore } from "Context/cartContext";
 import { observer } from "mobx-react";
+import { useUserFacilities } from "Models/facilities";
 import React, { useState } from "react";
 import { Facility } from "Types";
 

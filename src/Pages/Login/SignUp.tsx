@@ -1,4 +1,3 @@
-import { useMyProfile } from "APIHooks/user";
 import { Auth } from "aws-amplify";
 import ErrorDisplayForm, {
   SubmitCallback,
@@ -7,6 +6,7 @@ import InputField from "Components/Forms/InputField";
 import SubtleLink from "Components/Forms/SubtleLink";
 import TypedAPI from "Helpers/typedAPI";
 import { subset } from "Helpers/utils";
+import { useMyProfile } from "Models/user";
 import React, { ChangeEvent, useState } from "react";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router";

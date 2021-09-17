@@ -1,4 +1,3 @@
-import { useMyProfile } from "APIHooks/user";
 import Modal from "Components/Content/Modal";
 import Button from "Components/Forms/Button";
 import Checkbox from "Components/Forms/CheckboxConfirm";
@@ -10,6 +9,7 @@ import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import EmptyCart from "Images/Icons/shopping-cart-empty.svg";
 import { useObserver } from "mobx-react";
+import { useMyProfile } from "Models/user";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ReactSVG } from "react-svg";

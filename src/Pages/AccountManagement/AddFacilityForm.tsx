@@ -1,11 +1,11 @@
 import { MenuItem, TextField } from "@material-ui/core";
-import { facilitiesQK } from "APIHooks/facilities";
-import { useOrganization } from "APIHooks/organization";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { provinces } from "Data/geography";
 import TypedAPI, { FacilityData } from "Helpers/typedAPI";
 import { subset } from "Helpers/utils";
+import { facilitiesQK } from "Models/facilities";
+import { useOrganization } from "Models/organization";
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import InputMask from "react-input-mask";

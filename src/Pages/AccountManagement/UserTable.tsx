@@ -1,5 +1,10 @@
 import { Dialog } from "@material-ui/core";
-import { mapFacilitiesById, useFacilities } from "APIHooks/facilities";
+import IconButton from "Components/Content/IconButton";
+import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
+import SearchBar from "Components/Search/SearchBar";
+import Tabs from "Components/Tabs/Tabs";
+import TypedAPI from "Helpers/typedAPI";
+import { mapFacilitiesById, useFacilities } from "Models/facilities";
 import {
   fullName,
   searchUsers,
@@ -7,12 +12,7 @@ import {
   userIsFacilityAdmin,
   userIsNormalMember,
   useUsers,
-} from "APIHooks/user";
-import IconButton from "Components/Content/IconButton";
-import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
-import SearchBar from "Components/Search/SearchBar";
-import Tabs from "Components/Tabs/Tabs";
-import TypedAPI from "Helpers/typedAPI";
+} from "Models/user";
 import React, { useState } from "react";
 import { useQueryClient } from "react-query";
 import { FacilityMembership, UserProfile } from "Types";

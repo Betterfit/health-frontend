@@ -1,6 +1,6 @@
-import { fullName } from "APIHooks/user";
 import { VerticalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { formatTimeStamp } from "Helpers/utils";
+import { fullName } from "Models/user";
 import React from "react";
 import { Order } from "Types";
 

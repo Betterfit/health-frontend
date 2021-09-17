@@ -1,10 +1,10 @@
-import { useSelectedFacility } from "APIHooks/facilities";
 import Button from "Components/Content/Button";
 import Modal from "Components/Content/Modal";
 import Table from "Components/Table/Detail/Table";
 import DashboadOrderDetail from "Containers/DashboardOrderDetail";
 import dayjs from "dayjs";
 import Api from "Helpers/api";
+import { useSelectedFacility } from "Models/facilities";
 import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 

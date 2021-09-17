@@ -1,4 +1,3 @@
-import { useSelectedFacility } from "APIHooks/facilities";
 import BoxLink from "Components/Content/BoxLink";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import Search from "Components/Search/Search";
@@ -9,6 +8,7 @@ import DashboardProductDetail from "Containers/Supplier/Inner/DashboardProductDe
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import Spinner from "Images/spinner.gif";
+import { useSelectedFacility } from "Models/facilities";
 import React, { useEffect, useState } from "react";
 import { Route, useLocation } from "react-router-dom";
 

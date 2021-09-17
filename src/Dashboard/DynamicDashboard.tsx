@@ -1,5 +1,3 @@
-import { useOrganization } from "APIHooks/organization";
-import { useMyProfile } from "APIHooks/user";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import SideBarIcon from "Components/SideBar/SideBar";
 import AccountsIcon from "Images/Icons/accounts.svg";
@@ -9,6 +7,8 @@ import OrderIcon from "Images/Icons/order.svg";
 import ResourcesIcon from "Images/Icons/resources.svg";
 import TicketIcon from "Images/Icons/ticket.svg";
 import orderBy from "lodash/orderBy";
+import { useOrganization } from "Models/organization";
+import { useMyProfile } from "Models/user";
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Organization, UserProfile } from "Types";

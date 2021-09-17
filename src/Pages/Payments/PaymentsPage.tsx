@@ -1,9 +1,9 @@
-import { useOrganization } from "APIHooks/organization";
 import clsx from "clsx";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
 import PaymentCard from "Components/Payment/PaymentCard";
 import { api } from "Helpers/typedAPI";
+import { useOrganization } from "Models/organization";
 import ConnectedAccountCard from "Pages/AccountManagement/ConnectedAccountCard";
 import PaymentMethods from "Pages/AccountManagement/PaymentMethods";
 import React from "react";

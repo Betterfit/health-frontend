@@ -1,10 +1,10 @@
-import { useSelectedFacility } from "APIHooks/facilities";
 import TicketSearch from "Components/Search/TicketSearch";
 import Table from "Components/Table/List/Table";
 import Tabs from "Components/Tabs/Tabs";
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import Spinner from "Images/spinner.gif";
+import { useSelectedFacility } from "Models/facilities";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { Route } from "react-router-dom";

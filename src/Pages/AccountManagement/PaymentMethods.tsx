@@ -1,11 +1,11 @@
 import { TextField } from "@material-ui/core";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { usePaymentMethods } from "APIHooks/paymentMethods";
-import { useMyProfile } from "APIHooks/user";
 import AdminTabs from "Components/Content/AdminTabs";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { api } from "Helpers/typedAPI";
+import { usePaymentMethods } from "Models/paymentMethods";
+import { useMyProfile } from "Models/user";
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { PaymentMethod } from "Types";

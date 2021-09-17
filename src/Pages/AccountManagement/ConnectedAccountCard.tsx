@@ -1,10 +1,10 @@
-import { useMyProfile } from "APIHooks/user";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import {
   HorizontalDetail,
   VerticalDetail,
 } from "Components/InfoDisplay/LabeledDetails";
 import { api } from "Helpers/typedAPI";
+import { useMyProfile } from "Models/user";
 import { formatCurrency } from "Pages/Requests/RequestsPage";
 import React, { useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";

@@ -1,9 +1,9 @@
-import { useOrganization } from "APIHooks/organization";
-import { fullName, useMyProfile } from "APIHooks/user";
 import FaciltyCard from "Components/Profile/FacilityCard";
 import ProfileCard from "Components/Profile/ProfileCard";
 import Slider from "Components/Slider/Slider";
 import logo from "Images/Icons/logo-full.svg";
+import { useOrganization } from "Models/organization";
+import { fullName, useMyProfile } from "Models/user";
 import React, { useState } from "react";
 import SideBarDashboardTypeCTA from "./SideBarDashboardTypeCTA";
 import SideBarNavigation from "./SideBarNavigation";

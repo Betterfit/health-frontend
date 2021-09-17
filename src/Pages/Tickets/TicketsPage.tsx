@@ -1,5 +1,4 @@
 import { Dialog } from "@material-ui/core";
-import { productDisplayName } from "APIHooks/products";
 import clsx from "clsx";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
@@ -9,6 +8,7 @@ import Tabs from "Components/Tabs/Tabs";
 import { api } from "Helpers/typedAPI";
 import { formatTimeStamp } from "Helpers/utils";
 import { capitalize } from "lodash";
+import { productDisplayName } from "Models/products";
 import QRCode from "qrcode.react";
 import React, { ReactNode, useState } from "react";
 import { useQuery } from "react-query";
