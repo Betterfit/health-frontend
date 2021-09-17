@@ -13,12 +13,14 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
+import "./index.css";
 import NotFound from "./Pages/404";
 import ForgotPassword from "./Pages/Login/ForgotPassword";
 // ================ PAGES ================
 import Login from "./Pages/Login/HealthLogin";
 import LoginContainer from "./Pages/Login/LoginContainer";
 import LogOut from "./Pages/Logout";
+import "./styles/globalClasses.module.css";
 setUpCognito();
 const App = observer(() => {
   const authStore = useAuthStore();

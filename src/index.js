@@ -7,9 +7,7 @@ import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import App from "./App";
-import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import "./styles/globalClasses.module.css";
 import "./styles/tailwind.css";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
