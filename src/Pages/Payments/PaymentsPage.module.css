@@ -1,15 +1,17 @@
 @media (min-width: 1024px) {
-  /* styles for small viewport */
-  .content {
-    display: grid;
-    gap: 1rem;
-  }
-
   .content > div:first-child {
     width: 50%;
   }
 }
 
 .content {
-  gap: 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.paymentHistoryTitle {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
 }

@@ -279,7 +279,10 @@ const RequestedOrderCard = ({
   );
 };
 
-export const formatCurrency = (price: number | undefined | null) => {
+export const formatCurrency = (
+  price: number | string | undefined | null
+): string => {
   if (price == null) return "";
+  if (typeof price === "string") price = Number(price);
   return `$${price.toFixed(2)} CAD`;
 };

@@ -3,7 +3,6 @@ import { VerticalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { formatTimeStamp } from "Helpers/utils";
 import React from "react";
 import { Order } from "Types";
-import styles from "./OrderCardHeader.module.css";
 
 const OrderCardHeader = ({
   order,
@@ -15,7 +14,7 @@ const OrderCardHeader = ({
   // Formats like this: Aug 16, 2021 - 6:07 PM
   // https://momentjs.com/docs/#/displaying/
   return (
-    <div className={styles.orderHeader}>
+    <div className={"cardHeader"}>
       <VerticalDetail label="Ordered by" value={fullName(order.authorUser)} />
       <VerticalDetail
         label="Ordered on"

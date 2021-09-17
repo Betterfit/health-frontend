@@ -53,7 +53,7 @@ const SideBar = ({ navItemsList }) => {
     }
   };
   return (
-    <div className="md:flex md:flex-shrink-0 sidebar">
+    <div className="md:flex sidebar">
       <div className="flex flex-col sidebar md:p-2 md:pr-0 w-full">
         <div
           className="flex flex-col md:h-0 flex-1 relative rounded-lg m-2 mb-0 md:m-0"

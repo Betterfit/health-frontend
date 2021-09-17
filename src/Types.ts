@@ -246,6 +246,8 @@ export interface OrderProduct {
   supplierOrg?: Organization;
   productOption: ProductOption;
   ticket?: PurchaserTicket;
+  shipping: string;
+  pricePerUnit: string;
 }
 export interface Order {
   url: string;
@@ -342,7 +344,7 @@ export interface OrderInvoice {
 
 export interface Payment {
   productOptionId: number;
-  total: number;
+  total: string;
   orderId: number;
   paymentMethodName: string;
   paymentMethodId: number;

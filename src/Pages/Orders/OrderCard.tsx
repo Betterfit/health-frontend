@@ -62,7 +62,7 @@ const OrderProductInfo = ({
       <div className={styles.detailList}>
         <HorizontalDetail label="Supplier" value={ticket?.supplier.name} />
         <HorizontalDetail label="Warehouse" value={ticket?.warehouse.name} />
-        <HorizontalDetail label={"Total"} value={32} />
+        {/* <HorizontalDetail label={"Total"} value={32} /> */}
       </div>
       <div className={styles.detailList}>
         <HorizontalDetail

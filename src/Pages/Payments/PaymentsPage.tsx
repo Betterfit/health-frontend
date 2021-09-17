@@ -33,9 +33,9 @@ const PaymentCardList = () => {
   const payments = paymentsQuery.data;
   return (
     <div>
-      <h2>Payment History</h2>
+      <h2 className={styles.paymentHistoryTitle}>Payment History</h2>
       {payments.map((payment) => (
-        <PaymentCard payment={payment} />
+        <PaymentCard payment={payment} startExpanded />
       ))}
     </div>
   );

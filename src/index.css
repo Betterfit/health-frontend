@@ -1,6 +1,7 @@
 @import "styles/type.css";
 @import "styles/dashboard.css";
 @import "styles/resources.css";
+@import "styles/card.css";
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",

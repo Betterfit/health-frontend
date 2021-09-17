@@ -105,6 +105,12 @@ export default class TypedAPI {
     return client.get<Order[]>(path);
   };
 
+  getOrder = async (id: number) => {
+    const client = await this.init();
+    const response = await client.get<Order>(`/orders/${id}`);
+    return response.data;
+  };
+
   updateOrderStatus = async ({
     order,
     action,
