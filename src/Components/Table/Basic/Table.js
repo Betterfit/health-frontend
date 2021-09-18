@@ -9,7 +9,7 @@ const Table = ({ TableData, edit }) => {
   if (TableData.product_options && TableData.product_options.length) {
     const excludeKeys = ["pk", "product_image"];
     const excludeValues = ["product_image"];
-    TableData.product_options.map((variant) => {
+    TableData.product_options.forEach((variant) => {
       let keys = Object.keys(variant);
       let values = Object.entries(variant);
       keys.forEach((key) => {
@@ -22,11 +22,7 @@ const Table = ({ TableData, edit }) => {
     // exclude keys from filter
     TableHeadData = TableHeadData.filter((item) => !excludeKeys.includes(item));
     TableBodyData = TableBodyData.map((row) => {
-      return row.filter((item) => {
-        if (!excludeValues.includes(item[0])) {
-          return item;
-        }
-      });
+      return row.filter((item) => !excludeValues.includes(item[0]));
     });
   } else {
     nooptions = true;
@@ -48,13 +44,9 @@ const Table = ({ TableData, edit }) => {
 
     // exclude keys from filter
     TableHeadData = TableHeadData.filter((item) => !excludeKeys.includes(item));
-    TableBodyData = TableBodyData.map((row, index) => {
-      return row.filter((item, index) => {
-        if (!excludeValues.includes(item[0])) {
-          return item;
-        }
-      });
-    });
+    TableBodyData = TableBodyData.map((row) =>
+      row.filter((item) => !excludeValues.includes(item[0]))
+    );
   }
   return (
     <div className="flex flex-col mt-4 mb-10">

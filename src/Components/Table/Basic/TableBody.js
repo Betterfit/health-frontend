@@ -7,15 +7,15 @@ const TableBody = ({ TableBody, variantID, NoOptions, edit }) => {
   let setIndex;
   return (
     <tbody>
-      {TableBody.map((row, index) => {
-        if (index % 2 === 0) {
+      {TableBody.map((row, i) => {
+        if (i % 2 === 0) {
           return (
-            <tr key={uuid()} className="bg-gray-100 border-t border-gray-200">
+            <tr key={i} className="bg-gray-100 border-t border-gray-200">
               {row.map((r, index) => {
                 if (r[0] !== "pk") {
                   return (
                     <td
-                      key={uuid()}
+                      key={index}
                       className="px-4 py-4 text-sm leading-5 text-betterfit-graphite"
                     >
                       {r[1]}
@@ -23,6 +23,7 @@ const TableBody = ({ TableBody, variantID, NoOptions, edit }) => {
                   );
                 } else {
                   setIndex = r[1];
+                  return null;
                 }
               })}
               <td
@@ -56,7 +57,7 @@ const TableBody = ({ TableBody, variantID, NoOptions, edit }) => {
                 if (r[0] !== "pk") {
                   return (
                     <td
-                      key={uuid()}
+                      key={index}
                       className="px-4 py-4 text-sm leading-5 text-betterfit-graphite"
                     >
                       {r[1]}
@@ -64,6 +65,7 @@ const TableBody = ({ TableBody, variantID, NoOptions, edit }) => {
                   );
                 } else {
                   setIndex = r[1];
+                  return null;
                 }
               })}
               <td

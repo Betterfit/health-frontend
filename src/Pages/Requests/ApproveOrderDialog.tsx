@@ -15,7 +15,6 @@ export interface InvoiceItem {
   cost: number;
 }
 
-type ApproveOrderDialogProps = {};
 const ApproveOrderDialog = ({
   orderProducts,
   handleClose,
