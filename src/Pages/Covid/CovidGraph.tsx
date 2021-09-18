@@ -23,15 +23,12 @@ import {
   VaccineChartOptions,
 } from "Types";
 
-interface DashboardGraphProps {
+interface CovidGraphProps {
   whichChart: ChartType;
   isAuthenticated: boolean;
 }
 
-const DashboardGraph = ({
-  whichChart,
-  isAuthenticated,
-}: DashboardGraphProps) => {
+const CovidGraph = ({ whichChart, isAuthenticated }: CovidGraphProps) => {
   // State is kept here so that selected regions/time series tab etc are kept consistent when switching between the vaccine and time series charts.
   // In the future, it might be worth encoding this information in the url.
   const [regionTray, setRegionTray] = useState<Selectable<HealthRegion>[]>([
@@ -186,4 +183,4 @@ const DashboardGraph = ({
   return <FlowSquares chart={chart} options={options} />;
 };
 
-export default DashboardGraph;
+export default CovidGraph;

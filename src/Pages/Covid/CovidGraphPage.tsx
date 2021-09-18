@@ -1,5 +1,5 @@
 import { Auth } from "aws-amplify";
-import DashboardGraph from "Containers/Traffic/Inner/DashboardGraph";
+import DashboardGraph from "Pages/Covid/CovidGraph";
 import CognitoLogin from "Pages/Login/CognitoLogin";
 import LoginContainer from "Pages/Login/LoginContainer";
 import React, { useCallback, useLayoutEffect, useState } from "react";
