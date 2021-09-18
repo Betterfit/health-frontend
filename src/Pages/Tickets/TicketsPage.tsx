@@ -1,7 +1,7 @@
-import { Dialog } from "@material-ui/core";
 import clsx from "clsx";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
+import Dialog from "Components/Dialog";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 import Tabs from "Components/Tabs/Tabs";

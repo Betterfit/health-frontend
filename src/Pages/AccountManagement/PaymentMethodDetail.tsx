@@ -1,5 +1,5 @@
-import { Dialog } from "@material-ui/core";
 import IconButton from "Components/Content/IconButton";
+import Dialog from "Components/Dialog";
 import UserPicker from "Components/Forms/UserPicker";
 import { api, PaymentMethodUpdate } from "Helpers/typedAPI";
 import { fullName, useUsers } from "Models/user";

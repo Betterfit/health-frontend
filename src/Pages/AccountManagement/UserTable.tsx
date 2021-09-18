@@ -1,5 +1,5 @@
-import { Dialog } from "@material-ui/core";
 import IconButton from "Components/Content/IconButton";
+import Dialog from "Components/Dialog";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import SearchBar from "Components/Search/SearchBar";
 import Tabs from "Components/Tabs/Tabs";
