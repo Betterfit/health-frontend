@@ -1,5 +1,5 @@
-import { getByText, render, screen } from "@testing-library/react";
 import * as rtl from "@testing-library/react";
+import { getByText, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import ResourceLink from "./ResourceLink";
@@ -71,13 +71,13 @@ describe("Resource Link", () => {
     const link = screen.getByRole("listitem", { name: /royal crom/i });
     userEvent.click(link);
     const resourceCard = await screen.findByRole("dialog");
-    const email = rtl.getByRole(resourceCard, "button", {
+    rtl.getByRole(resourceCard, "button", {
       name: /copy email/i,
     });
-    const phone = rtl.getByRole(resourceCard, "button", {
+    rtl.getByRole(resourceCard, "button", {
       name: /copy phone/i,
     });
-    const address = rtl.getByRole(resourceCard, "button", {
+    rtl.getByRole(resourceCard, "button", {
       name: /copy address/i,
     });
     // its a bit tricky to test the clipboard value after clicking, so that's omitted

@@ -16,28 +16,20 @@ const DashboardProductDetail = (props) => {
   const product_details_id = parseInt(match.params.id);
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState();
-  // eslint-ignore
-  const [isError, setIsError] = useState(false);
   const getData = async () =>
-    await api
-      .getProductOption(product_details_id)
-      .then((response) => {
-        setProduct({
-          product_category: response.data.product_category,
-          product_name: response.data.product_variation,
-          product_parent: response.data.product,
-          product_label: response.data.option_label,
-          product_label_value: response.data.name,
-          product_description: response.data.product_description,
-          product_image: response.data.product_image,
-          pk: response.data.pk,
-        });
-        setIsError(false);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsError(true);
+    await api.getProductOption(product_details_id).then((response) => {
+      setProduct({
+        product_category: response.data.product_category,
+        product_name: response.data.product_variation,
+        product_parent: response.data.product,
+        product_label: response.data.option_label,
+        product_label_value: response.data.name,
+        product_description: response.data.product_description,
+        product_image: response.data.product_image,
+        pk: response.data.pk,
       });
+      setIsLoading(false);
+    });
 
   useEffect(() => {
     getData();

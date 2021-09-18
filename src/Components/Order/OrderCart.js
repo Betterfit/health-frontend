@@ -3,7 +3,6 @@ import Button from "Components/Forms/Button";
 import Checkbox from "Components/Forms/CheckboxConfirm";
 import OrderName from "Components/Forms/OrderName";
 import OrderProductCard from "Components/Order/OrderProductCard";
-import { useAuthStore } from "Context/authContext";
 import { useCartStore } from "Context/cartContext";
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
@@ -22,7 +21,6 @@ const OrderCart = ({ Cart, id = null, facility }) => {
   const myProfileQuery = useMyProfile();
   let CartData = JSON.stringify(Cart);
   CartData = JSON.parse(CartData);
-  const authStore = useAuthStore();
   const cartStore = useCartStore();
   const [cartItems, setCartItems] = useState(null);
   const [modalOrder, setModalOrder] = useState(false);

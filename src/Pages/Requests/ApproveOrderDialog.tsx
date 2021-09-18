@@ -5,13 +5,7 @@ import { keyBy } from "lodash";
 import { usePaymentMethods } from "Models/paymentMethods";
 import { productDisplayName } from "Models/products";
 import React, { useState } from "react";
-import {
-  Money,
-  OrderInvoice,
-  OrderProduct,
-  PaymentMethod,
-  ProductInvoice,
-} from "Types";
+import { Money, OrderInvoice, OrderProduct, PaymentMethod } from "Types";
 import styles from "./ApproveOrderDialog.module.css";
 import { formatCurrency } from "./RequestsPage";
 
@@ -103,14 +97,6 @@ const ApproveOrderDialog = ({
     </Dialog>
   );
 };
-
-const ProductLineItem = ({
-  item,
-  orderProducts,
-}: {
-  item: ProductInvoice;
-  orderProducts: OrderProduct[];
-}) => {};
 
 const FeeLineItem = ({
   name,

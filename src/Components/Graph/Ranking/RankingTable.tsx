@@ -46,7 +46,7 @@ const RankingTable = ({
         setTableHeight(containingDiv.offsetHeight);
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [tableHeight]);
   const tableData = data?.map((region) => ({
     ...region,
     // round and format

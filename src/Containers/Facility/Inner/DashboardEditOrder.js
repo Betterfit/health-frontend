@@ -13,7 +13,6 @@ const DashboardEditOrder = observer((props) => {
 
   const cartStore = useCartStore();
 
-  const [order, setOrderData] = useState(null);
   const [orderHeader, setOrderHeader] = useState();
 
   const getOrder = async () =>
@@ -31,7 +30,6 @@ const DashboardEditOrder = observer((props) => {
           return obj;
         });
 
-        setOrderData(response.data);
         setOrderHeader({
           order_number: response.data.order_no,
           order_date: dayjs(response.data.order_date).format("MMM DD, YYYY"),
