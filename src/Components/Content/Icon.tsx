@@ -1,14 +1,25 @@
+import clsx from "clsx";
 import React from "react";
 
 const Icon = ({
   name,
   extraClasses,
+  size,
 }: {
   name: string;
   extraClasses?: string;
+  size?: keyof typeof sizes;
 }) => {
   return (
-    <span className={"material-icons-outlined " + extraClasses}>{name}</span>
+    <span
+      className={clsx(
+        "material-icons-outlined",
+        extraClasses,
+        size && sizes[size]
+      )}
+    >
+      {name}
+    </span>
   );
 };
 

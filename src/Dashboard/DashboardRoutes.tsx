@@ -1,7 +1,6 @@
 import DashboardResources from "Containers/DashboardResources";
 import DashboardOrder from "Containers/Facility/Inner/DashboardOrder";
 import DashboardInventory from "Containers/Supplier/Inner/DashboardInventory";
-import DashboardTicketDetail from "Containers/Supplier/Inner/DashboardTicketDetail";
 import { CartProvider } from "Context/cartContext";
 import styles from "Dashboard/Dashboard.module.css";
 import AccountManagement from "Pages/AccountManagement/AccountManagement";
@@ -82,13 +81,6 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
       <Route path="/dashboard/tickets/">
         <TicketsPage />
       </Route>
-      <Route
-        exact
-        path="/dashboard/ticket/:id"
-        render={(props) => {
-          return <DashboardTicketDetail {...props} />;
-        }}
-      />
       <Route path="/dashboard/inventory">
         <DashboardInventory />
       </Route>
