@@ -3,7 +3,6 @@ import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import Search from "Components/Search/Search";
 import Tabs from "Components/Tabs/Tabs";
 import DashboardProductList from "Containers/DashboardProductList";
-import DashboardSearch from "Containers/DashboardSearch";
 import DashboardProductDetail from "Containers/Supplier/Inner/DashboardProductDetail";
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
@@ -136,9 +135,6 @@ const DashboardInventory = () => {
                 return <DashboardProductDetail edit={true} {...props} />;
               }}
             />
-            <Route path="/dashboard/inventory/search:query?">
-              <DashboardSearch />
-            </Route>
           </div>
         </div>
       ) : (
