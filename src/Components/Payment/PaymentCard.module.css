@@ -50,4 +50,11 @@
   justify-content: space-evenly;
   width: 100%;
   margin: 0.5rem 0;
+  min-width: 200px;
+}
+
+.actions {
+  flex-basis: 100%;
+  display: grid;
+  place-items: center;
 }

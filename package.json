@@ -22,6 +22,7 @@
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
     "@types/react-input-mask": "^3.0.1",
+    "@types/react-router": "^5.1.16",
     "@types/react-router-dom": "^5.1.6",
     "@types/react-tabs": "^2.3.3",
     "amazon-cognito-identity-js": "^4.5.10",
@@ -81,7 +82,8 @@
     "build:style": "tailwind build src/styles/index.css -o src/styles/tailwind.css --watch",
     "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx}\"",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "lint": "eslint --ext js,ts,tsx --format node_modules/eslint-stats/byErrorAndWarning.js src",
+    "lint": "eslint --ext js,ts,tsx src",
+    "lint-total": "eslint --ext js,ts,tsx --format ./totalErrors.js src",
     "lint-folders": "eslint --ext js,ts,tsx --format node_modules/eslint-stats/byFolder.js src "
   },
   "lint-staged": {

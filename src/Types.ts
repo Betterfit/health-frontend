@@ -343,6 +343,7 @@ export interface OrderInvoice {
 }
 
 export interface Payment {
+  id: number;
   productOptionId: number;
   total: string;
   orderId: number;

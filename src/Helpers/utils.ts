@@ -49,3 +49,15 @@ export const formatTimeStamp = (
 ): string =>
   //  https://momentjs.com/docs/#/displaying/
   moment(timeStamp).format("MMM D, YYYY" + (dateOnly ? "" : " - h:mm A"));
+
+export const buildQueryString = (
+  object: Record<number | string, number | string> | undefined
+): string => {
+  if (!object) return "";
+  return (
+    "?" +
+    Object.keys(object)
+      .map((key) => `${key}=${object[key]}`)
+      .join("&")
+  );
+};

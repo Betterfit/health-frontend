@@ -2,12 +2,11 @@ import clsx from "clsx";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
 import PaymentCard from "Components/Payment/PaymentCard";
-import { api } from "Helpers/typedAPI";
 import { useOrganization } from "Models/organization";
+import { usePayments } from "Models/payments";
 import ConnectedAccountCard from "Pages/AccountManagement/ConnectedAccountCard";
 import PaymentMethods from "Pages/AccountManagement/PaymentMethods";
 import React from "react";
-import { useQuery } from "react-query";
 import styles from "./PaymentsPage.module.css";
 
 const PaymentsPage = () => {
@@ -28,14 +27,14 @@ const PaymentsPage = () => {
 };
 
 const PaymentCardList = () => {
-  const paymentsQuery = useQuery("payments", api.getPayments);
+  const paymentsQuery = usePayments({});
   if (!paymentsQuery.isSuccess) return <LoadingSpinner />;
   const payments = paymentsQuery.data;
   return (
     <div>
       <h2 className={styles.paymentHistoryTitle}>Payment History</h2>
       {payments.map((payment) => (
-        <PaymentCard payment={payment} startExpanded />
+        <PaymentCard payment={payment} />
       ))}
     </div>
   );

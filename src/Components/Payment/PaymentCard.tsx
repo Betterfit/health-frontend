@@ -13,6 +13,7 @@ import { fullName } from "Models/user";
 import { formatCurrency } from "Pages/Requests/RequestsPage";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
+import { useHistory } from "react-router-dom";
 import { Order, OrderProduct, Payment } from "Types";
 import styles from "./PaymentCard.module.css";
 
@@ -24,6 +25,7 @@ const PaymentCard = ({
   startExpanded?: boolean;
 }) => {
   const [expanded, setExpanded] = useState(startExpanded);
+  const history = useHistory();
   const orderQuery = useQuery(
     ["orders", { id: payment.orderId }],
     () => api.getOrder(payment.orderId),
@@ -50,11 +52,17 @@ const PaymentCard = ({
             label="Amount"
             value={formatCurrency(Number(payment.total))}
           />
+          <PrettyButton
+            text="Open Order"
+            onClick={() =>
+              history.push("/dashboard/orders/detail/" + payment.orderId)
+            }
+          />
         </div>
         {expanded && <PaymentDetails {...{ payment, order }} />}
         <PrettyButton
           variant="link"
-          text={expanded ? "Hide Details" : "View Details"}
+          text={expanded ? "Hide Details" : "Show Details"}
           icon={expanded ? "expand_less" : "expand_more"}
           onClick={() => setExpanded(!expanded)}
         />
@@ -106,6 +114,7 @@ const PaymentDetails = ({
               fullWidth
             />
           </div>
+          <div className={styles.actions}></div>
         </>
       )}
     </div>

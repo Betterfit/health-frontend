@@ -13,6 +13,7 @@ import {
   SupplierTicket,
   UserProfile,
 } from "Types";
+import { buildQueryString } from "./utils";
 
 export const apiURL = process.env.REACT_APP_DJANGO_API_URL;
 export default class TypedAPI {
@@ -214,9 +215,13 @@ export default class TypedAPI {
     return client.post("/connected-accounts/setup-complete");
   };
 
-  getPayments = async () => {
+  getPayments = async (queryParams?: {
+    order?: number;
+    paymentMethod?: number;
+  }) => {
+    const queryString = buildQueryString(queryParams);
     const client = await this.init();
-    const response = await client.get<Payment[]>("/payments");
+    const response = await client.get<Payment[]>("/payments" + queryString);
     return response.data;
   };
 

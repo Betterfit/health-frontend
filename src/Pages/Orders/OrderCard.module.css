@@ -1,4 +1,9 @@
-.order {
+.order > hr {
+  margin-bottom: 1rem;
+}
+
+.order:focus-visible {
+  outline: 3px dotted black;
 }
 .orderProduct {
   width: 100%;

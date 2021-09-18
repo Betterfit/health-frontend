@@ -1,17 +1,17 @@
 import DashboardResources from "Containers/DashboardResources";
-import DashboardFacilityOrder from "Containers/Facility/Inner/DashboardFacilityOrderDetail";
 import DashboardOrder from "Containers/Facility/Inner/DashboardOrder";
 import DashboardInventory from "Containers/Supplier/Inner/DashboardInventory";
 import DashboardTicketDetail from "Containers/Supplier/Inner/DashboardTicketDetail";
 import { CartProvider } from "Context/cartContext";
+import styles from "Dashboard/Dashboard.module.css";
 import AccountManagement from "Pages/AccountManagement/AccountManagement";
+import OrderDetail from "Pages/Orders/OrderDetail";
 import OrdersPage from "Pages/Orders/OrdersPage";
 import PaymentsPage from "Pages/Payments/PaymentsPage";
 import RequestsPage from "Pages/Requests/RequestsPage";
 import TicketsPage from "Pages/Tickets/TicketsPage";
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
-import styles from "./Dashboard.module.css";
 import { NavItem } from "./DynamicDashboard";
 
 export interface DashboardRoutesProps {
@@ -65,7 +65,7 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
         exact
         path="/dashboard/orders/detail/:id"
         render={(props) => {
-          return <DashboardFacilityOrder {...props} />;
+          return <OrderDetail orderId={Number(props.match.params.id)} />;
         }}
       />
       <Route

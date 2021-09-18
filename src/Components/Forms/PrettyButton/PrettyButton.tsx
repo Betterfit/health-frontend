@@ -24,6 +24,9 @@ const PrettyButton = ({
   const colorClass =
     props.disabled || variant === "link" ? "" : colorClasses[color];
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    // stops parent nodes from recieving a click event
+    e.stopPropagation();
     if (onClick) onClick();
     if (variant !== "link") createRipple(e);
   };

@@ -24,7 +24,6 @@ export const useMyProfile = (
 const api = new TypedAPI();
 const getMyProfile = () =>
   api.getProfile().then((response) => {
-    console.log(response);
     return response.data.user;
   });
 

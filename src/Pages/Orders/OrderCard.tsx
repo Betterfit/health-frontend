@@ -10,12 +10,29 @@ import { api } from "Helpers/typedAPI";
 import { capitalize } from "lodash";
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useHistory } from "react-router-dom";
 import { Order, OrderProduct } from "Types";
 import styles from "./OrderCard.module.css";
 
 const OrderCard = ({ order }: { order: Order }) => {
+  const history = useHistory();
+  const detailLink = "/dashboard/orders/detail/" + order.pk;
+  const onDetailPage = history.location.pathname === detailLink;
+  console.log(order);
   return (
-    <div className={clsx("cardBorder", styles.order)}>
+    <div
+      // only act as a link to the detail page if we're not already on the detail page
+      className={clsx(
+        !onDetailPage && "cardBorder hoverShadowDark cursor-pointer",
+        styles.order
+      )}
+      onClick={() => !onDetailPage && history.push(detailLink)}
+      tabIndex={!onDetailPage ? 0 : -1}
+      aria-label={`Order ${order.pk}`}
+      onKeyDown={(event) => {
+        if (!onDetailPage && event.key === "Enter") history.push(detailLink);
+      }}
+    >
       <OrderCardHeader order={order}>
         {/* <VerticalDetail label="status" value={capitalize(order.status)} /> */}
         {/* <Badge text={order.status} backgroundColor="green" /> */}
@@ -24,6 +41,7 @@ const OrderCard = ({ order }: { order: Order }) => {
           value={<StatusBadge status={order.status} />}
         />
       </OrderCardHeader>
+      {onDetailPage && <hr />}
       {order.orderProducts.map((orderProduct, i) => (
         <OrderProductInfo key={i} {...{ order, orderProduct }} />
       ))}
@@ -83,7 +101,7 @@ const OrderProductInfo = ({
             <PrettyButton
               text="Mark as Delivered"
               color="green"
-              onClick={() => deliveredMutation.mutate()}
+              onClick={() => console.log("objeccoolt")}
               disabled={deliveredMutation.isLoading}
             />
             {/* <PrettyButton text="Contact Supplier" variant="outline" /> */}
