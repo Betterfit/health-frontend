@@ -227,6 +227,14 @@ export interface SupplierTicket extends Ticket {
   destination: Facility;
   purchaser: Organization;
 }
+export interface ProductCategory {
+  name: string;
+  id: number;
+  icon: string;
+  backgroundColor: string;
+  mainColor: string;
+  count: number;
+}
 export interface ProductOption {
   id: number;
   name: string;

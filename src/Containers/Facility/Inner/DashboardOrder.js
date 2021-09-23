@@ -1,6 +1,6 @@
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
+import CategoryProductList from "Containers/Facility/Inner/CategoryProductList";
 import DashboardCategoryList from "Containers/Facility/Inner/DashboardCategoryList";
-import DashboardCategoryProductList from "Containers/Facility/Inner/DashboardCategoryProductList";
 import DashboardEditOrder from "Containers/Facility/Inner/DashboardEditOrder";
 import DashboardNewOrder from "Containers/Facility/Inner/DashboardNewOrder";
 import DashboardProductDetail from "Containers/Facility/Inner/DashboardProductDetail";
@@ -34,10 +34,10 @@ const DashboardOrder = ({ props, type }) => {
           exact
           render={(props) => {
             return (
-              <DashboardCategoryProductList
+              <CategoryProductList
                 edit={true}
-                {...props}
                 type={type}
+                categoryId={props.match.params.id}
                 orderId={
                   parseInt(match.params.oid) ? parseInt(match.params.oid) : null
                 }
