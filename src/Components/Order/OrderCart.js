@@ -24,8 +24,6 @@ const OrderCart = ({ Cart, id = null, facility }) => {
   const [cartItems, setCartItems] = useState(null);
   const [modalOrder, setModalOrder] = useState(false);
   const [modalDraft, setModalDraft] = useState(false);
-  const [agreeTerms, setAgreeTerms] = useState(true);
-  const [agreeTermsError, setAgreeTermsError] = useState(false);
   const getCartItems = () => {
     const promises = CartData.map((item, i) =>
       api.getProductOption(item.pk).then((data) => {
@@ -59,7 +57,7 @@ const OrderCart = ({ Cart, id = null, facility }) => {
 
   const confirmCallBack = (status) => {
     if (!facility) return;
-    if (agreeTerms || status === "draft") {
+    if (status === "draft") {
       let order = {
         facility: facility.id,
         user: myProfileQuery.data.id,
@@ -97,8 +95,6 @@ const OrderCart = ({ Cart, id = null, facility }) => {
           history.push(`/dashboard/orders/detail/${response.data.pk}`);
         });
       }
-    } else {
-      setAgreeTermsError(true);
     }
   };
 
@@ -150,7 +146,6 @@ const OrderCart = ({ Cart, id = null, facility }) => {
           borderColor="border-betterfit-grey"
           onClick={() => {
             setModalDraft(!modalOrder);
-            setAgreeTermsError(false);
           }}
         />
         <Button
@@ -160,7 +155,6 @@ const OrderCart = ({ Cart, id = null, facility }) => {
           text_size="text-sm"
           onClick={() => {
             setModalOrder(!modalOrder);
-            setAgreeTermsError(false);
           }}
         />
       </div>

@@ -78,7 +78,9 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
             onClick={() => {
               let path = history.location.pathname.replace("/search", "");
               console.log(path);
-              history.push(path + "/product/" + product.id);
+              history.push(
+                `${path}/product/${product.productId}/${product.id}`
+              );
             }}
             extras="hidden md:block"
           />
