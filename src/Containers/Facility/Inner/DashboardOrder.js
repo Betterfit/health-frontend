@@ -1,6 +1,6 @@
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
+import CategoryList from "Containers/Facility/Inner/CategoryList";
 import CategoryProductList from "Containers/Facility/Inner/CategoryProductList";
-import DashboardCategoryList from "Containers/Facility/Inner/DashboardCategoryList";
 import DashboardEditOrder from "Containers/Facility/Inner/DashboardEditOrder";
 import DashboardNewOrder from "Containers/Facility/Inner/DashboardNewOrder";
 import DashboardProductDetail from "Containers/Facility/Inner/DashboardProductDetail";
@@ -21,14 +21,10 @@ const DashboardOrder = ({ props, type }) => {
         {type === "edit" && <DashboardEditOrder {...props} />}
         {type === "new" && <DashboardNewOrder {...props} />}
       </DashboardSideBar>
-      <div className="w-full min-width-0 md:w-3/5 mx-auto h-screen md:overflow-y-scroll mt-2">
-        <Route
-          exact
-          path={`${match.path}`}
-          render={(props) => {
-            return <DashboardCategoryList {...props} />;
-          }}
-        />
+      <div className="w-full min-width-0 md:w-3/5 mx-auto h-screen md:overflow-y-scroll mt-2 relative">
+        <Route exact path={`${match.path}`}>
+          <CategoryList />
+        </Route>
         <Route
           path={`${match.path}/:categoryName/:id?`}
           exact
