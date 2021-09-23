@@ -3,7 +3,7 @@ import TitleUnderLine from "Components/Content/TitleUnderLine";
 import EditProductForm from "Components/Forms/EditProductForm";
 //Components
 import BackNavigation from "Components/Helpers/BackNavigation";
-import ProductDetailsCard from "Components/Product/ProductDetailsCard";
+import ProductDetailsCard from "Components/Product/DeprecatedProductDetailsCard";
 import Api from "Helpers/api";
 import { useSelectedFacility } from "Models/facilities";
 import React from "react";

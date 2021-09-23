@@ -33,15 +33,14 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
   const history = useHistory();
   const [active, setActive] = useState(false);
   const addToCart = () => {
-    //@ts-ignore
-    cartStore?.addToCart(product_details.pk, 1, false, product.pk);
+    (cartStore as any)?.addToCart(product.id, 1, false, product.productId);
   };
   const displayName = productDisplayName(product);
   return (
     <>
       <div
         className={
-          "mb-2 rounded relative flex md:flex-col justify-content flex h-24 md:h-auto " +
+          "mb-2 rounded relative md:flex-col justify-content flex h-24 md:h-auto " +
           (active
             ? "bg-betterfit-pale-blue border border-betterfit-highlight-blue"
             : "bg-betterfit-soft-blue")

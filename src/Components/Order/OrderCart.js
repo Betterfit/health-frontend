@@ -153,6 +153,7 @@ const OrderCart = ({ Cart, id = null, facility }) => {
           hoverColor="bg-green-900"
           text="Submit Request"
           text_size="text-sm"
+          disabled={!facility}
           onClick={() => {
             setModalOrder(!modalOrder);
           }}

@@ -285,6 +285,12 @@ export default class TypedAPI {
     );
     return response.data;
   };
+
+  getProductOption = async (id: number) => {
+    const client = await this.init();
+    const response = await client.get<ProductOption>("/product-options/" + id);
+    return response.data;
+  };
 }
 
 export const api = new TypedAPI();
