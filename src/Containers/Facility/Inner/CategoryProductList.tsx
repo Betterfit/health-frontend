@@ -1,7 +1,7 @@
-import CategoryTitle from "Components/Content/CategoryTitle";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import BackNavigation from "Components/Helpers/BackNavigation";
-import ProductCard from "Components/Order/ProductCard";
+import CategoryTitle from "Components/Product/CategoryTitle";
+import ProductCard from "Components/Product/ProductCard";
 import { api } from "Helpers/typedAPI";
 import React from "react";
 import { useQuery } from "react-query";

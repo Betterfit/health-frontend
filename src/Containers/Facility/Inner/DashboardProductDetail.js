@@ -1,8 +1,8 @@
-import ProductDetailsCard from "Components/Content/ProductDetailsCard";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 import AddProductForm from "Components/Forms/AddProductForm";
 //components
 import BackNavigation from "Components/Helpers/BackNavigation";
+import ProductDetailsCard from "Components/Product/ProductDetailsCard";
 import Api from "Helpers/api";
 //images
 import Spinner from "Images/spinner.gif";

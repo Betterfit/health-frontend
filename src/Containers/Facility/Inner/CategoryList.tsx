@@ -1,6 +1,6 @@
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
-import CategoryCard from "Components/Order/CategoryCard";
+import CategoryCard from "Components/Product/CategoryCard";
 import { api } from "Helpers/typedAPI";
 import React from "react";
 import { useQuery } from "react-query";

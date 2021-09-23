@@ -1,4 +1,4 @@
-import ResourceLink from "Components/Content/ResourceLink";
+import ResourceLink from "Components/Resources/ResourceLink";
 import React from "react";
 import { Resource } from "Types";
 

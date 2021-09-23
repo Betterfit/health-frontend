@@ -1,4 +1,4 @@
-import TagLink from "Components/Content/TagLink";
+import TagLink from "Components/Resources/TagLink";
 import Translator from "Helpers/Translator";
 import React from "react";
 import { Tag } from "Types";
