@@ -245,6 +245,7 @@ export interface ProductOption {
   productDescription: string;
   productImage: string;
   productId: number;
+  categoryId: number;
 }
 export interface OrderProduct {
   url: string;

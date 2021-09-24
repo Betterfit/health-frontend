@@ -45,8 +45,13 @@ const DashboardOrder = ({ props, type }) => {
         <Route
           path={`${match.path}/:categoryName/:cid/product/:pid/:id?`}
           exact
-          render={(props) => {
-            return <DashboardProductDetail edit={true} {...props} />;
+          render={({ match }) => {
+            return (
+              <DashboardProductDetail
+                edit={true}
+                productOptionId={Number(match.params.id)}
+              />
+            );
           }}
         />
         <Route

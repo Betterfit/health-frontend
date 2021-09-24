@@ -4,20 +4,16 @@ import AddProductForm from "Components/Forms/AddProductForm";
 //components
 import BackNavigation from "Components/Helpers/BackNavigation";
 import ProductDetailsCard from "Components/Product/ProductDetailsCard";
-import { api } from "Helpers/typedAPI";
-import { productDisplayName } from "Models/products";
+import { productDisplayName, useProductOption } from "Models/products";
 import React from "react";
-import { useQuery } from "react-query";
 
 const DashboardProductDetail = ({
   productOptionId,
 }: {
   productOptionId: number;
 }) => {
-  const productQuery = useQuery(
-    ["productOptions", { id: productOptionId }],
-    () => api.getProductOption(productOptionId)
-  );
+  const productQuery = useProductOption(productOptionId);
+
   if (!productQuery.isSuccess)
     return (
       <LoadingSpinner bubbleColor="gray" genericError={productQuery.isError} />

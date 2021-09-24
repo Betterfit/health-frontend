@@ -56,45 +56,44 @@ const OrderCart = ({ Cart, id = null, facility }) => {
   });
 
   const confirmCallBack = (status) => {
+    console.log(facility);
     if (!facility) return;
-    if (status === "draft") {
-      let order = {
-        facility: facility.id,
-        user: myProfileQuery.data.id,
-        purchase_no: cartStore.newOrderName,
-        status: status,
-        order_products: CartData.map((item) => {
-          return {
-            quantity: item.quantity,
-            product_option: item.pk,
-            pk: item.product_pk,
-            priority: item.priority ? "stat" : "normal",
-          };
-        }),
-      };
-      if (cartStore.cartType === "editCart") {
-        delete order.facility;
-        delete order.facility_admin;
-        api.editOrder(order, id).then((response) => {
-          setModalOrder(false);
-          setModalDraft(false);
-          cartStore.newOrderName = "";
-          cartStore.cart = [];
-          cartStore.updateLocalCartStorage();
-          setCartItems(null);
-          history.push(`/dashboard/orders/detail/${response.data.pk}`);
-        });
-      } else {
-        api.setNewOrder(order).then((response) => {
-          setModalOrder(false);
-          setModalDraft(false);
-          cartStore.newOrderName = "";
-          cartStore.cart = [];
-          cartStore.updateLocalCartStorage();
-          setCartItems(null);
-          history.push(`/dashboard/orders/detail/${response.data.pk}`);
-        });
-      }
+    let order = {
+      facility: facility.id,
+      user: myProfileQuery.data.id,
+      purchase_no: cartStore.newOrderName,
+      status: status,
+      order_products: CartData.map((item) => {
+        return {
+          quantity: item.quantity,
+          product_option: item.pk,
+          pk: item.product_pk,
+          priority: item.priority ? "stat" : "normal",
+        };
+      }),
+    };
+    if (cartStore.cartType === "editCart") {
+      delete order.facility;
+      delete order.facility_admin;
+      api.editOrder(order, id).then((response) => {
+        setModalOrder(false);
+        setModalDraft(false);
+        cartStore.newOrderName = "";
+        cartStore.cart = [];
+        cartStore.updateLocalCartStorage();
+        setCartItems(null);
+        history.push(`/dashboard/orders/detail/${response.data.pk}`);
+      });
+    } else {
+      api.setNewOrder(order).then((response) => {
+        setModalOrder(false);
+        setModalDraft(false);
+        cartStore.newOrderName = "";
+        cartStore.cart = [];
+        cartStore.updateLocalCartStorage();
+        setCartItems(null);
+        history.push(`/dashboard/orders/detail/${response.data.pk}`);
+      });
     }
   };
 
