@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import CircleButton from "Components/Forms/CircleButton";
 import FlatButton from "Components/Forms/FlatDetailButton";
+import { setProductNavInfo } from "Containers/Facility/Inner/ProductList";
 import { useCartStore } from "Context/cartContext";
 import EmptyImage from "Images/emptyImage.png";
 import { productDisplayName } from "Models/products";
@@ -75,11 +76,7 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
           <FlatButton
             text="View Details"
             onClick={() => {
-              let path = history.location.pathname.replace("/search", "");
-              console.log(path);
-              history.push(
-                `${path}/product/${product.productId}/${product.id}`
-              );
+              setProductNavInfo(history, { productId: product.id });
             }}
             extras="hidden md:block"
           />

@@ -1,3 +1,4 @@
+import { setProductNavInfo } from "Containers/Facility/Inner/ProductList";
 import Translator from "Helpers/Translator";
 import RightArrow from "Images/Icons/right-arrow.svg";
 import React from "react";
@@ -11,11 +12,7 @@ const CategoryCard = ({ category }: { category: ProductCategory }) => {
     <>
       <button
         className="col-span-1 mb-2 p-6 relative flex flex-row md:flex-col justify-content items-center rounded-lg border border-betterfit-grey hover:bg-betterfit-pale-blue hover:border-betterfit-basic-blue focus-visible:shadow-none"
-        onClick={() =>
-          history.push(
-            history.location.pathname + category.name + "/" + category.id
-          )
-        }
+        onClick={() => setProductNavInfo(history, { categoryId: category.id })}
       >
         <div
           className="rounded-full h-18 w-18 flex items-center "

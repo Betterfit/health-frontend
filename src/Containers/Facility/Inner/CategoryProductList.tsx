@@ -27,12 +27,11 @@ const CategoryProductList = ({ categoryId }: { categoryId: number }) => {
               title={category.name}
               icon={category.icon}
               background_color={category.backgroundColor}
-              color={category.mainColor}
             />
           </div>
           <div className="grid grid-cols-1 gap-4 mb-6 md:mb-10 customproductgrid">
             {productsQuery.data.map((product) => (
-              <ProductCard product={product} />
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         </>

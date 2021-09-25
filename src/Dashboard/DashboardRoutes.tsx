@@ -47,7 +47,7 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
           return <Redirect to={`/dashboard/edit-order/${id}/category/`} />;
         }}
       />
-      <Route
+      {/* <Route
         path="/dashboard/edit-order/:oid/category"
         render={(props) => {
           return (
@@ -56,7 +56,7 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
             </CartProvider>
           );
         }}
-      />
+      /> */}
       <Route exact path="/dashboard/requests">
         <RequestsPage />
       </Route>
@@ -67,16 +67,11 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
           return <OrderDetail orderId={Number(props.match.params.id)} />;
         }}
       />
-      <Route
-        path="/dashboard/new-order/category"
-        render={(props) => {
-          return (
-            <CartProvider value="cart">
-              <DashboardOrder props={props} type="new" />
-            </CartProvider>
-          );
-        }}
-      />
+      <Route path="/dashboard/new-order">
+        <CartProvider value="cart">
+          <DashboardOrder />
+        </CartProvider>
+      </Route>
       {/* Supplier Routes */}
       <Route path="/dashboard/tickets/">
         <TicketsPage />
