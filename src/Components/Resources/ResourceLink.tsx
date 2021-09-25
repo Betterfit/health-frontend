@@ -1,13 +1,13 @@
-import TagLink from "Components/Content/TagLink";
 import FacilityCard from "Components/ResourceProfile/FacilityCard";
 import LabCard from "Components/ResourceProfile/LabCard";
 import RegulationCard from "Components/ResourceProfile/RegulationCard";
 import ResearchCard from "Components/ResourceProfile/ResearchCard";
 import SupplierCard from "Components/ResourceProfile/SupplierCard";
+import TagLink from "Components/Resources/TagLink";
 import Slider from "Components/Slider/Slider";
+import Translator from "Helpers/Translator";
 import React, { useState } from "react";
 import { Resource, ResourceDetails, Tag } from "Types";
-import Translator from "Helpers/Translator";
 
 interface ResourceLinkProps {
   resource: Resource;

@@ -35,6 +35,7 @@ To extend a global style, compose it in a selector in a css module file like so:
 :global .hoverShadow:hover {
   transition: box-shadow 0.3s;
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  transform: scale(1.01);
 }
 
 :global .hoverShadowDark:hover {

@@ -101,7 +101,7 @@ const OrderProductInfo = ({
             <PrettyButton
               text="Mark as Delivered"
               color="green"
-              onClick={() => console.log("objeccoolt")}
+              onClick={deliveredMutation.mutate}
               disabled={deliveredMutation.isLoading}
             />
             {/* <PrettyButton text="Contact Supplier" variant="outline" /> */}

@@ -89,7 +89,7 @@ const sortedNavItems = (
     navItems.push(
       ...[
         {
-          to: "/dashboard/new-order/category/",
+          to: "/dashboard/new-order",
           name: "New Order",
           icon: NewOrderIcon,
           key: "new-order",

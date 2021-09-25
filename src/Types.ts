@@ -227,6 +227,14 @@ export interface SupplierTicket extends Ticket {
   destination: Facility;
   purchaser: Organization;
 }
+export interface ProductCategory {
+  name: string;
+  id: number;
+  icon: string;
+  backgroundColor: string;
+  mainColor: string;
+  count: number;
+}
 export interface ProductOption {
   id: number;
   name: string;
@@ -236,6 +244,8 @@ export interface ProductOption {
   productVariation: string;
   productDescription: string;
   productImage: string;
+  productId: number;
+  categoryId: number;
 }
 export interface OrderProduct {
   url: string;
@@ -354,4 +364,12 @@ export interface Payment {
   taxes: number;
   timeCreated: string;
   order: Order;
+}
+
+export interface Transfer {
+  id: number;
+  total: string;
+  completed: boolean;
+  orderProduct: OrderProduct;
+  timeCreated: string;
 }

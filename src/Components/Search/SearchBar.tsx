@@ -51,6 +51,10 @@ const SearchBar = ({
           // clears/resets placeholder text on focus
           onBlur={(e) => (e.target.placeholder = placeholderText)}
           onFocus={(e) => (e.target.placeholder = "")}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && searchRef.current)
+              performSearch(searchRef.current.value);
+          }}
           autoComplete="false"
           onChange={(e) => {
             // Removes the previously queued up search
