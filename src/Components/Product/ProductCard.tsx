@@ -3,11 +3,16 @@ import CircleButton from "Components/Forms/CircleButton";
 import FlatButton from "Components/Forms/FlatDetailButton";
 import { setProductNavInfo } from "Containers/Facility/Inner/ProductList";
 import { useCartStore } from "Context/cartContext";
+import { api } from "Helpers/typedAPI";
 import EmptyImage from "Images/emptyImage.png";
+import _ from "lodash";
+import { useSelectedFacility } from "Models/facilities";
 import { productDisplayName } from "Models/products";
+import { formatCurrency } from "Pages/Requests/RequestsPage";
 import React, { useState } from "react";
+import { useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
-import { ProductOption } from "Types";
+import { ProductOption, SupplierQuote } from "Types";
 
 //The html component for the product image
 //If no image can be found - return nothing
@@ -37,6 +42,14 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
     (cartStore as any)?.addToCart(product.id, 1, false, product.productId);
   };
   const displayName = productDisplayName(product);
+  const { facilityId } = useSelectedFacility();
+  const pricingQueryProps = { productOptionId: product.id, facilityId };
+  const pricingQuery = useQuery(
+    ["pricing", pricingQueryProps],
+    () => api.getPricing([pricingQueryProps]).then((result) => result.data[0]),
+    { enabled: facilityId != null }
+  );
+  const { data: pricing } = pricingQuery;
   return (
     <>
       <div
@@ -62,6 +75,9 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
             <span className="text-betterfit-grey-blue text-xs">
               {product.name ?? "N/A"}
             </span>
+            {pricing && (
+              <ProductPricing purchaseOptions={pricing.purchaseOptions} />
+            )}
           </div>
 
           <div className="flex flex-row pl-4 pr-2 py-1 justify-between items-center ml-auto mt-0 md:ml-0 md:mt-auto">
@@ -71,7 +87,6 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
             <CircleButton hover={active} onClick={() => addToCart()} />
           </div>
         </div>
-        {/*TODO - improve path here*/}
         {active && (
           <FlatButton
             text="View Details"
@@ -85,4 +100,26 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
     </>
   );
 };
+
+const ProductPricing = ({
+  purchaseOptions,
+}: {
+  purchaseOptions: SupplierQuote[];
+}) => {
+  const minPrice = _.minBy(purchaseOptions, (po) => po.priceInfo.minPricePer)
+    ?.priceInfo.minPricePer;
+  const maxPrice = _.maxBy(purchaseOptions, (po) => po.priceInfo.minPricePer)
+    ?.priceInfo.maxPricePer;
+  return (
+    <>
+      <span className="text-betterfit-grey-blue text-xs">
+        {purchaseOptions.length + " Suppliers"}
+      </span>
+      <span className="text-betterfit-grey-blue text-xs">
+        {formatCurrency(minPrice)} - {formatCurrency(maxPrice)}
+      </span>
+    </>
+  );
+};
+
 export default ProductCard;
