@@ -23,7 +23,7 @@ const OrderCard = ({ order }: { order: Order }) => {
     <div
       // only act as a link to the detail page if we're not already on the detail page
       className={clsx(
-        !onDetailPage && "cardBorder hoverShadowDark cursor-pointer",
+        !onDetailPage && "cardBorder hoverShadowDark hoverGrow cursor-pointer",
         styles.order
       )}
       onClick={() => !onDetailPage && history.push(detailLink)}
