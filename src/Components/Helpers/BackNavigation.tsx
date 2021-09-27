@@ -4,7 +4,13 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 
-const BackNavigation = ({ link, onClickOverride }) => {
+const BackNavigation = ({
+  link,
+  onClickOverride,
+}: {
+  link: string;
+  onClickOverride?: React.MouseEventHandler<HTMLButtonElement>;
+}) => {
   const history = useHistory();
   const action = onClickOverride ? onClickOverride : () => history.goBack();
   return (

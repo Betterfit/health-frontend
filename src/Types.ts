@@ -227,6 +227,14 @@ export interface SupplierTicket extends Ticket {
   destination: Facility;
   purchaser: Organization;
 }
+export interface ProductCategory {
+  name: string;
+  id: number;
+  icon: string;
+  backgroundColor: string;
+  mainColor: string;
+  count: number;
+}
 export interface ProductOption {
   id: number;
   name: string;
@@ -236,6 +244,8 @@ export interface ProductOption {
   productVariation: string;
   productDescription: string;
   productImage: string;
+  productId: number;
+  categoryId: number;
 }
 export interface OrderProduct {
   url: string;
@@ -263,7 +273,12 @@ export interface Order {
 
 export interface SupplierQuote {
   supplier: Organization;
-  priceInfo: { pricePer: number; totalPrice: number };
+  priceInfo: {
+    pricePer: number;
+    totalPrice: number;
+    minPricePer: number;
+    maxPricePer: number;
+  };
 }
 
 export interface SupplierPriceRange {

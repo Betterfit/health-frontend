@@ -8,6 +8,8 @@ import {
   Organization,
   Payment,
   PaymentMethod,
+  ProductCategory,
+  ProductOption,
   ProductPricing,
   SupplierPricing,
   SupplierTicket,
@@ -54,7 +56,7 @@ export default class TypedAPI {
     client.patch("/users/" + userId + "/", data);
   };
 
-  // organization
+  //  ********** FACILITIES AND ORGANIZATION API **********
   getMyOrganization = async () => {
     const client = await this.init();
     return client.get<Organization>("/organizations/my_organization/");
@@ -255,6 +257,39 @@ export default class TypedAPI {
   updateTicket = async (ticket: SupplierTicket, data: SupplierTicketUpdate) => {
     const client = await this.init();
     return client.patch(ticket.url, data);
+  };
+
+  //  ********** PRODUCTS API **********
+  getCategories = async () => {
+    const client = await this.init();
+    const response = await client.get<ProductCategory[]>("/product-categories");
+    return response.data;
+  };
+
+  getCategory = async (id: number) => {
+    const client = await this.init();
+    const response = await client.get<ProductCategory>(
+      "/product-categories/" + id
+    );
+    return response.data;
+  };
+
+  getProductOptions = async (queryParams?: {
+    category?: number;
+    search?: string;
+  }) => {
+    const client = await this.init();
+    const queryString = buildQueryString(queryParams);
+    const response = await client.get<ProductOption[]>(
+      "/product-options" + queryString
+    );
+    return response.data;
+  };
+
+  getProductOption = async (id: number) => {
+    const client = await this.init();
+    const response = await client.get<ProductOption>("/product-options/" + id);
+    return response.data;
   };
 }
 
