@@ -1,0 +1,19 @@
+.status {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+.status > div {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.25rem;
+  border-radius: 100%;
+}
+
+.statusPaid > div {
+  background-color: var(--lucky-green);
+}
+
+.statusPending > div {
+  background-color: #efa93a;
+}

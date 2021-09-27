@@ -1,4 +1,4 @@
-import ProductImageCard from "Components/Content/ProductImageCard";
+import ProductImageCard from "Components/Product/ProductImageCard";
 import React from "react";
 import InventoryDescription from "../Inventory/Inventory_Description";
 

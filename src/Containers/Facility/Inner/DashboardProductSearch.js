@@ -1,6 +1,6 @@
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 import BackNavigation from "Components/Helpers/BackNavigation";
-import ProductCard from "Components/Order/ProductCard";
+import ProductCard from "Components/Product/ProductCard";
 import API from "Helpers/api";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";

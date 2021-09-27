@@ -3,18 +3,17 @@ import OrderCart from "Components/Order/OrderCart";
 import { useCartStore } from "Context/cartContext";
 import { observer } from "mobx-react";
 import { useUserFacilities } from "Models/facilities";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Facility } from "Types";
 
 const DashboardNewOrder = observer(() => {
   const cartStore = useCartStore() as any;
-  const { data: facilities } = useUserFacilities({
-    onSuccess: (facilities) => {
-      if (facilities.length > 0) setFacility(facilities[0]);
-      else console.log("User does not have access to any facilities");
-    },
-  });
+  const { data: facilities } = useUserFacilities();
   const [facility, setFacility] = useState<Facility | undefined>();
+  useEffect(() => {
+    if (!facility && facilities && facilities.length > 0)
+      setFacility(facilities[0]);
+  }, [facility, facilities]);
 
   let headerData = {
     facility: facility?.name,

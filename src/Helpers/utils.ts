@@ -51,13 +51,12 @@ export const formatTimeStamp = (
   moment(timeStamp).format("MMM D, YYYY" + (dateOnly ? "" : " - h:mm A"));
 
 export const buildQueryString = (
-  object: Record<number | string, number | string> | undefined
+  object: Record<number | string, number | string | null> | undefined
 ): string => {
   if (!object) return "";
-  return (
-    "?" +
-    Object.keys(object)
-      .map((key) => `${key}=${object[key]}`)
-      .join("&")
+  const params = new URLSearchParams();
+  Object.keys(object).forEach(
+    (k) => object[k] && params.set(k, String(object[k]))
   );
+  return "?" + params.toString();
 };
