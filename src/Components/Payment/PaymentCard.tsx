@@ -32,10 +32,11 @@ const PaymentCard = ({
     { enabled: expanded }
   );
   const { data: order } = orderQuery;
+  const detailPath = "/dashboard/orders/detail/" + payment.orderId;
   return (
     <AnimatedHeightChange className={clsx("cardBorder")}>
       <div className={styles.card}>
-        <div className={clsx("cardHeader")}>
+        <div className="cardHeader">
           <VerticalDetail
             label="Payment Date"
             value={formatTimeStamp(payment.timeCreated)}
@@ -52,12 +53,13 @@ const PaymentCard = ({
             label="Amount"
             value={formatCurrency(Number(payment.total))}
           />
-          <PrettyButton
-            text="Open Order"
-            onClick={() =>
-              history.push("/dashboard/orders/detail/" + payment.orderId)
-            }
-          />
+          {/* don't show button to go to detail page if we're already on the detail page */}
+          {history.location.pathname !== detailPath && (
+            <PrettyButton
+              text="Open Order"
+              onClick={() => history.push(detailPath)}
+            />
+          )}
         </div>
         {expanded && <PaymentDetails {...{ payment, order }} />}
         <PrettyButton
@@ -121,7 +123,7 @@ const PaymentDetails = ({
   );
 };
 
-const OrderProductInvoice = ({
+export const OrderProductInvoice = ({
   orderProduct,
 }: {
   orderProduct: OrderProduct;

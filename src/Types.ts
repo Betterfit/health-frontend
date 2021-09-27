@@ -355,3 +355,11 @@ export interface Payment {
   timeCreated: string;
   order: Order;
 }
+
+export interface Transfer {
+  id: number;
+  total: string;
+  completed: boolean;
+  orderProduct: OrderProduct;
+  timeCreated: string;
+}

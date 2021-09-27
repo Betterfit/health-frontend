@@ -11,6 +11,7 @@ import {
   ProductPricing,
   SupplierPricing,
   SupplierTicket,
+  Transfer,
   UserProfile,
 } from "Types";
 import { buildQueryString } from "./utils";
@@ -222,6 +223,12 @@ export default class TypedAPI {
     const queryString = buildQueryString(queryParams);
     const client = await this.init();
     const response = await client.get<Payment[]>("/payments" + queryString);
+    return response.data;
+  };
+
+  getTransfers = async () => {
+    const client = await this.init();
+    const response = await client.get<Transfer[]>("/transfers");
     return response.data;
   };
 

@@ -102,12 +102,10 @@ const CompleteConnectedAccount = ({
     <>
       <div className={styles.balances}>
         <VerticalDetail
-          label="Pending Balance"
-          value={formatCurrency(balance.pending.amount)}
-        />
-        <VerticalDetail
-          label="Available Balance"
-          value={formatCurrency(balance.available.amount)}
+          label="Balance"
+          value={formatCurrency(
+            balance.available.amount + balance.pending.amount
+          )}
         />
       </div>
       <div>
