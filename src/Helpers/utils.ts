@@ -50,13 +50,15 @@ export const formatTimeStamp = (
   //  https://momentjs.com/docs/#/displaying/
   moment(timeStamp).format("MMM D, YYYY" + (dateOnly ? "" : " - h:mm A"));
 
-export const buildQueryString = (
-  object: Record<number | string, number | string | null> | undefined
-): string => {
+/**
+ * Turns an object into a query string: ?a=3&b=fdafda
+ * Excludes values that aren't truthy.
+ */
+export const buildQueryString = (object: object | undefined): string => {
   if (!object) return "";
   const params = new URLSearchParams();
-  Object.keys(object).forEach(
-    (k) => object[k] && params.set(k, String(object[k]))
+  Object.entries(object).forEach(
+    ([key, val]) => val != null && params.set(key, String(val))
   );
   return "?" + params.toString();
 };
