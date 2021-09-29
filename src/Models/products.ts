@@ -28,6 +28,9 @@ export const useProductOption = (
   });
 };
 
-export const productDisplayName = (product: ProductOption): string => {
+export const productDisplayName = (
+  product: ProductOption | undefined
+): string => {
+  if (!product) return "";
   return `${product.product} - ${product.productVariation}`;
 };

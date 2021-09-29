@@ -1,10 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Order } from "Types";
-
-export interface CartItem {
-  quantity: number;
-  productOptionId: number;
-}
+import { CartItem, Order } from "Types";
 
 const initialState: CartItem[] = [];
 export const cartSlice = createSlice({
@@ -16,7 +11,13 @@ export const cartSlice = createSlice({
     // See here for some update patterns:
     // https://immerjs.github.io/immer/update-patterns/
     addItem: (state, action: PayloadAction<CartItem>) => {
-      state.push(action.payload);
+      const newItem = action.payload;
+      // if there's already an item for this product, add the quantities
+      const existing = state.find(
+        (item) => item.productOptionId === newItem.productOptionId
+      );
+      if (existing) existing.quantity += newItem.quantity;
+      else state.push(action.payload);
     },
     removeById: (state, action: PayloadAction<number>) => {
       const id = action.payload;
@@ -25,10 +26,12 @@ export const cartSlice = createSlice({
     },
     updateItemQuantity: (
       state,
-      action: PayloadAction<{ id: number; quantity: number }>
+      action: PayloadAction<{ productOptionId: number; quantity: number }>
     ) => {
-      const { id, quantity } = action.payload;
-      const item = state.find((item) => item.productOptionId === id);
+      const { productOptionId, quantity } = action.payload;
+      const item = state.find(
+        (item) => item.productOptionId === productOptionId
+      );
       if (item) item.quantity = quantity;
     },
     importOrder: (state, action: PayloadAction<Order>) => {

@@ -373,3 +373,8 @@ export interface Transfer {
   orderProduct: OrderProduct;
   timeCreated: string;
 }
+
+export interface CartItem {
+  quantity: number;
+  productOptionId: number;
+}
