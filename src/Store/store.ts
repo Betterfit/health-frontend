@@ -1,11 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { cartSlice } from "./cartSlice";
+import { cartSlice, validatePersistedState } from "./cartSlice";
 
 // read serializer state from local storage
 const loadSavedState = () => {
-  const serializedState = localStorage.getItem("reduxState");
-  return serializedState ? JSON.parse(serializedState) : {};
+  let rawState = localStorage.getItem("reduxState");
+  const state = rawState ? JSON.parse(rawState) : {};
+  return {
+    cart: validatePersistedState(state),
+  };
 };
 
 export const store = configureStore({

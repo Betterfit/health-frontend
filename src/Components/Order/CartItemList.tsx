@@ -5,7 +5,7 @@ import { useAppSelector } from "Store/store";
 import OrderProductCard from "./OrderProductCard";
 
 const CartItemList = () => {
-  const cartItems = useAppSelector((state) => state.cart);
+  const cartItems = useAppSelector((state) => state.cart.items);
   return (
     <div role="list" className="my-4 overflow-y-scroll p-4">
       {cartItems &&

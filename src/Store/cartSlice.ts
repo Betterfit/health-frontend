@@ -1,7 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartItem, Order } from "Types";
 
-const initialState: CartItem[] = [];
+// change this when you want the local storage persisted state to be evicted
+export const VERSION = 1;
+
+interface CartState {
+  items: CartItem[];
+  facilityId?: number;
+  orderId?: number;
+  version: number;
+}
+
+const initialState = {
+  items: [],
+  version: VERSION,
+} as CartState;
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -13,37 +26,51 @@ export const cartSlice = createSlice({
     addItem: (state, action: PayloadAction<CartItem>) => {
       const newItem = action.payload;
       // if there's already an item for this product, add the quantities
-      const existing = state.find(
+      const existing = state.items.find(
         (item) => item.productOptionId === newItem.productOptionId
       );
       if (existing) existing.quantity += newItem.quantity;
-      else state.push(action.payload);
+      else state.items.push(action.payload);
     },
     removeById: (state, action: PayloadAction<number>) => {
       const id = action.payload;
-      const index = state.findIndex((item) => item.productOptionId === id);
-      if (index !== -1) state.splice(index, 1);
+      const index = state.items.findIndex(
+        (item) => item.productOptionId === id
+      );
+      if (index !== -1) state.items.splice(index, 1);
     },
     updateItemQuantity: (
       state,
       action: PayloadAction<{ productOptionId: number; quantity: number }>
     ) => {
       const { productOptionId, quantity } = action.payload;
-      const item = state.find(
+      const item = state.items.find(
         (item) => item.productOptionId === productOptionId
       );
       if (item) item.quantity = quantity;
     },
     importOrder: (state, action: PayloadAction<Order>) => {
       const order = action.payload;
-      return order.orderProducts.map((op) => ({
+      state.items = order.orderProducts.map((op) => ({
         productOptionId: op.productOption.id,
         quantity: op.quantity,
       }));
+      state.facilityId = order.facility.id;
+      state.orderId = order.pk;
     },
-    // immer allows you to return a value as well
-    clearCart: (state, action: PayloadAction<void>) => [],
+    clearCart: (state, action: PayloadAction<void>) => {
+      state.items = [];
+    },
   },
 });
 
 export const cartActions = cartSlice.actions;
+
+/**
+ * Returns the passed in state if it is valid, or the default initial state.
+ * This is what allows us to purge the localstorage after updates.
+ */
+export const validatePersistedState = (state: any): CartState => {
+  if (state?.version === VERSION) return state;
+  return initialState;
+};
