@@ -4,7 +4,6 @@ import AccountsIcon from "Images/Icons/accounts.svg";
 import InventoryIcon from "Images/Icons/inventory.svg";
 import NewOrderIcon from "Images/Icons/new-order.svg";
 import OrderIcon from "Images/Icons/order.svg";
-import ResourcesIcon from "Images/Icons/resources.svg";
 import TicketIcon from "Images/Icons/ticket.svg";
 import orderBy from "lodash/orderBy";
 import { useOrganization } from "Models/organization";
@@ -56,15 +55,7 @@ const sortedNavItems = (
   const isAdmin =
     myOrganization.isAdmin ||
     userProfile.facilityMembership.some((membership) => membership.isAdmin);
-  const navItems: NavItem[] = [
-    {
-      to: "/dashboard/resources",
-      name: "Resources",
-      icon: ResourcesIcon,
-      key: "resources",
-      precedence: 0,
-    },
-  ];
+  const navItems: NavItem[] = [];
   if (isAdmin) {
     navItems.push(
       ...[
@@ -73,14 +64,14 @@ const sortedNavItems = (
           name: "Admin",
           icon: AccountsIcon,
           key: "admin",
-          precedence: 4,
+          precedence: 2,
         },
         {
           to: "/dashboard/payments",
           name: "Payments",
           icon: AccountsIcon,
           key: "payments",
-          precedence: 5,
+          precedence: 1,
         },
       ]
     );
@@ -93,14 +84,14 @@ const sortedNavItems = (
           name: "New Order",
           icon: NewOrderIcon,
           key: "new-order",
-          precedence: 3,
+          precedence: 5,
         },
         {
           to: "/dashboard/orders",
           name: "Orders",
           icon: OrderIcon,
           key: "order",
-          precedence: 2,
+          precedence: 4,
         },
       ]
     );
@@ -112,7 +103,7 @@ const sortedNavItems = (
             name: "Requests",
             icon: OrderIcon,
             key: "requests",
-            precedence: 2,
+            precedence: 3,
           },
         ]
       );
@@ -126,14 +117,14 @@ const sortedNavItems = (
           name: "Tickets",
           icon: TicketIcon,
           key: "tickets",
-          precedence: 3,
+          precedence: 5,
         },
         {
           to: "/dashboard/inventory",
           name: "Inventory",
           icon: InventoryIcon,
           key: "inventory",
-          precedence: 2,
+          precedence: 4,
         },
       ]
     );
