@@ -37,7 +37,7 @@ const DashboardInventory = () => {
       })
       .catch((err) => console.log(err));
 
-  const createProductCategoryList = (productCategory) =>
+  const createProductCategoryList = (productCategory, showAll = false) =>
     productCategory.map((product, i) => {
       return (
         <div key={i}>
@@ -49,10 +49,11 @@ const DashboardInventory = () => {
               return (
                 <BoxLink
                   key={j}
-                  to="/dashboard/inventory/product/"
+                  to={`/dashboard/inventory/product/${p.pk}${
+                    showAll ? "/all" : ""
+                  }`}
                   link={p.name}
                   textColor="dark-blue"
-                  id={p.pk}
                 />
               );
             })}
@@ -70,7 +71,8 @@ const DashboardInventory = () => {
       {
         heading: "All Products",
         content: createProductCategoryList(
-          AllCategoryData.filter((category) => category.products.length > 0)
+          AllCategoryData.filter((category) => category.products.length > 0),
+          true
         ),
         key: "all-products",
       },
@@ -84,6 +86,7 @@ const DashboardInventory = () => {
     if (AllCategoryData) {
       getSupplierCategories();
     }
+    console.log(AllCategoryData);
   }, [AllCategoryData]);
 
   useEffect(() => {
@@ -121,13 +124,12 @@ const DashboardInventory = () => {
               location.pathname === "/dashboard/inventory" ? `z-0` : `z-10`
             }`}
           >
-            <Route
-              exact
-              path="/dashboard/inventory/product/:id"
-              render={(props) => {
-                return <DashboardProductList {...props} edit={true} />;
-              }}
-            />
+            <Route exact path="/dashboard/inventory/product/:id">
+              <DashboardProductList />
+            </Route>
+            <Route path="/dashboard/inventory/product/:id/all">
+              <DashboardProductList showAll />
+            </Route>
             <Route
               path="/dashboard/inventory/product/:id/detail/:oid?/edit"
               exact

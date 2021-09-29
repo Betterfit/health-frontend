@@ -1,11 +1,11 @@
+import RightArrow from "Images/Icons/right-arrow.svg";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { ReactSVG } from "react-svg";
-import RightArrow from "Images/Icons/right-arrow.svg";
-const BoxLink = ({ textColor, link, to, id }) => {
+const BoxLink = ({ textColor, link, to }) => {
   return (
     <NavLink
-      to={`${to}${id}`}
+      to={to}
       className={`text-${textColor} pl-4 pr-2 py-5 flex justify-between bg-white rounded-md box-link font-semibold`}
     >
       {link}
