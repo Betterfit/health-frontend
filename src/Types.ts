@@ -273,7 +273,12 @@ export interface Order {
 
 export interface SupplierQuote {
   supplier: Organization;
-  priceInfo: { pricePer: number; totalPrice: number };
+  priceInfo: {
+    pricePer: number;
+    totalPrice: number;
+    minPricePer: number;
+    maxPricePer: number;
+  };
 }
 
 export interface SupplierPriceRange {

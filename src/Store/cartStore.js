@@ -4,6 +4,7 @@ export function createCartStore(name = "cart") {
     cart: [],
     newOrderName: "",
     addToCart(item, quantity, priority, product_pk) {
+      console.log(item, quantity, priority);
       let newObj = {
         pk: item,
         product_pk: product_pk,

@@ -44,18 +44,18 @@ export const mapFacilitiesById = (
  * Returns the currently selected facility, along with a function to update it.
  * Currently just selects the first facility facility that the user has access to.
  * TODO: Persist globally, perhaps between sessions as well
- * @returns
  */
 export const useSelectedFacility = () => {
   const { data: facilities } = useUserFacilities();
-  const facility = facilities && facilities.length > 0 ? facilities[0] : null;
+  const facility =
+    facilities && facilities.length > 0 ? facilities[0] : undefined;
   // eventually we'll make this global with context
   const setSelectedFacility = (facility: Facility) => {
     throw Error("Not implemented!");
   };
   return {
     facility,
-    facilityId: facility ? facility.id : null,
+    facilityId: facility ? facility.id : undefined,
     setSelectedFacility,
   };
 };
