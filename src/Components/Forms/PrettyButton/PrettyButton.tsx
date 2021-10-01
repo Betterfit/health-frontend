@@ -28,6 +28,7 @@ const PrettyButton = ({
       e.preventDefault();
       // stops parent nodes from recieving a click event
       e.stopPropagation();
+      onClick();
     }
     if (variant !== "link") createRipple(e);
   };
