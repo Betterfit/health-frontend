@@ -6,7 +6,7 @@ export const VERSION = 1;
 
 interface CartState {
   items: CartItem[];
-  facilityId?: number;
+  destinationId?: number;
   orderId?: number;
   version: number;
 }
@@ -55,11 +55,14 @@ export const cartSlice = createSlice({
         productOptionId: op.productOption.id,
         quantity: op.quantity,
       }));
-      state.facilityId = order.facility.id;
+      state.destinationId = order.facility.id;
       state.orderId = order.pk;
     },
     clearCart: (state, action: PayloadAction<void>) => {
       state.items = [];
+    },
+    setDestinationId: (state, action: PayloadAction<number>) => {
+      state.destinationId = action.payload;
     },
   },
 });

@@ -65,12 +65,18 @@
 .outline {
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
-  color: var(--midnight-blue);
 }
 
 .outline.blue {
   background-color: var(--purple-wash);
   border: 2px solid var(--primary-blue);
+  color: var(--midnight-blue);
+}
+
+.outline.green {
+  background-color: #e0ffed;
+  border: 2px solid var(--lucky-green);
+  color: var(--lucky-green);
 }
 
 .outline:disabled {

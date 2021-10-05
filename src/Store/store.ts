@@ -7,7 +7,7 @@ const loadSavedState = () => {
   let rawState = localStorage.getItem("reduxState");
   const state = rawState ? JSON.parse(rawState) : {};
   return {
-    cart: validatePersistedState(state),
+    cart: validatePersistedState(state?.cart),
   };
 };
 

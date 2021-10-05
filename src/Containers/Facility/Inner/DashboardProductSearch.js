@@ -60,7 +60,7 @@ const DashboardProductSearch = () => {
                 return (
                   <ProductCard
                     key={uuid()}
-                    product={product}
+                    products={product}
                     product_details={productdetails}
                     category={item.product_category}
                     extra={null}

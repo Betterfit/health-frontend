@@ -143,6 +143,27 @@ export default class TypedAPI {
     return client.post(order.url + "/cancel");
   };
 
+  createOrder = async (order: {
+    facility: number;
+    orderProducts: {
+      quantity: number;
+      productOption: number;
+      autoSelectSupplier?: boolean;
+      pk?: number;
+    }[];
+  }) => {
+    const client = await this.init();
+    return client
+      .post<Order>(`/orders/`, order)
+      .then((response) => response.data);
+  };
+
+  // editOrder = async (order, id) => {
+  //   console.log(order);
+  //   const client = await this.init();
+  //   return client.patch(`/orders/${id}/`, order);
+  // };
+
   //  ********** PRICING API **********
   /**
    * Used by purchasers to get price quotes/ranges

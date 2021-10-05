@@ -57,11 +57,11 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
             product={product}
             className={active ? "opacity-50" : ""}
           />
-          <div className="flex flex-col md:pt-7 pl-4  w-1/2 md:w-auto">
-            <h1 className="text-sm md:text-base font-semibold text-status-dark-blue ">
+          <div className="flex flex-col md:pt-7 pl-4  w-1/2 md:w-auto flex-1">
+            <h1 className="text-lg md:text-base font-semibold text-status-dark-blue ">
               {displayName}
             </h1>
-            <span className="text-betterfit-grey-blue text-xs">
+            <span className="text-betterfit-grey-blue text-md">
               {product.name ?? "N/A"}
             </span>
             {pricing && (
@@ -101,10 +101,10 @@ const ProductPricing = ({
     ?.priceInfo.maxPricePer;
   return (
     <>
-      <span className="text-betterfit-grey-blue text-xs">
+      <span className="text-betterfit-grey-blue text-sm">
         {purchaseOptions.length + " Suppliers"}
       </span>
-      <span className="text-betterfit-grey-blue text-xs">
+      <span className="text-betterfit-grey-blue text-sm">
         {formatCurrency(minPrice)} - {formatCurrency(maxPrice)}
       </span>
     </>
