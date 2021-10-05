@@ -9,7 +9,7 @@ export const useOrder = (id: number, queryOptions?: UseQueryOptions<Order>) => {
     // https://react-query.tanstack.com/guides/initial-query-data#initial-data-from-cache
     initialData: () => {
       const cache = queryClient.getQueryData("orders") as Order[] | undefined;
-      return cache?.find((order) => order.pk === id);
+      return cache?.find((order) => order.id === id);
     },
     ...queryOptions,
   });

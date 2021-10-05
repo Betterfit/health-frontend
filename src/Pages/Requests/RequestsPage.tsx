@@ -1,3 +1,4 @@
+import { Dialog } from "@material-ui/core";
 import IconButton from "Components/Content/IconButton";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
@@ -10,14 +11,7 @@ import { notNull } from "Helpers/utils";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
-import {
-  Order,
-  OrderInvoice,
-  OrderProduct,
-  PaymentMethod,
-  ProductPricing,
-  SupplierQuote,
-} from "Types";
+import { Order, OrderProduct, ProductPricing, SupplierQuote } from "Types";
 import ApproveOrderDialog from "./ApproveOrderDialog";
 import RequestedProductCard from "./RequestedProductCard";
 import styles from "./RequestsPage.module.css";
@@ -112,7 +106,7 @@ const RequestPage = () => {
           orders.map((order) => (
             <RequestedOrderCard
               order={order}
-              key={order.pk}
+              key={order.id}
               selectedQuotes={order.orderProducts.map(
                 ({ id: pk }) => selectedQuotes[pk]
               )}
@@ -162,7 +156,7 @@ const RequestedOrderCard = ({
   prices?: ProductPricing[];
   selectQuote: (orderProduct: OrderProduct, supplier: SupplierQuote) => void;
 }) => {
-  const [invoice, setInvoice] = useState<OrderInvoice | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const { orderProducts } = order;
   const queryClient = useQueryClient();
   const orderStatusMutation = useMutation(api.updateOrderStatus, {
@@ -190,32 +184,21 @@ const RequestedOrderCard = ({
     supplierSelections.length < orderProducts.length;
 
   const denyOrder = () =>
-    orderStatusMutation.mutate({ action: "cancel", order });
+    orderStatusMutation.mutate({ action: "cancel", orderId: order.id });
   const saveSelections = () => {
     orderStatusMutation.mutate(
       {
-        order,
+        orderId: order.id,
         action: "save-selections",
         data: supplierSelections,
       },
       {
-        onSuccess: (response) => {
-          setInvoice(response.data);
+        onSuccess: () => {
+          setDialogOpen(true);
         },
       }
     );
   };
-  const approveOrder = (paymentMethod: PaymentMethod, total: number) => {
-    orderStatusMutation.mutate({
-      order,
-      action: "approve",
-      data: {
-        paymentMethodId: paymentMethod.id,
-        total,
-      },
-    });
-  };
-
   let orderPrice: number | null = 0;
   // const invoice: InvoiceItem[] = [];
   if (selectedQuotes) {
@@ -229,12 +212,12 @@ const RequestedOrderCard = ({
 
   return (
     <div className={styles.order} data-testid={"request-" + order.orderNo}>
-      {invoice && (
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
         <ApproveOrderDialog
-          handleClose={() => setInvoice(null)}
-          {...{ invoice, approveOrder, orderProducts }}
+          orderId={order.id}
+          onCancel={() => setDialogOpen(false)}
         />
-      )}
+      </Dialog>
       <LoadingSpinner darkened show={orderStatusMutation.isLoading} />
       <OrderCardHeader order={order}>
         <VerticalDetail

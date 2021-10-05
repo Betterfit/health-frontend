@@ -16,7 +16,7 @@ import styles from "./OrderCard.module.css";
 
 const OrderCard = ({ order }: { order: Order }) => {
   const history = useHistory();
-  const detailLink = "/dashboard/orders/detail/" + order.pk;
+  const detailLink = "/dashboard/orders/detail/" + order.id;
   const onDetailPage = history.location.pathname === detailLink;
   console.log(order);
   return (
@@ -28,7 +28,7 @@ const OrderCard = ({ order }: { order: Order }) => {
       )}
       onClick={() => !onDetailPage && history.push(detailLink)}
       tabIndex={!onDetailPage ? 0 : -1}
-      aria-label={`Order ${order.pk}`}
+      aria-label={`Order ${order.id}`}
       onKeyDown={(event) => {
         if (!onDetailPage && event.key === "Enter") history.push(detailLink);
       }}

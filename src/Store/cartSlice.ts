@@ -56,7 +56,7 @@ export const cartSlice = createSlice({
         quantity: op.quantity,
       }));
       state.destinationId = order.facility.id;
-      state.orderId = order.pk;
+      state.orderId = order.id;
     },
     clearCart: (state, action: PayloadAction<void>) => {
       state.items = [];

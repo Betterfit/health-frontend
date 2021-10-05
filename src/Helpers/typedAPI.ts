@@ -5,6 +5,7 @@ import {
   ConnectedAccount,
   Facility,
   Order,
+  OrderInvoice,
   Organization,
   Payment,
   PaymentMethod,
@@ -116,12 +117,12 @@ export default class TypedAPI {
   };
 
   updateOrderStatus = async ({
-    order,
+    orderId,
     action,
     data,
   }: UpdateOrderStatusProps) => {
     const client = await this.init();
-    return client.post(order.url + "/" + action, data);
+    return client.post(`/orders/${orderId}/${action}`, data);
   };
 
   approveOrder = async ({
@@ -156,6 +157,11 @@ export default class TypedAPI {
     return client
       .post<Order>(`/orders/`, order)
       .then((response) => response.data);
+  };
+
+  getOrderInvoice = async (orderId: number) => {
+    const client = await this.init();
+    return client.get<OrderInvoice>(`/orders/${orderId}/invoice`);
   };
 
   // editOrder = async (order, id) => {
@@ -318,7 +324,7 @@ export const api = new TypedAPI();
 
 export type FacilityData = Omit<Facility, "pk" | "url" | "id">;
 
-type UpdateOrderStatusProps = { order: Order } & (
+type UpdateOrderStatusProps = { orderId: number } & (
   | { action: "cancel"; data?: undefined }
   | {
       action: "save-selections";

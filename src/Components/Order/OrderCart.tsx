@@ -1,7 +1,7 @@
-import { Dialog } from "@material-ui/core";
+import Dialog from "Components/Dialog";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
-import Translator from "Helpers/Translator";
 import { api } from "Helpers/typedAPI";
+import ApproveOrderDialog from "Pages/Requests/ApproveOrderDialog";
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
@@ -9,10 +9,7 @@ import { cartActions } from "Store/cartSlice";
 import { useAppDispatch, useAppSelector } from "Store/store";
 import CartItemList from "./CartItemList";
 
-/**
- * @param orderId Specify if updating and existing order
- */
-const OrderCart = ({ orderId }: { orderId?: number }) => {
+const OrderCart = () => {
   const history = useHistory();
   const cart = useAppSelector((state) => state.cart);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -31,11 +28,13 @@ const OrderCart = ({ orderId }: { orderId?: number }) => {
         })),
       };
       const order = await api.createOrder(orderData);
-      console.log(order);
       queryClient.invalidateQueries("orders");
+      queryClient.invalidateQueries("invoice");
       if (status === "draft") {
-        history.push(`/dashboard/orders/detail/${order.pk}`);
+        history.push(`/dashboard/orders/detail/${order.id}`);
         dispatch(cartActions.clearCart());
+      } else {
+        dispatch(cartActions.importOrder(order));
       }
     },
     { onSuccess: () => setDialogOpen(true) }
@@ -69,27 +68,14 @@ const OrderCart = ({ orderId }: { orderId?: number }) => {
         />
       </div>
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <ConfirmOrderForm />
+        <ApproveOrderDialog
+          orderId={cart.orderId!}
+          onCancel={() => setDialogOpen(false)}
+          onSuccess={() => dispatch(cartActions.clearCart())}
+        />
       </Dialog>
     </>
   );
 };
 
 export default OrderCart;
-
-const ConfirmOrderForm = () => {
-  return (
-    <>
-      <div className="px-6 py-4 border-b border-gray-300">
-        <h2 className="text-betterfit-navy text-xl">
-          {Translator("Save as Draft")}
-        </h2>
-      </div>
-      <div className="py-6 px-6">
-        <p className="text-paragraph text-base">
-          {Translator("Would you like to add a purchase order to it?")}
-        </p>
-      </div>
-    </>
-  );
-};

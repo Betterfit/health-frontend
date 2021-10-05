@@ -261,7 +261,7 @@ export interface OrderProduct {
 }
 export interface Order {
   url: string;
-  pk: number;
+  id: number;
   orderNo: string;
   orderDate: string;
   purchaseNo: string;

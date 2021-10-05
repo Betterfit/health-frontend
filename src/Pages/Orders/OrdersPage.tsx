@@ -54,7 +54,7 @@ const Orders = () => {
 const OrderList = ({ orders }: { orders: Order[] }) => (
   <div className={styles.orderList}>
     {orders.map((order) => (
-      <OrderCard key={order.pk} order={order} />
+      <OrderCard key={order.id} order={order} />
     ))}
   </div>
 );
