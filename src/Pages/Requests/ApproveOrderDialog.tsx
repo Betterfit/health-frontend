@@ -1,7 +1,11 @@
 import { MenuItem, TextField } from "@material-ui/core";
+import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import BackNavigation from "Components/Helpers/BackNavigation";
-import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
+import {
+  HorizontalDetail,
+  VerticalDetail,
+} from "Components/InfoDisplay/LabeledDetails";
 import { api } from "Helpers/typedAPI";
 import { keyBy } from "lodash";
 import { useOrder } from "Models/orders";
@@ -84,6 +88,10 @@ const ApproveOrderDialog = ({
   return (
     <div className={styles.dialog}>
       <h2>Approve and Pay for Order</h2>
+      <LoadingSpinner
+        show={!invoice || !order || approveOrderMutation.isLoading}
+        darkened
+      />
       {invoice && order && (
         <>
           {invoice.items.map((item) => {
@@ -112,6 +120,37 @@ const ApproveOrderDialog = ({
             label="Total"
             value={formatCurrency(invoice.total.amount)}
             fullWidth
+          />
+          {/* allow users to change the facility here in the future */}
+          {/*  <TextField
+            value={order.facility.id}
+            className="mb-2"
+            id="destinationSelect"
+            label="Destination"
+            variant="outlined"
+            size="small"
+            select
+            fullWidth
+            disabled
+          >
+            {userFacilities?.map((facility) => (
+              <MenuItem key={facility.id} value={facility.id}>
+                {facility.name}
+              </MenuItem>
+            ))}
+          </TextField> */}
+          <VerticalDetail
+            label="Destination"
+            value={
+              <div className="flex flex-col item-center text-center">
+                <p>{order.facility.name}</p>
+                <p>{order.facility.shippingStreet}</p>
+                <p>
+                  {order.facility.shippingCity},{" "}
+                  {order.facility.shippingProvince}
+                </p>
+              </div>
+            }
           />
         </>
       )}
@@ -149,7 +188,10 @@ const ApproveOrderDialog = ({
         <PrettyButton
           text="Confirm"
           color="green"
-          disabled={!paymentMethod && invoice != null}
+          disabled={
+            (!paymentMethod && invoice != null) ||
+            approveOrderMutation.isLoading
+          }
           onClick={approveOrderMutation.mutate}
         />
       </div>

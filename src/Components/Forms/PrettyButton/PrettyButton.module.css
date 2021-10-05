@@ -6,6 +6,7 @@
   position: relative;
   overflow: hidden;
   font-weight: bold;
+  align-items: center;
 }
 
 .button:disabled {
