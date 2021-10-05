@@ -43,6 +43,9 @@
 .fullWidth .horizontalDetailValue {
   text-align: right;
 }
+.fullWidth .horizontalDetailLabel {
+  text-align: left;
+}
 
 @media (max-width: 500px) {
   .horizontalDetail {

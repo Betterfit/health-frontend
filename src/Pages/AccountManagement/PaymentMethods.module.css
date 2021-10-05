@@ -23,8 +23,8 @@
   padding: 0.5rem;
 }
 
-.addPayment .buttons {
-  margin-top: 2rem;
+.addPayment > button {
+  margin-top: auto;
 }
 
 .paymentMethodTypeTitle {

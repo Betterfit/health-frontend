@@ -1,11 +1,13 @@
 import { MenuItem, TextField } from "@material-ui/core";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
+import BackNavigation from "Components/Helpers/BackNavigation";
 import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { api } from "Helpers/typedAPI";
 import { keyBy } from "lodash";
 import { useOrder } from "Models/orders";
 import { usePaymentMethods } from "Models/paymentMethods";
 import { productDisplayName } from "Models/products";
+import { AddPaymentMethod } from "Pages/AccountManagement/PaymentMethods";
 import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
@@ -32,10 +34,14 @@ const ApproveOrderDialog = ({
   const { data: invoice } = useQuery(["invoice"], () =>
     api.getOrderInvoice(orderId).then((response) => response.data)
   );
+  // users can open up a form to add a payment method in the checkout flow
+  const [paymentMethodForm, setPaymentMethodForm] = useState(false);
   const { data: order } = useOrder(orderId);
   const { data } = usePaymentMethods();
   const paymentMethods = data ?? [];
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>();
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(
+    null
+  );
   const queryClient = useQueryClient();
   const approveOrderMutation = useMutation(
     () =>
@@ -59,7 +65,22 @@ const ApproveOrderDialog = ({
       },
     }
   );
+
   const orderProductsById = order ? keyBy(order.orderProducts, "id") : {};
+  if (paymentMethodForm)
+    return (
+      <div className={styles.dialog}>
+        <BackNavigation
+          link="Go Back"
+          onClickOverride={() => setPaymentMethodForm(false)}
+        />
+        <h2>Add New Payment Method</h2>
+        <AddPaymentMethod
+          onSuccess={() => setPaymentMethodForm(false)}
+          extraClasses="w-full flex-1"
+        />
+      </div>
+    );
   return (
     <div className={styles.dialog}>
       <h2>Approve and Pay for Order</h2>
@@ -95,6 +116,7 @@ const ApproveOrderDialog = ({
         </>
       )}
       <TextField
+        className={styles.paymentMethod}
         value={paymentMethod?.id}
         id="selectPaymentMethod"
         label="Payment Method"
@@ -103,15 +125,24 @@ const ApproveOrderDialog = ({
         select
         fullWidth
         onChange={(e) => {
+          // One of the options will be to add a new payment method
+          if (e.target.value === "new") {
+            return setPaymentMethodForm(true);
+          }
           const id = parseInt(e.target.value);
-          setPaymentMethod(paymentMethods.find((pm) => pm.id === id));
+          setPaymentMethod(paymentMethods.find((pm) => pm.id === id) ?? null);
         }}
       >
-        {paymentMethods.map((pm) => (
-          <MenuItem key={pm.id} value={pm.id}>
-            {pm.name}
-          </MenuItem>
-        ))}
+        {[
+          ...paymentMethods.map((pm) => (
+            <MenuItem key={pm.id} value={pm.id}>
+              {pm.name}
+            </MenuItem>
+          )),
+          <MenuItem key="newPaymentMethod" value="new">
+            - Add New Payment Method -
+          </MenuItem>,
+        ]}
       </TextField>
       <div className={styles.actions}>
         <PrettyButton text="Cancel" color="red" onClick={onCancel} />

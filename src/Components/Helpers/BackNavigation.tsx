@@ -16,7 +16,7 @@ const BackNavigation = ({
   return (
     <button
       onClick={action}
-      className="flex flex-row items-center cursor-pointer mb-2"
+      className="flex flex-row items-center cursor-pointer mb-2 ml-0 mr-auto"
     >
       <ReactSVG
         src={LeftArrow}

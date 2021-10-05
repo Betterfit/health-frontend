@@ -1,5 +1,6 @@
 import { TextField } from "@material-ui/core";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import clsx from "clsx";
 import AdminTabs from "Components/Content/AdminTabs";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
@@ -83,7 +84,15 @@ const PaymentMethodListItem = ({
   );
 };
 
-const AddPaymentMethod = ({ onSuccess }: { onSuccess: () => void }) => {
+export const AddPaymentMethod = ({
+  onSuccess,
+  onCancel,
+  extraClasses,
+}: {
+  onSuccess: () => void;
+  onCancel?: () => void;
+  extraClasses?: string;
+}) => {
   const [formData, setFormData] = useState({
     paymentMethodName: "",
     cardHolderName: "",
@@ -137,7 +146,10 @@ const AddPaymentMethod = ({ onSuccess }: { onSuccess: () => void }) => {
   };
 
   return (
-    <form className={styles.addPayment} onSubmit={handleSubmit}>
+    <form
+      className={clsx(styles.addPayment, extraClasses)}
+      onSubmit={handleSubmit}
+    >
       <LoadingSpinner darkened show={addPaymentMethodMutation.isLoading} />
       <TextField
         value={formData.paymentMethodName}
@@ -176,6 +188,9 @@ const AddPaymentMethod = ({ onSuccess }: { onSuccess: () => void }) => {
         disabled={!stripeHasLoaded || addPaymentMethodMutation.isLoading}
         type="submit"
       />
+      {onCancel && (
+        <PrettyButton text="Cancel" color="red" onClick={onCancel} />
+      )}
     </form>
   );
 };
