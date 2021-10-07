@@ -2,6 +2,7 @@ import { TextField } from "@material-ui/core";
 import clsx from "clsx";
 import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 import ProductImage from "Components/Product/ProductImage";
+import ReturnPolicy from "Components/Product/ReturnPolicy";
 import { api } from "Helpers/typedAPI";
 import { formatCurrency } from "Helpers/utils";
 import Close from "Images/Icons/red-close.svg";
@@ -50,6 +51,7 @@ const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
   }, [quantity, dispatch, productOptionId]);
   // if there are no suppliers with this product in stock, and this may be undefined
   const priceInfo = priceQuery.data?.purchaseOptions[0];
+  const supplier = priceInfo?.supplier;
   const outOfStock = priceQuery.isSuccess && !priceInfo;
 
   const displayName = productDisplayName(product);
@@ -87,7 +89,7 @@ const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
             </span>
           </div>
         </div>
-        <div className="flex flex-row flex-wrap justify-around py-1">
+        <div className="flex flex-row flex-wrap justify-around items-center py-1">
           {priceInfo && (
             <HorizontalDetail
               label="Price Per Unit"
@@ -100,6 +102,7 @@ const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
               value={priceInfo.supplier.name}
             />
           )}
+          {supplier && <ReturnPolicy supplier={supplier} />}
           {outOfStock && <p className={styles.outOfStock}>Out of stock!</p>}
         </div>
         <TextField
