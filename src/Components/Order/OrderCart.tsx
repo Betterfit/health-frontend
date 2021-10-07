@@ -42,6 +42,7 @@ const CartActions = ({ openDialog }: { openDialog: () => void }) => {
 
   const cartItems = useAppSelector((state) => state.cart.items);
   const destinationId = useAppSelector((state) => state.cart.destinationId);
+  const orderId = useAppSelector((state) => state.cart.orderId);
 
   const orderMutation = useMutation(
     async (status: "draft" | "open") => {
@@ -54,7 +55,10 @@ const CartActions = ({ openDialog }: { openDialog: () => void }) => {
           autoSelectSupplier: true,
         })),
       };
-      const order = await api.createOrder(orderData);
+
+      const order = await (orderId
+        ? api.editOrder(orderId, orderData)
+        : api.createOrder(orderData));
       queryClient.invalidateQueries("orders");
       queryClient.invalidateQueries("invoice");
       if (status === "draft") {

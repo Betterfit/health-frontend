@@ -143,8 +143,8 @@ const ApproveOrderForm = ({
           <VerticalDetail
             label="Destination"
             value={
-              <div className="flex flex-col item-center text-center">
-                <p>{order.facility.name}</p>
+              <div className="flex flex-col item-center text-center text-base">
+                <p className="text-lg">{order.facility.name}</p>
                 <p>{order.facility.shippingStreet}</p>
                 <p>
                   {order.facility.shippingCity},{" "}

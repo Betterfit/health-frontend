@@ -151,18 +151,17 @@ export default class TypedAPI {
     return client.post(order.url + "/cancel");
   };
 
-  createOrder = async (order: {
-    facility: number;
-    orderProducts: {
-      quantity: number;
-      productOption: number;
-      autoSelectSupplier?: boolean;
-      pk?: number;
-    }[];
-  }) => {
+  createOrder = async (data: OrderMutationProps) => {
     const client = await this.init();
     return client
-      .post<Order>(`/orders/`, order)
+      .post<Order>(`/orders/`, data)
+      .then((response) => response.data);
+  };
+
+  editOrder = async (id: number, data: OrderMutationProps) => {
+    const client = await this.init();
+    return client
+      .put<Order>(`/orders/${id}/`, data)
       .then((response) => response.data);
   };
 
@@ -172,12 +171,6 @@ export default class TypedAPI {
       .get<OrderInvoice>(`/orders/${orderId}/invoice`)
       .then((response) => response.data);
   };
-
-  // editOrder = async (order, id) => {
-  //   console.log(order);
-  //   const client = await this.init();
-  //   return client.patch(`/orders/${id}/`, order);
-  // };
 
   //  ********** PRICING API **********
   /**
@@ -355,6 +348,16 @@ type NewPaymentMethodProps = {
   stripeId: string;
   // list of ids
   authorizedUsers: number[];
+};
+
+type OrderMutationProps = {
+  facility: number;
+  orderProducts: {
+    quantity: number;
+    productOption: number;
+    autoSelectSupplier?: boolean;
+    pk?: number;
+  }[];
 };
 
 export type PaymentMethodUpdate = {

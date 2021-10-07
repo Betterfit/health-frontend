@@ -5,14 +5,22 @@ import styles from "./LabeledDetails.module.css";
 export const VerticalDetail = ({
   label,
   value,
+  labelClass,
+  valueClass,
 }: {
   label: string;
   value: ReactNode;
+  labelClass?: string;
+  valueClass?: string;
 }) => {
   return (
     <div className={styles.verticalDetail}>
-      <span className={styles.verticalDetailLabel}>{label}</span>
-      <span className={styles.verticalDetailValue}>{value}</span>
+      <span className={clsx(styles.verticalDetailLabel, labelClass)}>
+        {label}
+      </span>
+      <span className={clsx(styles.verticalDetailValue, valueClass)}>
+        {value}
+      </span>
     </div>
   );
 };
