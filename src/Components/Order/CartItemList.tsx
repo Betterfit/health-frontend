@@ -2,7 +2,7 @@ import EmptyCartIcon from "Images/Icons/shopping-cart-empty.svg";
 import React from "react";
 import { ReactSVG } from "react-svg";
 import { useAppSelector } from "Store/store";
-import OrderProductCard from "./OrderProductCard";
+import CartItem from "./CartItemCard";
 
 const CartItemList = () => {
   const cartItems = useAppSelector((state) => state.cart.items);
@@ -11,9 +11,7 @@ const CartItemList = () => {
       {cartItems &&
         cartItems.length >= 1 &&
         cartItems.map((item) => {
-          return (
-            <OrderProductCard key={item.productOptionId} cartItem={item} />
-          );
+          return <CartItem key={item.productOptionId} cartItem={item} />;
         })}
       {cartItems.length === 0 && <EmptyCart />}
     </div>

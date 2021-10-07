@@ -1,0 +1,11 @@
+p.outOfStock {
+  color: var(--plastic-red);
+  font-weight: bold;
+}
+img.outOfStock {
+  filter: grayScale(100%);
+}
+
+.quantity {
+  margin: 1rem auto;
+}

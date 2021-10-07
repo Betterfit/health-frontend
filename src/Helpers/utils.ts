@@ -50,6 +50,14 @@ export const formatTimeStamp = (
   //  https://momentjs.com/docs/#/displaying/
   moment(timeStamp).format("MMM D, YYYY" + (dateOnly ? "" : " - h:mm A"));
 
+export const formatCurrency = (
+  price: number | string | undefined | null
+): string => {
+  if (price == null) return "";
+  if (typeof price === "string") price = Number(price);
+  return `$${price.toFixed(2)} CAD`;
+};
+
 /**
  * Turns an object into a query string: ?a=3&b=fdafda
  * Excludes values that aren't truthy.
