@@ -1,7 +1,6 @@
 import CircleButton from "Components/Forms/CircleButton";
 import FlatButton from "Components/Forms/FlatDetailButton";
 import { setProductNavInfo } from "Containers/Facility/Inner/ProductList";
-import { useCartStore } from "Context/cartContext";
 import { api } from "Helpers/typedAPI";
 import _ from "lodash";
 import { useSelectedFacility } from "Models/facilities";
@@ -19,13 +18,11 @@ import ProductImage from "./ProductImage";
  * A product card shown in the catalog one placing orders.
  */
 const ProductCard = ({ product }: { product: ProductOption }) => {
-  const cartStore = useCartStore();
   const history = useHistory();
   const [active, setActive] = useState(false);
   const dispatch = useAppDispatch();
   const addToCart = () => {
     dispatch(cartActions.addItem({ productOptionId: product.id, quantity: 1 }));
-    (cartStore as any)?.addToCart(product.id, 1, false, product.productId);
   };
   const displayName = productDisplayName(product);
   const { facilityId } = useSelectedFacility();

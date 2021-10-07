@@ -33,6 +33,7 @@ const OrderComponentTitle = ({ title, value, classes }: TextProps) => {
 const NewOrderHeader = () => {
   const { data: userFacilities } = useUserFacilities();
   const destinationId = useAppSelector((state) => state.cart.destinationId);
+  const orderId = useAppSelector((state) => state.cart.orderId);
   const dispatch = useAppDispatch();
   const setDestination = (facilityId: number) =>
     dispatch(cartActions.setDestinationId(facilityId));
@@ -42,10 +43,12 @@ const NewOrderHeader = () => {
       dispatch(cartActions.setDestinationId(userFacilities[0].id));
   }, [destinationId, userFacilities, dispatch]);
   let orderDate = dayjs().format("MMM DD, YYYY");
-  const order_no = Translator("New Order");
   return (
     <div className="flex flex-col p-4 pb-2 border-b border-betterfit-grey border-opacity-40">
-      <OrderComponentTitle title={orderDate} value={order_no} />
+      <OrderComponentTitle
+        title={orderDate}
+        value={orderId ? `Order #${orderId}` : "New Order"}
+      />
       <div className="flex flex-col items-start">
         <label
           className="pl-1 uppercase text-betterfit-graphite text-xs tracking-extra-wide opacity-75 font-semibold"

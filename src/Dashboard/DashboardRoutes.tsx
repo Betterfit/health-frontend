@@ -1,7 +1,6 @@
 import DashboardResources from "Containers/DashboardResources";
 import DashboardOrder from "Containers/Facility/Inner/DashboardOrder";
 import DashboardInventory from "Containers/Supplier/Inner/DashboardInventory";
-import { CartProvider } from "Context/cartContext";
 import styles from "Dashboard/Dashboard.module.css";
 import AccountManagement from "Pages/AccountManagement/AccountManagement";
 import OrderDetail from "Pages/Orders/OrderDetail";
@@ -47,16 +46,6 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
           return <Redirect to={`/dashboard/edit-order/${id}/category/`} />;
         }}
       />
-      {/* <Route
-        path="/dashboard/edit-order/:oid/category"
-        render={(props) => {
-          return (
-            <CartProvider value="editCart">
-              <DashboardOrder props={props} type="edit" />
-            </CartProvider>
-          );
-        }}
-      /> */}
       <Route exact path="/dashboard/requests">
         <RequestsPage />
       </Route>
@@ -68,9 +57,7 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
         }}
       />
       <Route path="/dashboard/new-order">
-        <CartProvider value="cart">
-          <DashboardOrder />
-        </CartProvider>
+        <DashboardOrder />
       </Route>
       {/* Supplier Routes */}
       <Route path="/dashboard/tickets/">
