@@ -16,8 +16,8 @@ import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import { Money, PaymentMethod } from "Types";
-import styles from "./ApproveOrderDialog.module.css";
-import { formatCurrency } from "./RequestsPage";
+import { formatCurrency } from "../../Pages/Requests/RequestsPage";
+import styles from "./ApproveOrderForm.module.css";
 
 export interface InvoiceItem {
   name: string;
@@ -25,7 +25,7 @@ export interface InvoiceItem {
   cost: number;
 }
 
-const ApproveOrderDialog = ({
+const ApproveOrderForm = ({
   orderId,
   onSuccess,
   onCancel,
@@ -227,4 +227,4 @@ const FeeLineItem = ({
   );
 };
 
-export default ApproveOrderDialog;
+export default ApproveOrderForm;

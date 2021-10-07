@@ -1,7 +1,7 @@
 import Dialog from "Components/Dialog";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
+import ApproveOrderForm from "Components/Order/ApproveOrderForm";
 import { api } from "Helpers/typedAPI";
-import ApproveOrderDialog from "Pages/Requests/ApproveOrderDialog";
 import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
@@ -25,7 +25,7 @@ const OrderCart = () => {
       </div>
       <CartActions openDialog={() => setDialogOpen(true)} />
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <ApproveOrderDialog
+        <ApproveOrderForm
           orderId={orderId!}
           onCancel={() => setDialogOpen(false)}
           onSuccess={() => dispatch(cartActions.clearCart())}

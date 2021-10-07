@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import { Order, OrderProduct, ProductPricing, SupplierQuote } from "Types";
-import ApproveOrderDialog from "./ApproveOrderDialog";
+import ApproveOrderForm from "../../Components/Order/ApproveOrderForm";
 import RequestedProductCard from "./RequestedProductCard";
 import styles from "./RequestsPage.module.css";
 
@@ -213,7 +213,7 @@ const RequestedOrderCard = ({
   return (
     <div className={styles.order} data-testid={"request-" + order.orderNo}>
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <ApproveOrderDialog
+        <ApproveOrderForm
           orderId={order.id}
           onCancel={() => setDialogOpen(false)}
         />
