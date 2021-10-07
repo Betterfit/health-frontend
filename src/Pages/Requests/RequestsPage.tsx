@@ -58,7 +58,7 @@ const RequestPage = () => {
   );
   // choose default suppliers for each product on first render with pricing data available
   useEffect(() => {
-    if (!pricingQuery.data) return;
+    if (!pricingQuery.data || !orders) return;
     const data = pricingQuery.data;
     const orderProducts = orders!.flatMap((order) => order.orderProducts);
     // use the first quote for each orderProduct as the default chosen one
