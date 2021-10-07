@@ -7,7 +7,6 @@ import {
   VerticalDetail,
 } from "Components/InfoDisplay/LabeledDetails";
 import { api, parseException } from "Helpers/typedAPI";
-import { keyBy } from "lodash";
 import { useOrder } from "Models/orders";
 import { usePaymentMethods } from "Models/paymentMethods";
 import { productDisplayName } from "Models/products";
@@ -70,7 +69,6 @@ const ApproveOrderForm = ({
     }
   );
 
-  const orderProductsById = order ? keyBy(order.orderProducts, "id") : {};
   if (paymentMethodForm)
     return (
       <div className={styles.dialog}>
@@ -96,12 +94,14 @@ const ApproveOrderForm = ({
       {invoice && order && (
         <>
           {invoice.items.map((item) => {
-            const orderProduct = orderProductsById[item.orderProductId];
+            const orderProduct = order.orderProducts.find(
+              (orderProduct) => orderProduct.id === item.orderProductId
+            );
             return (
               <HorizontalDetail
                 label={
-                  productDisplayName(orderProduct.productOption) +
-                  ` (x${orderProduct.quantity})`
+                  productDisplayName(orderProduct?.productOption) +
+                  ` (x${orderProduct?.quantity})`
                 }
                 labelClass="normal-case"
                 value={formatCurrency(item.baseTotal.amount)}

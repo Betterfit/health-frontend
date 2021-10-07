@@ -8,17 +8,22 @@ import {
 import OrderCardHeader from "Components/Order/OrderCardHeader";
 import { api } from "Helpers/typedAPI";
 import { capitalize } from "lodash";
+import { orderCanBeEdited } from "Models/orders";
+import { useMyProfile } from "Models/user";
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
+import { cartActions } from "Store/cartSlice";
+import { useAppDispatch } from "Store/store";
 import { Order, OrderProduct } from "Types";
 import styles from "./OrderCard.module.css";
 
 const OrderCard = ({ order }: { order: Order }) => {
   const history = useHistory();
+  const dispatch = useAppDispatch();
   const detailLink = "/dashboard/orders/detail/" + order.id;
   const onDetailPage = history.location.pathname === detailLink;
-  console.log(order);
+  const { data: myProfile } = useMyProfile();
   return (
     <div
       // only act as a link to the detail page if we're not already on the detail page
@@ -45,6 +50,17 @@ const OrderCard = ({ order }: { order: Order }) => {
       {order.orderProducts.map((orderProduct, i) => (
         <OrderProductInfo key={i} {...{ order, orderProduct }} />
       ))}
+      {onDetailPage && myProfile && orderCanBeEdited(order, myProfile) && (
+        <PrettyButton
+          text="Edit Order"
+          className="mx-auto"
+          onClick={() => {
+            dispatch(cartActions.importOrder(order));
+            history.push("/dashboard/new-order");
+          }}
+          variant="outline"
+        />
+      )}
     </div>
   );
 };

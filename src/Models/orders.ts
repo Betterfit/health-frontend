@@ -1,6 +1,6 @@
 import { api } from "Helpers/typedAPI";
 import { useQuery, useQueryClient, UseQueryOptions } from "react-query";
-import { Order } from "Types";
+import { Order, UserProfile } from "Types";
 
 export const useOrder = (id: number, queryOptions?: UseQueryOptions<Order>) => {
   const queryClient = useQueryClient();
@@ -13,4 +13,17 @@ export const useOrder = (id: number, queryOptions?: UseQueryOptions<Order>) => {
     },
     ...queryOptions,
   });
+};
+
+export const orderCanBeEdited = (order: Order, userProfile: UserProfile) => {
+  if (order.status !== "open" && order.status !== "draft") return false;
+  if (order.authorUser.id === userProfile.id) return true;
+  // administrators can update orders (if they have authority over that facility)
+  return (
+    userProfile.isOrganizationAdmin ||
+    userProfile.facilityMembership.some(
+      (membership) =>
+        membership.facilityId === order.facility.id && membership.isAdmin
+    )
+  );
 };
