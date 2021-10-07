@@ -6,7 +6,7 @@ import {
   HorizontalDetail,
   VerticalDetail,
 } from "Components/InfoDisplay/LabeledDetails";
-import { api } from "Helpers/typedAPI";
+import { api, parseException } from "Helpers/typedAPI";
 import { keyBy } from "lodash";
 import { useOrder } from "Models/orders";
 import { usePaymentMethods } from "Models/paymentMethods";
@@ -35,9 +35,10 @@ const ApproveOrderDialog = ({
   onCancel: () => void;
 }) => {
   const history = useHistory();
-  const { data: invoice } = useQuery(["invoice"], () =>
-    api.getOrderInvoice(orderId).then((response) => response.data)
+  const invoiceQuery = useQuery(["invoice"], () =>
+    api.getOrderInvoice(orderId)
   );
+  const { data: invoice } = invoiceQuery;
   // users can open up a form to add a payment method in the checkout flow
   const [paymentMethodForm, setPaymentMethodForm] = useState(false);
   const { data: order } = useOrder(orderId);
@@ -64,7 +65,6 @@ const ApproveOrderDialog = ({
         history.push(`/dashboard/orders/detail/${orderId}`);
       },
       onError: () => {
-        alert("Payment could not be processed.");
         queryClient.invalidateQueries(["pricing"]);
       },
     }
@@ -85,6 +85,7 @@ const ApproveOrderDialog = ({
         />
       </div>
     );
+  const error = parseException(approveOrderMutation.error);
   return (
     <div className={styles.dialog}>
       <h2>Approve and Pay for Order</h2>
@@ -163,6 +164,12 @@ const ApproveOrderDialog = ({
         size="small"
         select
         fullWidth
+        error={error?.code === "card_declined"}
+        helperText={
+          error?.code === "card_declined"
+            ? "Payment method was declined"
+            : undefined
+        }
         onChange={(e) => {
           // One of the options will be to add a new payment method
           if (e.target.value === "new") {

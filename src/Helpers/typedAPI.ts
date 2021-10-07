@@ -12,6 +12,7 @@ import {
   ProductCategory,
   ProductOption,
   ProductPricing,
+  ServerException,
   SupplierPricing,
   SupplierTicket,
   Transfer,
@@ -28,13 +29,19 @@ export default class TypedAPI {
       Authorization: requireAuth && `Bearer ${await getIdToken()}`,
     };
 
-    return applyCaseMiddleware(
+    const client = applyCaseMiddleware(
       axios.create({
         baseURL: apiURL,
         timeout: 31000,
         headers: headers,
       })
     );
+    // client.interceptors.response.use(undefined, (err: any) =>
+    //   err?.response?.data?.code
+    //     ? Promise.reject(new Error(err.response.data.code))
+    //     : err
+    // );
+    return client;
   };
   // cleaner name
   getClient = async (): Promise<AxiosInstance> => {
@@ -161,7 +168,9 @@ export default class TypedAPI {
 
   getOrderInvoice = async (orderId: number) => {
     const client = await this.init();
-    return client.get<OrderInvoice>(`/orders/${orderId}/invoice`);
+    return client
+      .get<OrderInvoice>(`/orders/${orderId}/invoice`)
+      .then((response) => response.data);
   };
 
   // editOrder = async (order, id) => {
@@ -358,4 +367,9 @@ export type SupplierTicketUpdate = {
   shippingProvider?: string;
   trackingNumber?: string;
   status: "shipped";
+};
+
+export const parseException = (error: unknown): undefined | ServerException => {
+  const exception = (error as any)?.response?.data;
+  if (exception) return exception as ServerException | undefined;
 };

@@ -303,8 +303,8 @@ export interface PaymentMethod {
   timeCreated: string;
 }
 
-export interface Error {
-  message: string;
+export interface ServerException {
+  code: string;
 }
 export interface Money {
   amount: number;
