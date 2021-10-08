@@ -1,5 +1,5 @@
-import TagLink from "Components/Content/TagLink";
 import CardTitle from "Components/ResourceProfile/ResourceTitle";
+import TagLink from "Components/Resources/TagLink";
 import Translator from "Helpers/Translator";
 import React from "react";
 import { Tag } from "Types";

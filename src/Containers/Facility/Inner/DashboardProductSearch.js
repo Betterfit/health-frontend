@@ -1,6 +1,6 @@
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 import BackNavigation from "Components/Helpers/BackNavigation";
-import ProductCard from "Components/Order/ProductCard";
+import ProductCard from "Components/Product/ProductCard";
 import API from "Helpers/api";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -8,7 +8,7 @@ import uuid from "react-uuid";
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
-const DashboardProductSearch = ({}) => {
+const DashboardProductSearch = () => {
   const api = new API();
   let query = useQuery();
   const [searchQuery, setSearchQuery] = useState(query.get("search"));
@@ -60,7 +60,7 @@ const DashboardProductSearch = ({}) => {
                 return (
                   <ProductCard
                     key={uuid()}
-                    product={product}
+                    products={product}
                     product_details={productdetails}
                     category={item.product_category}
                     extra={null}

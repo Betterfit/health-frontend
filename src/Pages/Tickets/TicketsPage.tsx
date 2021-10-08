@@ -1,14 +1,14 @@
-import { Dialog } from "@material-ui/core";
-import { productDisplayName } from "APIHooks/products";
 import clsx from "clsx";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
+import Dialog from "Components/Dialog";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 import Tabs from "Components/Tabs/Tabs";
 import { api } from "Helpers/typedAPI";
 import { formatTimeStamp } from "Helpers/utils";
 import { capitalize } from "lodash";
+import { productDisplayName } from "Models/products";
 import QRCode from "qrcode.react";
 import React, { ReactNode, useState } from "react";
 import { useQuery } from "react-query";
@@ -94,7 +94,7 @@ const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
           <span>{productDisplayName(product)}</span>
           <img src={product.productImage} alt={productDisplayName(product)} />
         </div>
-        <HorizontalDetail label="quantity" value={orderProduct.quantity} />
+        <HorizontalDetail label="Quantity" value={orderProduct.quantity} />
         <HorizontalDetail label={product.optionLabel} value={product.name} />
       </TicketDetail>
       {/* <TicketDetail label={product.optionLabel} value={product.name} />
@@ -103,7 +103,7 @@ const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
       <TicketDetail label="Shipping Info" value={ticket.shippingProvider} /> */}
       <div className={styles.qrCode}>
         <QRCode
-          value={"http://localhost:3000/dashboard/tickets/" + ticket.id}
+          value={window.location.origin + "/tickets/" + ticket.id}
           size={128}
           // imageSettings={{
           //   src: "https://betterfit.com/betterfit-favicon.png",

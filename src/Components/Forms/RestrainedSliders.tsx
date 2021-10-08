@@ -22,7 +22,7 @@ const RestrainedSliders = ({
 
   const toggleValueLock = (type: string) => {
     if (lockedValues.includes(type))
-      setLockedValues(lockedValues.filter((locked) => locked != type));
+      setLockedValues(lockedValues.filter((locked) => locked !== type));
     else setLockedValues([...lockedValues, type]);
   };
 

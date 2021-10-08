@@ -1,0 +1,13 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  column-gap: 1rem;
+}
+
+.root > hr {
+  margin: 1rem 0;
+}
+
+.paymentList > * {
+  margin-top: 1rem;
+}

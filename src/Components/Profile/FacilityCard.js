@@ -6,7 +6,7 @@ import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import React, { useEffect, useState } from "react";
 
-const FacilityCard = ({}) => {
+const FacilityCard = () => {
   const api = new Api();
   const authStore = useAuthStore();
   const [userData] = useState(JSON.parse(authStore.user));

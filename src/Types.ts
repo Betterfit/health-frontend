@@ -227,6 +227,14 @@ export interface SupplierTicket extends Ticket {
   destination: Facility;
   purchaser: Organization;
 }
+export interface ProductCategory {
+  name: string;
+  id: number;
+  icon: string;
+  backgroundColor: string;
+  mainColor: string;
+  count: number;
+}
 export interface ProductOption {
   id: number;
   name: string;
@@ -236,6 +244,8 @@ export interface ProductOption {
   productVariation: string;
   productDescription: string;
   productImage: string;
+  productId: number;
+  categoryId: number;
 }
 export interface OrderProduct {
   url: string;
@@ -246,10 +256,12 @@ export interface OrderProduct {
   supplierOrg?: Organization;
   productOption: ProductOption;
   ticket?: PurchaserTicket;
+  shipping: string;
+  pricePerUnit: string;
 }
 export interface Order {
   url: string;
-  pk: number;
+  id: number;
   orderNo: string;
   orderDate: string;
   purchaseNo: string;
@@ -261,7 +273,12 @@ export interface Order {
 
 export interface SupplierQuote {
   supplier: Organization;
-  priceInfo: { pricePer: number; totalPrice: number };
+  priceInfo: {
+    pricePer: number;
+    totalPrice: number;
+    minPricePer: number;
+    maxPricePer: number;
+  };
 }
 
 export interface SupplierPriceRange {
@@ -286,8 +303,8 @@ export interface PaymentMethod {
   timeCreated: string;
 }
 
-export interface Error {
-  message: string;
+export interface ServerException {
+  code: string;
 }
 export interface Money {
   amount: number;
@@ -338,4 +355,31 @@ export interface OrderInvoice {
   taxRate: number;
   taxName: string;
   applicationFee: Money;
+}
+
+export interface Payment {
+  id: number;
+  productOptionId: number;
+  total: string;
+  orderId: number;
+  paymentMethodName: string;
+  paymentMethodId: number;
+  payer: User;
+  appFee: number;
+  taxes: number;
+  timeCreated: string;
+  order: Order;
+}
+
+export interface Transfer {
+  id: number;
+  total: string;
+  completed: boolean;
+  orderProduct: OrderProduct;
+  timeCreated: string;
+}
+
+export interface CartItem {
+  quantity: number;
+  productOptionId: number;
 }

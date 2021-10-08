@@ -1,9 +1,10 @@
-import { productDisplayName } from "APIHooks/products";
 import Icon from "Components/Content/Icon";
 import IconButton from "Components/Content/IconButton";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Badge from "Components/Forms/Badge/Badge";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
+import ReturnPolicy from "Components/Product/ReturnPolicy";
+import { productDisplayName } from "Models/products";
 import React, { useState } from "react";
 import { Order, OrderProduct, ProductPricing, SupplierQuote } from "Types";
 import styles from "./RequestedProductCard.module.css";
@@ -181,17 +182,7 @@ const SupplierCard = ({
         />
 
         <div className={styles.returnPolicy}>
-          {supplier.offerReturns ? (
-            <a
-              href={supplier.returnPolicyLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Return Policy
-            </a>
-          ) : (
-            <p>No Returns</p>
-          )}
+          <ReturnPolicy supplier={supplier} />
         </div>
       </div>
       <div className={styles.supplierInfo}>

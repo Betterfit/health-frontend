@@ -1,4 +1,4 @@
-import { useUsers } from "APIHooks/user";
+import { useUsers } from "Models/user";
 import React from "react";
 
 const PendingInvitations = () => {

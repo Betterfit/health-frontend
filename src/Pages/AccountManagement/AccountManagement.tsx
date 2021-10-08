@@ -1,24 +1,21 @@
-import { useUserFacilities } from "APIHooks/facilities";
-import { useOrganization } from "APIHooks/organization";
 import AdminTabs from "Components/Content/AdminTabs";
 import { ErrorMessage } from "Components/Content/ErrorMessage";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
+import Title from "Components/Content/Title";
+import { useUserFacilities } from "Models/facilities";
 import React, { useState } from "react";
 import styles from "./AccountManagement.module.css";
 import AddFacilityForm from "./AddFacilityForm";
 import AddUserForm from "./AddUserForm";
-import ConnectedAccountCard from "./ConnectedAccountCard";
-import PaymentMethods from "./PaymentMethods";
 import PendingInvitations from "./PendingInvitations";
 import UserTable from "./UserTable";
 
 const AccountManagement = () => {
-  const { data: organization } = useOrganization();
   return (
     <div className={styles.root}>
+      <Title text="Users and Facilities" extraClasses={styles.title} />
       <MyFacilities />
       <AddUsers />
-      {organization?.isSupplier ? <ConnectedAccountCard /> : <PaymentMethods />}
       <UserTable />
     </div>
   );

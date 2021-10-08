@@ -1,3 +1,4 @@
+import { Dialog } from "@material-ui/core";
 import IconButton from "Components/Content/IconButton";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
@@ -10,15 +11,8 @@ import { notNull } from "Helpers/utils";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
-import {
-  Order,
-  OrderInvoice,
-  OrderProduct,
-  PaymentMethod,
-  ProductPricing,
-  SupplierQuote,
-} from "Types";
-import ApproveOrderDialog from "./ApproveOrderDialog";
+import { Order, OrderProduct, ProductPricing, SupplierQuote } from "Types";
+import ApproveOrderForm from "../../Components/Order/ApproveOrderForm";
 import RequestedProductCard from "./RequestedProductCard";
 import styles from "./RequestsPage.module.css";
 
@@ -64,7 +58,7 @@ const RequestPage = () => {
   );
   // choose default suppliers for each product on first render with pricing data available
   useEffect(() => {
-    if (!pricingQuery.data) return;
+    if (!pricingQuery.data || !orders) return;
     const data = pricingQuery.data;
     const orderProducts = orders!.flatMap((order) => order.orderProducts);
     // use the first quote for each orderProduct as the default chosen one
@@ -89,9 +83,7 @@ const RequestPage = () => {
   // };
   return (
     <div className={styles.root}>
-      <div className={styles.titleSection}>
-        <Title text="Requests" />
-      </div>
+      <Title text="Requests" />
       <div className={styles.actionBar}>
         {/* <PrettyButton
           text="Approve All"
@@ -114,7 +106,7 @@ const RequestPage = () => {
           orders.map((order) => (
             <RequestedOrderCard
               order={order}
-              key={order.pk}
+              key={order.id}
               selectedQuotes={order.orderProducts.map(
                 ({ id: pk }) => selectedQuotes[pk]
               )}
@@ -165,7 +157,6 @@ const RequestedOrderCard = ({
   selectQuote: (orderProduct: OrderProduct, supplier: SupplierQuote) => void;
 }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [invoice, setInvoice] = useState<OrderInvoice | null>(null);
   const { orderProducts } = order;
   const queryClient = useQueryClient();
   const orderStatusMutation = useMutation(api.updateOrderStatus, {
@@ -173,7 +164,7 @@ const RequestedOrderCard = ({
       queryClient.invalidateQueries(["orders"]);
     },
     onError: () => {
-      alert("Order is no longer available at this price");
+      alert("Payment could not be processed.");
       queryClient.invalidateQueries(["pricing"]);
     },
   });
@@ -193,32 +184,21 @@ const RequestedOrderCard = ({
     supplierSelections.length < orderProducts.length;
 
   const denyOrder = () =>
-    orderStatusMutation.mutate({ action: "cancel", order });
+    orderStatusMutation.mutate({ action: "cancel", orderId: order.id });
   const saveSelections = () => {
     orderStatusMutation.mutate(
       {
-        order,
+        orderId: order.id,
         action: "save-selections",
         data: supplierSelections,
       },
       {
-        onSuccess: (response) => {
-          setInvoice(response.data);
+        onSuccess: () => {
+          setDialogOpen(true);
         },
       }
     );
   };
-  const approveOrder = (paymentMethod: PaymentMethod, total: number) => {
-    orderStatusMutation.mutate({
-      order,
-      action: "approve",
-      data: {
-        paymentMethodId: paymentMethod.id,
-        total,
-      },
-    });
-  };
-
   let orderPrice: number | null = 0;
   // const invoice: InvoiceItem[] = [];
   if (selectedQuotes) {
@@ -232,12 +212,12 @@ const RequestedOrderCard = ({
 
   return (
     <div className={styles.order} data-testid={"request-" + order.orderNo}>
-      {invoice && (
-        <ApproveOrderDialog
-          handleClose={() => setInvoice(null)}
-          {...{ invoice, approveOrder, orderProducts }}
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <ApproveOrderForm
+          orderId={order.id}
+          onCancel={() => setDialogOpen(false)}
         />
-      )}
+      </Dialog>
       <LoadingSpinner darkened show={orderStatusMutation.isLoading} />
       <OrderCardHeader order={order}>
         <VerticalDetail
@@ -282,7 +262,10 @@ const RequestedOrderCard = ({
   );
 };
 
-export const formatCurrency = (price: number | undefined | null) => {
+export const formatCurrency = (
+  price: number | string | undefined | null
+): string => {
   if (price == null) return "";
+  if (typeof price === "string") price = Number(price);
   return `$${price.toFixed(2)} CAD`;
 };

@@ -1,14 +1,13 @@
-import { useSelectedFacility } from "APIHooks/facilities";
 import BoxLink from "Components/Content/BoxLink";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import Search from "Components/Search/Search";
 import Tabs from "Components/Tabs/Tabs";
 import DashboardProductList from "Containers/DashboardProductList";
-import DashboardSearch from "Containers/DashboardSearch";
 import DashboardProductDetail from "Containers/Supplier/Inner/DashboardProductDetail";
 import Api from "Helpers/api";
 import Translator from "Helpers/Translator";
 import Spinner from "Images/spinner.gif";
+import { useSelectedFacility } from "Models/facilities";
 import React, { useEffect, useState } from "react";
 import { Route, useLocation } from "react-router-dom";
 
@@ -38,8 +37,8 @@ const DashboardInventory = () => {
       })
       .catch((err) => console.log(err));
 
-  const createProductCategoryList = (products) =>
-    products.map((product, i) => {
+  const createProductCategoryList = (productCategory, showAll = false) =>
+    productCategory.map((product, i) => {
       return (
         <div key={i}>
           <h3 className="mb-4 md:mb-2 text-gray-700 text-xs font-body ml-4 uppercase font-bold tracking-wider">
@@ -50,10 +49,11 @@ const DashboardInventory = () => {
               return (
                 <BoxLink
                   key={j}
-                  to="/dashboard/inventory/product/"
+                  to={`/dashboard/inventory/product/${p.pk}${
+                    showAll ? "/all" : ""
+                  }`}
                   link={p.name}
                   textColor="dark-blue"
-                  id={p.pk}
                 />
               );
             })}
@@ -71,7 +71,8 @@ const DashboardInventory = () => {
       {
         heading: "All Products",
         content: createProductCategoryList(
-          AllCategoryData.filter((category) => category.products.length > 0)
+          AllCategoryData.filter((category) => category.products.length > 0),
+          true
         ),
         key: "all-products",
       },
@@ -85,6 +86,7 @@ const DashboardInventory = () => {
     if (AllCategoryData) {
       getSupplierCategories();
     }
+    console.log(AllCategoryData);
   }, [AllCategoryData]);
 
   useEffect(() => {
@@ -122,13 +124,12 @@ const DashboardInventory = () => {
               location.pathname === "/dashboard/inventory" ? `z-0` : `z-10`
             }`}
           >
-            <Route
-              exact
-              path="/dashboard/inventory/product/:id"
-              render={(props) => {
-                return <DashboardProductList {...props} edit={true} />;
-              }}
-            />
+            <Route exact path="/dashboard/inventory/product/:id">
+              <DashboardProductList />
+            </Route>
+            <Route path="/dashboard/inventory/product/:id/all">
+              <DashboardProductList showAll />
+            </Route>
             <Route
               path="/dashboard/inventory/product/:id/detail/:oid?/edit"
               exact
@@ -136,9 +137,6 @@ const DashboardInventory = () => {
                 return <DashboardProductDetail edit={true} {...props} />;
               }}
             />
-            <Route path="/dashboard/inventory/search:query?">
-              <DashboardSearch />
-            </Route>
           </div>
         </div>
       ) : (

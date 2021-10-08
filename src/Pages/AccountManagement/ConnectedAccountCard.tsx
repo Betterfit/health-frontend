@@ -1,10 +1,10 @@
-import { useMyProfile } from "APIHooks/user";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import {
   HorizontalDetail,
   VerticalDetail,
 } from "Components/InfoDisplay/LabeledDetails";
 import { api } from "Helpers/typedAPI";
+import { useMyProfile } from "Models/user";
 import { formatCurrency } from "Pages/Requests/RequestsPage";
 import React, { useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -102,12 +102,10 @@ const CompleteConnectedAccount = ({
     <>
       <div className={styles.balances}>
         <VerticalDetail
-          label="Pending Balance"
-          value={formatCurrency(balance.pending.amount)}
-        />
-        <VerticalDetail
-          label="Available Balance"
-          value={formatCurrency(balance.available.amount)}
+          label="Balance"
+          value={formatCurrency(
+            balance.available.amount + balance.pending.amount
+          )}
         />
       </div>
       <div>

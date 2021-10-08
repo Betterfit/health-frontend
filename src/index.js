@@ -6,12 +6,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { Provider } from "react-redux";
+import { store } from "Store/store";
 import App from "./App";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import "./styles/globalClasses.module.css";
-import "./styles/tailwind.css";
-
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,17 +19,19 @@ const queryClient = new QueryClient({
 });
 ReactDOM.render(
   <React.StrictMode>
-    <AuthProvider>
-      <Elements stripe={stripePromise}>
-        {/* https://material-ui.com/guides/interoperability/#controlling-priority-4 */}
-        <StylesProvider injectFirst>
-          <QueryClientProvider client={queryClient}>
-            <ReactQueryDevtools initialIsOpen={false} />
-            <App />
-          </QueryClientProvider>
-        </StylesProvider>
-      </Elements>
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <Elements stripe={stripePromise}>
+          {/* https://material-ui.com/guides/interoperability/#controlling-priority-4 */}
+          <StylesProvider injectFirst>
+            <QueryClientProvider client={queryClient}>
+              <ReactQueryDevtools initialIsOpen={false} />
+              <App />
+            </QueryClientProvider>
+          </StylesProvider>
+        </Elements>
+      </AuthProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

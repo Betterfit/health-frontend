@@ -1,0 +1,18 @@
+@media (min-width: 1024px) {
+  .content > div:first-child {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.content {
+  display: grid;
+  gap: 1rem;
+}
+
+.transactionList {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}

@@ -1,9 +1,9 @@
-import { useOrganization } from "APIHooks/organization";
-import { fullName, useMyProfile } from "APIHooks/user";
 import FaciltyCard from "Components/Profile/FacilityCard";
 import ProfileCard from "Components/Profile/ProfileCard";
 import Slider from "Components/Slider/Slider";
 import logo from "Images/Icons/logo-full.svg";
+import { useOrganization } from "Models/organization";
+import { fullName, useMyProfile } from "Models/user";
 import React, { useState } from "react";
 import SideBarDashboardTypeCTA from "./SideBarDashboardTypeCTA";
 import SideBarNavigation from "./SideBarNavigation";
@@ -53,7 +53,7 @@ const SideBar = ({ navItemsList }) => {
     }
   };
   return (
-    <div className="md:flex md:flex-shrink-0 sidebar">
+    <div className="md:flex sidebar">
       <div className="flex flex-col sidebar md:p-2 md:pr-0 w-full">
         <div
           className="flex flex-col md:h-0 flex-1 relative rounded-lg m-2 mb-0 md:m-0"

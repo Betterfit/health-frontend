@@ -1,0 +1,10 @@
+a.returnPolicy {
+  color: var(--primary-blue);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+p.returnPolicy {
+  color: var(--midnight-blue);
+  font-weight: bold;
+}

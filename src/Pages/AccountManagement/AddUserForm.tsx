@@ -5,11 +5,11 @@ import {
   TextField,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import { useUserFacilities } from "APIHooks/facilities";
-import { groupUsersByFacility, useMyProfile, useUsers } from "APIHooks/user";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { validate } from "email-validator";
 import TypedAPI from "Helpers/typedAPI";
+import { useUserFacilities } from "Models/facilities";
+import { groupUsersByFacility, useMyProfile, useUsers } from "Models/user";
 import React, { FormEventHandler, useState } from "react";
 import { useQueryClient } from "react-query";
 import { Facility } from "Types";

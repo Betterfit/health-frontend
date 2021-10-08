@@ -5,13 +5,20 @@ import {
   ConnectedAccount,
   Facility,
   Order,
+  OrderInvoice,
   Organization,
+  Payment,
   PaymentMethod,
+  ProductCategory,
+  ProductOption,
   ProductPricing,
+  ServerException,
   SupplierPricing,
   SupplierTicket,
+  Transfer,
   UserProfile,
 } from "Types";
+import { buildQueryString } from "./utils";
 
 export const apiURL = process.env.REACT_APP_DJANGO_API_URL;
 export default class TypedAPI {
@@ -22,13 +29,19 @@ export default class TypedAPI {
       Authorization: requireAuth && `Bearer ${await getIdToken()}`,
     };
 
-    return applyCaseMiddleware(
+    const client = applyCaseMiddleware(
       axios.create({
         baseURL: apiURL,
         timeout: 31000,
         headers: headers,
       })
     );
+    // client.interceptors.response.use(undefined, (err: any) =>
+    //   err?.response?.data?.code
+    //     ? Promise.reject(new Error(err.response.data.code))
+    //     : err
+    // );
+    return client;
   };
   // cleaner name
   getClient = async (): Promise<AxiosInstance> => {
@@ -51,7 +64,7 @@ export default class TypedAPI {
     client.patch("/users/" + userId + "/", data);
   };
 
-  // organization
+  //  ********** FACILITIES AND ORGANIZATION API **********
   getMyOrganization = async () => {
     const client = await this.init();
     return client.get<Organization>("/organizations/my_organization/");
@@ -104,13 +117,19 @@ export default class TypedAPI {
     return client.get<Order[]>(path);
   };
 
+  getOrder = async (id: number) => {
+    const client = await this.init();
+    const response = await client.get<Order>(`/orders/${id}`);
+    return response.data;
+  };
+
   updateOrderStatus = async ({
-    order,
+    orderId,
     action,
     data,
   }: UpdateOrderStatusProps) => {
     const client = await this.init();
-    return client.post(order.url + "/" + action, data);
+    return client.post(`/orders/${orderId}/${action}`, data);
   };
 
   approveOrder = async ({
@@ -130,6 +149,27 @@ export default class TypedAPI {
   cancelOrder = async (order: Order) => {
     const client = await this.init();
     return client.post(order.url + "/cancel");
+  };
+
+  createOrder = async (data: OrderMutationProps) => {
+    const client = await this.init();
+    return client
+      .post<Order>(`/orders/`, data)
+      .then((response) => response.data);
+  };
+
+  editOrder = async (id: number, data: OrderMutationProps) => {
+    const client = await this.init();
+    return client
+      .put<Order>(`/orders/${id}/`, data)
+      .then((response) => response.data);
+  };
+
+  getOrderInvoice = async (orderId: number) => {
+    const client = await this.init();
+    return client
+      .get<OrderInvoice>(`/orders/${orderId}/invoice`)
+      .then((response) => response.data);
   };
 
   //  ********** PRICING API **********
@@ -207,6 +247,22 @@ export default class TypedAPI {
     return client.post("/connected-accounts/setup-complete");
   };
 
+  getPayments = async (queryParams?: {
+    order?: number;
+    paymentMethod?: number;
+  }) => {
+    const queryString = buildQueryString(queryParams);
+    const client = await this.init();
+    const response = await client.get<Payment[]>("/payments" + queryString);
+    return response.data;
+  };
+
+  getTransfers = async () => {
+    const client = await this.init();
+    const response = await client.get<Transfer[]>("/transfers");
+    return response.data;
+  };
+
   /**
    * Used to get a client secrete needed to set up a payment method.
    * https://stripe.com/docs/payments/save-and-reuse?platform=web#web-create-setup-intent
@@ -231,13 +287,46 @@ export default class TypedAPI {
     const client = await this.init();
     return client.patch(ticket.url, data);
   };
+
+  //  ********** PRODUCTS API **********
+  getCategories = async () => {
+    const client = await this.init();
+    const response = await client.get<ProductCategory[]>("/product-categories");
+    return response.data;
+  };
+
+  getCategory = async (id: number) => {
+    const client = await this.init();
+    const response = await client.get<ProductCategory>(
+      "/product-categories/" + id
+    );
+    return response.data;
+  };
+
+  getProductOptions = async (queryParams?: {
+    category?: number;
+    search?: string;
+  }) => {
+    const client = await this.init();
+    const queryString = buildQueryString(queryParams);
+    const response = await client.get<ProductOption[]>(
+      "/product-options" + queryString
+    );
+    return response.data;
+  };
+
+  getProductOption = async (id: number) => {
+    const client = await this.init();
+    const response = await client.get<ProductOption>("/product-options/" + id);
+    return response.data;
+  };
 }
 
 export const api = new TypedAPI();
 
 export type FacilityData = Omit<Facility, "pk" | "url" | "id">;
 
-type UpdateOrderStatusProps = { order: Order } & (
+type UpdateOrderStatusProps = { orderId: number } & (
   | { action: "cancel"; data?: undefined }
   | {
       action: "save-selections";
@@ -261,6 +350,16 @@ type NewPaymentMethodProps = {
   authorizedUsers: number[];
 };
 
+type OrderMutationProps = {
+  facility: number;
+  orderProducts: {
+    quantity: number;
+    productOption: number;
+    autoSelectSupplier?: boolean;
+    pk?: number;
+  }[];
+};
+
 export type PaymentMethodUpdate = {
   authorizedUsers?: number[];
   owner?: number;
@@ -271,4 +370,9 @@ export type SupplierTicketUpdate = {
   shippingProvider?: string;
   trackingNumber?: string;
   status: "shipped";
+};
+
+export const parseException = (error: unknown): undefined | ServerException => {
+  const exception = (error as any)?.response?.data;
+  if (exception) return exception as ServerException | undefined;
 };

@@ -1,11 +1,11 @@
-import { useSelectedFacility } from "APIHooks/facilities";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
-import ProductDetailsCard from "Components/Content/ProductDetailsCard";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
 import EditProductForm from "Components/Forms/EditProductForm";
 //Components
 import BackNavigation from "Components/Helpers/BackNavigation";
+import ProductDetailsCard from "Components/Product/DeprecatedProductDetailsCard";
 import Api from "Helpers/api";
+import { useSelectedFacility } from "Models/facilities";
 import React from "react";
 import { useQuery } from "react-query";
 

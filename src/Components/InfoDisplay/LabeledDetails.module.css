@@ -19,8 +19,7 @@
 .horizontalDetail {
   display: flex;
   align-items: center;
-  margin: 0.5rem 2rem;
-  flex: 1;
+  margin: 0.5rem 1rem;
   max-width: 400px;
 }
 
@@ -28,7 +27,7 @@
   color: var(--slate);
   font-size: small;
   font-weight: bold;
-  margin-right: 2rem;
+  margin-right: 1rem;
 }
 
 .horizontalDetailValue {
@@ -39,6 +38,13 @@
 .fullWidth {
   justify-content: space-between;
   width: 100%;
+}
+
+.fullWidth .horizontalDetailValue {
+  text-align: right;
+}
+.fullWidth .horizontalDetailLabel {
+  text-align: left;
 }
 
 @media (max-width: 500px) {

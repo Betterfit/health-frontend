@@ -1,6 +1,7 @@
 @import "styles/type.css";
 @import "styles/dashboard.css";
 @import "styles/resources.css";
+@import "styles/card.css";
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -55,3 +56,21 @@ code {
 p {
   color: var(--midnight-blue);
 }
+
+hr {
+  width: 100%;
+  height: 2px;
+  background-color: var(--medium-grey);
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+/* button {
+  outline: 3px dotted black;
+} */
+
+/* button:focus-visible {
+} */

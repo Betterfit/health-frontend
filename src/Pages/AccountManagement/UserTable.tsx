@@ -1,5 +1,10 @@
-import { Dialog } from "@material-ui/core";
-import { mapFacilitiesById, useFacilities } from "APIHooks/facilities";
+import IconButton from "Components/Content/IconButton";
+import Dialog from "Components/Dialog";
+import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
+import SearchBar from "Components/Search/SearchBar";
+import Tabs from "Components/Tabs/Tabs";
+import TypedAPI from "Helpers/typedAPI";
+import { mapFacilitiesById, useFacilities } from "Models/facilities";
 import {
   fullName,
   searchUsers,
@@ -7,13 +12,7 @@ import {
   userIsFacilityAdmin,
   userIsNormalMember,
   useUsers,
-} from "APIHooks/user";
-import IconButton from "Components/Content/IconButton";
-import Title from "Components/Content/Title";
-import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
-import SearchBar from "Components/Search/SearchBar";
-import Tabs from "Components/Tabs/Tabs";
-import TypedAPI from "Helpers/typedAPI";
+} from "Models/user";
 import React, { useState } from "react";
 import { useQueryClient } from "react-query";
 import { FacilityMembership, UserProfile } from "Types";
@@ -64,7 +63,6 @@ const UserTable = () => {
   );
   return (
     <div className={styles.users}>
-      <Title text="Users" />
       <Tabs
         key="userTabs"
         tabs={userCategories.map((category) => ({

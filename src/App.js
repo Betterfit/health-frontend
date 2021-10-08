@@ -1,5 +1,6 @@
 import DashboardResearch from "Containers/DashboardResearch";
 import { useAuthStore } from "Context/authContext";
+import DynamicDashboard from "Dashboard/DynamicDashboard";
 import { setUpCognito } from "Helpers/cognito";
 import { observer } from "mobx-react";
 import { CovidGraphPage } from "Pages/Covid/CovidGraphPage";
@@ -13,12 +14,14 @@ import {
   Switch,
 } from "react-router-dom";
 import NotFound from "./Pages/404";
-import Dashboard from "./Pages/Dashboard";
 import ForgotPassword from "./Pages/Login/ForgotPassword";
 // ================ PAGES ================
 import Login from "./Pages/Login/HealthLogin";
 import LoginContainer from "./Pages/Login/LoginContainer";
 import LogOut from "./Pages/Logout";
+import "./styles/globalClasses.module.css";
+import "./styles/tailwind.css";
+
 setUpCognito();
 const App = observer(() => {
   const authStore = useAuthStore();
@@ -34,7 +37,7 @@ const App = observer(() => {
             <CovidGraphPage />
           </Route>
           <Route path="/dashboard">
-            <Dashboard language={authStore.language} />
+            <DynamicDashboard />
           </Route>
           <Route
             exact

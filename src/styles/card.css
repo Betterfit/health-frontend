@@ -1,0 +1,8 @@
+.cardHeader {
+  width: 100%;
+  display: flex;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 0.5rem;
+}

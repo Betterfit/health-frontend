@@ -16,7 +16,7 @@ describe("Account Management", () => {
   it("Allows admins to create facilities and add new accounts to them.", () => {
     cy.loginAsPurchaserAdmin();
     cy.url().should("include", "/dashboard");
-    cy.findByRole("link", { name: /accounts/i }).click();
+    cy.findByRole("link", { name: /admin/i }).click();
     // creates a name like "Test Facility 9754"
     const facilityName = "Test Facility " + Math.floor(Math.random() * 10000);
     cy.findByRole("tab", { name: /add facility/i }).click();

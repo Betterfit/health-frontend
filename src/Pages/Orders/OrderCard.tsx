@@ -8,14 +8,36 @@ import {
 import OrderCardHeader from "Components/Order/OrderCardHeader";
 import { api } from "Helpers/typedAPI";
 import { capitalize } from "lodash";
+import { orderCanBeEdited } from "Models/orders";
+import { useMyProfile } from "Models/user";
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useHistory } from "react-router-dom";
+import { cartActions } from "Store/cartSlice";
+import { useAppDispatch } from "Store/store";
 import { Order, OrderProduct } from "Types";
 import styles from "./OrderCard.module.css";
 
 const OrderCard = ({ order }: { order: Order }) => {
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+  const detailLink = "/dashboard/orders/detail/" + order.id;
+  const onDetailPage = history.location.pathname === detailLink;
+  const { data: myProfile } = useMyProfile();
   return (
-    <div className={clsx("cardBorder", styles.order)}>
+    <div
+      // only act as a link to the detail page if we're not already on the detail page
+      className={clsx(
+        !onDetailPage && "cardBorder hoverShadowDark hoverGrow cursor-pointer",
+        styles.order
+      )}
+      onClick={() => !onDetailPage && history.push(detailLink)}
+      tabIndex={!onDetailPage ? 0 : -1}
+      aria-label={`Order ${order.id}`}
+      onKeyDown={(event) => {
+        if (!onDetailPage && event.key === "Enter") history.push(detailLink);
+      }}
+    >
       <OrderCardHeader order={order}>
         {/* <VerticalDetail label="status" value={capitalize(order.status)} /> */}
         {/* <Badge text={order.status} backgroundColor="green" /> */}
@@ -24,9 +46,21 @@ const OrderCard = ({ order }: { order: Order }) => {
           value={<StatusBadge status={order.status} />}
         />
       </OrderCardHeader>
+      {onDetailPage && <hr />}
       {order.orderProducts.map((orderProduct, i) => (
         <OrderProductInfo key={i} {...{ order, orderProduct }} />
       ))}
+      {onDetailPage && myProfile && orderCanBeEdited(order, myProfile) && (
+        <PrettyButton
+          text="Edit Order"
+          className="mx-auto"
+          onClick={() => {
+            dispatch(cartActions.importOrder(order));
+            history.push("/dashboard/new-order");
+          }}
+          variant="outline"
+        />
+      )}
     </div>
   );
 };
@@ -62,7 +96,7 @@ const OrderProductInfo = ({
       <div className={styles.detailList}>
         <HorizontalDetail label="Supplier" value={ticket?.supplier.name} />
         <HorizontalDetail label="Warehouse" value={ticket?.warehouse.name} />
-        <HorizontalDetail label={"Total"} value={32} />
+        {/* <HorizontalDetail label={"Total"} value={32} /> */}
       </div>
       <div className={styles.detailList}>
         <HorizontalDetail
@@ -83,7 +117,7 @@ const OrderProductInfo = ({
             <PrettyButton
               text="Mark as Delivered"
               color="green"
-              onClick={() => deliveredMutation.mutate()}
+              onClick={deliveredMutation.mutate}
               disabled={deliveredMutation.isLoading}
             />
             {/* <PrettyButton text="Contact Supplier" variant="outline" /> */}

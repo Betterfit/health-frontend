@@ -1,6 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import { Autocomplete } from "@material-ui/lab";
-import { fullName } from "APIHooks/user";
+import { fullName } from "Models/user";
 import React from "react";
 import { User } from "Types";
 import styles from "./UserPicker.module.css";

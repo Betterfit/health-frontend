@@ -28,6 +28,7 @@ const Orders = () => {
     return <LoadingSpinner bubbleColor="gray" />;
   if (ordersQuery.isError) return <div>Error: {ordersQuery.error.message}</div>;
   const { data: orders } = ordersQuery;
+  console.log(orders);
   const ordersWithStatus = (status: string) =>
     status === "all"
       ? orders
@@ -53,7 +54,7 @@ const Orders = () => {
 const OrderList = ({ orders }: { orders: Order[] }) => (
   <div className={styles.orderList}>
     {orders.map((order) => (
-      <OrderCard key={order.pk} order={order} />
+      <OrderCard key={order.id} order={order} />
     ))}
   </div>
 );
