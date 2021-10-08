@@ -21,6 +21,7 @@ const OrderCardHeader = ({
         value={formatTimeStamp(order.orderDate)}
       />
       <VerticalDetail label="Destination" value={order.facility.name} />
+      <VerticalDetail label="ID" value={order.id} />
       {children}
     </div>
   );
