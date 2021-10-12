@@ -1,4 +1,6 @@
+import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { Auth } from "aws-amplify";
+import TermsOfService from "Components/Content/TermsOfService";
 import ErrorDisplayForm, {
   SubmitCallback,
 } from "Components/Forms/ErrorDisplayForm";
@@ -11,6 +13,7 @@ import React, { ChangeEvent, useState } from "react";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router";
 import { UserProfile } from "Types";
+import styles from "./SignUp.module.css";
 
 interface FormData {
   email: string;
@@ -19,6 +22,7 @@ interface FormData {
   code: string;
   firstName: string;
   lastName: string;
+  termsAccepted: boolean;
 }
 
 const api = new TypedAPI();
@@ -37,6 +41,7 @@ const SignUp = () => {
     code: "",
     firstName: "",
     lastName: "",
+    termsAccepted: false,
   });
 
   const onChange = (property: keyof FormData) => (
@@ -106,6 +111,11 @@ const SignUp = () => {
           handleSubmit={signUp}
           subtitle="If your organization has created an account for you, you can set up your login credentials here"
           submitLabel="Sign up"
+          canSubmit={
+            formData.termsAccepted &&
+            formData.password !== "" &&
+            formData.email !== ""
+          }
         >
           <InputField
             name="Email"
@@ -125,6 +135,20 @@ const SignUp = () => {
             type="password"
             value={formData.passwordConfirmation}
             onChange={onChange("passwordConfirmation")}
+          />
+          <TermsOfService />
+          <FormControlLabel
+            className={styles.agreeToTerms}
+            control={
+              <Checkbox
+                value={formData.termsAccepted}
+                onChange={(e) =>
+                  setFormData({ ...formData, termsAccepted: e.target.checked })
+                }
+                data-testid="agree-to-terms"
+              />
+            }
+            label="Agree to Terms"
           />
         </ErrorDisplayForm>
       )}

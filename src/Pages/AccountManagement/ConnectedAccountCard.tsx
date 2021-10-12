@@ -1,3 +1,4 @@
+import PrettyLink from "Components/Content/PrettyLink";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import {
   HorizontalDetail,
@@ -119,13 +120,10 @@ const CompleteConnectedAccount = ({
           value={`*******${bankAccount.last4}`}
         />
       </div>
-      <a
-        href="https://dashboard.stripe.com"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Open Stripe Dashboard
-      </a>
+      <PrettyLink
+        to="https://dashboard.stripe.com"
+        text="Open Stripe Dashboard"
+      />
     </>
   );
 };

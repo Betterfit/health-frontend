@@ -60,6 +60,7 @@ describe("Account Management", () => {
     cy.findAllByLabelText(/password/i).each((textbox) =>
       cy.wrap(textbox).type(newUser.password)
     );
+    cy.findByTestId("agree-to-terms").click();
     cy.findByRole("button", { name: /sign up/i }).click();
     // retrieving verification code
     cy.mailosaurGetMessage(emailServerId, {
