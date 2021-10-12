@@ -68,15 +68,6 @@ h2 {
   font-size: 1.4rem;
 }
 
-a {
-  font-weight: bold;
-  color: var(--primary-blue);
-}
-
-a:hover {
-  filter: brightness(140%);
-  text-decoration: underline;
-}
 /* button {
   outline: 3px dotted black;
 } */
