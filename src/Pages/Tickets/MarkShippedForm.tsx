@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { SupplierTicket } from "Types";
 import styles from "./MarkShippedForm.module.css";
 
-const MarkShippedDialog = ({
+const MarkShippedForm = ({
   ticket,
   onClose,
 }: {
@@ -91,4 +91,4 @@ const MarkShippedDialog = ({
     </form>
   );
 };
-export default MarkShippedDialog;
+export default MarkShippedForm;
