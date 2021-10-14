@@ -4,7 +4,6 @@ import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { formatTimeStamp } from "Helpers/utils";
 import { productDisplayName } from "Models/products";
-import QRCode from "qrcode.react";
 import React, { ReactNode, useState } from "react";
 import { useQueryClient } from "react-query";
 import { SupplierTicket } from "Types";
@@ -54,7 +53,7 @@ const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
       <TicketDetail label="Quantity" value={orderProduct.quantity} /> */}
       {/* <TicketDetail label="Status" value={ticket.status} />
       <TicketDetail label="Shipping Info" value={ticket.shippingProvider} /> */}
-      <div className={styles.qrCode}>
+      {/* <div className={styles.qrCode}>
         <QRCode
           value={window.location.origin + "/tickets/" + ticket.id}
           size={128}
@@ -67,7 +66,7 @@ const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
           height={128}
           level="Q"
         />
-      </div>
+      </div> */}
       <div className={styles.actions}>
         {ticket.status === "open" && (
           <PrettyButton
@@ -77,7 +76,7 @@ const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
             onClick={() => setDialogState("markShipped")}
           />
         )}
-        <PrettyButton text="Print QR Code" />
+        {/* <PrettyButton text="Print QR Code" /> */}
       </div>
       <Dialog
         open={
