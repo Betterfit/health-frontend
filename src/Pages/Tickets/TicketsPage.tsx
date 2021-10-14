@@ -56,7 +56,7 @@ const TicketList = ({ tickets }: { tickets: SupplierTicket[] }) => {
   return (
     <div className={styles.ticketList}>
       {tickets.map((ticket) => (
-        <TicketCard ticket={ticket} />
+        <TicketCard key={ticket.id} ticket={ticket} />
       ))}
     </div>
   );

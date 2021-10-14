@@ -1,5 +1,6 @@
 import camelcaseKeys from "camelcase-keys";
 import moment from "moment";
+import snakecaseKeys from "snakecase-keys";
 
 export const setClipboard = (text: string) =>
   navigator.clipboard.writeText(text);
@@ -17,10 +18,12 @@ export const findLastNonNull = <T>(array: (T | null)[], fallback?: T): T => {
   return findFirstNonNull(array.slice().reverse(), fallback);
 };
 
-// converts all of the keys in a potentially nested object from snake case to camel case
-export const convertFromSnake = (object: any): any =>
+/** converts all of the keys in a potentially nested object from snake case to camel case*/
+export const convertToCamel = (object: any): any =>
   camelcaseKeys(object, { deep: true });
 
+export const convertToSnake = (object: any): any =>
+  snakecaseKeys(object, { deep: true });
 // typesafe pick function
 // https://stackoverflow.com/questions/47232518/write-a-typesafe-pick-function-in-typescript
 export const subset = <T, K extends keyof T>(
@@ -61,11 +64,14 @@ export const formatCurrency = (
 /**
  * Turns an object into a query string: ?a=3&b=fdafda
  * Excludes values that aren't truthy.
+ * All keys are converted to snake case because our backend works with snake case.
+ * productOption -> product_option.
  */
 export const buildQueryString = (object: object | undefined): string => {
   if (!object) return "";
   const params = new URLSearchParams();
-  Object.entries(object).forEach(
+  const snake = convertToSnake(object);
+  Object.entries(snake).forEach(
     ([key, val]) => val != null && params.set(key, String(val))
   );
   return "?" + params.toString();

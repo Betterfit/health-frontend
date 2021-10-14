@@ -4,7 +4,7 @@ import { VerticalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { api } from "Helpers/typedAPI";
 import { productDisplayName } from "Models/products";
 import React, { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import { SupplierTicket } from "Types";
 import styles from "./MarkShippedForm.module.css";
 
@@ -21,13 +21,11 @@ const MarkShippedForm = ({
     shippingProvider: "",
     trackingNumber: "",
   });
-  const queryClient = useQueryClient();
   const ticketMutation = useMutation(
     () => api.updateTicket(ticket, { status: "shipped", ...formData }),
     {
       onSuccess: () => {
         onClose();
-        queryClient.invalidateQueries("tickets");
       },
     }
   );
@@ -40,7 +38,7 @@ const MarkShippedForm = ({
         ticketMutation.mutate();
       }}
     >
-      <p className={styles.title}>Mark Ticket #{ticket.id} as Shipped</p>
+      <h2>Mark Ticket #{ticket.id} as Shipped</h2>
       <hr />
       <VerticalDetail label="Destination" value={destination.name} />
       <VerticalDetail label="Product" value={productDisplayName(product)} />

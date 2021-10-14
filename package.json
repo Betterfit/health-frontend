@@ -71,6 +71,7 @@
     "react-uuid": "^1.0.2",
     "recharts": "^1.8.5",
     "redux": "^4.0.5",
+    "snakecase-keys": "^5.1.0",
     "sortablejs": "^1.12.0",
     "source-map-explorer": "^2.5.2",
     "tailwind-react-ui": "^0.8.1",

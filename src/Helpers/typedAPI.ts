@@ -4,6 +4,7 @@ import { getIdToken } from "Helpers/cognito";
 import {
   ConnectedAccount,
   Facility,
+  Inventory,
   Order,
   OrderInvoice,
   Organization,
@@ -319,6 +320,26 @@ export default class TypedAPI {
     const client = await this.init();
     const response = await client.get<ProductOption>("/product-options/" + id);
     return response.data;
+  };
+
+  //  ********** INVENTORY API **********
+  getInventory = async (queryParams: {
+    warehouse?: number;
+    productOption?: number;
+  }) => {
+    const client = await this.init();
+    const queryString = buildQueryString(queryParams);
+    const response = await client.get<Inventory[]>("/inventory" + queryString);
+    return response.data;
+  };
+
+  updateInventory = async (data: {
+    warehouse: number;
+    productOption: number;
+    quantity: number;
+  }) => {
+    const client = await this.init();
+    return client.post("/inventory/edit", data);
   };
 }
 

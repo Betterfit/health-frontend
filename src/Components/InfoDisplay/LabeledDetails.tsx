@@ -7,14 +7,16 @@ export const VerticalDetail = ({
   value,
   labelClass,
   valueClass,
+  containerClass,
 }: {
   label: string;
   value: ReactNode;
   labelClass?: string;
   valueClass?: string;
+  containerClass?: string;
 }) => {
   return (
-    <div className={styles.verticalDetail}>
+    <div className={clsx(styles.verticalDetail, containerClass)}>
       <span className={clsx(styles.verticalDetailLabel, labelClass)}>
         {label}
       </span>

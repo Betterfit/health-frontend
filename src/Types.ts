@@ -215,9 +215,9 @@ export interface Ticket {
   status: "open" | "shipped" | "delivered";
   shippingProvider: string;
   trackingNumber: string;
+  warehouse: Facility;
 }
 export interface PurchaserTicket extends Ticket {
-  warehouse: Facility;
   supplier: Organization;
   orderProductId: number;
 }
@@ -381,5 +381,15 @@ export interface Transfer {
 
 export interface CartItem {
   quantity: number;
+  productOptionId: number;
+}
+
+export interface Inventory {
+  /** The id of the inventory object */
+  id: number;
+  warehouseId: number;
+  quantity: number;
+  /** The amount of inventory that has been committed to orders */
+  allottedQuantity: number;
   productOptionId: number;
 }

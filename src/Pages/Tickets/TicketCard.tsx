@@ -6,20 +6,25 @@ import { formatTimeStamp } from "Helpers/utils";
 import { productDisplayName } from "Models/products";
 import QRCode from "qrcode.react";
 import React, { ReactNode, useState } from "react";
+import { useQueryClient } from "react-query";
 import { SupplierTicket } from "Types";
 import MarkShippedForm from "./MarkShippedForm";
 import styles from "./TicketCard.module.css";
+import UpdateInventoryForm from "./UpdateInventoryForm";
+
+type DialogState = "closed" | "markShipped" | "updateInventory";
 
 /**
  * Displays the ticket's information and allows the user to mark it as shipped.
  */
 const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
+  const queryClient = useQueryClient();
   const product = ticket.orderProduct.productOption;
   const { destination, purchaser, orderProduct } = ticket;
   // const history = useHistory();
   // const basePath = "/dashboard/tickets";
   // const markShippedPath = `${basePath}/${ticket.id}/mark-shipped`;
-  const [markingShipped, setMarkingShipped] = useState(false);
+  const [dialogState, setDialogState] = useState<DialogState>("closed");
   return (
     <div className={styles.ticket}>
       <TicketDetail label="Purchaser" value={purchaser.name} />
@@ -69,23 +74,33 @@ const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
             text="Mark Shipped"
             color="green"
             // onClick={() => history.push(markShippedPath)}
-            onClick={() => setMarkingShipped(true)}
+            onClick={() => setDialogState("markShipped")}
           />
         )}
         <PrettyButton text="Print QR Code" />
       </div>
       <Dialog
         open={
-          markingShipped
+          dialogState !== "closed"
           // ticket.status !== "shipped" &&
           // history.location.pathname === markShippedPath
         }
-        onClose={() => setMarkingShipped(false)}
+        onClose={() => setDialogState("markShipped")}
       >
-        <MarkShippedForm
-          ticket={ticket}
-          onClose={() => setMarkingShipped(false)}
-        />
+        {dialogState === "markShipped" ? (
+          <MarkShippedForm
+            ticket={ticket}
+            onClose={() => setDialogState("updateInventory")}
+          />
+        ) : (
+          <UpdateInventoryForm
+            ticket={ticket}
+            handleClose={() => {
+              queryClient.invalidateQueries("tickets");
+              setDialogState("closed");
+            }}
+          />
+        )}
       </Dialog>
     </div>
   );

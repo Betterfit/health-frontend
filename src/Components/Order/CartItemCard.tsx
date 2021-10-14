@@ -15,6 +15,10 @@ import { useAppDispatch, useAppSelector } from "Store/store";
 import { CartItem } from "Types";
 import styles from "./CartItemCard.module.css";
 
+/**
+ * The cards shown on the cart that represent OrderProducts.
+ * This allows the quantity to be changed and for the OrderProduct to be deleted.
+ */
 const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
   const dispatch = useAppDispatch();
   const { productOptionId, quantity } = cartItem;

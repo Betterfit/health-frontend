@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   margin: 0.25rem 1rem;
+  text-align: center;
 }
 .verticalDetailLabel {
   text-transform: uppercase;
