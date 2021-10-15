@@ -392,4 +392,5 @@ export interface Inventory {
   /** The amount of inventory that has been committed to orders */
   allottedQuantity: number;
   productOptionId: number;
+  productOption: ProductOption;
 }

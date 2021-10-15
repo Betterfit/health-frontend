@@ -69,7 +69,7 @@ const UpdateInventoryForm = ({
           label="Old Quantity"
           value={inventory?.quantity}
           // remove margin so that arrow is properly centered between old and new quantity
-          containerClass="m-0"
+          className="m-0"
         />
         <span className="text-2xl">→</span>
         <TextField

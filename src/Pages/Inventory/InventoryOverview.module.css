@@ -1,0 +1,15 @@
+.inventoryCard {
+  color: var(--midnight-blue);
+  padding: 1rem;
+  font-weight: 600;
+  background-color: white;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  border-radius: 0.25rem;
+}
+
+.inventoryCard > img {
+  margin-left: 0;
+  margin-right: 0;
+}

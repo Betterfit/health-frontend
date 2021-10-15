@@ -1,8 +1,8 @@
 import DashboardResources from "Containers/DashboardResources";
 import DashboardOrder from "Containers/Facility/Inner/DashboardOrder";
-import DashboardInventory from "Containers/Supplier/Inner/DashboardInventory";
 import styles from "Dashboard/Dashboard.module.css";
 import AccountManagement from "Pages/AccountManagement/AccountManagement";
+import InventoryPage from "Pages/Inventory/InventoryPage";
 import OrderDetail from "Pages/Orders/OrderDetail";
 import OrdersPage from "Pages/Orders/OrdersPage";
 import PaymentsPage from "Pages/Payments/PaymentsPage";
@@ -64,7 +64,7 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
         <TicketsPage />
       </Route>
       <Route path="/dashboard/inventory">
-        <DashboardInventory />
+        <InventoryPage />
       </Route>
       {/* Publicly Accessible */}
       <Route path="/dashboard/resources">
