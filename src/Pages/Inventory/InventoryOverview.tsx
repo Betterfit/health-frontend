@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Icon from "Components/Content/Icon";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import { VerticalDetail } from "Components/InfoDisplay/LabeledDetails";
@@ -30,6 +31,7 @@ const InventoryOverview = () => {
     <div className="space-y-5">
       {categories.map((category) => (
         <InventoryCategory
+          key={category}
           category={category}
           inventories={inventory.filter(
             (i) => i.productOption.productCategory === category
@@ -55,7 +57,7 @@ const InventoryCategory = ({
       <ul className="space-y-2">
         {inventories.map((inventory) => (
           <li>
-            <InventoryOverviewCard inventory={inventory} />
+            <InventoryOverviewCard key={inventory.id} inventory={inventory} />
           </li>
         ))}
       </ul>
@@ -67,9 +69,9 @@ const InventoryOverviewCard = ({ inventory }: { inventory: Inventory }) => {
   const product = inventory.productOption;
   return (
     <NavLink
-      to={`/dashboard/inventory/product/${inventory.productOptionId}`}
+      to={`/dashboard/inventory/${inventory.productOptionId}`}
       // className={`text-dark-blue pl-4 pr-2 py-5 flex justify-between bg-white rounded-md box-link font-semibold`}
-      className={styles.inventoryCard}
+      className={clsx(styles.inventoryCard, "hoverGrow hoverShadow")}
     >
       <img src={product.productImage} alt="" style={{ maxWidth: "64px" }} />
       <VerticalDetail
@@ -78,6 +80,7 @@ const InventoryOverviewCard = ({ inventory }: { inventory: Inventory }) => {
         value={product.name}
         valueClass="text-sm"
         className="flex-1"
+        leftAlign
       />
       <VerticalDetail
         label="Total"

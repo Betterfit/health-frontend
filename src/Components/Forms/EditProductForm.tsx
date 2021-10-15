@@ -1,45 +1,38 @@
+import { InputAdornment } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
-import Api from "Helpers/api";
 import TypedAPI, { api } from "Helpers/typedAPI";
-import { useSelectedFacility } from "Models/facilities";
 import { useOrganization } from "Models/organization";
 import React, { useCallback, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { SupplierPricing } from "Types";
+import { Inventory, SupplierPricing } from "Types";
 import PrettyButton from "./PrettyButton/PrettyButton";
 
-const EditProductForm = ({
-  id,
-  matched = 0,
-  avail = 0,
-  edit = true,
-}: {
-  id: number;
-  matched: number;
-  avail: number;
-  edit: boolean;
-}) => {
+const EditProductForm = ({ inventory }: { inventory: Inventory }) => {
+  const { productOptionId } = inventory;
   const [details, setDetails] = useState<{
     quantity: number;
     price: number;
     forSale: boolean;
   }>({
     forSale: false,
-    quantity: avail,
+    quantity: inventory.quantity,
     price: 0.05,
   });
-  const { facilityId } = useSelectedFacility();
   const queryClient = useQueryClient();
   const organizationQuery = useOrganization();
   const organizationId = organizationQuery.data?.id;
   const inventoryMutation = useMutation(
     () =>
-      new Api().updateSupplierProductQuantity(facilityId, id, details.quantity),
+      api.updateInventory({
+        warehouse: inventory.warehouseId,
+        productOption: inventory.productOptionId,
+        quantity: details.quantity,
+      }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["products"]);
+        queryClient.invalidateQueries(["inventory"]);
       },
     }
   );
@@ -47,9 +40,10 @@ const EditProductForm = ({
     (prices?: SupplierPricing[]): SupplierPricing | undefined =>
       prices?.find(
         (item) =>
-          item.productOptionId === id && item.organizationId === organizationId
+          item.productOptionId === productOptionId &&
+          item.organizationId === organizationId
       ),
-    [organizationId, id]
+    [organizationId, productOptionId]
   );
 
   const pricingQuery = useQuery(["pricing"], () =>
@@ -77,7 +71,10 @@ const EditProductForm = ({
       const data = { price: details.price, currency: "CAD" };
       const pricing = findPricing(pricingQuery.data);
       if (!pricing)
-        return api.addSupplierPricing({ ...data, productOption: id });
+        return api.addSupplierPricing({
+          ...data,
+          productOption: productOptionId,
+        });
       if (details.forSale) return api.updateSupplierPricing({ pricing, data });
       else return api.deleteSupplierPricing(pricing);
     },
@@ -89,35 +86,12 @@ const EditProductForm = ({
   );
   const loading = pricingMutation.isLoading || inventoryMutation.isLoading;
   const saveChanges = () => {
-    if (!loading) {
-      inventoryMutation.mutate();
-      pricingMutation.mutate();
-    }
+    inventoryMutation.mutate();
+    pricingMutation.mutate();
   };
   return (
-    <div className="my-1 flex flex-col gap-2 items-center">
-      <TextField
-        name="Matched"
-        label="Matched"
-        value={matched}
-        disabled
-        variant="outlined"
-        size="small"
-      />
-      <TextField
-        name="Available"
-        label="Available"
-        value={details.quantity}
-        type="number"
-        onChange={(e) =>
-          setDetails({ ...details, quantity: parseInt(e.target.value) })
-        }
-        inputProps={{ min: 0 }}
-        id="availableQuantityInput"
-        disabled={!edit}
-        variant="outlined"
-        size="small"
-      />
+    <div className="mt-4 mb-2 flex flex-col space-y-4 items-center bg-betterfit-soft-blue p-4">
+      <h3 className="mediumTitle">Edit Inventory/Price</h3>
       <FormControlLabel
         control={
           <Switch
@@ -126,6 +100,20 @@ const EditProductForm = ({
           />
         }
         label="For Sale"
+      />
+      <TextField
+        name="quantity"
+        label="Total Stock"
+        value={details.quantity}
+        type="number"
+        onChange={(e) =>
+          setDetails({ ...details, quantity: parseInt(e.target.value) })
+        }
+        inputProps={{ min: 0 }}
+        id="quantityInput"
+        variant="outlined"
+        style={{ width: "160px" }}
+        size="small"
       />
       {details.forSale && (
         <TextField
@@ -138,18 +126,19 @@ const EditProductForm = ({
           }
           inputProps={{ step: 0.01, min: 0.05 }}
           id="priceInput"
-          disabled={!edit}
           variant="outlined"
           size="small"
+          style={{ width: "160px" }}
+          InputProps={{
+            startAdornment: <InputAdornment position="start">$</InputAdornment>,
+          }}
         />
       )}
-      {edit && (
-        <PrettyButton
-          text="Save Changes"
-          onClick={saveChanges}
-          disabled={loading}
-        />
-      )}
+      <PrettyButton
+        text="Save Changes"
+        onClick={saveChanges}
+        disabled={loading}
+      />
     </div>
   );
 };

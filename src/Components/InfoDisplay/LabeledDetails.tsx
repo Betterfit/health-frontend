@@ -8,15 +8,23 @@ export const VerticalDetail = ({
   labelClass,
   valueClass,
   className,
+  leftAlign = false,
 }: {
   label: string;
   value: ReactNode;
   labelClass?: string;
   valueClass?: string;
   className?: string;
+  leftAlign?: boolean;
 }) => {
   return (
-    <div className={clsx(styles.verticalDetail, className)}>
+    <div
+      className={clsx(
+        styles.verticalDetail,
+        className,
+        leftAlign ? "items-start" : "items-center text-center"
+      )}
+    >
       <span className={clsx(styles.verticalDetailLabel, labelClass)}>
         {label}
       </span>

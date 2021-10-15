@@ -8,6 +8,7 @@ import ProductList, { useProductNavInfo } from "./ProductList";
 
 const DashboardOrder = () => {
   const productNavInfo = useProductNavInfo();
+  console.log(productNavInfo);
   let content;
   if (productNavInfo.productId)
     content = (

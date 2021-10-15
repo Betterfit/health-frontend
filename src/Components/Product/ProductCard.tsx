@@ -15,7 +15,7 @@ import { ProductOption, SupplierQuote } from "Types";
 import ProductImage from "./ProductImage";
 
 /**
- * A product card shown in the catalog one placing orders.
+ * A product card shown in the catalog when placing orders.
  */
 const ProductCard = ({ product }: { product: ProductOption }) => {
   const history = useHistory();

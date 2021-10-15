@@ -19,10 +19,10 @@ export const findLastNonNull = <T>(array: (T | null)[], fallback?: T): T => {
 };
 
 /** converts all of the keys in a potentially nested object from snake case to camel case*/
-export const convertToCamel = (object: any): any =>
+export const convertToCamel = (object: object): object =>
   camelcaseKeys(object, { deep: true });
 
-export const convertToSnake = (object: any): any =>
+export const convertToSnake = (object: object): object =>
   snakecaseKeys(object, { deep: true });
 // typesafe pick function
 // https://stackoverflow.com/questions/47232518/write-a-typesafe-pick-function-in-typescript
@@ -64,14 +64,16 @@ export const formatCurrency = (
 /**
  * Turns an object into a query string: ?a=3&b=fdafda
  * Excludes values that aren't truthy.
- * All keys are converted to snake case because our backend works with snake case.
- * productOption -> product_option.
+ * By default, keys are converted to snake case because our backend works with snake case.
  */
-export const buildQueryString = (object: object | undefined): string => {
+export const buildQueryString = (
+  object: object | undefined,
+  convertToSnakeCase = true
+): string => {
   if (!object) return "";
   const params = new URLSearchParams();
-  const snake = convertToSnake(object);
-  Object.entries(snake).forEach(
+  if (convertToSnakeCase) object = convertToSnake(object);
+  Object.entries(object).forEach(
     ([key, val]) => val != null && params.set(key, String(val))
   );
   return "?" + params.toString();

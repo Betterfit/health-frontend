@@ -1,12 +1,13 @@
+import Title from "Components/Content/Title";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
-import DashboardProductDetail from "Containers/Supplier/Inner/DashboardProductDetail";
+import InventoryProductDetail from "Pages/Inventory/InventoryDetail";
 import React from "react";
 import { Route } from "react-router-dom";
 import InventoryOverview from "./InventoryOverview";
 
 const InventoryPage = () => {
   return (
-    <div className="">
+    <div className="flex flex-wrap">
       <InventorySidebar />
       <InventoryDetail />
     </div>
@@ -16,9 +17,7 @@ const InventoryPage = () => {
 const InventorySidebar = () => {
   return (
     <DashboardSideBar addonStyles="relative p-4">
-      <div className="pt-4 px-4">
-        <h2 className="text-3xl text-dark-blue my-3">Inventory</h2>
-      </div>
+      <Title text="Inventory" />
       <hr />
       <InventoryOverview />
     </DashboardSideBar>
@@ -33,8 +32,8 @@ const InventoryDetail = () => {
       <Route
         path="/dashboard/inventory/:id"
         exact
-        render={(props) => {
-          return <DashboardProductDetail edit={true} {...props} />;
+        render={({ match }) => {
+          return <InventoryProductDetail productOptionId={match.params?.id} />;
         }}
       />
     </div>

@@ -44,7 +44,7 @@ export const setProductNavInfo = (
   history: History,
   newNavInfo: ProductNavInfo
 ) => {
-  history.push({ search: buildQueryString(newNavInfo) });
+  history.push({ search: buildQueryString(newNavInfo, false) });
 };
 export interface ProductNavInfo {
   productId?: number;
