@@ -51,7 +51,7 @@ export const useSelectedFacility = () => {
   const setSelectedFacility = (facility: Facility) => {
     dispatch(preferencesActions.setFacilityId(facility.id));
   };
-  const facilityId = useAppSelector((state) => state.supplier.facilityId);
+  const facilityId = useAppSelector((state) => state.preferences.facilityId);
   const { data: facilities } = useUserFacilities();
   const facility =
     facilities && facilities.length > 0

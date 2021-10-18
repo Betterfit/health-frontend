@@ -9,12 +9,12 @@ const loadSavedState = () => {
   const state = rawState ? JSON.parse(rawState) : {};
   return {
     cart: validateCartState(state?.cart),
-    supplier: validatePreferences(state?.supplier),
+    preferences: validatePreferences(state?.preferences),
   };
 };
 
 export const store = configureStore({
-  reducer: { cart: cartSlice.reducer, supplier: preferencesSlice.reducer },
+  reducer: { cart: cartSlice.reducer, preferences: preferencesSlice.reducer },
   devTools: true,
   preloadedState: loadSavedState(),
 });

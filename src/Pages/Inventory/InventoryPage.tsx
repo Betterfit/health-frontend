@@ -1,8 +1,11 @@
 import Title from "Components/Content/Title";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
+import FacilitySelector from "Components/FacilitySelector";
 import InventoryProductDetail from "Pages/Inventory/InventoryDetail";
 import React from "react";
 import { Route } from "react-router-dom";
+import { preferencesActions } from "Store/preferencesSlice";
+import { useAppDispatch, useAppSelector } from "Store/store";
 import InventoryOverview from "./InventoryOverview";
 
 const InventoryPage = () => {
@@ -15,9 +18,16 @@ const InventoryPage = () => {
 };
 
 const InventorySidebar = () => {
+  const dispatch = useAppDispatch();
+  const facilityId = useAppSelector((state) => state.preferences.facilityId);
   return (
     <DashboardSideBar addonStyles="relative p-4">
       <Title text="Inventory" />
+      <FacilitySelector
+        label="warehouse"
+        facilityId={facilityId}
+        selectFacility={(id) => dispatch(preferencesActions.setFacilityId(id))}
+      />
       <hr />
       <InventoryOverview />
     </DashboardSideBar>
