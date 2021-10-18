@@ -6,7 +6,7 @@ import { ReactSVG } from "react-svg";
 // components
 import SideBarProfileNavigation from "./SideBarProfileNavigation";
 
-const SideBarProfile = ({ userName, userType, showFacility, showProfile }) => {
+const SideBarProfile = ({ userName }) => {
   const [ShowNav, SetNav] = useState(false);
   const ToggleProfileNavigation = () => {
     SetNav(!ShowNav);
@@ -27,12 +27,7 @@ const SideBarProfile = ({ userName, userType, showFacility, showProfile }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <SideBarProfileNavigation
-            userType={userType}
-            showFacility={showFacility}
-            showProfile={showProfile}
-            close={ToggleProfileNavigation}
-          ></SideBarProfileNavigation>
+          <SideBarProfileNavigation close={ToggleProfileNavigation} />
         </Transition>
         <button
           href="#"

@@ -1,10 +1,7 @@
-import FaciltyCard from "Components/Profile/FacilityCard";
-import ProfileCard from "Components/Profile/ProfileCard";
-import Slider from "Components/Slider/Slider";
 import logo from "Images/Icons/logo-full.svg";
 import { useOrganization } from "Models/organization";
 import { fullName, useMyProfile } from "Models/user";
-import React, { useState } from "react";
+import React from "react";
 import SideBarDashboardTypeCTA from "./SideBarDashboardTypeCTA";
 import SideBarNavigation from "./SideBarNavigation";
 import SideBarProfile from "./SideBarProfile";
@@ -38,20 +35,7 @@ const SideBar = ({ navItemsList }) => {
   if (organizationQuery.isSuccess) {
     orgName = organizationQuery.data.name;
   }
-  const [ShowProfile, SetProfile] = useState({
-    profile: false,
-    facility: false,
-  });
 
-  const ToggleOptions = (type) => {
-    if (type === "profile") {
-      SetProfile({ profile: true, facility: false });
-    } else if (type === "facility") {
-      SetProfile({ profile: false, facility: true });
-    } else {
-      SetProfile({ profile: false, facility: false });
-    }
-  };
   return (
     <div className="md:flex sidebar">
       <div className="flex flex-col sidebar md:p-2 md:pr-0 w-full">
@@ -75,19 +59,8 @@ const SideBar = ({ navItemsList }) => {
             </div>
             <SideBarNavigation navList={navItemsList} />
           </div>
-          <SideBarProfile
-            userName={userName}
-            userType={userType}
-            showFacility={() => ToggleOptions("facility")}
-            showProfile={() => ToggleOptions("profile")}
-          />
+          <SideBarProfile userName={userName} userType={userType} />
         </div>
-        <Slider active={ShowProfile.facility} close={ToggleOptions}>
-          <FaciltyCard></FaciltyCard>
-        </Slider>
-        <Slider active={ShowProfile.profile} close={ToggleOptions}>
-          <ProfileCard></ProfileCard>
-        </Slider>
       </div>
     </div>
   );
