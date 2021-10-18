@@ -73,7 +73,7 @@ export const cartActions = cartSlice.actions;
  * Returns the passed in state if it is valid, or the default initial state.
  * This is what allows us to purge the localstorage after updates.
  */
-export const validatePersistedState = (state: any): CartState => {
+export const validateCartState = (state: any): CartState => {
   if (state?.version === VERSION) return state;
   return initialState;
 };

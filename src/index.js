@@ -17,6 +17,7 @@ const queryClient = new QueryClient({
     queries: { staleTime: 1000 * 60 * 5, cacheTime: 1000 * 60 * 15 },
   },
 });
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

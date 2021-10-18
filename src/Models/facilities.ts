@@ -1,5 +1,7 @@
 import TypedAPI from "Helpers/typedAPI";
 import { useQuery, UseQueryOptions } from "react-query";
+import { preferencesActions } from "Store/preferencesSlice";
+import { useAppDispatch, useAppSelector } from "Store/store";
 import { Facility } from "Types";
 
 export const facilitiesQK = "facilities";
@@ -43,19 +45,22 @@ export const mapFacilitiesById = (
 /**
  * Returns the currently selected facility, along with a function to update it.
  * Currently just selects the first facility facility that the user has access to.
- * TODO: Persist globally, perhaps between sessions as well
  */
 export const useSelectedFacility = () => {
+  const dispatch = useAppDispatch();
+  const setSelectedFacility = (facility: Facility) => {
+    dispatch(preferencesActions.setFacilityId(facility.id));
+  };
+  const facilityId = useAppSelector((state) => state.supplier.facilityId);
   const { data: facilities } = useUserFacilities();
   const facility =
-    facilities && facilities.length > 0 ? facilities[0] : undefined;
+    facilities && facilities.length > 0
+      ? facilities.find((facility) => facility.id === facilityId)
+      : undefined;
   // eventually we'll make this global with context
-  const setSelectedFacility = (facility: Facility) => {
-    throw Error("Not implemented!");
-  };
   return {
     facility,
-    facilityId: facility ? facility.id : undefined,
+    facilityId,
     setSelectedFacility,
   };
 };

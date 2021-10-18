@@ -19,8 +19,7 @@ const InventoryOverview = () => {
     () => api.getInventory(inventoryParams)
   );
 
-  if (!inventoryQuery.isSuccess)
-    return <LoadingSpinner bubbleColor="gres_yashy" />;
+  if (!inventoryQuery.isSuccess) return <LoadingSpinner bubbleColor="grey" />;
 
   const inventory = inventoryQuery.data;
   const categories = Array.from(
