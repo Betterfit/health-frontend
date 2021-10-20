@@ -9,8 +9,9 @@ import TicketIcon from "Images/Icons/ticket.svg";
 import orderBy from "lodash/orderBy";
 import { useOrganization } from "Models/organization";
 import { useMyProfile } from "Models/user";
+import LogOut from "Pages/Logout";
 import React from "react";
-import { BrowserRouter as Router, Redirect } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { clearPersistedReduxState } from "Store/store";
 import { Organization, UserProfile } from "Types";
 import DashboardRoutes from "./DashboardRoutes";
@@ -39,7 +40,7 @@ const DynamicDashboard = () => {
   if (!userOrganization || !userProfile) {
     signOut();
     clearPersistedReduxState();
-    return <Redirect to="/login" />;
+    return <LogOut />;
   }
   // these are what get displayed on the side bar
   const navItems = sortedNavItems(userOrganization, userProfile);

@@ -1,7 +1,6 @@
 import { StylesProvider } from "@material-ui/core/styles";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { AuthProvider } from "Context/authContext";
 import React from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -21,17 +20,15 @@ const queryClient = new QueryClient({
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <AuthProvider>
-        <Elements stripe={stripePromise}>
-          {/* https://material-ui.com/guides/interoperability/#controlling-priority-4 */}
-          <StylesProvider injectFirst>
-            <QueryClientProvider client={queryClient}>
-              <ReactQueryDevtools initialIsOpen={false} />
-              <App />
-            </QueryClientProvider>
-          </StylesProvider>
-        </Elements>
-      </AuthProvider>
+      <Elements stripe={stripePromise}>
+        {/* https://material-ui.com/guides/interoperability/#controlling-priority-4 */}
+        <StylesProvider injectFirst>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <App />
+          </QueryClientProvider>
+        </StylesProvider>
+      </Elements>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

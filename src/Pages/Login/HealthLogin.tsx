@@ -1,5 +1,4 @@
 import Auth from "@aws-amplify/auth";
-import { useAuthStore } from "Context/authContext";
 import Api from "Helpers/api";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
@@ -9,15 +8,11 @@ const api = new Api();
 
 const HealthLogin = () => {
   // TODO: add typing to mobx
-  const authStore = useAuthStore() as any;
   const history = useHistory();
-  if (authStore.user) history.push("/dashboard/");
 
   const getUserProfile = () =>
     api.getProfile().then((response: { data: { user: any } }) => {
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      authStore.user = JSON.stringify(response.data.user);
-      console.log(response);
       history.push("/dashboard/");
     });
 

@@ -1,8 +1,7 @@
 import DashboardResearch from "Containers/DashboardResearch";
-import { useAuthStore } from "Context/authContext";
 import DynamicDashboard from "Dashboard/DynamicDashboard";
 import { setUpCognito } from "Helpers/cognito";
-import { observer } from "mobx-react";
+import { useMyProfile } from "Models/user";
 import { CovidGraphPage } from "Pages/Covid/CovidGraphPage";
 import SignUp from "Pages/Login/SignUp";
 import React from "react";
@@ -23,8 +22,8 @@ import "./styles/globalClasses.module.css";
 import "./styles/tailwind.css";
 
 setUpCognito();
-const App = observer(() => {
-  const authStore = useAuthStore();
+const App = () => {
+  const { signedIn } = useMyProfile();
   return (
     <Router>
       <div className="App">
@@ -43,11 +42,7 @@ const App = observer(() => {
             exact
             path="/"
             render={() =>
-              authStore.user ? (
-                <Redirect to="/dashboard" />
-              ) : (
-                <Redirect to="/login" />
-              )
+              signedIn ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
             }
           />
           <Route path="/forgotpassword" initial>
@@ -70,7 +65,7 @@ const App = observer(() => {
               <LogOut />
             </LoginContainer>
           </Route>
-          {!authStore.user && <Redirect to="/login" />}
+          {!signedIn && <Redirect to="/login" />}
           <Route path="*">
             <NotFound />
           </Route>
@@ -79,6 +74,6 @@ const App = observer(() => {
       </div>
     </Router>
   );
-});
+};
 
 export default App;
