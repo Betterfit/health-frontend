@@ -20,6 +20,7 @@ const ProductDetail = ({
     <div className="flex flex-col lg:flex-row lg:justify-around w-full">
       <div className="xl:w-3/5 lg:w-1/2 lg:pr-12 py-4 mx-2">
         <img src={product.productImage} alt="" className="max-w-md" />
+        <p>{product.productDescription}</p>
         <HorizontalDetail label={product.optionLabel} value={product.name} />
         <HorizontalDetail label="Category" value={product.productCategory} />
       </div>
