@@ -1,11 +1,13 @@
 .root {
   max-height: 200px;
   overflow-y: auto;
+  width: 100%;
+  overflow-x: clip;
 }
 
 .terms {
-  white-space: pre;
-  line-height: 0.8;
+  white-space: pre-line;
+  /* line-height: 0.8; */
 }
 
 .title {
