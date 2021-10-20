@@ -1,5 +1,6 @@
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import SideBarIcon from "Components/SideBar/SideBar";
+import { signOut } from "Helpers/cognito";
 import AccountsIcon from "Images/Icons/accounts.svg";
 import InventoryIcon from "Images/Icons/inventory.svg";
 import NewOrderIcon from "Images/Icons/new-order.svg";
@@ -9,7 +10,8 @@ import orderBy from "lodash/orderBy";
 import { useOrganization } from "Models/organization";
 import { useMyProfile } from "Models/user";
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Redirect } from "react-router-dom";
+import { clearPersistedReduxState } from "Store/store";
 import { Organization, UserProfile } from "Types";
 import DashboardRoutes from "./DashboardRoutes";
 
@@ -33,8 +35,12 @@ const DynamicDashboard = () => {
   } = useOrganization();
   const { data: userProfile, isLoading: userProfileLoading } = useMyProfile();
   if (organizationLoading || userProfileLoading) return <LoadingSpinner />;
-  if (!userOrganization || !userProfile)
-    return <div>Your account does not belong to an organization</div>;
+  // sign out user if their account is in valid
+  if (!userOrganization || !userProfile) {
+    signOut();
+    clearPersistedReduxState();
+    return <Redirect to="/login" />;
+  }
   // these are what get displayed on the side bar
   const navItems = sortedNavItems(userOrganization, userProfile);
   return (

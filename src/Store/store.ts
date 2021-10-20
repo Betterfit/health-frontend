@@ -24,6 +24,9 @@ store.subscribe(() => {
   localStorage.setItem("reduxState", JSON.stringify(store.getState()));
 });
 
+export const clearPersistedReduxState = () =>
+  localStorage.clearItem("reduxState");
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
