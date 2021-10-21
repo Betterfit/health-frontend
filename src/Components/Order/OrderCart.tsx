@@ -2,7 +2,8 @@ import Dialog from "Components/Dialog";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import ApproveOrderForm from "Components/Order/ApproveOrderForm";
 import { api } from "Helpers/typedAPI";
-import React, { useState } from "react";
+import { useOrder } from "Models/orders";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import { cartActions } from "Store/cartSlice";
@@ -10,9 +11,16 @@ import { useAppDispatch, useAppSelector } from "Store/store";
 import CartItemList from "./CartItemList";
 
 const OrderCart = () => {
-  const orderId = useAppSelector((state) => state.cart.orderId);
-  const [dialogOpen, setDialogOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const orderId = useAppSelector((state) => state.cart.orderId);
+  const { data: oldOrder } = useOrder(orderId ?? 0, {
+    enabled: orderId != null,
+  });
+  useEffect(() => {
+    if (oldOrder?.status === "approved" || oldOrder?.status === "delivered")
+      dispatch(cartActions.clearCart());
+  }, [oldOrder, dispatch]);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   return (
     <>
