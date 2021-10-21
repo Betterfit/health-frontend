@@ -7,7 +7,7 @@ import SubtleLink from "Components/Forms/SubtleLink";
 import VerificationCodeForm, {
   VerifyCodeCallback,
 } from "Components/Forms/VerificationCodeForm";
-import { CognitoResult } from "Helpers/cognito";
+import { isServerException, ServerException } from "Helpers/cognito";
 import { api } from "Helpers/typedAPI";
 import React, { useState } from "react";
 
@@ -28,19 +28,22 @@ const CognitoLogin = ({
 
   const signIn: SubmitCallback = async (notifyError) => {
     // authenticate with cognito
-    const signInPromise = Auth.signIn(email, password);
     const userExists = await api.userExists(email);
+    console.log("userExists", userExists);
     if (!userExists) {
       notifyError("This email hasn't been added to an organization yet");
-      await signInPromise;
-      Auth.signOut();
       return;
     }
+    const signInPromise = Auth.signIn(email, password);
     let cognitoUser = null;
     try {
       cognitoUser = await signInPromise;
     } catch (error) {
-      notifyError((error as CognitoResult).message);
+      if (isServerException(error)) {
+        if (error.code === "UserNotFoundException")
+          notifyError("Please sign up to set up your credentials");
+        else notifyError((error as ServerException).message);
+      }
       return;
     }
     setUser(cognitoUser);

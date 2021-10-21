@@ -13,6 +13,7 @@ interface PreferencesState {
 const initialState = {
   facilityId: undefined,
   version: VERSION,
+  loggedIn: false,
 } as PreferencesState;
 
 export const preferencesSlice = createSlice({
@@ -34,6 +35,6 @@ export const preferencesActions = preferencesSlice.actions;
  * This is what allows us to purge the localstorage after updates.
  */
 export const validatePreferences = (state: any): PreferencesState => {
-  if (state?.version === VERSION) return { ...state, loggedIn: false };
+  if (state?.version === VERSION) return state as PreferencesState;
   return initialState;
 };

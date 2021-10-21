@@ -1,3 +1,4 @@
+import { Auth } from "@aws-amplify/auth";
 import DashboardResearch from "Containers/DashboardResearch";
 import DynamicDashboard from "Dashboard/DynamicDashboard";
 import { setUpCognito } from "Helpers/cognito";
@@ -27,12 +28,18 @@ setUpCognito();
 const App = () => {
   const dispatch = useAppDispatch();
   const loggedIn = useAppSelector((state) => state.preferences.loggedIn);
-  const profileQuery = useMyProfile();
+  const profileQuery = useMyProfile({ enabled: true, staleTime: 0 });
 
   // this is what handles logging in users automatically if they are authenticated with amplify Auth
   useEffect(() => {
     if (profileQuery.isSuccess) dispatch(preferencesActions.setLoggedIn(true));
-  }, [profileQuery.isSuccess, dispatch]);
+    if (profileQuery.isError) dispatch(preferencesActions.setLoggedIn(false));
+  }, [profileQuery.isSuccess, profileQuery.isError, dispatch]);
+  useEffect(() => {
+    Auth.currentSession()
+      .then(() => dispatch(preferencesActions.setLoggedIn(true)))
+      .catch(() => dispatch(preferencesActions.setLoggedIn(false)));
+  }, [dispatch]);
   return (
     <Router>
       <div className="App">

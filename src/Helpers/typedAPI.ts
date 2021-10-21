@@ -65,7 +65,7 @@ export default class TypedAPI {
   };
   /** Checks that a user with the given email exists on our django backend */
   userExists = async (email: string) => {
-    const client = await this.init();
+    const client = await this.init(false);
     const response = await client.post<{ userExists: boolean }>(
       "/user-exists",
       { email }

@@ -32,9 +32,12 @@ export const getIdToken = async () => {
   return token;
 };
 
-// errors thrown by Auth
-export type CognitoResult = {
+// errors thrown by Cognito and our backend
+export type ServerException = {
   code: string;
   message: string;
-  name: string;
+};
+
+export const isServerException = (error: any): error is ServerException => {
+  return error?.code !== undefined && error?.message !== undefined;
 };
