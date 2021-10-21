@@ -1,5 +1,6 @@
-import { TextField } from "@material-ui/core";
+import { IconButton, InputAdornment, TextField } from "@material-ui/core";
 import { Auth } from "aws-amplify";
+import Icon from "Components/Content/Icon";
 import ErrorDisplayForm, {
   SubmitCallback,
 } from "Components/Forms/ErrorDisplayForm";
@@ -25,6 +26,7 @@ const CognitoLogin = ({
   const [user, setUser] = useState<any>();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const signIn: SubmitCallback = async (notifyError) => {
     // authenticate with cognito
@@ -79,10 +81,26 @@ const CognitoLogin = ({
             label="Password"
             id="password"
             variant="outlined"
-            type="password"
-            value={password}
+            type={showPassword ? "text" : "password"}
             onChange={(e) => {
               setPassword(e.target.value);
+            }}
+            InputProps={{
+              // toggle reveal password butto,n
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {
+                      <Icon
+                        name={showPassword ? "visibility_off" : "visibility"}
+                      />
+                    }
+                  </IconButton>
+                </InputAdornment>
+              ),
             }}
           />
         </ErrorDisplayForm>

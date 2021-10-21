@@ -12,7 +12,7 @@ const LogOut = () => {
   queryClient.clear();
   signOut();
   clearPersistedReduxState();
-  dispatch(preferencesActions.setLoggedIn(true));
+  dispatch(preferencesActions.setLoggedIn(false));
   return <Redirect to="/login" />;
 };
 

@@ -71,7 +71,13 @@ const App = () => {
           <Route path="/dashboard">
             <DynamicDashboard />
           </Route>
-          <Route exact path="/" render={() => <Redirect to="/dashboard" />} />
+          <Route
+            exact
+            path="/"
+            render={() =>
+              loggedIn ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
+            }
+          />
           <Route path="/forgotpassword" initial>
             <LoginContainer>
               <ForgotPassword />
