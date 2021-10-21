@@ -7,12 +7,7 @@ import { CovidGraphPage } from "Pages/Covid/CovidGraphPage";
 import SignUp from "Pages/Login/SignUp";
 import React, { useEffect } from "react";
 // components
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { preferencesActions } from "Store/preferencesSlice";
 import { useAppDispatch, useAppSelector } from "Store/store";
 import NotFound from "./Pages/404";
@@ -29,6 +24,7 @@ const App = () => {
   const dispatch = useAppDispatch();
   const loggedIn = useAppSelector((state) => state.preferences.loggedIn);
   const profileQuery = useMyProfile({ enabled: true, staleTime: 0 });
+  const history = useHistory();
 
   // this is what handles logging in users automatically if they are authenticated with amplify Auth
   useEffect(() => {
@@ -41,55 +37,55 @@ const App = () => {
       .catch(() => dispatch(preferencesActions.setLoggedIn(false)));
   }, [dispatch]);
   return (
-    <Router>
-      <div className="App">
-        <Switch>
-          {/* publically accessible page, no login required */}
-          <Route path="/research">
-            <DashboardResearch />
-          </Route>
-          {/* has own authentication*/}
-          <Route path="/covid">
-            <CovidGraphPage />
-          </Route>
-          <Route path="/signup" initial exact>
-            <LoginContainer>
-              <SignUp />
-            </LoginContainer>
-          </Route>
-          <Route path="/logout" initial>
-            <LoginContainer>
-              <LogOut />
-            </LoginContainer>
-          </Route>
-          <Route path="/login" initial>
-            <LoginContainer>
-              <Login />
-            </LoginContainer>
-          </Route>
-          {!loggedIn && profileQuery.isError && <Redirect to="/login" />}
-          <Route path="/dashboard">
-            <DynamicDashboard />
-          </Route>
-          <Route
-            exact
-            path="/"
-            render={() =>
-              loggedIn ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
-            }
-          />
-          <Route path="/forgotpassword" initial>
-            <LoginContainer>
-              <ForgotPassword />
-            </LoginContainer>
-          </Route>
-          <Route path="*">
-            <NotFound />
-          </Route>
-          <Route path="/404" component={NotFound} />
-        </Switch>
-      </div>
-    </Router>
+    <div className="App">
+      <Switch>
+        {/* publically accessible page, no login required */}
+        <Route path="/research">
+          <DashboardResearch />
+        </Route>
+        {/* has own authentication*/}
+        <Route path="/covid">
+          <CovidGraphPage />
+        </Route>
+        <Route path="/signup" initial exact>
+          <LoginContainer>
+            <SignUp />
+          </LoginContainer>
+        </Route>
+        <Route path="/logout" initial>
+          <LoginContainer>
+            <LogOut />
+          </LoginContainer>
+        </Route>
+        <Route path="/login" initial>
+          <LoginContainer>
+            <Login />
+          </LoginContainer>
+        </Route>
+        {!loggedIn && (
+          <Redirect to={"/login?redirect=" + history.location.pathname} />
+        )}
+        <Route path="/dashboard">
+          <DynamicDashboard />
+        </Route>
+        <Route
+          exact
+          path="/"
+          render={() =>
+            loggedIn ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
+          }
+        />
+        <Route path="/forgotpassword" initial>
+          <LoginContainer>
+            <ForgotPassword />
+          </LoginContainer>
+        </Route>
+        <Route path="*">
+          <NotFound />
+        </Route>
+        <Route path="/404" component={NotFound} />
+      </Switch>
+    </div>
   );
 };
 

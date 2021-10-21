@@ -27,7 +27,6 @@ const CognitoLogin = ({
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
   const signIn: SubmitCallback = async (notifyError) => {
     // authenticate with cognito
     const userExists = await api.userExists(email);

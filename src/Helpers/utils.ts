@@ -1,5 +1,6 @@
 import camelcaseKeys from "camelcase-keys";
 import moment from "moment";
+import { useLocation } from "react-router-dom";
 import snakecaseKeys from "snakecase-keys";
 
 export const setClipboard = (text: string) =>
@@ -77,4 +78,8 @@ export const buildQueryString = (
     ([key, val]) => val != null && params.set(key, String(val))
   );
   return "?" + params.toString();
+};
+
+export const useQueryParams = () => {
+  return new URLSearchParams(useLocation().search);
 };

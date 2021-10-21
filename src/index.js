@@ -6,10 +6,12 @@ import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
 import { store } from "Store/store";
 import App from "./App";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
+
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,7 +27,10 @@ ReactDOM.render(
         <StylesProvider injectFirst>
           <QueryClientProvider client={queryClient}>
             <ReactQueryDevtools initialIsOpen={false} />
-            <App />
+
+            <Router>
+              <App />
+            </Router>
           </QueryClientProvider>
         </StylesProvider>
       </Elements>
