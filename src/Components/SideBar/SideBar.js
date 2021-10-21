@@ -23,11 +23,8 @@ const SideBar = ({ navItemsList }) => {
   const myProfileQuery = useMyProfile();
   const organizationQuery = useOrganization();
 
-  let userData = JSON.parse(localStorage.getItem("user"));
-  let userName = userData.username;
-  let orgName = UserInfo(userData.user_profile);
-  let userType = userData.user_profile.user_type;
-
+  let userName = "";
+  let orgName = "";
   if (myProfileQuery.isSuccess) {
     const user = myProfileQuery.data;
     userName = user.firstName ? fullName(user) : user.email;
@@ -59,7 +56,7 @@ const SideBar = ({ navItemsList }) => {
             </div>
             <SideBarNavigation navList={navItemsList} />
           </div>
-          <SideBarProfile userName={userName} userType={userType} />
+          <SideBarProfile userName={userName} />
         </div>
       </div>
     </div>

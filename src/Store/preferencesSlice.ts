@@ -6,6 +6,7 @@ interface PreferencesState {
    * Saved in redux so that users don't have to select their facility every time
    */
   facilityId?: number;
+  loggedIn: boolean;
   version: number;
 }
 
@@ -21,6 +22,9 @@ export const preferencesSlice = createSlice({
     setFacilityId: (state, action: PayloadAction<number>) => {
       state.facilityId = action.payload;
     },
+    setLoggedIn: (state, action: PayloadAction<boolean>) => {
+      state.loggedIn = action.payload;
+    },
   },
 });
 export const preferencesActions = preferencesSlice.actions;
@@ -30,6 +34,6 @@ export const preferencesActions = preferencesSlice.actions;
  * This is what allows us to purge the localstorage after updates.
  */
 export const validatePreferences = (state: any): PreferencesState => {
-  if (state?.version === VERSION) return state;
+  if (state?.version === VERSION) return { ...state, loggedIn: false };
   return initialState;
 };

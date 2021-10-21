@@ -14,7 +14,7 @@ export const useMyProfile = (
     ...queryOptions,
   });
   const invalidate = () => queryClient.invalidateQueries(userProfileQueryKey);
-  return { ...data, invalidate, signedIn: data.isSuccess };
+  return { ...data, invalidate, signedIn: !data.isError };
 };
 
 // export const useProfileCreationMutation = (props: UseMutationOptions) => {

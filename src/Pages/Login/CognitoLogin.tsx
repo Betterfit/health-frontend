@@ -1,12 +1,14 @@
+import { TextField } from "@material-ui/core";
 import { Auth } from "aws-amplify";
 import ErrorDisplayForm, {
   SubmitCallback,
 } from "Components/Forms/ErrorDisplayForm";
-import InputField from "Components/Forms/InputField";
 import SubtleLink from "Components/Forms/SubtleLink";
 import VerificationCodeForm, {
   VerifyCodeCallback,
 } from "Components/Forms/VerificationCodeForm";
+import { CognitoResult } from "Helpers/cognito";
+import { api } from "Helpers/typedAPI";
 import React, { useState } from "react";
 
 interface CognitoLoginProps {
@@ -26,16 +28,22 @@ const CognitoLogin = ({
 
   const signIn: SubmitCallback = async (notifyError) => {
     // authenticate with cognito
-    let cognitoUser = null;
-    try {
-      cognitoUser = await Auth.signIn(email, password);
-      setUser(cognitoUser);
-      console.log(cognitoUser);
-    } catch (error) {
-      notifyError(error.message, "");
-      console.log(error);
+    const signInPromise = Auth.signIn(email, password);
+    const userExists = await api.userExists(email);
+    if (!userExists) {
+      notifyError("This email hasn't been added to an organization yet");
+      await signInPromise;
+      Auth.signOut();
       return;
     }
+    let cognitoUser = null;
+    try {
+      cognitoUser = await signInPromise;
+    } catch (error) {
+      notifyError((error as CognitoResult).message);
+      return;
+    }
+    setUser(cognitoUser);
     if (!cognitoUser?.challengeName) onAuthenticate();
   };
 
@@ -55,18 +63,19 @@ const CognitoLogin = ({
     return (
       <>
         <ErrorDisplayForm handleSubmit={signIn} submitLabel="Login">
-          <InputField
-            idTag="email"
-            name="Email"
-            type="text"
+          <TextField
+            label="Email"
+            id="email"
+            variant="outlined"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
           />
-          <InputField
-            idTag="password"
-            name="Password"
+          <TextField
+            label="Password"
+            id="password"
+            variant="outlined"
             type="password"
             value={password}
             onChange={(e) => {

@@ -2,7 +2,7 @@ import Notifications from "Components/Helpers/Notifications";
 import React, { useState } from "react";
 import PrettyButton from "./PrettyButton/PrettyButton";
 
-export type NotifyErrorCallback = (title: string, text: string) => void;
+export type NotifyErrorCallback = (title: string, text?: string) => void;
 export type SubmitCallback = (
   /** Call this if the signing attempt fails to show an error message*/
   notifyError: NotifyErrorCallback
@@ -40,7 +40,7 @@ const ErrorDisplayForm = ({
     if (!canSubmit) return;
     // clear out error after submit
     setError({ title: "", text: "", isSet: false });
-    handleSubmit((title, text) => setError({ title, text, isSet: true }));
+    handleSubmit((title, text = "") => setError({ title, text, isSet: true }));
   };
 
   return (

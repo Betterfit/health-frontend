@@ -52,7 +52,6 @@ export default class TypedAPI {
     const client = await this.init();
     return client.get<UserProfile[]>("/users/");
   };
-  // repeat in the non typed api, this one converts to camel case
   getProfile = async () => {
     const client = await this.init();
     return client.get<{ user: UserProfile }>("/me/");
@@ -63,6 +62,15 @@ export default class TypedAPI {
   ) => {
     const client = await this.init();
     client.patch("/users/" + userId + "/", data);
+  };
+  /** Checks that a user with the given email exists on our django backend */
+  userExists = async (email: string) => {
+    const client = await this.init();
+    const response = await client.post<{ userExists: boolean }>(
+      "/user-exists",
+      { email }
+    );
+    return response.data.userExists;
   };
 
   //  ********** FACILITIES AND ORGANIZATION API **********
