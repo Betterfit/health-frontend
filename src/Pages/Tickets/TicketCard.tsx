@@ -89,7 +89,8 @@ const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
         {dialogState === "markShipped" ? (
           <MarkShippedForm
             ticket={ticket}
-            onClose={() => setDialogState("updateInventory")}
+            onSuccess={() => setDialogState("updateInventory")}
+            onCancel={() => setDialogState("closed")}
           />
         ) : (
           <UpdateInventoryForm

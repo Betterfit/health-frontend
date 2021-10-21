@@ -6,19 +6,6 @@ import SideBarDashboardTypeCTA from "./SideBarDashboardTypeCTA";
 import SideBarNavigation from "./SideBarNavigation";
 import SideBarProfile from "./SideBarProfile";
 
-const UserInfo = (profile) => {
-  switch (profile.user_type) {
-    case "facility_admin":
-      return profile.facility_name;
-    case "supplier_admin":
-      return profile.supplier_name;
-    case "traffic_controller":
-      return "Traffic Controller";
-    default:
-      return profile.email;
-  }
-};
-
 const SideBar = ({ navItemsList }) => {
   const myProfileQuery = useMyProfile();
   const organizationQuery = useOrganization();

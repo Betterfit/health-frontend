@@ -10,10 +10,12 @@ import styles from "./MarkShippedForm.module.css";
 
 const MarkShippedForm = ({
   ticket,
-  onClose,
+  onSuccess,
+  onCancel,
 }: {
   ticket: SupplierTicket;
-  onClose: () => void;
+  onSuccess: () => void;
+  onCancel: () => void;
 }) => {
   const product = ticket.orderProduct.productOption;
   const { destination, orderProduct } = ticket;
@@ -24,9 +26,7 @@ const MarkShippedForm = ({
   const ticketMutation = useMutation(
     () => api.updateTicket(ticket, { status: "shipped", ...formData }),
     {
-      onSuccess: () => {
-        onClose();
-      },
+      onSuccess: onSuccess,
     }
   );
 
@@ -78,7 +78,7 @@ const MarkShippedForm = ({
       />
       <hr />
       <div className={styles.actions}>
-        <PrettyButton text="Cancel" color="red" onClick={onClose} />
+        <PrettyButton text="Cancel" color="red" onClick={onCancel} />
         <PrettyButton
           text="Confirm"
           color="green"
