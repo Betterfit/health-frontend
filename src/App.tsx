@@ -7,7 +7,7 @@ import { CovidGraphPage } from "Pages/Covid/CovidGraphPage";
 import SignUp from "Pages/Login/SignUp";
 import React, { useEffect } from "react";
 // components
-import { Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { preferencesActions } from "Store/preferencesSlice";
 import { useAppDispatch, useAppSelector } from "Store/store";
 import NotFound from "./Pages/404";
@@ -24,7 +24,12 @@ const App = () => {
   const dispatch = useAppDispatch();
   const loggedIn = useAppSelector((state) => state.preferences.loggedIn);
   const profileQuery = useMyProfile({ enabled: true, staleTime: 0 });
-  const history = useHistory();
+  const location = useLocation();
+  // if a user visits a page without being logged in, they will be redirected to
+  // the login page with a ?redirect={path} query parameter.
+  // Once they login, they will be redirected to this path.
+  // However, we don't want users to ever be redirected back to the login page after logging in.
+  const redirect = location.pathname.includes("login") ? "" : location.pathname;
 
   // this is what handles logging in users automatically if they are authenticated with amplify Auth
   useEffect(() => {
@@ -62,9 +67,7 @@ const App = () => {
             <Login />
           </LoginContainer>
         </Route>
-        {!loggedIn && (
-          <Redirect to={"/login?redirect=" + history.location.pathname} />
-        )}
+        {!loggedIn && <Redirect to={"/login?redirect=" + redirect} />}
         <Route path="/dashboard">
           <DynamicDashboard />
         </Route>

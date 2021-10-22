@@ -1,9 +1,6 @@
 import { IconButton, InputAdornment, TextField } from "@material-ui/core";
 import { Auth } from "aws-amplify";
 import Icon from "Components/Content/Icon";
-import ErrorDisplayForm, {
-  SubmitCallback,
-} from "Components/Forms/ErrorDisplayForm";
 import SubtleLink from "Components/Forms/SubtleLink";
 import VerificationCodeForm, {
   VerifyCodeCallback,
@@ -11,6 +8,8 @@ import VerificationCodeForm, {
 import { isServerException, ServerException } from "Helpers/cognito";
 import { api } from "Helpers/typedAPI";
 import React, { useState } from "react";
+import { useMutation } from "react-query";
+import LoginPageForm from "./LoginPageForm";
 
 interface CognitoLoginProps {
   onAuthenticate: () => void;
@@ -27,12 +26,14 @@ const CognitoLogin = ({
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const signIn: SubmitCallback = async (notifyError) => {
+  const [error, setError] = useState<string>();
+
+  const signIn = async () => {
     // authenticate with cognito
     const userExists = await api.userExists(email);
     console.log("userExists", userExists);
     if (!userExists) {
-      notifyError("This email hasn't been added to an organization yet");
+      setError("This email hasn't been added to an organization yet");
       return;
     }
     const signInPromise = Auth.signIn(email, password);
@@ -42,8 +43,8 @@ const CognitoLogin = ({
     } catch (error) {
       if (isServerException(error)) {
         if (error.code === "UserNotFoundException")
-          notifyError("Please sign up to set up your credentials");
-        else notifyError((error as ServerException).message);
+          setError("Please sign up to set up your credentials");
+        else setError((error as ServerException).message);
       }
       return;
     }
@@ -63,10 +64,17 @@ const CognitoLogin = ({
     onAuthenticate();
   };
 
+  const signInMutation = useMutation(signIn);
+
   if (!user?.challengeName)
     return (
       <>
-        <ErrorDisplayForm handleSubmit={signIn} submitLabel="Login">
+        <LoginPageForm
+          handleSubmit={() => signInMutation.mutate()}
+          submitLabel="Login"
+          canSubmit={!signInMutation.isLoading}
+          error={error ? { title: error } : undefined}
+        >
           <TextField
             label="Email"
             id="email"
@@ -102,7 +110,7 @@ const CognitoLogin = ({
               ),
             }}
           />
-        </ErrorDisplayForm>
+        </LoginPageForm>
 
         <div className="py-5 flex flex-col item-center">
           {continueWithoutPassword && (
@@ -113,6 +121,12 @@ const CognitoLogin = ({
           )}
           {signUpEnabled && <SubtleLink text="Sign up" path="/signup" />}
           <SubtleLink text="Forgot password?" path="/forgotpassword" />
+          <SubtleLink
+            text="Apply to join Supply Net"
+            onClick={() =>
+              (window.location.href = "https://betterfit.com/apply-now/")
+            }
+          />
         </div>
       </>
     );

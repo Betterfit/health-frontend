@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel } from "@material-ui/core";
+import { Checkbox, FormControlLabel, TextField } from "@material-ui/core";
 import { Auth } from "aws-amplify";
 import TermsOfService from "Components/Content/TermsOfService";
 import ErrorDisplayForm, {
@@ -13,6 +13,7 @@ import React, { ChangeEvent, useState } from "react";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router";
 import { UserProfile } from "Types";
+import LoginPageForm from "./LoginPageForm";
 import styles from "./SignUp.module.css";
 
 interface FormData {
@@ -26,13 +27,21 @@ interface FormData {
 }
 
 const api = new TypedAPI();
-type Stage = "enterInfo" | "confirm" | "completeProfile" | "success";
+type Stage =
+  | "enterEmail"
+  | "enterInfo"
+  | "confirm"
+  | "completeProfile"
+  | "success";
 const SignUp = () => {
   const history = useHistory();
-  const [stage, setStage] = useState<Stage>("enterInfo");
+  const [stage, setStage] = useState<Stage>("enterEmail");
+  const [error, setError] = useState<string>();
+  const [notRegistered, setNotRegistered] = useState(false);
   //   we can only make an authenticate request after these stages
   const myProfileQuery = useMyProfile({
-    enabled: stage !== "enterInfo" && stage !== "confirm",
+    enabled:
+      stage !== "enterEmail" && stage !== "enterInfo" && stage !== "confirm",
   });
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -42,6 +51,12 @@ const SignUp = () => {
     firstName: "",
     lastName: "",
     termsAccepted: false,
+  });
+
+  const checkEmailMutation = useMutation(async () => {
+    const userExists = await api.userExists(formData.email);
+    if (!userExists) throw new Error("");
+    else setStage("enterInfo");
   });
 
   const onChange = (property: keyof FormData) => (
@@ -105,11 +120,45 @@ const SignUp = () => {
 
   return (
     <div>
+      {stage === "enterEmail" && (
+        <>
+          <LoginPageForm
+            title="Sign up"
+            handleSubmit={checkEmailMutation.mutate}
+            submitLabel="Continue"
+            canSubmit={formData.email !== ""}
+          >
+            <TextField
+              label="Email"
+              id="email"
+              type="email"
+              variant="outlined"
+              value={formData.email}
+              onChange={onChange("email")}
+              error={checkEmailMutation.isError}
+              helperText={
+                checkEmailMutation.isError &&
+                "Hmmm, it looks like that email hasn't been invited to Supply Net."
+              }
+            />
+            {checkEmailMutation.isError && (
+              <p className="text-center">
+                Want to add your organization to Supply Net?{" "}
+                <a
+                  href="https://betterfit.com/apply-now/"
+                  className="font-bold hover:text-underline"
+                >
+                  Click here to apply.
+                </a>
+              </p>
+            )}
+          </LoginPageForm>
+        </>
+      )}
       {stage === "enterInfo" && (
         <ErrorDisplayForm
           title="Sign Up"
           handleSubmit={signUp}
-          subtitle="If your organization has created an account for you, you can set up your login credentials here"
           submitLabel="Sign up"
           canSubmit={
             formData.termsAccepted &&
