@@ -56,6 +56,7 @@ describe("Account Management", () => {
     // newly created user signs in and completes profile
     cy.contains(/sign up/i).click();
     cy.findByRole("textbox", { name: /email/i }).type(newUser.email);
+    cy.findByRole("button", { name: /continue/i }).click();
     // users have to enter their password twice to confirm
     cy.findAllByLabelText(/password/i).each((textbox) =>
       cy.wrap(textbox).type(newUser.password)

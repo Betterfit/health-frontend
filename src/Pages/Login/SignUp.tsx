@@ -7,11 +7,13 @@ import ErrorDisplayForm, {
 import InputField from "Components/Forms/InputField";
 import SubtleLink from "Components/Forms/SubtleLink";
 import TypedAPI from "Helpers/typedAPI";
-import { subset } from "Helpers/utils";
+import { subset, useQueryParams } from "Helpers/utils";
 import { useMyProfile } from "Models/user";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { preferencesActions } from "Store/preferencesSlice";
 import { UserProfile } from "Types";
 import LoginPageForm from "./LoginPageForm";
 import styles from "./SignUp.module.css";
@@ -34,10 +36,9 @@ type Stage =
   | "completeProfile"
   | "success";
 const SignUp = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [stage, setStage] = useState<Stage>("enterEmail");
-  const [error, setError] = useState<string>();
-  const [notRegistered, setNotRegistered] = useState(false);
   //   we can only make an authenticate request after these stages
   const myProfileQuery = useMyProfile({
     enabled:
@@ -52,6 +53,19 @@ const SignUp = () => {
     lastName: "",
     termsAccepted: false,
   });
+
+  // automatically populate the email field and skip the 'enterEmail' stage when
+  // the url looks like /signup?email=blah@domain.com.
+  // This makes sign up from email invites more convenient.
+  const urlEmail = useQueryParams().get("email");
+  useEffect(() => {
+    if (urlEmail !== null)
+      setFormData((old) => ({
+        ...old,
+        email: old.email === "" ? urlEmail : old.email,
+      }));
+    setStage((stage) => (stage === "enterEmail" ? "enterInfo" : stage));
+  }, [urlEmail]);
 
   const checkEmailMutation = useMutation(async () => {
     const userExists = await api.userExists(formData.email);
@@ -105,7 +119,8 @@ const SignUp = () => {
       onSuccess: () => {
         setStage("success");
         myProfileQuery.invalidate();
-        history.push("/login");
+        dispatch(preferencesActions.setLoggedIn(true));
+        history.push("/dashboard");
       },
     }
   );
