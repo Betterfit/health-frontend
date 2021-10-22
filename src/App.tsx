@@ -62,6 +62,11 @@ const App = () => {
             <LogOut />
           </LoginContainer>
         </Route>
+        <Route path="/forgotpassword" initial>
+          <LoginContainer>
+            <ForgotPassword />
+          </LoginContainer>
+        </Route>
         <Route path="/login" initial>
           <LoginContainer>
             <Login />
@@ -78,11 +83,6 @@ const App = () => {
             loggedIn ? <Redirect to="/dashboard" /> : <Redirect to="/login" />
           }
         />
-        <Route path="/forgotpassword" initial>
-          <LoginContainer>
-            <ForgotPassword />
-          </LoginContainer>
-        </Route>
         <Route path="*">
           <NotFound />
         </Route>
