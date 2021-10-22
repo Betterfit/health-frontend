@@ -1,5 +1,6 @@
 import { MenuItem, TextField } from "@material-ui/core";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
+import PrettyLink from "Components/Content/PrettyLink";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import BackNavigation from "Components/Helpers/BackNavigation";
 import {
@@ -190,6 +191,14 @@ const ApproveOrderForm = ({
           </MenuItem>,
         ]}
       </TextField>
+      <p className="mt-2">
+        By placing an order you agree to our{" "}
+        <PrettyLink
+          to="https://betterfit.com/wp-content/uploads/Sale_of_Goods_Terms_E9282035.pdf"
+          text="terms of sale"
+        />
+        .
+      </p>
       <div className={styles.actions}>
         <PrettyButton text="Cancel" color="red" onClick={onCancel} />
         <PrettyButton
