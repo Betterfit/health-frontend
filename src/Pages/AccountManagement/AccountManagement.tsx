@@ -3,6 +3,7 @@ import { ErrorMessage } from "Components/Content/ErrorMessage";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import Title from "Components/Content/Title";
 import Dialog from "Components/Dialog";
+import { sortBy } from "lodash";
 import { useUserFacilities } from "Models/facilities";
 import React, { useState } from "react";
 import { Facility } from "Types";
@@ -56,11 +57,13 @@ const FacilityList = () => {
 
   if (facilitiesQuery.isError) return <ErrorMessage />;
   const closeDialog = () => setOpenFacility(null);
+  let facilities = facilitiesQuery.data.filter((facility) => facility.active);
+  facilities = sortBy(facilities, ["name"]);
   return (
     <>
-      {facilitiesQuery.data.map((facility, i) => (
+      {facilities.map((facility) => (
         <button
-          key={i}
+          key={facility.id}
           className={styles.facility}
           onClick={() => setOpenFacility(facility)}
         >

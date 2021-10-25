@@ -353,7 +353,7 @@ export default class TypedAPI {
 
 export const api = new TypedAPI();
 
-export type FacilityData = Omit<Facility, "pk" | "url" | "id">;
+export type FacilityData = Omit<Facility, "pk" | "url" | "id" | "active">;
 
 type UpdateOrderStatusProps = { orderId: number } & (
   | { action: "cancel"; data?: undefined }

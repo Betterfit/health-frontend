@@ -207,6 +207,7 @@ export interface Facility {
   url: string;
   isAdmin?: boolean;
   isMember?: boolean;
+  active: boolean;
 }
 export interface Ticket {
   id: number;
