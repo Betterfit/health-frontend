@@ -1,3 +1,7 @@
 .agreeToTerms {
   align-self: center;
 }
+
+.error {
+  color: plastic-red;
+}

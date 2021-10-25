@@ -190,9 +190,8 @@ export interface Facility {
   name: string;
   pk: number;
   id: number;
-  email: string;
+  email?: string;
   phoneNumber: string;
-  region?: string;
   street: string;
   city: string;
   province: string;
@@ -207,6 +206,7 @@ export interface Facility {
   parentOrganization: string;
   url: string;
   isAdmin?: boolean;
+  isMember?: boolean;
 }
 export interface Ticket {
   id: number;

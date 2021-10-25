@@ -59,12 +59,13 @@ const SignUp = () => {
   // This makes sign up from email invites more convenient.
   const urlEmail = useQueryParams().get("email");
   useEffect(() => {
-    if (urlEmail !== null)
+    if (urlEmail !== null) {
       setFormData((old) => ({
         ...old,
         email: old.email === "" ? urlEmail : old.email,
       }));
-    setStage((stage) => (stage === "enterEmail" ? "enterInfo" : stage));
+      setStage((stage) => (stage === "enterEmail" ? "enterInfo" : stage));
+    }
   }, [urlEmail]);
 
   const checkEmailMutation = useMutation(async () => {

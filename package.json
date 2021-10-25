@@ -68,6 +68,7 @@
     "react-svg": "^11.0.40",
     "react-tabs": "^3.2.2",
     "react-tooltip": "^4.2.11",
+    "react-use-form-state": "^0.13.2",
     "react-uuid": "^1.0.2",
     "recharts": "^1.8.5",
     "redux": "^4.0.5",

@@ -41,6 +41,11 @@
 
 .facility {
   composes: clickableListItem from "./pageStyles.module.css";
+  width: 100%;
+}
+
+.facilityDialog {
+  padding: 1rem;
 }
 
 .cardWithTab {
