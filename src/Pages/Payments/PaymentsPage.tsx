@@ -16,7 +16,7 @@ const PaymentsPage = () => {
   const { data: organization } = useOrganization();
   return (
     <div className={clsx("page")}>
-      <Title text="Payments" />
+      <Title>Payments</Title>
       <div className={clsx(styles.content)}>
         {/* suppliers and purchasers see different things */}
         {organization?.isSupplier && (

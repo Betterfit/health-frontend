@@ -12,7 +12,7 @@ import styles from "./OrdersPage.module.css";
 const OrdersPage = () => {
   return (
     <div className="page">
-      <Title text="Orders" />
+      <Title>Orders</Title>
       <Orders />
     </div>
   );

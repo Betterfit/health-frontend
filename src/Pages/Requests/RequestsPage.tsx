@@ -83,7 +83,7 @@ const RequestPage = () => {
   // };
   return (
     <div className={styles.root}>
-      <Title text="Requests" />
+      <Title>Requests</Title>
       <div className={styles.actionBar}>
         {/* <PrettyButton
           text="Approve All"

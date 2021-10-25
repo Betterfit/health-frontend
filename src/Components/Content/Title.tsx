@@ -2,10 +2,10 @@ import clsx from "clsx";
 import React from "react";
 
 export interface TitleProps {
-  text: string;
+  children?: React.ReactNode;
   extraClasses?: string;
 }
-const Title = ({ text, extraClasses }: TitleProps) => {
+const Title = ({ children, extraClasses }: TitleProps) => {
   return (
     <h1
       className={clsx(
@@ -13,7 +13,7 @@ const Title = ({ text, extraClasses }: TitleProps) => {
         extraClasses
       )}
     >
-      {text}
+      {children}
     </h1>
   );
 };

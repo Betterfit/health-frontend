@@ -68,67 +68,67 @@ const CognitoLogin = ({
 
   if (!user?.challengeName)
     return (
-      <>
-        <LoginPageForm
-          handleSubmit={() => signInMutation.mutate()}
-          submitLabel="Login"
-          canSubmit={!signInMutation.isLoading}
-          error={error ? { title: error } : undefined}
-        >
-          <TextField
-            label="Email"
-            id="email"
-            variant="outlined"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          <TextField
-            label="Password"
-            id="password"
-            variant="outlined"
-            type={showPassword ? "text" : "password"}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            InputProps={{
-              // toggle reveal password butto,n
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {
-                      <Icon
-                        name={showPassword ? "visibility_off" : "visibility"}
-                      />
-                    }
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </LoginPageForm>
-
-        <div className="py-5 flex flex-col item-center">
-          {continueWithoutPassword && (
+      <LoginPageForm
+        title="Welcome to Supply Net"
+        handleSubmit={() => signInMutation.mutate()}
+        submitLabel="Login"
+        canSubmit={!signInMutation.isLoading}
+        error={error ? { title: error } : undefined}
+        extraActions={
+          <>
+            {continueWithoutPassword && (
+              <SubtleLink
+                text="Continue without login"
+                onClick={continueWithoutPassword}
+              />
+            )}
+            {signUpEnabled && <SubtleLink text="Sign up" path="/signup" />}
+            <SubtleLink text="Forgot password?" path="/forgotpassword" />
             <SubtleLink
-              text="Continue without login"
-              onClick={continueWithoutPassword}
+              text="Apply to join Supply Net"
+              onClick={() =>
+                (window.location.href = "https://betterfit.com/apply-now/")
+              }
             />
-          )}
-          {signUpEnabled && <SubtleLink text="Sign up" path="/signup" />}
-          <SubtleLink text="Forgot password?" path="/forgotpassword" />
-          <SubtleLink
-            text="Apply to join Supply Net"
-            onClick={() =>
-              (window.location.href = "https://betterfit.com/apply-now/")
-            }
-          />
-        </div>
-      </>
+          </>
+        }
+      >
+        <TextField
+          label="Email"
+          id="email"
+          variant="outlined"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
+        <TextField
+          label="Password"
+          id="password"
+          variant="outlined"
+          type={showPassword ? "text" : "password"}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          InputProps={{
+            // toggle reveal password butto,n
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {
+                    <Icon
+                      name={showPassword ? "visibility_off" : "visibility"}
+                    />
+                  }
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </LoginPageForm>
     );
 
   return <VerificationCodeForm verifyCode={confirmMFA} />;

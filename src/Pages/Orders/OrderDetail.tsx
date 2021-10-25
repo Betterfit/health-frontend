@@ -20,7 +20,7 @@ const OrderDetail = ({ orderId }: { orderId: number }) => {
         link="Back to Orders"
         onClickOverride={() => history.push("/dashboard/orders")}
       />
-      <Title text={"Order #" + orderId} />
+      <Title children={"Order #" + orderId} />
       {order ? <OrderCard order={order} /> : <LoadingSpinner />}
       <hr />
       {payments && (

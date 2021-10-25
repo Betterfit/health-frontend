@@ -1,8 +1,9 @@
+import Title from "Components/Content/Title";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import Notifications from "Components/Helpers/Notifications";
 import React, { ReactNode } from "react";
 
-interface LoginPageFormProps {
+export interface LoginPageFormProps {
   /** Callback that will be executed when the user submits the form*/
   handleSubmit: () => void;
   /** No title is shown if this prop is not given */
@@ -16,6 +17,7 @@ interface LoginPageFormProps {
   /** Form submit will be disabled if false */
   canSubmit?: boolean;
   error?: { title?: string; text?: string };
+  extraActions?: React.ReactNode;
 }
 
 const LoginPageForm = ({
@@ -26,6 +28,7 @@ const LoginPageForm = ({
   children,
   canSubmit = true,
   error,
+  extraActions,
 }: LoginPageFormProps) => {
   const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -34,12 +37,8 @@ const LoginPageForm = ({
   };
 
   return (
-    <>
-      {title && (
-        <div className="flex flex-col items-center">
-          <h1 className="text-xl font-semibold pb-2">{title}</h1>
-        </div>
-      )}
+    <div className="flex-1 flex flex-col justify-around h-full">
+      {title && <Title>{title}</Title>}
       <form
         className="my-2 space-y-3 flex flex-col"
         onSubmit={onSubmit}
@@ -60,8 +59,11 @@ const LoginPageForm = ({
             type="submit"
           />
         </div>
+        <div className="py-5 flex flex-col item-center mt-auto">
+          {extraActions}
+        </div>
       </form>
-    </>
+    </div>
   );
 };
 

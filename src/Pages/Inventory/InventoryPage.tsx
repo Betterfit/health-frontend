@@ -22,7 +22,7 @@ const InventorySidebar = () => {
   const facilityId = useAppSelector((state) => state.preferences.facilityId);
   return (
     <DashboardSideBar addonStyles="relative p-4">
-      <Title text="Inventory" />
+      <Title>Inventory</Title>
       <FacilitySelector
         label="warehouse"
         facilityId={facilityId}

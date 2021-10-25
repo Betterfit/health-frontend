@@ -16,7 +16,7 @@ import UserTable from "./UserTable";
 const AccountManagement = () => {
   return (
     <div className={styles.root}>
-      <Title text="Users and Facilities" extraClasses={styles.title} />
+      <Title extraClasses={styles.title}>Users and Facilities</Title>
       <MyFacilities />
       <AddUsers />
       <UserTable />

@@ -21,7 +21,7 @@ const InventoryDetail = ({ productOptionId }: { productOptionId: number }) => {
   return (
     <>
       <Title
-        text={productDisplayName(inventory.productOption)}
+        children={productDisplayName(inventory.productOption)}
         extraClasses="mt-6"
       />
       <hr />

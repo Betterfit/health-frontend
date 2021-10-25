@@ -135,7 +135,7 @@ const SignUp = () => {
   };
 
   return (
-    <div>
+    <>
       {stage === "enterEmail" && (
         <>
           <LoginPageForm
@@ -143,6 +143,7 @@ const SignUp = () => {
             handleSubmit={checkEmailMutation.mutate}
             submitLabel="Continue"
             canSubmit={formData.email !== ""}
+            extraActions={<SubtleLink text="Back to Login" path="/login" />}
           >
             <TextField
               label="Email"
@@ -181,6 +182,7 @@ const SignUp = () => {
             formData.password !== "" &&
             formData.email !== ""
           }
+          extraActions={<SubtleLink text="Back to Login" path="/login" />}
         >
           <InputField
             name="Email"
@@ -254,10 +256,7 @@ const SignUp = () => {
         </ErrorDisplayForm>
       )}
       {stage === "success" && <p>Successfully signed up!</p>}
-      <div className="py-5 flex flex-col item-center">
-        <SubtleLink text="Back to Login" path="/login" />
-      </div>
-    </div>
+    </>
   );
 };
 

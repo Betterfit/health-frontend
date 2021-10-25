@@ -12,7 +12,7 @@ import styles from "./TicketsPage.module.css";
 const TicketsPage = () => {
   return (
     <div className={styles.root}>
-      <Title text="Pick Tickets" />
+      <Title>Pick Tickets</Title>
       <Tickets />
     </div>
   );

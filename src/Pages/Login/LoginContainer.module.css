@@ -1,2 +1,37 @@
 .root {
+  background-image: linear-gradient(to left, #1332c7, #6d2cff);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 2rem;
+}
+
+.globe {
+  max-height: 80vh;
+  max-width: 50vw;
+  margin-right: 2rem;
+  /* /* margin-left: -7rem; */
+}
+
+.form {
+  min-height: 80vh;
+  max-width: min(80%, 500px);
+  width: 100%;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .globe {
+    display: none;
+  }
+
+  .root {
+    padding-right: 0;
+  }
 }
