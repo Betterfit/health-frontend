@@ -96,13 +96,13 @@ const ProductPricing = ({
     ?.priceInfo.minPricePer;
   const maxPrice = _.maxBy(purchaseOptions, (po) => po.priceInfo.minPricePer)
     ?.priceInfo.maxPricePer;
+  const singlePrice = minPrice === maxPrice ? minPrice : null;
   return (
     <>
       <span className="text-betterfit-grey-blue text-sm">
-        {purchaseOptions.length + " Suppliers"}
-      </span>
-      <span className="text-betterfit-grey-blue text-sm">
-        {formatCurrency(minPrice)} - {formatCurrency(maxPrice)}
+        {singlePrice
+          ? formatCurrency(singlePrice)
+          : `${formatCurrency(minPrice)} - ${formatCurrency(maxPrice)}`}
       </span>
     </>
   );
