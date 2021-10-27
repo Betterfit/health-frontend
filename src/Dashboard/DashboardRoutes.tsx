@@ -6,7 +6,6 @@ import InventoryPage from "Pages/Inventory/InventoryPage";
 import OrderDetail from "Pages/Orders/OrderDetail";
 import OrdersPage from "Pages/Orders/OrdersPage";
 import PaymentsPage from "Pages/Payments/PaymentsPage";
-import RequestsPage from "Pages/Requests/RequestsPage";
 import TicketsPage from "Pages/Tickets/TicketsPage";
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
@@ -46,9 +45,9 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
           return <Redirect to={`/dashboard/edit-order/${id}/category/`} />;
         }}
       />
-      <Route exact path="/dashboard/requests">
+      {/* <Route exact path="/dashboard/requests">
         <RequestsPage />
-      </Route>
+      </Route> */}
       <Route
         exact
         path="/dashboard/orders/detail/:id"

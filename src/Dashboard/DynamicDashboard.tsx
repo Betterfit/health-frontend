@@ -5,6 +5,7 @@ import AccountsIcon from "Images/Icons/accounts.svg";
 import InventoryIcon from "Images/Icons/inventory.svg";
 import NewOrderIcon from "Images/Icons/new-order.svg";
 import OrderIcon from "Images/Icons/order.svg";
+import PaymentsIcon from "Images/Icons/payments.svg";
 import TicketIcon from "Images/Icons/ticket.svg";
 import orderBy from "lodash/orderBy";
 import { useOrganization } from "Models/organization";
@@ -76,7 +77,7 @@ const sortedNavItems = (
         {
           to: "/dashboard/payments",
           name: "Payments",
-          icon: AccountsIcon,
+          icon: PaymentsIcon,
           key: "payments",
           precedence: 1,
         },
@@ -102,18 +103,18 @@ const sortedNavItems = (
         },
       ]
     );
-    if (isAdmin)
-      navItems.push(
-        ...[
-          {
-            to: "/dashboard/requests",
-            name: "Requests",
-            icon: OrderIcon,
-            key: "requests",
-            precedence: 3,
-          },
-        ]
-      );
+    // if (isAdmin)
+    //   navItems.push(
+    //     ...[
+    //       {
+    //         to: "/dashboard/requests",
+    //         name: "Requests",
+    //         icon: OrderIcon,
+    //         key: "requests",
+    //         precedence: 3,
+    //       },
+    //     ]
+    //   );
   }
 
   if (myOrganization?.isSupplier) {
