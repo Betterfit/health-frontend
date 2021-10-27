@@ -13,7 +13,7 @@ const ReturnPolicy = ({ supplier }: { supplier: Organization }) =>
       Return Policy
     </a>
   ) : (
-    <p className={styles.returnPolicy}>No Returns</p>
+    <p className={styles.returnPolicy}>No Returns due to COVID</p>
   );
 
 export default ReturnPolicy;
