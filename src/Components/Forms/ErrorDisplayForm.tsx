@@ -16,7 +16,6 @@ interface ErrorDisplayFormProps
 /** Form wrapper that provides a callback to display error messages. */
 const ErrorDisplayForm = ({
   handleSubmit,
-  subtitle,
   ...props
 }: ErrorDisplayFormProps) => {
   const [error, setError] = useState({
@@ -33,7 +32,7 @@ const ErrorDisplayForm = ({
   return (
     <LoginPageForm
       handleSubmit={onSubmit}
-      error={error.title !== "" ? error : {}}
+      error={error.title !== "" ? error : undefined}
       {...props}
     />
   );
