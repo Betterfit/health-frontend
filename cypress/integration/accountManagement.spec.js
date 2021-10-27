@@ -25,7 +25,7 @@ describe("Account Management", () => {
     cy.findByLabelText(/city/i).type("Edmonton");
     cy.findByLabelText(/postal code/i).type("A9A 9A9");
     cy.findByLabelText(/phone number/i).type("7805547999");
-    cy.findByLabelText("province").type("{downarrow}{enter}");
+    cy.findByTestId("province selector").type("{downarrow}{enter}");
     cy.findByRole("button", { name: /add facility/i }).click();
     cy.findByRole("form").should("not.exist");
     cy.findByRole("tabpanel", { name: /my facilities/i })

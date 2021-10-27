@@ -11,7 +11,7 @@ describe("Payment Methods", () => {
   it("Admins can add payment methods and (de)authorize users", () => {
     Cypress.config("chromeWebSecurity", false);
     cy.loginAsPurchaserAdmin();
-    cy.findByRole("link", { name: /accounts/i }).click();
+    cy.findByRole("link", { name: /payments/i }).click();
     cy.findByRole("tab", { name: /add payment method/i }).click();
 
     const paymentMethodName =

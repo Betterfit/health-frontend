@@ -42,7 +42,9 @@ const AddFacilityForm = ({
   const defaultValues = existingFacility
     ? populateWithExistingFacility(existingFacility)
     : { province: "" };
-  const [formState, register] = useFormState<FacilityFormData>(defaultValues);
+  const [formState, register] = useFormState<FacilityFormData>(defaultValues, {
+    withIds: true,
+  });
   const { errors, setField, values: formData } = formState;
   console.log(defaultValues);
   const editing = existingFacility != null;
@@ -124,6 +126,7 @@ const AddFacilityForm = ({
           onChange={(e) => setField("province", e.target.value)}
           {...defaultTextFieldProps}
           label="Province"
+          data-testid="province selector"
           required
           select
           className={styles.province}

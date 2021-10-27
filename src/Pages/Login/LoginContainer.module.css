@@ -15,7 +15,7 @@
 }
 
 .form {
-  min-height: 80vh;
+  min-height: 60vh;
   max-width: min(80%, 500px);
   width: 100%;
   background-color: white;
