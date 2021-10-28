@@ -152,6 +152,7 @@ const ApproveOrderForm = ({
                 <p className="text-lg">{order.facility.name}</p>
                 <p>{order.facility.shippingStreet}</p>
                 <p>
+                  {order.facility.postalCode?.toUpperCase()}{" "}
                   {order.facility.shippingCity},{" "}
                   {order.facility.shippingProvince}
                 </p>
