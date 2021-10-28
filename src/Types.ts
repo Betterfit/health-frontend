@@ -196,10 +196,6 @@ export interface Facility {
   city: string;
   province: string;
   postalCode: string;
-  shippingStreet: string;
-  shippingCity: string;
-  shippingProvince: string;
-  shippingPostalCode: string;
   fax?: string;
   website?: string;
   parentFacility?: string;

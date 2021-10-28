@@ -68,10 +68,6 @@ const AddFacilityForm = ({
           "province"
         ),
         street: formData.address,
-        shippingStreet: formData.address,
-        shippingCity: formData.city,
-        shippingProvince: formData.province,
-        shippingPostalCode: formData.postalCode,
         parentOrganization: orgQuery.data!.url,
         phoneNumber: formData.phoneNumber,
       };
@@ -109,7 +105,6 @@ const AddFacilityForm = ({
         {...defaultTextFieldProps}
         label="Address"
         required
-        inputProps={{ readOnly: editing }}
       />
       <div className={styles.cityProvince}>
         <TextField
@@ -118,7 +113,6 @@ const AddFacilityForm = ({
           label="City"
           required
           className={styles.city}
-          inputProps={{ readOnly: editing }}
         />
 
         <TextField
@@ -130,7 +124,6 @@ const AddFacilityForm = ({
           required
           select
           className={styles.province}
-          inputProps={{ readOnly: editing }}
         >
           {provinces.map((province, i) => (
             <MenuItem key={i} value={province.abbreviation}>

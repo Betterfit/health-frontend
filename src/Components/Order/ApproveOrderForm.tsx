@@ -150,11 +150,10 @@ const ApproveOrderForm = ({
             value={
               <div className="flex flex-col item-center text-center text-base">
                 <p className="text-lg">{order.facility.name}</p>
-                <p>{order.facility.shippingStreet}</p>
+                <p>{order.facility.street}</p>
                 <p>
                   {order.facility.postalCode?.toUpperCase()}{" "}
-                  {order.facility.shippingCity},{" "}
-                  {order.facility.shippingProvince}
+                  {order.facility.city}, {order.facility.province}
                 </p>
               </div>
             }
