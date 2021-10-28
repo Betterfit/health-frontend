@@ -1,0 +1,16 @@
+@media screen and (max-width: 768px) {
+  .backNavigation {
+    display: flex !important;
+  }
+  .minimizedSidebar {
+    visibility: visible;
+  }
+}
+
+.inventoryDetail {
+  overflow-y: scroll;
+}
+
+.backNavigation {
+  visibility: hidden;
+}

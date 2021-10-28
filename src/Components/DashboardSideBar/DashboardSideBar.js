@@ -1,9 +1,18 @@
+import clsx from "clsx";
 import React from "react";
 
-const DashboardSideBar = ({ children, addonStyles, padding = "p-4" }) => {
+const DashboardSideBar = ({
+  children,
+  addonStyles,
+  padding = "p-4",
+  width = "2/5",
+}) => {
   return (
     <div
-      className="w-full lg:w-2/5 md:h-screen md:max-h-screen p-2 relative z-10"
+      className={clsx(
+        "w-full md:h-screen md:max-h-screen p-2 relative z-10",
+        "lg:w-" + width
+      )}
       style={{ minWidth: 320 }}
     >
       <div
@@ -17,4 +26,5 @@ const DashboardSideBar = ({ children, addonStyles, padding = "p-4" }) => {
     </div>
   );
 };
+
 export default DashboardSideBar;

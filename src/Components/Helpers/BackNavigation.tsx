@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Translator from "Helpers/Translator";
 import LeftArrow from "Images/Icons/left-arrow.svg";
 import React from "react";
@@ -7,16 +8,21 @@ import { ReactSVG } from "react-svg";
 const BackNavigation = ({
   link,
   onClickOverride,
+  className,
 }: {
   link: string;
   onClickOverride?: React.MouseEventHandler<HTMLButtonElement>;
+  className?: string;
 }) => {
   const history = useHistory();
   const action = onClickOverride ? onClickOverride : () => history.goBack();
   return (
     <button
       onClick={action}
-      className="flex flex-row items-center cursor-pointer mb-2 ml-0 mr-auto"
+      className={clsx(
+        className,
+        "flex flex-row items-center cursor-pointer mb-2 ml-0 mr-auto"
+      )}
     >
       <ReactSVG
         src={LeftArrow}
