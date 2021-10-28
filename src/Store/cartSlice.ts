@@ -65,6 +65,9 @@ export const cartSlice = createSlice({
     setDestinationId: (state, action: PayloadAction<number>) => {
       state.destinationId = action.payload;
     },
+    setOrderId: (state, action: PayloadAction<number | undefined>) => {
+      state.orderId = action.payload;
+    },
   },
 });
 

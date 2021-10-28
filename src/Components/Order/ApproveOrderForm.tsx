@@ -15,6 +15,8 @@ import { AddPaymentMethod } from "Pages/AccountManagement/PaymentMethods";
 import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
+import { cartActions } from "Store/cartSlice";
+import { useAppDispatch } from "Store/store";
 import { Money, PaymentMethod } from "Types";
 import { formatCurrency } from "../../Pages/Requests/RequestsPage";
 import styles from "./ApproveOrderForm.module.css";
@@ -35,6 +37,7 @@ const ApproveOrderForm = ({
   onCancel: () => void;
 }) => {
   const history = useHistory();
+  const dispatch = useAppDispatch();
   const invoiceQuery = useQuery(["invoice"], () =>
     api.getOrderInvoice(orderId)
   );
@@ -66,6 +69,7 @@ const ApproveOrderForm = ({
       },
       onError: () => {
         queryClient.invalidateQueries(["pricing"]);
+        dispatch(cartActions.setOrderId(undefined));
       },
     }
   );

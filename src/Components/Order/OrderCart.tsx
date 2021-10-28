@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import Dialog from "Components/Dialog";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import ApproveOrderForm from "Components/Order/ApproveOrderForm";
@@ -76,7 +77,14 @@ const CartActions = ({ openDialog }: { openDialog: () => void }) => {
         dispatch(cartActions.importOrder(order));
       }
     },
-    { onSuccess: openDialog }
+    {
+      onSuccess: openDialog,
+      onError: (e: AxiosError) => {
+        if (e?.response?.status === 404)
+          dispatch(cartActions.setOrderId(undefined));
+        console.log(e);
+      },
+    }
   );
 
   const priceRequest = cartItems.map(({ productOptionId, quantity }) => ({
