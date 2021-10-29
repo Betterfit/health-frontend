@@ -229,7 +229,7 @@ const FeeLineItem = ({
   cost: Money;
 }) => {
   let label = name;
-  if (percentage) label += ` (${percentage}%)`;
+  if (percentage) label += ` (${percentage.toFixed(0)}%)`;
   return (
     <HorizontalDetail
       labelClass="normal-case"
