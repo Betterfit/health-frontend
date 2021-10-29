@@ -50,6 +50,10 @@ td:nth-last-child(1) {
   padding: 0.5rem;
 }
 
+.email {
+  overflow-x: hidden;
+}
+
 @media (min-width: 1024px) {
   .userLists table {
     /* Having columns line up on all of the tables is aesthetically pleasing, but

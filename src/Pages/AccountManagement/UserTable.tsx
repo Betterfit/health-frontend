@@ -153,7 +153,7 @@ const UserTypeList = ({
         <tbody>
           {users.map((user, i) => (
             <tr key={i}>
-              <td>{user.email}</td>
+              <td className={styles.email}>{user.email}</td>
               <td>{fullName(user)}</td>
               <td>
                 {user.facilityMembership.map((membership, i) => (
