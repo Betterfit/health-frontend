@@ -4,8 +4,10 @@ import {
   VerticalDetail,
 } from "Components/InfoDisplay/LabeledDetails";
 import React from "react";
+import ReactMarkdown from "react-markdown";
 import { ReactNode } from "react-transition-group/node_modules/@types/react";
 import { Inventory, ProductOption } from "Types";
+import styles from "./ProductDetail.module.css";
 
 const ProductDetail = ({
   product,
@@ -19,8 +21,13 @@ const ProductDetail = ({
   return (
     <div className="flex flex-col lg:flex-row lg:justify-around w-full">
       <div className="xl:w-3/5 lg:w-1/2 lg:pr-12 py-4 mx-2">
-        <img src={product.productImage} alt="" className="max-w-md" />
-        <p>{product.productDescription}</p>
+        <img src={product.productImage} alt="" className="w-full max-w-sm" />
+        <ReactMarkdown
+          className={styles.description}
+          children={product.productDescription}
+          // links will open in new tab
+          linkTarget="_blank"
+        />
         <HorizontalDetail label={product.optionLabel} value={product.name} />
         <HorizontalDetail label="Category" value={product.productCategory} />
       </div>

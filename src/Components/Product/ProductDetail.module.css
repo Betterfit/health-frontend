@@ -1,0 +1,15 @@
+.description {
+  white-space: pre-line;
+}
+.description p {
+  color: var(--midnight-blue);
+}
+
+.description a {
+  font-weight: bold;
+  color: var(--primary-blue);
+}
+
+.description a:hover {
+  text-decoration: underline;
+}
