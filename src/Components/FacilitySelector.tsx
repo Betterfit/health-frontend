@@ -10,7 +10,9 @@ const FacilitySelector = ({
   facilityId?: number;
   selectFacility: (facilityId: number) => void;
 }) => {
-  const { data: facilities } = useUserFacilities();
+  const { data: allFacilities } = useUserFacilities();
+  const facilities =
+    allFacilities && allFacilities.filter((facility) => facility.active);
   if (!facilityId && facilities && facilities.length > 0)
     selectFacility(facilities[0].id);
   return (
