@@ -10,7 +10,7 @@ const SideBarNavigation = ({ navList }) => {
         return (
           <div key={`menu_item_${navItem.key}`}>
             <NavLink
-              className="mt-0 block nav opacity-75 flex flex-col sm:flex-row items-center rounded py-1"
+              className="mt-0 nav opacity-75 flex flex-col md:flex-row items-center rounded py-1"
               activeStyle={{
                 backgroundColor: "rgba(0,0,0,0.3)",
                 color: "white",
@@ -24,7 +24,7 @@ const SideBarNavigation = ({ navList }) => {
                   svg.setAttribute("style", "width: 24px;height:24px");
                 }}
               />
-              <span className="group flex items-center text-10 sm:text-sm leading-5 font-medium sm:text-xl font-body text-white">
+              <span className="group flex items-center text-10 sm:text-base lg:text-xl leading-5 font-medium font-body text-white">
                 {Translator(navItem.name)}
               </span>
             </NavLink>
