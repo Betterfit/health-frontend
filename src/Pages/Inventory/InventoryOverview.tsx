@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import Icon from "Components/Content/Icon";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import { VerticalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { api } from "Helpers/typedAPI";
@@ -75,19 +74,20 @@ const InventoryOverviewCard = ({ inventory }: { inventory: Inventory }) => {
       <img src={product.productImage} alt="" style={{ maxWidth: "64px" }} />
       <VerticalDetail
         label={productDisplayName(product)}
-        labelClass="text-base"
+        labelClass="text-sm md:text-base"
         value={product.name}
-        valueClass="text-sm"
+        valueClass="text-xs md:text-sm"
         className="flex-1"
         leftAlign
       />
+      <VerticalDetail label="Total" value={inventory.quantity} />
       <VerticalDetail
-        label="Total"
-        value={inventory.quantity}
-        className="ml-auto"
+        label="Committed"
+        value={inventory.allottedQuantity}
+        // we hide on sufficiently small displays
+        className="ml-auto hidden sm:flex"
       />
-      <VerticalDetail label="Committed" value={inventory.allottedQuantity} />
-      <Icon name="navigate_next" extraClasses="ml-auto" />
+      {/* <Icon name="navigate_next" extraClasses="ml-auto" /> */}
     </NavLink>
   );
 };

@@ -46,6 +46,11 @@
 .fullWidth .horizontalDetailLabel {
   text-align: left;
 }
+@media screen and (max-width: 768px) {
+  .verticalDetail {
+    margin: 0.25rem 0.5rem;
+  }
+}
 
 @media (max-width: 500px) {
   .horizontalDetail {

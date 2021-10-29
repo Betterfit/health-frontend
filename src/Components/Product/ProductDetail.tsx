@@ -1,46 +1,70 @@
 import EditProductForm from "Components/Forms/EditProductForm";
-import {
-  HorizontalDetail,
-  VerticalDetail,
-} from "Components/InfoDisplay/LabeledDetails";
+import { VerticalDetail } from "Components/InfoDisplay/LabeledDetails";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { ReactNode } from "react-transition-group/node_modules/@types/react";
 import { Inventory, ProductOption } from "Types";
+import AddProductForm from "./AddProductForm";
 import styles from "./ProductDetail.module.css";
 
+/**
+ * Detailed product information/forms that are displayed on the New Order and
+ * Inventory pages.
+ */
 const ProductDetail = ({
   product,
   inventory,
   children,
 }: {
   product: ProductOption;
+  /** Displays inventory information if provided */
   inventory?: Inventory;
   children?: ReactNode;
 }) => {
   return (
-    <div className="flex flex-col lg:flex-row lg:justify-around w-full">
-      <div className="xl:w-3/5 lg:w-1/2 lg:pr-12 py-4 mx-2">
-        <img src={product.productImage} alt="" className="w-full max-w-sm" />
+    <div className="grid grid-cols-2 w-full">
+      <img src={product.productImage} alt="" className="w-full max-w-sm" />
+      {inventory ? (
+        <EditProductForm inventory={inventory} />
+      ) : (
+        <AddProductForm product={product} />
+      )}
+      <div>
+        <h3 className="text-center mediumTitle">Product Details</h3>
+        <hr className="my-2" />
         <ReactMarkdown
           className={styles.description}
           children={product.productDescription}
           // links will open in new tab
           linkTarget="_blank"
         />
-        <HorizontalDetail label={product.optionLabel} value={product.name} />
-        <HorizontalDetail label="Category" value={product.productCategory} />
+        <VerticalDetail
+          leftAlign
+          label={product.optionLabel}
+          value={product.name}
+        />
+        <VerticalDetail
+          leftAlign
+          label="Category"
+          value={product.productCategory}
+        />
       </div>
       {inventory && (
         <div>
-          <EditProductForm inventory={inventory} />
           <h3 className="text-center mediumTitle">Current Inventory</h3>
-          <VerticalDetail label="Total Stock" value={inventory.quantity} />
+          <hr className="my-2" />
           <VerticalDetail
+            leftAlign
+            label="Total Stock"
+            value={inventory.quantity}
+          />
+          <VerticalDetail
+            leftAlign
             label="Committed to Open Orders"
             value={inventory.allottedQuantity}
           />
           <VerticalDetail
+            leftAlign
             label="Available to Sell"
             value={inventory.quantity - inventory.allottedQuantity}
           />

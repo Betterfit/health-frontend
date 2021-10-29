@@ -1,5 +1,7 @@
 .description {
   white-space: pre-line;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
 }
 .description p {
   color: var(--midnight-blue);
@@ -8,8 +10,5 @@
 .description a {
   font-weight: bold;
   color: var(--primary-blue);
-}
-
-.description a:hover {
   text-decoration: underline;
 }

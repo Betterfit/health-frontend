@@ -1,16 +1,17 @@
-@media screen and (max-width: 768px) {
-  .backNavigation {
-    display: flex !important;
-  }
-  .minimizedSidebar {
-    visibility: visible;
-  }
-}
-
 .inventoryDetail {
   overflow-y: scroll;
 }
 
+/* On large displays we hide the back navigation because it's not needed */
 .backNavigation {
-  visibility: hidden;
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .backNavigation {
+    display: flex;
+  }
+  .minimizedSidebar {
+    display: none !important;
+  }
 }
