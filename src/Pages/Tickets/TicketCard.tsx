@@ -6,22 +6,29 @@ import { formatTimeStamp } from "Helpers/utils";
 import { productDisplayName } from "Models/products";
 import React, { ReactNode, useState } from "react";
 import { useQueryClient } from "react-query";
+import { useHistory } from "react-router-dom";
 import { SupplierTicket } from "Types";
 import MarkShippedForm from "./MarkShippedForm";
 import styles from "./TicketCard.module.css";
 import UpdateInventoryForm from "./UpdateInventoryForm";
 
+const basePath = "/dashboard/tickets";
 type DialogState = "closed" | "markShipped" | "updateInventory";
 
 /**
  * Displays the ticket's information and allows the user to mark it as shipped.
  */
-const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
+const TicketCard = ({
+  ticket,
+  onDetailPage = false,
+}: {
+  ticket: SupplierTicket;
+  onDetailPage?: boolean;
+}) => {
   const queryClient = useQueryClient();
   const product = ticket.orderProduct.productOption;
   const { destination, purchaser, orderProduct } = ticket;
-  // const history = useHistory();
-  // const basePath = "/dashboard/tickets";
+  const history = useHistory();
   // const markShippedPath = `${basePath}/${ticket.id}/mark-shipped`;
   const [dialogState, setDialogState] = useState<DialogState>("closed");
   return (
@@ -74,6 +81,13 @@ const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
             color="green"
             // onClick={() => history.push(markShippedPath)}
             onClick={() => setDialogState("markShipped")}
+          />
+        )}
+        {!onDetailPage && (
+          <PrettyButton
+            text="View Details"
+            color="blue"
+            onClick={() => history.push(basePath + "/" + ticket.id)}
           />
         )}
         {/* <PrettyButton text="Print QR Code" /> */}

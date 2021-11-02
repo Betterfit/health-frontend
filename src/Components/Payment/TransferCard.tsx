@@ -14,8 +14,7 @@ import styles from "./TransferCard.module.css";
  */
 const TransferCard = ({ transfer }: { transfer: Transfer }) => {
   const history = useHistory();
-  const detailPath =
-    "/dashboard/tickets/detail/" + transfer.orderProduct.ticket?.id;
+  const detailPath = "/dashboard/tickets/" + transfer.orderProduct.ticket?.id;
   return (
     <div className={clsx("cardBorder")}>
       <div className="cardHeader">

@@ -28,7 +28,6 @@ const Orders = () => {
     return <LoadingSpinner bubbleColor="gray" />;
   if (ordersQuery.isError) return <div>Error: {ordersQuery.error.message}</div>;
   const { data: orders } = ordersQuery;
-  console.log(orders);
   const ordersWithStatus = (status: string) =>
     status === "all"
       ? orders

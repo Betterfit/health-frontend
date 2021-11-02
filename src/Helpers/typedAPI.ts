@@ -272,6 +272,14 @@ export default class TypedAPI {
     return response.data;
   };
 
+  getTransfer = async (ticketId: number) => {
+    const client = await this.init();
+    const response = await client.get<Transfer[]>(
+      "/transfers" + buildQueryString({ ticketId })
+    );
+    return response.data[0];
+  };
+
   /**
    * Used to get a client secrete needed to set up a payment method.
    * https://stripe.com/docs/payments/save-and-reuse?platform=web#web-create-setup-intent
@@ -290,6 +298,11 @@ export default class TypedAPI {
   getTickets = async () => {
     const client = await this.init();
     return client.get<SupplierTicket[]>("/tickets");
+  };
+
+  getTicket = async (ticketId: number) => {
+    const client = await this.init();
+    return client.get<SupplierTicket>("/tickets/" + ticketId);
   };
 
   updateTicket = async (ticket: SupplierTicket, data: SupplierTicketUpdate) => {
