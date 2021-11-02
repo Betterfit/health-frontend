@@ -184,22 +184,29 @@ const SignUp = () => {
           }
           extraActions={<SubtleLink text="Back to Login" path="/login" />}
         >
-          <InputField
-            name="Email"
+          <TextField
+            label="Email"
+            id="email"
             type="email"
+            variant="outlined"
             value={formData.email}
             onChange={onChange("email")}
-            autoFocus
+            inputProps={{ readOnly: true }}
           />
-          <InputField
-            name="Password"
+          <TextField
+            label="Password"
+            id="password"
             type="password"
+            variant="outlined"
             value={formData.password}
             onChange={onChange("password")}
+            helperText="Must be atleast 8 characters, include number, symbol and uppercase"
           />
-          <InputField
-            name="Confirm Password"
+          <TextField
+            label="Confirm Password"
+            id="confirm password"
             type="password"
+            variant="outlined"
             value={formData.passwordConfirmation}
             onChange={onChange("passwordConfirmation")}
           />
