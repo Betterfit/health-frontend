@@ -130,7 +130,7 @@ const statusColors = {
   open: "lavender",
   approved: "tropical-blue",
   delivered: "cool-green",
-  canceled: "rubber-red",
+  cancelled: "rubber-red",
 };
 const StatusBadge = ({ status }: { status: keyof typeof statusColors }) => (
   <Badge backgroundColor={`var(--${statusColors[status]})`} text={status} />
