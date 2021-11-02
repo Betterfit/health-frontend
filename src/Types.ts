@@ -238,7 +238,6 @@ export interface ProductOption {
   optionLabel: string;
   productCategory: string;
   product: string;
-  productVariation: string;
   productDescription: string;
   productImage: string;
   productId: number;
