@@ -20,7 +20,7 @@ export const preferencesSlice = createSlice({
   name: "preferences",
   initialState,
   reducers: {
-    setFacilityId: (state, action: PayloadAction<number>) => {
+    setFacilityId: (state, action: PayloadAction<number | undefined>) => {
       state.facilityId = action.payload;
     },
     setLoggedIn: (state, action: PayloadAction<boolean>) => {
