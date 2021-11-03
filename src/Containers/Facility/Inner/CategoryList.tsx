@@ -23,9 +23,11 @@ const CategoryList = () => {
         <ProductSearch />
       </div>
       <div className="mb-6 md:mb-10 grid grid-cols-1 gap-2 lg:gap-4 md:grids-cols-2 lg:grid-cols-3 customcategorygrid">
-        {categories.map((category) => {
-          return <CategoryCard key={category.id} category={category} />;
-        })}
+        {categories
+          .filter((category) => category.count > 0)
+          .map((category) => {
+            return <CategoryCard key={category.id} category={category} />;
+          })}
       </div>
     </div>
   );
