@@ -90,7 +90,7 @@ export default class TypedAPI {
 
   createFacility = async (facilityData: FacilityData) => {
     const client = await this.init();
-    return client.post("/facilities/", facilityData);
+    return client.post<Facility>("/facilities/", facilityData);
   };
 
   addExistingUserToFacility = async (
@@ -170,7 +170,7 @@ export default class TypedAPI {
   editOrder = async (id: number, data: OrderMutationProps) => {
     const client = await this.init();
     return client
-      .put<Order>(`/orders/${id}/`, data)
+      .patch<Order>(`/orders/${id}/`, data)
       .then((response) => response.data);
   };
 
@@ -394,7 +394,7 @@ type NewPaymentMethodProps = {
 
 type OrderMutationProps = {
   facility: number;
-  orderProducts: {
+  orderProducts?: {
     quantity: number;
     productOption: number;
     autoSelectSupplier?: boolean;

@@ -1,14 +1,26 @@
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
 import { useUserFacilities } from "Models/facilities";
 import React from "react";
 
+/**
+ * A selection box that allows users to select a facility from those that they
+ * have access to.
+ */
 const FacilitySelector = ({
   label = "Facility",
   facilityId,
   selectFacility,
+  addNewFacility,
 }: {
   label?: string;
   facilityId?: number;
   selectFacility: (facilityId: number) => void;
+  /**
+   * If provided, an additional option will be added to the select box labeled 'Add New {label}'.
+   * If chosen, this callback will be executed.
+   */
+  addNewFacility?: () => void;
 }) => {
   const { data: allFacilities } = useUserFacilities();
   const facilities =
@@ -16,28 +28,31 @@ const FacilitySelector = ({
   if (!facilityId && facilities && facilities.length > 0)
     selectFacility(facilities[0].id);
   return (
-    <div className="flex flex-col items-start">
-      <label
-        className="pl-1 uppercase text-betterfit-graphite text-xs tracking-extra-wide opacity-75 font-semibold"
-        htmlFor="facility"
-      >
-        {label}
-      </label>
-      <select
-        name="facility"
-        className="bg-transparent text-lg"
-        onChange={(e) => {
-          selectFacility(Number(e.target.value));
-        }}
-        value={facilityId}
-      >
-        {facilities?.map((facility) => (
-          <option key={facility.id} value={facility.id}>
-            {facility.name}
-          </option>
-        ))}
-      </select>
-    </div>
+    <TextField
+      value={facilityId ?? ""}
+      onChange={(e) => {
+        if (addNewFacility && e.target.value === "new") addNewFacility();
+        else selectFacility(Number(e.target.value));
+      }}
+      className="mb-2 bg-white"
+      id="facilitySelect"
+      label={label}
+      variant="outlined"
+      size="small"
+      select
+      fullWidth
+    >
+      {facilities?.map((facility) => (
+        <MenuItem key={facility.id} value={facility.id}>
+          {facility.name}
+        </MenuItem>
+      ))}
+      {addNewFacility && (
+        <MenuItem key="addNew" value="new">
+          + Add New {label} +
+        </MenuItem>
+      )}
+    </TextField>
   );
 };
 
