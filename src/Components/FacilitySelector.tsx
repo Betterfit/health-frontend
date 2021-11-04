@@ -1,3 +1,5 @@
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
 import { useUserFacilities } from "Models/facilities";
 import React from "react";
 
@@ -16,28 +18,25 @@ const FacilitySelector = ({
   if (!facilityId && facilities && facilities.length > 0)
     selectFacility(facilities[0].id);
   return (
-    <div className="flex flex-col items-start">
-      <label
-        className="pl-1 uppercase text-betterfit-graphite text-xs tracking-extra-wide opacity-75 font-semibold"
-        htmlFor="facility"
-      >
-        {label}
-      </label>
-      <select
-        name="facility"
-        className="bg-transparent text-lg"
-        onChange={(e) => {
-          selectFacility(Number(e.target.value));
-        }}
-        value={facilityId}
-      >
-        {facilities?.map((facility) => (
-          <option key={facility.id} value={facility.id}>
-            {facility.name}
-          </option>
-        ))}
-      </select>
-    </div>
+    <TextField
+      value={facilityId}
+      onChange={(e) => {
+        selectFacility(Number(e.target.value));
+      }}
+      className="mb-2 bg-white"
+      id="facilitySelect"
+      label={label}
+      variant="outlined"
+      size="small"
+      select
+      fullWidth
+    >
+      {facilities?.map((facility) => (
+        <MenuItem key={facility.id} value={facility.id}>
+          {facility.name}
+        </MenuItem>
+      ))}
+    </TextField>
   );
 };
 
