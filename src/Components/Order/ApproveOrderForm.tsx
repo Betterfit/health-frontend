@@ -9,6 +9,7 @@ import { api, parseException } from "Helpers/typedAPI";
 import { useOrder } from "Models/orders";
 import { usePaymentMethods } from "Models/paymentMethods";
 import { productDisplayName } from "Models/products";
+import AddFacilityForm from "Pages/AccountManagement/AddFacilityForm";
 import { AddPaymentMethod } from "Pages/AccountManagement/PaymentMethods";
 import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -40,8 +41,10 @@ const ApproveOrderForm = ({
     api.getOrderInvoice(orderId)
   );
   const { data: invoice } = invoiceQuery;
-  // users can open up a form to add a payment method in the checkout flow
-  const [paymentMethodForm, setPaymentMethodForm] = useState(false);
+  // users can open forms to add a payment method or destination in the checkout flow.
+  const [openForm, setOpenForm] = useState<"paymentMethod" | "facility" | null>(
+    null
+  );
   const destinationId = useAppSelector((state) => state.cart.destinationId);
   const orderQuery = useOrder(orderId);
   const order = orderQuery.data;
@@ -88,18 +91,34 @@ const ApproveOrderForm = ({
     }
   );
 
-  if (paymentMethodForm)
+  if (openForm)
     return (
       <div className={styles.dialog}>
         <BackNavigation
           link="Go Back"
-          onClickOverride={() => setPaymentMethodForm(false)}
+          onClickOverride={() => setOpenForm(null)}
         />
-        <h2>Add New Payment Method</h2>
-        <AddPaymentMethod
-          onSuccess={() => setPaymentMethodForm(false)}
-          extraClasses="w-full flex-1"
-        />
+        {openForm === "paymentMethod" ? (
+          <>
+            <h2>Add New Payment Method</h2>
+            <AddPaymentMethod
+              onSuccess={() => {
+                setOpenForm(null);
+              }}
+              extraClasses="w-full flex-1"
+            />
+          </>
+        ) : (
+          <>
+            <h2>Add Destination Facility</h2>
+            <AddFacilityForm
+              handleClose={(facility) => {
+                setOpenForm(null);
+                facility && updateDestinationMutation.mutate(facility.id);
+              }}
+            />
+          </>
+        )}
       </div>
     );
   const error = parseException(approveOrderMutation.error);
@@ -156,6 +175,7 @@ const ApproveOrderForm = ({
               facilityId !== order.facility.id &&
               updateDestinationMutation.mutate(facilityId)
             }
+            addNewFacility={() => setOpenForm("facility")}
           />
           <div className="flex flex-col item-center text-center text-base">
             <p>{order.facility.street}</p>
@@ -185,7 +205,7 @@ const ApproveOrderForm = ({
         onChange={(e) => {
           // One of the options will be to add a new payment method
           if (e.target.value === "new") {
-            return setPaymentMethodForm(true);
+            return setOpenForm("paymentMethod");
           }
           const id = parseInt(e.target.value);
           setPaymentMethod(paymentMethods.find((pm) => pm.id === id) ?? null);
@@ -198,7 +218,7 @@ const ApproveOrderForm = ({
             </MenuItem>
           )),
           <MenuItem key="newPaymentMethod" value="new">
-            - Add New Payment Method -
+            + Add New Payment Method +
           </MenuItem>,
         ]}
       </TextField>
@@ -216,8 +236,10 @@ const ApproveOrderForm = ({
           text="Confirm"
           color="green"
           disabled={
-            (!paymentMethod && invoice != null) ||
-            approveOrderMutation.isLoading
+            !paymentMethod ||
+            invoice == null ||
+            approveOrderMutation.isLoading ||
+            destinationId == null
           }
           onClick={approveOrderMutation.mutate}
         />

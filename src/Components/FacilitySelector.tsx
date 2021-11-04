@@ -3,14 +3,24 @@ import TextField from "@material-ui/core/TextField";
 import { useUserFacilities } from "Models/facilities";
 import React from "react";
 
+/**
+ * A selection box that allows users to select a facility from those that they
+ * have access to.
+ */
 const FacilitySelector = ({
   label = "Facility",
   facilityId,
   selectFacility,
+  addNewFacility,
 }: {
   label?: string;
   facilityId?: number;
   selectFacility: (facilityId: number) => void;
+  /**
+   * If provided, an additional option will be added to the select box labeled 'Add New {label}'.
+   * If chosen, this callback will be executed.
+   */
+  addNewFacility?: () => void;
 }) => {
   const { data: allFacilities } = useUserFacilities();
   const facilities =
@@ -19,9 +29,10 @@ const FacilitySelector = ({
     selectFacility(facilities[0].id);
   return (
     <TextField
-      value={facilityId}
+      value={facilityId ?? ""}
       onChange={(e) => {
-        selectFacility(Number(e.target.value));
+        if (addNewFacility && e.target.value === "new") addNewFacility();
+        else selectFacility(Number(e.target.value));
       }}
       className="mb-2 bg-white"
       id="facilitySelect"
@@ -36,6 +47,11 @@ const FacilitySelector = ({
           {facility.name}
         </MenuItem>
       ))}
+      {addNewFacility && (
+        <MenuItem key="addNew" value="new">
+          + Add New {label} +
+        </MenuItem>
+      )}
     </TextField>
   );
 };

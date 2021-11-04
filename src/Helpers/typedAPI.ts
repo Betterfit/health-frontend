@@ -90,7 +90,7 @@ export default class TypedAPI {
 
   createFacility = async (facilityData: FacilityData) => {
     const client = await this.init();
-    return client.post("/facilities/", facilityData);
+    return client.post<Facility>("/facilities/", facilityData);
   };
 
   addExistingUserToFacility = async (
