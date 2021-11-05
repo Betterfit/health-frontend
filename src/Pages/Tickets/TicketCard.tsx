@@ -33,7 +33,9 @@ const TicketCard = ({
   const [dialogState, setDialogState] = useState<DialogState>("closed");
   return (
     <div className={styles.ticket}>
-      <TicketDetail label="Purchaser" value={purchaser.name} />
+      <TicketDetail label="Purchaser">
+        <p>{purchaser.name}</p> <p>Phone: {destination.phoneNumber}</p>
+      </TicketDetail>
       <TicketDetail label="Destination" value={destination.name} />
       {/* <TicketDetail label="Address to" value="John Doe" /> */}
       <TicketDetail label="Ticket Id" value={ticket.id} />
@@ -45,7 +47,7 @@ const TicketCard = ({
         <span>{destination.name}</span>
         <span>{destination.street}</span>
         <span>
-          {destination.city} {destination.province} {destination.postalCode}
+          {destination.postalCode} {destination.city} {destination.province}
         </span>
       </TicketDetail>
       <TicketDetail label="Product">
