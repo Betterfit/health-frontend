@@ -36,6 +36,7 @@ const PrintTickets = ({
 const TicketPrintout = ({ ticket }: { ticket: SupplierTicket }) => {
   const warehouse = ticket.warehouse;
   const destination = ticket.destination;
+  const product = ticket.orderProduct.productOption;
   return (
     <div className={styles.ticket}>
       <span>
@@ -44,7 +45,6 @@ const TicketPrintout = ({ ticket }: { ticket: SupplierTicket }) => {
       </span>
       <hr />
       <div className={styles.address}>
-        <span>FROM:</span>
         <span>{warehouse.name}</span>
         <span>{warehouse.street}</span>
         <span>
@@ -53,7 +53,7 @@ const TicketPrintout = ({ ticket }: { ticket: SupplierTicket }) => {
       </div>
       <hr />
       <div className={styles.address}>
-        <span>SHIP TO:</span>
+        <span>SHIP TO: </span>
         <span>{destination.name}</span>
         <span>{destination.street}</span>
         <span>
@@ -63,7 +63,10 @@ const TicketPrintout = ({ ticket }: { ticket: SupplierTicket }) => {
       <hr />
       <div className="flex flex-col">
         <span>
-          Product: <strong>{ticket.orderProduct.productOption.product}</strong>
+          Product: <strong>{product.product}</strong>
+        </span>
+        <span>
+          {product.optionLabel}: <strong>{product.name}</strong>
         </span>
         <span>
           Product SKU: <strong>{ticket.orderProduct.productOption.sku}</strong>
