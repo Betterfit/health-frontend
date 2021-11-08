@@ -9,6 +9,7 @@ import { useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import { SupplierTicket } from "Types";
 import MarkShippedForm from "./MarkShippedForm";
+import PrintTickets from "./PrintTickets";
 import styles from "./TicketCard.module.css";
 import UpdateInventoryForm from "./UpdateInventoryForm";
 
@@ -61,20 +62,6 @@ const TicketCard = ({
       <TicketDetail label="Quantity" value={orderProduct.quantity} /> */}
       {/* <TicketDetail label="Status" value={ticket.status} />
       <TicketDetail label="Shipping Info" value={ticket.shippingProvider} /> */}
-      {/* <div className={styles.qrCode}>
-        <QRCode
-          value={window.location.origin + "/tickets/" + ticket.id}
-          size={128}
-          // imageSettings={{
-          //   src: "https://betterfit.com/betterfit-favicon.png",
-          //   width: 32,
-          //   height: 32,
-          // }}
-          width={128}
-          height={128}
-          level="Q"
-        />
-      </div> */}
       <div className={styles.actions}>
         {ticket.status === "open" && (
           <PrettyButton
@@ -91,7 +78,9 @@ const TicketCard = ({
             onClick={() => history.push(basePath + "/" + ticket.id)}
           />
         )}
-        {/* <PrettyButton text="Print QR Code" /> */}
+        {onDetailPage && (
+          <PrintTickets tickets={[ticket]} label="Print Ticket" />
+        )}
       </div>
       <Dialog
         open={

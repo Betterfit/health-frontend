@@ -59,7 +59,7 @@ const Tabs = ({
         return (
           <div
             key={tab.key}
-            className={`px-4 ${
+            className={`px-1 md:px-4 ${
               tab.key === activeTab ? "opacity-100 visible" : "opacity-0 hidden"
             }`}
           >

@@ -23,7 +23,11 @@ const TicketDetail = ({ ticketId }: { ticketId: number }) => {
         onClickOverride={() => history.push("/dashboard/tickets")}
       />
       <Title>Pick Ticket #{ticketId}</Title>
-      {ticket ? <TicketCard ticket={ticket} /> : <LoadingSpinner />}
+      {ticket ? (
+        <TicketCard ticket={ticket} onDetailPage />
+      ) : (
+        <LoadingSpinner />
+      )}
       <hr className="my-4" />
       {transfer && <h2 className="text-2xl">Transfer</h2>}
       {transfer && <TransferCard transfer={transfer} />}
