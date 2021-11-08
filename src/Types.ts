@@ -184,6 +184,11 @@ export interface Organization {
   organizationImage: string;
   offerReturns: boolean;
   returnPolicyLink: string;
+  // address
+  street: string;
+  city: string;
+  province: string;
+  postalCode: string;
 }
 
 export interface Facility {
@@ -377,6 +382,7 @@ export interface Transfer {
   completed: boolean;
   orderProduct: OrderProduct;
   timeCreated: string;
+  recipient: Organization;
 }
 
 export interface CartItem {
