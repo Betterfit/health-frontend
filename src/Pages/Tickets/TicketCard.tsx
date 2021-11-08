@@ -36,8 +36,7 @@ const TicketCard = ({
       <TicketDetail label="Purchaser">
         <p>{purchaser.name}</p> <p>Phone: {destination.phoneNumber}</p>
       </TicketDetail>
-      <TicketDetail label="Destination" value={destination.name} />
-      {/* <TicketDetail label="Address to" value="John Doe" /> */}
+      <TicketDetail label="SKU" value={product.sku ?? "N/A"} />
       <TicketDetail label="Ticket Id" value={ticket.id} />
       <TicketDetail
         label="Assigned On"

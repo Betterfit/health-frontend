@@ -233,6 +233,10 @@ export interface ProductCategory {
   count: number;
 }
 export interface ProductOption {
+  /** The id that suppliers use internally to refer to this product, not
+   * guaranteed to be unique */
+  sku: string;
+  /** The id in our database.  */
   id: number;
   name: string;
   optionLabel: string;
