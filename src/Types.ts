@@ -184,6 +184,11 @@ export interface Organization {
   organizationImage: string;
   offerReturns: boolean;
   returnPolicyLink: string;
+  // address
+  street: string;
+  city: string;
+  province: string;
+  postalCode: string;
 }
 
 export interface Facility {
@@ -233,12 +238,15 @@ export interface ProductCategory {
   count: number;
 }
 export interface ProductOption {
+  /** The id that suppliers use internally to refer to this product, not
+   * guaranteed to be unique */
+  sku: string;
+  /** The id in our database.  */
   id: number;
   name: string;
   optionLabel: string;
   productCategory: string;
   product: string;
-  productVariation: string;
   productDescription: string;
   productImage: string;
   productId: number;
@@ -265,7 +273,7 @@ export interface Order {
   authorUser: User;
   orderProducts: OrderProduct[];
   facility: Facility;
-  status: "open" | "approved" | "delivered" | "canceled" | "draft";
+  status: "open" | "approved" | "delivered" | "cancelled" | "draft";
 }
 
 export interface SupplierQuote {
@@ -374,6 +382,7 @@ export interface Transfer {
   completed: boolean;
   orderProduct: OrderProduct;
   timeCreated: string;
+  recipient: Organization;
 }
 
 export interface CartItem {

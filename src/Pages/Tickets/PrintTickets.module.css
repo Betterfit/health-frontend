@@ -1,0 +1,36 @@
+.ticketGrid {
+  /* display: table; */
+}
+.ticket {
+  display: inline-block;
+  margin: 0.25cm;
+  width: 45%;
+  border: 2px solid black;
+  page-break-inside: avoid;
+}
+
+.ticket:nth-child(2n) {
+  margin-left: 1cm;
+}
+
+.ticket > * {
+  margin: 0.25cm;
+}
+
+.ticket > hr {
+  margin: 0;
+  height: 2px;
+  background-color: black;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.qrCode {
+  padding: 0.25cm;
+  display: flex;
+  justify-content: center;
+}

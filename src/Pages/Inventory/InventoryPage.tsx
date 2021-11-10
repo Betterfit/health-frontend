@@ -41,7 +41,7 @@ const InventorySidebar = ({ productId }: { productId?: string }) => {
     >
       <Title>Inventory</Title>
       <FacilitySelector
-        label="warehouse"
+        label="Warehouse"
         facilityId={facilityId}
         selectFacility={(id) => dispatch(preferencesActions.setFacilityId(id))}
       />

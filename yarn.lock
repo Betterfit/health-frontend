@@ -14805,6 +14805,13 @@ react-tabs@^3.2.2:
     clsx "^1.1.0"
     prop-types "^15.5.0"
 
+react-to-print@^2.14.0:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/react-to-print/-/react-to-print-2.14.0.tgz#376d83391928221e45f4fdf1f7fd02891fc3042d"
+  integrity sha512-R5EbtQY6tqch+Vwoo7hlZ5cZ5Ew81SYessW1Nyb9Uq5njWolwYWyJUh5X7AtGNhVWD6y4ZfyTN+1iW1tR5a84w==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-tooltip@^4.2.11:
   version "4.2.11"
   resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-4.2.11.tgz#244d4d1833c583160c4e6c95a8a89e0fb320e18a"

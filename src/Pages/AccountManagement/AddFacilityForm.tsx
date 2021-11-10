@@ -34,7 +34,8 @@ const AddFacilityForm = ({
   existingFacility,
   className,
 }: {
-  handleClose: () => void;
+  /** If successful, this will be called with the newly created facility as its argument */
+  handleClose: (facility?: Facility) => void;
   /** This form will edit if an existing facility is given */
   existingFacility?: Facility;
   className?: string;
@@ -54,7 +55,9 @@ const AddFacilityForm = ({
     async (action: "create" | "update" | "delete") => {
       const client = await api.getClient();
       if (action === "delete") {
-        return client.delete(existingFacility!.url);
+        await client.delete(existingFacility!.url);
+        // We don't return the response when we are deleting
+        return;
       }
 
       const data = {
@@ -72,12 +75,14 @@ const AddFacilityForm = ({
         phoneNumber: formData.phoneNumber,
       };
       if (action === "create") return api.createFacility(data);
-      if (action === "update") return client.patch(existingFacility!.url, data);
+      if (action === "update")
+        return client.patch<Facility>(existingFacility!.url, data);
     },
     {
-      onSuccess: () => {
+      onSuccess: (response) => {
         queryClient.invalidateQueries(facilitiesQK);
-        handleClose();
+        // We only return the response when we are creating or updating a facility, so this should contain a facility object
+        handleClose(response?.data);
         formState.reset();
       },
     }

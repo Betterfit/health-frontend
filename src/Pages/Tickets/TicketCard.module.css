@@ -59,17 +59,10 @@ https://stackoverflow.com/questions/43686698/collapsing-borders-using-css-grid *
   grid-column: auto / span 2;
 }
 
-.qrCode {
-  padding: 0.5rem;
-  display: flex;
-  justify-content: center;
-}
-
 .actions {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   grid-column: 1/3;
   padding: 1rem;
 }

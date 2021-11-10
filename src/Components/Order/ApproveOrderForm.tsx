@@ -1,22 +1,21 @@
 import { MenuItem, TextField } from "@material-ui/core";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import PrettyLink from "Components/Content/PrettyLink";
+import FacilitySelector from "Components/FacilitySelector";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import BackNavigation from "Components/Helpers/BackNavigation";
-import {
-  HorizontalDetail,
-  VerticalDetail,
-} from "Components/InfoDisplay/LabeledDetails";
+import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { api, parseException } from "Helpers/typedAPI";
 import { useOrder } from "Models/orders";
 import { usePaymentMethods } from "Models/paymentMethods";
 import { productDisplayName } from "Models/products";
+import AddFacilityForm from "Pages/AccountManagement/AddFacilityForm";
 import { AddPaymentMethod } from "Pages/AccountManagement/PaymentMethods";
 import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import { cartActions } from "Store/cartSlice";
-import { useAppDispatch } from "Store/store";
+import { useAppDispatch, useAppSelector } from "Store/store";
 import { Money, PaymentMethod } from "Types";
 import { formatCurrency } from "../../Pages/Requests/RequestsPage";
 import styles from "./ApproveOrderForm.module.css";
@@ -42,15 +41,33 @@ const ApproveOrderForm = ({
     api.getOrderInvoice(orderId)
   );
   const { data: invoice } = invoiceQuery;
-  // users can open up a form to add a payment method in the checkout flow
-  const [paymentMethodForm, setPaymentMethodForm] = useState(false);
-  const { data: order } = useOrder(orderId);
+  // users can open forms to add a payment method or destination in the checkout flow.
+  const [openForm, setOpenForm] = useState<"paymentMethod" | "facility" | null>(
+    null
+  );
+  const destinationId = useAppSelector((state) => state.cart.destinationId);
+  const orderQuery = useOrder(orderId);
+  const order = orderQuery.data;
   const { data } = usePaymentMethods();
   const paymentMethods = data ?? [];
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(
     null
   );
   const queryClient = useQueryClient();
+  // We'll update our cart immediately for responsiveness
+  const updateDestinationMutation = useMutation(
+    async (facility: number) => {
+      return api.editOrder(orderId, {
+        facility,
+      });
+    },
+    {
+      onSuccess: (updatedOrder) => {
+        dispatch(cartActions.importOrder(updatedOrder));
+        orderQuery.refetch();
+      },
+    }
+  );
   const approveOrderMutation = useMutation(
     () =>
       api.updateOrderStatus({
@@ -74,26 +91,51 @@ const ApproveOrderForm = ({
     }
   );
 
-  if (paymentMethodForm)
+  if (openForm)
     return (
       <div className={styles.dialog}>
         <BackNavigation
           link="Go Back"
-          onClickOverride={() => setPaymentMethodForm(false)}
+          onClickOverride={() => setOpenForm(null)}
         />
-        <h2>Add New Payment Method</h2>
-        <AddPaymentMethod
-          onSuccess={() => setPaymentMethodForm(false)}
-          extraClasses="w-full flex-1"
-        />
+        {openForm === "paymentMethod" ? (
+          <>
+            <h2>Add New Payment Method</h2>
+            <AddPaymentMethod
+              onSuccess={() => {
+                setOpenForm(null);
+              }}
+              extraClasses="w-full flex-1"
+            />
+          </>
+        ) : (
+          <>
+            <h2>Add Destination Facility</h2>
+            <AddFacilityForm
+              handleClose={(facility) => {
+                setOpenForm(null);
+                facility && updateDestinationMutation.mutate(facility.id);
+              }}
+            />
+          </>
+        )}
       </div>
     );
   const error = parseException(approveOrderMutation.error);
   return (
     <div className={styles.dialog}>
       <h2>Approve and Pay for Order</h2>
+      {/* {(!invoice ||
+        !order ||
+        approveOrderMutation.isLoading ||
+        updateDestinationMutation.isLoading) && <LoadingSpinner darkened />} */}
       <LoadingSpinner
-        show={!invoice || !order || approveOrderMutation.isLoading}
+        show={
+          !invoice ||
+          !order ||
+          approveOrderMutation.isLoading ||
+          updateDestinationMutation.isLoading
+        }
         darkened
       />
       {invoice && order && (
@@ -120,46 +162,31 @@ const ApproveOrderForm = ({
             cost={invoice.taxes}
           />
           <FeeLineItem name="SupplyNet Fee" cost={invoice.applicationFee} />
-
           <hr />
           <HorizontalDetail
             label="Total"
             value={formatCurrency(invoice.total.amount)}
             fullWidth
           />
-          {/* allow users to change the facility here in the future */}
-          {/*  <TextField
-            value={order.facility.id}
-            className="mb-2"
-            id="destinationSelect"
+          <FacilitySelector
             label="Destination"
-            variant="outlined"
-            size="small"
-            select
-            fullWidth
-            disabled
-          >
-            {userFacilities?.map((facility) => (
-              <MenuItem key={facility.id} value={facility.id}>
-                {facility.name}
-              </MenuItem>
-            ))}
-          </TextField> */}
-          <VerticalDetail
-            label="Destination"
-            value={
-              <div className="flex flex-col item-center text-center text-base">
-                <p className="text-lg">{order.facility.name}</p>
-                <p>{order.facility.street}</p>
-                <p>
-                  {order.facility.postalCode?.toUpperCase()}{" "}
-                  {order.facility.city}, {order.facility.province}
-                </p>
-              </div>
+            facilityId={destinationId}
+            selectFacility={(facilityId) =>
+              facilityId !== order.facility.id &&
+              updateDestinationMutation.mutate(facilityId)
             }
+            addNewFacility={() => setOpenForm("facility")}
           />
+          <div className="flex flex-col item-center text-center text-base">
+            <p>{order.facility.street}</p>
+            <p>
+              {order.facility.city}, {order.facility.province}{" "}
+              {order.facility.postalCode?.toUpperCase()}
+            </p>
+          </div>
         </>
       )}
+      <hr className="my-4" />
       <TextField
         className={styles.paymentMethod}
         value={paymentMethod?.id}
@@ -178,7 +205,7 @@ const ApproveOrderForm = ({
         onChange={(e) => {
           // One of the options will be to add a new payment method
           if (e.target.value === "new") {
-            return setPaymentMethodForm(true);
+            return setOpenForm("paymentMethod");
           }
           const id = parseInt(e.target.value);
           setPaymentMethod(paymentMethods.find((pm) => pm.id === id) ?? null);
@@ -191,7 +218,7 @@ const ApproveOrderForm = ({
             </MenuItem>
           )),
           <MenuItem key="newPaymentMethod" value="new">
-            - Add New Payment Method -
+            + Add New Payment Method +
           </MenuItem>,
         ]}
       </TextField>
@@ -209,8 +236,10 @@ const ApproveOrderForm = ({
           text="Confirm"
           color="green"
           disabled={
-            (!paymentMethod && invoice != null) ||
-            approveOrderMutation.isLoading
+            !paymentMethod ||
+            invoice == null ||
+            approveOrderMutation.isLoading ||
+            destinationId == null
           }
           onClick={approveOrderMutation.mutate}
         />

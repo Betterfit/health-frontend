@@ -6,6 +6,7 @@ import InventoryPage from "Pages/Inventory/InventoryPage";
 import OrderDetail from "Pages/Orders/OrderDetail";
 import OrdersPage from "Pages/Orders/OrdersPage";
 import PaymentsPage from "Pages/Payments/PaymentsPage";
+import TicketDetail from "Pages/Tickets/TicketDetail";
 import TicketsPage from "Pages/Tickets/TicketsPage";
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
@@ -59,9 +60,16 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
         <DashboardOrder />
       </Route>
       {/* Supplier Routes */}
-      <Route path="/dashboard/tickets/">
+      <Route exact path="/dashboard/tickets/">
         <TicketsPage />
       </Route>
+      <Route
+        exact
+        path="/dashboard/tickets/:id"
+        render={(props) => {
+          return <TicketDetail ticketId={Number(props.match.params.id)} />;
+        }}
+      />
       <Route path="/dashboard/inventory">
         <InventoryPage />
       </Route>

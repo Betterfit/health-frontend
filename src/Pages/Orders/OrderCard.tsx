@@ -86,10 +86,7 @@ const OrderProductInfo = ({
     <div className={styles.orderProduct}>
       <img src={product.productImage} alt={product.name + " Product Image"} />
       <div className={styles.detailList}>
-        <HorizontalDetail
-          label="Item"
-          value={`${product.product} - ${product.productVariation}`}
-        />
+        <HorizontalDetail label="Item" value={product.product} />
         <HorizontalDetail label="Quantity" value={orderProduct.quantity} />
         <HorizontalDetail label={product.optionLabel} value={product.name} />
       </div>
@@ -133,7 +130,7 @@ const statusColors = {
   open: "lavender",
   approved: "tropical-blue",
   delivered: "cool-green",
-  canceled: "rubber-red",
+  cancelled: "rubber-red",
 };
 const StatusBadge = ({ status }: { status: keyof typeof statusColors }) => (
   <Badge backgroundColor={`var(--${statusColors[status]})`} text={status} />

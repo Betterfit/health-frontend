@@ -28,9 +28,10 @@ export const useProductOption = (
   });
 };
 
+/** Hold over from when product name had to be computed using product variation*/
 export const productDisplayName = (
   product: ProductOption | undefined
 ): string => {
   if (!product) return "";
-  return `${product.product} - ${product.productVariation}`;
+  return `${product.product}`;
 };

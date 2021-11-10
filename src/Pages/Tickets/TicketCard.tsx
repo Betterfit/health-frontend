@@ -6,29 +6,38 @@ import { formatTimeStamp } from "Helpers/utils";
 import { productDisplayName } from "Models/products";
 import React, { ReactNode, useState } from "react";
 import { useQueryClient } from "react-query";
+import { useHistory } from "react-router-dom";
 import { SupplierTicket } from "Types";
 import MarkShippedForm from "./MarkShippedForm";
+import PrintTickets from "./PrintTickets";
 import styles from "./TicketCard.module.css";
 import UpdateInventoryForm from "./UpdateInventoryForm";
 
+const basePath = "/dashboard/tickets";
 type DialogState = "closed" | "markShipped" | "updateInventory";
 
 /**
  * Displays the ticket's information and allows the user to mark it as shipped.
  */
-const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
+const TicketCard = ({
+  ticket,
+  onDetailPage = false,
+}: {
+  ticket: SupplierTicket;
+  onDetailPage?: boolean;
+}) => {
   const queryClient = useQueryClient();
   const product = ticket.orderProduct.productOption;
   const { destination, purchaser, orderProduct } = ticket;
-  // const history = useHistory();
-  // const basePath = "/dashboard/tickets";
+  const history = useHistory();
   // const markShippedPath = `${basePath}/${ticket.id}/mark-shipped`;
   const [dialogState, setDialogState] = useState<DialogState>("closed");
   return (
     <div className={styles.ticket}>
-      <TicketDetail label="Purchaser" value={purchaser.name} />
-      <TicketDetail label="Destination" value={destination.name} />
-      {/* <TicketDetail label="Address to" value="John Doe" /> */}
+      <TicketDetail label="Purchaser">
+        <p>{purchaser.name}</p> <p>Phone: {destination.phoneNumber}</p>
+      </TicketDetail>
+      <TicketDetail label="SKU" value={product.sku ?? "N/A"} />
       <TicketDetail label="Ticket Id" value={ticket.id} />
       <TicketDetail
         label="Assigned On"
@@ -38,7 +47,7 @@ const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
         <span>{destination.name}</span>
         <span>{destination.street}</span>
         <span>
-          {destination.city} {destination.province} {destination.postalCode}
+          {destination.postalCode} {destination.city} {destination.province}
         </span>
       </TicketDetail>
       <TicketDetail label="Product">
@@ -53,20 +62,6 @@ const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
       <TicketDetail label="Quantity" value={orderProduct.quantity} /> */}
       {/* <TicketDetail label="Status" value={ticket.status} />
       <TicketDetail label="Shipping Info" value={ticket.shippingProvider} /> */}
-      {/* <div className={styles.qrCode}>
-        <QRCode
-          value={window.location.origin + "/tickets/" + ticket.id}
-          size={128}
-          // imageSettings={{
-          //   src: "https://betterfit.com/betterfit-favicon.png",
-          //   width: 32,
-          //   height: 32,
-          // }}
-          width={128}
-          height={128}
-          level="Q"
-        />
-      </div> */}
       <div className={styles.actions}>
         {ticket.status === "open" && (
           <PrettyButton
@@ -76,7 +71,16 @@ const TicketCard = ({ ticket }: { ticket: SupplierTicket }) => {
             onClick={() => setDialogState("markShipped")}
           />
         )}
-        {/* <PrettyButton text="Print QR Code" /> */}
+        {!onDetailPage && (
+          <PrettyButton
+            text="View Details"
+            color="blue"
+            onClick={() => history.push(basePath + "/" + ticket.id)}
+          />
+        )}
+        {onDetailPage && (
+          <PrintTickets tickets={[ticket]} label="Print Ticket" />
+        )}
       </div>
       <Dialog
         open={

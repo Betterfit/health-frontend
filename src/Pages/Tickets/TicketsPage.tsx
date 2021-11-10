@@ -6,12 +6,13 @@ import { capitalize } from "lodash";
 import React from "react";
 import { useQuery } from "react-query";
 import { SupplierTicket } from "Types";
+import PrintTickets from "./PrintTickets";
 import TicketCard from "./TicketCard";
 import styles from "./TicketsPage.module.css";
 
 const TicketsPage = () => {
   return (
-    <div className={styles.root}>
+    <div className="page">
       <Title>Pick Tickets</Title>
       <Tickets />
     </div>
@@ -42,12 +43,19 @@ const Tickets = () => {
       tabs={statuses.map((status) => {
         const tickets = ticketsWithStatus(status);
         return {
-          heading: capitalize(status),
+          heading: capitalize(status === "open" ? "outstanding" : status),
+          // the term "outstanding" makes more sense than "open"
           key: status,
           amount: tickets.length,
           content: <TicketList tickets={tickets} />,
         };
       })}
+      headingComp={
+        <PrintTickets
+          tickets={tickets.filter((ticket) => ticket.status === "open")}
+          label="Print Outstanding Tickets"
+        />
+      }
     />
   );
 };
@@ -61,5 +69,4 @@ const TicketList = ({ tickets }: { tickets: SupplierTicket[] }) => {
     </div>
   );
 };
-
 export default TicketsPage;

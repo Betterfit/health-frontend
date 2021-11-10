@@ -13,12 +13,14 @@ To extend a global style, compose it in a selector in a css module file like so:
 /* Starting point for pages */
 :global .page {
   padding: 2rem 1rem;
+  margin-bottom: 2rem;
 }
 
 @media (max-width: 640px) {
   :global .page {
     padding: 0.5rem 0.5rem;
-    margin: 0;
+    margin-left: 0;
+    margin-right: 0;
     max-width: 100vw;
   }
 }

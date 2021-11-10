@@ -14,8 +14,9 @@ import styles from "./TransferCard.module.css";
  */
 const TransferCard = ({ transfer }: { transfer: Transfer }) => {
   const history = useHistory();
-  const detailPath =
-    "/dashboard/tickets/detail/" + transfer.orderProduct.ticket?.id;
+  const detailPath = "/dashboard/tickets/" + transfer.orderProduct.ticket?.id;
+  const onDetailPage = history.location.pathname === detailPath;
+  const recipient = transfer.recipient;
   return (
     <div className={clsx("cardBorder")}>
       <div className="cardHeader">
@@ -29,7 +30,7 @@ const TransferCard = ({ transfer }: { transfer: Transfer }) => {
         />
         <TransferStatus completed={transfer.completed} />
         {/* don't show the open ticket button if we're already on the detail page */}
-        {history.location.pathname !== detailPath && (
+        {!onDetailPage && (
           <PrettyButton
             text="Open Ticket"
             onClick={() => history.push(detailPath)}
@@ -38,6 +39,20 @@ const TransferCard = ({ transfer }: { transfer: Transfer }) => {
       </div>
       <div>
         <OrderProductInvoice orderProduct={transfer.orderProduct} />
+        {onDetailPage && (
+          <VerticalDetail
+            label="Billing Address"
+            value={
+              <>
+                <span>{recipient.name}</span>
+                <span>{recipient.street}</span>
+                <span>
+                  {recipient.postalCode} {recipient.city} {recipient.province}
+                </span>
+              </>
+            }
+          />
+        )}
       </div>
     </div>
   );
