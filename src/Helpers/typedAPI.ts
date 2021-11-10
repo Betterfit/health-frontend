@@ -317,7 +317,11 @@ export default class TypedAPI {
     search?: string;
   }) => {
     const client = await this.init();
-    const queryString = buildQueryString(queryParams);
+    const queryString = buildQueryString({
+      ...queryParams,
+      // only show product options that are ready to be sold
+      sellable: true,
+    });
     const response = await client.get<ProductOption[]>(
       "/product-options" + queryString
     );
