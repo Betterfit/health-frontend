@@ -26,6 +26,7 @@ const AddProductForm = ({ product }: { product: ProductOption }) => {
         variant="outlined"
         style={{ width: "80px" }}
       />
+      <p>${product.price}</p>
       <PrettyButton
         onClick={() => addToCart(quantity)}
         color="green"

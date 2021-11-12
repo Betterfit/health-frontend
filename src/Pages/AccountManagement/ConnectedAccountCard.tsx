@@ -5,8 +5,8 @@ import {
   VerticalDetail,
 } from "Components/InfoDisplay/LabeledDetails";
 import { api } from "Helpers/typedAPI";
+import { formatCurrency } from "Helpers/utils";
 import { useMyProfile } from "Models/user";
-import { formatCurrency } from "Pages/Requests/RequestsPage";
 import React, { useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";

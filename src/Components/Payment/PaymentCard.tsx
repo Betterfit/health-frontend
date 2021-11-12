@@ -7,10 +7,9 @@ import {
   VerticalDetail,
 } from "Components/InfoDisplay/LabeledDetails";
 import { api } from "Helpers/typedAPI";
-import { formatTimeStamp } from "Helpers/utils";
+import { formatCurrency, formatTimeStamp } from "Helpers/utils";
 import { productDisplayName } from "Models/products";
 import { fullName } from "Models/user";
-import { formatCurrency } from "Pages/Requests/RequestsPage";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { useHistory } from "react-router-dom";

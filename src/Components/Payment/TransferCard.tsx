@@ -1,8 +1,7 @@
 import clsx from "clsx";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { VerticalDetail } from "Components/InfoDisplay/LabeledDetails";
-import { formatTimeStamp } from "Helpers/utils";
-import { formatCurrency } from "Pages/Requests/RequestsPage";
+import { formatCurrency, formatTimeStamp } from "Helpers/utils";
 import React from "react";
 import { useHistory } from "react-router";
 import { Transfer } from "Types";

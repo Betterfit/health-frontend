@@ -5,7 +5,7 @@ import ApproveOrderForm from "Components/Order/ApproveOrderForm";
 import { api } from "Helpers/typedAPI";
 import { useOrder } from "Models/orders";
 import React, { useEffect, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import { cartActions } from "Store/cartSlice";
 import { useAppDispatch, useAppSelector } from "Store/store";
@@ -87,21 +87,6 @@ const CartActions = ({ openDialog }: { openDialog: () => void }) => {
     }
   );
 
-  const priceRequest = cartItems.map(({ productOptionId, quantity }) => ({
-    productOptionId,
-    quantity,
-    facilityId: destinationId,
-  }));
-  const priceQuery = useQuery(
-    ["pricing", priceRequest],
-    () => api.getPricing(priceRequest).then((response) => response.data),
-    { enabled: destinationId != null }
-  );
-  const inStock =
-    priceQuery.isSuccess &&
-    priceQuery.data?.every(
-      (orderProduct) => orderProduct.purchaseOptions.length > 0
-    );
   const readyToSubmit = destinationId && cartItems.length !== 0;
   return (
     <div className="flex justify-around ">
@@ -116,7 +101,7 @@ const CartActions = ({ openDialog }: { openDialog: () => void }) => {
         variant="outline"
         color="green"
         text="Place Order"
-        disabled={!readyToSubmit || orderMutation.isLoading || !inStock}
+        disabled={!readyToSubmit || orderMutation.isLoading}
         className="flex-1 justify-center"
         onClick={() => orderMutation.mutate("open")}
       />

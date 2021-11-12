@@ -12,7 +12,6 @@ import {
   PaymentMethod,
   ProductCategory,
   ProductOption,
-  ProductPricing,
   ServerException,
   SupplierPricing,
   Ticket,
@@ -185,22 +184,6 @@ export default class TypedAPI {
   /**
    * Used by purchasers to get price quotes/ranges
    */
-  getPricing = async (
-    orderProducts: {
-      productOptionId: number;
-      facilityId?: number;
-      quantity?: number;
-    }[]
-  ) => {
-    const client = await this.init();
-    return client.post<ProductPricing[]>("/pricing/", orderProducts);
-  };
-
-  getSupplierPricing = async () => {
-    const client = await this.init();
-    return client.get<SupplierPricing[]>("/product-option-pricing");
-  };
-
   addSupplierPricing = async (data: {
     productOption: number;
     price: number;

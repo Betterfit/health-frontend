@@ -234,6 +234,7 @@ export interface ProductOption {
   categoryId: number;
   /** Decimal number stored as a string */
   price: string;
+  supplier: Organization;
 }
 
 interface BaseOrderProduct {

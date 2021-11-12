@@ -6,6 +6,7 @@ import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import BackNavigation from "Components/Helpers/BackNavigation";
 import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { api, parseException } from "Helpers/typedAPI";
+import { formatCurrency } from "Helpers/utils";
 import { useOrder } from "Models/orders";
 import { usePaymentMethods } from "Models/paymentMethods";
 import { productDisplayName } from "Models/products";
@@ -17,7 +18,6 @@ import { useHistory } from "react-router-dom";
 import { cartActions } from "Store/cartSlice";
 import { useAppDispatch, useAppSelector } from "Store/store";
 import { Money, PaymentMethod } from "Types";
-import { formatCurrency } from "../../Pages/Requests/RequestsPage";
 import styles from "./ApproveOrderForm.module.css";
 
 export interface InvoiceItem {

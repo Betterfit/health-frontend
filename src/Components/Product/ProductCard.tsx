@@ -1,17 +1,12 @@
 import CircleButton from "Components/Forms/CircleButton";
 import FlatButton from "Components/Forms/FlatDetailButton";
 import { setProductNavInfo } from "Containers/Facility/Inner/ProductList";
-import { api } from "Helpers/typedAPI";
-import _ from "lodash";
-import { useSelectedFacility } from "Models/facilities";
 import { productDisplayName } from "Models/products";
-import { formatCurrency } from "Pages/Requests/RequestsPage";
 import React, { useState } from "react";
-import { useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
 import { cartActions } from "Store/cartSlice";
 import { useAppDispatch } from "Store/store";
-import { ProductOption, SupplierQuote } from "Types";
+import { ProductOption } from "Types";
 import ProductImage from "./ProductImage";
 
 /**
@@ -25,14 +20,6 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
     dispatch(cartActions.addItem({ productOptionId: product.id, quantity: 1 }));
   };
   const displayName = productDisplayName(product);
-  const { facilityId } = useSelectedFacility();
-  const pricingQueryProps = { productOptionId: product.id, facilityId };
-  const pricingQuery = useQuery(
-    ["pricing", pricingQueryProps],
-    () => api.getPricing([pricingQueryProps]).then((result) => result.data[0]),
-    { enabled: facilityId != null }
-  );
-  const { data: pricing } = pricingQuery;
   return (
     <>
       <div
@@ -61,9 +48,9 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
             <span className="text-betterfit-grey-blue text-md">
               {product.name ?? "N/A"}
             </span>
-            {pricing && (
-              <ProductPricing purchaseOptions={pricing.purchaseOptions} />
-            )}
+            <span className="text-betterfit-grey-blue text-sm">
+              ${product.price}
+            </span>
           </div>
 
           <div className="flex flex-row pl-4 pr-2 py-1 justify-between items-center ml-auto mt-0 md:ml-0 md:mt-auto">
@@ -83,27 +70,6 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
           />
         )}
       </div>
-    </>
-  );
-};
-
-const ProductPricing = ({
-  purchaseOptions,
-}: {
-  purchaseOptions: SupplierQuote[];
-}) => {
-  const minPrice = _.minBy(purchaseOptions, (po) => po.priceInfo.minPricePer)
-    ?.priceInfo.minPricePer;
-  const maxPrice = _.maxBy(purchaseOptions, (po) => po.priceInfo.minPricePer)
-    ?.priceInfo.maxPricePer;
-  const singlePrice = minPrice === maxPrice ? minPrice : null;
-  return (
-    <>
-      <span className="text-betterfit-grey-blue text-sm">
-        {singlePrice
-          ? formatCurrency(singlePrice)
-          : `${formatCurrency(minPrice)} - ${formatCurrency(maxPrice)}`}
-      </span>
     </>
   );
 };

@@ -3,15 +3,12 @@ import clsx from "clsx";
 import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 import ProductImage from "Components/Product/ProductImage";
 import ReturnPolicy from "Components/Product/ReturnPolicy";
-import { api } from "Helpers/typedAPI";
-import { formatCurrency } from "Helpers/utils";
 import Close from "Images/Icons/red-close.svg";
 import { productDisplayName, useProductOption } from "Models/products";
-import React, { useEffect, useRef } from "react";
-import { useQuery } from "react-query";
+import React from "react";
 import { ReactSVG } from "react-svg";
 import { cartActions } from "Store/cartSlice";
-import { useAppDispatch, useAppSelector } from "Store/store";
+import { useAppDispatch } from "Store/store";
 import { CartItem } from "Types";
 import styles from "./CartItemCard.module.css";
 
@@ -23,41 +20,10 @@ const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
   const dispatch = useAppDispatch();
   const { productOptionId, quantity } = cartItem;
   const { data: product } = useProductOption(cartItem.productOptionId);
-  const facilityId = useAppSelector((state) => state.cart.destinationId);
-  const priceRequest = {
-    productOptionId: cartItem.productOptionId,
-    facilityId,
-    quantity: cartItem.quantity,
-  };
-  const priceQuery = useQuery(
-    ["pricing", priceRequest],
-    () => api.getPricing([priceRequest]).then((response) => response.data[0]),
-    { keepPreviousData: true }
-  );
   // we don't immediately update the cart whenever the user changes quantity
   // because then we could send out dozens of requests if they hold down the increment button.
   // Instead we only update every 500ms
-  const quantityInput = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (quantityInput) {
-        const newQuantity = quantityInput?.current?.valueAsNumber;
-        if (newQuantity && newQuantity !== quantity)
-          dispatch(
-            cartActions.updateItemQuantity({
-              productOptionId,
-              quantity: newQuantity,
-            })
-          );
-      }
-    }, 500);
-    return () => clearInterval(interval);
-  }, [quantity, dispatch, productOptionId]);
-  // if there are no suppliers with this product in stock, and this may be undefined
-  const priceInfo = priceQuery.data?.purchaseOptions[0];
-  const supplier = priceInfo?.supplier;
-  const outOfStock = priceQuery.isSuccess && !priceInfo;
-
+  const supplier = product?.supplier;
   const displayName = productDisplayName(product);
 
   return (
@@ -80,8 +46,8 @@ const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
           <ProductImage
             product={product}
             className={clsx(
-              "h-20 w-20 md:h-32 md:w-32 pt-3 pr-3 object-contain",
-              outOfStock && styles.outOfStock
+              "h-20 w-20 md:h-32 md:w-32 pt-3 pr-3 object-contain"
+              // outOfStock && styles.outOfStock
             )}
           />
           <div className="flex-col pt-7">
@@ -94,24 +60,27 @@ const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
           </div>
         </div>
         <div className="flex flex-row flex-wrap justify-around items-center py-1">
-          {priceInfo && (
+          {product && (
             <HorizontalDetail
               label="Price Per Unit"
-              value={formatCurrency(priceInfo.priceInfo.pricePer)}
+              value={"$" + product?.price}
             />
           )}
-          {priceInfo && (
-            <HorizontalDetail
-              label="Fulfilled by"
-              value={priceInfo.supplier.name}
-            />
+          {supplier && (
+            <HorizontalDetail label="Fulfilled by" value={supplier.name} />
           )}
           {supplier && <ReturnPolicy supplier={supplier} />}
-          {outOfStock && <p className={styles.outOfStock}>Out of stock!</p>}
         </div>
         <TextField
-          inputRef={quantityInput}
           className={styles.quantity}
+          onChange={(e) =>
+            dispatch(
+              cartActions.updateItemQuantity({
+                productOptionId,
+                quantity: Number(e.target.value),
+              })
+            )
+          }
           id="quantity-input"
           label="Quantity"
           size="small"
