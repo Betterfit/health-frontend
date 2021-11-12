@@ -9,7 +9,7 @@ import { SyntheticEvent } from "hoist-non-react-statics/node_modules/@types/reac
 import { productDisplayName } from "Models/products";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { SupplierTicket } from "Types";
+import { Ticket } from "Types";
 import styles from "./MarkShippedForm.module.css";
 
 /**
@@ -20,12 +20,12 @@ const UpdateInventoryForm = ({
   ticket,
   handleClose,
 }: {
-  ticket: SupplierTicket;
+  ticket: Ticket;
   handleClose: () => void;
 }) => {
   const { warehouse } = ticket;
   const queryClient = useQueryClient();
-  const product = ticket.orderProduct.productOption;
+  const product = ticket.productOption;
   const inventoryParams = {
     productOption: product.id,
     warehouse: warehouse.id,
@@ -52,8 +52,8 @@ const UpdateInventoryForm = ({
   useEffect(() => {
     if (inventory)
       // subtract the amount of inventory that was just shipped as default
-      setNewQuantity(inventory.quantity - ticket.orderProduct.quantity);
-  }, [inventory, ticket.orderProduct.quantity]);
+      setNewQuantity(inventory.quantity - ticket.quantity);
+  }, [inventory, ticket.quantity]);
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <h2>Update Inventory</h2>

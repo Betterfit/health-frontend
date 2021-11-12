@@ -210,25 +210,6 @@ export interface Facility {
   isMember?: boolean;
   active: boolean;
 }
-export interface Ticket {
-  id: number;
-  timeCreated: string;
-  timeShipped: string;
-  status: "open" | "shipped" | "delivered";
-  shippingProvider: string;
-  trackingNumber: string;
-  warehouse: Facility;
-}
-export interface PurchaserTicket extends Ticket {
-  supplier: Organization;
-  orderProductId: number;
-}
-export interface SupplierTicket extends Ticket {
-  url: string;
-  orderProduct: OrderProduct;
-  destination: Facility;
-  purchaser: Organization;
-}
 export interface ProductCategory {
   name: string;
   id: number;
@@ -252,17 +233,31 @@ export interface ProductOption {
   productId: number;
   categoryId: number;
 }
-export interface OrderProduct {
+
+interface BaseOrderProduct {
   url: string;
   order: number;
   id: number;
-  priority: "normal" | "stat";
   quantity: number;
-  supplierOrg?: Organization;
   productOption: ProductOption;
-  ticket?: PurchaserTicket;
   shipping: string;
   pricePerUnit: string;
+  warehouse: Facility | null;
+  shippingProvider: string;
+  trackingNumber: string;
+  status: TicketStatus;
+  timeCreated: string;
+  timeShipped: string;
+}
+export type TicketStatus = "open" | "shipped" | "delivered";
+
+export interface Ticket extends BaseOrderProduct {
+  warehouse: Facility;
+  destination: Facility;
+  purchaser: Organization;
+}
+export interface OrderProduct extends BaseOrderProduct {
+  supplier?: Organization;
 }
 export interface Order {
   url: string;
@@ -380,7 +375,7 @@ export interface Transfer {
   id: number;
   total: string;
   completed: boolean;
-  orderProduct: OrderProduct;
+  ticket: Ticket;
   timeCreated: string;
   recipient: Organization;
 }

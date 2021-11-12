@@ -5,7 +5,7 @@ import { api } from "Helpers/typedAPI";
 import { productDisplayName } from "Models/products";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
-import { SupplierTicket } from "Types";
+import { Ticket } from "Types";
 import styles from "./MarkShippedForm.module.css";
 
 const MarkShippedForm = ({
@@ -13,12 +13,12 @@ const MarkShippedForm = ({
   onSuccess,
   onCancel,
 }: {
-  ticket: SupplierTicket;
+  ticket: Ticket;
   onSuccess: () => void;
   onCancel: () => void;
 }) => {
-  const product = ticket.orderProduct.productOption;
-  const { destination, orderProduct } = ticket;
+  const product = ticket.productOption;
+  const { destination } = ticket;
   const [formData, setFormData] = useState({
     shippingProvider: "",
     trackingNumber: "",
@@ -43,7 +43,7 @@ const MarkShippedForm = ({
       <VerticalDetail label="Destination" value={destination.name} />
       <VerticalDetail label="Product" value={productDisplayName(product)} />
       <VerticalDetail label={product.optionLabel} value={product.name} />
-      <VerticalDetail label="Quantity" value={orderProduct.quantity} />
+      <VerticalDetail label="Quantity" value={ticket.quantity} />
       <hr />
       <p>Shipping Information (Optional)</p>
       <TextField

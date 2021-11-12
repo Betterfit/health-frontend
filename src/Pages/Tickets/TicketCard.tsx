@@ -7,7 +7,7 @@ import { productDisplayName } from "Models/products";
 import React, { ReactNode, useState } from "react";
 import { useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
-import { SupplierTicket } from "Types";
+import { Ticket } from "Types";
 import MarkShippedForm from "./MarkShippedForm";
 import PrintTickets from "./PrintTickets";
 import styles from "./TicketCard.module.css";
@@ -23,12 +23,12 @@ const TicketCard = ({
   ticket,
   onDetailPage = false,
 }: {
-  ticket: SupplierTicket;
+  ticket: Ticket;
   onDetailPage?: boolean;
 }) => {
   const queryClient = useQueryClient();
-  const product = ticket.orderProduct.productOption;
-  const { destination, purchaser, orderProduct } = ticket;
+  const product = ticket.productOption;
+  const { destination, purchaser } = ticket;
   const history = useHistory();
   // const markShippedPath = `${basePath}/${ticket.id}/mark-shipped`;
   const [dialogState, setDialogState] = useState<DialogState>("closed");
@@ -55,7 +55,7 @@ const TicketCard = ({
           <span>{productDisplayName(product)}</span>
           <img src={product.productImage} alt={productDisplayName(product)} />
         </div>
-        <HorizontalDetail label="Quantity" value={orderProduct.quantity} />
+        <HorizontalDetail label="Quantity" value={ticket.quantity} />
         <HorizontalDetail label={product.optionLabel} value={product.name} />
       </TicketDetail>
       {/* <TicketDetail label={product.optionLabel} value={product.name} />

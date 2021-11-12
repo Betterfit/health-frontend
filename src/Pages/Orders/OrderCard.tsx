@@ -81,7 +81,6 @@ const OrderProductInfo = ({
     { onSuccess: () => queryClient.invalidateQueries("orders") }
   );
   const product = orderProduct.productOption;
-  const ticket = orderProduct.ticket;
   return (
     <div className={styles.orderProduct}>
       <img src={product.productImage} alt={product.name + " Product Image"} />
@@ -91,25 +90,34 @@ const OrderProductInfo = ({
         <HorizontalDetail label={product.optionLabel} value={product.name} />
       </div>
       <div className={styles.detailList}>
-        <HorizontalDetail label="Supplier" value={ticket?.supplier.name} />
-        <HorizontalDetail label="Warehouse" value={ticket?.warehouse.name} />
+        <HorizontalDetail
+          label="Supplier"
+          value={orderProduct.supplier?.name}
+        />
+        <HorizontalDetail
+          label="Warehouse"
+          value={orderProduct.warehouse?.name}
+        />
         {/* <HorizontalDetail label={"Total"} value={32} /> */}
       </div>
       <div className={styles.detailList}>
         <HorizontalDetail
           label={"Shipping Provider"}
-          value={ticket?.shippingProvider}
+          value={orderProduct.shippingProvider}
         />
         <HorizontalDetail
           label={"Tracking Number"}
-          value={ticket?.trackingNumber}
+          value={orderProduct.trackingNumber}
         />
-        <HorizontalDetail label={"Status"} value={capitalize(ticket?.status)} />
+        <HorizontalDetail
+          label={"Status"}
+          value={capitalize(orderProduct.status)}
+        />
       </div>
       <div className={styles.orderProductActions}>
         {/* Even if a ticket hasn't been marked as shipped, we still let
         orderers mark it as delivered, in case the supplier forgot to mark it*/}
-        {ticket && ticket.status !== "delivered" && (
+        {order.status === "approved" && orderProduct.status !== "delivered" && (
           <>
             <PrettyButton
               text="Mark as Delivered"

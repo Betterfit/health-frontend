@@ -5,7 +5,7 @@ import { api } from "Helpers/typedAPI";
 import { capitalize } from "lodash";
 import React from "react";
 import { useQuery } from "react-query";
-import { SupplierTicket } from "Types";
+import { Ticket } from "Types";
 import PrintTickets from "./PrintTickets";
 import TicketCard from "./TicketCard";
 import styles from "./TicketsPage.module.css";
@@ -25,7 +25,7 @@ const TicketsPage = () => {
  */
 const Tickets = () => {
   const statuses = ["open", "shipped", "delivered"];
-  const ticketsQuery = useQuery<SupplierTicket[], Error>(["tickets"], () =>
+  const ticketsQuery = useQuery<Ticket[], Error>(["tickets"], () =>
     api.getTickets().then((response) => response.data)
   );
   if (ticketsQuery.isLoading || ticketsQuery.isIdle)
@@ -60,7 +60,7 @@ const Tickets = () => {
   );
 };
 
-const TicketList = ({ tickets }: { tickets: SupplierTicket[] }) => {
+const TicketList = ({ tickets }: { tickets: Ticket[] }) => {
   return (
     <div className={styles.ticketList}>
       {tickets.map((ticket) => (

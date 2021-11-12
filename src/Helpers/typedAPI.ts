@@ -15,7 +15,7 @@ import {
   ProductPricing,
   ServerException,
   SupplierPricing,
-  SupplierTicket,
+  Ticket,
   Transfer,
   UserProfile,
 } from "Types";
@@ -297,15 +297,15 @@ export default class TypedAPI {
   //  ********** TICKETS API **********
   getTickets = async () => {
     const client = await this.init();
-    return client.get<SupplierTicket[]>("/tickets");
+    return client.get<Ticket[]>("/tickets");
   };
 
   getTicket = async (ticketId: number) => {
     const client = await this.init();
-    return client.get<SupplierTicket>("/tickets/" + ticketId);
+    return client.get<Ticket>("/tickets/" + ticketId);
   };
 
-  updateTicket = async (ticket: SupplierTicket, data: SupplierTicketUpdate) => {
+  updateTicket = async (ticket: Ticket, data: SupplierTicketUpdate) => {
     const client = await this.init();
     return client.patch(ticket.url, data);
   };

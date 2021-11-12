@@ -2,7 +2,7 @@ import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import QRCode from "qrcode.react";
 import React, { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import { SupplierTicket } from "Types";
+import { Ticket } from "Types";
 import styles from "./PrintTickets.module.css";
 
 /**
@@ -12,7 +12,7 @@ const PrintTickets = ({
   tickets,
   label,
 }: {
-  tickets: SupplierTicket[];
+  tickets: Ticket[];
   label: string;
 }) => {
   const componentRef = useRef<HTMLDivElement>(null);
@@ -33,15 +33,15 @@ const PrintTickets = ({
   );
 };
 
-const TicketPrintout = ({ ticket }: { ticket: SupplierTicket }) => {
+const TicketPrintout = ({ ticket }: { ticket: Ticket }) => {
   const warehouse = ticket.warehouse;
   const destination = ticket.destination;
-  const product = ticket.orderProduct.productOption;
+  const product = ticket.productOption;
   return (
     <div className={styles.ticket}>
       <span>
         Betterfit Supplynet - Ticket <strong>#{ticket.id}</strong> - Order{" "}
-        <strong>#{ticket.orderProduct.order}</strong>
+        <strong>#{ticket.order}</strong>
       </span>
       <hr />
       <div className={styles.address}>
@@ -69,10 +69,10 @@ const TicketPrintout = ({ ticket }: { ticket: SupplierTicket }) => {
           {product.optionLabel}: <strong>{product.name}</strong>
         </span>
         <span>
-          Product SKU: <strong>{ticket.orderProduct.productOption.sku}</strong>
+          Product SKU: <strong>{ticket.productOption.sku}</strong>
         </span>
         <span>
-          Quantity: <strong>{ticket.orderProduct.quantity}</strong>
+          Quantity: <strong>{ticket.quantity}</strong>
         </span>
         {/* <span>Weight: </span>
         <span>Dimensions: </span> */}
@@ -82,7 +82,7 @@ const TicketPrintout = ({ ticket }: { ticket: SupplierTicket }) => {
   );
 };
 
-const TicketQR = ({ ticket }: { ticket: SupplierTicket }) => {
+const TicketQR = ({ ticket }: { ticket: Ticket }) => {
   return (
     <div className={styles.qrCode}>
       <QRCode

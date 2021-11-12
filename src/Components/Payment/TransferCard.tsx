@@ -14,7 +14,7 @@ import styles from "./TransferCard.module.css";
  */
 const TransferCard = ({ transfer }: { transfer: Transfer }) => {
   const history = useHistory();
-  const detailPath = "/dashboard/tickets/" + transfer.orderProduct.ticket?.id;
+  const detailPath = "/dashboard/tickets/" + transfer.ticket.id;
   const onDetailPage = history.location.pathname === detailPath;
   const recipient = transfer.recipient;
   return (
@@ -38,7 +38,7 @@ const TransferCard = ({ transfer }: { transfer: Transfer }) => {
         )}
       </div>
       <div>
-        <OrderProductInvoice orderProduct={transfer.orderProduct} />
+        <OrderProductInvoice orderProduct={transfer.ticket} />
         {onDetailPage && (
           <VerticalDetail
             label="Billing Address"

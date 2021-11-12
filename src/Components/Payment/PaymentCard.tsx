@@ -14,7 +14,7 @@ import { formatCurrency } from "Pages/Requests/RequestsPage";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
-import { Order, OrderProduct, Payment } from "Types";
+import { Order, OrderProduct, Payment, Ticket } from "Types";
 import styles from "./PaymentCard.module.css";
 
 const PaymentCard = ({
@@ -126,7 +126,7 @@ const PaymentDetails = ({
 export const OrderProductInvoice = ({
   orderProduct,
 }: {
-  orderProduct: OrderProduct;
+  orderProduct: OrderProduct | Ticket;
 }) => {
   const subtotal =
     Number(orderProduct.pricePerUnit) * Number(orderProduct.quantity) +
