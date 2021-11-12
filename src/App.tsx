@@ -1,4 +1,5 @@
 import { Auth } from "@aws-amplify/auth";
+import ProductCatalog from "Components/Product/ProductCatalog";
 import DashboardResearch from "Containers/DashboardResearch";
 import DynamicDashboard from "Dashboard/DynamicDashboard";
 import { setUpCognito } from "Helpers/cognito";
@@ -47,6 +48,9 @@ const App = () => {
         {/* publically accessible page, no login required */}
         <Route path="/research">
           <DashboardResearch />
+        </Route>
+        <Route path="/catalog">
+          <ProductCatalog />
         </Route>
         {/* has own authentication*/}
         <Route path="/covid">

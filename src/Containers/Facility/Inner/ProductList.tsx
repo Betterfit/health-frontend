@@ -16,7 +16,6 @@ function useQueryParams() {
 
 /**
  * Parses navigation information from the url for the New Order page.
- * If orderId is not null, then the users currently editing an existing order.
  */
 export const useProductNavInfo = (): ProductNavInfo => {
   const queryParams = useQueryParams();
@@ -29,9 +28,6 @@ export const useProductNavInfo = (): ProductNavInfo => {
     // don't get null values or NaN (only undefined)
     categoryId: queryParams.has("categoryId")
       ? Number(queryParams.get("categoryId"))
-      : undefined,
-    orderId: queryParams.has("orderId")
-      ? Number(queryParams.get("orderId"))
       : undefined,
   };
 };
@@ -50,7 +46,6 @@ export interface ProductNavInfo {
   productId?: number;
   search?: string;
   categoryId?: number;
-  orderId?: number;
 }
 
 const ProductList = () => {

@@ -44,7 +44,7 @@ const PaymentList = () => {
     <div className={styles.transactionList}>
       <h2>Payment History</h2>
       {payments.map((payment) => (
-        <PaymentCard payment={payment} />
+        <PaymentCard key={payment.id} payment={payment} />
       ))}
     </div>
   );
