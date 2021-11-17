@@ -3,7 +3,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
 import { api } from "Helpers/typedAPI";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { Inventory } from "Types";
 import PrettyButton from "./PrettyButton/PrettyButton";
@@ -14,10 +14,19 @@ const EditProductForm = ({ inventory }: { inventory: Inventory }) => {
     price: number;
     forSale: boolean;
   }>({
-    forSale: false,
+    forSale: inventory.productOption.forSale,
     quantity: inventory.quantity,
     price: Number(inventory.productOption.price),
   });
+  // change form details when changing which inventory record is selected
+  useEffect(() => {
+    setDetails({
+      forSale: inventory.productOption.forSale,
+      quantity: inventory.quantity,
+      price: Number(inventory.productOption.price),
+    });
+  }, [inventory]);
+
   const queryClient = useQueryClient();
   const inventoryMutation = useMutation(
     () =>
@@ -35,22 +44,14 @@ const EditProductForm = ({ inventory }: { inventory: Inventory }) => {
 
   const pricingMutation = useMutation(
     async () => {
-      // either creates/updates/deletes pricing, or does nothing, depending on
-      // form data and if a pricing object exists already
       if (!details.price) return;
-      // const data = { price: details.price, currency: "CAD" };
-      // const pricing = findPricing(pricingQuery.data);
-      // if (!pricing)
-      //   return api.addSupplierPricing({
-      //     ...data,
-      //     productOption: productOptionId,
-      //   });
-      // if (details.forSale) return api.updateSupplierPricing({ pricing, data });
-      // else return api.deleteSupplierPricing(pricing);
+      api.updateProductOption(inventory.productOptionId, {
+        price: details.price,
+      });
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["pricing"]);
+        queryClient.invalidateQueries(["products"]);
       },
     }
   );

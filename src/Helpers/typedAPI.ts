@@ -13,7 +13,6 @@ import {
   ProductCategory,
   ProductOption,
   ServerException,
-  SupplierPricing,
   Ticket,
   Transfer,
   UserProfile,
@@ -180,35 +179,6 @@ export default class TypedAPI {
       .then((response) => response.data);
   };
 
-  //  ********** PRICING API **********
-  /**
-   * Used by purchasers to get price quotes/ranges
-   */
-  addSupplierPricing = async (data: {
-    productOption: number;
-    price: number;
-    currency: string;
-  }) => {
-    const client = await this.init();
-    return client.post("/product-option-pricing", data);
-  };
-
-  updateSupplierPricing = async ({
-    pricing,
-    data,
-  }: {
-    pricing: SupplierPricing;
-    data: { price: number; currency: string };
-  }) => {
-    const client = await this.init();
-    return client.patch(pricing.url, data);
-  };
-
-  deleteSupplierPricing = async (pricing: SupplierPricing) => {
-    const client = await this.init();
-    return client.delete(pricing.url);
-  };
-
   //  ********** PAYMENTS API **********
 
   getPaymentMethods = async () => {
@@ -328,6 +298,15 @@ export default class TypedAPI {
     const client = await this.init();
     const response = await client.get<ProductOption>("/product-options/" + id);
     return response.data;
+  };
+
+  updateProductOption = async (id: number, data: { price?: number }) => {
+    const client = await this.init();
+    const response = await client.patch<ProductOption>(
+      "/product-options/" + id,
+      data
+    );
+    return response;
   };
 
   //  ********** INVENTORY API **********
