@@ -85,7 +85,13 @@ const InventoryOverviewCard = ({ inventory }: { inventory: Inventory }) => {
         label="Committed"
         value={inventory.allottedQuantity}
         // we hide on sufficiently small displays
-        className="ml-auto hidden sm:flex"
+        className="ml-auto hidden md:flex"
+      />
+      <VerticalDetail
+        label="Price"
+        value={product.price ? "$" + product.price : "N/A"}
+        // we hide on sufficiently small displays
+        className="ml-auto hidden xl:flex"
       />
       {/* <Icon name="navigate_next" extraClasses="ml-auto" /> */}
     </NavLink>
