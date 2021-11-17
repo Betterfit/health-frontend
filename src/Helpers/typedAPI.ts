@@ -300,7 +300,10 @@ export default class TypedAPI {
     return response.data;
   };
 
-  updateProductOption = async (id: number, data: { price?: number }) => {
+  updateProductOption = async (
+    id: number,
+    data: { price?: number; forSale?: boolean }
+  ) => {
     const client = await this.init();
     const response = await client.patch<ProductOption>(
       "/product-options/" + id,

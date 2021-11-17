@@ -52,6 +52,22 @@ const EditProductForm = ({ inventory }: { inventory: Inventory }) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["products"]);
+        queryClient.invalidateQueries(["inventory"]);
+      },
+    }
+  );
+
+  const forSaleMutation = useMutation(
+    async (newValue: boolean) => {
+      api.updateProductOption(inventory.productOptionId, {
+        forSale: newValue,
+      });
+    },
+    {
+      onSuccess: (data, newValue) => {
+        setDetails({ ...details, forSale: newValue });
+        queryClient.invalidateQueries(["products"]);
+        queryClient.invalidateQueries(["inventory"]);
       },
     }
   );
@@ -67,7 +83,7 @@ const EditProductForm = ({ inventory }: { inventory: Inventory }) => {
         control={
           <Switch
             checked={details.forSale}
-            onChange={(e, forSale) => setDetails({ ...details, forSale })}
+            onChange={(e, forSale) => forSaleMutation.mutate(forSale)}
           />
         }
         label="For Sale"
@@ -86,25 +102,23 @@ const EditProductForm = ({ inventory }: { inventory: Inventory }) => {
         style={{ width: "160px" }}
         size="small"
       />
-      {details.forSale && (
-        <TextField
-          name="Price"
-          label="Price"
-          type="number"
-          value={details.price}
-          onChange={(e) =>
-            setDetails({ ...details, price: parseFloat(e.target.value) })
-          }
-          inputProps={{ step: 0.01, min: 0.05 }}
-          id="priceInput"
-          variant="outlined"
-          size="small"
-          style={{ width: "160px" }}
-          InputProps={{
-            startAdornment: <InputAdornment position="start">$</InputAdornment>,
-          }}
-        />
-      )}
+      <TextField
+        name="Price"
+        label="Price"
+        type="number"
+        value={details.price}
+        onChange={(e) =>
+          setDetails({ ...details, price: parseFloat(e.target.value) })
+        }
+        inputProps={{ step: 0.01, min: 0.05 }}
+        id="priceInput"
+        variant="outlined"
+        size="small"
+        style={{ width: "160px" }}
+        InputProps={{
+          startAdornment: <InputAdornment position="start">$</InputAdornment>,
+        }}
+      />
       <PrettyButton
         text="Save Changes"
         onClick={saveChanges}
