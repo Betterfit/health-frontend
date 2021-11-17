@@ -23,7 +23,8 @@ const CategoryList = () => {
           nounderline={true}
           extraclasses=" hidden md:block no-margin"
         />
-        {history.location.pathname && (
+        {/* cta for viewers of the public catalog to sign up. */}
+        {history.location.pathname.includes("catalog") && (
           <PrettyButton
             text="Sign Up To Order"
             color="green"
