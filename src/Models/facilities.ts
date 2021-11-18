@@ -14,7 +14,11 @@ export const useUserFacilities = (
 ) => {
   return useQuery<Facility[]>(
     facilitiesQK,
-    () => api.getMyFacilities().then((response) => response.data),
+    () =>
+      api
+        .getMyFacilities()
+        .then((response) => response.data)
+        .then((facilities) => facilities.filter((facility) => facility.active)),
     {
       ...queryOptions,
     }
