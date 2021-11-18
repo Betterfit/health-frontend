@@ -366,7 +366,6 @@ type OrderMutationProps = {
   orderProducts?: {
     quantity: number;
     productOption: number;
-    autoSelectSupplier?: boolean;
     pk?: number;
   }[];
 };

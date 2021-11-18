@@ -61,7 +61,6 @@ const CartActions = ({ openDialog }: { openDialog: () => void }) => {
         orderProducts: cartItems.map((item) => ({
           quantity: item.quantity,
           productOption: item.productOptionId,
-          autoSelectSupplier: true,
         })),
       };
 
