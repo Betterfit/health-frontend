@@ -239,7 +239,6 @@ export interface ProductOption {
 }
 
 interface BaseOrderProduct {
-  url: string;
   order: number;
   id: number;
   quantity: number;

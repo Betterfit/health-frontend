@@ -260,7 +260,7 @@ export default class TypedAPI {
 
   updateTicket = async (ticket: Ticket, data: SupplierTicketUpdate) => {
     const client = await this.init();
-    return client.patch(ticket.url, data);
+    return client.patch("/tickets/" + ticket.id, data);
   };
 
   //  ********** PRODUCTS API **********
