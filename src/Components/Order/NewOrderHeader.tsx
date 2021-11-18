@@ -34,7 +34,7 @@ const NewOrderHeader = () => {
   const destinationId = useAppSelector((state) => state.cart.destinationId);
   const orderId = useAppSelector((state) => state.cart.orderId);
   const dispatch = useAppDispatch();
-  const setDestination = (facilityId: number) =>
+  const setDestination = (facilityId?: number) =>
     dispatch(cartActions.setDestinationId(facilityId));
   // sets the destination if it's currently undefined
   let orderDate = dayjs().format("MMM DD, YYYY");

@@ -15,7 +15,7 @@ const FacilitySelector = ({
 }: {
   label?: string;
   facilityId?: number;
-  selectFacility: (facilityId: number) => void;
+  selectFacility: (facilityId?: number) => void;
   /**
    * If provided, an additional option will be added to the select box labeled 'Add New {label}'.
    * If chosen, this callback will be executed.
@@ -27,6 +27,12 @@ const FacilitySelector = ({
     allFacilities && allFacilities.filter((facility) => facility.active);
   if (!facilityId && facilities && facilities.length > 0)
     selectFacility(facilities[0].id);
+  if (
+    facilityId &&
+    facilities &&
+    facilities?.find((facility) => facility.id === facilityId)
+  )
+    selectFacility(undefined);
   return (
     <TextField
       value={facilityId ?? ""}

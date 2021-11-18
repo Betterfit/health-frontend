@@ -63,7 +63,7 @@ export const cartSlice = createSlice({
       state.orderId = undefined;
       state.destinationId = undefined;
     },
-    setDestinationId: (state, action: PayloadAction<number>) => {
+    setDestinationId: (state, action: PayloadAction<number | undefined>) => {
       state.destinationId = action.payload;
     },
     setOrderId: (state, action: PayloadAction<number | undefined>) => {

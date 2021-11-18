@@ -172,6 +172,7 @@ const ApproveOrderForm = ({
             label="Destination"
             facilityId={destinationId}
             selectFacility={(facilityId) =>
+              facilityId &&
               facilityId !== order.facility.id &&
               updateDestinationMutation.mutate(facilityId)
             }
