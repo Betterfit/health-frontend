@@ -22,15 +22,13 @@ const FacilitySelector = ({
    */
   addNewFacility?: () => void;
 }) => {
-  const { data: allFacilities } = useUserFacilities();
-  const facilities =
-    allFacilities && allFacilities.filter((facility) => facility.active);
+  const { data: facilities } = useUserFacilities();
   if (!facilityId && facilities && facilities.length > 0)
     selectFacility(facilities[0].id);
   if (
     facilityId &&
     facilities &&
-    facilities?.find((facility) => facility.id === facilityId)
+    !facilities?.find((facility) => facility.id === facilityId)
   )
     selectFacility(undefined);
   return (
