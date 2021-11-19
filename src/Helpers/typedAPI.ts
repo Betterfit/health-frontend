@@ -265,13 +265,13 @@ export default class TypedAPI {
 
   //  ********** PRODUCTS API **********
   getCategories = async () => {
-    const client = await this.init();
+    const client = await this.init(false);
     const response = await client.get<ProductCategory[]>("/product-categories");
     return response.data;
   };
 
   getCategory = async (id: number) => {
-    const client = await this.init();
+    const client = await this.init(false);
     const response = await client.get<ProductCategory>(
       "/product-categories/" + id
     );
@@ -282,7 +282,7 @@ export default class TypedAPI {
     category?: number;
     search?: string;
   }) => {
-    const client = await this.init();
+    const client = await this.init(false);
     const queryString = buildQueryString({
       ...queryParams,
       // only show product options that are ready to be sold
@@ -295,7 +295,7 @@ export default class TypedAPI {
   };
 
   getProductOption = async (id: number) => {
-    const client = await this.init();
+    const client = await this.init(false);
     const response = await client.get<ProductOption>("/product-options/" + id);
     return response.data;
   };
