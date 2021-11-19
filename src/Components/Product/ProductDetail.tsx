@@ -22,8 +22,17 @@ const ProductDetail = ({
   children?: ReactNode;
 }) => {
   return (
-    <div className="grid grid-cols-2 w-full">
+    <div className="flex flex-col sm:grid sm:grid-cols-2 w-full">
       <img src={product.productImage} alt="" className="w-full max-w-sm" />
+      {/* <div style={{ zIndex: 5 }}>
+        <ReactImageMagnify
+          smallImage={{
+            src: product.productImage,
+            isFluidWidth: true,
+          }}
+          largeImage={{ src: product.productImage, width: 900, height: 900 }}
+        /> */}
+      {/* </div> */}
       {inventory ? (
         <EditProductForm inventory={inventory} />
       ) : (
