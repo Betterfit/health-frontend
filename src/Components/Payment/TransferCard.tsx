@@ -16,6 +16,7 @@ const TransferCard = ({ transfer }: { transfer: Transfer }) => {
   const detailPath = "/dashboard/tickets/" + transfer.ticket.id;
   const onDetailPage = history.location.pathname === detailPath;
   const recipient = transfer.recipient;
+  const destination = transfer.ticket.destination;
   return (
     <div className={clsx("cardBorder")}>
       <div className="cardHeader">
@@ -43,11 +44,15 @@ const TransferCard = ({ transfer }: { transfer: Transfer }) => {
             label="Billing Address"
             value={
               // the organization might not have it's address set so we fall
-              // back to the destination facility.
-              hasAddress(recipient) ? (
+              // back to the destination facility (but only if it's in the same province).
+              hasAddress(recipient) ||
+              recipient.province !== destination.province ? (
                 <DisplayAddress destination={recipient} />
               ) : (
-                <DisplayAddress destination={transfer.ticket.destination} />
+                // show facilities address, but organization's name
+                <DisplayAddress
+                  destination={{ ...destination, name: recipient.name }}
+                />
               )
             }
           />
@@ -69,13 +74,13 @@ const DisplayAddress = ({
   destination: Facility | Organization;
 }) => {
   return (
-    <>
+    <div className="flex flex-col">
       <span>{destination.name}</span>
       <span>{destination.street}</span>
       <span>
         {destination.postalCode} {destination.city} {destination.province}
       </span>
-    </>
+    </div>
   );
 };
 
