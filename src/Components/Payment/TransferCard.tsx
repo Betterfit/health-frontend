@@ -4,7 +4,7 @@ import { VerticalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { formatCurrency, formatTimeStamp } from "Helpers/utils";
 import React from "react";
 import { useHistory } from "react-router";
-import { Transfer } from "Types";
+import { Facility, Organization, Transfer } from "Types";
 import { OrderProductInvoice } from "./PaymentCard";
 import styles from "./TransferCard.module.css";
 
@@ -42,18 +42,40 @@ const TransferCard = ({ transfer }: { transfer: Transfer }) => {
           <VerticalDetail
             label="Billing Address"
             value={
-              <>
-                <span>{recipient.name}</span>
-                <span>{recipient.street}</span>
-                <span>
-                  {recipient.postalCode} {recipient.city} {recipient.province}
-                </span>
-              </>
+              // the organization might not have it's address set so we fall
+              // back to the destination facility.
+              hasAddress(recipient) ? (
+                <DisplayAddress destination={recipient} />
+              ) : (
+                <DisplayAddress destination={transfer.ticket.destination} />
+              )
             }
           />
         )}
       </div>
     </div>
+  );
+};
+
+const hasAddress = (object: Organization | Facility) => {
+  return (
+    object.street != null && object.city != null && object.province != null
+  );
+};
+
+const DisplayAddress = ({
+  destination,
+}: {
+  destination: Facility | Organization;
+}) => {
+  return (
+    <>
+      <span>{destination.name}</span>
+      <span>{destination.street}</span>
+      <span>
+        {destination.postalCode} {destination.city} {destination.province}
+      </span>
+    </>
   );
 };
 
