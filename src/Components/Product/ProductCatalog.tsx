@@ -7,14 +7,19 @@ import React from "react";
 
 const ProductCatalog = () => {
   const productNavInfo = useProductNavInfo();
-  console.log(productNavInfo);
+  let content: React.ReactNode;
   if (productNavInfo.productId)
-    return (
+    content = (
       <DashboardProductDetail productOptionId={productNavInfo.productId} />
     );
   else if (productNavInfo.categoryId || productNavInfo.search)
-    return <ProductList />;
-  else return <CategoryList />;
+    content = <ProductList />;
+  else content = <CategoryList />;
+  return (
+    <div className="mx-1 sm:px-6 md:px-8 relative p-2 pt-8 h-full">
+      {content}
+    </div>
+  );
 };
 
 export default ProductCatalog;

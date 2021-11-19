@@ -1,11 +1,11 @@
 import { Auth } from "@aws-amplify/auth";
-import ProductCatalog from "Components/Product/ProductCatalog";
 import DashboardResearch from "Containers/DashboardResearch";
 import DynamicDashboard from "Dashboard/DynamicDashboard";
 import { setUpCognito } from "Helpers/cognito";
 import { useMyProfile } from "Models/user";
 import { CovidGraphPage } from "Pages/Covid/CovidGraphPage";
 import SignUp from "Pages/Login/SignUp";
+import PublicProductCatalog from "Pages/PublicProductCatalog";
 import React, { useEffect } from "react";
 // components
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
@@ -50,7 +50,7 @@ const App = () => {
           <DashboardResearch />
         </Route>
         <Route path="/catalog">
-          <ProductCatalog />
+          <PublicProductCatalog />
         </Route>
         {/* has own authentication*/}
         <Route path="/covid">

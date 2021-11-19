@@ -16,19 +16,18 @@ const CategoryList = () => {
 
   const { data: categories } = categoriesQuery;
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative p-2 pt-8 h-full">
+    <>
       <div className="flex flex-wrap justify-between items-center pb-4 mb-8 border-b border-betterfit-grey">
         <TitleUnderLine
           title="Product Categories"
           nounderline={true}
-          extraclasses=" hidden md:block no-margin"
+          extraclasses="hidden md:block no-margin"
         />
         {/* cta for viewers of the public catalog to sign up. */}
         {history.location.pathname.includes("catalog") && (
           <PrettyButton
             text="Sign Up To Order"
-            color="green"
-            onClick={() => history.push("/sign-up")}
+            onClick={() => history.push("/signup")}
           />
         )}
         <ProductSearch />
@@ -40,7 +39,7 @@ const CategoryList = () => {
             return <CategoryCard key={category.id} category={category} />;
           })}
       </div>
-    </div>
+    </>
   );
 };
 

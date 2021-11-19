@@ -260,6 +260,7 @@ export interface Ticket extends BaseOrderProduct {
   purchaser: Organization;
 }
 export interface OrderProduct extends BaseOrderProduct {
+  url: string;
   supplier?: Organization;
 }
 export interface Order {

@@ -1,0 +1,101 @@
+.root {
+  display: flex;
+  height: 100vh;
+}
+
+.left {
+  height: calc(100% - 2rem);
+  /* min-width: min(450px, 25vw); */
+  /* flex-shrink: 0; */
+  margin: 1rem;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--gray-ice);
+  border-radius: 0.5rem;
+  position: relative;
+}
+
+.right {
+  max-height: 100vh;
+  overflow-y: scroll;
+  flex-grow: 4;
+  width: 80vw;
+}
+
+@media screen and (max-width: 768px) {
+  .root {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .left {
+    height: 500px;
+    display: none;
+  }
+  .right {
+    width: 100vw;
+  }
+}
+
+.loginBox {
+  background-color: #3720b8;
+  margin: auto 2rem;
+  border-radius: 2px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 5;
+}
+.loginBox > p {
+  color: white;
+  text-align: center;
+  font-size: large;
+}
+
+.globe {
+  max-width: 200px;
+  position: absolute;
+}
+
+.left {
+  /* stolen css that creates the line effect on the left sidebar */
+  background-image: linear-gradient(
+      351deg,
+      rgba(54, 54, 54, 0.05) 0%,
+      rgba(54, 54, 54, 0.05) 33.333%,
+      rgba(85, 85, 85, 0.05) 33.333%,
+      rgba(85, 85, 85, 0.05) 66.666%,
+      rgba(255, 255, 255, 0.05) 66.666%,
+      rgba(255, 255, 255, 0.05) 99.999%
+    ),
+    linear-gradient(
+      398deg,
+      rgba(81, 81, 81, 0.05) 0%,
+      rgba(81, 81, 81, 0.05) 33.333%,
+      rgba(238, 238, 238, 0.05) 33.333%,
+      rgba(238, 238, 238, 0.05) 66.666%,
+      rgba(32, 32, 32, 0.05) 66.666%,
+      rgba(32, 32, 32, 0.05) 99.999%
+    ),
+    linear-gradient(
+      185deg,
+      rgba(192, 192, 192, 0.05) 0%,
+      rgba(192, 192, 192, 0.05) 33.333%,
+      rgba(109, 109, 109, 0.05) 33.333%,
+      rgba(109, 109, 109, 0.05) 66.666%,
+      rgba(30, 30, 30, 0.05) 66.666%,
+      rgba(30, 30, 30, 0.05) 99.999%
+    ),
+    linear-gradient(
+      234deg,
+      rgba(77, 77, 77, 0.05) 0%,
+      rgba(77, 77, 77, 0.05) 33.333%,
+      rgba(55, 55, 55, 0.05) 33.333%,
+      rgba(55, 55, 55, 0.05) 66.666%,
+      rgba(145, 145, 145, 0.05) 66.666%,
+      rgba(145, 145, 145, 0.05) 99.999%
+    ),
+    linear-gradient(135deg, rgb(109, 44, 255), rgb(19, 50, 199));
+}

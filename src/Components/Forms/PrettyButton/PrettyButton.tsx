@@ -53,6 +53,7 @@ const colorClasses = {
   blue: styles.blue,
   red: styles.red,
   green: styles.green,
+  transparent: styles.transparent,
 };
 const variantClasses = {
   link: styles.link,

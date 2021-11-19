@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import CircleButton from "Components/Forms/CircleButton";
 import FlatButton from "Components/Forms/FlatDetailButton";
 import { setProductNavInfo } from "Containers/Facility/Inner/ProductList";
@@ -7,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import { cartActions } from "Store/cartSlice";
 import { useAppDispatch } from "Store/store";
 import { ProductOption } from "Types";
+import styles from "./ProductCard.module.css";
 import ProductImage from "./ProductImage";
 
 /**
@@ -20,31 +22,37 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
     dispatch(cartActions.addItem({ productOptionId: product.id, quantity: 1 }));
   };
   const displayName = productDisplayName(product);
+  const viewDetails = () =>
+    setProductNavInfo(history, { productId: product.id });
   return (
     <>
       <div
-        className={
-          "mb-2 rounded relative md:flex-col justify-content flex h-24 md:h-auto " +
-          (active
+        className={clsx(
+          styles.productCard,
+          "mb-2 rounded relative md:flex-col justify-content flex h-auto ",
+          active
             ? "bg-betterfit-pale-blue border border-betterfit-highlight-blue"
-            : "bg-betterfit-soft-blue")
-        }
+            : "bg-betterfit-soft-blue border border-transparent"
+        )}
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
       >
         <div
           role="listitem"
           aria-label={displayName}
-          className="flex md:flex-col p-2 h-full w-full items-center md:items-stretch"
+          className="flex flex-col p-2 h-full w-full items-stretch"
         >
           <ProductImage
             product={product}
             className={active ? "opacity-50" : ""}
           />
-          <div className="flex flex-col md:pt-7 pl-4  w-1/2 md:w-auto flex-1">
-            <h1 className="text-lg md:text-base font-semibold text-status-dark-blue ">
+          <div className="flex flex-col pt-7 pl-4 w-auto flex-1">
+            <button
+              className="text-base text-left font-semibold text-status-dark-blue "
+              onClick={viewDetails}
+            >
               {displayName}
-            </h1>
+            </button>
             <span className="text-betterfit-grey-blue text-md">
               {product.name ?? "N/A"}
             </span>
@@ -53,8 +61,8 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
             </span>
           </div>
 
-          <div className="flex flex-row pl-4 pr-2 py-1 justify-between items-center ml-auto mt-0 md:ml-0 md:mt-auto">
-            <p className="text-betterfit-graphite uppercase text-xxs font-semibold hidden md:block">
+          <div className="flex flex-row pl-4 pr-2 py-1 justify-between items-center ml-auto mt-auto">
+            <p className="text-betterfit-graphite uppercase text-xxs font-semibold mr-2">
               {product.productCategory}
             </p>
             <CircleButton hover={active} onClick={() => addToCart()} />
@@ -63,9 +71,7 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
         {active && (
           <FlatButton
             text="View Details"
-            onClick={() => {
-              setProductNavInfo(history, { productId: product.id });
-            }}
+            onClick={viewDetails}
             extras="hidden md:block"
           />
         )}

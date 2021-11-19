@@ -14,6 +14,7 @@ const AddProductForm = ({ product }: { product: ProductOption }) => {
   };
   return (
     <div className="flex flex-col mx-1 items-center bg-betterfit-soft-blue p-4">
+      <p className="mb-4 font-bold text-lg">${product.price}</p>
       <TextField
         id="quantity-input"
         label="Quantity"
@@ -26,7 +27,6 @@ const AddProductForm = ({ product }: { product: ProductOption }) => {
         variant="outlined"
         style={{ width: "80px" }}
       />
-      <p>${product.price}</p>
       <PrettyButton
         onClick={() => addToCart(quantity)}
         color="green"

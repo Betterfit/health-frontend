@@ -18,13 +18,13 @@ const DashboardProductDetail = ({
     );
   const { data: product } = productQuery;
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative p-2">
+    <>
       <BackNavigation link={`Back to Products`} />
       <TitleUnderLine title={productDisplayName(product)} />
       <div className="w-full flex place-self-center justify-self-center m-auto">
         <ProductDetail product={product} />
       </div>
-    </div>
+    </>
   );
 };
 

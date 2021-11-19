@@ -9,6 +9,7 @@ import { History } from "history";
 import React from "react";
 import { useQuery } from "react-query";
 import { useHistory, useLocation } from "react-router";
+import styles from "./ProductList.module.css";
 
 function useQueryParams() {
   return new URLSearchParams(useLocation().search);
@@ -64,7 +65,7 @@ const ProductList = () => {
     return <LoadingSpinner bubbleColor="gray" />;
   }
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 relative p-2 mt-2 h-full">
+    <>
       {(categoryId || search) && (
         <BackNavigation
           link="Back To Product Categories"
@@ -78,12 +79,12 @@ const ProductList = () => {
         />
         <ProductSearch />
       </div>
-      <div className="grid grid-cols-1 gap-4 mb-6 md:mb-10 customproductgrid">
+      <div className={styles.productList}>
         {productsQuery.data.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-    </div>
+    </>
   );
 };
 export default ProductList;
