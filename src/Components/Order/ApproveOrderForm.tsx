@@ -270,4 +270,27 @@ const FeeLineItem = ({
   );
 };
 
+export const EnterDestinationForm = ({
+  onSuccess,
+  onCancel,
+}: {
+  onSuccess: () => void;
+  onCancel: () => void;
+}) => {
+  const dispatch = useAppDispatch();
+  return (
+    <div className={styles.dialog}>
+      <h2>Add Destination Facility</h2>
+      <AddFacilityForm
+        handleClose={(facility) => {
+          if (facility != null) {
+            dispatch(cartActions.setDestinationId(facility.id));
+            onSuccess();
+          } else onCancel();
+        }}
+      />
+    </div>
+  );
+};
+
 export default ApproveOrderForm;

@@ -1,7 +1,9 @@
 import { AxiosError } from "axios";
 import Dialog from "Components/Dialog";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
-import ApproveOrderForm from "Components/Order/ApproveOrderForm";
+import ApproveOrderForm, {
+  EnterDestinationForm,
+} from "Components/Order/ApproveOrderForm";
 import { api } from "Helpers/typedAPI";
 import { useOrder } from "Models/orders";
 import React, { useEffect, useState } from "react";
@@ -21,7 +23,9 @@ const OrderCart = () => {
     if (oldOrder?.status === "approved" || oldOrder?.status === "delivered")
       dispatch(cartActions.clearCart());
   }, [oldOrder, dispatch]);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState<
+    null | "destination" | "approve"
+  >(null);
 
   return (
     <>
@@ -32,19 +36,29 @@ const OrderCart = () => {
       >
         <CartItemList />
       </div>
-      <CartActions openDialog={() => setDialogOpen(true)} />
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <ApproveOrderForm
-          orderId={orderId!}
-          onCancel={() => setDialogOpen(false)}
-          onSuccess={() => dispatch(cartActions.clearCart())}
-        />
+      <CartActions openDialog={setDialogOpen} />
+      <Dialog open={dialogOpen != null} onClose={() => setDialogOpen(null)}>
+        {dialogOpen === "approve" ? (
+          <ApproveOrderForm
+            orderId={orderId!}
+            onCancel={() => setDialogOpen(null)}
+            onSuccess={() => dispatch(cartActions.clearCart())}
+          />
+        ) : (
+          <EnterDestinationForm
+            onCancel={() => setDialogOpen(null)}
+            onSuccess={() => setDialogOpen(null)}
+          />
+        )}
       </Dialog>
     </>
   );
 };
 
-const CartActions = ({ openDialog }: { openDialog: () => void }) => {
+const useOrderMutation = (options: {
+  onSuccess: () => void;
+  onError: (err: AxiosError) => void;
+}) => {
   const history = useHistory();
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
@@ -53,7 +67,7 @@ const CartActions = ({ openDialog }: { openDialog: () => void }) => {
   const destinationId = useAppSelector((state) => state.cart.destinationId);
   const orderId = useAppSelector((state) => state.cart.orderId);
 
-  const orderMutation = useMutation(
+  return useMutation(
     async (status: "draft" | "open") => {
       const orderData = {
         facility: destinationId!,
@@ -76,17 +90,31 @@ const CartActions = ({ openDialog }: { openDialog: () => void }) => {
         dispatch(cartActions.importOrder(order));
       }
     },
-    {
-      onSuccess: openDialog,
-      onError: (e: AxiosError) => {
-        if (e?.response?.status === 404)
-          dispatch(cartActions.setOrderId(undefined));
-        console.log(e);
-      },
-    }
+    { ...options }
   );
+};
 
-  const readyToSubmit = destinationId && cartItems.length !== 0;
+const CartActions = ({
+  openDialog,
+}: {
+  openDialog: (dialog: "approve" | "destination") => void;
+}) => {
+  const dispatch = useAppDispatch();
+
+  const cartItems = useAppSelector((state) => state.cart.items);
+  const destinationId = useAppSelector((state) => state.cart.destinationId);
+
+  const orderMutation = useOrderMutation({
+    onSuccess: () => openDialog("approve"),
+    onError: (e: AxiosError) => {
+      if (e?.response?.status === 404)
+        dispatch(cartActions.setOrderId(undefined));
+      console.log(e);
+    },
+  });
+
+  const emptyCart = cartItems.length === 0;
+  const needsDestination = !destinationId;
   return (
     <div className="flex justify-around ">
       <PrettyButton
@@ -94,15 +122,19 @@ const CartActions = ({ openDialog }: { openDialog: () => void }) => {
         variant="outline"
         onClick={() => orderMutation.mutate("draft")}
         className="flex-1 justify-center"
-        disabled={!readyToSubmit || orderMutation.isLoading}
+        disabled={emptyCart || needsDestination || orderMutation.isLoading}
       />
       <PrettyButton
         variant="outline"
         color="green"
-        text="Place Order"
-        disabled={!readyToSubmit || orderMutation.isLoading}
+        text={needsDestination ? "Select Destination" : "Place Order"}
+        disabled={emptyCart || orderMutation.isLoading}
         className="flex-1 justify-center"
-        onClick={() => orderMutation.mutate("open")}
+        onClick={() =>
+          needsDestination
+            ? openDialog("destination")
+            : orderMutation.mutate("open")
+        }
       />
     </div>
   );
