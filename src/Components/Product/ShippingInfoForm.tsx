@@ -56,11 +56,18 @@ const ShippingInfoForm = ({ product }: { product: ProductOption }) => {
         }
         label="Free Domestic Shipping"
       />
-      {formData.freeShipping && <p>Disable to enter shipping information.</p>}
+      {formData.freeShipping && (
+        <p className="text-center">
+          You will have to ship this product to purchasers at no extra cost.
+          Please price this product high enough to compensate, or disable free
+          shipping.
+        </p>
+      )}
       {!formData.freeShipping && (
         <div className="flex justify-around w-full my-2">
           <div className="flex flex-col items-center flex-1 space-y-2">
             <UnitPicker
+              key={product.id + "-size-unit"}
               name="Size"
               units={["cm", "in"]}
               selectedUnit={formData.sizeUnit ?? "cm"}
@@ -72,6 +79,7 @@ const ShippingInfoForm = ({ product }: { product: ProductOption }) => {
               }
             />
             <DimensionInputs
+              key={product.id + "-size"}
               unit={formData.sizeUnit}
               dimensions={[
                 { name: "length", value: formData.length },
@@ -85,6 +93,7 @@ const ShippingInfoForm = ({ product }: { product: ProductOption }) => {
           </div>
           <div className="flex flex-col items-center flex-1 space-y-2">
             <UnitPicker
+              key={product.id + "-weight-unit"}
               name="Weight"
               units={["kg", "lb"]}
               selectedUnit={formData.weightUnit}
@@ -93,6 +102,7 @@ const ShippingInfoForm = ({ product }: { product: ProductOption }) => {
               }
             />
             <DimensionInputs
+              key={product.id + "-weight"}
               unit={formData.weightUnit}
               dimensions={[{ name: "weight", value: formData.weight }]}
               updateDimension={(name, value) =>
@@ -156,12 +166,13 @@ const DimensionInputs = ({
       <TextField
         key={name}
         id={name + "-input"}
-        value={value ?? 0}
+        value={value}
         label={capitalize(name)}
         type="number"
         variant="outlined"
         size="small"
         onChange={(e) => updateDimension(name, Number(e.target.value))}
+        required
         InputProps={{
           endAdornment: <InputAdornment position="end">{unit}</InputAdornment>,
         }}
