@@ -6,6 +6,7 @@ import { ReactNode } from "react-transition-group/node_modules/@types/react";
 import { Inventory, ProductOption } from "Types";
 import AddProductForm from "./AddProductForm";
 import styles from "./ProductDetail.module.css";
+import ShippingInfoForm from "./ShippingInfoForm";
 
 /**
  * Detailed product information/forms that are displayed on the New Order and
@@ -37,6 +38,12 @@ const ProductDetail = ({
         <EditProductForm inventory={inventory} />
       ) : (
         <AddProductForm product={product} />
+      )}
+      {inventory && (
+        <div className="bg-betterfit-soft-blue col-span-2">
+          <hr className="my-2" />
+          <ShippingInfoForm product={product} />
+        </div>
       )}
       <div>
         <h3 className="text-center mediumTitle">Product Details</h3>
