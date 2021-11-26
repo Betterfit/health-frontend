@@ -1,16 +1,13 @@
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import TitleUnderLine from "Components/Content/TitleUnderLine";
-import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import CategoryCard from "Components/Product/CategoryCard";
 import ProductSearch from "Components/Product/ProductSearch";
 import { api } from "Helpers/typedAPI";
 import React from "react";
 import { useQuery } from "react-query";
-import { useHistory } from "react-router-dom";
 
 const CategoryList = () => {
   const categoriesQuery = useQuery("productCategories", api.getCategories);
-  const history = useHistory();
 
   if (!categoriesQuery.isSuccess) return <LoadingSpinner bubbleColor="gray" />;
 
@@ -23,13 +20,6 @@ const CategoryList = () => {
           nounderline={true}
           extraclasses="hidden md:block no-margin"
         />
-        {/* cta for viewers of the public catalog to sign up. */}
-        {history.location.pathname.includes("catalog") && (
-          <PrettyButton
-            text="Sign Up To Order"
-            onClick={() => history.push("/signup")}
-          />
-        )}
         <ProductSearch />
       </div>
       <div className="mb-6 md:mb-10 grid grid-cols-1 gap-2 lg:gap-4 md:grids-cols-2 lg:grid-cols-3 customcategorygrid">
