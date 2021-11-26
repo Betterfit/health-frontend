@@ -40,7 +40,7 @@ const ProductDetail = ({
         <AddProductForm product={product} />
       )}
       {inventory && (
-        <div className="bg-betterfit-soft-blue col-span-2">
+        <div className="bg-betterfit-soft-blue col-span-2 py-4 my-4">
           <h3 className="text-center mediumTitle">Shipping Information</h3>
           <hr className="my-2" />
           <ShippingInfoForm product={product} />

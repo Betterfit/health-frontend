@@ -14,6 +14,9 @@ const AddProductForm = ({ product }: { product: ProductOption }) => {
   };
   return (
     <div className="flex flex-col mx-1 items-center bg-betterfit-soft-blue p-4">
+      {product.freeShipping && (
+        <p className="font-bold text-lg text-lucky-green">Free Shipping</p>
+      )}
       <p className="mb-4 font-bold text-lg">${product.price}</p>
       <TextField
         id="quantity-input"
