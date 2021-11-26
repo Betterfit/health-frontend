@@ -1,7 +1,10 @@
 import clsx from "clsx";
 import Dialog from "Components/Dialog";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
-import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
+import {
+  HorizontalDetail,
+  VerticalDetail,
+} from "Components/InfoDisplay/LabeledDetails";
 import { formatTimeStamp } from "Helpers/utils";
 import { productDisplayName } from "Models/products";
 import React, { ReactNode, useState } from "react";
@@ -43,12 +46,18 @@ const TicketCard = ({
         label="Assigned On"
         value={formatTimeStamp(ticket.timeCreated)}
       />
-      <TicketDetail label="Shipping Address">
+      <TicketDetail label="Shipping Information">
         <span>{destination.name}</span>
         <span>{destination.street}</span>
         <span>
           {destination.postalCode} {destination.city} {destination.province}
         </span>
+        {ticket.trackingNumber && (
+          <>
+            <VerticalDetail label="Carrier" value={ticket.shippingProvider} />
+            <VerticalDetail label="Tracking #" value={ticket.trackingNumber} />
+          </>
+        )}
       </TicketDetail>
       <TicketDetail label="Product">
         <div className="flex flex-col items-center">
