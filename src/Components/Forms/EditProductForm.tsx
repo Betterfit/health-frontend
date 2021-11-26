@@ -106,7 +106,7 @@ const EditProductForm = ({ inventory }: { inventory: Inventory }) => {
         name="Price"
         label="Price"
         type="number"
-        value={details.price}
+        value={details.price.toFixed(2)}
         onChange={(e) =>
           setDetails({ ...details, price: parseFloat(e.target.value) })
         }
