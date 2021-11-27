@@ -186,9 +186,12 @@ export interface Organization {
   returnPolicyLink: string;
   // address
   street: string;
+  street2: string;
   city: string;
   province: string;
   postalCode: string;
+  // shipping
+  carrier: string | null;
 }
 
 export interface Facility {
