@@ -66,6 +66,9 @@ const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
               value={"$" + product?.price}
             />
           )}
+          {product?.freeShipping && (
+            <p className="font-bold  text-lucky-green">Free Shipping</p>
+          )}
           {supplier && (
             <HorizontalDetail label="Fulfilled by" value={supplier.name} />
           )}
@@ -87,7 +90,7 @@ const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
           name="Quantity"
           defaultValue={quantity}
           type="number"
-          inputProps={{ min: 1 }}
+          inputProps={{ min: 0 }}
           variant="outlined"
           style={{ width: "80px" }}
         />
