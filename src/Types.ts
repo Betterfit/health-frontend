@@ -236,6 +236,14 @@ export interface ProductOption {
   price: string;
   forSale: boolean;
   supplier: Organization;
+  freeShipping: boolean;
+  width: number | null;
+  height: number | null;
+  length: number | null;
+  sizeUnit: "cm" | "in" | null;
+  weight: number | null;
+  weightUnit: "kg" | "lb" | null;
+  carrier: string | null;
 }
 
 interface BaseOrderProduct {

@@ -302,7 +302,18 @@ export default class TypedAPI {
 
   updateProductOption = async (
     id: number,
-    data: { price?: number; forSale?: boolean }
+    data: {
+      price?: number;
+      forSale?: boolean;
+      freeShipping?: boolean;
+      width?: number | null;
+      height?: number | null;
+      length?: number | null;
+      sizeUnit?: "cm" | "in";
+      weight?: number | null;
+      weightUnit?: "kg" | "lb";
+      carrier?: string | null;
+    }
   ) => {
     const client = await this.init();
     const response = await client.patch<ProductOption>(

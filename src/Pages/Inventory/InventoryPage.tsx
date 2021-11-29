@@ -18,7 +18,9 @@ const InventoryPage = () => {
   return (
     <div className="flex flex-wrap">
       <InventorySidebar productId={productId} />
-      <div className={`relative w-full lg:w-1/2 mx-auto overflow-y-scroll p-2`}>
+      <div
+        className={`relative w-full lg:w-1/2 mx-auto overflow-y-scroll h-screen p-2`}
+      >
         {productId && (
           <InventoryProductDetail productOptionId={Number(productId)} />
         )}
