@@ -6,6 +6,7 @@ import InventoryPage from "Pages/Inventory/InventoryPage";
 import OrderDetail from "Pages/Orders/OrderDetail";
 import OrdersPage from "Pages/Orders/OrdersPage";
 import PaymentsPage from "Pages/Payments/PaymentsPage";
+import ShippingPage from "Pages/Shipping/ShippingPage";
 import TicketDetail from "Pages/Tickets/TicketDetail";
 import TicketsPage from "Pages/Tickets/TicketsPage";
 import React from "react";
@@ -72,6 +73,9 @@ const DashboardRoutes = ({ navItems }: DashboardRoutesProps) => {
       />
       <Route path="/dashboard/inventory">
         <InventoryPage />
+      </Route>
+      <Route path="/dashboard/shipping">
+        <ShippingPage />
       </Route>
       {/* Publicly Accessible */}
       <Route path="/dashboard/resources">

@@ -86,6 +86,11 @@ export default class TypedAPI {
     return client.get<Organization>("/organizations/my_organization/");
   };
 
+  updateOrganization = async (id: number, data: Partial<Organization>) => {
+    const client = await this.getClient();
+    return client.patch<Organization>("/organizations/" + id, data);
+  };
+
   getFacilitiesInMyOrganization = async () => {
     const client = await this.init();
     return client.get<Facility[]>("/facilities/");

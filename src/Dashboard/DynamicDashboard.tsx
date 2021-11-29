@@ -6,6 +6,7 @@ import InventoryIcon from "Images/Icons/inventory.svg";
 import NewOrderIcon from "Images/Icons/new-order.svg";
 import OrderIcon from "Images/Icons/order.svg";
 import PaymentsIcon from "Images/Icons/payments.svg";
+import ShippingIcon from "Images/Icons/shipping.svg";
 import TicketIcon from "Images/Icons/ticket.svg";
 import orderBy from "lodash/orderBy";
 import { useOrganization } from "Models/organization";
@@ -55,6 +56,10 @@ const DynamicDashboard = () => {
   );
 };
 
+/**
+ * Returns the items that should appear on the navigation bar.
+ * @returns
+ */
 const sortedNavItems = (
   myOrganization: Organization,
   userProfile: UserProfile
@@ -103,18 +108,6 @@ const sortedNavItems = (
         },
       ]
     );
-    // if (isAdmin)
-    //   navItems.push(
-    //     ...[
-    //       {
-    //         to: "/dashboard/requests",
-    //         name: "Requests",
-    //         icon: OrderIcon,
-    //         key: "requests",
-    //         precedence: 3,
-    //       },
-    //     ]
-    //   );
   }
 
   if (myOrganization?.isSupplier) {
@@ -133,6 +126,13 @@ const sortedNavItems = (
           icon: InventoryIcon,
           key: "inventory",
           precedence: 4,
+        },
+        {
+          to: "/dashboard/shipping",
+          name: "Shipping",
+          icon: ShippingIcon,
+          key: "shipping",
+          precedence: 3,
         },
       ]
     );

@@ -1,0 +1,23 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.carrierSelect {
+  max-width: 400px;
+}
+
+.explainer {
+  max-width: 400px;
+  margin: 1rem auto;
+}
+
+.explainer > h3 {
+  font-size: large;
+  font-weight: bold;
+}
+
+.explainer > hr {
+  margin: 1rem auto;
+}
