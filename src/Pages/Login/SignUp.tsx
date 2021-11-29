@@ -39,7 +39,7 @@ const SignUp = () => {
   const joinOrganization = () =>
     userExistsMutation.mutate(email, {
       onSuccess: (data) => {
-        if (!data.userExists) setForm("user");
+        if (data.userExists) setForm("user");
         else
           setError(
             "This email has not been invited to an organization. " +
