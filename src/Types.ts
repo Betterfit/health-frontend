@@ -165,6 +165,8 @@ export interface UserProfile extends User {
   };
   isOrganizationAdmin: boolean;
   facilityMembership: FacilityMembership[];
+  /** only available from the /me endpoint */
+  organization?: string;
 }
 export interface FacilityMembership {
   url: string;

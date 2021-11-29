@@ -48,17 +48,15 @@ const LoginPageForm = ({
           <Notifications head={error.title} text={error.text} success={false} />
         )}
         {subtitle && (
-          <p className="text-center leading-5 text-base">{subtitle}</p>
+          <p className="text-center leading-5 text-base mb-6">{subtitle}</p>
         )}
         {children}
-        <div className="flex">
-          <PrettyButton
-            className="flex-1 justify-center"
-            text={submitLabel}
-            disabled={!canSubmit}
-            type="submit"
-          />
-        </div>
+        <PrettyButton
+          className="w-full"
+          text={submitLabel}
+          disabled={!canSubmit}
+          type="submit"
+        />
         <div className="py-5 flex flex-col item-center mt-auto">
           {extraActions}
         </div>

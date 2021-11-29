@@ -64,14 +64,23 @@ export default class TypedAPI {
   /** Checks that a user with the given email exists on our django backend */
   userExists = async (email: string) => {
     const client = await this.init(false);
-    const response = await client.post<{ userExists: boolean }>(
-      "/user-exists",
-      { email }
-    );
-    return response.data.userExists;
+    const response = await client.post<
+      | { userExists: true; orgName: string }
+      | { userExists: false; orgName: null }
+    >("/user-exists", { email });
+    return response.data;
   };
 
   //  ********** FACILITIES AND ORGANIZATION API **********
+  registerPurchaser = async (data: {
+    adminEmail: string;
+    orgName: string;
+    province: string;
+  }) => {
+    const client = await this.init(false);
+    return client.post("/organizations/register-purchaser/", data);
+  };
+
   getMyOrganization = async () => {
     const client = await this.init();
     return client.get<Organization>("/organizations/my_organization/");

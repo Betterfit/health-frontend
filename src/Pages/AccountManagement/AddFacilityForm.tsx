@@ -8,7 +8,6 @@ import { subset } from "Helpers/utils";
 import { facilitiesQK } from "Models/facilities";
 import { useOrganization } from "Models/organization";
 import React from "react";
-import { Control } from "react-hook-form";
 import InputMask from "react-input-mask";
 import { useMutation, useQueryClient } from "react-query";
 import { useFormState } from "react-use-form-state";
@@ -223,12 +222,6 @@ const populateWithExistingFacility = (
   province: facility.province,
 });
 export default AddFacilityForm;
-
-interface ControlledTextFieldProps {
-  control: Control<FacilityFormData>;
-  name: string;
-  label: string;
-}
 
 const defaultTextFieldProps = {
   size: "small",

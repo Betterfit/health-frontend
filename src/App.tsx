@@ -56,11 +56,6 @@ const App = () => {
         <Route path="/covid">
           <CovidGraphPage />
         </Route>
-        <Route path="/signup" initial exact>
-          <LoginContainer>
-            <SignUp />
-          </LoginContainer>
-        </Route>
         <Route path="/logout" initial>
           <LoginContainer>
             <LogOut />
@@ -74,6 +69,11 @@ const App = () => {
         <Route path="/login" initial>
           <LoginContainer>
             <Login />
+          </LoginContainer>
+        </Route>
+        <Route path="/signup" initial>
+          <LoginContainer>
+            <SignUp />
           </LoginContainer>
         </Route>
         {!loggedIn && <Redirect to={"/login?redirect=" + redirect} />}
