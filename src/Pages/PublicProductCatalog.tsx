@@ -3,9 +3,11 @@ import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import ProductCatalog from "Components/Product/ProductCatalog";
 import Globe from "Images/Login/betterfit_globe.svg";
 import React from "react";
+import { Link, useHistory } from "react-router-dom";
 import styles from "./PublicProductCatalog.module.css";
 
 const PublicProductCatalog = () => {
+  const history = useHistory();
   return (
     <div className={styles.root}>
       <div className={clsx(styles.left)}>
@@ -15,14 +17,12 @@ const PublicProductCatalog = () => {
           <p>Sign up to purchase.</p>
           <PrettyButton
             text="Sign Up"
-            onClick={() =>
-              (window.location.href = "https://betterfit.com/apply-now/")
-            }
+            onClick={() => history.push("/signup")}
           />
         </div>
-        <a href="/login" className={clsx(styles.login)}>
+        <Link to="/login" className={clsx(styles.login)}>
           Login to existing account.
-        </a>
+        </Link>
       </div>
       <div className={styles.right}>
         <ProductCatalog />
