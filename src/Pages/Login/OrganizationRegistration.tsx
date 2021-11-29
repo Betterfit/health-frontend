@@ -1,5 +1,5 @@
 import { MenuItem, TextField } from "@material-ui/core";
-import { provinces } from "Data/geography";
+import { supportedProvinces as provinces } from "Data/geography";
 import { api } from "Helpers/typedAPI";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
@@ -33,7 +33,7 @@ const OrganizationRegistration = ({
   return (
     <LoginPageForm
       title="Register Organization"
-      subtitle="Register your organization with Supply Net"
+      subtitle="Our pilot is being rolled out in select provinces, but Supply Net will soon be available Canada wide."
       handleSubmit={registerMutation.mutate}
       submitLabel="Register"
     >

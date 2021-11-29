@@ -2,7 +2,7 @@ import { MenuItem, TextField } from "@material-ui/core";
 import clsx from "clsx";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
-import { provinces } from "Data/geography";
+import { supportedProvinces as provinces } from "Data/geography";
 import TypedAPI from "Helpers/typedAPI";
 import { subset } from "Helpers/utils";
 import { facilitiesQK } from "Models/facilities";

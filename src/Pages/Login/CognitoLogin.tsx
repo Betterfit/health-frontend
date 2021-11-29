@@ -1,6 +1,7 @@
 import { IconButton, InputAdornment, TextField } from "@material-ui/core";
 import { Auth } from "aws-amplify";
 import Icon from "Components/Content/Icon";
+import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import SubtleLink from "Components/Forms/SubtleLink";
 import VerificationCodeForm, {
   VerifyCodeCallback,
@@ -9,6 +10,7 @@ import { isServerException, ServerException } from "Helpers/cognito";
 import { api } from "Helpers/typedAPI";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
+import { useHistory } from "react-router-dom";
 import LoginPageForm from "./LoginPageForm";
 
 interface CognitoLoginProps {
@@ -22,6 +24,7 @@ const CognitoLogin = ({
   signUpEnabled = true,
   continueWithoutPassword = undefined,
 }: CognitoLoginProps) => {
+  const history = useHistory();
   const [user, setUser] = useState<any>();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -82,7 +85,13 @@ const CognitoLogin = ({
                 onClick={continueWithoutPassword}
               />
             )}
-            {signUpEnabled && <SubtleLink text="Sign up" path="/signup" />}
+            {signUpEnabled && (
+              <PrettyButton
+                text="Sign Up"
+                onClick={() => history.push("/signup")}
+                className="w-full -mt-5 mb-4"
+              />
+            )}
             <SubtleLink text="Forgot password?" path="/forgotpassword" />
             <SubtleLink
               text="Apply to join Supply Net"

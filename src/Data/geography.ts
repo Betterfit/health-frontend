@@ -11,5 +11,9 @@ export const provinces = [
   { name: "Newfoundland and Labrador", abbreviation: "NL" },
 ] as const;
 
+export const supportedProvinces = provinces.filter((prov) =>
+  ["AB", "MB", "ON", "SK"].includes(prov.abbreviation)
+);
+
 export type Province = typeof provinces[number];
 export type ProvinceName = Province["name"];

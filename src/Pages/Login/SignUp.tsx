@@ -57,7 +57,7 @@ const SignUp = () => {
       title="Sign up"
       subtitle="Create a new organization, or join an existing one that you have been invited to."
       handleSubmit={joinOrganization}
-      submitLabel="Join Organization"
+      submitLabel="Join Existing Organization"
       extraActions={<SubtleLink text="Back to Login" path="/login" />}
       canSubmit={!userExistsMutation.isLoading}
     >
@@ -73,7 +73,7 @@ const SignUp = () => {
         required
       />
       <PrettyButton
-        text="Create Organization"
+        text="Create New Organization"
         className="w-full"
         color="green"
         variant="outline"
