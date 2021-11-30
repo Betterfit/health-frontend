@@ -4,8 +4,8 @@ describe("Account Management", () => {
   const newUser = {
     email: "",
     password: "scubaTree2!",
-    firstName: "Emily",
-    lastName: "Faker",
+    firstName: "Purchaser",
+    lastName: "Member",
   };
   before(() => {
     cy.mailosaurGenerateEmailAddress(emailServerId).then((emailAddress) => {
@@ -56,7 +56,7 @@ describe("Account Management", () => {
     // newly created user signs in and completes profile
     cy.contains(/sign up/i).click();
     cy.findByRole("textbox", { name: /email/i }).type(newUser.email);
-    cy.findByRole("button", { name: /continue/i }).click();
+    cy.findByRole("button", { name: /join existing organization/i }).click();
     // users have to enter their password twice to confirm
     cy.findAllByLabelText(/password/i).each((textbox) =>
       cy.wrap(textbox).type(newUser.password)

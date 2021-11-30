@@ -80,6 +80,7 @@ const UserRegistration = ({ email }: { email: string }) => {
         console.log(result);
 
         Auth.signIn(formData.email, formData.password).then(() => {
+          myProfileQuery.invalidate();
           setStage("completeProfile");
         });
       },
@@ -186,6 +187,7 @@ const UserRegistration = ({ email }: { email: string }) => {
           title="Complete Your Profile"
           subtitle="We need a few more details about you so your coworkers can tell who you are."
           handleSubmit={completeProfile}
+          canSubmit={!myProfileQuery.isFetching}
           submitLabel="Complete Profile"
         >
           <InputField

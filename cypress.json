@@ -1,6 +1,11 @@
 {
     "env": {
-        "apiUrl": "http://localhost:8002/"
+        "apiUrl": "http://localhost:8002/",
+        "MEMBER_EMAIL": "purchaser@re0raxdu.mailosaur.net",
+        "MEMBER_PASSWORD": "scubaTree2!",
+        "ADMIN_EMAIL": "purchaseradmin@re0raxdu.mailosaur.net",
+        "ADMIN_PASSWORD": "scubaTree2!",
+        "MAILOSAUR_API_KEY": "fCIRnyXwDVrxuR4g"
     },
     "baseUrl": "http://localhost:3000",
     "scrollBehavior": "center",
