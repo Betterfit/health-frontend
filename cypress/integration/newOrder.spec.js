@@ -17,7 +17,7 @@ describe("New Order Dashboard", () => {
   it("Shows cart and allows users to navigate product categories", () => {
     getCart();
     productCategoriesVisibile();
-    sanitizerProductsVisible();
+    maskProductsVisible();
     goBackToProductCategories();
     productCategoriesVisibile();
   });
@@ -61,16 +61,14 @@ describe("New Order Dashboard", () => {
 });
 
 const productCategoriesVisibile = () => {
-  cy.contains(/masks/i);
+  cy.contains(/surgical masks/i);
   cy.contains(/sanitizers/i);
-  cy.contains(/eye protection/i);
-  cy.contains(/filters/i);
+  cy.contains(/gloves/i);
 };
 
-const sanitizerProductsVisible = () => {
-  cy.contains(/sanitizers/i).click();
-  cy.contains(/walter surface technology/i);
-  cy.contains(/igcksancs service/i);
+const maskProductsVisible = () => {
+  cy.contains(/surgical masks/i).click();
+  cy.contains(/Eternity Surgical Mask - 4 ply - CSA certificated/i);
 };
 
 const goBackToProductCategories = () => {

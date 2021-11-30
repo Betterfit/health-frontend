@@ -48,6 +48,7 @@ const OrganizationRegistration = ({
       <TextField
         value={formData.province}
         onChange={(e) => setFormData({ ...formData, province: e.target.value })}
+        data-testid="province selector"
         id="province"
         label="Province"
         variant="outlined"

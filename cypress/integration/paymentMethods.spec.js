@@ -26,7 +26,7 @@ describe("Payment Methods", () => {
     cy.findByRole("button", { name: /save card/i }).click();
 
     // payment method should be added to the list
-    cy.findByRole("list", { name: /credit cards/i })
+    cy.findByRole("list", { name: /credit cards/i, timeout: 10000 })
       .contains(paymentMethodName)
       .click();
     cy.contains("Owner: Purchaser Admin");

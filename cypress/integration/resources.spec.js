@@ -3,7 +3,7 @@
 /// <reference path="../support/index.d.ts" />
 
 describe("Resources", () => {
-  it("Shows resources and lets users search and filter", () => {
+  it.skip("Shows resources and lets users search and filter", () => {
     cy.visit("/");
     cy.loginAsPurchaser();
     cy.findByRole("link", { name: /resources/i }).click();
@@ -44,16 +44,3 @@ const clickOnResourceTypeFilter = (resourceType) =>
 
 const clickOnResourceTagFilter = (tagName) =>
   cy.findByRole("list", { name: "Tag List" }).contains(tagName).click();
-
-const enterEmail = (email) =>
-  cy.findByRole("textbox", { name: /email/i }).type(email);
-// we don't log the password
-const enterPassword = (password) =>
-  cy.get("#password").type(password, { log: false });
-const loginButton = () => cy.findByRole("button", { name: /^login$/i });
-
-const login = (email, password) => {
-  enterEmail(email);
-  enterPassword(password);
-  loginButton().click();
-};

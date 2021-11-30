@@ -9,5 +9,6 @@
     },
     "baseUrl": "http://localhost:3000",
     "scrollBehavior": "center",
-    "chromeWebSecurity": false
+    "chromeWebSecurity": false,
+    "video": false
 }
