@@ -22,7 +22,7 @@ describe("Account Management", () => {
     });
   });
   beforeEach(() => cy.visit(""));
-  it.only("Allows new users to create an organization", () => {
+  it("Allows new users to create an organization", () => {
     cy.findByRole("button", { name: /sign up/i }).click();
     cy.findByRole("textbox", { name: /email/i }).type(newAdmin.email);
     cy.findByRole("button", { name: /create new organization/i }).click();
