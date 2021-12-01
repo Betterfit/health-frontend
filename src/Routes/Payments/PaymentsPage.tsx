@@ -6,10 +6,10 @@ import TransferCard from "Components/Payment/TransferCard";
 import { api } from "Helpers/typedAPI";
 import { useOrganization } from "Models/organization";
 import { usePayments } from "Models/payments";
-import ConnectedAccountCard from "Pages/AccountManagement/ConnectedAccountCard";
-import PaymentMethods from "Pages/AccountManagement/PaymentMethods";
 import React from "react";
 import { useQuery } from "react-query";
+import ConnectedAccountCard from "Routes/AccountManagement/ConnectedAccountCard";
+import PaymentMethods from "Routes/AccountManagement/PaymentMethods";
 import styles from "./PaymentsPage.module.css";
 
 const PaymentsPage = () => {

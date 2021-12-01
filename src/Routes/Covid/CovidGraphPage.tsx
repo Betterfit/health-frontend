@@ -1,9 +1,9 @@
 import { Auth } from "aws-amplify";
-import DashboardGraph from "Pages/Covid/CovidGraph";
-import CognitoLogin from "Pages/Login/CognitoLogin";
-import LoginContainer from "Pages/Login/LoginContainer";
 import React, { useCallback, useLayoutEffect, useState } from "react";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
+import DashboardGraph from "Routes/Covid/CovidGraph";
+import CognitoLogin from "Routes/Login/CognitoLogin";
+import LoginContainer from "Routes/Login/LoginContainer";
 import FlowNav from "./FlowNav";
 
 export const CovidGraphPage = () => {

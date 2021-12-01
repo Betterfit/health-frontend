@@ -1,5 +1,5 @@
-import LoginPageForm, { LoginPageFormProps } from "Pages/Login/LoginPageForm";
 import React, { useState } from "react";
+import LoginPageForm, { LoginPageFormProps } from "Routes/Login/LoginPageForm";
 
 export type NotifyErrorCallback = (title: string, text?: string) => void;
 export type SubmitCallback = (

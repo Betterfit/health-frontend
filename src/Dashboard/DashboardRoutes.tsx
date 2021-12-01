@@ -1,16 +1,16 @@
 import DashboardResources from "Containers/DashboardResources";
 import DashboardOrder from "Containers/Facility/Inner/DashboardOrder";
 import styles from "Dashboard/Dashboard.module.css";
-import AccountManagement from "Pages/AccountManagement/AccountManagement";
-import InventoryPage from "Pages/Inventory/InventoryPage";
-import OrderDetail from "Pages/Orders/OrderDetail";
-import OrdersPage from "Pages/Orders/OrdersPage";
-import PaymentsPage from "Pages/Payments/PaymentsPage";
-import ShippingPage from "Pages/Shipping/ShippingPage";
-import TicketDetail from "Pages/Tickets/TicketDetail";
-import TicketsPage from "Pages/Tickets/TicketsPage";
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
+import AccountManagement from "Routes/AccountManagement/AccountManagement";
+import InventoryPage from "Routes/Inventory/InventoryPage";
+import OrderDetail from "Routes/Orders/OrderDetail";
+import OrdersPage from "Routes/Orders/OrdersPage";
+import PaymentsPage from "Routes/Payments/PaymentsPage";
+import ShippingPage from "Routes/Shipping/ShippingPage";
+import TicketDetail from "Routes/Tickets/TicketDetail";
+import TicketsPage from "Routes/Tickets/TicketsPage";
 import { NavItem } from "./DynamicDashboard";
 
 export interface DashboardRoutesProps {

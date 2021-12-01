@@ -3,20 +3,20 @@ import DashboardResearch from "Containers/DashboardResearch";
 import DynamicDashboard from "Dashboard/DynamicDashboard";
 import { setUpCognito } from "Helpers/cognito";
 import { useMyProfile } from "Models/user";
-import { CovidGraphPage } from "Pages/Covid/CovidGraphPage";
-import SignUp from "Pages/Login/SignUp";
-import PublicProductCatalog from "Pages/PublicProductCatalog";
 import React, { useEffect } from "react";
 // components
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
+import { CovidGraphPage } from "Routes/Covid/CovidGraphPage";
+import SignUp from "Routes/Login/SignUp";
+import PublicProductCatalog from "Routes/PublicProductCatalog";
 import { preferencesActions } from "Store/preferencesSlice";
 import { useAppDispatch, useAppSelector } from "Store/store";
-import NotFound from "./Pages/404";
-import ForgotPassword from "./Pages/Login/ForgotPassword";
+import NotFound from "./Routes/404";
+import ForgotPassword from "./Routes/Login/ForgotPassword";
 // ================ PAGES ================
-import Login from "./Pages/Login/HealthLogin";
-import LoginContainer from "./Pages/Login/LoginContainer";
-import LogOut from "./Pages/Logout";
+import Login from "./Routes/Login/HealthLogin";
+import LoginContainer from "./Routes/Login/LoginContainer";
+import LogOut from "./Routes/Logout";
 import "./styles/globalClasses.module.css";
 import "./styles/tailwind.css";
 

@@ -12,8 +12,8 @@ import {
   defaultVaccineUsage,
   defaultVariantPrevalance,
 } from "Helpers/vaccineUtils";
-import FlowSquares from "Pages/Covid/FlowSquares";
 import React, { useState } from "react";
+import FlowSquares from "Routes/Covid/FlowSquares";
 import {
   ChartType,
   Country,
