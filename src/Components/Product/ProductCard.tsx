@@ -56,6 +56,8 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
             <span className="text-betterfit-grey-blue text-md">
               {product.name ?? "N/A"}
             </span>
+            <span className="text-betterfit-grey-blue text-sm">Supplied by : </span>
+            <span className="text-betterfit-grey-blue text-md font-bold">{product.supplier.name}</span>
             <span className="text-betterfit-grey-blue text-sm">
               ${product.price}
             </span>
