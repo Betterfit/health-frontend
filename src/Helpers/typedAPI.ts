@@ -193,6 +193,11 @@ export default class TypedAPI {
       .then((response) => response.data);
   };
 
+  markOrderProductDelivered = async (orderProductId: number) => {
+    const client = await this.init();
+    return client.post("/order-products/" + orderProductId + "/mark-delivered");
+  };
+
   //  ********** PAYMENTS API **********
 
   getPaymentMethods = async () => {

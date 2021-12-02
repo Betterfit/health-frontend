@@ -74,10 +74,7 @@ const OrderProductInfo = ({
 }) => {
   const queryClient = useQueryClient();
   const deliveredMutation = useMutation(
-    async () => {
-      const client = await api.getClient();
-      return client.post(orderProduct.url + "/mark-delivered");
-    },
+    async () => api.markOrderProductDelivered(orderProduct.id),
     { onSuccess: () => queryClient.invalidateQueries("orders") }
   );
   const product = orderProduct.productOption;
