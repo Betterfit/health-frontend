@@ -9,6 +9,7 @@ import { Ticket } from "Types";
 import PrintTickets from "./PrintTickets";
 import TicketCard from "./TicketCard";
 import styles from "./TicketsPage.module.css";
+import TicketPageEmpty from "Images/ticketPageEmpty.png";
 
 const TicketsPage = () => {
   return (
@@ -47,7 +48,12 @@ const Tickets = () => {
           // the term "outstanding" makes more sense than "open"
           key: status,
           amount: tickets.length,
-          content: <TicketList tickets={tickets} />,
+          content:
+            tickets.length === 0 && status === "open" ? (
+              <TicketsPagePlaceholder />
+            ) : (
+              <TicketList tickets={tickets} />
+            ),
         };
       })}
       headingComp={
@@ -59,6 +65,25 @@ const Tickets = () => {
     />
   );
 };
+
+/*
+  Placeholder component for zero amount of tickers in the default tab (outstanding tickets)
+*/
+const TicketsPagePlaceholder = () => (
+  <div className="justify-center">
+    <Title>Welcome to Supply Net!</Title>
+    <p className="text-status-dark-blue text-center">
+      You don't have any outstanding pick tickets. Feel free to explore the
+      other
+      <br />
+      tabs to manage your stock levels, prices, users, and direst deposit info.
+    </p>
+    <img className="ml-auto mr-auto mt-8 mb-8" src={TicketPageEmpty} alt="" />
+    <p className="text-status-dark-blue text-center">
+      Have any questions? Click the help button.
+    </p>
+  </div>
+);
 
 const TicketList = ({ tickets }: { tickets: Ticket[] }) => {
   return (
