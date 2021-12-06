@@ -2,6 +2,8 @@ import EditProductForm from "Components/Forms/EditProductForm";
 import { VerticalDetail } from "Components/InfoDisplay/LabeledDetails";
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { ReactNode } from "react-transition-group/node_modules/@types/react";
 import { Inventory, ProductOption } from "Types";
 import AddProductForm from "./AddProductForm";
@@ -24,7 +26,16 @@ const ProductDetail = ({
 }) => {
   return (
     <div className="flex flex-col sm:grid sm:grid-cols-2 w-full">
-      <img src={product.productImage} alt="" className="w-full max-w-sm" />
+      {/* <img src={product.productImage} alt="" className="w-full max-w-sm" /> */}
+      <div>
+        <Carousel>
+          {product.images.map((image, i) => (
+            <div key={i}>
+              <img src={image.image} alt="" />
+            </div>
+          ))}
+        </Carousel>
+      </div>
       {/* <div style={{ zIndex: 5 }}>
         <ReactImageMagnify
           smallImage={{

@@ -237,6 +237,7 @@ export interface ProductOption {
   productImage: string;
   productId: number;
   categoryId: number;
+  images: { image: string }[];
   /** Decimal number stored as a string */
   price: string;
   forSale: boolean;
