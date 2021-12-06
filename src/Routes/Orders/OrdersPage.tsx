@@ -8,6 +8,7 @@ import { useQuery } from "react-query";
 import { Order } from "Types";
 import OrderCard from "./OrderCard";
 import styles from "./OrdersPage.module.css";
+import OrdersPageEmpty from "Images/ordersPageEmpty.png";
 
 const OrdersPage = () => {
   return (
@@ -19,6 +20,7 @@ const OrdersPage = () => {
 };
 
 const statuses = ["all", "draft", "approved", "cancelled", "delivered"];
+
 const Orders = () => {
   const ordersQuery = useQuery<Order[], Error>(["orders"], async () => {
     const response = await api.getOrders();
@@ -28,6 +30,7 @@ const Orders = () => {
     return <LoadingSpinner bubbleColor="gray" />;
   if (ordersQuery.isError) return <div>Error: {ordersQuery.error.message}</div>;
   const { data: orders } = ordersQuery;
+
   const ordersWithStatus = (status: string) =>
     status === "all"
       ? orders
@@ -42,7 +45,12 @@ const Orders = () => {
             heading: capitalize(status),
             key: status,
             amount: orders.length,
-            content: <OrderList orders={orders} />,
+            content:
+              orders.length === 0 && status === "all" ? (
+                <OrdersPagePlaceholder />
+              ) : (
+                <OrderList orders={orders} />
+              ),
           };
         })}
       />
@@ -55,6 +63,24 @@ const OrderList = ({ orders }: { orders: Order[] }) => (
     {orders.map((order) => (
       <OrderCard key={order.id} order={order} />
     ))}
+  </div>
+);
+
+/*
+  Placeholder component for zero amount of orders in the default tab (all orders)
+*/
+const OrdersPagePlaceholder = () => (
+  <div className="justify-center">
+    <Title>Welcome to Supply Net!</Title>
+    <p className="text-status-dark-blue text-center">
+      You don't have any outstanding orders. Feel free to explore the other
+      <br />
+      tabs to manage your stock levels, prices, users, and direst deposit info.
+    </p>
+    <img className="ml-auto mr-auto mt-8 mb-8" src={OrdersPageEmpty} alt="" />
+    <p className="text-status-dark-blue text-center">
+      Have any questions? Click the help button.
+    </p>
   </div>
 );
 
