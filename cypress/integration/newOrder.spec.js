@@ -2,15 +2,12 @@
 /// <reference types="@testing-library/cypress" />
 /// <reference path="../support/index.d.ts" />
 
+const emailServerId = "re0raxdu";
+const supplierEmail = "supplieradmin@re0raxdu.mailosaur.net";
 describe("New Order Dashboard", () => {
-  const username = "yash@betterfit.co";
-  const password = "scubaTree2!";
-
-  before(() => {});
-
   beforeEach(() => {
     cy.visit("");
-    cy.login(username, password);
+    cy.loginAsPurchaser();
     cy.contains(/new order/i).click();
   });
 
@@ -22,42 +19,43 @@ describe("New Order Dashboard", () => {
     productCategoriesVisibile();
   });
 
-  // failing test
-  // it("Shows correct search results for N95 masks", () => {
-  //   cy.contains(/masks/i).click();
-  //   cy.findByPlaceholderText(/search products/i).type("n95");
-  //   cy.contains(/surgical mask/i).should("not.exist");
-  //   cy.contains("3M N95 - 9211+");
-  //   cy.contains("3M N95 - 8210V");
-  //   cy.contains("3M N95 - 9211+");
-  // });
+  it.only("Allows users to place orders", () => {
+    const products = [
+      {
+        productName: "4mil ProNitrile Nitrile Gloves - Small",
+        category: "Gloves",
+        quantity: 1,
+      },
+    ];
+    products.forEach((product) => addProductToCart(product));
+    cy.contains(/place order/i).click();
+    cy.contains("$36.61 CAD");
+    // select the first payment method
+    cy.findByLabelText("Payment Method").type("{enter}");
+    cy.findByRole("button", { name: /confirm/i }).click();
+    cy.url({ timeout: 15000 }).should("include", "/orders");
+    products.forEach((product) => assertProductIsInOrderDetail(product));
 
-  // it("Allows users to add a product to their cart and submit an order", () => {
-  //   const products = [
-  //     {
-  //       productName: "3M N95 - 9211+",
-  //       productVariation: "9211+",
-  //       category: /masks/i,
-  //       quantity: 12,
-  //     },
-  //     {
-  //       productName: "3M Easi Care Prefilter - 5N1",
-  //       productVariation: "5N1",
-  //       category: /filters/i,
-  //       quantity: 35,
-  //     },
-  //   ];
-  //   products.forEach((product) => addProductToCart(product));
-  //   // submit order
-  //   cy.findByRole("button", { name: /submit order/i }).click();
-  //   // confirm in modal
-  //   cy.findByRole("checkbox", { name: /agree to terms/i }).click({
-  //     force: true,
-  //   });
-  //   cy.contains(/place order/i).click();
-  //   cy.url().should("include", "/orders");
-  //   products.forEach((product) => assertProductIsInOrderDetail(product));
-  // });
+    cy.findByTestId("orderProduct")
+      .invoke("attr", "data-ticketid")
+      .then((ticketId) => {
+        cy.logout();
+        // find ticket email and follow link
+        cy.mailosaurGetMessage(emailServerId, {
+          sentTo: supplierEmail,
+          subject: "Betterfit Supply Net - New Ticket",
+        }).then((email) => {
+          const ticketLink = email.html.links.find(
+            (link) => (link.text = "See ticket")
+          );
+          cy.visit(ticketLink.href);
+        });
+        cy.loginAsSupplier();
+        cy.url().should("include", ticketId);
+      });
+    // transfer should have been recieved sucessfully
+    cy.findByTestId("transfer", { timeout: 10000 }).contains("Success");
+  });
 });
 
 const productCategoriesVisibile = () => {
@@ -90,16 +88,18 @@ const addProductToCart = (product) => {
     .click();
   getCart().contains(productName);
   // set quantity to correct amount
-  getCart()
-    .findByRole("listitem", { name: productName })
-    .findByRole("spinbutton")
-    .clear()
-    .type(quantity)
-    .should("have.value", quantity);
+  if (quantity > 1) {
+    getCart()
+      .findByRole("listitem", { name: productName })
+      .findByRole("spinbutton", { name: /quantity/i })
+      .clear()
+      .type(quantity)
+      .should("have.value", quantity);
+  }
   goBackToProductCategories();
 };
 
 const assertProductIsInOrderDetail = (product) => {
-  cy.contains(product.productVariation);
+  cy.contains(product.productName);
   cy.contains(product.quantity);
 };

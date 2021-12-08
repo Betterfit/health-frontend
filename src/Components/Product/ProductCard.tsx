@@ -42,6 +42,7 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
         )}
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
+        data-testid={`productOption-${product.id}`}
       >
         <div
           role="listitem"
