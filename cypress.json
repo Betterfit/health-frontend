@@ -7,7 +7,7 @@
         "ADMIN_PASSWORD": "scubaTree2!",
         "MAILOSAUR_API_KEY": "fCIRnyXwDVrxuR4g"
     },
-    "baseUrl": "http://localhost:3000",
+    "baseUrl": "https://staging.supplynet.betterfit.com",
     "scrollBehavior": "center",
     "chromeWebSecurity": false,
     "video": false

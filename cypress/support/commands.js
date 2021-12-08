@@ -85,6 +85,9 @@ Cypress.Commands.add("loginAsPurchaserAdmin", () =>
 Cypress.Commands.add("loginAsPurchaser", () =>
   login(Cypress.env("MEMBER_EMAIL"), Cypress.env("MEMBER_PASSWORD"))
 );
+Cypress.Commands.add("loginAsSupplier", () =>
+  login("tech+supplier@betterfit.com", "scubaTree2!")
+);
 Cypress.Commands.add("logout", logout);
 
 // https://medium.com/@michabahr/testing-stripe-elements-with-cypress-5a2fc17ab27b

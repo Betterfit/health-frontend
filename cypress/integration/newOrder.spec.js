@@ -10,7 +10,7 @@ describe("New Order Dashboard", () => {
 
   beforeEach(() => {
     cy.visit("");
-    cy.login(username, password);
+    cy.loginAsPurchaser();
     cy.contains(/new order/i).click();
   });
 
@@ -20,6 +20,24 @@ describe("New Order Dashboard", () => {
     maskProductsVisible();
     goBackToProductCategories();
     productCategoriesVisibile();
+  });
+
+  it.only("Allows users to place orders", () => {
+    const products = [
+      {
+        productName: "4mil ProNitrile Nitrile Gloves - Small",
+        category: "Gloves",
+        quantity: 1,
+      },
+    ];
+    products.forEach((product) => addProductToCart(product));
+    cy.contains(/place order/i).click();
+    cy.contains("$439.34 CAD");
+    // select the first payment method
+    cy.findByLabelText("Payment Method").type("{enter}");
+    cy.findByRole("button", { name: /confirm/i }).click();
+    cy.url().should("include", "/orders", { timeout: 15000 });
+    // products.forEach((product) => assertProductIsInOrderDetail(product));
   });
 
   // failing test
@@ -90,12 +108,14 @@ const addProductToCart = (product) => {
     .click();
   getCart().contains(productName);
   // set quantity to correct amount
-  getCart()
-    .findByRole("listitem", { name: productName })
-    .findByRole("spinbutton")
-    .clear()
-    .type(quantity)
-    .should("have.value", quantity);
+  if (quantity > 1) {
+    getCart()
+      .findByRole("listitem", { name: productName })
+      .findByRole("spinbutton", { name: /quantity/i })
+      .clear()
+      .type(quantity)
+      .should("have.value", quantity);
+  }
   goBackToProductCategories();
 };
 
