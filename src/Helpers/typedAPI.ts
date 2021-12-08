@@ -16,6 +16,7 @@ import {
   Ticket,
   Transfer,
   UserProfile,
+  Product,
 } from "Types";
 import { buildQueryString } from "./utils";
 
@@ -332,6 +333,7 @@ export default class TypedAPI {
       weight?: number | null;
       weightUnit?: "kg" | "lb";
       carrier?: string | null;
+      description?: string | "";
     }
   ) => {
     const client = await this.init();
@@ -339,6 +341,18 @@ export default class TypedAPI {
       "/product-options/" + id,
       data
     );
+    return response;
+  };
+
+  updateProduct = async (
+    id: number,
+    data: {
+      description?: string | "";
+    }
+  ) => {
+    const client = await this.init();
+    const response = await client.patch<Product>("/products/" + id, data);
+
     return response;
   };
 
