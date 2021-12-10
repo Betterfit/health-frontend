@@ -25,12 +25,22 @@
   }
 }
 
+.descriptionWrapper:hover .editFocus {
+  border: 2px solid #808080c2;
+  border-radius: 4px;
+}
+
 .orderCartCard .removeCartItem {
   transition: opacity 0.3s ease;
 }
 
 .orderCartCard:hover .removeCartItem {
   opacity: 1 !important;
+}
+
+.editFocus:hover {
+  transform: scale(1.2);
+  transition: transform 300ms ease;
 }
 
 .shortColumn td {

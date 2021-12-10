@@ -13,6 +13,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useMutation, useQueryClient } from "react-query";
 import { api } from "Helpers/typedAPI";
+// import Edit from "Images/Icons/edit.svg";
+import Icon from "Components/Content/Icon";
 
 /**
  * Detailed product information/forms that are displayed on the New Order and
@@ -28,8 +30,6 @@ const ProductDetail = ({
   inventory?: Inventory;
   children?: ReactNode;
 }) => {
-  console.log("product, productDetail => ", product);
-
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const queryClient = useQueryClient();
@@ -78,18 +78,25 @@ const ProductDetail = ({
           // links will open in new tab
           linkTarget="_blank"
         /> */}
-        <div
-          className={styles.description}
-          dangerouslySetInnerHTML={{ __html: product.productDescription }}
-        ></div>
-        <PrettyButton
-          text={
-            product.productDescription === ""
-              ? "Add Description"
-              : "Edit Description"
-          }
-          onClick={() => setDialogOpen(true)}
-        />
+        {product.productDescription === "" && (
+          <PrettyButton
+            text="Add Description"
+            onClick={() => setDialogOpen(true)}
+          />
+        )}
+        <div className={styles.descriptionWrapper}>
+          {product.productDescription !== "" && (
+            <Icon
+              extraClasses="float-right cursor-pointer text-gray-600 editFocus"
+              name="edit"
+              onClick={() => setDialogOpen(true)}
+            />
+          )}
+          <div
+            className={styles.description}
+            dangerouslySetInnerHTML={{ __html: product.productDescription }}
+          ></div>
+        </div>
         <VerticalDetail
           leftAlign
           label={product.optionLabel}
@@ -150,6 +157,16 @@ const DescriptionEditor = ({
   const [productDescription, setProductDescription] = useState<string>(
     description
   );
+
+  /* 
+    Using this check because the quill editer returns <p><br></p> when the input is empty.
+  */
+  const isEmpty = () => {
+    return productDescription.replace(/<(.|\n)*?>/g, "").trim().length === 0
+      ? true
+      : false;
+  };
+
   return (
     <Dialog open={dialogOpen} disableBackdropClick>
       <div className="p-5">
@@ -160,7 +177,7 @@ const DescriptionEditor = ({
         <PrettyButton
           className="mt-5 mr-auto ml-auto"
           text="Save"
-          onClick={() => save(productDescription)}
+          onClick={() => save(isEmpty() ? "" : productDescription)}
           disabled={loading}
         />
         <PrettyButton

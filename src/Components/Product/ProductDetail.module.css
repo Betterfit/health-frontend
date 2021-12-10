@@ -1,7 +1,8 @@
 .description {
   white-space: pre-line;
-  margin-left: 1rem;
-  margin-bottom: 1rem;
+  /* margin-left: 1rem;
+  margin-bottom: 1rem; */
+  margin: 1rem;
 }
 .description p {
   color: var(--midnight-blue);
@@ -11,4 +12,13 @@
   font-weight: bold;
   color: var(--primary-blue);
   text-decoration: underline;
+}
+
+.descriptionWrapper:hover {
+  background: rgba(245, 245, 245, 0.815);
+}
+
+.descriptionWrapper:hover .editFocus {
+  border: 2px solid #808080c2;
+  border-radius: 4px;
 }
