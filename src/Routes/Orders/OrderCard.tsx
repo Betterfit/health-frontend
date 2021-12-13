@@ -79,7 +79,11 @@ const OrderProductInfo = ({
   );
   const product = orderProduct.productOption;
   return (
-    <div className={styles.orderProduct}>
+    <div
+      className={styles.orderProduct}
+      data-testid={"orderProduct"}
+      data-ticketid={orderProduct.id}
+    >
       <img src={product.productImage} alt={product.name + " Product Image"} />
       <div className={styles.detailList}>
         <HorizontalDetail label="Item" value={product.product} />
@@ -95,6 +99,7 @@ const OrderProductInfo = ({
           label="Warehouse"
           value={orderProduct.warehouse?.name}
         />
+        <HorizontalDetail label="Ticket #" value={orderProduct.id} />
         {/* <HorizontalDetail label={"Total"} value={32} /> */}
       </div>
       <div className={styles.detailList}>

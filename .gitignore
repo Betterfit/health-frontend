@@ -28,3 +28,4 @@ yarn-error.log*
 /src/styles/tailwind.css
 
 cypress.env.json
+cypress/screenshots

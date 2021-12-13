@@ -6,7 +6,7 @@ import { productDisplayName } from "Models/products";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { cartActions } from "Store/cartSlice";
-import { useAppDispatch } from "Store/store";
+import { useAppDispatch, useAppSelector } from "Store/store";
 import { ProductOption } from "Types";
 import styles from "./ProductCard.module.css";
 import ProductImage from "./ProductImage";
@@ -18,8 +18,14 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
   const history = useHistory();
   const [active, setActive] = useState(false);
   const dispatch = useAppDispatch();
+  const loggedIn = useAppSelector((state) => state.preferences.loggedIn);
+
   const addToCart = () => {
-    dispatch(cartActions.addItem({ productOptionId: product.id, quantity: 1 }));
+    if (loggedIn)
+      dispatch(
+        cartActions.addItem({ productOptionId: product.id, quantity: 1 })
+      );
+    else history.push("/login");
   };
   const displayName = productDisplayName(product);
   const viewDetails = () =>
@@ -36,6 +42,7 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
         )}
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
+        data-testid={`productOption-${product.id}`}
       >
         <div
           role="listitem"
@@ -56,8 +63,12 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
             <span className="text-betterfit-grey-blue text-md">
               {product.name ?? "N/A"}
             </span>
-            <span className="text-betterfit-grey-blue text-sm">Supplied by : </span>
-            <span className="text-betterfit-grey-blue text-md font-bold">{product.supplier.name}</span>
+            <span className="text-betterfit-grey-blue text-sm">
+              Supplied by :{" "}
+            </span>
+            <span className="text-betterfit-grey-blue text-md font-bold">
+              {product.supplier.name}
+            </span>
             <span className="text-betterfit-grey-blue text-sm">
               ${product.price}
             </span>

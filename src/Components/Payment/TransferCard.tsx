@@ -9,7 +9,7 @@ import { OrderProductInvoice } from "./PaymentCard";
 import styles from "./TransferCard.module.css";
 
 /**
- * Transfers two suppliers are represented as "Received Payments"
+ * Transfers to suppliers are represented as "Received Payments"
  */
 const TransferCard = ({ transfer }: { transfer: Transfer }) => {
   const history = useHistory();
@@ -18,7 +18,7 @@ const TransferCard = ({ transfer }: { transfer: Transfer }) => {
   const recipient = transfer.recipient;
   const destination = transfer.ticket.destination;
   return (
-    <div className={clsx("cardBorder")}>
+    <div className={clsx("cardBorder")} data-testid={"transfer"}>
       <div className="cardHeader">
         <VerticalDetail
           label="Time Received"
@@ -90,6 +90,7 @@ const TransferStatus = ({ completed }: { completed: boolean }) => (
       styles.status,
       completed ? styles.statusPaid : styles.statusPending
     )}
+    data-testid="transfer status"
   >
     <div />
     {completed ? "Success" : "Pending"}

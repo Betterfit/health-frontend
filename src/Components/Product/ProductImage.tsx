@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import EmptyImage from "Images/emptyImage.png";
-import { productDisplayName } from "Models/products";
 import React from "react";
 import { ProductOption } from "Types";
 
@@ -17,9 +16,12 @@ const ProductImage = ({
     <img
       className={clsx("max-h-full", className)}
       src={product?.productImage ?? EmptyImage}
-      alt={productDisplayName(product) + " Product Image" ?? "Product Image"}
+      alt=""
       loading="lazy"
       data-sizes="auto"
+      onError={(e) => {
+        e.currentTarget.src = EmptyImage;
+      }}
     />
   );
 };

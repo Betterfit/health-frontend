@@ -36,7 +36,7 @@ const TicketCard = ({
   // const markShippedPath = `${basePath}/${ticket.id}/mark-shipped`;
   const [dialogState, setDialogState] = useState<DialogState>("closed");
   return (
-    <div className={styles.ticket}>
+    <div className={styles.ticket} data-testid={"ticket#" + ticket.id}>
       <TicketDetail label="Purchaser">
         <p>{purchaser.name}</p> <p>Phone: {destination.phoneNumber}</p>
       </TicketDetail>
