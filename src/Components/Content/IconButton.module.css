@@ -3,7 +3,10 @@
   composes: noOutline from global;
 }
 .button:hover {
-  filter: drop-shadow(0 0 4px grey);
+  filter: drop-shadow(0 0 4px rgb(187, 187, 187));
+  /* scale3d to prevent weird layout shift at end of transition */
+  transform: scale3d(1.1, 1.1, 1.1);
+  transition: transform 300ms;
 }
 .blue {
   color: var(--primary-blue);

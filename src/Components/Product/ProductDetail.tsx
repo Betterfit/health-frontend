@@ -99,9 +99,9 @@ const ProductDetail = ({
         )}
         <div className={styles.descriptionWrapper}>
           {product.productDescription !== "" && (
-            <Icon
-              extraClasses="float-right cursor-pointer text-gray-600 editFocus"
-              name="edit"
+            <IconButton
+              className="float-right text-gray-600"
+              iconName="edit"
               onClick={() => setDialogOpen(true)}
             />
           )}
