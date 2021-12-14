@@ -37,8 +37,10 @@ const ApproveOrderForm = ({
 }) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const invoiceQuery = useQuery(["invoice"], () =>
-    api.getOrderInvoice(orderId)
+  const invoiceQuery = useQuery(
+    ["invoice"],
+    () => api.getOrderInvoice(orderId),
+    { retry: false }
   );
   const { data: invoice } = invoiceQuery;
   // users can open forms to add a payment method or destination in the checkout flow.
