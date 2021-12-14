@@ -77,7 +77,7 @@ const EditProductForm = ({ inventory }: { inventory: Inventory }) => {
     pricingMutation.mutate();
   };
   return (
-    <div className="mt-4 mb-2 flex flex-col space-y-4 items-center bg-betterfit-soft-blue p-4">
+    <div className="mb-2 flex flex-col space-y-4 items-center bg-betterfit-soft-blue p-4">
       <h3 className="mediumTitle">Edit Inventory/Price</h3>
       <FormControlLabel
         control={

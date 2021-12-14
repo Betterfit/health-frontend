@@ -10,13 +10,13 @@ import {
   Organization,
   Payment,
   PaymentMethod,
+  Product,
   ProductCategory,
   ProductOption,
   ServerException,
   Ticket,
   Transfer,
   UserProfile,
-  Product,
 } from "Types";
 import { buildQueryString } from "./utils";
 
@@ -354,6 +354,21 @@ export default class TypedAPI {
     const response = await client.patch<Product>("/products/" + id, data);
 
     return response;
+  };
+
+  uploadProductImage = async (
+    data: { image: File } & ({ productOption: number } | { product: number })
+  ) => {
+    const client = await api.getClient();
+    // uploading an image file requires us to use the form-data format
+    const formData = new FormData();
+    formData.append("image", data.image);
+    if ("productOption" in data)
+      formData.append("productOption", String(data.productOption));
+    else formData.append("product", String(data.product));
+    return client.post("/product-images", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   };
 
   //  ********** INVENTORY API **********

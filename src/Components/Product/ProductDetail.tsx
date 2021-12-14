@@ -1,8 +1,14 @@
+// import Edit from "Images/Icons/edit.svg";
+import IconButton from "Components/Content/IconButton";
 import Dialog from "Components/Dialog";
 import EditProductForm from "Components/Forms/EditProductForm";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { VerticalDetail } from "Components/InfoDisplay/LabeledDetails";
+import { api } from "Helpers/typedAPI";
 import React, { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 // import ReactMarkdown from "react-markdown";
 // import React from "react";
 // import ReactMarkdown from "react-markdown";
@@ -11,14 +17,9 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { ReactNode } from "react-transition-group/node_modules/@types/react";
 import { Inventory, ProductOption } from "Types";
 import AddProductForm from "./AddProductForm";
+import ImageUploadForm from "./ImageUploadForm";
 import styles from "./ProductDetail.module.css";
 import ShippingInfoForm from "./ShippingInfoForm";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import { useMutation, useQueryClient } from "react-query";
-import { api } from "Helpers/typedAPI";
-// import Edit from "Images/Icons/edit.svg";
-import Icon from "Components/Content/Icon";
 
 /**
  * Detailed product information/forms that are displayed on the New Order and
@@ -50,26 +51,8 @@ const ProductDetail = ({
   );
 
   return (
-    <div className="flex flex-col sm:grid sm:grid-cols-2 w-full">
-      {/* <img src={product.productImage} alt="" className="w-full max-w-sm" /> */}
-      <div>
-        <Carousel>
-          {product.images.map((image, i) => (
-            <div key={i}>
-              <img src={image.image} alt="" />
-            </div>
-          ))}
-        </Carousel>
-      </div>
-      {/* <div style={{ zIndex: 5 }}>
-        <ReactImageMagnify
-          smallImage={{
-            src: product.productImage,
-            isFluidWidth: true,
-          }}
-          largeImage={{ src: product.productImage, width: 900, height: 900 }}
-        /> */}
-      {/* </div> */}
+    <div className="flex flex-col sm:grid sm:grid-cols-2 w-full pt-4">
+      <ProductImages product={product} canEdit={inventory != null} />
       {inventory ? (
         <EditProductForm inventory={inventory} />
       ) : (
@@ -201,6 +184,43 @@ const DescriptionEditor = ({
         />
       </div>
     </Dialog>
+  );
+};
+
+const ProductImages = ({
+  product,
+  canEdit,
+}: {
+  product: ProductOption;
+  canEdit: boolean;
+}) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  return (
+    <div className="relative ">
+      {canEdit && (
+        <IconButton
+          className="absolute right-0 z-20"
+          iconName="file_upload"
+          label="Upload images"
+          color="green"
+          onClick={() => setDialogOpen(true)}
+        />
+      )}
+      <Carousel showStatus={false}>
+        {product.images.map((image) => (
+          <div key={image.id} className="h-full">
+            <img
+              src={image.image}
+              alt=""
+              style={{ objectFit: "contain", maxHeight: "350px" }}
+            />
+          </div>
+        ))}
+      </Carousel>
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <ImageUploadForm product={product} />
+      </Dialog>
+    </div>
   );
 };
 
