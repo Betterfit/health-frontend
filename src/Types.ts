@@ -237,7 +237,7 @@ export interface ProductOption {
   productImage: string;
   productId: number;
   categoryId: number;
-  images: { image: string }[];
+  images: { image: string; width: number; height: number; id: number }[];
   /** Decimal number stored as a string */
   price: string;
   forSale: boolean;
@@ -373,6 +373,7 @@ export interface OrderInvoice {
   taxRate: number;
   taxName: string;
   applicationFee: Money;
+  shipping: Money;
 }
 
 export interface Payment {
