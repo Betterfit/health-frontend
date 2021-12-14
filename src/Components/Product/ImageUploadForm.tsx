@@ -3,21 +3,35 @@ import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import { api } from "Helpers/typedAPI";
 import React, { useState } from "react";
 import ImageUploader from "react-images-upload";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { ProductOption } from "Types";
 import styles from "./ImageUploadForm.module.css";
 
-const ImageUploadForm = ({ product }: { product: ProductOption }) => {
+const ImageUploadForm = ({
+  product,
+  onSuccess,
+}: {
+  product: ProductOption;
+  onSuccess: () => void;
+}) => {
+  const queryClient = useQueryClient();
   const [images, setImages] = useState<{ base64: string; file: File }[]>([]);
-  const imageMutation = useMutation(() =>
-    Promise.all(
-      images.map((image) =>
-        api.uploadProductImage({
-          image: image.file,
-          product: product.productId,
-        })
-      )
-    )
+  const imageMutation = useMutation(
+    () =>
+      Promise.all(
+        images.map((image) =>
+          api.uploadProductImage({
+            image: image.file,
+            product: product.productId,
+          })
+        )
+      ),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("inventory");
+        onSuccess();
+      },
+    }
   );
   return (
     <div className={clsx("dialog", styles.root)} onDrop={(e) => {}}>
@@ -29,6 +43,7 @@ const ImageUploadForm = ({ product }: { product: ProductOption }) => {
         onChange={(files, images) => {
           setImages(files.map((file, i) => ({ file, base64: images[i] })));
         }}
+        label="New images will be visible on all sizes of this product."
       />
       <div className="dialogActions">
         <PrettyButton text="Save New Images" onClick={imageMutation.mutate} />

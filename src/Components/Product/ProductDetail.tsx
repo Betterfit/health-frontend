@@ -218,7 +218,10 @@ const ProductImages = ({
         ))}
       </Carousel>
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <ImageUploadForm product={product} />
+        <ImageUploadForm
+          product={product}
+          onSuccess={() => setDialogOpen(false)}
+        />
       </Dialog>
     </div>
   );
