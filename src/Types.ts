@@ -215,6 +215,14 @@ export interface Facility {
   isMember?: boolean;
   active: boolean;
 }
+
+export interface Product {
+  id: number;
+  name: string;
+  active: boolean;
+  description: string | "";
+}
+
 export interface ProductCategory {
   name: string;
   id: number;
