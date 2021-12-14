@@ -4,6 +4,7 @@ import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import ApproveOrderForm, {
   EnterDestinationForm,
 } from "Components/Order/ApproveOrderForm";
+import SignUpPrompt from "Components/SignUpPrompt";
 import { api } from "Helpers/typedAPI";
 import { useOrder } from "Models/orders";
 import React, { useEffect, useState } from "react";
@@ -24,7 +25,7 @@ const OrderCart = () => {
       dispatch(cartActions.clearCart());
   }, [oldOrder, dispatch]);
   const [dialogOpen, setDialogOpen] = useState<
-    null | "destination" | "approve"
+    null | "destination" | "approve" | "signup"
   >(null);
 
   return (
@@ -38,18 +39,20 @@ const OrderCart = () => {
       </div>
       <CartActions openDialog={setDialogOpen} />
       <Dialog open={dialogOpen != null} onClose={() => setDialogOpen(null)}>
-        {dialogOpen === "approve" ? (
+        {dialogOpen === "approve" && (
           <ApproveOrderForm
             orderId={orderId!}
             onCancel={() => setDialogOpen(null)}
             onSuccess={() => dispatch(cartActions.clearCart())}
           />
-        ) : (
+        )}
+        {dialogOpen === "destination" && (
           <EnterDestinationForm
             onCancel={() => setDialogOpen(null)}
             onSuccess={() => setDialogOpen(null)}
           />
         )}
+        {dialogOpen === "signup" && <SignUpPrompt />}
       </Dialog>
     </>
   );
@@ -97,12 +100,13 @@ const useOrderMutation = (options: {
 const CartActions = ({
   openDialog,
 }: {
-  openDialog: (dialog: "approve" | "destination") => void;
+  openDialog: (dialog: "approve" | "destination" | "signup") => void;
 }) => {
   const dispatch = useAppDispatch();
 
   const cartItems = useAppSelector((state) => state.cart.items);
   const destinationId = useAppSelector((state) => state.cart.destinationId);
+  const loggedIn = useAppSelector((state) => state.preferences.loggedIn);
 
   const orderMutation = useOrderMutation({
     onSuccess: () => openDialog("approve"),
@@ -114,27 +118,29 @@ const CartActions = ({
   });
 
   const emptyCart = cartItems.length === 0;
-  const needsDestination = !destinationId;
+  const needsDestination = loggedIn && !destinationId;
   return (
     <div className="flex justify-around ">
-      <PrettyButton
-        text="Save Draft"
-        variant="outline"
-        onClick={() => orderMutation.mutate("draft")}
-        className="flex-1 justify-center"
-        disabled={emptyCart || needsDestination || orderMutation.isLoading}
-      />
+      {loggedIn && (
+        <PrettyButton
+          text="Save Draft"
+          variant="outline"
+          onClick={() => orderMutation.mutate("draft")}
+          className="flex-1 justify-center"
+          disabled={emptyCart || needsDestination || orderMutation.isLoading}
+        />
+      )}
       <PrettyButton
         variant="outline"
         color="green"
         text={needsDestination ? "Select Destination" : "Place Order"}
         disabled={emptyCart || orderMutation.isLoading}
         className="flex-1 justify-center"
-        onClick={() =>
-          needsDestination
-            ? openDialog("destination")
-            : orderMutation.mutate("open")
-        }
+        onClick={() => {
+          if (needsDestination) openDialog("destination");
+          else if (!loggedIn) openDialog("signup");
+          else orderMutation.mutate("open");
+        }}
       />
     </div>
   );

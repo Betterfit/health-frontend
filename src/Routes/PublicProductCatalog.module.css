@@ -21,6 +21,7 @@
   overflow-y: scroll;
   flex-grow: 4;
   width: 80vw;
+  display: flex;
 }
 
 .ctaBox {
