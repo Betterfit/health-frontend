@@ -371,6 +371,11 @@ export default class TypedAPI {
     });
   };
 
+  deleteProductImage = async (id: number) => {
+    const client = await api.getClient();
+    return client.delete("/product-images/" + id);
+  };
+
   //  ********** INVENTORY API **********
   getInventory = async (queryParams: {
     warehouse?: number;

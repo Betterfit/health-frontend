@@ -231,6 +231,13 @@ export interface ProductCategory {
   mainColor: string;
   count: number;
 }
+
+export interface ProductImage {
+  image: string;
+  width: number;
+  height: number;
+  id: number;
+}
 export interface ProductOption {
   /** The id that suppliers use internally to refer to this product, not
    * guaranteed to be unique */
@@ -245,7 +252,7 @@ export interface ProductOption {
   productImage: string;
   productId: number;
   categoryId: number;
-  images: { image: string; width: number; height: number; id: number }[];
+  images: ProductImage[];
   /** Decimal number stored as a string */
   price: string;
   forSale: boolean;

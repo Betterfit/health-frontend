@@ -9,16 +9,12 @@ import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-// import ReactMarkdown from "react-markdown";
-// import React from "react";
-// import ReactMarkdown from "react-markdown";
-import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { ReactNode } from "react-transition-group/node_modules/@types/react";
 import { Inventory, ProductOption } from "Types";
 import AddProductForm from "./AddProductForm";
-import ImageUploadForm from "./ImageUploadForm";
 import styles from "./ProductDetail.module.css";
+import ProductImages from "./ProductImages";
 import ShippingInfoForm from "./ShippingInfoForm";
 
 /**
@@ -184,46 +180,6 @@ const DescriptionEditor = ({
         />
       </div>
     </Dialog>
-  );
-};
-
-const ProductImages = ({
-  product,
-  canEdit,
-}: {
-  product: ProductOption;
-  canEdit: boolean;
-}) => {
-  const [dialogOpen, setDialogOpen] = useState(false);
-  return (
-    <div className="relative ">
-      {canEdit && (
-        <IconButton
-          className="absolute right-0 z-20"
-          iconName="file_upload"
-          label="Upload images"
-          color="green"
-          onClick={() => setDialogOpen(true)}
-        />
-      )}
-      <Carousel showStatus={false}>
-        {product.images.map((image) => (
-          <div key={image.id} className="h-full">
-            <img
-              src={image.image}
-              alt=""
-              style={{ objectFit: "contain", maxHeight: "350px" }}
-            />
-          </div>
-        ))}
-      </Carousel>
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <ImageUploadForm
-          product={product}
-          onSuccess={() => setDialogOpen(false)}
-        />
-      </Dialog>
-    </div>
   );
 };
 

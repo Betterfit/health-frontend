@@ -46,7 +46,7 @@ const ImageUploadForm = ({
         label="New images will be visible on all sizes of this product."
       />
       <div className="dialogActions">
-        <PrettyButton text="Save New Images" onClick={imageMutation.mutate} />
+        <PrettyButton text="Upload New Images" onClick={imageMutation.mutate} />
       </div>
     </div>
   );
