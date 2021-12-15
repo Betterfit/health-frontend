@@ -1,55 +1,72 @@
-import FacilitySelector from "Components/FacilitySelector";
-import dayjs from "dayjs";
-import Translator from "Helpers/Translator";
 import React from "react";
-import { cartActions } from "Store/cartSlice";
-import { useAppDispatch, useAppSelector } from "Store/store";
+import Icon from "Components/Content/Icon";
+import { useAppSelector } from "Store/store";
+// import FacilitySelector from "Components/FacilitySelector";
+// import dayjs from "dayjs";
+// import Translator from "Helpers/Translator";
+// import { cartActions } from "Store/cartSlice";
+// import { useAppDispatch, useAppSelector } from "Store/store";
 
-export interface TextProps {
-  title?: string;
+/* export interface TextProps {
+  // title?: string;
   value?: string;
   classes?: string;
-}
+} */
 
-const OrderComponentTitle = ({ title, value, classes }: TextProps) => {
+/* const OrderComponentTitle = ({ value, classes }: TextProps) => {
   return (
     <div
       className={
-        "flex flex-col pr-4 md:pb-3 py-3 md:py-1 " + (classes ? classes : "")
+        "flex flex-row pl-4 pb-8   pr-2 pt-4 md:pb-3 py-3" +
+        (classes ? classes : "")
       }
     >
-      <span className="uppercase text-betterfit-graphite text-xs tracking-extra-wide opacity-75 font-semibold">
-        {Translator(title)}
-      </span>
+      <Icon
+        extraClasses="mt-2 mr-3 text-betterfit-graphite"
+        name="shopping_cart"
+        size="medium"
+      />
       <span className="text-betterfit-graphite text-3xl">{value}</span>
+      <Icon
+        name={cartOpen ? "keyboard_arrow_down" : "keyboard_arrow_up"}
+        size="medium"
+        extraClasses="cursor-pointer ml-auto p-2 rounded-full bg-white"
+        onClick={() => setCartOpen(!cartOpen)}
+      />
     </div>
   );
-};
+}; */
 
 /**
- * Lets purchasers choose the destination facility.
- * Shows information about the order when editing.
+ *
  */
-const NewOrderHeader = () => {
-  const destinationId = useAppSelector((state) => state.cart.destinationId);
-  const orderId = useAppSelector((state) => state.cart.orderId);
-  const dispatch = useAppDispatch();
-  const setDestination = (facilityId?: number) =>
-    dispatch(cartActions.setDestinationId(facilityId));
-  // sets the destination if it's currently undefined
-  let orderDate = dayjs().format("MMM DD, YYYY");
+const OrderCartToggle = ({
+  cartOpen,
+  toggleCart,
+}: {
+  cartOpen: boolean;
+  toggleCart: () => void;
+}) => {
+  const cartItems = useAppSelector((state) => state.cart.items);
+
   return (
-    <div className="flex flex-col p-4 pb-2 border-b border-betterfit-grey border-opacity-40">
-      <OrderComponentTitle
-        title={orderDate}
-        value={orderId ? `Order #${orderId}` : "New Order"}
+    <div className="flex flex-row pl-4 pb-8 pr-2 pt-4 md:pb-3 py-3">
+      <Icon
+        extraClasses="mt-2 mr-3 text-betterfit-graphite"
+        name="shopping_cart"
+        size="medium"
       />
-      <FacilitySelector
-        label="Destination Facility"
-        facilityId={destinationId}
-        selectFacility={setDestination}
+      <span className="text-betterfit-graphite text-3xl">Your Cart</span>
+      <span className="ml-2 text-betterfit-graphite font-bold">
+        {cartItems.length > 0 ? cartItems.length : ""}
+      </span>
+      <Icon
+        name={cartOpen ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+        size="medium"
+        extraClasses="cursor-pointer ml-auto p-2 rounded-full bg-white"
+        onClick={toggleCart}
       />
     </div>
   );
 };
-export default NewOrderHeader;
+export default OrderCartToggle;

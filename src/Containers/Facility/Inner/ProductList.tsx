@@ -72,7 +72,7 @@ const ProductList = () => {
           onClickOverride={() => setProductNavInfo(history, {})}
         />
       )}
-      <div className="flex flex-wrap justify-between items-center pb-4 mb-8 border-b border-betterfit-grey">
+      <div className="flex flex-wrap justify-between items-center mt-6 mb-8 border-b border-betterfit-grey">
         <CategoryTitle
           title={category?.name ?? "All Products"}
           icon={category?.icon}

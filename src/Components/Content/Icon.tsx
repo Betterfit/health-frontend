@@ -14,11 +14,8 @@ const Icon = ({
 }) => {
   return (
     <span
-      className={clsx(
-        "material-icons-outlined",
-        extraClasses,
-        size && sizes[size]
-      )}
+      className={clsx("material-icons-outlined", extraClasses)}
+      style={{ fontSize: size && sizes[size] }}
       onClick={onClick}
     >
       {name}
