@@ -19,7 +19,7 @@ describe("New Order Dashboard", () => {
     productCategoriesVisibile();
   });
 
-  it.only("Allows users to place orders", () => {
+  it("Allows users to place orders", () => {
     const products = [
       {
         productName: "4mil ProNitrile Nitrile Gloves - Small",
@@ -29,7 +29,6 @@ describe("New Order Dashboard", () => {
     ];
     products.forEach((product) => addProductToCart(product));
     cy.contains(/place order/i).click();
-    cy.contains("$36.61 CAD");
     // select the first payment method
     cy.findByLabelText("Payment Method").type("{enter}");
     cy.findByRole("button", { name: /confirm/i }).click();
@@ -54,7 +53,7 @@ describe("New Order Dashboard", () => {
         cy.url().should("include", ticketId);
       });
     // transfer should have been recieved sucessfully
-    cy.findByTestId("transfer", { timeout: 10000 }).contains("Success");
+    cy.findByTestId("transfer", { timeout: 20000 }).contains("Success");
   });
 });
 
