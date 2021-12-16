@@ -164,6 +164,16 @@ const ApproveOrderForm = ({
             cost={invoice.taxes}
           />
           <FeeLineItem name="SupplyNet Fee" cost={invoice.applicationFee} />
+          <FeeLineItem
+            name="Shipping"
+            cost={{
+              currency: invoice.total.currency,
+              amount: invoice.items.reduce(
+                (sum, item) => sum + item.shipping.amount,
+                0
+              ),
+            }}
+          />
           <hr />
           <HorizontalDetail
             label="Total"

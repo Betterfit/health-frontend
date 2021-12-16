@@ -56,7 +56,7 @@ const ShippingCarrierSelect = () => {
         fullWidth
         onChange={(e) => setCarrier(e.target.value)}
       >
-        {["Canada Post"].map((item) => (
+        {supportedCarriers.map((item) => (
           <MenuItem key={item} value={item}>
             {item}
           </MenuItem>
