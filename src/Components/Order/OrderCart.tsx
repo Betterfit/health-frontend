@@ -1,5 +1,7 @@
+import React, { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import Dialog from "Components/Dialog";
+import FacilitySelector from "Components/FacilitySelector";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
 import ApproveOrderForm, {
   EnterDestinationForm,
@@ -7,7 +9,6 @@ import ApproveOrderForm, {
 import SignUpPrompt from "Components/SignUpPrompt";
 import { api } from "Helpers/typedAPI";
 import { useOrder } from "Models/orders";
-import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import { cartActions } from "Store/cartSlice";
@@ -20,6 +21,9 @@ const OrderCart = () => {
   const { data: oldOrder } = useOrder(orderId ?? 0, {
     enabled: orderId != null,
   });
+  const destinationId = useAppSelector((state) => state.cart.destinationId);
+  const setDestination = (facilityId?: number) =>
+    dispatch(cartActions.setDestinationId(facilityId));
   useEffect(() => {
     if (oldOrder?.status === "approved" || oldOrder?.status === "delivered")
       dispatch(cartActions.clearCart());
@@ -35,6 +39,13 @@ const OrderCart = () => {
         aria-label="cart"
         role="complementary"
       >
+        <div className="flex flex-col p-4 pb-2 border-b border-betterfit-grey border-opacity-40">
+          <FacilitySelector
+            label="Destination Facility"
+            facilityId={destinationId}
+            selectFacility={setDestination}
+          />
+        </div>
         <CartItemList />
       </div>
       <CartActions openDialog={setDialogOpen} />

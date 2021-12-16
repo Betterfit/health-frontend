@@ -34,7 +34,7 @@ const SideBar = ({ navItemsList }) => {
         >
           <div className="flex-1 flex flex-col pt-8 pb-1 overflow-y-auto">
             <div className="sm:pl-8 px-4 border-white border-b border-opacity-25 mb-2">
-              <div className="flex items-center flex-shrink-0 flex flex-row items-center justify-between">
+              <div className="flex items-center flex-shrink-0 flex-row justify-between">
                 <img className="w-24 md:w-29" src={logo} alt="Betterfit" />
               </div>
               <div className="flex flex-row md:flex-col items-end md:items-start justify-between">
