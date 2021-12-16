@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
-import OrderCartToggle from "Components/Order/NewOrderHeader";
+import OrderCartToggle from "Components/Order/CartToggle";
 import OrderCart from "Components/Order/OrderCart";
 import ProductCatalog from "Components/Product/ProductCatalog";
+import { useAppDispatch, useAppSelector } from "Store/store";
+import { cartActions } from "Store/cartSlice";
 
 const DashboardOrder = () => {
-  const [cartOpen, setCartOpen] = useState(false);
+  const cartOpen = useAppSelector((state) => state.cart.cartOpen);
+  const dispatch = useAppDispatch();
 
   return (
     <div className="flex flex-col md:flex-row-reverse">
@@ -16,7 +19,7 @@ const DashboardOrder = () => {
       >
         <OrderCartToggle
           cartOpen={cartOpen}
-          toggleCart={() => setCartOpen(!cartOpen)}
+          toggleCart={() => dispatch(cartActions.toggleCartOpen())}
         />
         {cartOpen && <OrderCart />}
       </DashboardSideBar>
