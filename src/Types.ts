@@ -379,6 +379,7 @@ export interface ProductInvoice {
   productId: number;
   quantity: number;
   baseTotal: Money;
+  shipping: Money;
 }
 
 export interface OrderInvoice {
