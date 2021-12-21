@@ -18,7 +18,7 @@ const DashboardSideBar = ({
           width +
           (cartOpen
             ? " md:h-screen md:max-h-screen md:overflow-y-scroll"
-            : " md:absolute md:right-0")
+            : " md:absolute md:mr-1")
       )}
       style={{
         maxWidth: 400,

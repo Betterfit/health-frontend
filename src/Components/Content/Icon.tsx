@@ -5,18 +5,15 @@ const Icon = ({
   name,
   extraClasses,
   size,
-  onClick,
 }: {
   name: string;
   extraClasses?: string;
   size?: keyof typeof sizes;
-  onClick?: () => void;
 }) => {
   return (
     <span
       className={clsx("material-icons-outlined", extraClasses)}
       style={{ fontSize: size && sizes[size] }}
-      onClick={onClick}
     >
       {name}
     </span>
