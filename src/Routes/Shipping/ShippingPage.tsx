@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import styles from "./ShippingPage.module.css";
 
-const supportedCarriers = ["UPS", "Canada Post"];
+const supportedCarriers = ["Canada Post", "UPS"];
 const ShippingPage = () => {
   return (
     <div className={clsx("page", styles.root)}>
