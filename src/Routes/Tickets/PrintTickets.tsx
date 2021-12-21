@@ -34,7 +34,7 @@ const PrintTickets = ({
 };
 
 const TicketPrintout = ({ ticket }: { ticket: Ticket }) => {
-  // const warehouse = ticket.warehouse;
+  const warehouse = ticket.warehouse;
   const destination = ticket.destination;
   const product = ticket.productOption;
   return (
@@ -44,14 +44,14 @@ const TicketPrintout = ({ ticket }: { ticket: Ticket }) => {
         <strong>#{ticket.order}</strong>
       </span>
       <hr />
-      {/* <div className={styles.address}>
+      <div className={styles.address}>
         <span>{warehouse.name}</span>
         <span>{warehouse.street}</span>
         <span>
           {warehouse.postalCode} {warehouse.city} {warehouse.province}
         </span>
       </div>
-      <hr /> */}
+      <hr />
       <div className={styles.address}>
         <span>SHIP TO: </span>
         <span>{destination.name}</span>
