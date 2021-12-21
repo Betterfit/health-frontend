@@ -13,13 +13,13 @@ const OrderCartToggle = ({
   const cartSize = useAppSelector((state) => state.cart.items.length);
 
   return (
-    <div className="flex items-center pl-4 pb-8 pr-2 pt-4 md:pb-3 py-3">
+    <div className="flex items-center p-4 md:py-2">
       <Icon
         extraClasses="mr-3 text-betterfit-graphite"
         name="shopping_cart"
         size="medium"
       />
-      <span className="text-betterfit-graphite text-2xl">Cart</span>
+      <span className="text-betterfit-graphite text-xl">Cart</span>
       <span className="ml-2 text-betterfit-graphite font-bold">
         {cartSize > 0 ? cartSize : ""}
       </span>
