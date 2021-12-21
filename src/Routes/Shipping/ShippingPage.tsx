@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import styles from "./ShippingPage.module.css";
 
-const supportedCarriers = ["Canada Post"];
+const supportedCarriers = ["UPS", "Canada Post"];
 const ShippingPage = () => {
   return (
     <div className={clsx("page", styles.root)}>
@@ -56,7 +56,7 @@ const ShippingCarrierSelect = () => {
         fullWidth
         onChange={(e) => setCarrier(e.target.value)}
       >
-        {["Canada Post"].map((item) => (
+        {supportedCarriers.map((item) => (
           <MenuItem key={item} value={item}>
             {item}
           </MenuItem>
