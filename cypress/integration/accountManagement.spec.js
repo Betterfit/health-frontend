@@ -78,6 +78,9 @@ describe("Account Management", () => {
     cy.findByRole("textbox", { name: /email/i }).type(newMember.email);
     cy.findByRole("button", { name: /join existing organization/i }).click();
     completeSignUp(newMember);
+    cy.url().should("include", "new-order");
+    // make sure that the new facility is set as the default destination
+    cy.findByRole("button", { name: /open cart/i }).click();
     cy.contains(facilityName);
   });
 });
@@ -107,5 +110,5 @@ const completeSignUp = (user) => {
   cy.findByRole("button", { name: /complete/i }).click();
   // should be signed in, with profile properly updated with names
   cy.url().should("include", "/dashboard");
-  cy.contains(user.firstName);
+  cy.contains(`${user.firstName} ${user.lastName}`);
 };
