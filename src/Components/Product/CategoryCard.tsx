@@ -20,7 +20,7 @@ const CategoryCard = ({ category }: { category: ProductCategory }) => {
         >
           <img className="m-auto" src={category.icon} alt="" />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center w-full">
           <p className="font-semibold text-betterfit-graphite md:text-center text-base leading-tight md:pt-4">
             {Translator(category.name)}
           </p>
