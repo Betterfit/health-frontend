@@ -1,10 +1,10 @@
-import React from "react";
 import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
 import OrderCartToggle from "Components/Order/CartToggle";
 import OrderCart from "Components/Order/OrderCart";
 import ProductCatalog from "Components/Product/ProductCatalog";
-import { useAppDispatch, useAppSelector } from "Store/store";
+import React from "react";
 import { cartActions } from "Store/cartSlice";
+import { useAppDispatch, useAppSelector } from "Store/store";
 
 const DashboardOrder = () => {
   const cartOpen = useAppSelector((state) => state.cart.cartOpen);
@@ -23,7 +23,7 @@ const DashboardOrder = () => {
         />
         {cartOpen && <OrderCart />}
       </DashboardSideBar>
-      <div className="w-full min-width-0 mx-auto h-screen md:overflow-y-scroll mt-2 relative">
+      <div className="w-full min-width-0 mx-auto h-screen md:overflow-y-scroll pt-2 relative">
         <ProductCatalog />
       </div>
     </div>
