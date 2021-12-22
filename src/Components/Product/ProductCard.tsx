@@ -6,7 +6,7 @@ import { productDisplayName } from "Models/products";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { cartActions } from "Store/cartSlice";
-import { useAppDispatch, useAppSelector } from "Store/store";
+import { useAppDispatch } from "Store/store";
 import { ProductOption } from "Types";
 import styles from "./ProductCard.module.css";
 import ProductImage from "./ProductImage";
@@ -18,14 +18,9 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
   const history = useHistory();
   const [active, setActive] = useState(false);
   const dispatch = useAppDispatch();
-  const loggedIn = useAppSelector((state) => state.preferences.loggedIn);
 
   const addToCart = () => {
-    if (loggedIn)
-      dispatch(
-        cartActions.addItem({ productOptionId: product.id, quantity: 1 })
-      );
-    else history.push("/login");
+    dispatch(cartActions.addItem({ productOptionId: product.id, quantity: 1 }));
   };
   const displayName = productDisplayName(product);
   const viewDetails = () =>

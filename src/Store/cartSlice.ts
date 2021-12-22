@@ -9,12 +9,15 @@ interface CartState {
   destinationId?: number;
   orderId?: number;
   version: number;
+  cartOpen: boolean;
 }
 
 const initialState = {
   items: [],
   version: VERSION,
+  cartOpen: false,
 } as CartState;
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -31,6 +34,7 @@ export const cartSlice = createSlice({
       );
       if (existing) existing.quantity += newItem.quantity;
       else state.items.push(action.payload);
+      state.cartOpen = true;
     },
     removeById: (state, action: PayloadAction<number>) => {
       const id = action.payload;
@@ -75,6 +79,9 @@ export const cartSlice = createSlice({
     },
     setOrderId: (state, action: PayloadAction<number | undefined>) => {
       state.orderId = action.payload;
+    },
+    toggleCartOpen: (state) => {
+      state.cartOpen = !state.cartOpen;
     },
   },
 });

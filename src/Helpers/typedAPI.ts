@@ -10,6 +10,7 @@ import {
   Organization,
   Payment,
   PaymentMethod,
+  Product,
   ProductCategory,
   ProductOption,
   ServerException,
@@ -332,6 +333,7 @@ export default class TypedAPI {
       weight?: number | null;
       weightUnit?: "kg" | "lb";
       carrier?: string | null;
+      description?: string | "";
     }
   ) => {
     const client = await this.init();
@@ -340,6 +342,38 @@ export default class TypedAPI {
       data
     );
     return response;
+  };
+
+  updateProduct = async (
+    id: number,
+    data: {
+      description?: string | "";
+    }
+  ) => {
+    const client = await this.init();
+    const response = await client.patch<Product>("/products/" + id, data);
+
+    return response;
+  };
+
+  uploadProductImage = async (
+    data: { image: File } & ({ productOption: number } | { product: number })
+  ) => {
+    const client = await api.getClient();
+    // uploading an image file requires us to use the form-data format
+    const formData = new FormData();
+    formData.append("image", data.image);
+    if ("productOption" in data)
+      formData.append("productOption", String(data.productOption));
+    else formData.append("product", String(data.product));
+    return client.post("/product-images", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  };
+
+  deleteProductImage = async (id: number) => {
+    const client = await api.getClient();
+    return client.delete("/product-images/" + id);
   };
 
   //  ********** INVENTORY API **********

@@ -215,6 +215,14 @@ export interface Facility {
   isMember?: boolean;
   active: boolean;
 }
+
+export interface Product {
+  id: number;
+  name: string;
+  active: boolean;
+  description: string | "";
+}
+
 export interface ProductCategory {
   name: string;
   id: number;
@@ -222,6 +230,13 @@ export interface ProductCategory {
   backgroundColor: string;
   mainColor: string;
   count: number;
+}
+
+export interface ProductImage {
+  image: string;
+  width: number;
+  height: number;
+  id: number;
 }
 export interface ProductOption {
   /** The id that suppliers use internally to refer to this product, not
@@ -237,7 +252,7 @@ export interface ProductOption {
   productImage: string;
   productId: number;
   categoryId: number;
-  images: { image: string }[];
+  images: ProductImage[];
   /** Decimal number stored as a string */
   price: string;
   forSale: boolean;
@@ -364,6 +379,7 @@ export interface ProductInvoice {
   productId: number;
   quantity: number;
   baseTotal: Money;
+  shipping: Money;
 }
 
 export interface OrderInvoice {
@@ -373,6 +389,7 @@ export interface OrderInvoice {
   taxRate: number;
   taxName: string;
   applicationFee: Money;
+  shipping: Money;
 }
 
 export interface Payment {

@@ -160,7 +160,7 @@ const UserTypeList = ({
                   //   flex is required so that the delete icons line up
                   <div key={i} className="flex items-center">
                     {facilitiesById &&
-                      facilitiesById[membership.facilityId].name}
+                      facilitiesById[membership.facilityId]?.name}
                     {user.id === userToEdit?.id && (
                       <IconButton
                         color="red"

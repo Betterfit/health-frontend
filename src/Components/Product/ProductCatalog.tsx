@@ -15,11 +15,7 @@ const ProductCatalog = () => {
   else if (productNavInfo.categoryId || productNavInfo.search)
     content = <ProductList />;
   else content = <CategoryList />;
-  return (
-    <div className="mx-1 sm:px-6 md:px-8 relative p-2 pt-8 h-full">
-      {content}
-    </div>
-  );
+  return <div className="mx-1 relative p-2 h-full">{content}</div>;
 };
 
 export default ProductCatalog;

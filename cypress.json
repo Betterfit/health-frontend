@@ -10,5 +10,6 @@
     "baseUrl": "http://localhost:3000",
     "scrollBehavior": "center",
     "chromeWebSecurity": false,
-    "video": false
+    "video": false,
+    "defaultCommandTimeout": 8000
 }

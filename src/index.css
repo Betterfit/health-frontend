@@ -3,6 +3,7 @@
 @import "styles/resources.css";
 @import "styles/card.css";
 @import "styles/typography.css";
+@import "styles/dialog.css";
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",

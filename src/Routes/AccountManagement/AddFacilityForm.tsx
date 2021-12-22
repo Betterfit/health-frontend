@@ -150,7 +150,7 @@ const AddFacilityForm = ({
         error={errors?.postalCode != null}
         required
         placeholder="A9A 9A9"
-        inputProps={{ readOnly: editing, maxLength: 7, minLength: 6 }}
+        inputProps={{ maxLength: 7, minLength: 6 }}
       />
       <TextField
         {...register.text("shippingLabelNote")}

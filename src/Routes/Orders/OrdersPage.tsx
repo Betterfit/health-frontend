@@ -71,11 +71,12 @@ const OrderList = ({ orders }: { orders: Order[] }) => (
 */
 const OrdersPagePlaceholder = () => (
   <div className="justify-center">
-    <Title>Welcome to Supply Net!</Title>
     <p className="text-status-dark-blue text-center">
-      You don't have any outstanding orders. Feel free to explore the other
+      You haven't placed an order yet. Go to 'New Order' tab to make your
       <br />
-      tabs to manage your stock levels, prices, users, and direst deposit info.
+      first purchase. Feel free to explore the other tabs to add or manage your
+      <br />
+      users, facilties, and payment method.
     </p>
     <img className="ml-auto mr-auto mt-8 mb-8" src={OrdersPageEmpty} alt="" />
     <p className="text-status-dark-blue text-center">
