@@ -36,3 +36,7 @@
 .paymentMethod {
   composes: clickableListItem from "./pageStyles.module.css";
 }
+
+.credits {
+  height: 200px;
+}

@@ -4,7 +4,9 @@ import clsx from "clsx";
 import AdminTabs from "Components/Content/AdminTabs";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
+import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { api } from "Helpers/typedAPI";
+import { formatCurrency } from "Helpers/utils";
 import { usePaymentMethods } from "Models/paymentMethods";
 import { useMyProfile } from "Models/user";
 import React, { useState } from "react";
@@ -16,22 +18,30 @@ import styles from "./PaymentMethods.module.css";
 const PaymentMethods = () => {
   const [tabIndex, setTabIndex] = useState(0);
   return (
-    <AdminTabs
-      tabs={[
-        {
-          header: "My Payment Methods",
-          content: <PaymentMethodList />,
-        },
-        {
-          header: "Add Payment Method",
-          icon: "add",
-          content: <AddPaymentMethod onSuccess={() => setTabIndex(0)} />,
-        },
-      ]}
-      selectedIndex={tabIndex}
-      setSelectedIndex={setTabIndex}
-      ariaLabel="Payment Methods"
-    />
+    <div className="flex">
+      <AdminTabs
+        tabs={[
+          {
+            header: "My Payment Methods",
+            content: <PaymentMethodList />,
+          },
+          {
+            header: "Add Payment Method",
+            icon: "add",
+            content: <AddPaymentMethod onSuccess={() => setTabIndex(0)} />,
+          },
+        ]}
+        selectedIndex={tabIndex}
+        setSelectedIndex={setTabIndex}
+        ariaLabel="Payment Methods"
+      />
+      <div className={clsx(styles.credits, "cardBorder ml-3")}>
+        <p className={clsx(styles.paymentMethodTypeTitle, "text-center")}>
+          Credits
+        </p>
+        <HorizontalDetail label="Balance" value={formatCurrency(1000)} />
+      </div>
+    </div>
   );
 };
 
