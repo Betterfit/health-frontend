@@ -1,10 +1,7 @@
 import clsx from "clsx";
 import Dialog from "Components/Dialog";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
-import {
-  HorizontalDetail,
-  VerticalDetail,
-} from "Components/InfoDisplay/LabeledDetails";
+import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { formatTimeStamp } from "Helpers/utils";
 import { productDisplayName } from "Models/products";
 import React, { ReactNode, useState } from "react";
@@ -31,41 +28,72 @@ const TicketCard = ({
 }) => {
   const queryClient = useQueryClient();
   const product = ticket.productOption;
-  const { destination, purchaser } = ticket;
+  const { destination, purchaser, warehouse } = ticket;
   const history = useHistory();
   // const markShippedPath = `${basePath}/${ticket.id}/mark-shipped`;
   const [dialogState, setDialogState] = useState<DialogState>("closed");
   return (
     <div className={styles.ticket} data-testid={"ticket#" + ticket.id}>
-      <TicketDetail label="Purchaser">
+      <TicketDetail extraClass={styles.purchaser} label="Purchaser">
         <p>{purchaser.name}</p> <p>Phone: {destination.phoneNumber}</p>
       </TicketDetail>
-      <TicketDetail label="SKU" value={product.sku ?? "N/A"} />
-      <TicketDetail label="Ticket Id" value={ticket.id} />
+      {/* <TicketDetail
+        extraClass={styles.sku}
+        label="SKU"
+        value={product.sku ?? "N/A"}
+      /> */}
       <TicketDetail
+        extraClass={styles.ticketNumber}
+        label="Ticket Id"
+        value={ticket.id}
+      />
+      <TicketDetail extraClass={styles.shippingInfo} label="Shipping Info">
+        {!!ticket.trackingNumber ? (
+          <>
+            <HorizontalDetail label="Carrier" value={ticket.shippingProvider} />
+            <HorizontalDetail
+              label="Tracking #"
+              value={ticket.trackingNumber}
+            />
+          </>
+        ) : (
+          <span>N/A</span>
+        )}
+      </TicketDetail>
+      <TicketDetail
+        extraClass={styles.date}
         label="Assigned On"
         value={formatTimeStamp(ticket.timeCreated)}
       />
-      <TicketDetail label="Shipping Information">
+      <TicketDetail extraClass={styles.from} label="Shipping From">
+        <span>{warehouse.name}</span>
+        <span>{warehouse.street}</span>
+        <span>
+          {warehouse.postalCode} {warehouse.city} {warehouse.province}
+        </span>
+      </TicketDetail>
+      <TicketDetail extraClass={styles.to} label="Shipping To">
+        {/* <span className="text-xs text-slate-50">From:</span> */}
+        {/* <span className="text-xs text-slate-50">To:</span> */}
         <span>{destination.name}</span>
         <span>{destination.street}</span>
         <span>
           {destination.postalCode} {destination.city} {destination.province}
         </span>
-        {ticket.trackingNumber && (
-          <>
-            <VerticalDetail label="Carrier" value={ticket.shippingProvider} />
-            <VerticalDetail label="Tracking #" value={ticket.trackingNumber} />
-          </>
-        )}
       </TicketDetail>
-      <TicketDetail label="Product">
-        <div className="flex flex-col items-center">
-          <span>{productDisplayName(product)}</span>
+      <TicketDetail extraClass={styles.productInfo} label="Product">
+        <div className="flex">
+          <div className="flex flex-col items-center mr-3">
+            <span>{productDisplayName(product)}</span>
+            <HorizontalDetail label="SKU" value={product.sku ?? "N/A"} />
+            <HorizontalDetail label="Quantity" value={ticket.quantity} />
+            <HorizontalDetail
+              label={product.optionLabel}
+              value={product.name}
+            />
+          </div>
           <img src={product.productImage} alt={productDisplayName(product)} />
         </div>
-        <HorizontalDetail label="Quantity" value={ticket.quantity} />
-        <HorizontalDetail label={product.optionLabel} value={product.name} />
       </TicketDetail>
       {/* <TicketDetail label={product.optionLabel} value={product.name} />
       <TicketDetail label="Quantity" value={orderProduct.quantity} /> */}
