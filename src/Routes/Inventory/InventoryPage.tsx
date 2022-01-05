@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Title from "Components/Content/Title";
-import DashboardSideBar from "Components/DashboardSideBar/DashboardSideBar";
+import DashboardSideBarInventory from "Components/DashboardSideBar/DashboardSideBarInventory";
 import FacilitySelector from "Components/FacilitySelector";
 import React from "react";
 import { useRouteMatch } from "react-router-dom";
@@ -33,7 +33,7 @@ const InventorySidebar = ({ productId }: { productId?: string }) => {
   const dispatch = useAppDispatch();
   const facilityId = useAppSelector((state) => state.preferences.facilityId);
   return (
-    <DashboardSideBar
+    <DashboardSideBarInventory
       addonStyles={clsx(
         "relative p-4",
         // if a product has been selected, then on small devices we will hide the sidebar
@@ -49,7 +49,7 @@ const InventorySidebar = ({ productId }: { productId?: string }) => {
       />
       <hr />
       <InventoryOverview />
-    </DashboardSideBar>
+    </DashboardSideBarInventory>
   );
 };
 

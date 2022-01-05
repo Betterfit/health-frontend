@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import Dialog from "Components/Dialog";
 import FacilitySelector from "Components/FacilitySelector";
@@ -9,6 +8,7 @@ import ApproveOrderForm, {
 import SignUpPrompt from "Components/SignUpPrompt";
 import { api } from "Helpers/typedAPI";
 import { useOrder } from "Models/orders";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import { cartActions } from "Store/cartSlice";
@@ -45,10 +45,10 @@ const OrderCart = () => {
             facilityId={destinationId}
             selectFacility={setDestination}
           />
+          <CartActions openDialog={setDialogOpen} />
         </div>
         <CartItemList />
       </div>
-      <CartActions openDialog={setDialogOpen} />
       <Dialog open={dialogOpen != null} onClose={() => setDialogOpen(null)}>
         {dialogOpen === "approve" && (
           <ApproveOrderForm

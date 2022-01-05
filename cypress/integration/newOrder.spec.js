@@ -9,6 +9,7 @@ describe("New Order Dashboard", () => {
     cy.visit("");
     cy.loginAsPurchaser();
     cy.contains(/new order/i).click();
+    cy.findByRole("button", { name: /open cart/i }).click();
   });
 
   it("Shows cart and allows users to navigate product categories", () => {

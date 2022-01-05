@@ -43,6 +43,21 @@ const ApproveOrderForm = ({
     { retry: false }
   );
   const { data: invoice } = invoiceQuery;
+  const shippingRate = (): Money => {
+    const currency = "CAD";
+    let shippingAmount = 0;
+
+    if (invoice?.items) {
+      for (let item of invoice?.items) {
+        shippingAmount += item.shipping.amount;
+      }
+    }
+
+    return {
+      amount: shippingAmount,
+      currency,
+    };
+  };
   // users can open forms to add a payment method or destination in the checkout flow.
   const [openForm, setOpenForm] = useState<"paymentMethod" | "facility" | null>(
     null
@@ -164,16 +179,7 @@ const ApproveOrderForm = ({
             cost={invoice.taxes}
           />
           <FeeLineItem name="SupplyNet Fee" cost={invoice.applicationFee} />
-          <FeeLineItem
-            name="Shipping"
-            cost={{
-              currency: invoice.total.currency,
-              amount: invoice.items.reduce(
-                (sum, item) => sum + item.shipping.amount,
-                0
-              ),
-            }}
-          />
+          <FeeLineItem name="Shipping Fee" cost={shippingRate()} />
           <hr />
           <HorizontalDetail
             label="Total"

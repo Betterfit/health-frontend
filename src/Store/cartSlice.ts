@@ -34,6 +34,7 @@ export const cartSlice = createSlice({
       );
       if (existing) existing.quantity += newItem.quantity;
       else state.items.push(action.payload);
+      state.cartOpen = true;
     },
     removeById: (state, action: PayloadAction<number>) => {
       const id = action.payload;

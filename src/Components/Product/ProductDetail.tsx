@@ -1,4 +1,3 @@
-// import Edit from "Images/Icons/edit.svg";
 import IconButton from "Components/Content/IconButton";
 import Dialog from "Components/Dialog";
 import EditProductForm from "Components/Forms/EditProductForm";
@@ -64,20 +63,14 @@ const ProductDetail = ({
       <div>
         <h3 className="text-center mediumTitle">Product Details</h3>
         <hr className="my-2" />
-        {/* <ReactMarkdown
-          className={styles.description}
-          children={product.productDescription}
-          // links will open in new tab
-          linkTarget="_blank"
-        /> */}
-        {product.productDescription === "" && (
+        {inventory && product.productDescription === "" && (
           <PrettyButton
             text="Add Description"
             onClick={() => setDialogOpen(true)}
           />
         )}
-        <div className={styles.descriptionWrapper}>
-          {product.productDescription !== "" && (
+        <div className={!inventory ? "" : styles.editDescriptionWrapper}>
+          {inventory && product.productDescription !== "" && (
             <IconButton
               className="float-right text-gray-600"
               iconName="edit"
