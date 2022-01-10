@@ -45,6 +45,7 @@ const TicketPrintout = ({ ticket }: { ticket: Ticket }) => {
       </span>
       <hr />
       <div className={styles.address}>
+        <span>SHIPPING FROM: </span>
         <span>{warehouse.name}</span>
         <span>{warehouse.street}</span>
         <span>
@@ -53,7 +54,7 @@ const TicketPrintout = ({ ticket }: { ticket: Ticket }) => {
       </div>
       <hr />
       <div className={styles.address}>
-        <span>SHIP TO: </span>
+        <span>SHIPPING TO: </span>
         <span>{destination.name}</span>
         <span>{destination.street}</span>
         <span>

@@ -20,7 +20,10 @@ const DashboardProductDetail = ({
   return (
     <>
       <BackNavigation link={`Back to Products`} />
-      <TitleUnderLine title={productDisplayName(product)} />
+      <TitleUnderLine
+        title={productDisplayName(product)}
+        extraclasses="mt-10"
+      />
       <div className="w-full flex place-self-center justify-self-center m-auto">
         <ProductDetail product={product} />
       </div>

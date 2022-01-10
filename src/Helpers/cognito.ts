@@ -39,5 +39,5 @@ export type ServerException = {
 };
 
 export const isServerException = (error: any): error is ServerException => {
-  return error?.code !== undefined && error?.message !== undefined;
+  return error?.code !== undefined;
 };
