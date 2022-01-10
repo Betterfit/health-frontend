@@ -40,11 +40,13 @@ export const HorizontalDetail = ({
   labelClass,
   value,
   fullWidth = false,
+  valueClass,
 }: {
   label: ReactNode;
   labelClass?: string;
   value: ReactNode;
   fullWidth?: boolean;
+  valueClass?: string;
 }) => {
   return (
     <div
@@ -53,7 +55,9 @@ export const HorizontalDetail = ({
       <span className={clsx(styles.horizontalDetailLabel, labelClass)}>
         {label}
       </span>
-      <span className={styles.horizontalDetailValue}>{value}</span>
+      <span className={clsx(styles.horizontalDetailValue, valueClass)}>
+        {value}
+      </span>
     </div>
   );
 };

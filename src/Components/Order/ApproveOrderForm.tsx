@@ -180,6 +180,7 @@ const ApproveOrderForm = ({
           />
           <FeeLineItem name="SupplyNet Fee" cost={invoice.applicationFee} />
           <FeeLineItem name="Shipping Fee" cost={shippingRate()} />
+          <FeeLineItem name="Credits Applied" cost={shippingRate()} credit />
           <hr />
           <HorizontalDetail
             label="Total"
@@ -271,10 +272,12 @@ const FeeLineItem = ({
   name,
   percentage,
   cost,
+  credit,
 }: {
   name: string;
   percentage?: number;
   cost: Money;
+  credit?: boolean;
 }) => {
   let label = name;
   if (percentage) label += ` (${percentage.toFixed(0)}%)`;
@@ -284,6 +287,7 @@ const FeeLineItem = ({
       fullWidth
       label={label}
       value={formatCurrency(cost.amount)}
+      valueClass={!!credit ? "text-green-600" : ""}
     />
   );
 };
