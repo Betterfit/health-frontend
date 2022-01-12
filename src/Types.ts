@@ -194,6 +194,7 @@ export interface Organization {
   postalCode: string;
   // shipping
   carrier: string | null;
+  credit: string;
 }
 
 export interface Facility {
@@ -280,6 +281,7 @@ interface BaseOrderProduct {
   status: TicketStatus;
   timeCreated: string;
   timeShipped: string;
+  appliedCredit: string;
 }
 export type TicketStatus = "open" | "shipped" | "delivered";
 
@@ -390,6 +392,7 @@ export interface OrderInvoice {
   taxName: string;
   applicationFee: Money;
   shipping: Money;
+  appliedCredit: Money;
 }
 
 export interface Payment {
@@ -404,6 +407,7 @@ export interface Payment {
   taxes: number;
   timeCreated: string;
   order: Order;
+  appliedCredit: string;
 }
 
 export interface Transfer {

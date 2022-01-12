@@ -180,7 +180,14 @@ const ApproveOrderForm = ({
           />
           <FeeLineItem name="SupplyNet Fee" cost={invoice.applicationFee} />
           <FeeLineItem name="Shipping Fee" cost={shippingRate()} />
-          <FeeLineItem name="Credits Applied" cost={shippingRate()} credit />
+          {/* Showing applied credits only when non-zero amount is applied */}
+          {invoice.appliedCredit.amount !== 0 && (
+            <FeeLineItem
+              name="Credits Applied"
+              cost={invoice.appliedCredit}
+              credit
+            />
+          )}
           <hr />
           <HorizontalDetail
             label="Total"

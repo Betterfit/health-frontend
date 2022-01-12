@@ -15,7 +15,7 @@ import { PaymentMethod } from "Types";
 import PaymentMethodDetail from "./PaymentMethodDetail";
 import styles from "./PaymentMethods.module.css";
 
-const PaymentMethods = () => {
+const PaymentMethods = ({ credit }: { credit: string }) => {
   const [tabIndex, setTabIndex] = useState(0);
   return (
     <div className="flex">
@@ -39,7 +39,10 @@ const PaymentMethods = () => {
         <p className={clsx(styles.paymentMethodTypeTitle, "text-center")}>
           Credits
         </p>
-        <HorizontalDetail label="Balance" value={formatCurrency(1000)} />
+        <HorizontalDetail
+          label="Balance"
+          value={formatCurrency(Number(credit))}
+        />
       </div>
     </div>
   );
@@ -58,6 +61,7 @@ const PaymentMethodList = () => {
       <ul aria-labelledby="creditCardList" className={styles.paymentMethods}>
         {paymentMethods.map((paymentMethod) => (
           <PaymentMethodListItem
+            key={paymentMethod.id}
             paymentMethod={paymentMethod as PaymentMethod}
           />
         ))}

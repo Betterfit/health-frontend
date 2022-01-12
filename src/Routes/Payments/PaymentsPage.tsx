@@ -27,7 +27,7 @@ const PaymentsPage = () => {
         )}
         {organization?.isPurchaser && (
           <>
-            <PaymentMethods />
+            <PaymentMethods credit={organization.credit} />
             <PaymentList />
           </>
         )}
@@ -59,7 +59,7 @@ const TransferList = () => {
       <h2>Received Payments</h2>
       <hr />
       {transfers.map((transfer) => (
-        <TransferCard transfer={transfer} />
+        <TransferCard key={transfer.id} transfer={transfer} />
       ))}
     </div>
   );

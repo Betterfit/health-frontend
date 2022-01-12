@@ -108,6 +108,14 @@ const PaymentDetails = ({
               value={formatCurrency(payment.appFee)}
               fullWidth
             />
+            {payment.appliedCredit !== "0.00" && (
+              <HorizontalDetail
+                label="Credits Applied"
+                value={formatCurrency(payment.appliedCredit)}
+                valueClass="text-green-600"
+                fullWidth
+              />
+            )}
             <hr />
             <HorizontalDetail
               label="Grand Total"
@@ -145,6 +153,10 @@ export const OrderProductInvoice = ({
         label="Shipping"
         value={formatCurrency(Number(orderProduct.shipping))}
       />
+      {/* <HorizontalDetail
+        label="Credits Applied"
+        value={formatCurrency(Number(orderProduct.appliedCredit))}
+      /> */}
       <HorizontalDetail label="Subtotal" value={formatCurrency(subtotal)} />
     </div>
   );
