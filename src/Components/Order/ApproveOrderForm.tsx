@@ -139,6 +139,42 @@ const ApproveOrderForm = ({
       </div>
     );
   const error = parseException(approveOrderMutation.error);
+
+  if (invoice?.code === "no_stock") {
+    return (
+      <>
+        <div className="flex md:flex-col p-4">
+          <h1 className="text-xl text-center font-semibold text-betterfit-graphite mb-4">
+            Limited Stock
+          </h1>
+          <hr />
+          {/* <div className="flex md:flex-row px-4">
+            <ProductImage
+              product={product.productOption}
+              className={clsx(
+                "h-20 w-20 md:h-32 md:w-32 pt-3 pr-3 object-contain"
+                // outOfStock && styles.outOfStock
+              )}
+            />
+            <div className="flex-col pt-7">
+              <h1 className={"text-base font-semibold text-betterfit-graphite"}>
+                {product.productOption?.product}
+              </h1>
+              <span className="text-betterfit-grey-blue text-md">
+                {product.productOption?.name
+                  ? product.productOption.name
+                  : "N/A"}
+              </span>
+            </div>
+          </div> */}
+          <span className="text-xs text-red-500">
+            *Choose different products to proceed with the order.
+          </span>
+        </div>
+      </>
+    );
+  }
+
   return (
     <div className={styles.dialog}>
       <h2>Approve and Pay for Order</h2>
@@ -157,7 +193,7 @@ const ApproveOrderForm = ({
       />
       {invoice && order && (
         <>
-          {invoice.items.map((item) => {
+          {invoice.items.map((item: any) => {
             const orderProduct = order.orderProducts.find(
               (orderProduct) => orderProduct.id === item.orderProductId
             );
