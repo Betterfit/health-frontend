@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import clsx from "clsx";
+// import clsx from "clsx";
 import Dialog from "Components/Dialog";
 import FacilitySelector from "Components/FacilitySelector";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
@@ -8,7 +8,7 @@ import ApproveOrderForm, {
 } from "Components/Order/ApproveOrderForm";
 import SignUpPrompt from "Components/SignUpPrompt";
 import { api } from "Helpers/typedAPI";
-import { useSelectedFacility } from "Models/facilities";
+// import { useSelectedFacility } from "Models/facilities";
 import { useOrder } from "Models/orders";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -16,8 +16,8 @@ import { useHistory } from "react-router-dom";
 import { cartActions } from "Store/cartSlice";
 import { useAppDispatch, useAppSelector } from "Store/store";
 import CartItemList from "./CartItemList";
-import ProductImage from "Components/Product/ProductImage";
-import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
+// import ProductImage from "Components/Product/ProductImage";
+// import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 
 const OrderCart = () => {
   const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ const OrderCart = () => {
   const [dialogOpen, setDialogOpen] = useState<
     null | "destination" | "approve" | "signup" | "outOfStock"
   >(null);
-  const [outOfStockProducts, setOutOfStockProducts] = useState<any[]>([]);
+  // const [outOfStockProducts, setOutOfStockProducts] = useState<any[]>([]);
 
   return (
     <>
@@ -52,16 +52,16 @@ const OrderCart = () => {
           />
           <CartActions
             openDialog={setDialogOpen}
-            openOutOfStockList={(outOfStockProducts) => {
+            /* openOutOfStockList={(outOfStockProducts) => {
               setOutOfStockProducts(outOfStockProducts);
               setDialogOpen("outOfStock");
-            }}
+            }} */
           />
         </div>
         <CartItemList />
       </div>
       <Dialog open={dialogOpen != null} onClose={() => setDialogOpen(null)}>
-        {dialogOpen === "outOfStock" && (
+        {/* {dialogOpen === "outOfStock" && (
           <div className="flex md:flex-col p-4">
             <h1 className="text-xl text-center font-semibold text-betterfit-graphite mb-4">
               Limited Stock
@@ -97,13 +97,13 @@ const OrderCart = () => {
                   </div>
                 </div>
               </>
-            ))}
+            ))} 
             <span className="text-xs text-red-500">
               *Some of of product are limited or out stock. Change the selected
               quantity in your cart.
             </span>
           </div>
-        )}
+        )}*/}
         {dialogOpen === "approve" && (
           <ApproveOrderForm
             orderId={orderId!}
@@ -164,13 +164,13 @@ const useOrderMutation = (options: {
 
 const CartActions = ({
   openDialog,
-  openOutOfStockList,
-}: {
+}: // openOutOfStockList,
+{
   openDialog: (dialog: "approve" | "destination" | "signup") => void;
-  openOutOfStockList: (outOfStockProducts: any) => void;
+  // openOutOfStockList: (outOfStockProducts: any) => void;
 }) => {
   const dispatch = useAppDispatch();
-  const { facilityId } = useSelectedFacility();
+  // const { facilityId } = useSelectedFacility();
 
   const cartItems = useAppSelector((state) => state.cart.items);
   const destinationId = useAppSelector((state) => state.cart.destinationId);
@@ -185,7 +185,7 @@ const CartActions = ({
     },
   });
 
-  const checkStock = () => {
+  /* const checkStock = () => {
     const outOfStockProducts: any[] = [];
     api.getInventory({ warehouse: facilityId }).then((products) => {
       cartItems.forEach((item) => {
@@ -202,7 +202,7 @@ const CartActions = ({
         : openOutOfStockList(outOfStockProducts);
     });
     // orderMutation.mutate("open")
-  };
+  }; */
 
   const emptyCart = cartItems.length === 0;
   const needsDestination = loggedIn && !destinationId;
@@ -226,7 +226,7 @@ const CartActions = ({
         onClick={() => {
           if (needsDestination) openDialog("destination");
           else if (!loggedIn) openDialog("signup");
-          else checkStock();
+          else orderMutation.mutate("open");
         }}
       />
     </div>

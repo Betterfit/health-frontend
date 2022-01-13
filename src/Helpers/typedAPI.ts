@@ -191,7 +191,8 @@ export default class TypedAPI {
     const client = await this.init();
     return client
       .get<OrderInvoice>(`/orders/${orderId}/invoice`)
-      .then((response) => response.data);
+      .then((response) => response.data)
+      .catch((error) => error.response.data);
   };
 
   markOrderProductDelivered = async (orderProductId: number) => {
