@@ -103,7 +103,8 @@ const ApproveOrderForm = ({
       },
       onError: () => {
         queryClient.invalidateQueries(["pricing"]);
-        dispatch(cartActions.setOrderId(undefined));
+        // TODO: Ask question about it!
+        // dispatch(cartActions.setOrderId(undefined));
       },
     }
   );
@@ -252,7 +253,7 @@ const ApproveOrderForm = ({
       <hr className="my-4" />
       <TextField
         className={styles.paymentMethod}
-        value={paymentMethod?.id}
+        value={paymentMethod?.id ?? ""}
         id="selectPaymentMethod"
         label="Payment Method"
         variant="outlined"
