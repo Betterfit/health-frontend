@@ -37,6 +37,39 @@
   composes: clickableListItem from "./pageStyles.module.css";
 }
 
+.paymentMethodTypeTitle {
+  color: var(--primary-blue);
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+
 .credits {
-  height: 200px;
+  height: 229px;
+  flex: 1;
+  margin-top: 42px;
+  text-align: center;
+}
+
+.creditsTitle {
+  background-color: var(--sky-blue);
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.creditCardsList {
+  height: 157px;
+  overflow-y: scroll;
+}
+
+.creditAmount {
+  background-color: var(--light-blue);
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  padding: 12px 25px;
+  color: var(--midnight-blue);
+  font-size: larger;
+  font-weight: bolder;
 }

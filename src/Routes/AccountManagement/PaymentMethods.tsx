@@ -4,7 +4,6 @@ import clsx from "clsx";
 import AdminTabs from "Components/Content/AdminTabs";
 import { LoadingSpinner } from "Components/Content/LoadingSpinner";
 import PrettyButton from "Components/Forms/PrettyButton/PrettyButton";
-import { HorizontalDetail } from "Components/InfoDisplay/LabeledDetails";
 import { api } from "Helpers/typedAPI";
 import { formatCurrency } from "Helpers/utils";
 import { usePaymentMethods } from "Models/paymentMethods";
@@ -18,7 +17,7 @@ import styles from "./PaymentMethods.module.css";
 const PaymentMethods = ({ credit }: { credit: string }) => {
   const [tabIndex, setTabIndex] = useState(0);
   return (
-    <div className="flex">
+    <div className="flex flex-col md:flex-row">
       <AdminTabs
         tabs={[
           {
@@ -35,15 +34,21 @@ const PaymentMethods = ({ credit }: { credit: string }) => {
         setSelectedIndex={setTabIndex}
         ariaLabel="Payment Methods"
       />
-      <div className={clsx(styles.credits, "cardBorder ml-3")}>
-        <p className={clsx(styles.paymentMethodTypeTitle, "text-center")}>
-          Credits
-        </p>
-        <HorizontalDetail
-          label="Balance"
-          value={formatCurrency(Number(credit))}
-        />
-      </div>
+      <Credits credit={credit} />
+    </div>
+  );
+};
+
+const Credits = ({ credit }: { credit: string }) => {
+  return (
+    <div className={clsx(styles.credits, "cardBorder md:ml-3")}>
+      <p className={styles.creditsTitle}>Credit Certificate</p>
+      <p className="font-bold text-sm mt-4 mb-2">AVAILABLE CREDIT</p>
+      <p className={styles.creditAmount}>{formatCurrency(Number(credit))}</p>
+      <p className="text-sm mt-3">
+        Any future Supply Net order that you <br /> place wil be eligble for
+        100% off your card.
+      </p>
     </div>
   );
 };
@@ -58,7 +63,7 @@ const PaymentMethodList = () => {
       <p id="creditCardList" className={styles.paymentMethodTypeTitle}>
         Credit Cards
       </p>
-      <ul aria-labelledby="creditCardList" className={styles.paymentMethods}>
+      <ul aria-labelledby="creditCardList" className={styles.creditCardsList}>
         {paymentMethods.map((paymentMethod) => (
           <PaymentMethodListItem
             key={paymentMethod.id}

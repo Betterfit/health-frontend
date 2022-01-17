@@ -1,10 +1,10 @@
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
   .content > div:first-child {
     width: 50%;
     margin-left: auto;
     margin-right: auto;
   }
-}
+} */
 
 .content {
   display: grid;

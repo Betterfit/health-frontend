@@ -1,5 +1,6 @@
 .root {
   /* align-items: flex-start; */
+  flex: 1;
 }
 
 .root .border {

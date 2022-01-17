@@ -12,7 +12,7 @@ To extend a global style, compose it in a selector in a css module file like so:
 
 /* Starting point for pages */
 :global .page {
-  padding: 2rem 1rem;
+  padding: 2rem;
   margin-bottom: 2rem;
 }
 
