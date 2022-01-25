@@ -18,23 +18,48 @@ const AddProductForm = ({ product }: { product: ProductOption }) => {
         <p className="font-bold text-lg text-lucky-green">Free Shipping</p>
       )}
       <p className="mb-4 font-bold text-lg">${product.price}</p>
-      <TextField
-        id="quantity-input"
-        label="Quantity"
-        size="small"
-        name="Quantity"
-        value={quantity}
-        type="number"
-        onChange={(e) => setQuantity(parseInt(e.target.value))}
-        inputProps={{ min: 1 }}
-        variant="outlined"
-        style={{ width: "80px" }}
-      />
-      <PrettyButton
-        onClick={() => addToCart(quantity)}
-        color="green"
-        text="Add to Cart"
-      />
+      {product.quantity > 10 && (
+        <p className="text-green-500 text-sm">Available</p>
+      )}
+      {product.quantity <= 10 && product.quantity > 0 && (
+        <p className="text-betterfit-grey-blue text-sm">
+          <span className="text-status-dark-blue font-semibold">
+            {product.quantity}
+          </span>
+          {" left in stock"}
+        </p>
+      )}
+      {product.quantity <= 0 && (
+        <p className="text-red-500 text-sm">Out of stock</p>
+      )}
+      {product.quantity > 0 && (
+        <>
+          <TextField
+            id="quantity-input"
+            label="Quantity"
+            size="small"
+            name="Quantity"
+            value={quantity}
+            type="number"
+            onChange={(e) => setQuantity(parseInt(e.target.value))}
+            inputProps={{
+              min: 1,
+              max:
+                product.quantity <= 10 && product.quantity > 0
+                  ? product.quantity
+                  : null,
+            }}
+            variant="outlined"
+            style={{ width: "80px", marginTop: "20px" }}
+          />
+          <PrettyButton
+            className="mt-4"
+            onClick={() => addToCart(quantity)}
+            color="green"
+            text="Add to Cart"
+          />
+        </>
+      )}
     </div>
   );
 };

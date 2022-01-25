@@ -69,11 +69,29 @@ const ProductCard = ({ product }: { product: ProductOption }) => {
             </span>
           </div>
 
-          <div className="flex flex-row pl-4 pr-2 py-1 justify-between items-center ml-auto mt-auto">
-            <p className="text-betterfit-graphite uppercase text-xxs font-semibold mr-2">
-              {product.productCategory}
-            </p>
-            <CircleButton hover={active} onClick={() => addToCart()} />
+          <div className="flex flex-row pl-4 pr-2 py-1 justify-between items-center mt-auto">
+            <div className="flex flex-col">
+              {product.quantity > 10 && (
+                <p className="text-green-500 text-sm">Available</p>
+              )}
+              {product.quantity <= 10 && product.quantity > 0 && (
+                <p className="text-betterfit-grey-blue text-sm">
+                  <span className="text-status-dark-blue font-semibold">
+                    {product.quantity}
+                  </span>
+                  {" left in stock"}
+                </p>
+              )}
+              {product.quantity <= 0 && (
+                <p className="text-red-500 text-sm">Out of stock</p>
+              )}
+              <p className="text-betterfit-graphite uppercase text-xxs font-semibold mr-2">
+                {product.productCategory}
+              </p>
+            </div>
+            {product.quantity > 0 && (
+              <CircleButton hover={active} onClick={() => addToCart()} />
+            )}
           </div>
         </div>
         {active && (

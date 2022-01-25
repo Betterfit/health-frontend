@@ -266,6 +266,7 @@ export interface ProductOption {
   weight: number | null;
   weightUnit: "kg" | "lb" | null;
   carrier: string | null;
+  quantity: number;
 }
 
 interface BaseOrderProduct {

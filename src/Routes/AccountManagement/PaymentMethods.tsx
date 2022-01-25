@@ -46,7 +46,7 @@ const Credits = ({ credit }: { credit: string }) => {
       <p className="font-bold text-sm mt-4 mb-2">AVAILABLE CREDIT</p>
       <p className={styles.creditAmount}>{formatCurrency(Number(credit))}</p>
       <p className="text-sm mt-3">
-        Any future Supply Net order that you <br /> place wil be eligble for
+        Any future Supply Net order that you <br /> place will be eligible for
         100% off your card.
       </p>
     </div>
