@@ -1,0 +1,10 @@
+.mailtoButton {
+  display: flex;
+  margin-top: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0 10px 0 10px;
+  border: 2px solid var(--primary-blue);
+  border-radius: 6px;
+  background-color: var(--purple-wash);
+}

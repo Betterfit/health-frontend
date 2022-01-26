@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { cartActions } from "Store/cartSlice";
 import { useAppDispatch } from "Store/store";
 import { ProductOption } from "Types";
+import Icon from "Components/Content/Icon";
+import styles from "./AddProductForm.module.css";
+import clsx from "clsx";
 
 const AddProductForm = ({ product }: { product: ProductOption }) => {
   const [quantity, setQuantity] = useState(1);
@@ -60,6 +63,13 @@ const AddProductForm = ({ product }: { product: ProductOption }) => {
           />
         </>
       )}
+      <a
+        href="mailto:info@betterfit.com"
+        className={clsx(styles.mailtoButton, "btn btn-primary")}
+      >
+        <Icon name="mail" extraClasses="my-auto" />
+        <p className="m-2 font-bold">Inquire about stock</p>
+      </a>
     </div>
   );
 };
