@@ -17,7 +17,7 @@ const OrderCardHeader = ({
     <div className={"cardHeader"}>
       <VerticalDetail label="Ordered by" value={fullName(order.authorUser)} />
       <VerticalDetail
-        label="Ordered on"
+        label="Order Created Date"
         value={formatTimeStamp(order.orderDate)}
       />
       <VerticalDetail label="Destination" value={order.facility.name} />
