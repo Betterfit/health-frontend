@@ -251,7 +251,7 @@ const ApproveOrderForm = ({
             percentage={invoice.taxRate * 100}
             cost={invoice.taxes}
           />
-          <FeeLineItem name="SupplyNet Fee" cost={invoice.applicationFee} />
+          <FeeLineItem name="Supply Net Fee" cost={invoice.applicationFee} />
           <FeeLineItem name="Shipping Fee" cost={shippingRate()} />
           {/* Showing applied credits only when non-zero amount is applied */}
           {invoice.appliedCredit.amount !== 0 && (

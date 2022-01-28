@@ -131,27 +131,38 @@ const CartActions = ({
   const emptyCart = cartItems.length === 0;
   const needsDestination = loggedIn && !destinationId;
   return (
-    <div className="flex justify-around ">
-      {loggedIn && (
+    <div>
+      <div className="flex justify-around ">
+        {loggedIn && (
+          <PrettyButton
+            text="Save Draft"
+            variant="outline"
+            onClick={() => orderMutation.mutate("draft")}
+            className="flex-1 justify-center"
+            disabled={emptyCart || needsDestination || orderMutation.isLoading}
+          />
+        )}
         <PrettyButton
-          text="Save Draft"
           variant="outline"
-          onClick={() => orderMutation.mutate("draft")}
+          color="green"
+          text={needsDestination ? "Select Destination" : "Place Order"}
+          disabled={emptyCart || orderMutation.isLoading}
           className="flex-1 justify-center"
-          disabled={emptyCart || needsDestination || orderMutation.isLoading}
+          onClick={() => {
+            if (needsDestination) openDialog("destination");
+            else if (!loggedIn) openDialog("signup");
+            else orderMutation.mutate("open");
+          }}
         />
-      )}
+      </div>
+      <hr />
       <PrettyButton
-        variant="outline"
-        color="green"
-        text={needsDestination ? "Select Destination" : "Place Order"}
-        disabled={emptyCart || orderMutation.isLoading}
-        className="flex-1 justify-center"
+        text="Clear Cart"
+        className="w-full"
         onClick={() => {
-          if (needsDestination) openDialog("destination");
-          else if (!loggedIn) openDialog("signup");
-          else orderMutation.mutate("open");
+          dispatch(cartActions.removeAll());
         }}
+        variant="outline"
       />
     </div>
   );

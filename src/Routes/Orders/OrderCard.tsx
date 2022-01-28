@@ -50,7 +50,7 @@ const OrderCard = ({ order }: { order: Order }) => {
       {order.orderProducts.map((orderProduct, i) => (
         <OrderProductInfo key={i} {...{ order, orderProduct }} />
       ))}
-      {onDetailPage && myProfile && orderCanBeEdited(order, myProfile) && (
+      {myProfile && orderCanBeEdited(order, myProfile) && (
         <PrettyButton
           text="Edit Order"
           className="mx-auto"

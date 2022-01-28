@@ -38,7 +38,7 @@ const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
         <button
           onClick={() => dispatch(cartActions.removeById(productOptionId))}
           aria-label="remove from cart"
-          className="absolute top-0 right-0 transform translate-x-1/2 z-100 scale-150"
+          className="absolute top-0 right-0 transform z-100 scale-150"
         >
           <ReactSVG src={Close} className="flex items-center" />
         </button>

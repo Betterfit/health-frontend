@@ -43,18 +43,21 @@ export const cartSlice = createSlice({
       );
       if (index !== -1) state.items.splice(index, 1);
     },
+    removeAll: (state) => {
+      state.items = [];
+    },
     updateItemQuantity: (
       state,
       action: PayloadAction<{ productOptionId: number; quantity: number }>
     ) => {
       const { productOptionId, quantity } = action.payload;
       // remove item from cart if nonpositive quantity
-      if (quantity < 1) {
+      /* if (quantity < 1) {
         state.items = state.items.filter(
           (item) => item.productOptionId !== productOptionId
         );
         return;
-      }
+      } */
       const item = state.items.find(
         (item) => item.productOptionId === productOptionId
       );
