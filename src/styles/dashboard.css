@@ -30,13 +30,13 @@
   border-radius: 4px;
 }
 
-.orderCartCard .removeCartItem {
+/* .orderCartCard .removeCartItem {
   transition: opacity 0.3s ease;
 }
 
 .orderCartCard:hover .removeCartItem {
   opacity: 1 !important;
-}
+} */
 
 .editFocus:hover {
   transform: scale(1.2);

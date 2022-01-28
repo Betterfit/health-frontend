@@ -38,7 +38,7 @@ const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
         <button
           onClick={() => dispatch(cartActions.removeById(productOptionId))}
           aria-label="remove from cart"
-          className="absolute top-0 right-0 transform translate-x-1/2 z-100 opacity-0 removeCartItem"
+          className="absolute top-0 right-0 transform translate-x-1/2 z-100 scale-150"
         >
           <ReactSVG src={Close} className="flex items-center" />
         </button>
@@ -90,9 +90,12 @@ const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
           name="Quantity"
           defaultValue={quantity}
           type="number"
-          inputProps={{ min: 0 }}
+          inputProps={{ min: 1 }}
           variant="outlined"
           style={{ width: "80px" }}
+          onKeyDown={(event) => {
+            event.preventDefault();
+          }}
         />
       </div>
     </>
